@@ -1,0 +1,15 @@
+= Cluster Management
+
+== Manage the cluster
+
+== The web interface
+
+== Adding/Removing a node
+
+== Replacing a node
+
+== Logging
+
+== Version Migration
+
+*TODO*

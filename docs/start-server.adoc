@@ -1,0 +1,70 @@
+= Start Server
+
+Nakama is designed with development and operation simplicity in mind.
+
+You need to have a CockroachDB server running before starting Nakama. CockroachDB is an open source survivable SQL database. You can download CockroachDB https://www.cockroachlabs.com/docs/install-cockroachdb.html[here^].
+
+== Start a server
+
+[source,bash]
+----
+# Start CockroachDB
+cockroach start --background --insecure --store=attrs=ssd,path=/tmp/cockroach
+
+# Run the one-time Nakama database migration setup
+nakama migrate up
+
+# Start Nakama server
+nakama
+----
+
+You can now connected to the Nakama Server from the client on port `7350`. You can view Nakama's built-in dashboard by navigating to `http://localhost:7351`.
+
+== Start a cluster [local]
+
+Nakama can connect to other Nakama servers to provide high-availably guarantees.
+
+NOTE: *Nakama Enterprise*
+Connecting and clustering multiple servers is available in https://heroiclabs.com/managedcloud.html#enterprise[Nakama Enterprise] and https://heroiclabs.com/managedcloud.html[Managed Cloud].
+
+Clustering is built into Nakama and it requires two extra ports:
+
+. An inter-node communication port to enable different Nakama servers to exchange information with each other.
+. A gossip port to enable discovery and mesh connectivity across the network.
+
+You can start multiple Nakama servers on the same machine and connect them together.
+
+[source,bash]
+----
+# Start the first Nakama server
+nakama --name "node1"
+----
+
+[source,bash]
+----
+# Start the second Nakama server and connect
+# it to the first one to form a cluster
+nakama --name "node2" --port 7360 --join 127.0.0.1:7352
+----
+
+== Start a cluster [cloud]
+
+You can connect multiple Nakama servers on different machines to form a cluster.
+
+NOTE: *Nakama Enterprise*
+Connecting and clustering multiple servers is available in https://heroiclabs.com/managedcloud.html#enterprise[Nakama Enterprise] and https://heroiclabs.com/managedcloud.html[Managed Cloud].
+
+In production, we recommend that you setup configuration parameters within a link:./configure.adoc[configuration file]. You'd need to change the config file to include the following:
+
+[source,yml]
+----
+join:
+  - 10.0.0.1:7352
+  - 10.0.0.2:7352
+  - 10.0.0.3:7352
+  - server_ip_or_host:gossip_port
+----
+
+You don't need to explicitly join every node in the cluster. Nakama nodes will automatically exchange information and help new nodes discover other cluster members.
+
+We recommend that you run at least a minimum of three Nakama servers in production.

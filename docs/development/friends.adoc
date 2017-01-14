@@ -1,0 +1,19 @@
+= Friends
+
+*TODO*
+
+== Add
+
+*TODO*
+
+== List
+
+*TODO*
+
+== Remove
+
+*TODO*
+
+== Block
+
+*TODO*

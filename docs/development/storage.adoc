@@ -1,0 +1,27 @@
+= Storage
+
+*TODO*
+
+== Update
+
+*TODO*
+
+=== Write
+
+*TODO*
+
+== Fetch
+
+*TODO*
+
+=== Batch Fetch
+
+*TODO*
+
+== List
+
+*TODO*
+
+== Remove
+
+*TODO*

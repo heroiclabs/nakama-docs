@@ -1,0 +1,151 @@
+= Unity
+
+If you haven't set up a Nakama server and started it, please visit link:../start-server.adoc[Start a server] first.
+
+The Unity client handles all realtime client/server communication with our link:../protocol/[protocol]. It supports all Nakama server features which include users, data storage, groups, realtime multiplayer, realtime chat, and more. Have a look at our link:../development/user.adoc[Development^] docs for a full list.
+
+To work with our Unity client you'll need to install and setup https://unity3d.com/get-unity/download[Unity^].
+
+NOTE: *Looking for another engine?*
+Defold, Unreal, another? Join our https://gitter.im/heroiclabs/nakama[community] and help us shape the development of realtime and social games with your favorite game engine.
+
+== Install
+
+To include the Unity client in your project, download it from our GitHub https://github.com/heroiclabs/nakama-unity/releases[releases page^]. The download is named "Nakama.unitypackage" and contains a copy of all source code as well as the DLL dependencies required by the client.
+
+Drag or import the ".unitypackage" into your Unity editor project to install it.
+
+== How to connect to server
+
+In the Unity editor create a new C# script. This can be done via the Assets menu with "Assets > Create > C# Script". Modify the initial code in the script to connect with the server:
+
+TIP: *Run with a local server*
+These instructions assume you've got a Nakama server setup and started with default connection details "127.0.0.1" and port "7350". For more help see link:../start-server.adoc[Start a server].
+
+[source,csharp]
+----
+using UnityEngine;
+using System.Collections;
+using Nakama;
+
+public class NewBehaviourScript : MonoBehaviour {
+  void Start() {
+    INClient client = NClient.Default("defaultkey");
+  }
+
+  void Update() {
+  }
+}
+----
+
+An `INClient` object is created which represents a connection to the server. Have a read of https://docs.unity3d.com/Manual/ControllingGameObjectsComponents.html[Controlling GameObjects Using Components^] for examples on how to share a C# object across your game objects.
+
+You can change all the default connection settings with an `NClient.Builder`:
+
+[source,csharp]
+----
+INClient client = new NClient.Builder("defaultkey")
+    .Host("myprivate.server.com")
+    .Port(8080)
+    .SSL(true)
+    .Build();
+----
+
+WARNING: *In production*
+You must *not* use the default server key "defaultkey" in a production environment. Be sure to change it within the link:../configure.adoc[configuration] settings.
+
+== Authenticate
+
+The `INClient` manages a socket connection with the server but before you can connect to the socket you must authenticate. There's link:../development/user.adoc#_authenticate[various] link:../development/user.adoc#_email[different] link:../development/user.adoc#_custom[ways] you can authenticate a user with the server.
+
+The device ID option is the most simple register/login option for users. It is done entirely without user interaction, so the user experience is completely frictionless. You can use https://docs.unity3d.com/ScriptReference/SystemInfo-deviceUniqueIdentifier.html[`SystemInfo.deviceUniqueIdentifier`] which is guaranteed to be unique on every device.
+
+[source,csharp]
+----
+client.Register(request, (INSession session) => {
+  // cache session on device
+}, (INError error) => {
+  Debug.LogErrorFormat("ID register '{0}' failed: {1}", uid, error);
+});
+----
+
+If the user has already registered with the device ID you should use:
+
+[source,csharp]
+----
+var uid = SystemInfo.deviceUniqueIdentifier;
+var request = NAuthenticateMessage.Device(uid);
+client.Login(request, (INSession session) => {
+  // cache session on device
+}, (INError error) => {
+  Debug.LogErrorFormat("ID login '{0}' failed: {1}", uid, error);
+});
+----
+
+TIP: *Session cache*
+It's a good idea to cache a session on a device and restore it at game startup to avoid asking the user to login or register again. See the link:../development/user.adoc#_authenticate[User docs] for examples.
+
+Both "login" and "register" give us an `INSession` object. This session is used to establish a connection with the server.
+
+[source,csharp]
+----
+client.Connect(session, (bool connected) => {
+  Debug.Log("Socket connected.");
+});
+----
+
+TIP: *Session lifecycle*
+Use `client.Disconnect()` when the game client loses focus or is closed and reconnect when it's active. See the https://unity3d.com/learn/tutorials/topics/scripting/awake-and-start[Awake and Start^] tutorial on the Unity website.
+
+== Message and Error Handling
+
+*TODO*
+
+==
+
+== Read/Write records
+
+Nakama provides a general purpose data storage service for save games and other records owned by users. We'll use storage to introduce how messages are sent between client and server. This covers the general pattern for all of the protocol available in the Unity client.
+
+We'll create a record for the current user, create a message to store it, and send the message that will store it with the server.
+
+[source,csharp]
+----
+*TODO*
+----
+
+*TODO*
+
+== Logs and errors
+
+Both the server and client generate logs which can help to identify issues in development. To log all messages between client and server you can enable `Trace` when you create an `INClient`:
+
+[source,csharp]
+----
+#if UNITY_EDITOR
+var client = new NClient.Builder("defaultkey").Trace(true).Build();
+#else
+var client = NClient.Default("defaultkey");
+#endif
+----
+
+`#if` preprocessor directives are used so `Trace` is only enabled in Unity editor development. For more complex directives with "debug" vs "release" builds have a look at https://docs.unity3d.com/Manual/PlatformDependentCompilation.html[Platform dependent compilation^].
+
+All errors in the Unity client implement `INError`. It contains details on the source of an error:
+
+[source,csharp]
+----
+Debug.LogErrorFormat("Error occurred: {0}", error.Message);
+----
+
+TIP: *Open-source*
+The Unity client is https://github.com/heroiclabs/nakama-sdkunity[open-source] on GitHub. Please report issues and contribute code to help us make it better.
+
+== Next Steps
+
+This covers the basics of the Unity client. Some next steps are -
+
+* link:../development/user.adoc[Fetch users]
+* link:../development/groups.adoc[Add groups] or link:../development/friends.adoc[friends]
+* link:../development/realtime-chat.adoc[Send chat messages]
+* link:../development/realtime-multiplayer.adoc[Create multiplayer matches]

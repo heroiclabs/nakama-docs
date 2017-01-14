@@ -1,0 +1,19 @@
+= Realtime Chat
+
+*TODO*
+
+== Types
+
+*TODO*
+
+== Join / Leave
+
+*TODO*
+
+== Send
+
+*TODO*
+
+== Fetch messages
+
+*TODO*

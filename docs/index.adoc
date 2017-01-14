@@ -1,0 +1,36 @@
+= Welcome
+
+== What is Nakama?
+
+Nakama is a distributed server for social and realtime games and apps. It includes a large set of services for users, data storage, and realtime client/server communication; as well as specialized APIs like realtime multiplayer, groups/guilds, and chat.
+
+== Supported Operating Systems
+
+* CentOS 7
+* Debian 8.0
+* Ubuntu 16.04
+* Mac OSX 10.8+
+* Windows 10
+
+== Getting Started
+
+Are you brand new to Nakama? Start by https://github.com/heroiclabs/nakama[downloading^] Nakama, and then follow these pages to get started:
+
+. link:./setup/install.adoc[Install Nakama]
+. link:./configure.adoc[Configure your setup]
+. link:./start-server.adoc[Start the server]
+
+TIP: *Develop with Nakama*
+You can easily add Nakama to your games to power additional features alongside your existing services and tools. Have a look at the link:./clients/unity.adoc[clients] pages which include setup and examples for Unity.
+
+== Popular Docs
+
+. link:./clients/unity.adoc[Unity setup]
+. link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
+. link:./start-server.adoc[Start the server]
+. link:./development/user.adoc[User signin]
+. link:../services/[Managed cloud^]
+
+== Developer Training
+
+link:../services/[Heroic Labs'^] courses offer hands-on experience with Nakama. mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.

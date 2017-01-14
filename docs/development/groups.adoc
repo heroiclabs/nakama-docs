@@ -1,0 +1,51 @@
+= Groups
+
+*TODO*
+
+== Types
+
+*TODO*
+
+== Basics
+
+*TODO*
+
+=== Create
+
+*TODO*
+
+=== List
+
+*TODO*
+
+=== Update
+
+*TODO*
+
+=== Remove
+
+*TODO*
+
+== Admin
+
+*TODO*
+
+=== Promote
+
+*TODO*
+
+=== Kick
+
+*TODO*
+
+== Membership
+
+*TODO*
+
+=== Join
+
+*TODO*
+
+=== Leave
+
+*TODO*
