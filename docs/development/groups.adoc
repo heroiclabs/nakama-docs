@@ -1,51 +1,82 @@
 = Groups
 
-*TODO*
+Groups connect a set of users and give them a shared space to interact through online presence tracking, persistent chat, and more. Users can join groups with their friends, new people they meet, or by looking for groups in their area.
 
-== Types
+Membership to a group grants privileges like access to a private group link:./realtime-chat.adoc[chat topic], link:./realtime-chat.adoc[chat history], and more.
 
-*TODO*
+Groups have *members* and *admins*. Both participate in group activities equally but admins have additional privileges and responsibilities. All users joining a group do so as regular members and may be promoted later by existing admins.
 
-== Basics
+== Join
 
-*TODO*
+Any user can choose to join a group, which will be processed by Nakama one of two ways:
 
-=== Create
+* With *public* groups, the user is immediately added as a group member without further confirmation.
+* For *private* groups, a join request is created and submitted to group admins for review. The user is not added as a member unless that request is accepted by any of the group's current admins.
 
-*TODO*
+Users can list groups they've already joined. This provides fast access to all memberships for each user for further operations or individual group access.
 
-=== List
+== Leave
 
-*TODO*
+Users can leave groups at their discretion. When the leave operation is accepted, the user immediately loses access to all group privileges such as the link:./realtime-chat.adoc[chat topic], link:./realtime-chat.adoc[chat history].
 
-=== Update
+== Create
 
-*TODO*
+To create a group users must choose a name and may submit other optional fields:
 
-=== Remove
+* Group Description
+* Avatar URL
+* Lang Tag (such as `en_US`)
+* Additional application-specific metadata.
 
-*TODO*
+Nakama will use this data to create the group and ensure it appears in the correct listings based on its properties. The user creating the group will automatically be added as a member with admin privileges.
 
-== Admin
+== Update
 
-*TODO*
+After a group is created, its admins may update it at any time. All group properties available at creation time can be edited later.
+
+== Remove
+
+Group admins are allowed to disband the group itself and remove all its members.
+
+== Finding groups
+
+Group listings allow users to find new groups to join based on activity, location, and more.
+
+Nakama provides 3 main ways to find groups:
+
+* By creation time - allowing users to find established groups first.
+* By member count and updated at - to find recently active groups up to a given size.
+* By lang tag and member count - to find groups in the user's area/country/timezone or primarily speaking the same language.
+
+With these core building blocks users can quickly find one or more relevant groups to join and interact with based on interests, how frequently members are available, preferred language, and more.
+
+// list groups sample code
+
+TIP: *Group listing pagination*
+A cursor is returned with group listing results; use this in further calls to paginate results.
+
+== Admins
+
+Admins are group members with additional privileges, and are responsible for:
+
+* Changing group config, description, and more.
+* Approving or rejecting requests from other users to join the group.
+* Removing members and admins.
+* Appointing additional admins.
+
+The user that creates a group is automatically assigned as the first admin, and may then promote others to admin status. All admins have equal privileges, and may remove other admins from the group.
+
+TIP: *Leaving a group*
+Admins are allowed to leave groups just like regular members, with one exception: the last admin in a group cannot leave. They should promote at least one new admin from the other members, or remove and disband the group entirely.
+
+=== Accepting join requests
+
+When users attempt to join private groups a join request will be created. Admins can obtain a list of these requests and accept or reject each one. When a request is accepted that user becomes a member.
 
 === Promote
 
-*TODO*
+Any admin may promote a regular group member to admin status. This ensures there is likely to be an admin presence available at most times to handle group moderation and leadership.
 
 === Kick
 
-*TODO*
-
-== Membership
-
-*TODO*
-
-=== Join
-
-*TODO*
-
-=== Leave
-
-*TODO*
+Admins can kick members or other admins from groups for any reason. This permanently removes that user from the group but does not prevent them from joining at a later point if needed.

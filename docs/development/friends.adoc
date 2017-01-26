@@ -1,19 +1,90 @@
 = Friends
 
-*TODO*
+Friends are a core social feature in Nakama. Users can track new and existing friends, see who is online or when they were last seen, chat in real time, challenge them to matches, and more.
+
+Each individual user's friends list is their primary way to track relationships to other individual users. These relationships can be:
+
+* Mutual friend - both users have agreed to add each other as friends.
+* Received invite - another user has sent a friend request.
+* Sent invitation - an outgoing friend request from this user.
+* Blocked - a blacklisted user. Used to reject chat requests, and more.
+
+TIP: *Social accounts and friends*
+When registering or linking a social account, such as Facebook, Nakama will import friends automatically.
 
 == Add
 
-*TODO*
+Any user can add another user as a friend, identified by their user ID. If there is a pending friend invitation from that user, it will be accepted and the relationship between the two users will become mutual friendship.
+
+Sending a friend invite and accepting a received invitation are done through the same client call.
+
+[source,csharp]
+----
+// `id` is the user ID to add as a friend, or send an invite to.
+client.Send<bool>(NFriendAddMessage.Default(id), (bool done) =>
+{
+  // Handle success.
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not add friend: '{0}'.", error.Message);
+});
+----
 
 == List
 
-*TODO*
+Listing friends for the current user is a single request which will return all their friends, regardless of relationship type.
+
+When examining the returned list of friends, use `.State()` to differentiate the relationship types. State will be one of:
+
+* `FriendState.Friend` - a mutual friend.
+* `FriendState.Invite` - a received invite.
+* `FriendState.Invited` - a sent invitation.
+* `FriendState.Blocked` - a blocked user.
+
+[source,csharp]
+----
+client.Send<bool>(NFriendsListMessage.Default(), (INResultSet<INFriend> results) =>
+{
+  foreach (INFriend friend in results) {
+    Debug.LogFormat ("Friend ID '{0}'", friend.Id);
+  }
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not list friends: '{0}'.", error.Message);
+});
+----
 
 == Remove
 
-*TODO*
+At any time users can decide to remove a mutual friend, reject a received invite, cancel a sent invitation, or unblock a user. All of these operations are done through the same client call.
+
+TIP: *Re-adding removed friends*
+If a friend is removed and then re-added, they will have to accept the invitation again.
+
+[source,csharp]
+----
+// `id` is the user ID to remove from friends list, or unblock.
+client.Send<bool>(NFriendRemoveMessage.Default(id), (bool done) =>
+{
+  // Handle success.
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not remove friend: '{0}'.", error.Message);
+});
+----
 
 == Block
 
-*TODO*
+Nakama will observe the list of blocked users when other users trigger interactions. For example incoming direct chat messages or friend requests from blocked users will not be allowed.
+
+[source,csharp]
+----
+// `id` is the user ID to block.
+client.Send<bool>(NFriendBlockMessage.Default(id), (bool done) =>
+{
+  // Handle success.
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not block: '{0}'.", error.Message);
+});
+----
