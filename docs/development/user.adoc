@@ -389,7 +389,7 @@ Use this to display public user profiles, identify opponents in matches, and mor
 
 [source,csharp]
 ----
-var message = UsersFetchMessage.Default(id);
+var message = NUsersFetchMessage.Default(id);
 client.Send(message, (INResultSet<INUser> results) => {
   Debug.LogFormat ("Fetched {0} users'.", results.Results.Count);
   for (user in results.Results) {
