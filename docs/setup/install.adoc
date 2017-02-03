@@ -83,7 +83,7 @@ KillMode=process
 [Install]
 WantedBy=multi-user.target
 ----
-The `chmod` for the this file should be 644 (`chmod 644 <file>`).
+The `chmod` for this file should be 644 (`sudo chmod 644 /usr/lib/systemd/system/nakama.service`).
 
 2. Enable and run the service:
 +

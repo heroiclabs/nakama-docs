@@ -52,7 +52,7 @@ INClient client = new NClient.Builder("defaultkey")
 ----
 
 WARNING: *In production*
-You must *not* use the default server key "defaultkey" in a production environment. Be sure to change it within the link:../configure.adoc[configuration] settings.
+You must *not* use the default server key `"defaultkey"` in a production environment. Be sure to change it within the link:../configure.adoc[configuration] settings.
 
 == Authenticate
 

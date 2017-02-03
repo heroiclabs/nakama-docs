@@ -35,13 +35,13 @@ There are three main login mechanisms so far; ID-based Login, Social Login, and 
 
 The most effortless way of authenticating a user with Nakama is to use a Device ID. This can be done entirely without user interaction, so the user experience is completely frictionless.
 
-TIP: You can think of Device ID login as guest users.
+TIP: **Device ID login as guest users.**
 They don't require any information from the user to create although you'll want to use an identifier from the client device which can be used to recover the user if necessary.
 
 Anonymous logins are performed by sending Nakama a single field representing a unique identifier, usually a UDID or a Device ID.
 This unique identifier can be used again later to retrieve the same user for example when recovering the user after the game is removed and reinstalled.
 
-TIP: Cache Device ID
+TIP: **Cache Device ID**
 The UDID from mobile devices like Android and iOS are changed often by the operating system vendors.
 They are not reliable sources for uniquely identifying the device; you should cache the UDID once obtained so the game can use it to recover the account.
 
@@ -217,8 +217,8 @@ client.Login(message, (INSession session) =>
 
 ==== Steam
 
-NOTE: Make sure you have a Steam application set up.
-A Steam App ID and Publisher Key are required; set these in the Nakama ../configure.adoc[configuration] file.
+NOTE: **Make sure you have a Steam application set up.**
+A Steam App ID and Publisher Key are required; set these in the Nakama link:../../configure.adoc[configuration] file.
 
 To authenticate with Steam, you first need a Steam `SessionToken` for the user. Once you have obtained the `SessionToken` you can use it to register and login to Nakama.
 
@@ -250,7 +250,7 @@ Nakama supports authentication using Game Center Player IDs on compatible Apple 
 
 Users can be authenticated by sending the following Game Center credentials to the server: Player ID, Bundle ID, Timestamp, Salt, Signature, and Public Key URL. You'll need to dive into native Objective-C code as the `UnityEngine.SocialPlatforms.GameCenter` doesn't expose enough information to enable authentication.
 
-TIP: Getting the required parameters
+TIP: **Required parameters**
 Have a look at the relevant https://developer.apple.com/reference/gamekit/gklocalplayer/1515407-generateidentityverificationsign[iOS GameKit function reference^].
 
 [source,csharp]
@@ -384,7 +384,7 @@ client.Send(message, (bool completed) => {
 
 Nakama can give the client common information about other users. The client needs to know the IDs of those users.
 
-TIP: Public user information
+TIP: **Public user information**
 Use this to display public user profiles, identify opponents in matches, and more.
 
 [source,csharp]
