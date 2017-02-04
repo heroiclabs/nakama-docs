@@ -1,27 +1,123 @@
 = Storage
 
-*TODO*
+Storage is a distributed key-value store. It can be used to store individual user data, maintain global data sets or configuration values, share data and user generated content, and much more.
 
-== Update
+A key is used to look up data from Storage and it is the composed of a bucket, collection and a record. Records are grouped into collections which are grouped further into buckets. You can create any number of records, collections and buckets.
 
-*TODO*
+image::/images/storage.png[Storage, 500]
 
-=== Write
+Objects are JSON data stored against a key and must be less than 8KB in size. An object is identified by a key and (optionally) an owner.
 
-*TODO*
+Buckets are used to group or namespace data. Each bucket contains data identified by pair of collections and records, and each bucket enforces uniqueness of key-owner pairs. This means there will only ever be one object with a particular key, owned by a particular user, in any given bucket.
+
+=== Permission
+
+Records can optionally assign individual permissions to decide how both the owner and others can interact with this data. Objects can only be modifiable by their owner. These permissions can be combined freely. The server will enforce read and write permissions independently.
+
+Read permissions can be:
+
+* `0` - The object cannot be read by either the owner or any other users.
+* `1` - The object can only be read by the owner.
+* `2` - The object is readable by any user.
+
+Write permissions can be:
+
+* `0` - The object is read-only.
+* `1` - The object can be written or updated by its owner.
+
+== Write
+
+Clients can only write to objects which belong to the user with the current session. A write request to a key that does not exist will implicitly create it so you don't need to check if the object exists before a write operation. Objects must be valid JSON.
+
+Storage objects can be written and rewritten at any time, as often as the Client requires. If the key already exists this operation will correctly preserve original creation timestamps.
+
+[source,csharp]
+----
+string bucket = "testBucket";
+string collection = "testCollection";
+string record = "testRecord";
+byte[] storageValue = Encoding.UTF8.GetBytes("{\"jsonkey\":\"jsonvalue\"}");
+
+var builder = new NStorageWriteMessage.Builder();
+builder.Write(bucket, collection, record, storageValue);
+// builder.Write(bucket, collection, record2, storageValue2); -- You can batch write messages.
+
+var message = builder.Build();
+client.Send(message, (bool completed) => {
+  Debug.Log ("Successfully storage data.");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not store data into storage: '{0}'.", error.Message);
+});
+----
+
+=== Conditional Write
+
+All stored objects are versioned as they are stored to the database. The server can accept simple version lookup queries that are very similar to https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag[HTTP ETag conditional headers^].
+
+This allows the Client to send the latest version information that it has locally alongside the data that needs to be updated in one request. The server will then validate to see if the versions are matched and if so will update the stored data.
+
+There are two types of conditional writes:
+
+1. If-Match: Client data version and server data version must match before the data is updated. This allows the Client to safely assume that it has the latest version of the data. The value is sent by the server and cached locally from a previous data fetch operation.
+2. If-None-Match: This ensures that the Client does not overwrite data that is already stored on the server. This is useful for storage operations that only need to be done once. The only acceptable value is a `"*"`.
+
+[source,csharp]
+----
+var builder = new NStorageWriteMessage.Builder();
+byte[] version; // This is an object version cached locally on the client.
+
+// This is an If-Match check.
+builder.Write(bucket, collection, record, storageValue, version);
+
+// This is an If-None-Match check.
+builder.Write(bucket, collection, record, storageValue, Encoding.UTF8.GetBytes("*"));
+
+var message = builder.Build();
+----
 
 == Fetch
 
-*TODO*
+Clients performing a read request can retrieve Storage objects identified by key and owner. An object with a null owner is referred to as global data.
 
-=== Batch Fetch
+If the object permissions allow it, a complete Storage object will be returned to the client.
 
-*TODO*
+[source,csharp]
+----
+string bucket = "testBucket";
+string collection = "testCollection";
+string record = "testRecord";
+byte[] userId; // this value can be retrieve by sending a Self message.
 
-== List
+var message = new NStorageFetchMessage.Builder().Fetch(bucket, collection, record, userId).Build();
+client.Send(message, (INResultSet<INStorageData> results) =>
 
-*TODO*
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not fetch data from storage: '{0}'.", error.Message);
+});
+
+----
 
 == Remove
 
-*TODO*
+Objects can be deleted by their owners at any time with valid write permissions. Any request to delete keys that do not exist will succeed by default.
+
+You can also conditionally remove an object if the object version matches the version available on the client.
+
+[source,csharp]
+----
+string bucket = "testBucket";
+string collection = "testCollection";
+string record = "testRecord";
+byte[] version; // This is an object version cached locally on the client.
+
+var builder = new NStorageRemoveMessage.Builder();
+builder.Remove(bucket, collection, record, version);
+
+client.Send(message, (bool completed) => {
+  Debug.Log ("Successfully removed data.");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not delete data from storage: '{0}'.", error.Message);
+});
+----
+
+A delete operation performs a soft-delete on the server - data is not purged from the server but is no longer available to the client.
