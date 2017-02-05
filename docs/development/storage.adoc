@@ -4,7 +4,7 @@ Storage is a distributed key-value store. It can be used to store individual use
 
 A key is used to look up data from Storage and it is the composed of a bucket, collection and a record. Records are grouped into collections which are grouped further into buckets. You can create any number of records, collections and buckets.
 
-image::/images/storage.jpg[Storage, 500]
+image::/images/storage.png[Storage, 500]
 
 Objects are JSON data stored against a key and must be less than 8KB in size. An object is identified by a key and (optionally) an owner.
 
