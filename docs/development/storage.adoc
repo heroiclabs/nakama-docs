@@ -90,11 +90,12 @@ byte[] userId; // this value can be retrieve by sending a Self message.
 
 var message = new NStorageFetchMessage.Builder().Fetch(bucket, collection, record, userId).Build();
 client.Send(message, (INResultSet<INStorageData> results) =>
-
+  foreach (INStorageData data in results) {
+    Debug.LogFormat ("Storage Bucket: '{0}', Collection: '{1}', Record: '{2}'", data.Bucket, data.Collection, data.Record);
+  }
 }, (INError error) => {
   Debug.LogErrorFormat ("Could not fetch data from storage: '{0}'.", error.Message);
 });
-
 ----
 
 == Remove
