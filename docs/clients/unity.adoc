@@ -97,13 +97,13 @@ client.Connect(session, (bool connected) => {
 TIP: *Session lifecycle*
 Use `client.Disconnect()` when the game client loses focus or is closed and reconnect when it's active. See the https://unity3d.com/learn/tutorials/topics/scripting/awake-and-start[Awake and Start^] tutorial on the Unity website.
 
+////
 == Message and Error Handling
 
 *TODO*
+////
 
-==
-
-== Read/Write records
+== Write/Fetch records
 
 Nakama provides a general purpose data storage service for save games and other records owned by users. We'll use storage to introduce how messages are sent between client and server. This covers the general pattern for all of the protocol available in the Unity client.
 
@@ -111,10 +111,32 @@ We'll create a record for the current user, create a message to store it, and se
 
 [source,csharp]
 ----
-*TODO*
+byte[] storageValue = Encoding.UTF8.GetBytes("{\"jsonkey\":\"jsonvalue\"}");
+
+var message = new NStorageWriteMessage.Builder().Write("testBucket", "testCollection", "testRecord", storageValue).Build();
+client.Send(message, (bool completed) => {
+  Debug.Log ("Successfully storage data.");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not store data into storage: '{0}'.", error.Message);
+});
 ----
 
-*TODO*
+And you can fetch it back from the server:
+
+[source,csharp]
+----
+byte[] userId; // this value can be retrieve by sending a Self message.
+
+var message = new NStorageFetchMessage.Builder().Fetch("testBucket", "testCollection", "testRecord", userId).Build();
+client.Send(message, (INResultSet<INStorageData> results) =>
+  foreach (INStorageData data in results) {
+    Debug.LogFormat ("Storage Bucket: '{0}', Collection: '{1}', Record: '{2}'", data.Bucket, data.Collection, data.Record);
+  }
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not fetch data from storage: '{0}'.", error.Message);
+});
+
+----
 
 == Logs and errors
 

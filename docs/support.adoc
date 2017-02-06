@@ -3,6 +3,7 @@
 == Recovery
 
 When you run into a problem, the best place to start is having Nakama logging its output to standard error (as well as the log files in the `data` directory):
+
 [source,bash]
 ----
 nakama --verbose
@@ -14,6 +15,7 @@ The log file’s location is dependent on your system configuration and how you 
 
 * If you started Nakama on a terminal rather than from a startup script, it will log to the `data` directory. By default it will write to `nakama-xxxx` but this may be overridden with the `--data-dir` and `--name` startup option.
 * If your Linux system uses `systemd`, use `journalctl` to view the log:
+
 [source,bash]
 ----
 journalctl -u nakama@<instance>
@@ -35,6 +37,7 @@ We use Github for issue tracking: https://github.com/heroiclabs/nakama/issues. I
 The most important things for you to provide for us are:
 
 * The full output from `nakama --version`, something like:
+
 [source,bash]
 ----
 0.11.0-dev+0ae55d4
@@ -43,9 +46,10 @@ The most important things for you to provide for us are:
 * The full backtrace from the crash, if it’s available in the logs.
 * The full output from `uname -a`
 * Output of the `doctor` command:
+
 [source,bash]
 ----
-# this saves it to a log file named 'doctor.log' in the current working directory
+# this saves the output to a log file named 'doctor.log' in the current working directory
 nakama doctor > doctor.log
 ----
 

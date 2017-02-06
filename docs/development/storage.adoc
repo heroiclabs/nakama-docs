@@ -96,7 +96,6 @@ client.Send(message, (INResultSet<INStorageData> results) =>
 }, (INError error) => {
   Debug.LogErrorFormat ("Could not fetch data from storage: '{0}'.", error.Message);
 });
-
 ----
 
 == Remove
