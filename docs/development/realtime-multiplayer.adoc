@@ -1,15 +1,5 @@
 = Realtime Multiplayer
 
-*TODO*
+== Realtime Multiplayer
 
-== Create
-
-*TODO*
-
-== Join / Leave
-
-*TODO*
-
-== Send
-
-*TODO*
+Realtime multiplayer was launched in Nakama server with the https://github.com/heroiclabs/nakama/releases/tag/v0.10.0[0.10.0^] release. Documentation will be added soon but in the meantime https://gitter.im/heroiclabs/nakama[join our community^] and we can help you get started.

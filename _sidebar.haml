@@ -1,7 +1,7 @@
 %aside
   %ul.doc-sidebar__first-level
     %li
-      = link_to 'Home', '/docs/index.html'
+      = nav_link 'Home', '/docs/index.html'
       %ul.doc-sidebar__second-level
         %li= link_to 'What is Nakama?', '/docs/index.html#_what_is_nakama'
         %li= link_to 'Supported Operating Systems', '/docs/index.html#_supported_operating_systems'
@@ -13,45 +13,49 @@
     %li
       = link_to 'Setup', '/docs/setup/index.html'
       %ul.doc-sidebar__second-level
-        %li= link_to 'Install', '/docs/setup/install.html'
-        %li= link_to 'Upgrades', '/docs/setup/upgrades.html'
-        %li= link_to 'Recommended Production Settings', '/docs/setup/recommended-production-settings.html'
-    %li= link_to 'Configure', '/docs/configure.html'
-    %li= link_to 'Start Server', '/docs/start-server.html'
-    %li
-      = link_to 'Admin', '/docs/admin/index.html'
-      %ul.doc-sidebar__second-level
-        %li= link_to 'Cluster Management', '/docs/admin/cluster-management.html'
-        %li= link_to 'Dashboard', '/docs/admin/dashboard.html'
-    %li= link_to 'Managed Cloud', '/services.html'
+        %li= nav_link 'Install', '/docs/setup/install.html'
+        %li= nav_link 'Upgrades', '/docs/setup/upgrades.html'
+        /
+          %li= nav_link 'Recommended Production Settings', '/docs/setup/recommended-production-settings.html'
+    %li= nav_link 'Configure', '/docs/configure.html'
+    %li= nav_link 'Start Server', '/docs/start-server.html'
+    /
+      %li
+        = nav_link 'Admin', '/docs/admin/index.html'
+        %ul.doc-sidebar__second-level
+          %li= nav_link 'Cluster Management', '/docs/admin/cluster-management.html'
+          %li= nav_link 'Dashboard', '/docs/admin/dashboard.html'
+      %li= link_to 'Managed Cloud', '/services.html'
     %li
       = link_to 'Clients', '/docs/clients/index.html'
       %ul.doc-sidebar__second-level
-        %li= link_to 'Unity', '/docs/clients/unity.html'
-        %li= link_to 'Defold', '/docs/clients/defold.html'
-        %li= link_to 'Unreal', '/docs/clients/unreal.html'
+        %li= nav_link 'Unity', '/docs/clients/unity.html'
+        /
+          %li= nav_link 'Defold', '/docs/clients/defold.html'
+          %li= nav_link 'Unreal', '/docs/clients/unreal.html'
     %li
       = link_to 'Development', '/docs/development/index.html'
       %ul.doc-sidebar__second-level
-        %li= link_to 'User', '/docs/development/user.html'
-        %li= link_to 'Friends', '/docs/development/friends.html'
-        %li= link_to 'Groups', '/docs/development/groups.html'
-        %li= link_to 'Storage', '/docs/development/storage.html'
-        %li= link_to 'Realtime Chat', '/docs/development/realtime-chat.html'
-        %li= link_to 'Realtime Multiplayer', '/docs/development/realtime-multiplayer.html'
-    %li
-      = link_to 'Server Internals', '/docs/server-internals/index.html'
-      %ul.doc-sidebar__second-level
-        %li= link_to 'Protocol', '/docs/server-internals/protocol.html'
-        %li= link_to 'Architecture', '/docs/server-internals/architecture.html'
-        %li= link_to 'Realtime', '/docs/server-internals/realtime.html'
-        %li= link_to 'Consistency Semantics', '/docs/server-internals/consistency-semantics.html'
-        %li= link_to 'FAQ', '/docs/server-internals/faq.html'
-    %li= link_to 'Support', '/docs/support.html'
+        %li= nav_link 'User', '/docs/development/user.html'
+        %li= nav_link 'Friends', '/docs/development/friends.html'
+        %li= nav_link 'Groups', '/docs/development/groups.html'
+        %li= nav_link 'Realtime Chat', '/docs/development/realtime-chat.html'
+        %li= nav_link 'Realtime Multiplayer', '/docs/development/realtime-multiplayer.html'
+        %li= nav_link 'Storage', '/docs/development/storage.html'
+    /
+      %li
+        = nav_link 'Server Internals', '/docs/server-internals/index.html'
+        %ul.doc-sidebar__second-level
+          %li= nav_link 'Protocol', '/docs/server-internals/protocol.html'
+          %li= nav_link 'Architecture', '/docs/server-internals/architecture.html'
+          %li= nav_link 'Realtime', '/docs/server-internals/realtime.html'
+          %li= nav_link 'Consistency Semantics', '/docs/server-internals/consistency-semantics.html'
+          %li= nav_link 'FAQ', '/docs/server-internals/faq.html'
+    %li= nav_link 'Support', '/docs/support.html'
     %li
       %a(href="https://github.com/heroiclabs/nakama" target="_blank") Contribute
     %li
       %a(href="https://github.com/heroiclabs/nakama/releases" target="_blank") Release Notes
       %ul.doc-sidebar__second-level
         %li
-          %a(href="https://github.com/heroiclabs/nakama/releases/v0.10.0") v0.10.0
+          %a(href="https://github.com/heroiclabs/nakama/releases/v0.10.0") 0.10.0

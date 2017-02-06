@@ -145,7 +145,7 @@ The Unity client is https://github.com/heroiclabs/nakama-sdkunity[open-source] o
 
 This covers the basics of the Unity client. Some next steps are -
 
-* link:../development/user.adoc[Fetch users]
-* link:../development/groups.adoc[Add groups] or link:../development/friends.adoc[friends]
-* link:../development/realtime-chat.adoc[Send chat messages]
-* link:../development/realtime-multiplayer.adoc[Create multiplayer matches]
+* link:../../development/user.adoc[Fetch users]
+* link:../../development/groups.adoc[Add groups] or link:../../development/friends.adoc[friends]
+* link:../../development/realtime-chat.adoc[Send chat messages]
+* link:../../development/realtime-multiplayer.adoc[Create multiplayer matches]
