@@ -23,7 +23,7 @@ journalctl -u nakama@<instance>
 
 * If you installed Nakama through a package manager on a system that does not use `systemd`, then you may have to check where it’s configured to log. It’s very likely this will be in the `/var/log/` directory (i.e., `/var/log/nakama`).
 
-The log may give you information as to what caused the crash.
+The log may give you information on what caused the issue.
 
 == Hands-On Support
 
@@ -32,7 +32,7 @@ The log may give you information as to what caused the crash.
 
 == How to submit a bug report
 
-We use Github for issue tracking: https://github.com/heroiclabs/nakama/issues. If you want to report a suspected bug in Nakama, open an issue there.
+We use GitHub for issue tracking: https://github.com/heroiclabs/nakama/issues. If you want to report a suspected bug in Nakama, open an issue there.
 
 The most important things for you to provide for us are:
 
@@ -53,7 +53,7 @@ The most important things for you to provide for us are:
 nakama doctor > doctor.log
 ----
 
-You can optionally connecting to a remote Nakama setup:
+You can optionally connect to a remote Nakama node to obtain additional information about it:
 
 [source,bash]
 ----
