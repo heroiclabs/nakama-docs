@@ -29,8 +29,7 @@ You can easily add Nakama to your games to power additional features alongside y
 . link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
 . link:./start-server.adoc[Start the server]
 . link:./development/user.adoc[User signin]
-. link:../services/[Managed cloud^]
 
 == Developer Training
 
-link:../services/[Heroic Labs'^] courses offer hands-on experience with Nakama. mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
+mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
