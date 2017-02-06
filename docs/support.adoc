@@ -25,7 +25,7 @@ journalctl -u nakama@<instance>
 
 The log may give you information on what caused the issue.
 
-== Hands-On Support
+== Hands-On support
 
 - Join us on https://gitter.im/heroiclabs/nakama[Gitter^]: This is the most immediate way to connect with Nakama engineers. If your problem is a crash that we’ve seen before — or our users have — this may get you a quick answer.
 - https://github.com/heroiclabs/nakama/issues[GitHub Issue Tracker^]: If you are certain that what you are experiencing is a bug, please open an issue on the https://github.com/heroiclabs/nakama/[GitHub repository^]. Please be as detailed as possible and outline any steps required to replicate the issue you are experiencing.
