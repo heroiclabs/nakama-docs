@@ -1,3 +1,57 @@
 = Support
 
-*TODO*
+== Recovery
+
+When you run into a problem, the best place to start is having Nakama logging its output to standard error (as well as the log files in the `data` directory):
+[source,bash]
+----
+nakama --verbose
+----
+
+== Check the log
+
+The log file’s location is dependent on your system configuration and how you started Nakama.
+
+* If you started Nakama on a terminal rather than from a startup script, it will log to the `data` directory. By default it will write to `nakama-xxxx` but this may be overridden with the `--data-dir` and `--name` startup option.
+* If your Linux system uses `systemd`, use `journalctl` to view the log:
+[source,bash]
+----
+journalctl -u nakama@<instance>
+----
+
+* If you installed Nakama through a package manager on a system that does not use `systemd`, then you may have to check where it’s configured to log. It’s very likely this will be in the `/var/log/` directory (i.e., `/var/log/nakama`).
+
+The log may give you information as to what caused the crash.
+
+== Hands-On Support
+
+- Join us on https://gitter.im/heroiclabs/nakama[Gitter^]: This is the most immediate way to connect with Nakama engineers. If your problem is a crash that we’ve seen before — or our users have — this may get you a quick answer.
+- https://github.com/heroiclabs/nakama/issues[GitHub Issue Tracker^]: If you are certain that what you are experiencing is a bug, please open an issue on the https://github.com/heroiclabs/nakama/[GitHub repository^]. Please be as detailed as possible and outline any steps required to replicate the issue you are experiencing.
+
+== How to submit a bug report
+
+We use Github for issue tracking: https://github.com/heroiclabs/nakama/issues. If you want to report a suspected bug in Nakama, open an issue there.
+
+The most important things for you to provide for us are:
+
+* The full output from `nakama --version`, something like:
+[source,bash]
+----
+0.11.0-dev+0ae55d4
+----
+
+* The full backtrace from the crash, if it’s available in the logs.
+* The full output from `uname -a`
+* Output of the `doctor` command:
+[source,bash]
+----
+# this saves it to a log file named 'doctor.log' in the current working directory
+nakama doctor > doctor.log
+----
+
+You can optionally connecting to a remote Nakama setup:
+
+[source,bash]
+----
+nakama doctor <IP Address>:<Ops Port>
+----
