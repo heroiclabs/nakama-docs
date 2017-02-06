@@ -18,7 +18,7 @@ The log file’s location is dependent on your system configuration and how you 
 
 [source,bash]
 ----
-journalctl -u nakama@<instance>
+journalctl -u nakama
 ----
 
 * If you installed Nakama through a package manager on a system that does not use `systemd`, then you may have to check where it’s configured to log. It’s very likely this will be in the `/var/log/` directory (i.e., `/var/log/nakama`).
