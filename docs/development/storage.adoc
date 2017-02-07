@@ -10,7 +10,7 @@ Objects are JSON data stored against a key and must be less than 8KB in size. An
 
 Buckets are used to group or namespace data. Each bucket contains data identified by pair of collections and records, and each bucket enforces uniqueness of key-owner pairs. This means there will only ever be one object with a particular key, owned by a particular user, in any given bucket.
 
-=== Permission
+== Permissions
 
 Records can optionally assign individual permissions to decide how both the owner and others can interact with this data. Objects can only be modifiable by their owner. These permissions can be combined freely. The server will enforce read and write permissions independently.
 

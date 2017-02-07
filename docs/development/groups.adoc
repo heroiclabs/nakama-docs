@@ -2,7 +2,7 @@
 
 Groups connect a set of users and give them a shared space to interact through online presence tracking, persistent chat, and more. Users can join groups with their friends, new people they meet, or by looking for groups in their area.
 
-Membership to a group grants privileges like access to a private group link:./realtime-chat.adoc[chat topic], link:./realtime-chat.adoc[chat history], and more.
+Membership to a group grants privileges like access to a private group link:../realtime-chat.adoc[chat topic], link:../realtime-chat.adoc[chat history], and more.
 
 Groups have *members* and *admins*. Both participate in group activities equally but admins have additional privileges and responsibilities. All users joining a group do so as regular members and may be promoted later by existing admins.
 
@@ -17,7 +17,7 @@ Users can list groups they've already joined. This provides fast access to all m
 
 == Leave
 
-Users can leave groups at their discretion. When the leave operation is accepted, the user immediately loses access to all group privileges such as the link:./realtime-chat.adoc[chat topic], link:./realtime-chat.adoc[chat history].
+Users can leave groups at their discretion. When the leave operation is accepted, the user immediately loses access to all group privileges such as the link:../realtime-chat.adoc[chat topic], link:../realtime-chat.adoc[chat history].
 
 == Create
 

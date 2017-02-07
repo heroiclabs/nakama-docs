@@ -22,10 +22,10 @@ You can now connected to the Nakama Server from the client on port `7350`. You c
 
 == Start a cluster [local]
 
-Nakama can connect to other Nakama servers to provide high-availably guarantees.
+Nakama can connect to other Nakama servers to form a highly available cluster.
 
 NOTE: *Nakama Enterprise*
-Connecting and clustering multiple servers is available in https://heroiclabs.com/managedcloud.html#enterprise[Nakama Enterprise] and https://heroiclabs.com/managedcloud.html[Managed Cloud].
+Connecting and clustering multiple servers is available in https://heroiclabs.com/services/#enterprise[Nakama Enterprise] and https://heroiclabs.com/managed-cloud/[Managed Cloud].
 
 Clustering is built into Nakama and it requires two extra ports:
 
@@ -52,9 +52,9 @@ nakama --name "node2" --port 7360 --join 127.0.0.1:7352
 You can connect multiple Nakama servers on different machines to form a cluster.
 
 NOTE: *Nakama Enterprise*
-Connecting and clustering multiple servers is available in https://heroiclabs.com/managedcloud.html#enterprise[Nakama Enterprise] and https://heroiclabs.com/managedcloud.html[Managed Cloud].
+Connecting and clustering multiple servers is available in https://heroiclabs.com/services/#enterprise[Nakama Enterprise] and https://heroiclabs.com/managed-cloud/[Managed Cloud].
 
-In production, we recommend that you setup configuration parameters within a link:./configure.adoc[configuration file]. You'd need to change the config file to include the following:
+In production, we recommend that you setup configuration parameters within a link:../configure.adoc[configuration file]. You'd need to change the config file to include the following:
 
 [source,yml]
 ----

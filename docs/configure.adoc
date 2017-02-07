@@ -48,7 +48,7 @@ It is highly recommended to change the default value for production servers.
 NOTE: *Steam login*
 With the default values, Steam login is disabled.
 
-The following options are available in https://heroiclabs.com/managedcloud.html#enterprise[Nakama Enterprise]:
+The following options are available in https://heroiclabs.com/services/#enterprise[Nakama Enterprise^]:
 
 === Basic configuration
 * `join`: List of node addresses to connect to form a cluster. Default value is `""`.
@@ -61,43 +61,43 @@ The following options are available in https://heroiclabs.com/managedcloud.html#
 
 === Sample Configuration:
 
-[source,yml]
+[source,yaml]
 ----
-  name: nakama-node-1
-  datadir: "./data/"
-  port: 7350
-  ops_port: 7351
-  dsns:
-    - "root@127.0.0.1:26257"
-  join:
-    - "10.0.0.2:7352"
-    - "10.0.0.3:7352"
+name: nakama-node-1
+datadir: "./data/"
+port: 7350
+ops_port: 7351
+dsns:
+  - "root@127.0.0.1:26257"
+join:
+  - "10.0.0.2:7352"
+  - "10.0.0.3:7352"
 
-  cluster:
-    rpc_port: 7353
-    gossip_bindaddr: "127.0.0.1"
-    gossip_bindport: 7352
+cluster:
+  rpc_port: 7353
+  gossip_bindaddr: "127.0.0.1"
+  gossip_bindport: 7352
 
-  session:
-    encryption_key: "defaultencryptionkey"
-    token_expiry_ms: 60000
+session:
+  encryption_key: "defaultencryptionkey"
+  token_expiry_ms: 60000
 
-  transport:
-    server_key: "defaultkey"
-    max_message_size_bytes: 1024 # bytes
-    write_wait_ms: 5000
-    pong_wait_ms: 10000
-    ping_period_ms: 8000 # Must be less than pong_wait_ms
+transport:
+  server_key: "defaultkey"
+  max_message_size_bytes: 1024 # bytes
+  write_wait_ms: 5000
+  pong_wait_ms: 10000
+  ping_period_ms: 8000 # Must be less than pong_wait_ms
 
-  database:
-    conn_max_lifetime_ms: 60000
-    max_open_conns: 0
-    max_idle_conns: 0
+database:
+  conn_max_lifetime_ms: 60000
+  max_open_conns: 0
+  max_idle_conns: 0
 
-  social:
-    steam:
-      publisher_key: ""
-      app_id: 0
+social:
+  steam:
+    publisher_key: ""
+    app_id: 0
 ----
 
 == Command line options
@@ -111,6 +111,6 @@ These options can be passed to the Nakama server on the command line on startup.
 * `--port`: The port to listen on when accepting connections from the client. This is listening on all interfaces by default. Unless explicitly defined, other ports will be chosen sequentially from here upwards.
 * `--ops-port`: The port to listen on when accepting connections for the ops dashboard. This is listening on all interfaces by default.
 
-The following options are available in https://heroiclabs.com/managedcloud.html#enterprise[Nakama Enterprise]:
+The following options are available in https://heroiclabs.com/services/#enterprise[Nakama Enterprise^]:
 
 * `--join`: Address of a node to connect to, either to join an existing cluster or form a new one.

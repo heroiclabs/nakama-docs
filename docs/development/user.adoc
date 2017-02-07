@@ -4,7 +4,7 @@ The core component of every client interaction with Nakama is the user. A user r
 
 == Authenticate
 
-Authenticating with Nakama requires the server key. This key can be found in the link:../configure.adoc[server configuration]. We strongly suggest that you **use a unique key on your production servers**.
+Authenticating with Nakama requires the server key. This key can be found in the link:../../configure.adoc[server configuration]. We strongly suggest that you **use a unique key on your production servers**.
 
 In the Unity client, an `INClient` can be constructed with the server key like below:
 

@@ -2,12 +2,12 @@
 
 If you haven't set up a Nakama server and started it, please visit link:../start-server.adoc[Start a server] first.
 
-The Unity client handles all realtime client/server communication with our link:../protocol/[protocol]. It supports all Nakama server features which include users, data storage, groups, realtime multiplayer, realtime chat, and more. Have a look at our link:../development/user.adoc[Development^] docs for a full list.
+The Unity client handles all realtime client/server communication with our link:https://github.com/heroiclabs/nakama/blob/master/server/api.proto[protocol^]. It supports all Nakama server features which include users, data storage, groups, realtime multiplayer, realtime chat, and more. Have a look at our link:../../development/user.adoc[Development^] docs for a full list.
 
 To work with our Unity client you'll need to install and setup https://unity3d.com/get-unity/download[Unity^].
 
 NOTE: *Looking for another engine?*
-Defold, Unreal, another? Join our https://gitter.im/heroiclabs/nakama[community] and help us shape the development of realtime and social games with your favorite game engine.
+Defold, Unreal, another? Join our https://gitter.im/heroiclabs/nakama[community^] and help us shape the development of realtime and social games with your favorite game engine.
 
 == Install
 
@@ -20,7 +20,7 @@ Drag or import the ".unitypackage" into your Unity editor project to install it.
 In the Unity editor create a new C# script. This can be done via the Assets menu with "Assets > Create > C# Script". Modify the initial code in the script to connect with the server:
 
 TIP: *Run with a local server*
-These instructions assume you've got a Nakama server setup and started with default connection details "127.0.0.1" and port "7350". For more help see link:../start-server.adoc[Start a server].
+These instructions assume you've got a Nakama server setup and started with default connection details "127.0.0.1" and port "7350". For more help see link:../../start-server.adoc[Start a server].
 
 [source,csharp]
 ----
@@ -52,13 +52,13 @@ INClient client = new NClient.Builder("defaultkey")
 ----
 
 WARNING: *In production*
-You must *not* use the default server key `"defaultkey"` in a production environment. Be sure to change it within the link:../configure.adoc[configuration] settings.
+You must *not* use the default server key `"defaultkey"` in a production environment. Be sure to change it within the link:../../configure.adoc[configuration] settings.
 
 == Authenticate
 
-The `INClient` manages a socket connection with the server but before you can connect to the socket you must authenticate. There's link:../development/user.adoc#_authenticate[various] link:../development/user.adoc#_email[different] link:../development/user.adoc#_custom[ways] you can authenticate a user with the server.
+The `INClient` manages a socket connection with the server but before you can connect to the socket you must authenticate. There's link:../../development/user.adoc#_authenticate[various] link:../../development/user.adoc#_email[different] link:../development/user.adoc#_custom[ways] you can authenticate a user with the server.
 
-The device ID option is the most simple register/login option for users. It is done entirely without user interaction, so the user experience is completely frictionless. You can use https://docs.unity3d.com/ScriptReference/SystemInfo-deviceUniqueIdentifier.html[`SystemInfo.deviceUniqueIdentifier`] which is guaranteed to be unique on every device.
+The device ID option is the most simple register/login option for users. It is done entirely without user interaction, so the user experience is completely frictionless. You can use https://docs.unity3d.com/ScriptReference/SystemInfo-deviceUniqueIdentifier.html[`SystemInfo.deviceUniqueIdentifier`^] which is guaranteed to be unique on every device.
 
 [source,csharp]
 ----
@@ -83,7 +83,7 @@ client.Login(request, (INSession session) => {
 ----
 
 TIP: *Session cache*
-It's a good idea to cache a session on a device and restore it at game startup to avoid asking the user to login or register again. See the link:../development/user.adoc#_authenticate[User docs] for examples.
+It's a good idea to cache a session on a device and restore it at game startup to avoid asking the user to login or register again. See the link:../../development/user.adoc#_authenticate[User docs] for examples.
 
 Both "login" and "register" give us an `INSession` object. This session is used to establish a connection with the server.
 
@@ -161,7 +161,7 @@ Debug.LogErrorFormat("Error occurred: {0}", error.Message);
 ----
 
 TIP: *Open-source*
-The Unity client is https://github.com/heroiclabs/nakama-sdkunity[open-source] on GitHub. Please report issues and contribute code to help us make it better.
+The Unity client is https://github.com/heroiclabs/nakama-unity[open-source^] on GitHub. Please report issues and contribute code to help us make it better.
 
 == Next Steps
 
