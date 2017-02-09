@@ -50,6 +50,19 @@ client.Send(message, (bool completed) => {
 });
 ----
 
+=== Batch Write
+
+Client can optionally batch write multiple objects to multiple keys in Nakama. Nakama provides transactional guarantees over a given batch write of data - If the input parameters are not expected or database insertion fails, the entire operation aborts.
+
+[source,csharp]
+----
+var builder = new NStorageWriteMessage.Builder();
+builder.Write(bucket, collection, record, storageValue);
+builder.Write(bucket, collection, record2, storageValue2);
+builder.Write(bucket, collection, record3, storageValue3);
+var message = builder.Build();
+----
+
 === Conditional Write
 
 All stored objects are versioned as they are stored to the database. The server can accept simple version lookup queries that are very similar to https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag[HTTP ETag conditional headers^].
