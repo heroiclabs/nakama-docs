@@ -365,7 +365,7 @@ The client can update the information stored about the currently logged-in user,
 
 [source,csharp]
 ----
-var message = new SelfUpdateMessage.Builder()
+var message = new NSelfUpdateMessage.Builder()
                     .AvatarUrl("http://graph.facebook.com/avatar_url")
                     .Fullname("My New Name")
                     .Lang("en")
@@ -392,7 +392,7 @@ Use this to display public user profiles, identify opponents in matches, and mor
 var message = NUsersFetchMessage.Default(id);
 client.Send(message, (INResultSet<INUser> results) => {
   Debug.LogFormat ("Fetched {0} users'.", results.Results.Count);
-  for (user in results.Results) {
+  foreach (INUser user in results.Results) {
     Debug.LogFormat ("The user's handle is '{0}'.", user.Handle);
   }
 }, (INError error) =>
