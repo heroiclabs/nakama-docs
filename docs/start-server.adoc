@@ -18,7 +18,7 @@ nakama migrate up
 nakama
 ----
 
-You can now connected to the Nakama Server from the client on port `7350`. You can view Nakama's built-in dashboard by navigating to `http://localhost:7351`.
+You can now connect to the Nakama Server from the client on port `7350`. You can view Nakama's built-in dashboard by navigating to `http://localhost:7351`.
 
 == Start a cluster [local]
 
