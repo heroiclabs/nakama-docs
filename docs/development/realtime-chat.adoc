@@ -1,5 +1,76 @@
 = Realtime Chat
 
-== Realtime Chat
+Nakama's *realtime chat* feature allows users to send messages directly to other individual users, to groups they belong to, or to open "named" chat rooms. These messages are delivered immediately over the socket to clients if the recipients are currently online, and stored in message history so offline users can catch up when they connect.
 
-Realtime chat was launched in Nakama server with the https://github.com/heroiclabs/nakama/releases/tag/v0.10.0[0.10.0^] release. Documentation will be added soon but in the meantime https://gitter.im/heroiclabs/nakama[join our community^] and we can help you get started.
+== Topics
+
+Chat topics are Nakama's way to identify message recipients. Topics tie together users that are currently online, serve as targets when sending messages, and tie together the history of messages sent through that topic.
+
+Users explicitly join and leave topics each time they connect to Nakama. This allows users to selectively listen for messages on various topics, or opt for quiet periods where no messages are delivered while they're busy.
+
+Users can join multiple topics at once from each connection, to chat simultaneously in multiple groups or chat rooms.
+
+TIP: *Multiple sessions*
+Topics only allow one concurrent connection from each user session, but the same user connected on multiple devices simultaneously can still join the same topic from each device.
+
+=== Direct messages
+
+Direct message (DM) topics represent 1-to-1 chat between two users. Any user can start a DM chat with other users in Nakama, their live messages and chat history are automatically kept private.
+
+TIP: *Blocking users*
+To stop unwanted direct messages, see how to block users in link:../friends.adoc[Friends > Block].
+
+=== Group chat
+
+link:../groups.adoc[Groups] have individual private chat topics, which only group members are allowed to join. Messages sent to these topics are propagated to other group members currently connected to the topic, and offline group members can replay message history when they next connect.
+
+TIP: *Leaving groups*
+When a user leaves a group, or is kicked, they lose access to the group's realtime chat topic and all message history.
+
+=== Rooms
+
+Chat rooms are dynamic spaces for any user to join and exchange messages. Rooms are identified by a name, and are dynamically created when a user requests to join a room that did not previously exist.
+
+== Presence
+
+Nakama's *presence* system is the core mechanism used to track the users currently online on a given topic. Presences are identified by the user-session pair they belong to, and are scoped to topics. This means a user connecting to the same topic from two different devices will have two visible presences on that topic, one for each session.
+
+Presences can be used by clients to display a list of online group members, chat room participants, and more.
+
+When a user successfully joins a topic, they receive the current presence list immediately. The server then sends presence updates periodically, which contain any presences that have joined or left. If there are no changes to the presence list, no updates are sent.
+
+== Sending messages
+
+Once the topic is successfully joined, users can send messages using the returned topic ID as a target. All message data is expected to be JSON encoded strings.
+
+Senders receive an acknowledgement notification from the server for each successfully sent message, containing the assigned message ID and other metadata.
+
+The server will tag each message with a generated message ID, timestamp, and information about the user that sent it. There is no way for users to set these metadata fields themselves, so they can be reliably used by all recipients to identify messages.
+
+== Receiving messages
+
+Nakama will propagate messages to all users present on the topic when the message is sent. Messages are delivered in the order they are processed by the server.
+
+=== Incoming message types
+
+Alongside user chat messages, Nakama may insert additional messages into the chat stream. These are informational messages about users joining or leaving a group, being promoted to group admin, and more.
+
+[options="header"]
+|========================================================================================
+|Message type       |Source |Topics |Description
+|0 (chat message)   |User   |All    |Chat messages sent by users
+|1 (group join)     |Server |Group  |Notification, a user joined the group
+|2 (group add)      |Server |Group  |Notification, a user was added/accepted to the group
+|3 (group leave)    |Server |Group  |Notification, a user left the group
+|4 (group kick)     |Server |Group  |Notification, a user was kicked from the group
+|5 (group promoted) |Server |Group  |Notification, a user was promoted to group admin
+|========================================================================================
+
+== Message history
+
+All chat topics automatically maintain a history of messages sent through them, including notification messages generated by the server. Users with access to the topic can retrieve this history as needed to catch up on messages they missed while not connected.
+
+Users can fetch message history starting from the most recent message and going backwards in time, or starting from the oldest available message and going forwards to current time. The server returns historic messages in batches alongside pagination cursors, which clients use to identify and retrieve the next set of messages in further fetch operations.
+
+TIP: *Message history without presence*
+Users can retrieve a topic's message history without joining, effectively "peeking" at messages without subscribing for real-time delivery or appearing as a presence on the topic.
