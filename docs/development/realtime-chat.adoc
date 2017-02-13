@@ -1,6 +1,6 @@
 = Realtime Chat
 
-Nakama's *realtime chat* feature allows users to send messages directly to other individual users, to groups they belong to, or to freely formed chat rooms. These messages are delivered immediately over the socket to clients if the recipients are currently online, and stored in message history so offline users can catch up when they connect.
+Nakama's *realtime chat* feature allows users to send messages directly to other individual users, to groups they belong to, or to open "named" chat rooms. These messages are delivered immediately over the socket to clients if the recipients are currently online, and stored in message history so offline users can catch up when they connect.
 
 == Topics
 
@@ -10,21 +10,21 @@ Users explicitly join and leave topics each time they connect to Nakama. This al
 
 Users can join multiple topics at once from each connection, to chat simultaneously in multiple groups or chat rooms.
 
-TIP *Multiple sessions*
+TIP: *Multiple sessions*
 Topics only allow one concurrent connection from each user session, but the same user connected on multiple devices simultaneously can still join the same topic from each device.
 
 === Direct messages
 
 Direct message (DM) topics represent 1-to-1 chat between two users. Any user can start a DM chat with other users in Nakama, their live messages and chat history are automatically kept private.
 
-TIP *Blocking users*
+TIP: *Blocking users*
 To stop unwanted direct messages, see how to block users in link:../friends.adoc[Friends > Block].
 
 === Group chat
 
 link:../groups.adoc[Groups] have individual private chat topics, which only group members are allowed to join. Messages sent to these topics are propagated to other group members currently connected to the topic, and offline group members can replay message history when they next connect.
 
-TIP *Leaving groups*
+TIP: *Leaving groups*
 When a user leaves a group, or is kicked, they lose access to the group's realtime chat topic and all message history.
 
 === Rooms
@@ -72,5 +72,5 @@ All chat topics automatically maintain a history of messages sent through them, 
 
 Users can fetch message history starting from the most recent message and going backwards in time, or starting from the oldest available message and going forwards to current time. The server returns historic messages in batches alongside pagination cursors, which clients use to identify and retrieve the next set of messages in further fetch operations.
 
-TIP *Message history without presence*
+TIP: *Message history without presence*
 Users can retrieve a topic's message history without joining, effectively "peeking" at messages without subscribing for real-time delivery or appearing as a presence on the topic.
