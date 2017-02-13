@@ -45,7 +45,7 @@ Once the topic is successfully joined, users can send messages using the returne
 
 Senders receive an acknowledgement notification from the server for each successfully sent message, containing the assigned message ID and other metadata.
 
-The server will tag each message with a generated message ID, timestamp, and information about the user that sent it. There is no way for users to set these metadata fields themselves, so they can be reliably used by all recipients to identify messages.
+The server will tag each message with a generated message ID, timestamp, and information about the user that sent it. There is no way for users to set these metadata fields themselves, so all recipients can reliably use them to identify messages.
 
 == Receiving messages
 
@@ -55,7 +55,7 @@ Nakama will propagate messages to all users present on the topic when the messag
 
 Alongside user chat messages, Nakama may insert additional messages into the chat stream. These are informational messages about users joining or leaving a group, being promoted to group admin, and more.
 
-[options="header"]
+[cols="1,1,1,3",options="header"]
 |========================================================================================
 |Message type       |Source |Topics |Description
 |0 (chat message)   |User   |All    |Chat messages sent by users
