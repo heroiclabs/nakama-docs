@@ -57,13 +57,13 @@ Alongside user chat messages, Nakama may insert additional messages into the cha
 
 [cols="1,1,1,3",options="header"]
 |========================================================================================
-|Message type       |Source |Topics |Description
-|0 (chat message)   |User   |All    |Chat messages sent by users
-|1 (group join)     |Server |Group  |Notification, a user joined the group
-|2 (group add)      |Server |Group  |Notification, a user was added/accepted to the group
-|3 (group leave)    |Server |Group  |Notification, a user left the group
-|4 (group kick)     |Server |Group  |Notification, a user was kicked from the group
-|5 (group promoted) |Server |Group  |Notification, a user was promoted to group admin
+|Message type         |Source |Topics |Description
+|`0` (chat message)   |User   |All    |Chat messages sent by users
+|`1` (group join)     |Server |Group  |Notification - a user joined the group
+|`2` (group add)      |Server |Group  |Notification - a user was added/accepted to the group
+|`3` (group leave)    |Server |Group  |Notification - a user left the group
+|`4` (group kick)     |Server |Group  |Notification - a user was kicked from the group
+|`5` (group promoted) |Server |Group  |Notification - a user was promoted to group admin
 |========================================================================================
 
 == Message history
