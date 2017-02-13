@@ -8,7 +8,7 @@ Chat topics are Nakama's way to identify message recipients. Topics tie together
 
 Users explicitly join and leave topics each time they connect to Nakama. This allows users to selectively listen for messages on various topics, or opt for quiet periods where no messages are delivered while they're busy.
 
-Users can join multiple topics at once from each connection, to chat simultaneously in multiple groups or chat rooms.
+Users can join multiple topics at once from each connection to chat simultaneously in multiple groups or chat rooms.
 
 TIP: *Multiple sessions*
 Topics only allow one concurrent connection from each user session, but the same user connected on multiple devices simultaneously can still join the same topic from each device.
@@ -18,34 +18,34 @@ Topics only allow one concurrent connection from each user session, but the same
 Direct message (DM) topics represent 1-to-1 chat between two users. Any user can start a DM chat with other users in Nakama, their live messages and chat history are automatically kept private.
 
 TIP: *Blocking users*
-To stop unwanted direct messages, see how to block users in link:../friends.adoc[Friends > Block].
+See how to block users in link:../friends.adoc[Friends > Block] to stop unwanted direct messages.
 
 === Group chat
 
-link:../groups.adoc[Groups] have individual private chat topics, which only group members are allowed to join. Messages sent to these topics are propagated to other group members currently connected to the topic, and offline group members can replay message history when they next connect.
+link:../groups.adoc[Groups] have individual private chat topics which only group members are allowed to join. Messages sent to these topics are propagated to other group members currently connected to the topic, and offline group members can replay message history when they next connect.
 
 TIP: *Leaving groups*
-When a user leaves a group, or is kicked, they lose access to the group's realtime chat topic and all message history.
+When a user leaves a group or is kicked, they lose access to the group's realtime chat topic and all message history.
 
 === Rooms
 
-Chat rooms are dynamic spaces for any user to join and exchange messages. Rooms are identified by a name, and are dynamically created when a user requests to join a room that did not previously exist.
+Chat rooms are dynamic spaces for any user to join and exchange messages. Rooms are identified by a name and are dynamically created when a user requests to join a room that did not previously exist.
 
 == Presence
 
-Nakama's *presence* system is the core mechanism used to track the users currently online on a given topic. Presences are identified by the user-session pair they belong to, and are scoped to topics. This means a user connecting to the same topic from two different devices will have two visible presences on that topic, one for each session.
+Nakama's *presence* system is the core mechanism used to track the users currently online on a given topic. Presences are identified by the user-session pair they belong to and are scoped to topics. This means a user connecting to the same topic from two different devices will have two visible presences on that topic, one for each session.
 
 Presences can be used by clients to display a list of online group members, chat room participants, and more.
 
-When a user successfully joins a topic, they receive the current presence list immediately. The server then sends presence updates periodically, which contain any presences that have joined or left. If there are no changes to the presence list, no updates are sent.
+When a user successfully joins a topic, they receive the current presence list immediately. The server then sends presence updates periodically which contain any presences that have joined or left. No updates are sent if there are no changes to the presence list.
 
 == Sending messages
 
-Once the topic is successfully joined, users can send messages using the returned topic ID as a target. All message data is expected to be JSON encoded strings.
+Users can send messages using the returned topic ID as a target once the topic is successfully joined. All message data is expected to be JSON encoded strings.
 
-Senders receive an acknowledgement notification from the server for each successfully sent message, containing the assigned message ID and other metadata.
+Senders receive an acknowledgement notification from the server for each successfully sent message containing the assigned message ID and other metadata.
 
-The server will tag each message with a generated message ID, timestamp, and information about the user that sent it. There is no way for users to set these metadata fields themselves, so all recipients can reliably use them to identify messages.
+The server will tag each message with a generated message ID, timestamp, and information about the user that sent it. All recipients can reliably use these metadata fields to identify messages as there is no way for users to set these fields on the client.
 
 == Receiving messages
 
@@ -68,9 +68,9 @@ Alongside user chat messages, Nakama may insert additional messages into the cha
 
 == Message history
 
-All chat topics automatically maintain a history of messages sent through them, including notification messages generated by the server. Users with access to the topic can retrieve this history as needed to catch up on messages they missed while not connected.
+All chat topics automatically maintain a history of messages sent through them including notification messages generated by the server. Users with access to the topic can retrieve this history as needed to catch up on messages they missed while not connected.
 
 Users can fetch message history starting from the most recent message and going backwards in time, or starting from the oldest available message and going forwards to current time. The server returns historic messages in batches alongside pagination cursors, which clients use to identify and retrieve the next set of messages in further fetch operations.
 
 TIP: *Message history without presence*
-Users can retrieve a topic's message history without joining, effectively "peeking" at messages without subscribing for real-time delivery or appearing as a presence on the topic.
+Users can retrieve a topic's message history without joining effectively "peeking" at messages without subscribing for real-time delivery or appearing as a presence on the topic.
