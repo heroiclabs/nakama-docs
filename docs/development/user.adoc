@@ -348,8 +348,8 @@ The client can retrieve the currently logged-in user data from Nakama. This data
 
 [source,csharp]
 ----
-var message = SelfFetchMessage.Default();
-client.Send(message, (INSelf result) => {
+var message = NSelfFetchMessage.Default();
+client.Send(message, (INSelf self) => {
   Debug.LogFormat ("The user's ID is '{0}'.", self.Id);
   Debug.LogFormat ("The user's fullname is '{0}'.", self.Fullname); // may be null
   Debug.LogFormat ("The user's handle is '{0}'.", user.Handle);
