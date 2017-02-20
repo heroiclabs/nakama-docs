@@ -4,10 +4,14 @@
       = nav_link 'Home', '/docs/index.html'
       %ul.doc-sidebar__second-level
         %li= link_to 'What is Nakama?', '/docs/index.html#_what_is_nakama'
-        %li= link_to 'Supported Operating Systems', '/docs/index.html#_supported_operating_systems'
+        %li= link_to 'Example Games', '/docs/index.html#_example_games'
         %li= link_to 'Getting Started', '/docs/index.html#_getting_started'
-        %li= link_to 'Popular Docs', '/docs/index.html#_popular_docs'
-        %li= link_to 'Developer Training', '/docs/index.html#_developer_training'
+    %li
+      = nav_link 'Features', '/docs/features.html'
+      %ul.doc-sidebar__second-level
+        %li= link_to 'Capabilities', '/docs/features.html'
+        /
+          %li= link_to 'Game Examples', '/docs/index.html#_game_examples'
     %li
       %a(href="https://github.com/heroiclabs/nakama/releases") Download Nakama
     %li

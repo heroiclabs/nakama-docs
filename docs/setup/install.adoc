@@ -21,7 +21,7 @@ brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/
 
 === Binary
 
-Native binaries are provided for OS X 10.8 (Mountain Lion) and above.
+Native binaries are provided for macOS 10.9 (Mavericks) and above.
 
 1. Download the latest https://github.com/heroiclab/nakama/releases[Nakama tarball for macOS^].
 2. Extract the binary:
@@ -35,15 +35,19 @@ tar xfz nakama.macos.tgz
 
 == Windows
 
-*TODO*
+Nakama is supported under Microsoft Windows. Documentation will be added soon but in the meantime https://gitter.im/heroiclabs/nakama[join our community^] and we can help you get started.
 
-=== Chocolatey
+Download the latest https://github.com/heroiclab/nakama/releases[Nakama release for Windows^].
 
-*TODO*
-
-=== Binary
-
-*TODO*
+// *TODO*
+//
+// === Chocolatey
+//
+// *TODO*
+//
+// === Binary
+//
+// *TODO*
 
 == Linux
 
