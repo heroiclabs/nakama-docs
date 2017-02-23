@@ -20,6 +20,22 @@ Direct message (DM) topics represent 1-to-1 chat between two users. Any user can
 TIP: *Blocking users*
 See how to block users in link:../friends.adoc[Friends > Block] to stop unwanted direct messages.
 
+[source,csharp]
+----
+// `userId` is the `byte[]` ID of the user to chat with.
+var message = new NTopicJoinMessage.Builder().TopicDirectMessage(userId).Build();
+client.Send(message, (INTopic topic) =>
+{
+  // The `topicId` is used later to reference the topic.
+  INTopicId topicId = topic.Topic;
+  // Use `topic.Presence` to get the current presence list of the topic.
+  // Use `topic.Self` to get a presence representing the current user.
+  Debug.Log ("Successfully joined the topic");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not join topic: '{0}'.", error.Message);
+});
+----
+
 === Group chat
 
 link:../groups.adoc[Groups] have individual private chat topics which only group members are allowed to join. Messages sent to these topics are propagated to other group members currently connected to the topic, and offline group members can replay message history when they next connect.
@@ -27,9 +43,44 @@ link:../groups.adoc[Groups] have individual private chat topics which only group
 TIP: *Leaving groups*
 When a user leaves a group or is kicked, they lose access to the group's realtime chat topic and all message history.
 
+[source,csharp]
+----
+// `groupId` is the `byte[]` ID of the group to access chat for.
+var message = new NTopicJoinMessage.Builder().TopicGroup(groupId).Build();
+client.Send(message, (INTopic topic) =>
+{
+  // The `topicId` is used later to reference the topic.
+  INTopicId topicId = topic.Topic;
+  // Use `topic.Presence` to get the current presence list of the topic.
+  // Use `topic.Self` to get a presence representing the current user.
+  Debug.Log ("Successfully joined the topic");
+}, (INError error) => {
+  // An error will be returned if the user attempting
+  // to join is not a member of the group.
+  Debug.LogErrorFormat ("Could not join topic: '{0}'.", error.Message);
+});
+----
+
 === Rooms
 
 Chat rooms are dynamic spaces for any user to join and exchange messages. Rooms are identified by a name and are dynamically created when a user requests to join a room that did not previously exist.
+
+[source,csharp]
+----
+// `groupId` is the `byte[]` ID of the group to access chat for.
+var room = Encoding.UTF8.GetBytes("room-name-here");
+var message = new NTopicJoinMessage.Builder().TopicGroup(groupId).Build();
+client.Send(message, (INTopic topic) =>
+{
+  // The `topicId` is used later to reference the topic.
+  INTopicId topicId = topic.Topic;
+  // Use `topic.Presence` to get the current presence list of the topic.
+  // Use `topic.Self` to get a presence representing the current user.
+  Debug.Log ("Successfully joined the topic");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not join topic: '{0}'.", error.Message);
+});
+----
 
 == Presence
 
@@ -37,7 +88,17 @@ Nakama's *presence* system is the core mechanism used to track the users current
 
 Presences can be used by clients to display a list of online group members, chat room participants, and more.
 
-When a user successfully joins a topic, they receive the current presence list immediately. The server then sends presence updates periodically which contain any presences that have joined or left. No updates are sent if there are no changes to the presence list.
+When a user successfully joins a topic, they receive the current presence list immediately. The server then sends presence updates periodically which contain any presences that have joined or left since the previous presence update. No updates are sent if there are no changes to the presence list.
+
+[source,csharp]
+----
+client.OnTopicPresence += (object src, NTopicPresenceEventArgs args) =>
+{
+  // `args.TopicPresence.Topic` to get the `INTopicId` this update relates to.
+  // `args.TopicPresence.Join` and `args.TopicPresence.Leave` for lists of
+  // presences that have joined/left since the last update for this topic.
+};
+----
 
 == Sending messages
 
@@ -47,15 +108,41 @@ Senders receive an acknowledgement notification from the server for each success
 
 The server will tag each message with a generated message ID, timestamp, and information about the user that sent it. All recipients can reliably use these metadata fields to identify messages as there is no way for users to set these fields on the client.
 
+[source,csharp]
+----
+// `topic` is the `INTopicId` received after joining a topic.
+// `data` is any arbitrary JSON message data.
+byte[] data = Encoding.UTF8.GetBytes("{\"some\":\"data\"}");
+var message = NTopicMessageSendMessage.Default(topic, data);
+client.Send(message, (INTopicMessageAck ack) =>
+{
+  // `INTopicMessageAck` returns a message send receipt containing
+  // server-assigned fields such as the unique message ID and timestamp.
+  Debug.Log ("Successfully sent message to topic");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not send message to topic: '{0}'.", error.Message);
+});
+----
+
 == Receiving messages
 
 Nakama will propagate messages to all users present on the topic when the message is sent. Messages are delivered in the order they are processed by the server.
+
+[source,csharp]
+----
+client.OnTopicMessage += (object src, NTopicMessageEventArgs args) =>
+{
+  // `args.TopicMessage` to get the `INTopicMessage` that was just
+  // delivered. Tip: `args.TopicMessage.Topic` is the `INTopicId`
+  // the message was sent through.
+};
+----
 
 === Incoming message types
 
 Alongside user chat messages, Nakama may insert additional messages into the chat stream. These are informational messages about users joining or leaving a group, being promoted to group admin, and more.
 
-[cols="1,1,1,3",options="header"]
+[cols="2,1,1,4",options="header"]
 |========================================================================================
 |Message type         |Source |Topics |Description
 |`0` (chat message)   |User   |All    |Chat messages sent by users
@@ -68,9 +155,28 @@ Alongside user chat messages, Nakama may insert additional messages into the cha
 
 == Message history
 
-All chat topics automatically maintain a history of messages sent through them including notification messages generated by the server. Users with access to the topic can retrieve this history as needed to catch up on messages they missed while not connected.
+All chat topics automatically maintain a history of messages sent through them. This includes notification messages generated by the server. Users with access to the topic can retrieve this history as needed to catch up on messages they missed while not connected.
 
 Users can fetch message history starting from the most recent message and going backwards in time, or starting from the oldest available message and going forwards to current time. The server returns historic messages in batches alongside pagination cursors, which clients use to identify and retrieve the next set of messages in further fetch operations.
 
 TIP: *Message history without presence*
-Users can retrieve a topic's message history without joining effectively "peeking" at messages without subscribing for real-time delivery or appearing as a presence on the topic.
+Users can retrieve a topic's message history without joining to "peek" at messages without subscribing for real-time delivery or appearing as a presence on the topic.
+
+[source,csharp]
+----
+byte[] room = Encoding.UTF8.GetBytes("some-room-name");
+// Get the latest 10 messages on the room, in reverse order.
+var message = new NTopicMessagesListMessage.Builder()
+  .TopicRoom(room)
+  .Forward(false)
+  .Limit(10)
+  .Build();
+client.Send(message, (INResultSet<INTopicMessage> msgs) =>
+{
+  // Each message in the result set is a `INTopicMessage` identical
+  // to messages received through `OnTopicMessage` realtime delivery.
+  Debug.Log ("Successfully listed messages from topic");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not list messages from topic: '{0}'.", error.Message);
+});
+----
