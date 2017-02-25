@@ -55,30 +55,44 @@ Nakama servers can be run on macOS, Windows, and various Linux distributions.
 
 Are you brand new to Nakama? Start by https://github.com/heroiclabs/nakama[downloading^] Nakama.
 
-[cols=".<3a,.<3a,.<4a", role="transparent-table"]
-|===
-|*Read Next*
- +
+[docs__features-list]
+* *Read Next*
+  - link:./setup/install.adoc[Install Nakama]
+  - link:./configure.adoc[Configure your setup]
+  - link:./start-server.adoc[Start the server]
 
-- link:./setup/install.adoc[Install Nakama]
+* *Popular Documentation*
+  - link:./clients/unity.adoc[Unity setup]
+  - link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
+  - link:./start-server.adoc[Start the server]
+  - link:./development/user.adoc[User signin]
+* *Developer Training*
+  mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
 
-- link:./configure.adoc[Configure your setup]
-
-- link:./start-server.adoc[Start the server]
-
-|*Popular Documentation*:
- +
-
-- link:./clients/unity.adoc[Unity setup]
-
-- link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
-
-- link:./start-server.adoc[Start the server]
-
-- link:./development/user.adoc[User signin]
-
-|*Developer Training*
- +
-
-mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
-|===
+// [cols=".<3a,.<3a,.<4a", role="transparent-table"]
+// |===
+// |*Read Next*
+//  +
+//
+// - link:./setup/install.adoc[Install Nakama]
+//
+// - link:./configure.adoc[Configure your setup]
+//
+// - link:./start-server.adoc[Start the server]
+//
+// |*Popular Documentation*:
+//  +
+//
+// - link:./clients/unity.adoc[Unity setup]
+//
+// - link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
+//
+// - link:./start-server.adoc[Start the server]
+//
+// - link:./development/user.adoc[User signin]
+//
+// |*Developer Training*
+//  +
+//
+// mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
+// |===
