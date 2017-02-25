@@ -1,0 +1,183 @@
+= Features
+
+This is a complete capability breakdown currently available in Nakama.
+
+== Realtime Connection
+
+Nakama is built to be device-agnostic. Games can be built for Mobile, Consoles, Desktop, VR and AR.
+
+Nakama employs a realtime connection with clients. This allows Nakama to have a realtime user presence system. A user can have a presence per connection. Nakama will track individual presence connection liveliness.
+
+For more information, have a look at the link:../development/realtime-chat.adoc#_presence[Presence] documentation.
+
+== User Accounts
+
+The core component of every client interaction with Nakama is the user. A user represents a unique identity in Nakama and can have one or more unique identifiers attached:
+
+- Multiple Device IDs
+- Email address
+- Facebook ID
+- Google ID
+- GameCenter ID
+- Steam ID
+- Custom ID
+
+A user also has the following properties:
+
+- Handle (nickname)
+- Full name
+- Avatar URL
+- Language
+- Location
+- Timezone
+- Verification tag
+- Arbitrary metadata
+
+_For more information, have a look at the link:../development/user.adoc[User] documentation._
+
+== Authentication
+
+Authenticating with Nakama requires the server key.
+
+There are three main login mechanisms:
+
+- ID-based Login
+- Email Login
+- Social Login
+  * Facebook
+  * Google
+  * Steam
+  * GameCenter
+
+A pre-authenticated user can link their account with any combination of the login providers above.
+
+Once a user registers or links via a social provider, Nakama will automatically import their friend list from the respective social provider.
+
+Nakama's user system allows for:
+
+- Registering a user
+- Logging in
+- Explicit linking and unlinking with other login mechanisms.
+- Looking up the current user's complete profile.
+- Updating the current user's profile.
+- Looking up other users' public information.
+
+_For more information, have a look at the link:../development/user.adoc[User] documentation._
+
+== Friends
+
+Friend graph is one of the crucial social elements of Nakama.
+
+Each individual user's friends list is their primary way to track relationships to other individual users. These relationships can be:
+
+* Mutual friend - both users have agreed to add each other as friends.
+* Received invite - another user has sent a friend request.
+* Sent invitation - an outgoing friend request from this user.
+* Blocked - a blacklisted user. Used to reject chat requests, and more.
+
+You can dynamically:
+
+- Add a friend or accept an incoming friend request
+- Remove a friend
+- Block a user and removing them from the friend list
+
+_For more information, have a look at the link:../development/friends.adoc[Friends] documentation._
+
+== Groups
+
+Groups connect a set of users and give them a shared space to interact through online presence tracking, persistent chat, and more.
+
+Groups can either be:
+
+- Public groups: Upon joining, the user is immediately added as a group member.
+- Private groups: A join request is created and submitted to group admins for review.
+
+Groups have *members* and *admins*. Both participate in group activities equally but admins have additional privileges and responsibilities. All users joining a group do so as regular members and may be promoted later by existing admins.
+
+A group also has the following properties:
+
+- Creator ID
+- Name
+- Description
+- Avatar URL
+- Language
+- Arbitrary metadata
+- State (Private or Public)
+- User count
+
+Nakama allows users to:
+
+- Join public groups or send join requests to private groups
+- Leave groups
+- Create/update groups on the fly
+- Remove group
+- List groups the user has joined
+- Search groups by:
+  * By creation time
+  * By member count and updated at
+  * By language tag and member count
+
+In addition, group admins can:
+
+- Accept join requests
+- Promote member to admin
+- Kick a member from group
+
+_For more information, have a look at the link:../development/groups.adoc[Groups] documentation._
+
+== Data Storage
+
+Storage is a distributed key-value store. Storage objects are JSON data stored against a key and must be less than 8KB in size. Storage can be used to store and look up:
+
+- Individual user data
+- Maintain global data sets
+- Configuration values
+- Share user generated content
+
+A key is used to look up data from Storage and it is the composed of a bucket, collection and a record. Records are grouped into collections which are grouped further into buckets. You can create any number of records, collections and buckets.
+
+image::/images/storage.png[Storage, 500]
+
+Records can optionally assign individual read and write permissions. Objects can only be modifiable by their owner.
+
+Nakama has a simple API for storing and retrieving data:
+
+- Read: Read data from the current user, or a different user, or the system.
+- Write: Store data against a key for the current user.
+- Conditional Write: Version checks to ensure that client data version and server data version are matched before the data is updated.
+- Delete: Delete data stored for the current user.
+- Conditional Delete: Version check to ensure that the client has the latest data before proceeding with a delete operation.
+
+_For more information, have a look at the link:../development/storage.adoc[Storage] documentation._
+
+== Realtime Chat
+
+Nakama has a built-in realtime chat system with message persistence.
+
+Chat uses topics to manage user subscriptions. Chat topics are Nakama's way to identify message recipients. Topics tie together users that are currently online, serve as targets when sending messages, and tie together the history of messages sent through that topic.
+
+A chat topic can be:
+
+- Direct message (DM) topics represent 1-to-1 chat between two users
+- Groups have individual private chat topics which only group members are allowed to join.
+- Chat rooms are dynamic spaces for any user to join and exchange messages.
+
+Users can join multiple topics at once from each connection to chat simultaneously in multiple groups or chat rooms.
+
+All chat topics automatically maintain a history of messages sent through them including notification messages generated by the server. Users with access to the topic can retrieve this history as needed to catch up on messages they missed while not connected.
+
+Nakama allows clients to request the following:
+
+- Join topics
+- Leave topics
+- Send messages to topics
+- List messages from topics
+- Get users present in topics
+
+_For more information, have a look at the link:../development/realtime-chat.adoc[Realtime Chat] documentation._
+
+== Realtime Multiplayer
+
+Realtime multiplayer was launched in Nakama server with the https://github.com/heroiclabs/nakama/releases/tag/v0.10.0[0.10.0^] release. Documentation will be added soon.
+
+// === Turn-based Multiplayer

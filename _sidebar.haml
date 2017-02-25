@@ -4,10 +4,14 @@
       = nav_link 'Home', '/docs/index.html'
       %ul.doc-sidebar__second-level
         %li= link_to 'What is Nakama?', '/docs/index.html#_what_is_nakama'
-        %li= link_to 'Supported Operating Systems', '/docs/index.html#_supported_operating_systems'
+        %li= link_to 'Example Games', '/docs/index.html#_example_games'
         %li= link_to 'Getting Started', '/docs/index.html#_getting_started'
-        %li= link_to 'Popular Docs', '/docs/index.html#_popular_docs'
-        %li= link_to 'Developer Training', '/docs/index.html#_developer_training'
+    %li
+      = nav_link 'Features', '/docs/features.html'
+      %ul.doc-sidebar__second-level
+        %li= link_to 'Capabilities', '/docs/features.html'
+        /
+          %li= link_to 'Use cases', '/docs/use-cases.html'
     %li
       %a(href="https://github.com/heroiclabs/nakama/releases") Download Nakama
     %li
@@ -59,6 +63,5 @@
       %a(href="https://github.com/heroiclabs/nakama/blob/master/CHANGELOG.md" target="_blank") Release Notes
       %ul.doc-sidebar__second-level
         %li
-          %a(href="https://github.com/heroiclabs/nakama/releases/v0.11.1") 0.11.1
-          %a(href="https://github.com/heroiclabs/nakama/releases/v0.11.0") 0.11.0
+          %a(href="https://github.com/heroiclabs/nakama/releases/v0.11.3") 0.11.3
           %a(href="https://github.com/heroiclabs/nakama/releases/v0.10.0") 0.10.0

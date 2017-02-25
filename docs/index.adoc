@@ -4,32 +4,67 @@
 
 Nakama is a distributed server for social and realtime games and apps. It includes a large set of services for users, data storage, and realtime client/server communication; as well as specialized APIs like realtime multiplayer, groups/guilds, and chat.
 
-== Supported Operating Systems
+You can easily add Nakama to your games to power additional features alongside your existing services and tools. Have a look at the link:./clients/unity.adoc[clients] pages which include setup and examples for Unity.
 
-* CentOS 7
-* Debian 8.0
-* Ubuntu 16.04
-* Mac OSX 10.8+
-* Windows 10
+== Nakama Features
+
+Have a look at the link:./features.adoc[features] page for a complete breakdown of all server capabilities.
+
+[docs__features-list]
+* image:/images/svg/built-for-the-cloud.svg[] link:./development/user.adoc[*User Accounts*]
+  Every player has a user account which can be authenticated by device IDs, social profiles, and many more, or by your own custom server.
+* image:/images/svg/social-server.svg[] link:./development/user.adoc#_social_login[*Social Login*]
+  Add social login and enable all users to sign in or link with Facebook, Google, Steam, and other providers; and start playing right away.
+* image:/images/svg/data-backup.svg[] link:./development/storage.adoc[*Data Storage*]
+  Create records for each user and global ones shared for all users. This could be save games, maps, items, and other gameplay objects.
+
+* image:/images/svg/always-online.svg[] link:./development/realtime-chat.adoc[*In-game Chat*]
+  Send realtime chat messages directly to other individual users, to groups they belong to, or to open "named" chat rooms.
+* image:/images/svg/operations-management.svg[] link:./development/friends.adoc[*Friends*]
+  Users can add friends and import them from a social network. See who is online, chat in realtime, challenge them to matches, and more.
+* image:/images/svg/core-game-apis.svg[] link:./development/groups.adoc[*Groups*]
+  Groups join together a set of users. A group could contain friends and other users to form guilds or clans. Every user can search for groups to join.
+
+* image:/images/svg/realtime.svg[] link:./development/realtime-multiplayer.adoc[*Realtime Multiplayer*]
+  Full capabilities with a powerful server-authoritative option. Have users join the action mid-match or setup new private or public matches.
+* image:/images/svg/strong-consistancy.svg[] link:./development/realtime-multiplayer.adoc[*Turn-based Multiplayer*]
+  Build asynchronous (PvP) or Turn-based matches. Notifications can be sent in realtime when turns are completed.
+* image:/images/svg/local-development.svg[] link:./clients/unity.adoc[*Game Engine Support*]
+  Build the next big hit for mobile, console, desktop, and web with Nakama. First-class game engine integration for ease of development.
+
+Nakama servers can be run on macOS, Windows, and various Linux distributions.
+
+== Example Games
+
+[docs__features-list]
+* *Realtime gameplay*
+  Built with low-latency scalable design. Power realtime shooters or any other competitive games.
+* *Player vs Player*
+  Search for opponents in guilds, groups, or friends to play PvP whether it's active or passive gameplay.
+* *Puzzlers*
+  Store progress, add user generated levels, and send gifts to players. Track it all within a user's virtual wallet.
+
+* *Social games*
+  Team up with friends, compete together, or against each other. Drive competition via social leaderboards.
+* *MMO/MOBA*
+  Fill worlds with players and run live events. Run in-game group chat to increase guild combat efficiency.
+* *Arcade*
+  Compete against friends' best scores. Distribute daily virtual rewards and boost each round of play.
 
 == Getting Started
 
-Are you brand new to Nakama? Start by https://github.com/heroiclabs/nakama[downloading^] Nakama, and then follow these pages to get started:
+Are you brand new to Nakama? Start by https://github.com/heroiclabs/nakama[downloading^] Nakama.
 
-. link:./setup/install.adoc[Install Nakama]
-. link:./configure.adoc[Configure your setup]
-. link:./start-server.adoc[Start the server]
+[docs__features-list]
+* *Read Next*
+  - link:./setup/install.adoc[Install Nakama]
+  - link:./configure.adoc[Configure your setup]
+  - link:./start-server.adoc[Start the server]
 
-TIP: *Develop with Nakama*
-You can easily add Nakama to your games to power additional features alongside your existing services and tools. Have a look at the link:./clients/unity.adoc[clients] pages which include setup and examples for Unity.
-
-== Popular Docs
-
-. link:./clients/unity.adoc[Unity setup]
-. link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
-. link:./start-server.adoc[Start the server]
-. link:./development/user.adoc[User signin]
-
-== Developer Training
-
-mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
+* *Popular Documentation*
+  - link:./clients/unity.adoc[Unity setup]
+  - link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
+  - link:./start-server.adoc[Start the server]
+  - link:./development/user.adoc[User signin]
+* *Developer Training*
+  mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
