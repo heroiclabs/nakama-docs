@@ -49,7 +49,7 @@ Nakama servers can be run on macOS, Windows, and various Linux distributions.
 * *MMO/MOBA*
   Fill worlds with players and run live events. Run in-game group chat to increase guild combat efficiency.
 * *Arcade*
-  Compete against friends' best scores. Distribute daily virtual rewards when game is continuously.
+  Compete against friends' best scores. Distribute daily virtual rewards and boost each round of play.
 
 == Getting Started
 
@@ -68,31 +68,3 @@ Are you brand new to Nakama? Start by https://github.com/heroiclabs/nakama[downl
   - link:./development/user.adoc[User signin]
 * *Developer Training*
   mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
-
-// [cols=".<3a,.<3a,.<4a", role="transparent-table"]
-// |===
-// |*Read Next*
-//  +
-//
-// - link:./setup/install.adoc[Install Nakama]
-//
-// - link:./configure.adoc[Configure your setup]
-//
-// - link:./start-server.adoc[Start the server]
-//
-// |*Popular Documentation*:
-//  +
-//
-// - link:./clients/unity.adoc[Unity setup]
-//
-// - link:./development/realtime-multiplayer.adoc[Realtime multiplayer]
-//
-// - link:./start-server.adoc[Start the server]
-//
-// - link:./development/user.adoc[User signin]
-//
-// |*Developer Training*
-//  +
-//
-// mailto:support@heroiclabs.com[Reach out] to arrange for an engineer to get your team up to speed with development and best practices. This is available onsite or remote.
-// |===
