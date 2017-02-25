@@ -12,42 +12,42 @@ Have a look at the link:./features.adoc[features] page for a complete breakdown 
 
 [docs__features-list]
 * image:/images/svg/built-for-the-cloud.svg[] link:./development/user.adoc[*User Accounts*]
-  A user represents a unique identity in Nakama and can be device IDs, email addresses, Facebook accounts, and more.
+  Every player has a user account which can be authenticated by device IDs, social profiles, and many more, or by your own custom server.
 * image:/images/svg/social-server.svg[] link:./development/user.adoc#_social_login[*Social Login*]
-  Implement social login in your game to allow users to sign in using Facebook, Google, Steam or GameCenter and start playing right away.
+  Add social login and enable all users to sign in or link with Facebook, Google, Steam, and other providers; and start playing right away.
 * image:/images/svg/data-backup.svg[] link:./development/storage.adoc[*Data Storage*]
-  Store individual user data, maintain global data sets ,or share data and user generated content all with a simple API.
+  Create records for each user and global ones shared for all users. This could be save games, maps, items, and other gameplay objects.
 
 * image:/images/svg/always-online.svg[] link:./development/realtime-chat.adoc[*In-game Chat*]
   Send realtime chat messages directly to other individual users, to groups they belong to, or to open "named" chat rooms.
 * image:/images/svg/operations-management.svg[] link:./development/friends.adoc[*Friends*]
-  Users can track new and existing friends, see who is online or when they were last seen, chat in real time, challenge them to matches, and more.
+  Users can add friends and import them from a social network. See who is online, chat in realtime, challenge them to matches, and more.
 * image:/images/svg/core-game-apis.svg[] link:./development/groups.adoc[*Groups*]
-  Groups connect a set of users. They can join groups with their friends, new people they meet, or by looking for groups in their area.
+  Groups join together a set of users. A group could contain friends and other users to form guilds or clans. Every user can search for groups to join.
 
 * image:/images/svg/realtime.svg[] link:./development/realtime-multiplayer.adoc[*Realtime Multiplayer*]
-  Fully synchronous server-authoritative realtime multiplayer. Join the action mid-match or setup new private or public matches.
+  Full capabilities with a powerful server-authoritative option. Have users join the action mid-match or setup new private or public matches.
 * image:/images/svg/strong-consistancy.svg[] link:./development/realtime-multiplayer.adoc[*Turn-based Multiplayer*]
-  For asynchronous and turn-based gameplay. Notifications are sent in realtime when turns are completed.
+  Build asynchronous (PvP) or Turn-based matches. Notifications can be sent in realtime when turns are completed.
 * image:/images/svg/local-development.svg[] link:./clients/unity.adoc[*Game Engine Support*]
-  Build the next hit for mobile, console or desktop with Nakama. First-class game engine integration for ease of development.
+  Build the next big hit for mobile, console, desktop, and web with Nakama. First-class game engine integration for ease of development.
 
-Nakama is supported on macOS 10.9, Windows 7, Ubuntu 16.04, CentOS 7, and Debian 8.0.
+Nakama servers can be run on macOS, Windows, and various Linux distributions.
 
 == Example Games
 
 [docs__features-list]
-* *Realtime Shooters*
-  Nakama's realtime multiplayer is built with low-latency shooters in mind.
+* *Realtime gameplay*
+  Built with low-latency scalable design. Power realtime shooters or any other competitive games.
 * *Player vs Player*
-  Search for opponents in guilds, groups or friend list to play in your strategy PvP game.
-* *Match-3 Puzzle*
-  Store progress information, allow user generated levels and gift players. Use virtual currencies to unlock special gems.
+  Search for opponents in guilds, groups, or friends to play PvP whether it's active or passive gameplay.
+* *Puzzlers*
+  Store progress, add user generated levels, and send gifts to players. Track it all within a user's virtual wallet.
 
-* *Asynchronous Board Games*
-  Allow seamless continuous gameplay by syncing board state across devices. Apply game rules by authenticating moves on Nakama.
-* *MMO*
-  Create huge matches by setting up competitions between groups. Allow in-game chat to increase guild combat efficiency.
+* *Social games*
+  Team up with friends, compete together, or against each other. Drive competition via social leaderboards.
+* *MMO/MOBA*
+  Fill worlds with players and run live events. Run in-game group chat to increase guild combat efficiency.
 * *Arcade*
   Compete against friends' best scores. Distribute daily virtual rewards when game is continuously.
 
