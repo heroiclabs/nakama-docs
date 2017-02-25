@@ -1,18 +1,18 @@
 = Realtime Multiplayer
 
-Nakama allows users to set up and join realtime matches, where they can rapidly exchange data with other match participants.
+Nakama allows users to set up and join realtime matches, where they can rapidly exchange data with other match opponents.
 
 == Matches
 
-Realtime matches tie together a set of users for the duration of the match. Any user in Nakama may participate in matches with any other user. Users create, join, and leave matches at their discretion. A match only exists until its last participant has left, then it is discarded.
+Realtime matches bring together a set of users for the duration of the match. Any user in Nakama may participate in matches with any other user. Users can create, join, and leave matches as controlled by the game clients. A match only exists until its last participant has left, then it is discarded.
 
-Any data sent through a match is immediately routed to all other active match participants. Matches do not keep a record of exchanged data.
+Any data sent through a match is immediately routed to all other active match participants. Matches are kept in-memory but can be persisted as needed.
 
 == Presence
 
-Nakama's *presence* system governs user participation in realtime matches. Presences are identified by the user-session pair they belong to and are scoped to matches. This means a user connecting to the same match from two different devices will have two visible presences on that match, one for each session.
+Nakama's *presence* system governs user participation in realtime matches. Presences represent the user-session pair for a socket connection and only exist while the match is active. A user connected to the same match from two different devices will have two visible presences, one for each session. This gives maximum flexibility to construct matches which fit your gameplay.
 
-Presences can be used by clients to display a list of current match participants.
+Presences should be used by clients to display a list of current match participants.
 
 When a user successfully joins a match, they receive the current presence list immediately. The server then sends presence updates periodically which contain any presences that have joined or left since the previous presence update. No updates are sent if there are no changes to the presence list.
 
@@ -28,12 +28,12 @@ client.OnMatchPresence += (object src, NMatchPresenceEventArgs args) =>
 
 == Creating a match
 
-All matches are explicitly created by users. Nakama assigns each match a unique ID, which other users use to join that specific match.
+All matches are explicitly created by users. The server assigns each match a unique ID, which other users use to join that specific match.
 
-The user that creates the match does not have any additional privileges or responsibilities. All match participants have equal roles within the match.
+The user that creates the match does not have any additional privileges or responsibilities. All match participants have equal roles within the match. A host can be defined by a game client and become authoritative (validated by the server). If the user leaves the match it's easy to rotate the host role to another in the match.
 
 TIP *All match participants are equal*
-The match creator does not necessarily need to remain part of the match until it ends, or perform any special roles.
+The match creator does not necessarily need to remain part of the match until it ends or perform any special role.
 
 [source,csharp]
 ----
@@ -42,15 +42,15 @@ client.Send(message, (INMatch match) =>
 {
   // Use this match ID to reference the match later.
   byte[] matchId = match.Id;
-  Debug.Log ("Successfully created match");
+  Debug.Log("Successfully created match");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not create match: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not create match: '{0}'.", error.Message);
 });
 ----
 
 == Joining a match
 
-Users can join matches by specifying the match ID they wish to join. Matches are joinable at any point before they end.
+Users can join matches by specifying the match ID they wish to join. Matches can be joined at any point until the last participant leaves.
 
 [source,csharp]
 ----
@@ -62,17 +62,17 @@ client.Send(message, (INMatch match) =>
   byte[] matchId = match.Id;
   // `match.Presence` is the list of current participants.
   // `match.Self` is the presence identifying the current user/session.
-  Debug.Log ("Successfully joined match");
+  Debug.Log("Successfully joined match");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not join match: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not join match: '{0}'.", error.Message);
 });
 ----
 
 == Leaving a match
 
-Users can leave matches at their discretion. A match ends when all users have left.
+Users can leave a match at any point. A match ends when all users have left.
 
-TIP *After a match ends*
+NOTE: *After a match ends*
 Once a match ends its match ID becomes invalid and users can no longer join.
 
 [source,csharp]
@@ -81,21 +81,21 @@ Once a match ends its match ID becomes invalid and users can no longer join.
 var message = NMatchLeaveMessage.Default(matchId);
 client.Send(message, (bool complete) =>
 {
-  Debug.Log ("Successfully left match");
+  Debug.Log("Successfully left match");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not leave match: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not leave match: '{0}'.", error.Message);
 });
 ----
 
 == Sending data
 
-Nakama's matches allow participating users to send arbitrary binary data to all other participants on that match.
+Nakama's matches allow users to send arbitrary binary data to all other participants on that match.
 
 *Op codes* are numeric identifiers for various message types. Use these to allow clients to quickly decide the purpose or processing steps needed for a message without decoding the data payload.
 
 *Data* can be any information clients wish to send to other match participants. No particular data format is enforced, but it is common to use a standard data representation like JSON or an efficient binary encoding such as https://developers.google.com/protocol-buffers/[Protocol Buffers^] or https://google.github.io/flatbuffers/[FlatBuffers^].
 
-The server delivers both Op code and data exactly as received, with no changes or pre-processing.
+The server delivers both Op code and data exactly as received.
 
 [source,csharp]
 ----
@@ -105,17 +105,17 @@ The server delivers both Op code and data exactly as received, with no changes o
 var message = NMatchDataSendMessage.Default(matchId, opCode, data);
 client.Send(message, (bool complete) =>
 {
-  Debug.Log ("Successfully sent data to match");
+  Debug.Log("Successfully sent data to match.");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not send data to match: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not send data to match: '{0}'.", error.Message);
 });
 ----
 
 == Receiving data
 
-Clients should listen for incoming match data at any time between when they create (or join) and leave a match.
+A game client should listen for incoming match data before they create (or join) and leave a match. It's recommended to register the handler when the game client is in focus.
 
-TIP *Order of incoming data*
+TIP: *Message sequences*
 The server delivers data in the order it processes incoming requests from clients.
 
 [source,csharp]

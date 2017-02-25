@@ -30,9 +30,9 @@ client.Send(message, (INTopic topic) =>
   INTopicId topicId = topic.Topic;
   // Use `topic.Presence` to get the current presence list of the topic.
   // Use `topic.Self` to get a presence representing the current user.
-  Debug.Log ("Successfully joined the topic");
+  Debug.Log("Successfully joined the topic");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not join topic: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not join topic: '{0}'.", error.Message);
 });
 ----
 
@@ -41,7 +41,7 @@ client.Send(message, (INTopic topic) =>
 link:../groups.adoc[Groups] have individual private chat topics which only group members are allowed to join. Messages sent to these topics are propagated to other group members currently connected to the topic, and offline group members can replay message history when they next connect.
 
 TIP: *Leaving groups*
-When a user leaves a group or is kicked, they lose access to the group's realtime chat topic and all message history.
+When a user leaves a group or is kicked, they lose access to the group's realtime chat topic and it's message history.
 
 [source,csharp]
 ----
@@ -53,11 +53,11 @@ client.Send(message, (INTopic topic) =>
   INTopicId topicId = topic.Topic;
   // Use `topic.Presence` to get the current presence list of the topic.
   // Use `topic.Self` to get a presence representing the current user.
-  Debug.Log ("Successfully joined the topic");
+  Debug.Log("Successfully joined the topic");
 }, (INError error) => {
   // An error will be returned if the user attempting
   // to join is not a member of the group.
-  Debug.LogErrorFormat ("Could not join topic: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not join topic: '{0}'.", error.Message);
 });
 ----
 
@@ -67,18 +67,18 @@ Chat rooms are dynamic spaces for any user to join and exchange messages. Rooms 
 
 [source,csharp]
 ----
-// `groupId` is the `byte[]` ID of the group to access chat for.
-var room = Encoding.UTF8.GetBytes("room-name-here");
-var message = new NTopicJoinMessage.Builder().TopicGroup(groupId).Build();
+// `roomName` is a `byte[]` for the room name to create/join.
+var roomName = Encoding.UTF8.GetBytes("Some-Room");
+var message = new NTopicJoinMessage.Builder().TopicRoom(roomName).Build();
 client.Send(message, (INTopic topic) =>
 {
   // The `topicId` is used later to reference the topic.
   INTopicId topicId = topic.Topic;
   // Use `topic.Presence` to get the current presence list of the topic.
   // Use `topic.Self` to get a presence representing the current user.
-  Debug.Log ("Successfully joined the topic");
+  Debug.Log("Successfully joined the topic");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not join topic: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not join topic: '{0}'.", error.Message);
 });
 ----
 
@@ -112,15 +112,15 @@ The server will tag each message with a generated message ID, timestamp, and inf
 ----
 // `topic` is the `INTopicId` received after joining a topic.
 // `data` is any arbitrary JSON message data.
-byte[] data = Encoding.UTF8.GetBytes("{\"some\":\"data\"}");
+byte[] data = Encoding.UTF8.GetBytes("{'some':'data'}");
 var message = NTopicMessageSendMessage.Default(topic, data);
 client.Send(message, (INTopicMessageAck ack) =>
 {
   // `INTopicMessageAck` returns a message send receipt containing
   // server-assigned fields such as the unique message ID and timestamp.
-  Debug.Log ("Successfully sent message to topic");
+  Debug.Log("Successfully sent message to topic");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not send message to topic: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not send message to topic: '{0}'.", error.Message);
 });
 ----
 
@@ -160,11 +160,11 @@ All chat topics automatically maintain a history of messages sent through them. 
 Users can fetch message history starting from the most recent message and going backwards in time, or starting from the oldest available message and going forwards to current time. The server returns historic messages in batches alongside pagination cursors, which clients use to identify and retrieve the next set of messages in further fetch operations.
 
 TIP: *Message history without presence*
-Users can retrieve a topic's message history without joining to "peek" at messages without subscribing for real-time delivery or appearing as a presence on the topic.
+Users can retrieve a topic's message history without joining to "peek" at messages without subscribing for realtime delivery or appearing as a presence on the topic.
 
 [source,csharp]
 ----
-byte[] room = Encoding.UTF8.GetBytes("some-room-name");
+byte[] roomName = Encoding.UTF8.GetBytes("Some-Room");
 // Get the latest 10 messages on the room, in reverse order.
 var message = new NTopicMessagesListMessage.Builder()
   .TopicRoom(room)
@@ -175,8 +175,8 @@ client.Send(message, (INResultSet<INTopicMessage> msgs) =>
 {
   // Each message in the result set is a `INTopicMessage` identical
   // to messages received through `OnTopicMessage` realtime delivery.
-  Debug.Log ("Successfully listed messages from topic");
+  Debug.Log("Successfully listed messages from topic");
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not list messages from topic: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not list messages from topic: '{0}'.", error.Message);
 });
 ----
