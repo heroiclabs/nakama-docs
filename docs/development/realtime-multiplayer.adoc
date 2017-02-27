@@ -32,7 +32,7 @@ All matches are explicitly created by users. The server assigns each match a uni
 
 The user that creates the match does not have any additional privileges or responsibilities. All match participants have equal roles within the match. A host can be defined by a game client and become authoritative (validated by the server). If the user leaves the match it's easy to rotate the host role to another in the match.
 
-TIP *All match participants are equal*
+TIP: *All match participants are equal*
 The match creator does not necessarily need to remain part of the match until it ends or perform any special role.
 
 [source,csharp]
