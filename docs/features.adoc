@@ -178,6 +178,12 @@ _For more information, have a look at the link:../development/realtime-chat.adoc
 
 == Realtime Multiplayer
 
-Realtime multiplayer was launched in Nakama server with the https://github.com/heroiclabs/nakama/releases/tag/v0.10.0[0.10.0^] release. Documentation will be added soon.
+Nakama allows users to set up and join realtime or turn-based matches. Users can create, join, and leave matches as controlled by the game clients.
 
-// === Turn-based Multiplayer
+Any data sent through a match is immediately routed to all other active match participants. Matches are kept in-memory but can be persisted as needed.
+
+Similarly to realtime chat, the multiplayer system employs the system-wide presence system to track user connectivity status and notifies other users when a new user has joined/left a match in realtime. A user connected to the same match from two different devices will have two visible presences, one for each session. This gives maximum flexibility to construct matches which fit your gameplay.
+
+Nakama's matches allow users to send arbitrary binary data to all other participants on that match. *Op codes* are numeric identifiers for various message types. *Data* can be any information clients wish to send to other match participants. No particular data format is enforced, but it is common to use a standard data representation like JSON. The server delivers both Op code and data exactly as received. The server delivers data in the order it processes incoming requests from clients.
+
+_For more information, have a look at the link:../development/realtime-multiplayer.adoc[Realtime Multiplayer] documentation._

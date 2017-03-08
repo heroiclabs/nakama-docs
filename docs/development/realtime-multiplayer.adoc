@@ -18,7 +18,7 @@ When a user successfully joins a match, they receive the current presence list i
 
 [source,csharp]
 ----
-client.OnMatchPresence += (object src, NMatchPresenceEventArgs args) =>
+client.OnMatchPresence += (INClient src, NMatchPresenceEventArgs args) =>
 {
   // `args.MatchPresence.Id` to get the `byte[]` match ID this update relates to.
   // `args.MatchPresence.Join` and `args.MatchPresence.Leave` for lists of
@@ -58,8 +58,6 @@ Users can join matches by specifying the match ID they wish to join. Matches can
 var message = NMatchJoinMessage.Default(matchId);
 client.Send(message, (INMatch match) =>
 {
-  // Use this match ID to reference the match later.
-  byte[] matchId = match.Id;
   // `match.Presence` is the list of current participants.
   // `match.Self` is the presence identifying the current user/session.
   Debug.Log("Successfully joined match");
@@ -120,7 +118,7 @@ The server delivers data in the order it processes incoming requests from client
 
 [source,csharp]
 ----
-client.OnMatchData += (object src, NMatchDataEventArgs args) =>
+client.OnMatchData += (INClient src, NMatchDataEventArgs args) =>
 {
   // `args.MatchData.Id` to get the `byte[]` match ID this data relates to.
   // `args.MatchData.Presence` is the sender of this data.
