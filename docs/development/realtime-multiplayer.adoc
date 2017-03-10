@@ -18,7 +18,7 @@ When a user successfully joins a match, they receive the current presence list i
 
 [source,csharp]
 ----
-client.OnMatchPresence += (INClient src, NMatchPresenceEventArgs args) =>
+client.OnMatchPresence += (object src, NMatchPresenceEventArgs args) =>
 {
   // `args.MatchPresence.Id` to get the `byte[]` match ID this update relates to.
   // `args.MatchPresence.Join` and `args.MatchPresence.Leave` for lists of
@@ -118,7 +118,7 @@ The server delivers data in the order it processes incoming requests from client
 
 [source,csharp]
 ----
-client.OnMatchData += (INClient src, NMatchDataEventArgs args) =>
+client.OnMatchData += (object src, NMatchDataEventArgs args) =>
 {
   // `args.MatchData.Id` to get the `byte[]` match ID this data relates to.
   // `args.MatchData.Presence` is the sender of this data.
