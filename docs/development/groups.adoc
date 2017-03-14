@@ -42,14 +42,14 @@ With these core building blocks users can quickly find one or more relevant grou
 
 [source,csharp]
 ----
-var message = new NGroupListsMessage.Builder()
+var message = new NGroupsListMessage.Builder()
   .OrderByAsc(true)
   .FilterByLang("en")
   .Build();
 
 client.Send(message, (INResultSet<INGroup> results) =>
 {
-  foreach (INGroup nakamaGroup in results) {
+  foreach (INGroup nakamaGroup in results.Results) {
     Debug.LogFormat ("Group ID: '{0}'", nakamaGroup.Id);
   }
 }, (INError error) => {
@@ -69,11 +69,29 @@ The Client can list the groups the user is part of. This list includes the group
 var message = NGroupsSelfListMessage.Default();
 client.Send(message, (INResultSet<INGroup> results) =>
 {
-  foreach (INGroup nakamaGroup in results) {
+  foreach (INGroup nakamaGroup in results.Results) {
     Debug.LogFormat ("Group ID: '{0}'", nakamaGroup.Id);
   }
 }, (INError error) => {
   Debug.LogErrorFormat ("Could not list groups: '{0}'.", error.Message);
+});
+----
+
+== List users in a group
+
+The Client can list the users in a given group.
+
+[source,csharp]
+----
+byte[] groupId = null; // Some groupId
+var message = NGroupUsersListMessage.Default(groupId);
+client.Send(message, (INResultSet<INGroupUser> results) =>
+{
+  foreach (INGroupUser groupUser in results.Results) {
+    Debug.LogFormat ("User ID: '{0}'", groupUser.User.Id);
+  }
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not list users in group: '{0}'.", error.Message);
 });
 ----
 
