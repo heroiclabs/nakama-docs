@@ -30,6 +30,17 @@ This will download the latest cockroachdb and Nakama images published on Docker 
 
 All server logs are printed to the console as part of the `docker-compose` output.
 
+== Updating Docker to the latest image
+
+Application containers should not store application data. This way you can replace containers with its newer version at any time by executing the following commands:
+
+[source,bash]
+----
+docker-compose down # this will remove stop and remove all containers
+docker pull nakama
+docker-compose up
+----
+
 == Configuring the client
 
 By default the server is started on `127.0.0.1:7350` and dashboard is reachable at http://127.0.0.1:7351[http://127.0.0.1:7351^].
@@ -40,7 +51,7 @@ Follow one of the client guides to connect to the server:
 
 - https://heroiclabs.com/docs/clients/unity/[Unity^]
 
-## Stop the containers
+== Stop the containers
 
 You can stop `docker-compose` while it is running with `ctrl-c`. You can also run `docker-compose stop` in the same directory as `docker-compose.yml` and all containers will be shutdown gracefully. Your data within these containers is still safe. You can re-run the containers by running `docker-compose up`.
 
