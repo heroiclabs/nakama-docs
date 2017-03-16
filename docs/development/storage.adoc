@@ -43,8 +43,10 @@ builder.Write(bucket, collection, record, storageValue);
 // builder.Write(bucket, collection, record2, storageValue2); -- You can batch write messages.
 
 var message = builder.Build();
-client.Send(message, (bool completed) => {
-  Debug.Log ("Successfully storage data.");
+client.Send(message, (INResultSet<INStorageKey> results) => {
+  foreach (INStorageKey key in results.Results) {
+    Debug.LogFormat ("Successfully stored Bucket: '{0}', Collection: '{1}', Record: '{2}', Version: {3}", key.Bucket, key.Collection, key.Record, key.Version);
+  }
 }, (INError error) => {
   Debug.LogErrorFormat ("Could not store data into storage: '{0}'.", error.Message);
 });
@@ -103,7 +105,7 @@ byte[] userId; // this value can be retrieve by sending a Self message.
 
 var message = new NStorageFetchMessage.Builder().Fetch(bucket, collection, record, userId).Build();
 client.Send(message, (INResultSet<INStorageData> results) =>
-  foreach (INStorageData data in results) {
+  foreach (INStorageData data in results.Results) {
     Debug.LogFormat ("Storage Bucket: '{0}', Collection: '{1}', Record: '{2}'", data.Bucket, data.Collection, data.Record);
   }
 }, (INError error) => {
