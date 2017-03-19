@@ -1,0 +1,65 @@
+= Digital Ocean
+
+You can run Nakama and CockroachDB in a Digital Ocean droplet.
+
+It's recommended to run a DigitalOcean droplet with minimum 4GB of RAM. This guide will show you how to configure Docker and resources together.
+
+== Droplet configuration
+
+Create a new Ubuntu DigitalOcean droplet with the following configurations:
+
+- Image Distribution: Ubuntu 16.04 x64
+- 4GB RAM / 60GB SSD Disk
+- Optionally add block storage - You'll need this if you'd like to keep your database data intact between restarts.
+- Choose a region close to you. Let's select New York 3.
+- Add a new SSH Key. *This is important*. Follow https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets[this guide^] if you need to setup a public key.
+
+== Accessing droplet
+
+You can remote access the droplet using `SSH`. There isn't a need for username/password as you've pre-authorized yourself with a public key in the previous step.
+
+Make a note of the IPv4 of the droplet as we'll need it.
+
+[source,bash]
+----
+ssh root@<IP ADDRESS>
+# you are now connected to the droplet through an SSH channel.
+# you can type `exit` to close the SSH tunnel.
+----
+
+TIP: *Creating a user*
+It is recommended that you create a non-root user with sudo privileges. To do this, https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04[follow this guide^].
+
+== Installing Docker Compose
+
+Although we can install Docker Compose from the official Ubuntu repositories, it is several minor versions behind the latest release, so we'll install Docker Compose from the Docker's GitHub repository.
+
+NOTE: **Docker Compose requires Docker**
+Docker Compose requires Docker to be installed first. DigitalOcean has a https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04[comprehensive guide^] on installing Docker.
+
+1. We'll check the current release and if necessary, update it in the command below:
+
+[source,bash]
+----
+sudo curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.11.2/docker-compose-$(uname -s)-$(uname -m)"
+----
+
+2. Next we'll set the permissions:
+
+[source,bash]
+----
+sudo chmod +x /usr/local/bin/docker-compose
+----
+
+3. Then we'll verify that the installation was successful by checking the version:
+
+[source,bash]
+----
+docker-compose -v
+----
+
+_This excerpt is taken from the https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04[DigitalOcean guide^]._
+
+== Running Nakama
+
+You've now installed Docker and Docker Compose. Follow to the Nakama link:../docker.adoc[Docker installation guide] to deploy and run the containers.
