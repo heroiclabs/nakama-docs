@@ -1,0 +1,225 @@
+= Dynamic Leaderboards
+
+The *dynamic leaderboards* feature allows users to engage and compete to get better scores and rankings than their opponents.
+
+== Leaderboards
+
+Each leaderboard is a discrete list of ranked scores and is separate from other leaderboards. Leaderboards are uniquely identified by an ID.
+
+Leaderboards group together records and sort them based on their configured sort order: descending (default) or ascending. The sort order is decided when each leaderboard is created.
+
+=== Reset schedules
+
+You can assign each leaderboard an optional reset schedule. Records contained in the leaderboard will expire based on this schedule, and users will be able to submit new scores for each reset cycle.
+
+Reset schedules are defined in https://en.wikipedia.org/wiki/Cron[CRON format^] when the leaderboard is created. Leaderboards with no reset schedule defined will not expire.
+
+== Leaderboard records
+
+Each leaderboard ties together a list of records ordered by their scores either ascending or descending depending on the leaderboard configuration.
+
+Records belong to an owner (usually a user) and each owner will only have one record per leaderboard. If a leaderboard expires, each owner will then be able to submit a new score.
+
+The score associated with each leaderboard record can be updated as the user progresses. Scores can be updated as often as needed and are allowed to both increase and decrease.
+
+=== Additional fields
+
+Leaderboard records can optionally include additional data about the score or the user submitting it.
+
+A *lang* is read from the user data. *Location* and *Timezone* may be submitted at record write time, and later used to filter while retrieving leaderboard records.
+
+Arbitrary JSON-encoded *metadata* can be added to each leaderboard record write to track related information such as game state at the time of the score capture.
+
+TIP: *Choosing metadata*
+A good metadata example is info about race conditions in a driving game, such as weather, which can give additional hints to clients reading the scores.
+
+== Creating a leaderboard
+
+Leaderboards must be explicitly created before users are allowed to submit scores. Each created leaderboard is immediately available for use and does not require a server restart or configuration updates.
+
+[source,shell]
+----
+# In this example the leaderboard expires every week on Monday at midnight.
+nakama admin create-leaderboard -id "level20" -sort desc -reset "0 0 * * 1"
+----
+
+All flags are optional. If they are omitted the server will default to creating a new leaderboard with a randomly generated ID, descending sort order, and no reset schedule.
+
+== Listing available leaderboards
+
+Clients can obtain a list of available leaderboards at any time.
+
+[source,csharp]
+----
+var message = new NLeaderboardsListMessage.Builder().Build();
+client.Send(message, (INResultSet<INLeaderboard> results) =>
+{
+  // Process each INLeaderboard here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not list leaderboards: '{0}'.", error.Message);
+});
+----
+
+TIP: *Leaderboard listing pagination*
+A cursor may be returned with leaderboard listing results; use this in further calls to paginate results.
+
+== Submitting records
+
+Users may submit scores and associated data to available leaderboards, and update them when they change.
+
+=== Set
+
+The *set* operation will submit the given score and replace any existing value for the user on the given leaderboard.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to submit to.
+// `score` is the value to submit.
+var message = new NLeaderboardRecordWriteMessage.Builder(leaderboardId)
+  .Set(score)
+  .Build();
+client.Send(message, (INLeaderboardRecord result) =>
+{
+  // Process the write result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+});
+----
+
+=== Best
+
+The *best* operation will prompt the server to examine the new score and the existing score for the user, and keep the better one based on the leaderboard sort order. If there is no existing score for the user this operation behaves like a *set*.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to submit to.
+// `score` is the value to submit.
+var message = new NLeaderboardRecordWriteMessage.Builder(leaderboardId)
+  .Location("San Francisco") // Example, optional.
+  .Best(score)
+  .Build();
+client.Send(message, (INLeaderboardRecord result) =>
+{
+  // Process the write result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+});
+----
+
+=== Increment
+
+*Increment* will add the given score to any existing value. If the user had no existing value the server will assume an existing value of `0`.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to submit to.
+// `score` is the value to increment by.
+var message = new NLeaderboardRecordWriteMessage.Builder(leaderboardId)
+  .Location("San Francisco") // Example, optional.
+  .Increment(score)
+  .Build();
+client.Send(message, (INLeaderboardRecord result) =>
+{
+  // Process the write result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+});
+----
+
+=== Decrement
+
+*Decrement* will subtract the given score from any existing value. If the user had no existing value the server will assume an existing value of `0`.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to submit to.
+// `score` is the value to decrement by.
+var message = new NLeaderboardRecordWriteMessage.Builder(leaderboardId)
+  .Location("San Francisco") // Example, optional.
+  .Decrement(score)
+  .Build();
+client.Send(message, (INLeaderboardRecord result) =>
+{
+  // Process the write result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+});
+----
+
+== Listing leaderboard records
+
+Users can retrieve records on any leaderboard, whether or not they have a score submitted on it. They can compare scores with other users and see their positions.
+
+TIP: *Leaderboard record listing pagination*
+A cursor may be returned with leaderboard record listing results; use this in further calls to paginate results.
+
+=== By score
+
+The main way to list records is ordered by score, either ascending or descending based on the leaderboard configuration.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to list from.
+var message = new NLeaderboardRecordsListMessage.Builder(leaderboardId)
+  .Build();
+client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
+{
+  // Process the list result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+});
+----
+
+=== By filter
+
+Users may also list records filtering by one of: lang, location, or timezone.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to list from.
+var message = new NLeaderboardRecordsListMessage.Builder(leaderboardId)
+  .FilterByLocation("San Francisco")
+  .Build();
+client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
+{
+  // Process the list result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+});
+----
+
+=== By friends
+
+Pass a list of record owner IDs to restrict the record listing to only those record owners. This can be used to retrieve only scores belonging to the user's friends for example.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to list from.
+var message = new NLeaderboardRecordsListMessage.Builder(leaderboardId)
+  .FilterByOwnerIds(ownerIds) // A `IList<byte[]>` of owner IDs.
+  .Build();
+client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
+{
+  // Process the list result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+});
+----
+
+=== Finding the current user
+
+Leaderboards can 'scroll' to the page that contains the current user, or another given leaderboard record owner. Use this to give users a view of their own position on a leaderboard.
+
+[source,csharp]
+----
+// `leaderboardId` is the `byte[]` ID of the leaderboard to list from.
+var message = new NLeaderboardRecordsListMessage.Builder(leaderboardId)
+  .FilterByPagingToOwnerId(ownerId) // An owner ID, maybe the current user.
+  .Build();
+client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
+{
+  // Process the list result here.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+});
+----
