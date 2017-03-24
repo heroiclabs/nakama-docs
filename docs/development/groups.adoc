@@ -1,4 +1,4 @@
-= Groups
+= Groups | Nakama server documentation
 
 Groups connect a set of users and give them a shared space to interact through online presence tracking, persistent chat, and more. Users can join groups with their friends, new people they meet, or by looking for groups in their area.
 

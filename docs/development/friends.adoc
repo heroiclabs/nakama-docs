@@ -1,4 +1,4 @@
-= Friends
+= Friends | Nakama server documentation
 
 Friends are a core social feature in Nakama. Users can track new and existing friends, see who is online or when they were last seen, chat in real time, challenge them to matches, and more.
 

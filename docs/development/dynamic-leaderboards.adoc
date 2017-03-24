@@ -1,53 +1,57 @@
-= Dynamic Leaderboards
+= Dynamic Leaderboards | Nakama server documentation
 
-The *dynamic leaderboards* feature allows users to engage and compete to get better scores and rankings than their opponents.
+Leaderboards are a great way to add a social and competitive element to any game. They're a fun way to drive competition among your players. The game server supports an *unlimited* number of individual leaderboards per game; each one is a standalone scoreboard which tracks separate records.
+
+The server has no special requirement on what the score value should represent from your game. A leaderboard is created with a sort order which will order records. If you're using lap time or currency as a score value you'll want to order the results in ASC or DESC mode as required.
+
+You can use a leaderboard to track any score you like! Some good examples are: Highest Points, Longest Survival Time, Fastest Lap Time, Quickest Level Completion, and anything else which is worth competing over in your game!
+
+Leaderboards are referred to as dynamic because they don't need to be preconfigured as you would expect if you've used Google Play Games or Apple Game Center in the past. A leaderboard can be created via the script runtime or via the `admin` command.
 
 == Leaderboards
 
-Each leaderboard is a discrete list of ranked scores and is separate from other leaderboards. Leaderboards are uniquely identified by an ID.
+Each leaderboard is a collection of records where each record is a ranked score with metadata. A leaderboard is uniquely identified by an ID.
 
-Leaderboards group together records and sort them based on their configured sort order: descending (default) or ascending. The sort order is decided when each leaderboard is created.
+Leaderboard records are sorted based on their configured sort order: DESC (default) or ASC. The sort order is decided when each leaderboard is created. This cannot be changed once the leaderboard has been created. All leaderboard configuration is immutable once created. You should delete the leaderboard and create a new one if you need to change the sort order.
 
 === Reset schedules
 
 You can assign each leaderboard an optional reset schedule. Records contained in the leaderboard will expire based on this schedule, and users will be able to submit new scores for each reset cycle.
 
-Reset schedules are defined in https://en.wikipedia.org/wiki/Cron[CRON format^] when the leaderboard is created. Leaderboards with no reset schedule defined will not expire.
+Reset schedules are defined in https://en.wikipedia.org/wiki/Cron[CRON format^] when the leaderboard is created. Leaderboards with no reset schedule defined will never expire.
 
 == Leaderboard records
 
-Each leaderboard ties together a list of records ordered by their scores either ascending or descending depending on the leaderboard configuration.
+Each leaderboard contains a list of records ordered by their scores either ascending or descending depending on the leaderboard configuration.
 
-Records belong to an owner (usually a user) and each owner will only have one record per leaderboard. If a leaderboard expires, each owner will then be able to submit a new score.
+Records belong to an owner usually a user but other game objects like a group ID or some other custom ID can be used and each owner will only have one record per leaderboard. If a leaderboard expires, each owner will then be able to submit a new score.
 
-The score associated with each leaderboard record can be updated as the user progresses. Scores can be updated as often as needed and are allowed to both increase and decrease.
+The score associated with each leaderboard record can be updated as the owner progresses. Scores can be updated as often as needed and are allowed to both increase and decrease.
 
 === Additional fields
 
-Leaderboard records can optionally include additional data about the score or the user submitting it.
+Each leaderboard record can optionally include additional data about the score or the owner submitting it.
 
-A *lang* is read from the user data. *Location* and *Timezone* may be submitted at record write time, and later used to filter while retrieving leaderboard records.
-
-Arbitrary JSON-encoded *metadata* can be added to each leaderboard record write to track related information such as game state at the time of the score capture.
+A *lang* is read from the user data. *Location* and *Timezone* may be submitted with record writes and later used to filter while retrieving leaderboard records. JSON-encoded *metadata* can be added to each leaderboard record write to track related information such as game state at the time of the score.
 
 TIP: *Choosing metadata*
 A good metadata example is info about race conditions in a driving game, such as weather, which can give additional hints to clients reading the scores.
 
 == Creating a leaderboard
 
-Leaderboards must be explicitly created before users are allowed to submit scores. Each created leaderboard is immediately available for use and does not require a server restart or configuration updates.
+Leaderboards must be explicitly created before users are allowed to submit scores. Each created leaderboard is immediately available for use and does not require a server restart or configuration updates. Leaderboards can be dynamically created via the script runtime or via the admin command:
 
 [source,shell]
 ----
 # In this example the leaderboard expires every week on Monday at midnight.
-nakama admin create-leaderboard -id "level20" -sort desc -reset "0 0 * * 1"
+nakama admin create-leaderboard --id "level20" --sort desc --reset "0 0 * * 1"
 ----
 
 All flags are optional. If they are omitted the server will default to creating a new leaderboard with a randomly generated ID, descending sort order, and no reset schedule.
 
 == Listing available leaderboards
 
-Clients can obtain a list of available leaderboards at any time.
+A game client can obtain a list of available leaderboards at any time.
 
 [source,csharp]
 ----
@@ -56,7 +60,7 @@ client.Send(message, (INResultSet<INLeaderboard> results) =>
 {
   // Process each INLeaderboard here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not list leaderboards: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Leaderboard list failed: '{0}'.", error.Message);
 });
 ----
 
@@ -65,11 +69,11 @@ A cursor may be returned with leaderboard listing results; use this in further c
 
 == Submitting records
 
-Users may submit scores and associated data to available leaderboards, and update them when they change.
+Users may submit scores and associated data to available leaderboards and update them when they change. A score is submitted with an operator which indicates how the value should affect the current score stored. The operators are: `set`, `best`, `inc`, `decr`.
 
 === Set
 
-The *set* operation will submit the given score and replace any existing value for the user on the given leaderboard.
+The *set* operation will submit the score and replace any existing value for the owner on the given leaderboard.
 
 [source,csharp]
 ----
@@ -82,13 +86,13 @@ client.Send(message, (INLeaderboardRecord result) =>
 {
   // Process the write result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Leaderboard write failed: '{0}'.", error.Message);
 });
 ----
 
 === Best
 
-The *best* operation will prompt the server to examine the new score and the existing score for the user, and keep the better one based on the leaderboard sort order. If there is no existing score for the user this operation behaves like a *set*.
+The *best* operation will prompt the server to check the new score and the existing score for the owner and keep the better one based on the leaderboard sort order. If there is no existing score for the user this operation operates like *set*.
 
 [source,csharp]
 ----
@@ -102,13 +106,13 @@ client.Send(message, (INLeaderboardRecord result) =>
 {
   // Process the write result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Leaderboard write failed: '{0}'.", error.Message);
 });
 ----
 
 === Increment
 
-*Increment* will add the given score to any existing value. If the user had no existing value the server will assume an existing value of `0`.
+*Increment* will add the given score to any existing value. If the record had no existing value the server will assume an existing value of `0`.
 
 [source,csharp]
 ----
@@ -122,13 +126,13 @@ client.Send(message, (INLeaderboardRecord result) =>
 {
   // Process the write result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Leaderboard write failed: '{0}'.", error.Message);
 });
 ----
 
 === Decrement
 
-*Decrement* will subtract the given score from any existing value. If the user had no existing value the server will assume an existing value of `0`.
+*Decrement* will subtract the given score from any existing value. If the record had no existing value the server will assume an existing value of `0`.
 
 [source,csharp]
 ----
@@ -142,7 +146,7 @@ client.Send(message, (INLeaderboardRecord result) =>
 {
   // Process the write result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not write leaderboard record: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Leaderboard write failed: '{0}'.", error.Message);
 });
 ----
 
@@ -155,18 +159,17 @@ A cursor may be returned with leaderboard record listing results; use this in fu
 
 === By score
 
-The main way to list records is ordered by score, either ascending or descending based on the leaderboard configuration.
+The main way to list records is ordered by score either ascending or descending based on the leaderboard configuration.
 
 [source,csharp]
 ----
 // `leaderboardId` is the `byte[]` ID of the leaderboard to list from.
-var message = new NLeaderboardRecordsListMessage.Builder(leaderboardId)
-  .Build();
+var message = new NLeaderboardRecordsListMessage.Builder(leaderboardId).Build();
 client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
 {
   // Process the list result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not list leaderboard records: '{0}'.", error.Message);
 });
 ----
 
@@ -184,7 +187,7 @@ client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
 {
   // Process the list result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not list leaderboard records: '{0}'.", error.Message);
 });
 ----
 
@@ -202,13 +205,13 @@ client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
 {
   // Process the list result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not list leaderboard records: '{0}'.", error.Message);
 });
 ----
 
 === Finding the current user
 
-Leaderboards can 'scroll' to the page that contains the current user, or another given leaderboard record owner. Use this to give users a view of their own position on a leaderboard.
+Leaderboards can 'scroll' to the page that contains the current owner or another given leaderboard record owner. Use this to give users a view of their own position on a leaderboard.
 
 [source,csharp]
 ----
@@ -220,6 +223,6 @@ client.Send(message, (INResultSet<INLeaderboardRecord> results) =>
 {
   // Process the list result here.
 }, (INError error) => {
-  Debug.LogErrorFormat ("Could not list leaderboard records: '{0}'.", error.Message);
+  Debug.LogErrorFormat("Could not list leaderboard records: '{0}'.", error.Message);
 });
 ----

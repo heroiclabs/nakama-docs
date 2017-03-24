@@ -1,4 +1,4 @@
-= Storage
+= Storage | Nakama server documentation
 
 Storage is a distributed key-value store. It can be used to store individual user data, maintain global data sets or configuration values, share data and user generated content, and much more.
 

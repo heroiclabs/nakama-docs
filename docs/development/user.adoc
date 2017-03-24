@@ -1,4 +1,4 @@
-= User
+= User | Nakama server documentation
 
 The core component of every client interaction with Nakama is the user. A user represents a unique identity in Nakama, and can have one or more unique identifiers attached - device IDs, email addresses, Facebook accounts, and more.
 

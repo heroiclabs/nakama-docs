@@ -1,4 +1,4 @@
-= Realtime Multiplayer
+= Realtime Multiplayer | Nakama server documentation
 
 Nakama allows users to set up and join realtime matches, where they can rapidly exchange data with other match opponents.
 

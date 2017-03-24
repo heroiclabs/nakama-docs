@@ -1,4 +1,4 @@
-= Realtime Chat
+= Realtime Chat | Nakama server documentation
 
 Nakama's *realtime chat* feature allows users to send messages directly to other individual users, to groups they belong to, or to open "named" chat rooms. These messages are delivered immediately over the socket to clients if the recipients are currently online, and stored in message history so offline users can catch up when they connect.
 
