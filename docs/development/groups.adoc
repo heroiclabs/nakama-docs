@@ -1,4 +1,4 @@
-= Groups
+= Groups | Nakama server documentation
 
 Groups connect a set of users and give them a shared space to interact through online presence tracking, persistent chat, and more. Users can join groups with their friends, new people they meet, or by looking for groups in their area.
 
@@ -88,7 +88,7 @@ var message = NGroupUsersListMessage.Default(groupId);
 client.Send(message, (INResultSet<INGroupUser> results) =>
 {
   foreach (INGroupUser groupUser in results.Results) {
-    Debug.LogFormat ("User ID: '{0}'", groupUser.User.Id);
+    Debug.LogFormat ("User ID: '{0}'", groupUser.Id);
   }
 }, (INError error) => {
   Debug.LogErrorFormat ("Could not list users in group: '{0}'.", error.Message);
@@ -118,7 +118,7 @@ To create a group users must choose a name and may submit other optional fields:
 
 * Group Description
 * Avatar URL
-* Lang Tag (such as `en_US`)
+* Lang Tag (such as `en-US`)
 * Additional application-specific metadata.
 
 Nakama will use this data to create the group and ensure it appears in the correct listings based on its properties.
@@ -130,7 +130,7 @@ The user creating the group will automatically be added as a member with admin p
 var message = new NGroupCreateMessage
   .Builder("Group Name")
   .Description("Group Description")
-  .Lang("en_US")
+  .Lang("en-US")
   .Private(true)
   .Build();
 
