@@ -1,0 +1,165 @@
+= Frequently Asked Questions
+
+== Frequently Asked Questions
+
+. link:./#_what_is_nakama[What is Nakama?]
+. link:./#_what_can_i_build_with_nakama[What can I build with Nakama?]
+. link:./#_when_is_nakama_a_good_choice[When is Nakama a good choice?]
+. link:./#_when_is_nakama_not_a_good_choice[When is Nakama not a good choice?]
+. link:./#_what_database(s)_does_nakama_need[What database(s) does Nakama need?]
+. link:./#_what_are_the_supported_clients[What are the supported clients?]
+. link:./#_can_nakama_be_used_for_turn-based_games[Can Nakama be used for turn-based games?]
+. link:./#_how_does_realtime_data_get_routed_to_players_connected_on_different_servers[How does realtime data get routed to players connected on different servers?]
+. link:./#_does_nakama_provide_transactional_guarantees_on_storage_operations[Does Nakama provide transactional guarantees on storage operations?]
+. link:./#_does_nakama_store_chat_history[Does Nakama store chat history?]
+. link:./#_can_you_block_users_in_nakama[Can you block users in Nakama?]
+. link:./#_how_can_i_customize_the_server_behaviour[How can I customize the server behaviour?]
+. link:./#_what_s_the_difference_between_plugins_and_runtime_scripts[What’s the difference between Plugins and Runtime Scripts?]
+. link:./#_can_i_connect_my_existing_infrastructure_with_nakama[Can I connect my existing infrastructure with Nakama?]
+. link:./#_can_i_run_nakama_myself[Can I run Nakama myself?]
+. link:./#_can_you_host_nakama_for_me[Can you host Nakama for me?]
+. link:./#_can_i_run_multiple_games_on_one_nakama_server[Can I run multiple games on one Nakama server?]
+. link:./#_how_does_nakama_scale[How does Nakama scale?]
+. link:./#_how_is_nakama_different_from_other_backend_providers[How is Nakama different from other backend providers?]
+. link:./#_how_is_nakama_different_from_photon[How is Nakama different from Photon?]
+. link:./#_what_license_does_the_server_code_use[What license does the server code use?]
+. link:./#_have_questions_that_weren’t_answered[Have questions that weren’t answered?]
+
+=== What is Nakama?
+
+Nakama is an open-source distributed social and realtime server for games and apps written in the Go programming language. It handles user accounts, data storage, and realtime client/server communication; with APIs for realtime multiplayer, groups/guilds, and chat.
+
+The server is game device agnostic and works with desktop, console, VR headsets, as well as mobile platforms like iOS, Android, and Windows Phone.
+
+Nakama is built by a team of engineers with backgrounds in distributed databases, big data analytics and high-volume mobile application APIs.
+
+=== What can I build with Nakama?
+
+Nakama can be used to build any type of modern apps and games.
+
+The server can handle MOBA, PvP, FPS, Arcade and more for all kinds of casual to hardcore social games. It can also be used as a drop-in replacement for server-authoritative services (such as Parse) as it exposes general purpose user, storage and social APIs for apps.
+
+=== When is Nakama a good choice?
+
+Nakama is designed to power modern, synchronous or asynchronous realtime games and apps. With it’s in-memory presence system, and capabilities for simple scale out, it is designed for games with millions of active players to operate at scale for single and cross-platform play - from mobile, to VR, to console whilst offering reliability and high availability.
+
+For more engaging social games and apps the server includes a social graph for friends and groups (clans/guilds), as well as a robust chat system. This realtime chat system can handle multiple presences per user, and can power both 1-on-1 chat as well as large lobby’s and global chat rooms.
+
+=== When is Nakama not a good choice?
+
+Some games require a monolithic and persistent world like large-scale MMOs. These may often need custom simulation servers to represent users and other game objects as “live” entities. In these kinds of games it can be more practical to use Nakama servers in combination with dedicated simulation servers to power the gameplay. If you’re unsure whether your game mechanics are a good fit please get in touch.
+Nakama does not include builtin analytics intended for player behaviour analysis. Instead the server can be configured with plugins which are used to stream events for another system to analyse.
+
+We believe the core game server of any scalable game should focus on low latency and responsive gameplay and integrate with other specialised systems as needed.
+
+=== What database(s) does Nakama need?
+
+Nakama depends on a single database to run. CockroachDB is a Postgres-compatible, open source, survivable, strongly consistent, simple scale-out SQL database. In environments where CockroachDB is not available we also have unofficial compatibility with PostgreSQL.
+
+CockroachDB was chosen as the database engine to power storage operations with Nakama server due to its simple scale out properties which complement the simplicity of operations deployments with Nakama. It also focuses on CP in the CAP theorem which provides data guarantees over user data expected in large scale games.
+
+The cluster technology in Nakama uses an AP model for realtime presence replication between servers. The balance between strong eventual consistency and strong consistency between Nakama and CockroachDB is leveraged to great effect for scalable performance.
+
+=== What are the supported clients?
+
+Nakama has official library support for two of the most common game engines:
+
+- An https://github.com/heroiclabs/nakama-unity[open-source Unity client^] that you can find on the Unity Asset Store.
+- An https://github.com/heroiclabs/nakama-unreal[open-source Unreal client^] which is currently in public beta.
+
+We love community contribution for new clients. Nakama uses Protocol Buffers to pass messages between client and server. You can view the https://github.com/heroiclabs/nakama/blob/master/server/api.proto[API structure^] here.
+
+If you’d like us to add official support for another game engine or framework please mailto:support@heroiclabs.com[get in touch].
+
+=== Can Nakama be used for turn-based games?
+
+Nakama can be used for turn-based games. The server supports both “passive” and “active” turn-based gameplay. Passive gameplay enables users to play a turn disconnect and reconnect to continue a match at some point later. Active turn-based still uses the turn model for match participation but both users must be connected to compete.
+
+=== How does realtime data get routed to players connected on different servers?
+
+The clustering technology uses the latest in research technology to allow for high-availability across nodes and failover support. All of the clients connected to the Nakama nodes are kept in memory across the cluster - this allows for all of the servers to maintain a shared ledger on which client is attached to which node in order to send the relevant data and messages to the correct node and client.
+
+Nakama Enterprise is required to allow for data routing across multiple Nakama servers. You can use Nakama Managed Cloud or licence the clustering technology if you deploy Nakama in your own cloud.
+
+=== Does Nakama provide transactional guarantees on storage operations?
+
+Yes. All batch operations are committed to the database as a single transaction. If one of the operations fails all other operations in the batch are reverted. For more information see the link:./development/storage.adoc[Storage documentation].
+
+=== Does Nakama store chat history?
+
+Nakama keeps all chat history. It is up to each studio and depends on the type of gameplay how much message history should be kept. For more information see the link:./development/realtime-chat.adoc[Realtime Chat documentation].
+
+=== Can you block users in Nakama?
+
+Yes. You can block users that you no longer want to be able to login to the game. The block affects all features such as multiplayer, chat, friend invitations and more. This helps to remove bad actors from a player community and prevent the build up of negative reviews with a game.
+
+In future the server will also support a shadowban option for certain kinds of game state like leaderboards and chat messages. This reduces the likelihood of a malicious player creating a new account if they’ve been banned and also stops any damage to the rest of the player community.
+
+=== How can I customize the server behaviour?
+
+The server embeds a script runtime which can execute Lua code. The Lua functions can be grouped into modules and hook into various parts of the server behaviour. This enables authoritative code like velocity checks and game rules around group membership etc to be developed and customised for each game.
+
+The script runtime is designed to offer the flexibility to extend the core capabilities of the game server with new behaviour which is special to any specific game logic. It is also used to define background jobs, integrate with other authoritative servers, and perform other common server tasks.
+
+=== What’s the difference between Plugins and Runtime Scripts?
+
+The plugin system is an unidirectional events API which can be used to stream information into other services like analytics and backoffice support tools. Plugins cannot be used to manipulate data in Nakama or customize server behaviour.
+
+Plugins are statically compiled shared objects that are loaded once per server startup and are invoked to pipe out relevant information out of Nakama to third party services. This reduces the number of SDKs required in game clients.
+
+The script runtime is intended to enable modification of server behaviour and implement custom game logic. Lua functions can manipulate input and output data with clients. Plugins are used to stream data to other systems for insights and live analysis.
+
+=== Can I connect my existing infrastructure with Nakama?
+
+Yes. You can connect your existing game servers with Nakama. A simple way to achieve this requirement is to use a custom ID from the separate system to identify users in a Nakama cluster. The game clients can then connect to both systems via a single identifier.
+
+The game server can be used to add features like chat or multiplayer to live games as well as power most game services in new games. The script runtime also makes it possible to execute logic in Nakama from another server and return information to it. If you’re interested to know more about how best to integrate Nakama with your current infrastructure please mailto:support@heroiclabs.com[get in touch].
+
+=== Can I run Nakama myself?
+
+Yes, you can run Nakama yourself locally for development, on premise for eSports events, or in the cloud of your choice. Nakama comes with a https://hub.docker.com/r/heroiclabs/nakama/[Docker image^] making deployment simple on your favourite cloud provider.
+
+=== Can you host Nakama for me?
+
+We can host Nakama for you. The link:/managed-cloud[Managed Cloud] is available to all developers (as of April 2017). This includes a developer dashboard for simple scale out of your servers as your game moves into production. Heroic Labs is made up of a dedicated and experienced team to handle server operations, backups, and availability with your games so you can concentrate on the most successful gameplay experience for your players.
+
+=== Can I run multiple games on one Nakama server?
+
+Each Nakama instance or cluster is designed to run one game only. The system is specifically optimised for single game workloads. If you have several games you can run several clusters - one per game.
+
+=== How does Nakama scale?
+
+The open-source Nakama server can be scaled by running multiple instances of the server connected to the same database server cluster behind a load balancer. In this way clients can connect to any Nakama instance and play with other users. The only limit with this approach is that live connected users connected to one Nakama server will not be able to chat or play multiplayer matches with other users on other instances. They can only play matches and chat in realtime with other users connected to the same instance.
+
+The Nakama enterprise release includes scale out capabilities to replicate presences (information about connected users) between server instances across a cluster. This ensures all users can find, chat, and match against any user connected online across the cluster. This server release is available via licenses or auto-enabled if you use our managed cloud.
+
+These licenses and support contracts fund the development of Nakama server as open-source software. Have a look at our link:/services[services] page for more information.
+
+=== How is Nakama different from other backend providers?
+
+Nakama is the only open-source realtime game server. It is designed from the ground up for realtime authoritative gameplay. There is no lock-in to a specific service or cloud provider, and you can customise the server as needed for your games.
+
+The server can be run on-premise for local eSports events and you can develop locally using the same server on your personal machine as the server in the cloud for production. This gives you significantly more control and ownership over your game, data, and integrations with other services.
+
+Some features include:
+
+- Dynamic leaderboards with no usage limits.
+- Presence system which notifies the client when a user has joint/left.
+- Realtime 1-on-1, group and room chat.
+- Public/private groups (guild/clans) allow players to join their desired group and play multiplayer matches.
+- A built-in social graph system where the friend system is tightly integrated with other subsystems like realtime chat, multiplayer, and groups.
+- Batch storage operations with transactional guarantees.
+
+For a full list of features have a look at link:./index.adoc[our documentation].
+
+=== How is Nakama different from Photon?
+
+Have a look at our link:/nakama-vs-photon/[comparison page] for the similarities and differences between Photon on-premise and Nakama game server.
+
+=== What license does the server code use?
+
+The server code uses the Apache 2.0 license. You can read more about the license https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)[here^].
+
+=== Have questions that weren’t answered?
+
+If you have any questions do not hesitate to contact us at mailto:support@heroiclabs.com[contact@heroiclabs.com] or drop in on https://gitter.im/heroiclabs/nakama[our community channel^] to ask our engineers.
