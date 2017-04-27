@@ -1,0 +1,126 @@
+= Installing Nakama using Docker
+
+Installing Nakama using Docker is ideal for a few reasons, including:
+
+* you install to a pristine environment
+* you get everything you need in one go, including CockroachDB
+* you can take snapshots, re-install and remove Nakama without affecting your primary operating system.
+
+It also means that the installation instructions are the same whether your development machine runs Windows, MacOS and Linux.
+
+== What is Docker?
+
+If you're new to Docker, then here's what you need to know: Docker is an open soure containerization tool that lets you create multiple distinct Linux environments, each separate from the other. 
+
+In a Docker container you run a suite of tools to do a particular job; in this case we'll have one container running Nakama and another running CockroachDB. You can think of Docker containers as lightweight virtual machines.
+
+That's all you need to know to follow this installation guide but you can https://www.docker.com/what-docker[learn more about Docker] on their website.
+
+=== Installing Docker on your development machine
+
+For Nakama, you should install Docker Community Edition.
+
+NOTE: for some versions of Windows you'll need to use https://www.docker.com/products/docker-toolbox[Docker Toolbox] instead. See our link:./windows.adoc[Windows guide] for more details.
+
+Take a look in the Docker Store to find the right version of https://store.docker.com/search?offering=community&q=&type=edition[Docker Community Edition for your environment].
+
+== Installing Nakama
+
+We'll be using Docker Compose, which comes bundled with Docker Community Edition.
+
+Docker Compose simplifies running more than one Docker container in conjunction. For Nakama, we'll need two containers: one for Nakama itself and one for the database it relies on, CockroachDB.
+
+NOTE: You can choose to configure the https://hub.docker.com/r/heroiclabs/nakama/[Nakama] and https://hub.docker.com/r/cockroachdb/cockroach/[CockroachDB] containers without Docker Compose but we do not recommend it when you're starting out.
+
+== Run Nakama with Docker Compose
+
+Once you have Docker Community Edition installed, and you've followed the post-install instructions for your platform, you can get to installing the Nakama.
+
+Docker Compose uses YAML configuration files to declare which containers to use and how they should work together.
+
+1. Let's start by downloading the https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml[Nakama Docker Compose file^]:
++
+[source,bash]
+----
+wget https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml
+----
++
+This will download `docker-compose.yml` to your current working directory.
++
+2. Next, we'll ask Docker Compose to follow the instructions in the file we just downloaded:
++
+[source,bash]
+----
+docker-compose up
+----
++
+Docker Compose will now download the latest CockroachDB and Nakama images published on Docker Hub.
++
+3. If everything went smoothly, you now have both CockroachDB and Nakama running on your machine, available at `127.0.0.1:7350` and `127.0.0.1:26257` respectively. Confirm that Nakama is running by navigating to http://127.0.0.1:7351[http://127.0.0.1:7351^] where you should see the Nakama dashboard.
+
+=== Logs
+
+Logs generated within the containers are printed to the console as part of the `docker-compose` output, and you cann access them with `docker-compose logs` from within the same the directory as the `docker-compose.yml` file.
+
+=== Specifying where to host your data
+
+Docker containers are ephemeral by design: when you shut them down, you lose the data stored inside them.
+
+That's not a problem if you're just testing things out but for development work you should configure your containers to host your data on your local file system.
+
+*XXX: MIKE WRITE YOUR BIT HERE!!!!!!*
+
+== Upgrading
+
+*XXX: We need to ask Chris about data migration steps between versions of Namaka and CockroachDB.*
+
+As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.
+
+WARNING: When you upgrade the container images, any data stored in the containers will be deleted. Make sure you follow the xref:specifying-where-to-host-your-data[instructions above to store your data in your host operating system].
+
+Here's how to pull down the latest Nakama image:
+
+[source,bash]
+----
+docker-compose down # top and remove both the Nakama and CockroachDB containers
+docker pull heroiclabs/nakama # download the latest Nakama image
+docker-compose up # start the containers (both Nakama and CockroachDB) as fresh installs
+----
+
+And, similarly, here's how to update the CockroachDB container:
+
+[source,bash]
+----
+docker-compose down # stop and remove both the Nakama and CockroachDB containers
+docker pull cockroachdb/cockroach # download the latest CockroachDB image
+docker-compose up # start the containers (both Nakama and CockroachDB) as fresh installs
+----
+
+== Stopping the containers
+
+If you need to temporarily pause the Docker containers, without losing the state of those containers, you have two options:
+
+* In the terminal where `docker-compose` is currently running, hit `CTRL-C`.
+* Or run `docker-compose stop` in the same directory as `docker-compose.yml` and all containers will be shut down gracefully.
+
+You can re-activate them by running `docker-compose up`.
+
+To stop the containers and purge all stored data, run `docker-compose down`.
+
+
+== Connecting the Nakama client
+
+When you come to connect to your Docker-hosted Nakama instance, you'll need to use these locations:
+
+* *Nakama server endpoint:* `127.0.0.1:7350`
+* *Nakama dashboard:* http://127.0.0.1:8080[http://127.0.0.1:8080^]
+
+Although you won't need to interact directly with CockroachDB, you can find it at:
+
+ * *CockroachDB server endpoint:* `127.0.0.1:26257`
+ * *CockroachDB dashboard:* http://127.0.0.1:8080[http://127.0.0.1:8080^]
+
+== Next steps
+
+Now you can start developing your application with Nakama. Let's take a look at link:../development[Nakama Clients].
+

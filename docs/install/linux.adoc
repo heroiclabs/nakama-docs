@@ -1,0 +1,94 @@
+= Linux
+
+There are two ways to install Nakama on Linux-based operating systems:
+
+* using link:./docker.adoc[Docker]
+* directly installing the binaries.
+
+We recommend you install Nakama on your development machine using link:./docker.adoc[Docker].
+
+*XXX: which Linux distros?*
+
+== Binary installation
+
+First you'll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences. 
+
+Once that directory exists, you need to install CockroachDB, which is a prerequisit of Nakama.
+
+. Download the latest https://binaries.cockroachdb.com/cockroach-latest.linux-amd64.tgz[CockroachDB tarball for Linux].
+. Then extract the binary:
++
+[source,bash]
+----
+tar xfz cockroach-latest.linux-amd64.tgz
+----
+. Now put the binary into your `PATH` so it's easy to execute https://www.cockroachlabs.com/docs/cockroach-commands.html[cockroach commands] from anywhere:
++
+[source,bash]
+----
+cp -i cockroach-latest.linux-amd64/cockroach /usr/local/bin
+----
+
+NOTE: You might need to perform some of these actions `root`. Use `sudo` or `su root` if necessary.
+
+Now you can download and install the Nakama binary.
+
+. Download the latest https://github.com/heroiclabs/nakama/releases/latest[Nakama tarball for Linux^].
+. Then extract the binary:
++
+[source,bash]
+----
+tar xfz nakama-X.X.X-linux-amd64.tar.gz # replace the X.X.X with the version number you have downloaded
+----
++
+. Again we'll add the directory containing the binary to your `PATH`.
++
+[source,bash]
+----
+cp -i nakama /usr/local/bin
+----
++
+
+=== systemd
+
+If you prefer to run Nakama as a service, and you're running a distro that uses `systemd`, you can optionally use this script.
+
+You’ll have to create the link:../../configure.adoc[configuration] files manually.
+
+*XXX: Why? Isn't the config file always optional?*
+
+. First, create the service file, `/usr/lib/systemd/system/nakama.service`:
++
+NOTE: You'll need to update the paths within the systemd configuration.
+
+*XXX: this note needs more detail. Specifically: why and how*
++
+[source,bash]
+----
+[Unit]
+Description=Nakama server
+
+[Service]
+ExecStart=/path/to/nakama --config /path/to/nakama/config.yml
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+----
+The `chmod` for this file should be 644 (`sudo chmod 644 /usr/lib/systemd/system/nakama.service`).
+
+. Enable and run the service:
++
+[source,bash]
+----
+sudo systemctl enable nakama
+sudo systemctl start nakama
+----
+
+=== Docker
+
+You can also follow our link:./docker.adoc[Docker guide] to run Nakama as a container.
+
+== Next stage
+
+Once both CockroachDB and Nakama are installed you can link:../../start-server.adoc[start the server].
