@@ -29,7 +29,7 @@ Using Nakama, you can add the following functionality to your game with just a f
 * image:/images/svg/social-server.svg[] link:./development/user.adoc#_social_login[*Social Login*]
   Authenticate player logins using Facebook, Google, Steam and other providers.
 * image:/images/svg/data-backup.svg[] link:./development/storage.adoc[*Data Storage*]
-  Store and retrieve data – such as game saves, maps, highscore board, inventory items and other gameplay objects – using Nakama as your distrbuted data store.
+  Store and retrieve data – such as game saves, maps, highscore board, inventory items and other gameplay objects – using Nakama as your distributed data store.
 
 * image:/images/svg/always-online.svg[] link:./development/realtime-chat.adoc[*In-game Chat*]
   Add realtime chat to your games, from private player-to-player direct messages, through guild and group chat, to open named chat rooms.

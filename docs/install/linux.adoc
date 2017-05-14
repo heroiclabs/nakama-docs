@@ -55,13 +55,10 @@ If you prefer to run Nakama as a service, and you're running a distro that uses 
 
 You’ll have to create the link:../../configure.adoc[configuration] files manually.
 
-*XXX: Why? Isn't the config file always optional?*
-
 . First, create the service file, `/usr/lib/systemd/system/nakama.service`:
 +
 NOTE: You'll need to update the paths within the systemd configuration.
 
-*XXX: this note needs more detail. Specifically: why and how*
 +
 [source,bash]
 ----
