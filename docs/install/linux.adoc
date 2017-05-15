@@ -7,7 +7,7 @@ There are two ways to install Nakama on Linux-based operating systems:
 
 We recommend you install Nakama on your development machine using link:./docker.adoc[Docker].
 
-*XXX: which Linux distros?*
+NOTE: These binaries have been installed and tested on Ubuntu/Debian. If you're using another Linux distro then you can link:https://github.com/heroiclabs/nakama[build the the binary yourself^].
 
 == Binary installation
 
@@ -53,7 +53,7 @@ cp -i nakama /usr/local/bin
 
 If you prefer to run Nakama as a service, and you're running a distro that uses `systemd`, you can optionally use this script.
 
-You’ll have to create the link:../../configure.adoc[configuration] files manually.
+If you plan to use a custom configuration, you’ll have to create the link:../../configure.adoc[configuration] files manually.
 
 . First, create the service file, `/usr/lib/systemd/system/nakama.service`:
 +
@@ -81,6 +81,8 @@ The `chmod` for this file should be 644 (`sudo chmod 644 /usr/lib/systemd/system
 sudo systemctl enable nakama
 sudo systemctl start nakama
 ----
+
+The `ExecStart` prompt needs to point to the Nakama binary on the host machine. Just as when running Nakama in the terminalm you can apply a `--config` flag and file to `ExecStart`.
 
 === Docker
 
