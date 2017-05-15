@@ -74,7 +74,11 @@ https://docs.docker.com/engine/tutorials/dockervolumes/[Follow the Docker docume
 
 As new versions of Nakama, or CockroachDB, become available you might want to upgrade. 
 
-To grab the latest version of Nakama you  need to pull down the most recent container image. You then need to migrate the data to the most recent Nakama format.
+IMPORTANT: You should back-up your data before upgrading. See below for instructions on back-up your data.
+
+Upgrading with Docker is simple, as everything is handled by the Docker Compose script. 
+
+To grab the latest version of Nakama you simply need to re-run the Docker Compose process. This will pull down the most recent container image and migrate the data to the most recent Nakama format. 
 
 WARNING: When you upgrade the container images, any data stored in the containers will be deleted. Make sure you follow the xref:specifying-where-to-host-your-data[instructions above to store your data in your host operating system].
 
@@ -84,17 +88,14 @@ Before you upgrade, you should back-up the data that Nakama has stored in Cockro
 
 === Getting the latest Docker images
 
-You'll need to upgrade both the Nakama and the CockroachDB images.
-
-Here's how to pull down the latest Nakama image:
+Once you've completed your back-up, you can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.
 
 [source,bash]
 ----
-docker-compose down # stop and remove both the Nakama and CockroachDB containers
+docker-compose down # top and remove both the Nakama and CockroachDB containers
 docker pull heroiclabs/nakama # download the latest Nakama image
+docker-compose up # start the containers (both Nakama and CockroachDB) as fresh installs
 ----
-
-NOTE: Do not re-start Nakama yet; you need to migrate the data first.
 
 And, similarly, here's how to update the CockroachDB container:
 
@@ -102,28 +103,8 @@ And, similarly, here's how to update the CockroachDB container:
 ----
 docker-compose down # stop and remove both the Nakama and CockroachDB containers
 docker pull cockroachdb/cockroach # download the latest CockroachDB image
-----
-
-=== Migrating data to a new version
-
-To migrate your existing data to the new version of Nakama, you'll need to run a command inside the Nakama Docker container.
-
-`docker exec` lets you send commands directly to the container's command line; you just need to know the container's name.
-
-NOTE: You can find the name of your Nakama container by running `docker ps`, which lists all the containers on your system.
-
-[source,bash]
-----
-docker exec -d migrate up
 docker-compose up # start the containers (both Nakama and CockroachDB) as fresh installs
 ----
-
-=== Downgrading to a previous version
-
-If you need to roll-back to an older version of Nakama, you can follow the same process as upgrading, except you'll need to:
-
-1. Pull the Docker image for the specific version[https://docs.docker.com/engine/reference/commandline/pull/^] of Nakama that you want to run.
-2. Run `nakama migrate down --limit 1` to roll-back one version; replace the limit number with the number of versions you're rolling back by.
 
 == Stopping the containers
 
@@ -146,8 +127,8 @@ When you come to connect to your Docker-hosted Nakama instance, you'll need to u
 
 Although you won't need to interact directly with CockroachDB, you can find it at:
 
- * *CockroachDB server endpoint:* `127.0.0.1:26257`
- * *CockroachDB dashboard:* http://127.0.0.1:8080[http://127.0.0.1:8080^]
+* *CockroachDB server endpoint:* `127.0.0.1:26257`
+* *CockroachDB dashboard:* http://127.0.0.1:8080[http://127.0.0.1:8080^]
 
 == Next steps
 
