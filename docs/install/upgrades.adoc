@@ -1,0 +1,48 @@
+= Upgrades
+
+When upgrading to a new version of Nakama, you need to do three things before you run the newer version:
+
+ * Check the https://github.com/heroiclabs/nakama/releases[release notes^], in case that version has specific upgrade requirements. 
+ * Migrate your data to the format supported by the new version of Nakama.
+ * Ensure that the client version you're running is compatible with the server deployed.
+
+NOTE: If you're running Nakama in a Docker container, follow the link:../install/docker.adoc[dedicated upgrade instructions for Docker installs].
+
+== Upgrade
+
+You can upgrade one node or your whole cluster to latest Nakama by following the instructions below.
+
+For each node in the cluster:
+
+1. Stop Nakama: `$ nakama stop`
+2. https://www.cockroachlabs.com/docs/back-up-data.html[Back-up CockroachDB]
+3. Upgrade Nakama executable to the latest version.
+4. Upgrade the database schema with the following command:
++
+[source,bash]
+----
+nakama migrate up
+----
++
+5. If you’re upgrading Nakama Enterprise, apply your customized settings to your configuration YAML file to ensure that the instances can cluster together.
+6. Start Nakama: `$ nakama`
+7. Verify Nakama is running the upgraded version.
+
+== Downgrade
+
+Similar to the upgrade procedure, make sure that you take a backup the CockroachDB database before downgrading.
+
+For every node in the cluster:
+
+1. Stop Nakama.
+2. https://www.cockroachlabs.com/docs/back-up-data.html[Back-up CockroachDB]
+3. Downgrade the Nakama executable
+4. Run the following command to downgrade the database schema
++
+[source,bash]
+----
+nakama migrate down --limit 1
+----
++
+6. Start Nakama.
+7. Verify Nakama is running the downgraded version.

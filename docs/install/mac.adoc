@@ -1,0 +1,88 @@
+= MacOS
+
+There are three ways to install Nakama on MacOS:
+
+* using link:./docker.adoc[Docker]
+* with Homebrew
+* directly installing the binaries.
+
+We recommend you install Nakama on your development machine using link:./docker.adoc[Docker].
+
+However, if you prefer to use one of the other methods then please read on.
+
+NOTE: You'll need to be running MacOS 10.9 (Mavericks) or above to use either of the non-Docker methods.
+
+== Homebrew
+
+Homebrew is a community-developed package manager for MacOS. If you've used `apt` or `yum` on Linux systems then you'll find Homebrew to be familiar.
+
+If this is your first time using Homebrew, take a look at http://brew.sh/[their website^] for installation instructions.
+
+Once you've installed Homebrew, here's how to use it to install Nakama.
+
+. Make sure Homebrew's application catalog is up to date
++
+[source,bash]
+----
+brew update
+----
+. First, install Nakama's pre-requisite, CockroachDB. This step may take some time.
++
+[source,bash]
+----
+brew install cockroachdb/cockroach/cockroach
+----
+. Next, run our brew recipe to download the Nakama code and build the binary:
++
+[source,bash]
+----
+brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/local/nakama.rb
+----
+
+Now you have Nakama running and you're ready to start developing.
+
+== Binary installation
+
+If you prefer, you can download the Nakama and CockroachDB binaries and install them directly.
+
+Installing the binaries directly rather than via Homebrew allows you the flexibility of placing the server and database in your prefered workspace. You will also have the most up-to-date releases of Nakama and CockroachDB rather than waiting for Homebrew to be updated.
+
+However, installing through Homebrew is the simplest and easiest – including for updates – as everything is handled using the Homebrew workflow.
+
+First, you'll need to install Nakama's prerequisite CockroachDB.
+
+. Download the latest https://binaries.cockroachdb.com/cockroach-latest.darwin-10.9-amd64.tgz[CockroachDB tarball for MacOS].
+. Then extract the CockroachDB binary.
++
+[source,bash]
+----
+tar xfz cockroach-latest.darwin-10.9-amd64.tgz
+----
+. Move the binary into your `PATH` so it's easy to execute https://www.cockroachlabs.com/docs/cockroach-commands.html[cockroach commands] from anywhere:
++
+[source,bash]
+----
+cp -i cockroach-latest.darwin-10.9-amd64/cockroach /usr/local/bin
+----
+You may come across a permissions error. If you're happy to perform the action with root permissions then prefix the command with `sudo`.
+
+Once CockroachDB is installed, we can install Nakama itself.
+
+. Download the latest https://github.com/heroiclabs/nakama/releases/latest[Nakama tarball for Mac OSX^].
+. Then extract the binary:
++
+[source,bash]
+----
+tar xfz nakama-X.X.X-darwin-amd64.tar.gz # replace the X.X.X with the version number you have downloaded
+----
+. Add the directory containing the binary to your `PATH`. This makes it easy to execute link:../configure.adoc#command-line-options[Nakama commands^] from your terminal.
++
+[source,bash]
+----
+cp -i nakama /usr/local/bin
+----
+Again, if you get a permission error then prefix the command with `sudo` to perform the action as `root`.
+
+== Next steps
+
+Once both CockroachDB and Nakama are installed you can link:../../start-server.adoc[start the server].
