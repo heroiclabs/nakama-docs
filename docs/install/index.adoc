@@ -1,0 +1,39 @@
+= Install
+
+To start developing with Nakama, you'll first need to install it on your development machine. It's straightforward and takes just a few minutes.
+
+In this guide we're going to focus on installing your Nakama development instance using Docker. 
+
+If you prefer to install Nakama using other methods, then we'll also show you how to do that on link:./mac.adoc[MacOS] and link:./linux.adoc[Linux].
+
+== Prerequisites
+
+There are a few things you'll need to know or have to hand before you install Nakama:
+
+* *Operating system:* Windows 10 64-bit or above, MacOS 10.9 or above, or a modern Linux.
+* *Architecture:* X86_64 processor architecture
+* *Dependent software:* Nakama relies on CockroachDB.
+
+== Installation methods
+
+There are three main ways to install Nakama on your development machine:
+
+* using Docker *recommended*
+* with Homebrew, on MacOS
+* installing the binary on MacOS or Linux.
+
+You can also https://github.com/heroiclabs/nakama/blob/master/README.md#build-from-source[build from source], if you prefer.
+
+== Pick your platform
+
+Now let's get started and install Nakama using the method that suits you best:
+
+* *link:./docker.adoc[Docker]:* our recommend path for Windows, MacOS and Linux
+* *link:./mac.adoc[MacOS]:* using Homebrew or direct binary install
+* *link:./linux.adoc[Linux]:* using direct binary install.
+
+We also have instructions for installing Nakama on a link:./install/digitalocean.adoc[Digital Ocean] droplet and we'll add more cloud providers in time.
+
+== Upgrades
+
+If you are currently running an older version of Nakama, follow the link:./upgrades.adoc[upgrade guide] to switch to a newer version.

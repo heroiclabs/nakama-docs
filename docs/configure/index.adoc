@@ -1,0 +1,78 @@
+= Configure
+
+You can run Nakama without specifying a configuration file and rely on the the default settings instead.
+
+However, if you need to change any of the defaults then you can specify a YAML configuration file at run-time.
+
+== Specifying a config file
+
+If you're running Nakama natively – i.e. not in a Docker container – you can specify a configuration file at run-time using `--config` flag.
+
+For example:
+
+----
+nakama --config my-special-config.yml
+----
+
+*XXX*: What do we do for Docker people?
+
+=== Editing the config file
+
+Nakama configuration files use the YAML format. If you're new to YAML, you can http://yaml.org/[read more to get up to speed].
+
+Thanks to Nakama's sensible defaults, your config file can be as big or small as you like. For any option you choose not to configure, Nakama will use its default.
+
+== Securing Nakama
+
+If you specify only two configuration options they should be the encryption and transport keys:
+
+* `session.encryption_key`: (defaults to ``"defaultencryptionkey"``) used as the base for the encryption token.
+* `transport.server_key`: (defaults to ``"defaultencryptionkey"``) used to establish a secure connection between the client and server.
+
+WARNING: You *must* specify unique strings for both of these parameters when using Nakama in production or your server's security will be compromised.
+
+== Basic configuration options
+
+These are the parameters you're most likely to want to change during development:
+
+* where Nakama stores its data
+* the Nakama server's node name
+* network configuration.
+
+`datadir:` (default: ``"./data/"``) an absolute path to a writeable folder where Nakama will store its data.
+
+`port`: (default: `7350`) the port for accepting connections from the client, listening on all interfaces. Unless explicitly defined, other ports will be chosen sequentially from here upwards.
+
+`ops_port`: (default: `7351`) the port for accepting connections to the ops dashboard, listening on all interfaces.
+
+In development, you're most likely to run Nakama as a single server on your laptop. In production, however, Nakama runs as a distributed cluster and you can specify the name of each node at run-time.
+
+`name`: (default: ``nakama-xxxx`, where `xxxx` is a string of four random characters) the node name, also used in log files.
+
+NOTE: You should use plain alphanumeric characters for server names.
+
+`dsns`: (default assumes running on localhost: `root@127.0.0.1:26257`) a list of fully qualified JDBC addresses of CockroachDB servers.
+
+== Basic configuration example
+
+Assuming you didn't change the defaults, our basic Nakama configuration YAML file would look something like this:
+
+[source,yaml]
+----
+  name: nakama-node-1
+  datadir: "./data/"
+  port: 7350
+  ops_port: 7351
+  dsns:
+    - "root@127.0.0.1:26257"
+  session:
+    encryption_key: "defaultencryptionkey"
+  transport:
+    server_key: "defaultkey"
+----
+
+== Next steps
+
+Here we've covered only the basic configuration options. For more on configuring Nakama, take a look at our link:./advanced.adoc[comprehensive configuration reference guide].
+
+Otherwise, it's time to learn about working with link:../start-server.adoc[Nakama on the command-line].

@@ -1,0 +1,132 @@
+= Running Nakama server
+
+Once you have link:./install[installed Nakama^], you'll be able to use the `nakama` command to start, stop and manage the Nakama server.
+
+== Starting a server
+
+Running Nakama on your development machine is simple.
+
+NOTE: If you installed Nakama using Docker, you'll need to follow the link:../install./docker.adoc[Docker-specific instructions] for starting Nakama.
+
+First, you need to run CockroachDB:
+
+[source,bash]
+----
+# Start CockroachDB
+cockroach start --background --insecure --store=attrs=ssd,path=/tmp/cockroach
+----
+
+Next, prepare Nakama's data schema:
+
+[source,bash]
+----
+# Run the one-time Nakama database migration setup
+nakama migrate up
+----
+
+Then start Nakama itself:
+
+[source,bash]
+----
+# Start Nakama server
+nakama
+----
+
+Each subsequent time you start Nakama, you don't need to run the `migrate` step unless you're upgrading to a new version of Nakama.
+
+Once Nakama is running, you can connect to it from the client on port `7350`. To view Nakama's built-in dashboard, navigate to `http://localhost:7351`.
+
+=== Nakama run-time options
+
+Nakama has just a few run-time options, to make it as easy as possible to run and develop against. You can also specify each of these options in a persistent link:./configure[configuration file^].
+
+Nakama's run-time options:
+
+* `--config`: Absolute path to a configuration file.
+* `--db`: Fully qualified JDBC address to a CockroachDB server. This is in the form of `jdbc://user:password@hostname:port`.
+* `--data-dir`: Data directory to store server data. Absolute path to a writeable folder.
+* `--name`: Unique node name. This name is also used in the log files.
+* `--port`: The port to listen on when accepting connections from the client. Listens on all interfaces by default. Unless explicitly defined, other ports will be chosen sequentially from here upwards.
+* `--ops-port`: The port to listen on when accepting connections for the ops dashboard. Listens on all interfaces by default.
+
+Here's an example using all the run-time flags:
+
+[source,bash]
+----
+# Start Nakama server
+nakama --config=/path/to/config.yml --db=jdbc://user:password@hostname:port --data-dir=/path/to/data --name=nakama-demo1 --port=7896 --ops-port=6987
+----
+
+And here's the output that we'd expect to see:
+
+[source,bash]
+----
+[I] Nakama starting at=2017-04-07 13:07:50.322 +0000 UTC
+[I] Node name=nakama-92e1 version=0.12.1+aab3e2e
+[I] Data directory path=/path/to/data-dir/data
+[I] Database connections dsns=[root@localhost:26257]
+[W] DB schema outdated, run `nakama migrate up` migrations=2
+[I] Ops port=9646
+[I] Dashboard url=http://localhost:7350
+[I] Client port=7351
+[I] Startup done
+----
+
+For development on your local machine, that's all you need to get Nakama server started. Next let's take a look at link:./operate.adoc[operating Nakama].
+
+== Start a cluster [local]
+
+Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you're running Nakama Enterprise. In production you can use either Nakama Enterprise or our managed cloud service.
+
+NOTE: *Nakama Enterprise*
+Read more about https://heroiclabs.com/services/#enterprise[Nakama Enterprise] and https://heroiclabs.com/managed-cloud/[Managed Cloud].
+
+To create a cluster, you'll need two additional ports:
+
+. An inter-node communication port.
+. A gossip port to enable discovery and mesh connectivity across the network.
+
+Let's start multiple Nakama servers on the same machine and connect them together.
+
+[source,bash]
+----
+# Start the first Nakama server
+nakama --name "node1"
+----
+
+[source,bash]
+----
+# Start the second Nakama server and connect
+# it to the first one to form a cluster
+nakama --name "node2" --port 7360 --join 127.0.0.1:7352
+----
+
+The instances of Nakama running on your machine are now connected as a cluster.
+
+== Start a cluster [cloud]
+
+In production, each Nakama node must run on a separate machine..
+
+NOTE: *Nakama Enterprise*
+Clustering multiple servers is available in https://heroiclabs.com/services/#enterprise[Nakama Enterprise] and https://heroiclabs.com/managed-cloud/[Managed Cloud].
+
+When a Nakama server first connects to a cluster, you need to provie it with the IP address of at least one other Nakama server.
+
+You should do this using a link:../configure.adoc[configuration file]. Under the `join` parameter, you can list one or more existing Nakama servers that your new node should connect to:
+
+[source,yml]
+----
+join:
+  - 10.0.0.1:7352
+  - 10.0.0.2:7352
+  - 10.0.0.3:7352
+  - server_ip_or_host:gossip_port
+----
+
+You don't need to list every node in the cluster. The Nakama nodes will automatically exchange information and help new nodes discover other cluster members.
+
+In production you should run at least three Nakama servers in a cluster, to ensure availability.
+
+== Next steps
+
+Now that you know how to configure and run Nakama, you can either dive into the other link:./advanced.adoc[command-line options] available or get started with your first API calls.
