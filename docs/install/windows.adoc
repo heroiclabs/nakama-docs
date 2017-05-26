@@ -13,7 +13,7 @@ Once you've installed the version of Docker that's right for your Windows enviro
 
 == Binary installation
 
-Nakama is also available as a https://github.com/heroiclabs/nakama/releases/latest[Windows binary]. However, Nakama relies on CockroachDB, which is unavailable for Windows. You could choose to install the Nakama binary natively on Windows and CockroachDB as a Docker container but we don't recommend that method.
+Nakama is also available as a https://github.com/heroiclabs/nakama/releases/latest[Windows binary]. Currently, though, we recommend the Docker method as the best way to install Nakama on Windows.
 
 == Next steps
 

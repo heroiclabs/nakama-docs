@@ -1,7 +1,5 @@
 = Upgrades
 
-*XXX: To be done* - Upgrades aren't in the spec sheet.
-
 Have a look at the https://github.com/heroiclabs/nakama/releases[release notes^] for more details on upgrade requirements.
 
 Ensure that the client version is compatible with the server deployed.
