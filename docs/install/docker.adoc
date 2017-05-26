@@ -68,9 +68,6 @@ Docker containers are ephemeral by design: when you shut them down, you lose the
 
 That's not a problem if you're just testing things out but for development work you should configure your containers to host your data on your local file system.
 
-If you do require to persist data even when rebuilding or deploying docker containers it's advised to introduce `volumes` into your container.
-An in-depth guide to this is provided by as part of the link:https://docs.docker.com/engine/tutorials/dockervolumes/[Docker documentation^].
-
 == Upgrading
 
 As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.
@@ -80,6 +77,28 @@ NOTE: When upgrading to a new version of Nakama, the process in the `docker-comp
 WARNING: When you upgrade the container images, any data stored in the containers will be deleted. Make sure you follow the xref:specifying-where-to-host-your-data[instructions above to store your data in your host operating system].
 
 Here's how to pull down the latest Nakama image:
+
+https://docs.docker.com/engine/tutorials/dockervolumes/[Follow the Docker documentation^] to learn how to work with Docker data volumes, and host your Nakama and CockroachDB data outside the container.
+
+== Upgrading
+
+As new versions of Nakama, or CockroachDB, become available you might want to upgrade. 
+
+IMPORTANT: You should back-up your data before upgrading. See below for instructions on back-up your data.
+
+Upgrading with Docker is simple, as everything is handled by the Docker Compose script. 
+
+To grab the latest version of Nakama you simply need to re-run the Docker Compose process. This will pull down the most recent container image and migrate the data to the most recent Nakama format. 
+
+WARNING: When you upgrade the container images, any data stored in the containers will be deleted. Make sure you follow the xref:specifying-where-to-host-your-data[instructions above to store your data in your host operating system].
+
+=== Backing-up your data
+
+Before you upgrade, you should back-up the data that Nakama has stored in CockroachDB. To do so, follow the https://www.cockroachlabs.com/docs/back-up-data.html[back-up instructions in the CockroachDB documentation^].
+
+=== Getting the latest Docker images
+
+Once you've completed your back-up, you can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.
 
 [source,bash]
 ----
@@ -118,8 +137,8 @@ When you come to connect to your Docker-hosted Nakama instance, you'll need to u
 
 Although you won't need to interact directly with CockroachDB, you can find it at:
 
- * *CockroachDB server endpoint:* `127.0.0.1:26257`
- * *CockroachDB dashboard:* http://127.0.0.1:8080[http://127.0.0.1:8080^]
+* *CockroachDB server endpoint:* `127.0.0.1:26257`
+* *CockroachDB dashboard:* http://127.0.0.1:8080[http://127.0.0.1:8080^]
 
 == Next steps
 
