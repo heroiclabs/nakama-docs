@@ -15,16 +15,23 @@
     %li
       %a(href="https://github.com/heroiclabs/nakama/releases") Download Nakama
     %li
-      = link_to 'Setup', '/docs/setup/index.html'
+      = link_to 'Install', '/docs/install/index.html'
       %ul.doc-sidebar__second-level
-        %li= nav_link 'Install', '/docs/setup/install.html'
-        %li= nav_link 'Docker', '/docs/setup/docker.html'
-        %li= nav_link 'Digital Ocean', '/docs/setup/digitalocean.html'
-        %li= nav_link 'Upgrades', '/docs/setup/upgrades.html'
+        %li= nav_link 'Docker', '/docs/install/docker.html'
+        %li= nav_link 'Windows', '/docs/install/windows.html'
+        %li= nav_link 'Mac OSX', '/docs/install/mac.html'
+        %li= nav_link 'Linux', '/docs/install/linux.html'
+        %li= nav_link 'Digital Ocean', '/docs/install/digitalocean.html'
+        %li= nav_link 'Upgrades', '/docs/install/upgrades.html'
         /
           %li= nav_link 'Recommended Production Settings', '/docs/setup/recommended-production-settings.html'
-    %li= nav_link 'Configure', '/docs/configure.html'
-    %li= nav_link 'Start Server', '/docs/start-server.html'
+    %li
+      = link_to 'Configuration', '/docs/configure/'
+      %ul.doc-sidebar__second-level
+        %li= nav_link 'Basic', '/docs/configure/'
+        %li= nav_link 'Advanced', '/docs/configure/advanced'
+    %li= nav_link 'Start the Server', '/docs/start-server.html'
+    %li= nav_link 'Operate the Server', '/docs/operate.html'
     /
       %li
         = nav_link 'Admin', '/docs/admin/index.html'
@@ -65,6 +72,6 @@
       %a(href="https://github.com/heroiclabs/nakama/blob/master/CHANGELOG.md" target="_blank") Release Notes
       %ul.doc-sidebar__second-level
         %li
-          %a(href="https://github.com/heroiclabs/nakama/releases/v0.12.1") 0.12.1
+          %a(href="https://github.com/heroiclabs/nakama/releases/v0.12.2") 0.12.2
           %a(href="https://github.com/heroiclabs/nakama/releases/v0.11.3") 0.11.3
           %a(href="https://github.com/heroiclabs/nakama/releases/v0.10.0") 0.10.0

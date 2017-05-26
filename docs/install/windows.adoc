@@ -1,0 +1,20 @@
+= Windows
+
+Windows is a great environment for developing your game with Nakama. To install Nakama on your Windows machine you'll need to use link:./docker.adoc[Docker].
+
+== Windows version requirements
+
+For Windows development environments, there are two versions of Docker:
+
+* *https://store.docker.com/search?offering=community&q=&type=edition[Docker Community Edition]:* https://docs.docker.com/docker-for-windows/install/#what-to-know-before-you-install[requires] 64 bit Windows 10 pro and Microsoft Hyper-V].
+* *https://www.docker.com/products/docker-toolbox[Docker Toolbox]:* runs on previous versions of Windows.
+
+Once you've installed the version of Docker that's right for your Windows environment, you should follow our standard link:./docker.adoc[guide to installing Nakama with Docker].
+
+== Binary installation
+
+Nakama is also available as a https://github.com/heroiclabs/nakama/releases/latest[Windows binary]. However, Nakama relies on CockroachDB, which is unavailable for Windows. You could choose to install the Nakama binary natively on Windows and CockroachDB as a Docker container but we don't recommend that method.
+
+== Next steps
+
+Install Nakama by following our link:./docker.adoc[Docker install guide].
