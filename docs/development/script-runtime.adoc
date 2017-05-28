@@ -45,7 +45,7 @@ There are four ways to register a function within the runtime each of which is u
 
 === `register_before`
 
-Any function may registered to intercept a message type received from a client and operate on it (or reject it) based on custom logic. This is most useful to enforce specific rules on top of the standard features in the server.
+Any function may be registered to intercept a message type received from a client and operate on it (or reject it) based on custom logic. This is most useful to enforce specific rules on top of the standard features in the server.
 
 [source, lua]
 ----
@@ -63,11 +63,73 @@ nk.register_before(limit_friends, "TFriendAdd")
 
 The code above fetches the current user's profile and checks the metadata (which is structured as "{level: 12}"). If a user's level is too low an error is thrown to prevent the `TFriendAdd` message from completing in the server pipeline.
 
+TIP: **Pipeline passthrough**
+You must remember to pass through the payload (which contains the message) to continue in the server. See the "return payload" code above.
+
 === `register_after`
+
+Similar to the "register_before" function you can attach a function to operate on a message type but instead execution happens after the standard feature of the server has executed. The function handler will execute asynchronously after the response message has been sent to a client. This is useful to run custom logic after some server message type has been processed.
+
+[source, lua]
+----
+local function send_reward(context, payload)
+  local value = {
+    user_ids = {payload.user_id}
+  }
+  local json = nx.json_encode(value)
+  local new_records = {
+    {bucket = "mygame", collection = "rewards", record = "reward", user_id = context.user_id, value = json}
+  }
+  nk.storage_write(new_records)
+end
+nk.register_after(send_reward, "TFriendAdd")
+----
+
+The code above writes a reward to a user's storage when they add a friend.
+
+=== `register_http`
+
+Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. You should not use "register_http" with clients - instead use "register_rpc".
+
+[source, lua]
+----
+local function http_func(context, payload)
+  local message = nx.json_encode(payload)
+  nk.logger_info(message)
+  return {["context"] = context}
+end
+nk.register_http(http_func, "http_func_path")
+----
+
+This function can be called with any standard HTTP library. In cURL you could execute the function with the server default port and host:
+
+[source, shell]
+----
+curl -X POST "http://127.0.0.1:7350/runtime/http_func_path?key=defaultkey" \
+     -d "{'some': 'data'}" \
+     -H 'Content-Type: application/json' \
+     -H 'Accept: application/json'
+----
+
+WARNING: **Http key**
+You should change the default HTTP key before you deploy your code in production.
 
 === `register_rpc`
 
-=== `register_http`
+Some logic between client and server is best handled as RPC functions which clients can execute.
+
+[source, lua]
+----
+local function custom_rpc_func(context, payload)
+  -- "payload" is a byte array sent by the client we'll JSON decode it
+  local json = nkx.json_decode(payload)
+  nk.logger_warn(("%q"):format(json))
+  return nkx.json_encode(json)
+end
+nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
+----
+
+The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function and return the result. Results are always returned as a Lua string (or optionally "nil").
 
 TIP: **Function Reference**
 Have a look at the link:./function-reference.adoc[function reference] for a full list of available functions in the builtin modules.
