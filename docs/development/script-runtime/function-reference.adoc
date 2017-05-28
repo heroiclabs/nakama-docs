@@ -1,0 +1,427 @@
+= Function Reference | Nakama server documentation
+
+There are two Lua modules available by default within the VM runtime created by the server. The "nakama" and "nakamax" modules both contain functions useful to implement various logic and custom behavior in the server. They make it easy to define authoritative control over inputs received from clients.
+
+== Nakama module
+
+This module contains all the core gameplay APIs and all registration functions used at server startup.
+
+All examples assume the "nakama" module has been imported:
+
+[source, lua]
+----
+local nk = require("nakama")
+----
+
+'''
+=== `leaderboard_create (id, sort, reset, metadata, authoritative)`
+
+Setup a new dynamic leaderboard with the specified ID and various configuration settings. The leaderboard will be created if it doesn't already exist.
+
+[.small]#Parameters#
+
+* `id` (string) - The unique identifier for the new leaderboard. This is used by clients to submit scores.
+* `sort` (string) - The sort order for records in the leaderboard; possible values are "asc" or "desc".
+* `reset` (string) - The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards.
+* `metadata` (table) - The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game.
+* `authoritative` (bool) - Mark the leaderboard as authoritative which ensures updates can only be made via the Lua runtime. No client can submit a score directly.
+
+[.small]#Example#
+
+[source, lua]
+----
+local metadata = {
+  weather_conditions = "rain"
+}
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+nk.create_leaderboard(id, "desc", "0 0 * * 1", metadata, false)
+----
+
+'''
+=== `logger_error (message)`
+
+Write an ERROR level message to the server logs.
+
+[.small]#Parameters#
+
+* `message` (string) - The message to write to server logs with ERROR level severity.
+
+[.small]#Returns#
+
+(string) - The message which was written to the logs.
+
+[.small]#Example#
+
+[source, lua]
+----
+local message = ("%q - %q"):format("hello", "world")
+nk.logger_error(message)
+----
+
+'''
+=== `logger_info (message)`
+
+Write an INFO level message to the server logs.
+
+[.small]#Parameters#
+
+* `message` (string) - The message to write to server logs with INFO level severity.
+
+[.small]#Returns#
+
+(string) - The message which was written to the logs.
+
+[.small]#Example#
+
+[source, lua]
+----
+local message = ("%q - %q"):format("hello", "world")
+nk.logger_info(message)
+----
+
+'''
+=== `logger_warn (message)`
+
+Write an WARN level message to the server logs.
+
+[.small]#Parameters#
+
+* `message` (string) - The message to write to server logs with WARN level severity.
+
+[.small]#Returns#
+
+(string) - The message which was written to the logs.
+
+[.small]#Example#
+
+[source, lua]
+----
+local message = ("%q - %q"):format("hello", "world")
+nk.logger_warn(message)
+----
+
+'''
+=== `register_after (func, msgname)`
+
+Register a function with the server which will be executed after every message with the specified message name. This can be used to apply custom logic to standard features in the server. Similar to the `register_before` function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client.
+
+[.small]#Parameters#
+
+* `func` (function) - A reference to the function which will be executed on each `msgname` message.
+* `msgname` (string) - The specific message name to execute the `func` function after.
+
+[.small]#Example#
+
+[source, lua]
+----
+local function my_func(context, payload)
+  -- do some work
+end
+nk.register_after(my_func, "TFriendAdd")
+----
+
+'''
+=== `register_before (func, msgname)`
+
+Register a function with the server which will be executed before every message with the specified message name. For example `register_before(somefunc, "TFriendAdd")` will execute the function before the TFriendAdd message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server.
+
+[.small]#Parameters#
+
+* `func` (function) - A reference to the function which will be executed on each `msgname` message.
+* `msgname` (string) - The specific message name to execute the `func` function after.
+
+[.small]#Returns#
+
+(table) - The payload which was passed into the function. You must pass the message back as the return argument so the pipeline can continue to execute the standard logic.
+
+[.small]#Example#
+
+[source, lua]
+----
+local function my_func(context, payload)
+  -- do some work
+  return payload -- important!
+end
+nk.register_before(my_func, "TFriendAdd")
+----
+
+'''
+=== `register_http (func, path)`
+
+Registers a HTTP endpoint within the server. This should not be used to implement custom client functions - instead use `register_rpc`.
+
+This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks.
+
+[.small]#Parameters#
+
+* `func` (function) - A reference to the function which will be executed on each HTTP call.
+* `path` (string) - The path that should be registered as a HTTP endpoint.
+
+[.small]#Returns#
+
+(nil | table) - The value which will be returned as JSON in the HTTP response body.
+
+[.small]#Example#
+
+[source, lua]
+----
+local function my_func(context, payload)
+  -- let's return the "context" as JSON back in the HTTP response body
+  return context
+end
+nk.register_http(my_func, "/my_endpoint")
+-- "my_func" will be registered at 'POST /runtime/my_endpoint'
+----
+
+'''
+=== `register_rpc (func, id)`
+
+Registers a function for use with client RPC to the server. The ID can be any string identifier and should be hardcoded into the client. The ID is used to map the client RPC request to the specific function to execute.
+
+[.small]#Parameters#
+
+* `func` (function) - A reference to the function which will be executed on each RPC message.
+* `id` (string) - The unique identifier used to register the `func` function for RPC.
+
+[.small]#Returns#
+
+(nil | table) - The value which will be returned as bytes in the RPC response.
+
+[.small]#Example#
+
+[source, lua]
+----
+local function my_func(context, payload)
+  -- do some work
+end
+nk.register_rpc(my_func, "my_func_id")
+----
+
+'''
+=== `storage_fetch (record_keys)`
+
+Fetch a set of records by their bucket/collection/keyname and optional user.
+
+[.small]#Parameters#
+
+* `record_keys` (table) - A table array of record identifiers to be fetched.
+
+[.small]#Returns#
+
+(table) - A table array of the result set.
+
+[.small]#Example#
+
+[source, lua]
+----
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local record_keys = {
+  {bucket = "mygame", collection = "save", record = "save1", user_id = user_id},
+  {bucket = "mygame", collection = "save", record = "save2", user_id = user_id},
+  {bucket = "mygame", collection = "save", record = "save3", user_id = user_id}
+}
+local records = nk.storage_fetch(record_keys)
+for i, r in ipairs(records)
+do
+  local message = ("read: %q, write: %q, value: %q"):format(r.permission_read, r.permission_write, r.value)
+  print(message)
+end
+----
+
+'''
+=== `storage_remove (record_keys)`
+
+Remove a set of records by their bucket/collection/keyname and optional user.
+
+[.small]#Parameters#
+
+* `record_keys` (table) - A table array of record identifiers to be removed.
+
+[.small]#Example#
+
+[source, lua]
+----
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local record_keys = {
+  {bucket = "mygame", collection = "save", record = "save1", user_id = user_id},
+  {bucket = "mygame", collection = "save", record = "save2", user_id = user_id},
+  {bucket = "mygame", collection = "save", record = "save3", user_id = user_id}
+}
+nk.storage_remove(record_keys)
+----
+
+'''
+=== `storage_write (new_records)`
+
+Write a set of records by their bucket/collection/keyname and optional user.
+
+[.small]#Parameters#
+
+* `new_records` (table) - A table array of new records to write.
+
+[.small]#Example#
+
+[source, lua]
+----
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local new_records = {
+  {bucket = "mygame", collection = "save", record = "save1", user_id = user_id, value = "{}"},
+  {bucket = "mygame", collection = "save", record = "save2", user_id = user_id, value = "{}"},
+  {bucket = "mygame", collection = "save", record = "save3", user_id = user_id, value = "{}"}
+}
+nk.storage_write(new_records)
+----
+
+'''
+=== `user_fetch_handle (user_handles)`
+
+Fetch a set of users by handle.
+
+[.small]#Parameters#
+
+* `user_handles` (table) - A table array of user handles to fetch.
+
+[.small]#Returns#
+
+(table) - A table array of the result set.
+
+[.small]#Example#
+
+[source, lua]
+----
+local user_handles = {"b7865e7e", "c048ba7a"}
+local users = nk.user_fetch_handle(user_handles)
+for i, u in ipairs(users)
+do
+  local message = ("id: %q, fullname: %q"):format(u.id, u.fullname)
+  print(message)
+end
+----
+
+'''
+=== `user_fetch_id (user_ids)`
+
+Fetch a set of users by ID.
+
+[.small]#Parameters#
+
+* `user_ids` (table) - A table array of user IDs to fetch.
+
+[.small]#Returns#
+
+(table) - A table array of the result set.
+
+[.small]#Example#
+
+[source, lua]
+----
+local user_ids = {
+  "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+  "447524be-43c3-11e7-af09-3f7172f05936"
+}
+local users = nk.user_fetch_id(user_ids)
+for i, u in ipairs(users)
+do
+  local message = ("handle: %q, fullname: %q"):format(u.handle, u.fullname)
+  print(message)
+end
+----
+
+
+== Nakamax module
+
+This module contains a collection of experimental utilities for various codecs and cryptographic primitives.
+
+All examples assume the "nakamax" module has been imported:
+
+[source, lua]
+----
+local nx = require("nakamax")
+----
+
+'''
+=== `http_request (url, method, headers, body)`
+
+Send a HTTP request and receive the result as a Lua table.
+
+[.small]#Parameters#
+
+* `url` (string) - The URL of the web resource to request.
+* `method` (string) - The HTTP method verb used with the request.
+* `headers` (table) - A table of headers used with the request.
+* `body` (string) - The bytes to send with the request.
+
+[.small]#Returns#
+
+(code, headers, body) - Multiple return values for the HTTP response.
+
+[.small]#Example#
+
+[source, lua]
+----
+local url = "https://google.com/"
+local method = "HEAD"
+local body = ""
+local code, headers, resp_body = nx.http_request(url, method, {}, body)
+print(resp_body)
+----
+
+'''
+=== `json_decode (input)`
+
+Decode the JSON input as a Lua table.
+
+[.small]#Parameters#
+
+* `input` (string) - The JSON encoded input.
+
+[.small]#Returns#
+
+(table) - A table with the decoded JSON.
+
+[.small]#Example#
+
+[source, lua]
+----
+local json = nx.json_decode("{'hello': 'world'}")
+print(json.hello)
+----
+
+'''
+=== `json_encode (input)`
+
+Encode the input as JSON.
+
+[.small]#Parameters#
+
+* `input` (table) - The input to encode as JSON.
+
+[.small]#Returns#
+
+(string) - The encoded JSON string.
+
+[.small]#Example#
+
+[source, lua]
+----
+local input = {["some"] = "json"}
+local json = nx.json_encode(input)
+print(json)
+----
+
+'''
+=== `uuid_v4 ()`
+
+Generate a UUIDv4.
+
+[.small]#Returns#
+
+(string) - The generated UUIDv4 identifier.
+
+[.small]#Example#
+
+[source, lua]
+----
+local uuid = nx.uuid_v4()
+print(uuid)
+----
