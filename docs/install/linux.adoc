@@ -2,21 +2,18 @@
 
 There are two ways to install Nakama on Linux-based operating systems:
 
-* using link:./docker.adoc[Docker]
-* directly installing the binaries.
+* Using link:./docker.adoc[Docker] - This is the link:./docker.adoc[recommended approach].
+* Directly installing the binaries.
 
-We recommend you install Nakama on your development machine using link:./docker.adoc[Docker].
-
-The binaries have been installed and tested on Ubuntu/Debian,
-if you intend to use another Operating System you can build the the binary on the distribution following the guide in the link:https://github.com/heroiclabs/nakama[nakama github^]
+The binaries have been installed and tested on Ubuntu/Debian, if you intend to use another Operating System you can build the the binary on the distribution following the guide in the link:https://github.com/heroiclabs/nakama[Nakama GitHub^] repository.
 
 == Binary installation
 
 First you'll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.
 
-NOTE: These binaries have been installed and tested on Ubuntu/Debian. If you're using another Linux distro then you can link:https://github.com/heroiclabs/nakama[build the the binary yourself^].
+NOTE: These binaries have been installed and tested on Ubuntu/Debian. If you're using another Linux distro then you can https://github.com/heroiclabs/nakama[build the the binary yourself^].
 
-Once that directory exists, you need to install CockroachDB, which is a prerequisit of Nakama.
+Once that directory exists, you need to install CockroachDB, which is a prerequisite of Nakama.
 
 . Download the latest https://binaries.cockroachdb.com/cockroach-latest.linux-amd64.tgz[CockroachDB tarball for Linux].
 . Then extract the binary:
@@ -50,11 +47,10 @@ tar xfz nakama-X.X.X-linux-amd64.tar.gz # replace the X.X.X with the version num
 ----
 cp -i nakama /usr/local/bin
 ----
-+
 
-=== systemd
+=== Systemd
 
-If you prefer to run Nakama as a service, and you're running a distro that uses `systemd`, you can optionally use this script.
+If you prefer to run Nakama as a service, and you're running a distro that uses `systemd`, you can optionally use the following script.
 
 If you plan to use a custom configuration, you’ll have to create the link:../../configure.adoc[configuration] files manually.
 

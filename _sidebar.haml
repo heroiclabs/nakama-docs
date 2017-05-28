@@ -30,15 +30,18 @@
       %ul.doc-sidebar__second-level
         %li= nav_link 'Basic', '/docs/configure/'
         %li= nav_link 'Advanced', '/docs/configure/advanced'
-    %li= nav_link 'Start the Server', '/docs/start-server.html'
-    %li= nav_link 'Operate the Server', '/docs/operate.html'
+    %li
+      = nav_link 'Running the Server', '/docs/running-nakama/'
+      %ul.doc-sidebar__second-level
+        %li= nav_link 'Start Nakama', '/docs/running-nakama/'
+        %li= nav_link 'Additional Commands', '/docs/running-nakama/commands'
     /
       %li
         = nav_link 'Admin', '/docs/admin/index.html'
         %ul.doc-sidebar__second-level
           %li= nav_link 'Cluster Management', '/docs/admin/cluster-management.html'
           %li= nav_link 'Dashboard', '/docs/admin/dashboard.html'
-      %li= link_to 'Managed Cloud', '/services.html'
+    %li= link_to 'Managed Cloud', '/services.html'
     %li
       = link_to 'Clients', '/docs/clients/index.html'
       %ul.doc-sidebar__second-level
