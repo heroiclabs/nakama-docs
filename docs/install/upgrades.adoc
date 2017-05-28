@@ -18,6 +18,7 @@ For each node in the cluster:
 2. https://www.cockroachlabs.com/docs/back-up-data.html[Back-up CockroachDB]
 3. Upgrade Nakama executable to the latest version.
 4. Upgrade the database schema with the following command:
+
 +
 [source,bash]
 ----
@@ -25,7 +26,9 @@ nakama migrate up
 ----
 +
 5. If you’re upgrading Nakama Enterprise, apply your customized settings to your configuration YAML file to ensure that the instances can cluster together.
+
 6. Start Nakama: `$ nakama`
+
 7. Verify Nakama is running the upgraded version.
 
 == Downgrade

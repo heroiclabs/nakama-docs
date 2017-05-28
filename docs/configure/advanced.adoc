@@ -1,0 +1,117 @@
+= Advanced configuration
+
+You can use a YAML configuration file to configure many aspects of how your Nakama server runs. Here is a complete reference of the parameters you can use in the configuration file.
+
+=== Basic settings
+
+* `name`: Unique node name. This name is also used in the log files.
+** Default value is `"nakama-xxxx"`, where `xxxx` represents 4 random characters.
+* `datadir`: Data directory to store server data. The absolute path to a writeable folder.
+** Default value is ``"./data/"``.
+* `port`: The port to listen on when accepting connections from the client. This listens on all interfaces.
+** Default value is `7350`. Unless explicitly defined, other ports will be chosen sequentially from here upwards.
+* `ops_port`: The port to listen on when accepting connections for the ops dashboard. This listens on all interfaces.
+** Default value is `7351`.
+* `dsns`: Fully qualified list of JDBC addresses to CockroachDB servers.
+** Default value is `root@127.0.0.1:26257`.
+
+=== Session settings
+* `session.encryption_key`: The encryption key used to produce the client token.
+** Default value is ``"defaultencryptionkey"``.
+
+WARNING: *Set your encryption key*
+You must change the default value for production servers or your server security will be compromised.
+
+=== Transport settings
+* `transport.server_key`: Server key to use to establish a connection to the server.
+** Default value is ``"defaultkey"``.
+* `max_message_size_bytes`: Maximum amount of data in bytes allowed to be read from the client socket per message.
+** Default value is `1024`.
+* `write_wait_ms`: Time in milliseconds to wait for an ack from the client when writing data.
+** Default value is `5000`.
+* `pong_wait_ms`: Time in milliseconds to wait for a pong message from the client after sending a ping.
+** Default value is `10000`.
+* `ping_period_ms`: Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`.
+** Default value is `8000`.
+
+WARNING: *Set your server key*
+You must change the default value for production servers or your server security will be compromised.
+
+=== Database connection settings
+* `conn_max_lifetime_ms`: Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.
+** Default value is `60000`.
+* `max_open_conns`: Maximum number of allowed open connections to the database.
+** Default value is `0` (which mean no limit).
+* `max_idle_conns`: Maximum number of allowed open but unused connections to the database.
+** Default value is `0` (which means no limit).
+
+=== Social providers
+
+NOTE: Most game providers are fully configurable from within your client code. However, Steam requires configuration on the server-side too.
+
+==== Steam
+* `publisher_key`: Steam Publisher Key value.
+** Default value is `""`.
+* `app_id`: Steam App ID.
+** Default value is `0`.
+
+NOTE: *Steam login*
+Until you specify your own values here, Steam login is disabled.
+
+== Nakama Enterprise Settings
+
+The following configuration options are available only in the https://heroiclabs.com/services/#enterprise[Nakama Enterprise^] version of the Nakama server:
+
+=== Basic settings
+* `join`: List of node addresses to connect to form a cluster.
+** Default value is `""`.
+
+=== Cluster settings
+
+* `rpc_port`: Port to bind to for inter-cluster communication.
+** Default value is `7353`.
+* `gossip_bindaddr`: Address to bind to the discovery service. Gossip traffic will not be received on interfaces other than the specified one.
+** Default value is ``"127.0.0.1"``.
+* `gossip_bindport`: Port to bind for the discovery service.
+** Default value is `7352`.
+
+== Sample Configuration File
+
+[source,yaml]
+----
+name: nakama-node-1
+datadir: "./data/"
+port: 7350
+ops_port: 7351
+dsns:
+  - "root@127.0.0.1:26257"
+join:
+  - "10.0.0.2:7352"
+  - "10.0.0.3:7352"
+
+cluster:
+  rpc_port: 7353
+  gossip_bindaddr: "127.0.0.1"
+  gossip_bindport: 7352
+
+session:
+  encryption_key: "defaultencryptionkey"
+  token_expiry_ms: 60000
+
+transport:
+  server_key: "defaultkey"
+  max_message_size_bytes: 1024 # bytes
+  write_wait_ms: 5000
+  pong_wait_ms: 10000
+  ping_period_ms: 8000 # Must be less than pong_wait_ms
+
+database:
+  conn_max_lifetime_ms: 60000
+  max_open_conns: 0
+  max_idle_conns: 0
+
+social:
+  steam:
+    publisher_key: ""
+    app_id: 0
+----

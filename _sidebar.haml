@@ -25,8 +25,13 @@
         %li= nav_link 'Upgrades', '/docs/install/upgrades.html'
         /
           %li= nav_link 'Recommended Production Settings', '/docs/setup/recommended-production-settings.html'
-    %li= nav_link 'Configure', '/docs/configure.html'
-    %li= nav_link 'Start Server', '/docs/start-server.html'
+    %li
+      = link_to 'Configuration', '/docs/configure/'
+      %ul.doc-sidebar__second-level
+        %li= nav_link 'Basic', '/docs/configure/'
+        %li= nav_link 'Advanced', '/docs/configure/advanced'
+    %li= nav_link 'Start the Server', '/docs/start-server.html'
+    %li= nav_link 'Operate the Server', '/docs/operate.html'
     /
       %li
         = nav_link 'Admin', '/docs/admin/index.html'

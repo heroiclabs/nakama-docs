@@ -10,7 +10,7 @@ It also means that the installation instructions are the same whether your devel
 
 == What is Docker?
 
-If you're new to Docker, then here's what you need to know: Docker is an open soure containerization tool that lets you create multiple distinct Linux environments, each separate from the other. 
+If you're new to Docker, then here's what you need to know: Docker is an open soure containerization tool that lets you create multiple distinct Linux environments, each separate from the other.
 
 In a Docker container you run a suite of tools to do a particular job; in this case we'll have one container running Nakama and another running CockroachDB. You can think of Docker containers as lightweight virtual machines.
 
@@ -67,6 +67,16 @@ Logs generated within the containers are printed to the console as part of the `
 Docker containers are ephemeral by design: when you shut them down, you lose the data stored inside them.
 
 That's not a problem if you're just testing things out but for development work you should configure your containers to host your data on your local file system.
+
+== Upgrading
+
+As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.
+
+NOTE: When upgrading to a new version of Nakama, the process in the `docker-compose.yml` performs a migration of your data to the new database schema.
+
+WARNING: When you upgrade the container images, any data stored in the containers will be deleted. Make sure you follow the xref:specifying-where-to-host-your-data[instructions above to store your data in your host operating system].
+
+Here's how to pull down the latest Nakama image:
 
 https://docs.docker.com/engine/tutorials/dockervolumes/[Follow the Docker documentation^] to learn how to work with Docker data volumes, and host your Nakama and CockroachDB data outside the container.
 
@@ -133,4 +143,3 @@ Although you won't need to interact directly with CockroachDB, you can find it a
 == Next steps
 
 Now you can start developing your application with Nakama. Let's take a look at link:../development[Nakama Clients].
-

@@ -7,11 +7,14 @@ There are two ways to install Nakama on Linux-based operating systems:
 
 We recommend you install Nakama on your development machine using link:./docker.adoc[Docker].
 
-NOTE: These binaries have been installed and tested on Ubuntu/Debian. If you're using another Linux distro then you can link:https://github.com/heroiclabs/nakama[build the the binary yourself^].
+The binaries have been installed and tested on Ubuntu/Debian,
+if you intend to use another Operating System you can build the the binary on the distribution following the guide in the link:https://github.com/heroiclabs/nakama[nakama github^]
 
 == Binary installation
 
-First you'll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences. 
+First you'll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.
+
+NOTE: These binaries have been installed and tested on Ubuntu/Debian. If you're using another Linux distro then you can link:https://github.com/heroiclabs/nakama[build the the binary yourself^].
 
 Once that directory exists, you need to install CockroachDB, which is a prerequisit of Nakama.
 
@@ -82,7 +85,7 @@ sudo systemctl enable nakama
 sudo systemctl start nakama
 ----
 
-The `ExecStart` prompt needs to point to the Nakama binary on the host machine. Just as when running Nakama in the terminalm you can apply a `--config` flag and file to `ExecStart`.
+The `ExecStart` prompt needs to point to the Nakama binary on the host machine. Just as when running Nakama in the terminal, you can apply a `--config` flag and file to `ExecStart`.
 
 === Docker
 
