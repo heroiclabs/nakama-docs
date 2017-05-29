@@ -1,0 +1,87 @@
+= Matchmaker | Nakama server documentation
+
+In realtime and turn-based games it's important to be able to find active opponents to play against. A matchmaker system is designed to provide this kind of behavior. In Nakama server we've taken the design further and decoupled the action to matchmake from the realtime match system.
+
+This makes it easy to use the matchmaker system to find opponents even if the gameplay isn't realtime. It could be a casual social game where you want to find random new users to become friends with or an asynchronous PvP game where gameplay happens as a simulated battle. There's many kinds of gameplay experiences where you'd like to find other users outside of a realtime match.
+
+== Matchmake Add
+
+The distributed server maintains a pool of users who've requested to be matched together with a specific number of opponents. Each user can add themselves to the matchmaker pool and register an event handler to be notified when enough users meet their criteria to be matched.
+
+[source, csharp]
+----
+// Attach an event handler for when the user is matched with other users.
+client.OnMatchmakeMatched += (object source, NMatchmakeMatchedEventArgs args) => {
+  INMatchmakeMatched matched = args.Matched;
+  // The match token is used to join a multiplayer match.
+  Debug.LogInfoFormat ("Match token: '{0}'", matched.Token);
+  foreach (var presence in matched.Presence) {
+    Debug.LogInfoFormat ("User(id: '{0}', handle: '{1}')", presence.UserId, presence.Handle);
+  }
+};
+----
+
+Send a message to add the user to the matchmaker pool.
+
+[source, csharp]
+----
+// Look for a match for two total participants, the caller plus one more.
+var message = NMatchmakeAddMessage.Default(2);
+client.Send (message, (INMatchmakeTicket ticket) => {
+  // Store the ticket so it can be used to cancel later.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Send error: code '{1}' with '{0}'.", error.Message, error.Code);
+});
+----
+
+The `INMatchmakeTicket` is useful in case you want to remove the user from the matchmaker pool at some later point. In some games a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.
+
+== Matchmake Remove
+
+After a user has sent a message to add themselves to the matchmaker pool you'll receive a `INMatchmakeTicket` which can be used to cancel the action at some later point.
+
+Users may cancel matchmake actions at any point after they've added themselves to the pool but before they've been matched. Once matching completes for a given ticket, that ticket can no longer be cancelled.
+
+[source, csharp]
+----
+// Ticket is an instance of `INMatchmakeTicket`.
+var message = NMatchmakeRemoveMessage.Default(ticket);
+client.Send (message, (bool done) => {
+  // The user is now removed from the matchmaker pool.
+}, (INError error) => {
+  Debug.LogErrorFormat ("Send error: code '{1}' with '{0}'.", error.Message, error.Code);
+});
+----
+
+The user is now removed from the matchmaker pool.
+
+NOTE: **Matchmake remove on disconnect**
+A user will automatically be removed from the matchmaker pool by the server when they disconnect.
+
+== Join a Match
+
+To join a match after the event handler has notified the user their criteria is met and they've been given opponents you can use the `INMatchToken`.
+
+[source, csharp]
+----
+client.OnMatchmakeMatched += (object source, NMatchmakeMatchedEventArgs args) => {
+  INMatchmakeMatched matched = args.Matched;
+  // The match token is used to join a multiplayer match.
+  var message = NMatchJoinMessage.Default(matched.Token);
+  client.Send (message, (INMatch match) => {
+    Debug.Log ("Successfully joined match.");
+  }, (INError error) => {
+    Debug.LogErrorFormat ("Send error: code '{1}' with '{0}'.", error.Message, error.Code);
+  });
+};
+----
+
+The token makes it easy to join a match without an explicit match create action. The token enables the server to know that these users wanted to join a match and is able to create a match dynamically for them.
+
+Tokens are short-lived and must be used to join a match as soon as the client is ready. Once a token expires it can no longer be used in match join operations.
+
+The `INMatchToken` also prevents malicious users from attempting to join a match they were not invited into. The rest of the multiplayer match behavior follows the rules outlined in the link:../realtime-multiplayer.adoc[realtime multiplayer] docs.
+
+=== Next steps
+
+Have a look at link:../realtime-multiplayer.adoc[realtime multiplayer] docs for features and examples on how to develop the realtime match code.
