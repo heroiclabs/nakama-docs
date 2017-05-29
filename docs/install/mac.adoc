@@ -28,7 +28,7 @@ brew update
 +
 [source,bash]
 ----
-brew install cockroachdb/cockroach/cockroach
+brew install cockroach
 ----
 . Next, run our brew recipe to download the Nakama code and build the binary:
 +
