@@ -25,7 +25,7 @@ Send a message to add the user to the matchmaker pool.
 
 [source, csharp]
 ----
-// Look for two opponents to be matched against.
+// Look for a match for two total participants, the caller plus one more.
 var message = NMatchmakeAddMessage.Default(2);
 client.Send (message, (INMatchmakeTicket ticket) => {
   // Store the ticket so it can be used to cancel later.
@@ -39,6 +39,8 @@ The `INMatchmakeTicket` is useful in case you want to remove the user from the m
 == Matchmake Remove
 
 After a user has sent a message to add themselves to the matchmaker pool you'll receive a `INMatchmakeTicket` which can be used to cancel the action at some later point.
+
+Users may cancel matchmake actions at any point after they've added themselves to the pool but before they've been matched. Once matching completes for a given ticket, that ticket can no longer be cancelled.
 
 [source, csharp]
 ----
@@ -75,6 +77,8 @@ client.OnMatchmakeMatched += (object source, NMatchmakeMatchedEventArgs args) =>
 ----
 
 The token makes it easy to join a match without an explicit match create action. The token enables the server to know that these users wanted to join a match and is able to create a match dynamically for them.
+
+Tokens are short-lived and must be used to join a match as soon as the client is ready. Once a token expires it can no longer be used in match join operations.
 
 The `INMatchToken` also prevents malicious users from attempting to join a match they were not invited into. The rest of the multiplayer match behavior follows the rules outlined in the link:../realtime-multiplayer.adoc[realtime multiplayer] docs.
 
