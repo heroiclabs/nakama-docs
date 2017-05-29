@@ -6,7 +6,7 @@ A key is used to look up data from Storage and it is the composed of a bucket, c
 
 image::/images/storage.png[Storage, 500]
 
-Objects are JSON data stored against a key and must be less than 8KB in size. An object is identified by a key and (optionally) an owner.
+Objects are JSON data stored against a key and must be less than 16KB in size. An object is identified by a key and (optionally) an owner.
 
 Buckets are used to group or namespace data. Each bucket contains data identified by pair of collections and records, and each bucket enforces uniqueness of key-owner pairs. This means there will only ever be one object with a particular key, owned by a particular user, in any given bucket.
 
