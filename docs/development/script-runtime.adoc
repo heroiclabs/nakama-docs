@@ -52,7 +52,7 @@ Any function may be registered to intercept a message type received from a clien
 local function limit_friends(context, payload)
   local user = nk.user_fetch_id({context.user_id})
   -- Assume we've stored a user's level in their metadata
-  local json = nx.json_decode(user.metadata)
+  local json = nx.json_decode(user.Metadata)
   if json.level <= 10 then
     error("Must reach level 10 before you can add friends.")
   end
@@ -72,17 +72,17 @@ Similar to the "register_before" function you can attach a function to operate o
 
 [source, lua]
 ----
-local function send_reward(context, payload)
+local function add_reward(context, payload)
   local value = {
-    user_ids = {payload.user_id}
+    user_ids = {payload.UserId}
   }
   local json = nx.json_encode(value)
   local new_records = {
-    {bucket = "mygame", collection = "rewards", record = "reward", user_id = context.user_id, value = json}
+    {Bucket = "mygame", Collection = "rewards", Record = "reward", UserId = context.user_id, Value = json}
   }
   nk.storage_write(new_records)
 end
-nk.register_after(send_reward, "TFriendAdd")
+nk.register_after(add_reward, "TFriendAdd")
 ----
 
 The code above writes a reward to a user's storage when they add a friend.
@@ -129,7 +129,7 @@ end
 nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
 ----
 
-The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function and return the result. Results are always returned as a Lua string (or optionally "nil").
+The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function and return the result. Results are always returned as a Lua string (or optionally `nil`).
 
 TIP: **Function Reference**
 Have a look at the link:./function-reference.adoc[function reference] for a full list of available functions in the builtin modules.

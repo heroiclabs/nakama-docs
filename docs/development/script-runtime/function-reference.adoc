@@ -216,14 +216,14 @@ Fetch a set of records by their bucket/collection/keyname and optional user.
 ----
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local record_keys = {
-  {bucket = "mygame", collection = "save", record = "save1", user_id = user_id},
-  {bucket = "mygame", collection = "save", record = "save2", user_id = user_id},
-  {bucket = "mygame", collection = "save", record = "save3", user_id = user_id}
+  {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id},
+  {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id},
+  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id}
 }
 local records = nk.storage_fetch(record_keys)
 for i, r in ipairs(records)
 do
-  local message = ("read: %q, write: %q, value: %q"):format(r.permission_read, r.permission_write, r.value)
+  local message = ("read: %q, write: %q, value: %q"):format(r.PermissionRead, r.PermissionWrite, r.Value)
   print(message)
 end
 ----
@@ -243,9 +243,9 @@ Remove a set of records by their bucket/collection/keyname and optional user.
 ----
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local record_keys = {
-  {bucket = "mygame", collection = "save", record = "save1", user_id = user_id},
-  {bucket = "mygame", collection = "save", record = "save2", user_id = user_id},
-  {bucket = "mygame", collection = "save", record = "save3", user_id = user_id}
+  {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id},
+  {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id},
+  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id}
 }
 nk.storage_remove(record_keys)
 ----
@@ -265,9 +265,9 @@ Write a set of records by their bucket/collection/keyname and optional user.
 ----
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local new_records = {
-  {bucket = "mygame", collection = "save", record = "save1", user_id = user_id, value = "{}"},
-  {bucket = "mygame", collection = "save", record = "save2", user_id = user_id, value = "{}"},
-  {bucket = "mygame", collection = "save", record = "save3", user_id = user_id, value = "{}"}
+  {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id, Value = "{}"},
+  {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id, Value = "{}"},
+  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id, Value = "{}"}
 }
 nk.storage_write(new_records)
 ----
@@ -293,7 +293,7 @@ local user_handles = {"b7865e7e", "c048ba7a"}
 local users = nk.user_fetch_handle(user_handles)
 for i, u in ipairs(users)
 do
-  local message = ("id: %q, fullname: %q"):format(u.id, u.fullname)
+  local message = ("id: %q, fullname: %q"):format(u.Id, u.Fullname)
   print(message)
 end
 ----
@@ -322,7 +322,7 @@ local user_ids = {
 local users = nk.user_fetch_id(user_ids)
 for i, u in ipairs(users)
 do
-  local message = ("handle: %q, fullname: %q"):format(u.handle, u.fullname)
+  local message = ("handle: %q, fullname: %q"):format(u.Handle, u.Fullname)
   print(message)
 end
 ----
@@ -361,7 +361,7 @@ Send a HTTP request and receive the result as a Lua table.
 ----
 local url = "https://google.com/"
 local method = "HEAD"
-local body = ""
+local body = nil
 local code, headers, resp_body = nx.http_request(url, method, {}, body)
 print(resp_body)
 ----
@@ -383,7 +383,7 @@ Decode the JSON input as a Lua table.
 
 [source, lua]
 ----
-local json = nx.json_decode("{'hello': 'world'}")
+local json = nx.json_decode('{"hello": "world"}')
 print(json.hello)
 ----
 
@@ -406,7 +406,7 @@ Encode the input as JSON.
 ----
 local input = {["some"] = "json"}
 local json = nx.json_encode(input)
-print(json)
+print(json) -- outputs '{"some": "json"}'
 ----
 
 '''
