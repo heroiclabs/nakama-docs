@@ -14,9 +14,9 @@ The distributed server maintains a pool of users who've requested to be matched 
 client.OnMatchmakeMatched += (object source, NMatchmakeMatchedEventArgs args) => {
   INMatchmakeMatched matched = args.Matched;
   // The match token is used to join a multiplayer match.
-  Debug.LogInfoFormat ("Match token: '{0}'", matched.Token);
+  Debug.LogFormat ("Match token: '{0}'", matched.Token);
   foreach (var presence in matched.Presence) {
-    Debug.LogInfoFormat ("User(id: '{0}', handle: '{1}')", presence.UserId, presence.Handle);
+    Debug.LogFormat ("User(id: '{0}', handle: '{1}')", presence.UserId, presence.Handle);
   }
 };
 ----
