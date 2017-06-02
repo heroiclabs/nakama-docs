@@ -2,7 +2,7 @@
 
 == Welcome to Nakama
 
-Nakama is a suite of APIs that will make you a more productive games developer. It is built by https://heroiclabs.com/[Heroic Labs] to handle the boring but essential services that go into all social and realtime games and apps.
+Nakama is a suite of APIs that will make you a more productive games developer. It is built by https://heroiclabs.com/[Heroic Labs] to handle the difficult but essential services that go into all social and realtime games and apps.
 
 You get to focus on building your game, while Nakama handles the heavy-lifting for user accounts, social login, in-game chat, data storage, match hosting and more.
 
