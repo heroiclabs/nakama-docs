@@ -2,11 +2,9 @@
 
 There are three ways to install Nakama on MacOS:
 
-* using link:./docker.adoc[Docker]
-* with Homebrew
-* directly installing the binaries.
-
-We recommend you install Nakama on your development machine using link:./docker.adoc[Docker].
+* Using link:./docker.adoc[Docker] - This is the link:./docker.adoc[recommended approach].
+* via Homebrew
+* Directly installing the binaries.
 
 However, if you prefer to use one of the other methods then please read on.
 
@@ -30,7 +28,7 @@ brew update
 +
 [source,bash]
 ----
-brew install cockroachdb/cockroach/cockroach
+brew install cockroach
 ----
 . Next, run our brew recipe to download the Nakama code and build the binary:
 +

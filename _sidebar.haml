@@ -30,15 +30,18 @@
       %ul.doc-sidebar__second-level
         %li= nav_link 'Basic', '/docs/configure/'
         %li= nav_link 'Advanced', '/docs/configure/advanced'
-    %li= nav_link 'Start the Server', '/docs/start-server.html'
-    %li= nav_link 'Operate the Server', '/docs/operate.html'
+    %li
+      = nav_link 'Running the Server', '/docs/running-nakama/'
+      %ul.doc-sidebar__second-level
+        %li= nav_link 'Start Nakama', '/docs/running-nakama/'
+        %li= nav_link 'Additional Commands', '/docs/running-nakama/commands'
     /
       %li
         = nav_link 'Admin', '/docs/admin/index.html'
         %ul.doc-sidebar__second-level
           %li= nav_link 'Cluster Management', '/docs/admin/cluster-management.html'
           %li= nav_link 'Dashboard', '/docs/admin/dashboard.html'
-      %li= link_to 'Managed Cloud', '/services.html'
+    %li= link_to 'Managed Cloud', '/managed-cloud.html'
     %li
       = link_to 'Clients', '/docs/clients/index.html'
       %ul.doc-sidebar__second-level
@@ -49,13 +52,20 @@
     %li
       = link_to 'Development', '/docs/development/index.html'
       %ul.doc-sidebar__second-level
+        %li= nav_link 'Authentication', '/docs/development/authentication.html'
         %li= nav_link 'User', '/docs/development/user.html'
         %li= nav_link 'Friends', '/docs/development/friends.html'
         %li= nav_link 'Groups', '/docs/development/groups.html'
         %li= nav_link 'Realtime Chat', '/docs/development/realtime-chat.html'
+        %li= nav_link 'Matchmaker', '/docs/development/matchmaker.html'
         %li= nav_link 'Realtime Multiplayer', '/docs/development/realtime-multiplayer.html'
         %li= nav_link 'Storage', '/docs/development/storage.html'
         %li= nav_link 'Dynamic Leaderboards', '/docs/development/dynamic-leaderboards.html'
+        %li
+          = link_to 'Script Runtime', '/docs/development/script-runtime/index.html'
+          %ul.doc-sidebar__second-level
+            %li= nav_link 'Usage', '/docs/development/script-runtime.html'
+            %li= nav_link 'Function Reference', '/docs/development/script-runtime/function-reference.html'
     /
       %li
         = nav_link 'Server Internals', '/docs/server-internals/index.html'
@@ -72,6 +82,7 @@
       %a(href="https://github.com/heroiclabs/nakama/blob/master/CHANGELOG.md" target="_blank") Release Notes
       %ul.doc-sidebar__second-level
         %li
+          %a(href="https://github.com/heroiclabs/nakama/releases/v0.13.0") 0.13.0
           %a(href="https://github.com/heroiclabs/nakama/releases/v0.12.2") 0.12.2
           %a(href="https://github.com/heroiclabs/nakama/releases/v0.11.3") 0.11.3
           %a(href="https://github.com/heroiclabs/nakama/releases/v0.10.0") 0.10.0

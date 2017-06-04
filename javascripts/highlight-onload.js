@@ -1,4 +1,4 @@
 hljs.configure({
-  'languages': ['csharp', 'java', 'lua', 'javascript', 'yaml']
+  'languages': ['javascript', 'objc', 'bash', 'make', 'sql', 'csharp', 'json', 'cpp', 'java', 'docker', 'go', 'lua', 'swift', 'yaml']
 });
 hljs.initHighlightingOnLoad();

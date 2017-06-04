@@ -13,10 +13,6 @@ When you first run Nakama you need to prepare the schema of the data that Nakama
 * `nakama migrate redo` rebuilds the schema from the first instance it was created.
 * `nakama migrate status` provides you details of the database schema in relation to the `migrate` subcommand.
 
-If you do not provide an option to `nakama migrate` it will do nothing.
-
-*XXX:* Is the above correct?
-
 You can also provide flags to change the behaviour of how `nakama migrate` works, these flags are:
 
 * `--db`: the location of the CockroachDB instance to use.
@@ -39,8 +35,8 @@ Here's an example of the output from `nakama doctor`:
 
 [source,bash]
 ----
-2017/04/25 14:10:54 host: 127.0.0.1
-2017/04/25 14:10:54 port: 7351
+host: 127.0.0.1
+port: 7351
 arch: amd64
 cpus: 4
 go: go1.8
@@ -76,8 +72,6 @@ data_dir: /nakama/data
 
 == nakama admin
 
-XXX: Leading this until we have more detail from Chris.
-
 To setup certain features used by nakama the `nakama doctor` subcommand allows you initialise the state within the database.
 Depending on the input provided to `nakama admin` it will perform different actions:
 
@@ -88,11 +82,12 @@ You can also get more control over how the `nakama admin` subcommand behaves wit
 
 * `--db`: The location of the CockroachDB instance to use.
 ** Default value is `root@localhost:26257/nakama`.
+* `--id`: The leaderboard ID - can be any string you'd like
 * `--authoritative`: Dictates if the game client can modify the leaderboard at all
 ** Default value is `false`.
 * `--sort`: Sets whether the leaderboard should order scores in ascending or descending mode.
 ** Default value is `desc`.
-* `--reset`: Using link:https://en.wikipedia.org/wiki/Cron[Cron format^] sets when the leaderboard should reset. If an empty string is used the leaderboard will never reset.
+* `--reset`: Using https://en.wikipedia.org/wiki/Cron[Cron format^] sets when the leaderboard should reset. If an empty string is used the leaderboard will never reset.
 ** Default value is `""`.
 * `--metadata`: A JSON object contain any additional parameters about the leaderboard, such as description, title, etc.
 ** Default value is `"{}"`.
