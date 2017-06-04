@@ -123,11 +123,4 @@ Please report issues and contribute code to help us make it better.
 
 == Next Steps
 
-XXX: Update links to /development rather than client
-
-Now that you have a client instance, you can start taking advantage of the Nakama features such as
-
-* link:../clients/user.adoc[Creating and fetching users]
-* link:../clients/groups.adoc[Add groups] or link:../client/friends.adoc[friends]
-* link:../clients/realtime-chat.adoc[Realtime Chat]
-* link:../clients/realtime-multiplayer.adoc[Create multiplayer matches]
+Now that you've covered the basics of the Unity client, you can go on to create the fundamental building block of Nakama games: link:../development/user.adoc[a user].
