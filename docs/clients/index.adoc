@@ -1,0 +1,50 @@
+= Client-side development
+
+When you're ready to build your game using Nakama, you can choose the client library for your prefered framework.
+
+|===
+| *Framework* | *Status*
+| Unity | Officially supported
+| Unreal | Beta
+|===
+
+== Get started with your chosen client
+
+First up, you need to download and install your chosen client library. You can then start building with Nakama.
+
+[docs__platforms]
+* +++<h1>+++ image:/images/svg/unity.svg[] *Unity Platform* +++</h1>+++
+  +++<p>Instructions for starting an Unity application</p>+++
+  ** link:./unity.adoc[*Get started with Unity*]
+  ** link:https://github.com/heroiclabs/nakama-unity[*GitHub Source*]
+* +++<h1>+++ image:/images/svg/unreal.svg[] *Unreal Platform* +++</h1>+++
+  +++<p>Instructions for starting an Unreal application</p>+++
+  ** link:./unreal[*Get started with Unreal*]
+  ** link:https://github.com/heroiclabs/nakama-unreal[*GitHub Source*]
+
+== Building with Nakama
+
+Once you have the client up and running, you can start developing with Nakama.
+
+The core features of Nakama that will accelerate the application development are:
+
+[docs__features-list]
+* image:/images/svg/built-for-the-cloud.svg[] link:./clients/user.adoc[*User Accounts*]
+  +++<div class="available-client">+++ image:/images/svg/unity.svg[Unity supported] +++</div>+++
+  +++<p>Manage player accounts authenticated by device ID, social profiles or using your own custom server.</p>+++
+* image:/images/svg/core-game-apis.svg[] link:./clients/groups.adoc[*Groups*]
+  +++<div class="available-client">+++ image:/images/svg/unity.svg[Unity supported] +++</div>+++
+  +++<p>Take the friends system a step further with groups.</p>+++
+* image:/images/svg/operations-management.svg[] link:./clients/friends.adoc[*Friends*]
+  +++<div class="available-client">+++ image:/images/svg/unity.svg[Unity supported] +++</div>+++
+  +++<p>Build a social network into your games with Nakama’s friends system.</p>+++
+* image:/images/svg/always-online.svg[] link:./clients/realtime-chat.adoc[*In-game Chat*]
+  +++<div class="available-client">+++ image:/images/svg/unity.svg[Unity supported] +++</div>+++
+  +++<p>Add realtime in-game chat to your games.</p>+++
+
+== What to do next
+
+The first step to building your game with Nakama is to link:./setup/install.adoc[install]
+ it on your development laptop.
+
+ If you're already familiar with Nakama and want a refresher, you can jump through this guide by using the navigation on the left.
