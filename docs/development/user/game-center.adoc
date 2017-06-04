@@ -3,7 +3,8 @@
 == Apple Game Center
 
 Nakama supports authentication using Game Center Player IDs on compatible Apple devices.
-This is a good frictionless authentication option as it requires no user input on Applie devices.
+
+This is a good frictionless authentication option as it requires no user input on Apple devices.
 
 === How to login & Register Users
 
