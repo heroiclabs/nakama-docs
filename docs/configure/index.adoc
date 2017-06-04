@@ -29,6 +29,7 @@ volumes:
     target: /nakama/data
 ----
 
+
 === Editing the config file
 
 Nakama configuration files use the YAML format. If you're new to YAML, you can http://yaml.org/[read more to get up to speed].
@@ -42,7 +43,7 @@ If you specify only two configuration options they should be the encryption and 
 * `session.encryption_key`: (defaults to ``"defaultencryptionkey"``) used as the base for the encryption token.
 * `transport.server_key`: (defaults to ``"defaultencryptionkey"``) used to establish a secure connection between the client and server.
 
-WARNING: You must specify unique strings for both of these parameters when using Nakama in production or your server's security will be compromised.
+WARNING: You *must* specify unique strings for both of these parameters when using Nakama in production or your server's security will be compromised.
 
 == Basic configuration options
 
@@ -79,6 +80,7 @@ Assuming you didn't change the defaults, our basic Nakama configuration YAML fil
 
 [source,yaml]
 ----
+
 name: nakama-node-1
 datadir: "./data/"
 port: 7350
