@@ -1,0 +1,50 @@
+= User > Steam Social Login | Nakama Client
+
+== Steam Login
+
+=== Requirements
+
+To take advantage of the Steam Social Login you will need to have the following:
+
+* A Steam App ID and Publisher Key, you can find details on these at https://partner.steamgames.com/
+
+=== How to login & Register Users
+
+To begin with, you will need to setup Nakama to use the Steam App ID and Publisher Key, you can do this via the link:../../configure.adoc[configuration] file.
+
+Once you've got Nakama setup with your Steam credentials you will need to get a `SessionToken` for the user, and with that `SessionToken` you can then register and login a user into Nakama.
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity show"]
+----
+string sessionToken = "session-token-from-steam";
+var message = NAuthenticateMessage.Steam(sessionToken);
+client.Login(message, (INSession session) =>
+{
+  client.Connect(session);
+  Debug.Log ("Successfully logged in.");
+}, (INError error) =>
+{
+  Debug.Log ("Could not login. Attempting to register.");
+  client.Register(message, (INSession session) =>
+  {
+    client.Connect(session);
+    Debug.Log ("Successfully registered and logged in.");
+  }, (INError error) =>
+  {
+    Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+  });
+});
+----
+
+In the examples above you have registered and/or logged in a user, and connected the application to your Nakama server instance.
+
+== Next Steps
+
+You now have a user logged in with Google, you can now:
+
+* link:../clients/groups.adoc[Add groups] or link:../client/friends.adoc[friends]
+* link:../clients/realtime-chat.adoc[Realtime Chat]
+* link:../clients/realtime-multiplayer.adoc[Create multiplayer matches]

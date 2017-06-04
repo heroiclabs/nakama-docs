@@ -1,0 +1,56 @@
+= User > Game Center | Nakama Client
+
+== Apple Game Center
+
+Nakama supports authentication using Game Center Player IDs on compatible Apple devices.
+This is a good frictionless authentication option as it requires no user input on Applie devices.
+
+=== How to login & Register Users
+
+Users can be authenticated by sending the following Game Center credentials to the server: Player ID, Bundle ID, Timestamp, Salt, Signature, and Public Key URL.
+You'll need to dive into native Objective-C code as the `UnityEngine.SocialPlatforms.GameCenter` doesn't expose enough information to enable authentication.
+
+TIP: **Required parameters**
+Have a look at the relevant https://developer.apple.com/reference/gamekit/gklocalplayer/1515407-generateidentityverificationsign[iOS GameKit function reference^].
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+// These are passed in via your native Objective-C code...
+string playerId;
+string bundleId;
+long timestamp;
+string base64salt;
+string base64signature;
+string publicKeyUrl;
+
+var message = NAuthenticateMessage.GameCenter(playerId, bundleId, timestamp, base64salt, base64signature, publicKeyUrl);
+client.Login(message, (INSession session) =>
+{
+  client.Connect(session);
+  Debug.Log ("Successfully logged in.");
+}, (INError error) =>
+{
+  Debug.Log ("Could not login. Attempting to register.");
+  client.Register(message, (INSession session) =>
+  {
+    client.Connect(session);
+    Debug.Log ("Successfully registered and logged in.");
+  }, (INError error) =>
+  {
+    Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+  });
+});
+----
+
+In the examples above you have registered and/or logged in a user, and connected the application to your Nakama server instance.
+
+== Next Steps
+
+You now have a user logged in with Facebook, you can now:
+
+* link:../clients/groups.adoc[Add groups] or link:../client/friends.adoc[friends]
+* link:../clients/realtime-chat.adoc[Realtime Chat]
+* link:../clients/realtime-multiplayer.adoc[Create multiplayer matches]

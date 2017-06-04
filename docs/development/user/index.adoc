@@ -1,0 +1,324 @@
+= User | Nakama Client
+
+The user is at the core of all interactions with Nakama, so we'll start by looking at how to create and manage users.
+
+Here's what you need to know about users:
+
+ * each user represents a unique identity in Nakama
+ * users can be identified in one or more ways, such as a device ID or social login
+ * users can enter friendships with other users, join groups, participate in chats and play in multiplayer matches.
+
+Let's started by registering a user.
+
+== Register or log-in a user
+
+Each user in Nakama must have at least one form of unique identification, whether that's a:
+
+* device ID
+* email address
+* or social media ID.
+
+When creating a new user for the first time, or logging in an existing user, you'll need to provide at least one of these to either create the new account or retrieve an existing user account.
+
+=== Device ID
+
+Each device – such as an iPhone or Android phone – has a unique identifier that we can use as a convenient way to identify players who either do not wish to provide other identification information or where the game is so casual that it wouldn't make sense to ask for more details.
+
+Nakama lets you use the Device ID as a low friction way to create and manage a user identity. Here's what you need to know about using the device ID to manage a user identity:
+
+* It requires no interaction from the player for registration or subsequent log-in.
+* The user account is tied to the device, unless you add another identifier.
+* It's ideal for guest users.
+* The method of obtaining a device ID varies somewhat between iOS and Android.
+
+Let's take a look at what you need to do.
+
+==== Obtaining the device's ID
+
+To some extent, you can use any information from the device that you can be sure is unique. For example, if you can access the IMEI or the MAC address, you might choose to use one of those as the unique device identifier.
+
+*For iOS and Windows devices:* Unity provides a `link:https://docs.unity3d.com/ScriptReference/SystemInfo-deviceUniqueIdentifier.html[SystemInfo.deviceUniqueIdentifier^]`.
+
+*For Android devices:* you need to manually obtain a unique piece of identifying data and you can link:https://developer.android.com/training/articles/user-data-ids.html[read more in the Android documentation^].
+
+==== How to handle unreliable device IDs
+
+Device IDs are somewhat unreliable and can change following an operating system upgrade or other updates made by the operating system vendor.
+
+That's okay, though, because there's nothing particularly special about the identifier itself. After you've obtained it the first time to register a new user account, you should cache the ID locally on the device so that you can retrieve it in future without having to request it again from the operating system.
+
+TIP: **Reduce the chance of clashing device IDs**
+The device ID you obtain from the operating system is highly likely to be unique. However, you can reduce the chance of clashing IDs by appending the current timestamp to the ID.
+
+==== Registering the user with Nakama
+
+Using the `client` instance you created earlier, you can register a new user with a device ID as its identifier:
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+* image:/images/svg/unreal.svg[Unreal] link:#[Unreal, role="code-unreal"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+// Let's check storage if there was an ID already generated
+// if not, let's generate a new one and persist it.
+// Alternatively, on mobile devices you may use a native system device ID.
+string id = PlayerPrefs.GetString("ID");
+if (string.IsNullOrEmpty (id)) {
+  id = SystemInfo.deviceUniqueIdentifier;
+  PlayerPrefs.SetString ("ID", id);
+}
+
+var message = NAuthenticateMessage.Device(id);
+client.Register(message, (INSession newSession) =>
+{
+  client.Connect(session);
+  Debug.Log ("Successfully logged in.");
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+});
+----
+
+[source,cpp, role="docs__code-display code-unreal"]
+----
+// Testing for Unreal
+----
+
+If there is already a user with that device ID, we'll log into the existing account:
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+var request = NAuthenticateMessage.Device(id);
+client.Login(request, (INSession session) => {
+  client.Connect(session);
+  Debug.Log ("Successfully logged in.");
+}, (INError error) => {
+  Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+});
+----
+
+=== Non-anonymous identifiers
+
+For less casual players, or games where you'd prefer to have a non-anonymous method of identification, you can use an email address or social media account as the user identifier.
+
+== Email
+
+When using an email address as the unique identifier, the player needs to provide both an email address and password.
+
+==== Registration using an email address
+
+Here's how to create a user account using an email address as the identifier:
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+string email = "email@example.com"
+string password = "password"
+var message = NAuthenticateMessage.Email(email, password);
+client.Register(message, (INSession newSession) =>
+{
+  client.Connect(session);
+  Debug.Log ("Successfully logged in.");
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not register user: '{0}'.", error.Message);
+});
+----
+
+==== Login using an email address
+
+Subsequent logins work in pretty much the same way:
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+string email = "email@example.com"
+string password = "password"
+var message = NAuthenticateMessage.Email(email, password);
+client.Login(message, (INSession newSession) =>
+{
+  client.Connect(session);
+  Debug.Log ("Successfully logged in.");
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+});
+----
+
+=== Social Login
+
+The other form of non-anonymous login relies on one or more of the user's social media identities.
+
+Nakama makes it very easy to implement login using social media accounts, including:
+
+[docs__social-login]
+* *link:./user/facebook[Facebook]*
+* *link:./user/google[Google]*
+* *link:./user/steam[Steam]*
+* *link:./user/game-center[Game Center]*.
+
+Take a look at the dedicated guide for each social provider.
+
+To perform a social login, you must first make sure the gamer is logged into their social account. Once the social authentication is complete, the last step is to send Nakama the access token available. This is usually an OAuth 2.0 access token, but varies by social provider.
+
+=== Custom account identification
+
+If you need to use a different authentication method – perhaps your game publisher has their own player accounts system – then Nakama makes it easy to integrate a custom third-party authentication system.
+
+This works in a similar way to social logins: you must make sure that the user is logged into the relevant account on the external authentication system and then accept a token from that system.
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+string customId = "your-custom-id";
+var message = NAuthenticateMessage.Custom(customId);
+client.Login(message, (INSession session) =>
+{
+  client.Connect(session);
+  Debug.Log ("Successfully logged in.");
+}, (INError error) =>
+{
+  Debug.Log ("Could not login. Attempting to register.");
+  client.Register(message, (INSession session) =>
+  {
+    client.Connect(session);
+    Debug.Log ("Successfully registered and logged in.");
+  }, (INError error) =>
+  {
+    Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+  });
+});
+----
+
+== Adding login methods to an existing user account
+
+User accounts need just one authentication method at the time of creation but you can add as many additional methods as you need. In Nakama, this is called linking.
+
+As you'd expect, you can link a unique ID – such as an email address or social media profile – only if it is not already in use by another user account.
+
+To link or unlink an authentication method, the user needs to be logged in and have a connected session with the server.
+
+=== Linking
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+string id = "id";
+var message = SelfLinkMessage.Device(id);
+client.Send(message, (bool completed) => {
+  Debug.Log ("Successfully linked device ID to current user");
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not link device ID: '{0}'.", error.Message);
+});
+----
+
+=== Unlinking
+
+To unlink, simply tell Nakama to remove the credentials:
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+string id = "id";
+var message = SelfUnlinkMessage.Device(id);
+client.Send(message, (bool completed) => {
+  Debug.Log ("Successfully unlinked device ID from current user");
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not unlink device ID: '{0}'.", error.Message);
+});
+----
+
+== Retrieving the current user's information
+
+You can can retrieve profile data about the currently logged-in user, including common fields such as:
+
+* handle
+* full name
+* avatar URL
+* timezone. 
+
+The returned object also includes the user's login information such, such as the social IDs and device IDs associated with their account.
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+var message = NSelfFetchMessage.Default();
+client.Send(message, (INSelf self) => {
+  Debug.LogFormat ("The user's ID is '{0}'.", self.Id);
+  Debug.LogFormat ("The user's fullname is '{0}'.", self.Fullname); // may be null
+  Debug.LogFormat ("The user's handle is '{0}'.", user.Handle);
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not retrieve self: '{0}'.", error.Message);
+});
+----
+
+== Updating user information
+
+Updating the current user's profile information is handled in a similar way to retrieving the user's data.
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+var message = new NSelfUpdateMessage.Builder()
+                    .AvatarUrl("http://graph.facebook.com/avatar_url")
+                    .Fullname("My New Name")
+                    .Lang("en")
+                    .Location("San Francisco")
+                    .Timezone("Pacific Time")
+                    .Build();
+client.Send(message, (bool completed) => {
+  Debug.Log ("Successfully updated user information");
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not update self: '{0}'.", error.Message);
+});
+----
+
+== Retrieving other users
+
+You can retrieve publicly available information about other users registered in your Nakama instance. To get profile information of a particular user, you need to know one of the IDs associated with their account.
+
+This makes it easy to identify opponents in matches, build additional information into high score tables and so on.
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+* image:/images/svg/unreal.svg[Unreal] link:#[Unreal, role="code-unreal"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+var message = NUsersFetchMessage.Default(id);
+client.Send(message, (INResultSet<INUser> results) => {
+  Debug.LogFormat ("Fetched {0} users'.", results.Results.Count);
+  foreach (INUser user in results.Results) {
+    Debug.LogFormat ("The user's handle is '{0}'.", user.Handle);
+  }
+}, (INError error) =>
+{
+  Debug.LogErrorFormat ("Could not retrieve users: '{0}'.", error.Message);
+});
+----
+
+== Next steps
+
+Now that you have users you can use Nakama to build a game for them to play. Let's start by creating clients/groups.adoc[groups].

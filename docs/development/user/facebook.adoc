@@ -1,0 +1,106 @@
+= User > Facebook Social Login | Nakama Client
+
+== Facebook authentication
+
+Facebook is an ideal authentication provider for casual and social games. When authenticating a user through their Facebook account you receive:
+
+* the user's friends list
+* XXX: confirm with Alim exactly what you get.
+
+This makes it super easy to find the user's Facebook friends who are already registered in Nakama, by searching for their Facebook identities.
+
+=== Requirements
+
+If you're using the Nakama Unity client, you'll also need to Facebook Unity SDK to authenticate users with Facebook:
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[docs__code-display code-unity]
+* https://developers.facebook.com/docs/unity/downloads[Facebook Unity SDK]
+
+[docs__code-display code-unity]
+Follow the https://developers.facebook.com/docs/unity/examples[Facebook Unity Examples^] on how to add the asset to your project.
+You must also complete the instructions on https://developers.facebook.com/docs/unity/reference/current/ConfigureiOSAndroid[Facebook's developer guide^] to configure your iOS or Android client.
+
+=== Register or log-in users
+
+Once you are familiar with the Unity Facebook SDK, it's easy to use it to register or authenticate a user.
+
+First-up, you need to call `FB.Init`, which initialises the Facebook Unity SDK. You should do this as early in the game's start-up as possible.
+
+A typical workflow is to attempt to authenticate the user first and, if the Facebook user is not associated with an account in your Nakama server, to then register a new Nakama player account using that Facebook ID.
+
+XXX: Mike, I've expanded this section quite a bit but I feel there's more we could do here to explain the workflow. Shouldn't we show a standalone registration and then a standalone auth of an existing user?
+
+Here's an example of how you'd do that:
+
+[docs__code-switch]
+* image:/images/svg/unity.svg[Unity] link:#[Unity, role="code-unity"]
+
+[source,csharp, role="docs__code-display code-unity"]
+----
+// you must call FB.Init as early as possible at game startup
+if (!FB.IsInitialized) {
+  FB.Init (() => {
+    if (FB.IsInitialized) {
+      FB.ActivateApp();
+      // Use a Facebook access token to create a user account
+      var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
+      var message = NAuthenticateMessage.Facebook(oauthToken);
+      client.Login(message, (INSession session) =>
+      {
+        client.Connect(session);
+        Debug.Log ("Successfully logged in.");
+      }, (INError error) =>
+      {
+        Debug.Log ("Could not login. Attempting to register.");
+        client.Register(message, (INSession session) =>
+        {
+          client.Connect(session);
+          Debug.Log ("Successfully registered and logged in.");
+        }, (INError error) =>
+        {
+          Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+        });
+      });
+    }
+  });
+}
+
+// Execute in a button or UI component within your game
+FB.Login("email", (ILoginResult result) => {
+  if (FB.IsLoggedIn) {
+    var accessToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
+    client.Login(message, (INSession session) =>
+    {
+      client.Connect(session);
+      Debug.Log ("Successfully logged in.");
+    }, (INError error) =>
+    {
+      Debug.Log ("Could not login. Attempting to register.");
+      client.Register(message, (INSession session) =>
+      {
+        client.Connect(session);
+        Debug.Log ("Successfully registered and logged in.");
+      }, (INError error) =>
+      {
+        Debug.LogErrorFormat ("Could not login user: '{0}'.", error.Message);
+      });
+    });
+  } else {
+    Debug.LogErrorFormat ("Could not login to Facebook got '{0}'.", result.Error);
+  }
+});
+
+----
+
+In the examples above you have registered and/or logged in a user, and connected the application to your Nakama server instance.
+
+== Next steps
+
+You now have a user logged in with Facebook, you can now:
+
+* link:../clients/groups.adoc[Add groups] or link:../client/friends.adoc[friends]
+* link:../clients/realtime-chat.adoc[Realtime Chat]
+* link:../clients/realtime-multiplayer.adoc[Create multiplayer matches]
