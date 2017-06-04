@@ -68,9 +68,11 @@ Docker containers are ephemeral by design: when you remove the container, you lo
 
 That's not a problem if you're just testing things out but for development work you should configure your containers to host your data on your local file system.
 
+== Upgrading
+
 As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.
 
-When upgrading to a new version of Nakama, the process in the `docker-compose.yml` performs a migration of your data to the new database schema.
+NOTE: When upgrading to a new version of Nakama, the process in the `docker-compose.yml` performs a migration of your data to the new database schema.
 
 WARNING: When you upgrade the container images, any data stored in the containers will be deleted. Make sure you follow the https://docs.docker.com/compose/compose-file/#volumes[docker-compose reference^] to update your docker-compose configuration.
 
@@ -127,6 +129,5 @@ Although you won't need to interact directly with CockroachDB, you can find it a
 * *CockroachDB dashboard:* http://127.0.0.1:8080[http://127.0.0.1:8080^]
 
 == Next steps
-
 
 Now you can start developing your application with Nakama. Let's take a look at link:../development[Nakama Clients].

@@ -36,15 +36,14 @@ Each subsequent time you start Nakama, you don't need to run the `migrate` step 
 
 Once Nakama is running, you can connect to it from the client on port `7350`. To view Nakama's built-in dashboard, navigate to `http://localhost:7351`.
 
-=== Nakama run-time options
+=== Nakama command-line options
 
-Nakama has just a few run-time options, to make it as easy as possible to run and develop against. You can also specify each of these options in a persistent link:./configure[configuration file^].
+Nakama has just a few command-line options to make it as easy as possible to run and develop against. You can also specify each of these options in a persistent link:./configure[configuration file^].
 
 Nakama's run-time options:
 
 * `--config`: Absolute path to a configuration file.
-
-* `--db`: Fully qualified JDBC address to a CockroachDB server. This is in the form of `jdbc://user:password@hostname:port`.
+* `--db`: Fully qualified JDBC address to a CockroachDB server. This is in the form of `user:password@hostname:port`.
 * `--data-dir`: Data directory to store server data. Absolute path to a writeable folder.
 * `--name`: Unique node name. This name is also used in the log files.
 * `--port`: The port to listen on when accepting connections from the client. Listens on all interfaces by default. Unless explicitly defined, other ports will be chosen sequentially from here upwards.
@@ -66,8 +65,6 @@ And here's the output that we'd expect to see:
 [I] Node name=nakama-92e1 version=0.12.1+aab3e2e
 [I] Data directory path=/path/to/data-dir/data
 [I] Database connections dsns=[root@localhost:26257]
-
-[W] DB schema outdated, run `nakama migrate up` migrations=2
 [I] Ops port=9646
 [I] Dashboard url=http://localhost:7350
 [I] Client port=7351
