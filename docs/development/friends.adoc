@@ -1,26 +1,62 @@
 = Friends | Nakama server documentation
 
-Friends are a core social feature in Nakama. Users can track new and existing friends, see who is online or when they were last seen, chat in real time, challenge them to matches, and more.
+Nakama's friends system means you can add social elements to your games with virtually no effort. Friendships between users are at the heart of many Nakama features, including:
 
-Each individual user's friends list is their primary way to track relationships to other individual users. These relationships can be:
+ * presence reporting: allows players to see who is online
+ * one-on-one chat
+ * match challenges.
 
-* Mutual friend - both users have agreed to add each other as friends.
-* Received invite - another user has sent a friend request.
-* Sent invitation - an outgoing friend request from this user.
-* Blocked - a blacklisted user. Used to reject chat requests, and more.
+== Friends and relationships
 
-TIP: *Social accounts and friends*
-When registering or linking a social account, such as Facebook, Nakama will import friends automatically.
+All users in Nakama have a list of friends and each friend on that list has a relationship status associated with it. The relationship statuses available are:
+
+* *Mutual friend:* an active friendship that both users have agreed to.
+* *Received invitation:* the other party has sent a friend request.
+* *Sent invitation:* the user has sent a friend request to the other party.
+* *Blocked:* the user has chosen to blacklist the other part. This relationship is used to reject chat requests and any other activity from that person.
+
+Let's take a user called Lily as an example. Lily has four friends and each of Lily's friends has a relationship status associated:
+
+|=======
+|*Friend name* | *Relationship status*
+|Alfie | Mutual friend
+|Mia | Received invitation
+|Amita | Sent invitation
+|Jeremy | Blocked
+|=======
+
+=== Importing friends from social accounts
+
+If a user account is associated with a social login method – such as a Facebook account – then Nakama will automatically import the friends listed in that social account.
+
+You should make this clear to users of your game before they add a social media profile to their user account.
+
+== Working with friends
+
+Nakama gives you four basic methods for working with friends:
+
+ * Add
+ * List
+ * Remove
+ * Block.
+
+Let's take a look at each of them in turn.
 
 == Add
 
-Any user can add another user as a friend, identified by their user ID. If there is a pending friend invitation from that user, it will be accepted and the relationship between the two users will become mutual friendship.
+Let's say our example player, Lily, wants to add the user Katie as her friend, here's how it would work:
 
-Sending a friend invite and accepting a received invitation are done through the same client call.
+1. In your game, Lily identifies the player –– Katie –– that she wants to add as her friend.
+2. You send an "add friend" request to Nakama with the Katie's user ID.
+3. If Katie had previously sent an "add friend" request to Lily, then the friendship will be confirmed.
+4. Otherwise, Lily will be added Katie's friend list with a relationship status of `Invite` and Katie to Lily's friend list with the status `Invited`.
+5. If Katie chooses to accept Lily's request then both users will appear on each others friends lists with status `Friend`. However, if Katie choose to reject the request then Lily will be removed from Katie's friend list.
+
+Both sending and accepting an invitation happens with the same client call: whether inviting or accepting, you provide the ID of the user on the other side of the friendship. Let's look at an example.
 
 [source,csharp]
 ----
-// `id` is the user ID to add as a friend, or send an invite to.
+// `id` is the user ID to invite as a friend or whose invitation to accept
 client.Send<bool>(NFriendAddMessage.Default(id), (bool done) =>
 {
   // Handle success.
@@ -32,14 +68,14 @@ client.Send<bool>(NFriendAddMessage.Default(id), (bool done) =>
 
 == List
 
-Listing friends for the current user is a single request which will return all their friends, regardless of relationship type.
+You can retrieve the current user's friend list with a single call. Each friend int he list has associated `.State()`, which will be one of:
 
-When examining the returned list of friends, use `.State()` to differentiate the relationship types. State will be one of:
+* `FriendState.Friend`: a mutual friend.
+* `FriendState.Invite`: someone who has sent an invitation to the current user.
+* `FriendState.Invited`: someone the current user has sent an invitation to.
+* `FriendState.Blocked`: a blocked user.
 
-* `FriendState.Friend` - a mutual friend.
-* `FriendState.Invite` - a received invite.
-* `FriendState.Invited` - a sent invitation.
-* `FriendState.Blocked` - a blocked user.
+Here's how to request the current user's friend list:
 
 [source,csharp]
 ----
@@ -56,10 +92,17 @@ client.Send<bool>(NFriendsListMessage.Default(), (INResultSet<INFriend> results)
 
 == Remove
 
-At any time users can decide to remove a mutual friend, reject a received invite, cancel a sent invitation, or unblock a user. All of these operations are done through the same client call.
+A single call handles several types of removal, depending on the nature of the relationship between the current user and the user supplied.
 
-TIP: *Re-adding removed friends*
-If a friend is removed and then re-added, they will have to accept the invitation again.
+|=======
+|*Status*|*Action*
+|Friends|Friendship removed
+|Invite received| Invitation rejected
+|Invite sent| Invitation cancelled
+|Block|User unblocked
+|=======
+
+Here's an example of applying a removal to a user:
 
 [source,csharp]
 ----
@@ -73,9 +116,12 @@ client.Send<bool>(NFriendRemoveMessage.Default(id), (bool done) =>
 });
 ----
 
+TIP: *Re-adding removed friends*
+Once a friendship is removed, Nakama considers those two users to have no relationship. To recreate the friendship, one user must invite the other and they must then accept the invitation.
+
 == Block
 
-Nakama will observe the list of blocked users when other users trigger interactions. For example incoming direct chat messages or friend requests from blocked users will not be allowed.
+Blocking a user instructs Nakama to reject attempts by that user to initiate chats, friend requests, match invitations and other interactions.
 
 [source,csharp]
 ----
@@ -88,3 +134,7 @@ client.Send<bool>(NFriendBlockMessage.Default(id), (bool done) =>
   Debug.LogErrorFormat ("Could not block: '{0}'.", error.Message);
 });
 ----
+
+== Next steps
+
+Friendships are ideal for one-to-one relationships. Now let's look at many to many relationship with Nakama groups.
