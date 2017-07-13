@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
+      
+      
+        <link rel="canonical" href="https://heroiclabs.com/docs/in-app-notifications/">
+      
+      
+        <meta name="author" content="Heroic Labs Team & contributors">
+      
+      
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>In-app notifications - Nakama server</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-icon md-icon--home md-header-nav__button">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Social API
+                </span>
+              
+            
+            In-app notifications
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-icon md-icon--home md-nav__button"></i>
+    
+    Nakama server
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" checked>
+    
+    <label class="md-nav__link" for="nav-1">
+      Social API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Social API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        In-app notifications
+      </label>
+    
+    <a href="./" title="In-app notifications" class="md-nav__link md-nav__link--active">
+      In-app notifications
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#send-notifications" title="Send notifications" class="md-nav__link">
+    Send notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receive-notifications" title="Receive notifications" class="md-nav__link">
+    Receive notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-notifications" title="List notifications" class="md-nav__link">
+    List notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete-notifications" title="Delete notifications" class="md-nav__link">
+    Delete notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notification-codes" title="Notification codes" class="md-nav__link">
+    Notification codes
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#send-notifications" title="Send notifications" class="md-nav__link">
+    Send notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#receive-notifications" title="Receive notifications" class="md-nav__link">
+    Receive notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-notifications" title="List notifications" class="md-nav__link">
+    List notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete-notifications" title="Delete notifications" class="md-nav__link">
+    Delete notifications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notification-codes" title="Notification codes" class="md-nav__link">
+    Notification codes
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="in-app-notifications">In-app Notifications</h1>
+<p>In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts. A notification can be stored until read when the app is next opened or it can be pushed so only an active connected user will see it. You can also use notifications to trigger custom actions within your game and change client behavior.</p>
+<p>These notifications are viewed within the app which makes them a great companion to push notifications viewed outside the app.</p>
+<h2 id="send-notifications">Send notifications</h2>
+<p>You can send a notification to one or more users via the Lua runtime. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.</p>
+<p>Notifications can be sent as persistent or not. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read it should be marked as persistent when sent.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">user_ids</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;someuserid&quot;</span><span class="p">,</span> <span class="s2">&quot;anotheruserid&quot;</span><span class="p">,</span> <span class="s2">&quot;etc&quot;</span><span class="p">}</span>
+<span class="kd">local</span> <span class="n">sender_id</span> <span class="o">=</span> <span class="kc">nil</span> <span class="c1">-- &quot;nil&quot; for server sent.</span>
+<span class="kd">local</span> <span class="n">subject</span> <span class="o">=</span> <span class="s2">&quot;You earned a secret item!&quot;</span>
+<span class="kd">local</span> <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">item_id</span> <span class="o">=</span> <span class="s2">&quot;192308394345345&quot;</span><span class="p">,</span>
+  <span class="n">item_icon</span> <span class="o">=</span> <span class="s2">&quot;storm_bringer_sword.png&quot;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">code</span> <span class="o">=</span> <span class="mi">101</span>
+<span class="kd">local</span> <span class="n">expires_at</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span> <span class="c1">-- expires in 7 days.</span>
+<span class="kd">local</span> <span class="n">persistent</span> <span class="o">=</span> <span class="kc">true</span>
+
+<span class="n">nk</span><span class="p">.</span><span class="n">send_notification_id</span><span class="p">(</span><span class="n">user_ids</span><span class="p">,</span> <span class="n">sender_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span>
+                        <span class="n">code</span><span class="p">,</span> <span class="n">expires_at</span><span class="p">,</span> <span class="n">persistent</span><span class="p">)</span>
+</pre></div>
+
+
+<p>A notification must be given an "expires_at" value in milliseconds which indicates how long the notification will be available before it's removed. A message cannot be sent which expires in less than 60 seconds.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The code you choose for your notifications must start at "101" and upwards. See <a href="#notification-codes">below</a> for reserved message codes.</p>
+</div>
+<h2 id="receive-notifications">Receive notifications</h2>
+<p>An event handler can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.</p>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnNotificationReceived</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">NNotificationEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">INNotification</span> <span class="n">n</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Notification</span><span class="p">;</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received code &#39;{0}&#39; and subject &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Subject</span><span class="p">);</span>
+  <span class="kt">var</span> <span class="n">content</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">Content</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<h2 id="list-notifications">List notifications</h2>
+<p>You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. It depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">n</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Notice code &#39;{0}&#39; and subject &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Subject</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>A list of notifications can be retrieved in batches of up to 100 at a time. To retrieve all messages you should accumulate them with the resume cursor.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>You usually only want to list 100 notifications at a time otherwise you might cause user fatigue. A better option could be to have the UI fetch the next 100 notifications when the user scrolls to the bottom of your UI panel.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">allNotifications</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
+
+<span class="n">Action</span> <span class="n">accumulateNotifications</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INCursor</span> <span class="n">resumeCursor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">var</span> <span class="n">message</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
+      <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">allNotifications</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">);</span>
+      <span class="n">accumulateNotifications</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">);</span> <span class="c1">// recursive async call.</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">allNotifications</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">);</span>
+  <span class="n">accumulateNotifications</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the resume cursor returned which each list message.</p>
+<p>The resume cursor marks the position of the most recent notification retrieved as part of the list. We recommend you store the resume cursor in device storage and use it when the client makes it's next request for recent notifications.</p>
+<div class="codehilite"><pre><span></span><span class="n">INCursor</span> <span class="n">resumeCursor</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// use notification list.</span>
+  <span class="n">resumeCursor</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">;</span> <span class="c1">// cache resume cursor.</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="delete-notifications">Delete notifications</h2>
+<p>You can delete one or more notifications from the client. This is useful to purge notifications which has been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.</p>
+<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
+<span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(...);</span> <span class="c1">// Add notification from your internal list</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationRemove</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Notifications were removed.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="notification-codes">Notification codes</h2>
+<p>The server reserves codes 0 up to 100 for messages sent implicitly on certain events. The code is useful to decide how to display the notification in your UI.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>User X wants to chat.</td>
+</tr>
+<tr>
+<td>002</td>
+<td>User X wants to add you as a friend.</td>
+</tr>
+<tr>
+<td>003</td>
+<td>User X accepted your friend invite.</td>
+</tr>
+<tr>
+<td>004</td>
+<td>You've been accepted to X group.</td>
+</tr>
+<tr>
+<td>005</td>
+<td>User X wants to join your group.</td>
+</tr>
+<tr>
+<td>006</td>
+<td>Your friend X has just joined the game.</td>
+</tr>
+</tbody>
+</table>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2017 Heroic Labs
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://heroiclabs.com" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/heroiclabs" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/heroicdev" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/heroic-labs" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
