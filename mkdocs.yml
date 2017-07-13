@@ -1,0 +1,100 @@
+# Project information
+site_name: 'Nakama server'
+site_description: 'Documentation for the Nakama realtime and social server for games and apps.'
+site_author: 'Heroic Labs Team & contributors'
+site_url: 'https://heroiclabs.com/docs/'
+remote_name: 'origin'
+remote_branch: 'gh-pages'
+
+# Repository
+repo_name: 'heroiclabs/nakama'
+repo_url: 'https://github.com/heroiclabs/nakama'
+
+# Copyright
+copyright: 'Copyright &copy; 2016 - 2017 Heroic Labs'
+
+# Documentation and theme
+theme: 'material'
+
+# Options
+extra:
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  social:
+  - type: 'globe'
+    link: 'https://heroiclabs.com'
+  - type: 'github'
+    link: 'https://github.com/heroiclabs'
+  - type: 'twitter'
+    link: 'https://twitter.com/heroicdev'
+  - type: 'linkedin'
+    link: 'https://www.linkedin.com/company/heroic-labs'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite(guess_lang=false)
+  - markdown_fenced_code_tabs
+
+# Nav menu
+pages:
+#- 'Install and setup':
+#  - 'Docker quickstart': 'docker-quickstart.md'
+#  - 'Managed cloud': 'managed-cloud.md'
+#  - 'Production settings': 'production-settings.md'
+#  - 'Upgrades': 'nakama-upgrades.md'
+#- 'Fundamentals':
+#  - 'Nakama CLI': 'server-cli.md'
+#  - 'Authentication': 'authentication.md'
+#  - 'User accounts': 'user-accounts.md'
+#  - 'File configuration': 'file-configuration.md'
+#  - 'Resource limits': 'resource-limits.md'
+#- 'Storage engine':
+#  - 'Collections': 'storage-collections.md'
+#  - 'Design patterns': 'storage-design-patterns.md'
+#  - 'Permissions': 'storage-permissions.md'
+#  - 'Record ownership': 'record-ownership.md'
+- 'Social API':
+#  - 'Friends': 'friends.md'
+#  - 'Groups and clans': 'groups-clans.md'
+  - 'In-app notifications': 'in-app-notifications.md'
+#  - 'Realtime chat': 'realtime-chat.md'
+#- 'For games':
+#  - 'Leaderboards': 'leaderboards.md'
+#  - 'Matchmaker': 'matchmaker.md'
+#  - 'Multiplayer':
+#    - 'Realtime games': 'multiplayer-realtime.md'
+#    - 'Turn-based': 'multiplayer-turn-based.md'
+#- 'Unity engine': 'nakama-unity-engine.md'
+#- 'Unreal engine': 'nakama-unreal-engine.md'
+#- 'Android guide': 'nakama-android-guide.md'
+#- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
+#- 'JavaScript guide': 'nakama-javascript-guide.md'
+#- 'Runtime code':
+#  - 'Basics': 'runtime-code-basics.md'
+#  - 'Best practices': 'runtime-code-best-practices.md'
+#  - 'Examples': 'runtime-code-examples.md'
+#  - 'Recommended modules': 'runtime-code-recommended-modules.md'
+#  - 'Lua for JavaScripters': 'lua-for-javascripters.md'
+#  - 'JavaScript/Lua comparison': 'javascript-lua-comparison.md'
+#  - 'Lua cheatsheet': 'lua-cheatsheet.md'
+#  - 'Function reference': 'runtime-function-reference.md'
+#- 'Tutorials':
+#  - 'Ban users': 'tutorial-ban-users.md'
+#  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
+#  - 'Virtual wallet': 'tutorial-virtual-wallet.md'
+#  - 'Inventory management': 'tutorial-inventory-management.md'
+#  - 'Prized leaderboards': 'tutorial-prized-leaderboards.md'
+#- 'Nakama enterprise': 'nakama-enterprise.md'
+#- 'Internals':
+#  - 'Server architecture': 'nakama-server-architecture.md'
+#  - 'Social graph engine': 'nakama-social-graph-engine.md'
+#  - 'Message router': 'nakama-message-router.md'
+#  - 'Network protocol': 'nakama-network-protocol.md'
+#  - 'Lua runtime': 'nakama-lua-runtime.md'
+#- 'Protocol reference': '#'
+#- 'Release notes': '#'
