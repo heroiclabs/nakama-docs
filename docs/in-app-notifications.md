@@ -1,12 +1,19 @@
 # In-app Notifications
 
-In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts. A notification can be stored until read when the app is next opened or it can be pushed so only an active connected user will see it. You can also use notifications to trigger custom actions within your game and change client behavior.
+In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts.
+
+A notification can be stored until read when the app is next opened or it can be pushed so only an active connected user will see it. You can also use notifications to trigger custom actions within your game and change client behavior.
 
 These notifications are viewed within the app which makes them a great companion to push notifications viewed outside the app.
 
 ## Send notifications
 
-You can send a notification to one or more users via the Lua runtime. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.
+You can send a notification to one or more users with server-side Lua code. It can be sent to any user in the game, no need to be a friend to be able to exchange messages. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.
+
+!!! note
+    The code you choose for your notifications must start at "101" and upwards. See [below](#notification-codes) for reserved message codes.
+
+A notification has content which will be encoded as JSON and must be given an "expires_at" value in milliseconds which indicates how long the notification will be available before it's removed. A message cannot be sent which expires in less than 60 seconds.
 
 Notifications can be sent as persistent or not. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read it should be marked as persistent when sent.
 
@@ -27,11 +34,6 @@ local persistent = true
 nk.send_notification_id(user_ids, sender_id, subject, content,
                         code, expires_at, persistent)
 ```
-
-A notification must be given an "expires_at" value in milliseconds which indicates how long the notification will be available before it's removed. A message cannot be sent which expires in less than 60 seconds.
-
-!!! note
-    The code you choose for your notifications must start at "101" and upwards. See [below](#notification-codes) for reserved message codes.
 
 ## Receive notifications
 
@@ -94,9 +96,9 @@ client.Send(message, (INNotificationList list) => {
 });
 ```
 
-It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the resume cursor returned which each list message.
+It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the resume cursor returned with each list message.
 
-The resume cursor marks the position of the most recent notification retrieved as part of the list. We recommend you store the resume cursor in device storage and use it when the client makes it's next request for recent notifications.
+The resume cursor marks the position of the most recent notification retrieved. We recommend you store the resume cursor in device storage and use it when the client makes it's next request for recent notifications.
 
 ```csharp fct_label="Unity"
 INCursor resumeCursor = ...; // stored from last list retrieval.
@@ -114,7 +116,7 @@ client.Send(message, (INNotificationList list) => {
 
 ## Delete notifications
 
-You can delete one or more notifications from the client. This is useful to purge notifications which has been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.
+You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.
 
 ```csharp fct_label="Unity"
 IList<INNotification> list = new List<INNotification>();
