@@ -361,10 +361,16 @@
                 
                 
                 <h1 id="in-app-notifications">In-app Notifications</h1>
-<p>In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts. A notification can be stored until read when the app is next opened or it can be pushed so only an active connected user will see it. You can also use notifications to trigger custom actions within your game and change client behavior.</p>
+<p>In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts.</p>
+<p>A notification can be stored until read when the app is next opened or it can be pushed so only an active connected user will see it. You can also use notifications to trigger custom actions within your game and change client behavior.</p>
 <p>These notifications are viewed within the app which makes them a great companion to push notifications viewed outside the app.</p>
 <h2 id="send-notifications">Send notifications</h2>
-<p>You can send a notification to one or more users via the Lua runtime. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.</p>
+<p>You can send a notification to one or more users with server-side Lua code. It can be sent to any user in the game, no need to be a friend to be able to exchange messages. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The code you choose for your notifications must start at "101" and upwards. See <a href="#notification-codes">below</a> for reserved message codes.</p>
+</div>
+<p>A notification has content which will be encoded as JSON and must be given an "expires_at" value in milliseconds which indicates how long the notification will be available before it's removed. A message cannot be sent which expires in less than 60 seconds.</p>
 <p>Notifications can be sent as persistent or not. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read it should be marked as persistent when sent.</p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
 
@@ -384,11 +390,6 @@
 </pre></div>
 
 
-<p>A notification must be given an "expires_at" value in milliseconds which indicates how long the notification will be available before it's removed. A message cannot be sent which expires in less than 60 seconds.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The code you choose for your notifications must start at "101" and upwards. See <a href="#notification-codes">below</a> for reserved message codes.</p>
-</div>
 <h2 id="receive-notifications">Receive notifications</h2>
 <p>An event handler can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.</p>
 <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnNotificationReceived</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">NNotificationEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -446,8 +447,8 @@
 </pre></div>
 
 
-<p>It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the resume cursor returned which each list message.</p>
-<p>The resume cursor marks the position of the most recent notification retrieved as part of the list. We recommend you store the resume cursor in device storage and use it when the client makes it's next request for recent notifications.</p>
+<p>It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the resume cursor returned with each list message.</p>
+<p>The resume cursor marks the position of the most recent notification retrieved. We recommend you store the resume cursor in device storage and use it when the client makes it's next request for recent notifications.</p>
 <div class="codehilite"><pre><span></span><span class="n">INCursor</span> <span class="n">resumeCursor</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
@@ -463,7 +464,7 @@
 
 
 <h2 id="delete-notifications">Delete notifications</h2>
-<p>You can delete one or more notifications from the client. This is useful to purge notifications which has been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.</p>
+<p>You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.</p>
 <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
 <span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(...);</span> <span class="c1">// Add notification from your internal list</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationRemove</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
@@ -531,7 +532,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2016 - 2017 Heroic Labs
+            Copyright &copy; 2017 Heroic Labs
           </div>
         
         powered by
