@@ -213,6 +213,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../friends/" title="Friends" class="md-nav__link">
+      Friends
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -385,8 +397,9 @@
 <span class="kd">local</span> <span class="n">expires_at</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span> <span class="c1">-- expires in 7 days.</span>
 <span class="kd">local</span> <span class="n">persistent</span> <span class="o">=</span> <span class="kc">true</span>
 
-<span class="n">nk</span><span class="p">.</span><span class="n">send_notification_id</span><span class="p">(</span><span class="n">user_ids</span><span class="p">,</span> <span class="n">sender_id</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span>
-                        <span class="n">code</span><span class="p">,</span> <span class="n">expires_at</span><span class="p">,</span> <span class="n">persistent</span><span class="p">)</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">notification_send_id</span><span class="p">({</span><span class="n">UserIds</span> <span class="o">=</span> <span class="n">user_ids</span><span class="p">,</span> <span class="n">SenderId</span> <span class="o">=</span> <span class="n">sender_id</span><span class="p">,</span> <span class="n">Subject</span> <span class="o">=</span> <span class="n">subject</span><span class="p">,</span>
+                         <span class="n">Content</span> <span class="o">=</span> <span class="n">content</span><span class="p">,</span> <span class="n">Code</span> <span class="o">=</span> <span class="n">code</span><span class="p">,</span> <span class="n">ExpiresAt</span> <span class="o">=</span> <span class="n">expires_at</span><span class="p">,</span>
+                         <span class="n">Persistent</span> <span class="o">=</span> <span class="n">persistent</span><span class="p">})</span>
 </pre></div>
 
 
@@ -403,8 +416,8 @@
 
 <h2 id="list-notifications">List notifications</h2>
 <p>You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. It depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">n</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Notice code &#39;{0}&#39; and subject &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Subject</span><span class="p">);</span>
   <span class="p">}</span>
@@ -422,10 +435,10 @@
 <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">allNotifications</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
 
 <span class="n">Action</span> <span class="n">accumulateNotifications</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INCursor</span> <span class="n">resumeCursor</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">message</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
+  <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
       <span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
       <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;</span> <span class="m">1</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -437,8 +450,8 @@
   <span class="p">});</span>
 <span class="p">};</span>
 
-<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">allNotifications</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">);</span>
   <span class="n">accumulateNotifications</span><span class="p">(</span><span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -454,7 +467,7 @@
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INNotificationList</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// use notification list.</span>
   <span class="n">resumeCursor</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">;</span> <span class="c1">// cache resume cursor.</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -467,7 +480,7 @@
 <p>You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.</p>
 <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
 <span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(...);</span> <span class="c1">// Add notification from your internal list</span>
-<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationRemove</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationRemove</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Notifications were removed.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -526,6 +539,27 @@
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../friends/" title="Friends" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Friends
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
