@@ -2,10 +2,10 @@
 
 Friends are a great way to build a social community. Users can add other users to their list of friends, see who is online or when they were last online, chat together in realtime, and interact together in gameplay or collaboration.
 
-Each user builds up a list of friends by who they know already from the social networks, friend requests they send, requests they receive, and who the server recommends they should know. This information is stored in a social graph within the system as a powerful way to interact with other users. Much like how Twitter or Facebook work.
-
-!!! success "Fun fact"
+!!! summary "Fun fact"
     Nakama is a common Japanese word that directly translates to friend or comrade. Some believe the word means "people who are considered closer than family", though that is not a part of the official definition. We feel it expresses the kind of social communities we want developers to build into their games and apps!
+
+Each user builds up a list of friends by who they know already from their social networks, friend requests they send, requests they receive, and who the server recommends they should know. This information is stored in a social graph within the system as a powerful way to interact with other users. Much like how Twitter or Facebook work.
 
 Any social community must be maintained carefully to prevent spam or abuse. To help with this problem it's also possible for a user to block users they no longer want to communicate with and for the server to ban a user via server-side code to completely disable an account.
 
@@ -28,7 +28,7 @@ client.Send(message, (bool done) => {
 });
 ```
 
-When both users have added eachother as friends they are able to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](realtime-chat.md) section for more info.
+When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](realtime-chat.md) section for more info.
 
 ## List friends
 
@@ -67,7 +67,7 @@ client.Send(message, (bool done) => {
 
 ## Block a friend
 
-You can stop a user from 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#friend-remove) message.
+You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#friend-remove) message.
 
 A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
 
