@@ -59,7 +59,7 @@ pages:
 #  - 'Permissions': 'storage-permissions.md'
 #  - 'Record ownership': 'record-ownership.md'
 - 'Social API':
-#  - 'Friends': 'friends.md'
+  - 'Friends': 'friends.md'
 #  - 'Groups and clans': 'groups-clans.md'
   - 'In-app notifications': 'in-app-notifications.md'
 #  - 'Realtime chat': 'realtime-chat.md'

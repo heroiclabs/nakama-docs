@@ -31,8 +31,9 @@ local code = 101
 local expires_at = 1000 * 60 * 60 * 24 * 7 -- expires in 7 days.
 local persistent = true
 
-nk.send_notification_id(user_ids, sender_id, subject, content,
-                        code, expires_at, persistent)
+nk.notification_send_id({UserIds = user_ids, SenderId = sender_id, Subject = subject,
+                         Content = content, Code = code, ExpiresAt = expires_at,
+                         Persistent = persistent})
 ```
 
 ## Receive notifications
@@ -53,8 +54,8 @@ client.OnNotificationReceived += (object sender, NNotificationEventArgs args) =>
 You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. It depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.
 
 ```csharp fct_label="Unity"
-var message = new NNotificationsListMessage.Default(100);
-client.Send(message, (INNotificationList list) => {
+var message = NNotificationsListMessage.Default(100);
+client.Send(message, (INResultSet<INNotification> list) => {
   foreach (var n in list.Results) {
     Debug.LogFormat("Notice code '{0}' and subject '{1}'.", n.Code, n.Subject);
   }
@@ -72,10 +73,10 @@ A list of notifications can be retrieved in batches of up to 100 at a time. To r
 IList<INNotification> allNotifications = new List<INNotification>();
 
 Action accumulateNotifications = delegate(INCursor resumeCursor) {
-  var message new NNotificationsListMessage.Builder(100)
+  var message = new NNotificationsListMessage.Builder(100)
       .Cursor(resumeCursor)
       .Build();
-  client.Send(message, (INNotificationList list) => {
+  client.Send(message, (INResultSet<INNotification> list) => {
     if (list.Results.Length < 1) {
       return;
     } else {
@@ -87,8 +88,8 @@ Action accumulateNotifications = delegate(INCursor resumeCursor) {
   });
 };
 
-var message = new NNotificationsListMessage.Default(100);
-client.Send(message, (INNotificationList list) => {
+var message = NNotificationsListMessage.Default(100);
+client.Send(message, (INResultSet<INNotification> list) => {
   allNotifications.AddRange(list.Results);
   accumulateNotifications(list.Cursor);
 }, (INError err) => {
@@ -106,7 +107,7 @@ INCursor resumeCursor = ...; // stored from last list retrieval.
 var message = new NNotificationsListMessage.Builder(100)
     .Cursor(resumeCursor)
     .Build();
-client.Send(message, (INNotificationList list) => {
+client.Send(message, (INResultSet<INNotification> list) => {
   // use notification list.
   resumeCursor = list.Cursor; // cache resume cursor.
 }, (INError err) => {
@@ -121,7 +122,7 @@ You can delete one or more notifications from the client. This is useful to purg
 ```csharp fct_label="Unity"
 IList<INNotification> list = new List<INNotification>();
 list.Add(...); // Add notification from your internal list
-var message = new NNotificationRemove.Default(list);
+var message = NNotificationRemove.Default(list);
 client.Send(message, (bool done) => {
   Debug.Log("Notifications were removed.");
 }, (INError err) => {
