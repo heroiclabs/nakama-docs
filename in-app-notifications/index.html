@@ -22,7 +22,7 @@
     
     
       
-        <title>In-app notifications - Nakama server</title>
+        <title>In-app Notifications - Nakama server</title>
       
     
     
@@ -87,7 +87,7 @@
                 </span>
               
             
-            In-app notifications
+            In-app Notifications
           
         </span>
       </div>
@@ -236,11 +236,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        In-app notifications
+        In-app Notifications
       </label>
     
-    <a href="./" title="In-app notifications" class="md-nav__link md-nav__link--active">
-      In-app notifications
+    <a href="./" title="In-app Notifications" class="md-nav__link md-nav__link--active">
+      In-app Notifications
     </a>
     
       
@@ -294,6 +294,42 @@
   
 </nav>
     
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Runtime Code
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Runtime Code
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+      Function Reference
+    </a>
   </li>
 
         
@@ -386,26 +422,34 @@
 <p>Notifications can be sent as persistent or not. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read it should be marked as persistent when sent.</p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
 
-<span class="kd">local</span> <span class="n">user_ids</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;someuserid&quot;</span><span class="p">,</span> <span class="s2">&quot;anotheruserid&quot;</span><span class="p">,</span> <span class="s2">&quot;etc&quot;</span><span class="p">}</span>
-<span class="kd">local</span> <span class="n">sender_id</span> <span class="o">=</span> <span class="kc">nil</span> <span class="c1">-- &quot;nil&quot; for server sent.</span>
-<span class="kd">local</span> <span class="n">subject</span> <span class="o">=</span> <span class="s2">&quot;You earned a secret item!&quot;</span>
-<span class="kd">local</span> <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">item_id</span> <span class="o">=</span> <span class="s2">&quot;192308394345345&quot;</span><span class="p">,</span>
-  <span class="n">item_icon</span> <span class="o">=</span> <span class="s2">&quot;storm_bringer_sword.png&quot;</span>
+<span class="kd">local</span> <span class="n">user_ids</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;someuserid&quot;</span><span class="p">,</span> <span class="s2">&quot;anotheruserid&quot;</span><span class="p">}</span>
+<span class="kd">local</span> <span class="n">notification</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">SenderId</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>                       <span class="c1">-- &quot;nil&quot; for server sent.</span>
+  <span class="n">Subject</span> <span class="o">=</span> <span class="s2">&quot;You earned a secret item!&quot;</span><span class="p">,</span>
+  <span class="n">Content</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">item_id</span> <span class="o">=</span> <span class="s2">&quot;192308394345345&quot;</span><span class="p">,</span>
+    <span class="n">item_icon</span> <span class="o">=</span> <span class="s2">&quot;storm_bringer_sword.png&quot;</span>
+  <span class="p">},</span>
+  <span class="n">Code</span> <span class="o">=</span> <span class="mi">101</span><span class="p">,</span>
+  <span class="n">ExpiresAt</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1">-- expires in 7 days.</span>
+  <span class="n">Persistent</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="p">}</span>
-<span class="kd">local</span> <span class="n">code</span> <span class="o">=</span> <span class="mi">101</span>
-<span class="kd">local</span> <span class="n">expires_at</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span> <span class="c1">-- expires in 7 days.</span>
-<span class="kd">local</span> <span class="n">persistent</span> <span class="o">=</span> <span class="kc">true</span>
 
-<span class="n">nk</span><span class="p">.</span><span class="n">notification_send_id</span><span class="p">({</span><span class="n">UserIds</span> <span class="o">=</span> <span class="n">user_ids</span><span class="p">,</span> <span class="n">SenderId</span> <span class="o">=</span> <span class="n">sender_id</span><span class="p">,</span> <span class="n">Subject</span> <span class="o">=</span> <span class="n">subject</span><span class="p">,</span>
-                         <span class="n">Content</span> <span class="o">=</span> <span class="n">content</span><span class="p">,</span> <span class="n">Code</span> <span class="o">=</span> <span class="n">code</span><span class="p">,</span> <span class="n">ExpiresAt</span> <span class="o">=</span> <span class="n">expires_at</span><span class="p">,</span>
-                         <span class="n">Persistent</span> <span class="o">=</span> <span class="n">persistent</span><span class="p">})</span>
+<span class="kd">local</span> <span class="n">notifications</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">user_id</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">user_ids</span><span class="p">)</span>
+<span class="kr">do</span>
+  <span class="kd">local</span> <span class="n">n</span> <span class="o">=</span> <span class="p">{</span><span class="n">unpack</span><span class="p">(</span><span class="n">notification</span><span class="p">)}</span>
+  <span class="n">n</span><span class="p">.</span><span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span>
+  <span class="nb">table.insert</span><span class="p">(</span><span class="n">notifications</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="n">nk</span><span class="p">.</span><span class="n">notification_send_id</span><span class="p">(</span><span class="n">notifications</span><span class="p">)</span>
 </pre></div>
 
 
 <h2 id="receive-notifications">Receive notifications</h2>
 <p>An event handler can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnNotificationReceived</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">NNotificationEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnNotification</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">NNotificationEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">INNotification</span> <span class="n">n</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Notification</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received code &#39;{0}&#39; and subject &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Subject</span><span class="p">);</span>
   <span class="kt">var</span> <span class="n">content</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">Content</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
@@ -465,7 +509,7 @@
 <div class="codehilite"><pre><span></span><span class="n">INCursor</span> <span class="n">resumeCursor</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
-    <span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">ResumeCursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// use notification list.</span>
@@ -480,7 +524,7 @@
 <p>You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.</p>
 <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
 <span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(...);</span> <span class="c1">// Add notification from your internal list</span>
-<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationRemove</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationsRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Notifications were removed.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -557,6 +601,20 @@
             </div>
           </a>
         
+        
+          <a href="../runtime-function-reference/" title="Function Reference" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Function Reference
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>
