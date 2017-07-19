@@ -34,10 +34,11 @@ local notification = {
 }
 
 local notifications = {}
-for i, user_id in ipairs(user_ids) do
+for _, user_id in ipairs(user_ids)
+do
   local n = {unpack(notification)}
   n.UserId = user_id
-  table.insert(n)
+  table.insert(notifications, n)
 end
 
 nk.notification_send_id(notifications)
