@@ -67,7 +67,7 @@ client.Send(message, (bool done) => {
 
 ## Block a friend
 
-You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#friend-remove) message.
+You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#remove-friends) message.
 
 A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
 
