@@ -47,6 +47,11 @@ pages:
 #  - 'Managed cloud': 'managed-cloud.md'
 #  - 'Production settings': 'production-settings.md'
 #  - 'Upgrades': 'nakama-upgrades.md'
+#- 'Unity engine': 'nakama-unity-engine.md'
+#- 'Unreal engine': 'nakama-unreal-engine.md'
+#- 'Android guide': 'nakama-android-guide.md'
+#- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
+#- 'JavaScript guide': 'nakama-javascript-guide.md'
 #- 'Fundamentals':
 #  - 'Nakama CLI': 'server-cli.md'
 #  - 'Authentication': 'authentication.md'
@@ -61,20 +66,16 @@ pages:
 - 'Social API':
   - 'Friends': 'friends.md'
 #  - 'Groups and clans': 'groups-clans.md'
-  - 'In-app notifications': 'in-app-notifications.md'
-#  - 'Realtime chat': 'realtime-chat.md'
+  - 'In-app Notifications': 'in-app-notifications.md'
+  - 'Realtime Chat': 'realtime-chat.md'
 #- 'For games':
 #  - 'Leaderboards': 'leaderboards.md'
 #  - 'Matchmaker': 'matchmaker.md'
 #  - 'Multiplayer':
 #    - 'Realtime games': 'multiplayer-realtime.md'
 #    - 'Turn-based': 'multiplayer-turn-based.md'
-#- 'Unity engine': 'nakama-unity-engine.md'
-#- 'Unreal engine': 'nakama-unreal-engine.md'
-#- 'Android guide': 'nakama-android-guide.md'
-#- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
-#- 'JavaScript guide': 'nakama-javascript-guide.md'
-#- 'Runtime code':
+- 'In-app Purchase Validation': 'in-app-purchase-validation.md'
+- 'Runtime Code':
 #  - 'Basics': 'runtime-code-basics.md'
 #  - 'Best practices': 'runtime-code-best-practices.md'
 #  - 'Examples': 'runtime-code-examples.md'
@@ -82,7 +83,7 @@ pages:
 #  - 'Lua for JavaScripters': 'lua-for-javascripters.md'
 #  - 'JavaScript/Lua comparison': 'javascript-lua-comparison.md'
 #  - 'Lua cheatsheet': 'lua-cheatsheet.md'
-#  - 'Function reference': 'runtime-function-reference.md'
+  - 'Function Reference': 'runtime-function-reference.md'
 #- 'Tutorials':
 #  - 'Ban users': 'tutorial-ban-users.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'

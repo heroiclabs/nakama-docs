@@ -67,7 +67,7 @@ client.Send(message, (bool done) => {
 
 ## Block a friend
 
-You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#friend-remove) message.
+You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#remove-friends) message.
 
 A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
 
@@ -86,7 +86,7 @@ client.Send(message, (bool done) => {
 
 A user can be banned with server-side code. This will prevent the user from being able to connect to the server and interact at all.
 
-This is best used by a moderator system within your community. You could assign particular users the capabilities to send an RPC to permanently ban a user or you may decide to ban users via your liveops support team. See the [runtime code](runtime-code.md) section on how to write server-side code.
+This is best used by a moderator system within your community. You could assign particular users the capabilities to send an RPC to permanently ban a user or you may decide to ban users via your liveops support team. See the [runtime code basics](runtime-code-basics.md) section on how to write server-side code.
 
 ```lua
 local nk = require("nakama")

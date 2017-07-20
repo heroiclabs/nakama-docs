@@ -20,20 +20,29 @@ Notifications can be sent as persistent or not. A non-persistent message will on
 ```lua
 local nk = require("nakama")
 
-local user_ids = {"someuserid", "anotheruserid", "etc"}
-local sender_id = nil -- "nil" for server sent.
-local subject = "You earned a secret item!"
+local user_ids = {"someuserid", "anotheruserid"}
+local sender_id = nil   -- "nil" for server sent.
 local content = {
   item_id = "192308394345345",
   item_icon = "storm_bringer_sword.png"
 }
-local code = 101
-local expires_at = 1000 * 60 * 60 * 24 * 7 -- expires in 7 days.
-local persistent = true
 
-nk.notification_send_id({UserIds = user_ids, SenderId = sender_id, Subject = subject,
-                         Content = content, Code = code, ExpiresAt = expires_at,
-                         Persistent = persistent})
+local notifications = {}
+for _, user_id in ipairs(user_ids)
+do
+  local notification = {
+    UserId = user_id,
+    SenderId = sender_id,
+    Subject = "You earned a secret item!",
+    Content = content,
+    Code = 101,
+    ExpiresAt = 1000 * 60 * 60 * 24 * 7,  -- expires in 7 days.
+    Persistent = true
+  }
+  table.insert(notifications, notification)
+end
+
+nk.notification_send_id(notifications)
 ```
 
 ## Receive notifications
@@ -41,7 +50,7 @@ nk.notification_send_id({UserIds = user_ids, SenderId = sender_id, Subject = sub
 An event handler can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.
 
 ```csharp fct_label="Unity"
-client.OnNotificationReceived += (object sender, NNotificationEventArgs args) => {
+client.OnNotification += (object sender, NNotificationEventArgs args) => {
   INNotification n = args.Notification;
   Debug.LogFormat("Received code '{0}' and subject '{1}'.", n.Code, n.Subject);
   var content = Encoding.UTF8.GetString(n.Content); // convert byte[].
@@ -122,7 +131,7 @@ You can delete one or more notifications from the client. This is useful to purg
 ```csharp fct_label="Unity"
 IList<INNotification> list = new List<INNotification>();
 list.Add(...); // Add notification from your internal list
-var message = NNotificationRemove.Default(list);
+var message = NNotificationsRemoveMessage.Default(list);
 client.Send(message, (bool done) => {
   Debug.Log("Notifications were removed.");
 }, (INError err) => {
