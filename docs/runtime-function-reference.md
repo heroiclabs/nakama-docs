@@ -368,7 +368,7 @@ _Example_
 local function my_func(context, payload)
   -- run some code
 end
-nk.register_after(my_func, "TFriendAdd")
+nk.register_after(my_func, "TFriendsAdd")
 ```
 
 ---
@@ -396,7 +396,7 @@ local function my_func(context, payload)
   -- run some code
   return payload -- important!
 end
-nk.register_before(my_func, "TFriendAdd")
+nk.register_before(my_func, "TFriendsAdd")
 ```
 
 ---
