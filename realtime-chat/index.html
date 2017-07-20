@@ -1,0 +1,719 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
+      
+      
+        <link rel="canonical" href="https://heroiclabs.com/docs/realtime-chat/">
+      
+      
+        <meta name="author" content="Heroic Labs Team & contributors">
+      
+      
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>Realtime Chat - Nakama server</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-icon md-icon--home md-header-nav__button">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Social API
+                </span>
+              
+            
+            Realtime Chat
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-icon md-icon--home md-nav__button"></i>
+    
+    Nakama server
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" checked>
+    
+    <label class="md-nav__link" for="nav-1">
+      Social API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Social API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../friends/" title="Friends" class="md-nav__link">
+      Friends
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-notifications/" title="In-app Notifications" class="md-nav__link">
+      In-app Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Realtime Chat
+      </label>
+    
+    <a href="./" title="Realtime Chat" class="md-nav__link md-nav__link--active">
+      Realtime Chat
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#receive-messages" title="Receive messages" class="md-nav__link">
+    Receive messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-chat" title="Join chat" class="md-nav__link">
+    Join chat
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rooms" title="rooms" class="md-nav__link">
+    rooms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groups" title="groups" class="md-nav__link">
+    groups
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#direct" title="direct" class="md-nav__link">
+    direct
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-online-users" title="List online users" class="md-nav__link">
+    List online users
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#send-messages" title="Send messages" class="md-nav__link">
+    Send messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-history" title="Message history" class="md-nav__link">
+    Message history
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
+      In-app Purchase Validation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Runtime Code
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Runtime Code
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+      Function Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#receive-messages" title="Receive messages" class="md-nav__link">
+    Receive messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-chat" title="Join chat" class="md-nav__link">
+    Join chat
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rooms" title="rooms" class="md-nav__link">
+    rooms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groups" title="groups" class="md-nav__link">
+    groups
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#direct" title="direct" class="md-nav__link">
+    direct
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-online-users" title="List online users" class="md-nav__link">
+    List online users
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#send-messages" title="Send messages" class="md-nav__link">
+    Send messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-history" title="Message history" class="md-nav__link">
+    Message history
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="realtime-chat">Realtime Chat</h1>
+<p>Realtime chat makes it easy to power a live community.</p>
+<p>Users can chat with eachother 1-on-1, as part of a group, and in chat rooms. Messages can contain images, links, and other content. These messages are delivered immediately to clients if the recipients are online and stored in message history so offline users can catch up when they connect.</p>
+<p>Every message which flows through the realtime chat engine belongs to a topic which is used internally to identify which users should receive the messages. Users explicitly join and leave topics when they connect. This makes it easy to selectively listen for messages which they care about or decide to "mute" certain topics when they're busy. Users can also join multiple topics at once to chat simultaneously in multiple groups or chat rooms.</p>
+<p>There are 3 types of topic:</p>
+<ol>
+<li>
+<p>A chat room is great for public chat. Any user can join and participate without need for permission. These rooms can scale to millions of users all in simultaneous communication. This is perfect for live participation apps or games with live events or tournaments.</p>
+</li>
+<li>
+<p>A group chat is private to only users part of a <a href="groups-clans.md">group</a>. Each user must be a member of the group and no other users can participate. You can use group chat with team-based gameplay or collaboration.</p>
+</li>
+<li>
+<p>Direct chat is private between two users. Each user will receive a <a href="../in-app-notifications/">notification</a> when they've been invited to chat. Both users must join for messages to be exchanged which prevents spam from bad users.</p>
+</li>
+</ol>
+<h2 id="receive-messages">Receive messages</h2>
+<p>A user joins a chat topic to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.</p>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnTopicMessage</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NTopicMessageEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">INTopicMessage</span> <span class="n">message</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">TopicMessage</span><span class="p">;</span>
+  <span class="c1">// TopicType will be one of DirectMessage, Room, or Group.</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received a &#39;{0}&#39; message.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">TopicType</span><span class="p">);</span>
+  <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>     <span class="c1">// convert byte[].</span>
+  <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Message has id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>In group chat a user will receive other messages from the server. These messages contain events on users who join or leave the group, when someone is promoted as an admin, etc. You may want users to see these messages in the chat stream or ignore them in the UI.</p>
+<p>You can identify event messages from chat messages by the message "Type".</p>
+<div class="codehilite"><pre><span></span><span class="n">TopicMessageType</span> <span class="n">messageType</span> <span class="p">=</span> <span class="n">message</span><span class="p">.</span><span class="n">Type</span><span class="p">;</span> <span class="c1">// enum</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">messageType</span> <span class="p">!=</span> <span class="n">TopicMessageType</span><span class="p">.</span><span class="n">Chat</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received message with event type &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">messageType</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Purpose</th>
+<th>Source</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>chat message</td>
+<td>user</td>
+<td>All messages sent by users.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>joined group</td>
+<td>server</td>
+<td>An event message for when a user joined the group.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>added to group</td>
+<td>server</td>
+<td>An event message for when a user was added to the group.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>left group</td>
+<td>server</td>
+<td>An event message for when a user left a group.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>kicked from group</td>
+<td>server</td>
+<td>An event message for when an admin kicked a user from the group.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>promoted in group</td>
+<td>server</td>
+<td>An event message for when a user is promoted as a group admin.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="join-chat">Join chat</h2>
+<p>To send messages to other users a user must join the chat topic they want to communicate on. This will also enable messages to be <a href="#receive-messages">received in realtime</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Each user can join many rooms, groups, and direct chat with their session. The same user can also be connected to the same chats from another device because each device is identified as a separate session.</p>
+</div>
+<h3 id="rooms">rooms</h3>
+<p>A room is created dynamically for users to chat. A room has a name and will be setup on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a <a href="storage-collections.md">storage record</a>.</p>
+<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">roomId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">roomId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined the room.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The <code>roomId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
+<h3 id="groups">groups</h3>
+<p>A group chat can only be joined by a user who is a member of the <a href="groups-clans.md">group</a>. Messages are pushed in realtime to group members and they can read <a href="#message-history">historic messages</a>.</p>
+<p>A group ID is needed when a user joins group chat and can be <a href="groups-clans.md#list-groups">listed by the user</a>.</p>
+<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">groupTopicId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">TopicGroup</span><span class="p">(</span><span class="n">groupId</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">groupTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined the group chat.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The <code>groupTopicId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
+<h3 id="direct">direct</h3>
+<h2 id="list-online-users">List online users</h2>
+<h2 id="send-messages">Send messages</h2>
+<h2 id="message-history">Message history</h2>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../in-app-notifications/" title="In-app Notifications" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                In-app Notifications
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                In-app Purchase Validation
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 Heroic Labs
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://heroiclabs.com" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/heroiclabs" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/heroicdev" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/heroic-labs" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

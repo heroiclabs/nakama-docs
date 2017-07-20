@@ -231,8 +231,32 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../realtime-chat/" title="Realtime Chat" class="md-nav__link">
+      Realtime Chat
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
+      In-app Purchase Validation
+    </a>
   </li>
 
     
@@ -245,13 +269,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -677,10 +701,19 @@
 </tbody>
 </table>
 <p><em>Example</em></p>
-<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">new_groups</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="c1">-- The CreatorId should be a user ID.</span>
-  <span class="p">{</span> <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">Description</span> <span class="o">=</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">Lang</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="n">Private</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="n">CreatorId</span> <span class="o">=</span> <span class="s2">&quot;4c2ae592-b2a7-445e-98ec-697694478b1c&quot;</span> <span class="p">}</span>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">-- Add whatever custom fields you want.</span>
+  <span class="n">my_custom_field</span> <span class="o">=</span> <span class="s2">&quot;some value&quot;</span>
 <span class="p">}</span>
+<span class="kd">local</span> <span class="n">group</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Some unique group name&quot;</span><span class="p">,</span>
+  <span class="n">Description</span> <span class="o">=</span> <span class="s2">&quot;My awesome group.&quot;</span><span class="p">,</span>
+  <span class="n">Lang</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span>
+  <span class="n">Private</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="n">CreatorId</span> <span class="o">=</span> <span class="s2">&quot;4c2ae592-b2a7-445e-98ec-697694478b1c&quot;</span><span class="p">,</span>
+  <span class="n">AvatarUrl</span> <span class="o">=</span> <span class="s2">&quot;url://somelink&quot;</span><span class="p">,</span>
+  <span class="n">Metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">new_groups</span> <span class="o">=</span> <span class="p">{</span> <span class="n">group</span> <span class="p">}</span>
 <span class="n">nk</span><span class="p">.</span><span class="n">groups_create</span><span class="p">(</span><span class="n">new_groups</span><span class="p">)</span>
 </pre></div>
 
@@ -969,7 +1002,7 @@
 <h3 id="register-hooks">register hooks</h3>
 <p><strong>register_after (func, msgname)</strong></p>
 <p>Register a function with the server which will be executed after every message with the specified message name.</p>
-<p>This can be used to apply custom logic to standard features in the server. Similar to the <code>register_before</code> function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client.</p>
+<p>This can be used to apply custom logic to standard features in the server. Similar to the <code>register_before</code> function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -996,14 +1029,14 @@
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="kr">function</span> <span class="nf">my_func</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
   <span class="c1">-- run some code</span>
 <span class="kr">end</span>
-<span class="n">nk</span><span class="p">.</span><span class="n">register_after</span><span class="p">(</span><span class="n">my_func</span><span class="p">,</span> <span class="s2">&quot;TFriendAdd&quot;</span><span class="p">)</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">register_after</span><span class="p">(</span><span class="n">my_func</span><span class="p">,</span> <span class="s2">&quot;TFriendsAdd&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <hr />
 <p><strong>register_before (func, msgname)</strong></p>
 <p>Register a function with the server which will be executed before every message with the specified message name.</p>
-<p>For example <code>register_before(somefunc, "TFriendAdd")</code> will execute the function before the Friend Add message is executed by the server&rsquo;s message pipeline. This can be used to apply custom conditions to standard features in the server.</p>
+<p>For example <code>register_before(somefunc, "TFriendAdd")</code> will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -1035,7 +1068,7 @@
   <span class="c1">-- run some code</span>
   <span class="kr">return</span> <span class="n">payload</span> <span class="c1">-- important!</span>
 <span class="kr">end</span>
-<span class="n">nk</span><span class="p">.</span><span class="n">register_before</span><span class="p">(</span><span class="n">my_func</span><span class="p">,</span> <span class="s2">&quot;TFriendAdd&quot;</span><span class="p">)</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">register_before</span><span class="p">(</span><span class="n">my_func</span><span class="p">,</span> <span class="s2">&quot;TFriendsAdd&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -1044,9 +1077,9 @@
 <p>Registers a HTTP endpoint within the server.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This should not be used to implement custom client functions use <code>register_rpc</code> instead.</p>
+<p>This should not be used to implement custom client functions instead have a look at <code>register_rpc</code>.</p>
 </div>
-<p>This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks.</p>
+<p>This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -1094,7 +1127,7 @@
 <hr />
 <p><strong>register_rpc (func, id)</strong></p>
 <p>Registers a function for use with client RPC to the server.</p>
-<p>The ID can be any string identifier and is sent by the client. The ID is used to map the client RPC message to the specific function to execute.</p>
+<p>The ID can be any string identifier and is sent by the client. The ID is used to map the client RPC message to the specific function to execute. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -1421,7 +1454,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../in-app-notifications/" title="In-app Notifications" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1430,7 +1463,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                In-app Notifications
+                In-app Purchase Validation
               </span>
             </div>
           </a>

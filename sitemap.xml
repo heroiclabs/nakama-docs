@@ -5,23 +5,37 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//friends/</loc>
-     <lastmod>2017-07-19</lastmod>
+     <lastmod>2017-07-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//in-app-notifications/</loc>
-     <lastmod>2017-07-19</lastmod>
+     <lastmod>2017-07-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://heroiclabs.com/docs//realtime-chat/</loc>
+     <lastmod>2017-07-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     
 
     
+    <url>
+     <loc>https://heroiclabs.com/docs//in-app-purchase-validation/</loc>
+     <lastmod>2017-07-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
         
     <url>
      <loc>https://heroiclabs.com/docs//runtime-function-reference/</loc>
-     <lastmod>2017-07-19</lastmod>
+     <lastmod>2017-07-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

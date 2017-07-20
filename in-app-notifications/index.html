@@ -297,6 +297,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../realtime-chat/" title="Realtime Chat" class="md-nav__link">
+      Realtime Chat
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -307,15 +319,27 @@
       
 
 
+  <li class="md-nav__item">
+    <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
+      In-app Purchase Validation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -423,24 +447,25 @@
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
 
 <span class="kd">local</span> <span class="n">user_ids</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;someuserid&quot;</span><span class="p">,</span> <span class="s2">&quot;anotheruserid&quot;</span><span class="p">}</span>
-<span class="kd">local</span> <span class="n">notification</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="n">SenderId</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>                       <span class="c1">-- &quot;nil&quot; for server sent.</span>
-  <span class="n">Subject</span> <span class="o">=</span> <span class="s2">&quot;You earned a secret item!&quot;</span><span class="p">,</span>
-  <span class="n">Content</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">item_id</span> <span class="o">=</span> <span class="s2">&quot;192308394345345&quot;</span><span class="p">,</span>
-    <span class="n">item_icon</span> <span class="o">=</span> <span class="s2">&quot;storm_bringer_sword.png&quot;</span>
-  <span class="p">},</span>
-  <span class="n">Code</span> <span class="o">=</span> <span class="mi">101</span><span class="p">,</span>
-  <span class="n">ExpiresAt</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1">-- expires in 7 days.</span>
-  <span class="n">Persistent</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="kd">local</span> <span class="n">sender_id</span> <span class="o">=</span> <span class="kc">nil</span>   <span class="c1">-- &quot;nil&quot; for server sent.</span>
+<span class="kd">local</span> <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">item_id</span> <span class="o">=</span> <span class="s2">&quot;192308394345345&quot;</span><span class="p">,</span>
+  <span class="n">item_icon</span> <span class="o">=</span> <span class="s2">&quot;storm_bringer_sword.png&quot;</span>
 <span class="p">}</span>
 
 <span class="kd">local</span> <span class="n">notifications</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">user_id</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">user_ids</span><span class="p">)</span>
 <span class="kr">do</span>
-  <span class="kd">local</span> <span class="n">n</span> <span class="o">=</span> <span class="p">{</span><span class="n">unpack</span><span class="p">(</span><span class="n">notification</span><span class="p">)}</span>
-  <span class="n">n</span><span class="p">.</span><span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span>
-  <span class="nb">table.insert</span><span class="p">(</span><span class="n">notifications</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+  <span class="kd">local</span> <span class="n">notification</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span>
+    <span class="n">SenderId</span> <span class="o">=</span> <span class="n">sender_id</span><span class="p">,</span>
+    <span class="n">Subject</span> <span class="o">=</span> <span class="s2">&quot;You earned a secret item!&quot;</span><span class="p">,</span>
+    <span class="n">Content</span> <span class="o">=</span> <span class="n">content</span><span class="p">,</span>
+    <span class="n">Code</span> <span class="o">=</span> <span class="mi">101</span><span class="p">,</span>
+    <span class="n">ExpiresAt</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1">-- expires in 7 days.</span>
+    <span class="n">Persistent</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="p">}</span>
+  <span class="nb">table.insert</span><span class="p">(</span><span class="n">notifications</span><span class="p">,</span> <span class="n">notification</span><span class="p">)</span>
 <span class="kr">end</span>
 
 <span class="n">nk</span><span class="p">.</span><span class="n">notification_send_id</span><span class="p">(</span><span class="n">notifications</span><span class="p">)</span>
@@ -509,7 +534,7 @@
 <div class="codehilite"><pre><span></span><span class="n">INCursor</span> <span class="n">resumeCursor</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
-    <span class="p">.</span><span class="n">ResumeCursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// use notification list.</span>
@@ -602,13 +627,13 @@
           </a>
         
         
-          <a href="../runtime-function-reference/" title="Function Reference" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../realtime-chat/" title="Realtime Chat" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Function Reference
+                Realtime Chat
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
