@@ -598,6 +598,10 @@
 <p>The <code>roomId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
 <h3 id="groups">groups</h3>
 <p>A group chat can only be joined by a user who is a member of the <a href="groups-clans.md">group</a>. Messages are pushed in realtime to group members and they can read <a href="#message-history">historic messages</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a user is kicked or leaves a group they can no longer receive messages or read history.</p>
+</div>
 <p>A group ID is needed when a user joins group chat and can be <a href="groups-clans.md#list-groups">listed by the user</a>.</p>
 <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">groupTopicId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
@@ -616,9 +620,138 @@
 
 <p>The <code>groupTopicId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
 <h3 id="direct">direct</h3>
+<p>A user can direct message another user by ID. Each user will not receive messages in realtime until both users have joined the chat. This is important because it prevents bad users from spam messages.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Friends, groups, leaderboards, matchmaker, room chat, and searches in storage are all ways to find users for chat.</p>
+</div>
+<p>A user will receive an <a href="../in-app-notifications/">in-app notification</a> when a request to chat has been received.</p>
+<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">directTopicId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INUser ID.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">TopicDirectMessage</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">directTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined the direct chat.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The <code>directTopicId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A user can <a href="../friends/#block-a-friend">block other users</a> to stop unwanted direct messages.</p>
+</div>
 <h2 id="list-online-users">List online users</h2>
+<p>Each user who joins a chat becomes a "presence" in the chat topic. These presences keep information about which users are connected in each chat.</p>
+<p>A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected with multiple devices in the chat topic.</p>
+<p>The user who <a href="#join-chat">joins a chat topic</a> receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive "presence" changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.</p>
+<div class="admonition summary">
+<p class="admonition-title">Summary</p>
+<p>A list of all online users is received when a user joins a chat topic. An event handler can be used to be notified when users join or leave.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">onlineUsers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">OnTopicPresence</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NTopicPresenceEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">INTopicPresence</span> <span class="n">presenceUpdate</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">TopicPresence</span><span class="p">;</span>
+  <span class="c1">// Remove all users who left.</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">user</span> <span class="k">in</span> <span class="n">presenceUpdate</span><span class="p">.</span><span class="n">Leave</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">onlineUsers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// Add all users who joined.</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">presenceUpdate</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Setup initial online user list.</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">topic</span><span class="p">.</span><span class="n">Presences</span><span class="p">);</span>
+  <span class="c1">// Remove your own user from list.</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">topic</span><span class="p">.</span><span class="n">Self</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The server is optimized to only push presence updates when other users join or leave the chat.</p>
+</div>
 <h2 id="send-messages">Send messages</h2>
+<p>When a user has <a href="#join-chat">joined a chat topic</a> it's ID can be used to send messages with JSON encoded strings.</p>
+<p>Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.</p>
+<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
+
+<span class="kt">var</span> <span class="n">json</span> <span class="p">=</span> <span class="s">&quot;{&#39;some&#39;:&#39;data&#39;}&quot;</span><span class="p">;</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NTopicMessageSendMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">chatTopicId</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopicMessageAck</span> <span class="n">ack</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kt">var</span> <span class="n">messageId</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">ack</span><span class="p">.</span><span class="n">MessageId</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;New message sent has id &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">messageId</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
 <h2 id="message-history">Message history</h2>
+<p>Every chat conversation stores a history of messages. The history also contains <a href="#receive-messages">event messages</a> sent by the server with group chat. Each user can retrieve old messages for chat when they next connect online.</p>
+<p>Messages can be listed in order of most recent to oldest and also in reverse (oldest to newest). Messages are returned in batches of up to 100 each with a cursor for when there are more messages.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A user does not have to join a chat topic to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<span class="c1">// Fetch 10 messages on the chat room fetched in oldest first.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicMessagesListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Forward</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Limit</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopicMessage</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">msg</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>     <span class="c1">// convert byte[].</span>
+    <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Message has id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>A cursor can be used to page after a batch of messages for the next set of results.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<span class="kt">var</span> <span class="n">messageBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicMessagesListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Limit</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">messageBuilder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopicMessage</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Lets get the next page of results.</span>
+  <span class="n">INCursor</span> <span class="n">cursor</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">cursor</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">messageBuilder</span><span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">cursor</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopicMessage</span><span class="p">&gt;</span> <span class="n">nextList</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">msg</span> <span class="k">in</span> <span class="n">nextList</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>     <span class="c1">// convert byte[].</span>
+        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Message has id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+</pre></div>
                 
                   
                 
