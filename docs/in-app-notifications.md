@@ -21,24 +21,25 @@ Notifications can be sent as persistent or not. A non-persistent message will on
 local nk = require("nakama")
 
 local user_ids = {"someuserid", "anotheruserid"}
-local notification = {
-  SenderId = nil,                       -- "nil" for server sent.
-  Subject = "You earned a secret item!",
-  Content = {
-    item_id = "192308394345345",
-    item_icon = "storm_bringer_sword.png"
-  },
-  Code = 101,
-  ExpiresAt = 1000 * 60 * 60 * 24 * 7,  -- expires in 7 days.
-  Persistent = true
+local sender_id = nil   -- "nil" for server sent.
+local content = {
+  item_id = "192308394345345",
+  item_icon = "storm_bringer_sword.png"
 }
 
 local notifications = {}
 for _, user_id in ipairs(user_ids)
 do
-  local n = {unpack(notification)}
-  n.UserId = user_id
-  table.insert(notifications, n)
+  local notification = {
+    UserId = user_id,
+    SenderId = sender_id,
+    Subject = "You earned a secret item!",
+    Content = content,
+    Code = 101,
+    ExpiresAt = 1000 * 60 * 60 * 24 * 7,  -- expires in 7 days.
+    Persistent = true
+  }
+  table.insert(notifications, notification)
 end
 
 nk.notification_send_id(notifications)
@@ -113,7 +114,7 @@ The resume cursor marks the position of the most recent notification retrieved. 
 INCursor resumeCursor = ...; // stored from last list retrieval.
 
 var message = new NNotificationsListMessage.Builder(100)
-    .ResumeCursor(resumeCursor)
+    .Cursor(resumeCursor)
     .Build();
 client.Send(message, (INResultSet<INNotification> list) => {
   // use notification list.

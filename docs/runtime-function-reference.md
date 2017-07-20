@@ -120,10 +120,19 @@ _Parameters_
 _Example_
 
 ```lua
-local new_groups = {
-  -- The CreatorId should be a user ID.
-  { Name = "A", Description = "B", Lang = "en", Private = true, CreatorId = "4c2ae592-b2a7-445e-98ec-697694478b1c" }
+local metadata = { -- Add whatever custom fields you want.
+  my_custom_field = "some value"
 }
+local group = {
+  Name = "Some unique group name",
+  Description = "My awesome group.",
+  Lang = "en",
+  Private = true,
+  CreatorId = "4c2ae592-b2a7-445e-98ec-697694478b1c",
+  AvatarUrl = "url://somelink",
+  Metadata = metadata
+}
+local new_groups = { group }
 nk.groups_create(new_groups)
 ```
 
@@ -344,7 +353,7 @@ __register_after (func, msgname)__
 
 Register a function with the server which will be executed after every message with the specified message name.
 
-This can be used to apply custom logic to standard features in the server. Similar to the `register_before` function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client.
+This can be used to apply custom logic to standard features in the server. Similar to the `register_before` function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
 _Parameters_
 
@@ -368,7 +377,7 @@ __register_before (func, msgname)__
 
 Register a function with the server which will be executed before every message with the specified message name.
 
-For example `register_before(somefunc, "TFriendAdd")` will execute the function before the Friend Add message is executed by the server’s message pipeline. This can be used to apply custom conditions to standard features in the server.
+For example `register_before(somefunc, "TFriendAdd")` will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
 _Parameters_
 
@@ -397,9 +406,9 @@ __register_http (func, path)__
 Registers a HTTP endpoint within the server.
 
 !!! warning
-    This should not be used to implement custom client functions use `register_rpc` instead.
+    This should not be used to implement custom client functions instead have a look at `register_rpc`.
 
-This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks.
+This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
 _Parameters_
 
@@ -437,7 +446,7 @@ __register_rpc (func, id)__
 
 Registers a function for use with client RPC to the server.
 
-The ID can be any string identifier and is sent by the client. The ID is used to map the client RPC message to the specific function to execute.
+The ID can be any string identifier and is sent by the client. The ID is used to map the client RPC message to the specific function to execute. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
 _Parameters_
 
