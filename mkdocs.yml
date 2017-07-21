@@ -85,6 +85,7 @@ pages:
 #  - 'Lua cheatsheet': 'lua-cheatsheet.md'
   - 'Function Reference': 'runtime-function-reference.md'
 #- 'Tutorials':
+#  - 'Remote configuration': 'tutorial-remote-configuration.md'
 #  - 'Ban users': 'tutorial-ban-users.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
 #  - 'Virtual wallet': 'tutorial-virtual-wallet.md'

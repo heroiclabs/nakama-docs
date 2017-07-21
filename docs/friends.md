@@ -86,7 +86,9 @@ client.Send(message, (bool done) => {
 
 A user can be banned with server-side code. This will prevent the user from being able to connect to the server and interact at all.
 
-This is best used by a moderator system within your community. You could assign particular users the capabilities to send an RPC to permanently ban a user or you may decide to ban users via your liveops support team. See the [runtime code basics](runtime-code-basics.md) section on how to write server-side code.
+This is best used by a moderator system within your community. You could assign particular users the capabilities to send an RPC to permanently ban a user or you may decide to ban users via your liveops support team.
+
+See the [runtime code basics](runtime-code-basics.md) on how to write server-side code.
 
 ```lua
 local nk = require("nakama")

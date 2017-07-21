@@ -2,7 +2,7 @@
 
 Realtime chat makes it easy to power a live community.
 
-Users can chat with eachother 1-on-1, as part of a group, and in chat rooms. Messages can contain images, links, and other content. These messages are delivered immediately to clients if the recipients are online and stored in message history so offline users can catch up when they connect.
+Users can chat with each other 1-on-1, as part of a group, and in chat rooms. Messages can contain images, links, and other content. These messages are delivered immediately to clients if the recipients are online and stored in message history so offline users can catch up when they connect.
 
 Every message which flows through the realtime chat engine belongs to a topic which is used internally to identify which users should receive the messages. Users explicitly join and leave topics when they connect. This makes it easy to selectively listen for messages which they care about or decide to "mute" certain topics when they're busy. Users can also join multiple topics at once to chat simultaneously in multiple groups or chat rooms.
 
@@ -54,7 +54,7 @@ if (messageType != TopicMessageType.Chat) {
 To send messages to other users a user must join the chat topic they want to communicate on. This will also enable messages to be [received in realtime](#receive-messages).
 
 !!! tip
-    Each user can join many rooms, groups, and direct chat with their session. The same user can also be connected to the same chats from another device because each device is identified as a separate session.
+    Each user can join many rooms, groups, and direct chat with their session. The same user can also be connected to the same chats from other devices because each device is identified as a separate session.
 
 ### rooms
 
@@ -105,7 +105,7 @@ The `groupTopicId` variable contains an ID used to [send messages](#send-message
 
 ### direct
 
-A user can direct message another user by ID. Each user will not receive messages in realtime until both users have joined the chat. This is important because it prevents bad users from spam messages.
+A user can direct message another user by ID. Each user will not receive messages in realtime until both users have joined the chat. This is important because it prevents spam messages from bad users.
 
 !!! tip
     Friends, groups, leaderboards, matchmaker, room chat, and searches in storage are all ways to find users for chat.
@@ -134,14 +134,14 @@ The `directTopicId` variable contains an ID used to [send messages](#send-messag
 
 ## List online users
 
-Each user who joins a chat becomes a "presence" in the chat topic. These presences keep information about which users are connected in each chat.
+Each user who joins a chat becomes a "presence" in the chat topic. These presences keep information about which users are connected.
 
-A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected with multiple devices in the chat topic.
+A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat topic.
 
 The user who [joins a chat topic](#join-chat) receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive "presence" changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.
 
 !!! summary
-    A list of all online users is received when a user joins a chat topic. An event handler can be used to be notified when users join or leave.
+    A list of all online users is received when a user joins a chat topic you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
 
 ```csharp fct_label="Unity"
 IList<INUserPresence> onlineUsers = new List<INUserPresence>();
@@ -193,6 +193,21 @@ client.Send(message, (INTopicMessageAck ack) => {
 });
 ```
 
+## Leave chat
+
+A user can leave a chat topic to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.
+
+```csharp fct_label="Unity"
+INTopicId chatTopicId = topic.Topic; // A chat topic ID.
+
+var message = NTopicLeaveMessage.Default(chatTopicId);
+client.Send(message, (bool done) => {
+  Debug.Log("Successfully left chat.");
+}, (INError err) => {
+  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
 ## Message history
 
 Every chat conversation stores a history of messages. The history also contains [event messages](#receive-messages) sent by the server with group chat. Each user can retrieve old messages for chat when they next connect online.
@@ -204,7 +219,7 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
 
 ```csharp fct_label="Unity"
 byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.
-// Fetch 10 messages on the chat room fetched in oldest first.
+// Fetch 10 messages on the chat room with oldest first.
 var message = new NTopicMessagesListMessage.Builder()
     .TopicRoom(roomName)
     .Forward(false)
@@ -223,6 +238,8 @@ client.Send(message, (INResultSet<INTopicMessage> list) => {
 
 A cursor can be used to page after a batch of messages for the next set of results.
 
+We recommend you only list the most recent 100 messages in your UI. A good user experience could be to fetch the next 100 older messages when the user scrolls to the bottom of your UI panel.
+
 ```csharp fct_label="Unity"
 var errorHandler = delegate(INError err) {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -237,6 +254,7 @@ client.Send(messageBuilder.Build(), (INResultSet<INTopicMessage> list) => {
   INCursor cursor = list.Cursor;
   if (cursor != null && list.Results.Count > 0) {
     var message = messageBuilder.Cursor(cursor).Build();
+
     client.Send(message, (INResultSet<INTopicMessage> nextList) => {
       foreach (var msg in nextList.Results) {
         var id = Encoding.UTF8.GetString(msg.Topic.Id);     // convert byte[].
