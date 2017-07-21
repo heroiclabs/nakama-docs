@@ -3,6 +3,7 @@ site_name: 'Nakama server'
 site_description: 'Documentation for the Nakama realtime and social server for games and apps.'
 site_author: 'Heroic Labs Team & contributors'
 site_url: 'https://heroiclabs.com/docs/'
+site_favicon: 'images/favicon.ico'
 remote_name: 'origin'
 remote_branch: 'gh-pages'
 
@@ -18,6 +19,7 @@ theme: 'material'
 
 # Options
 extra:
+  logo: 'images/logo-white.svg'
   palette:
     primary: 'indigo'
     accent: 'indigo'
