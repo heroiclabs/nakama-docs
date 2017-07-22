@@ -65,7 +65,7 @@ pages:
 #  - 'Record ownership': 'record-ownership.md'
 - 'Social API':
   - 'Friends': 'friends.md'
-#  - 'Groups and clans': 'groups-clans.md'
+  - 'Groups and Clans': 'groups-clans.md'
   - 'In-app Notifications': 'in-app-notifications.md'
   - 'Realtime Chat': 'realtime-chat.md'
 #- 'For games':
