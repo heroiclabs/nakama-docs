@@ -1,0 +1,923 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
+      
+      
+        <link rel="canonical" href="https://heroiclabs.com/docs/groups-clans/">
+      
+      
+        <meta name="author" content="Heroic Labs Team & contributors">
+      
+      
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>Groups and Clans - Nakama server</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-icon md-icon--home md-header-nav__button">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Social API
+                </span>
+              
+            
+            Groups and Clans
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-icon md-icon--home md-nav__button"></i>
+    
+    Nakama server
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" checked>
+    
+    <label class="md-nav__link" for="nav-1">
+      Social API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Social API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../friends/" title="Friends" class="md-nav__link">
+      Friends
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Groups and Clans
+      </label>
+    
+    <a href="./" title="Groups and Clans" class="md-nav__link md-nav__link--active">
+      Groups and Clans
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#search-for-groups" title="Search for groups" class="md-nav__link">
+    Search for groups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-groups" title="Join groups" class="md-nav__link">
+    Join groups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-a-users-groups" title="List a user's groups" class="md-nav__link">
+    List a user's groups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-group-members" title="List group members" class="md-nav__link">
+    List group members
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-group" title="Create a group" class="md-nav__link">
+    Create a group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update-a-group" title="Update a group" class="md-nav__link">
+    Update a group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leave-a-group" title="Leave a group" class="md-nav__link">
+    Leave a group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manage-groups" title="Manage groups" class="md-nav__link">
+    Manage groups
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accept-new-members" title="Accept new members" class="md-nav__link">
+    Accept new members
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promote-a-member" title="Promote a member" class="md-nav__link">
+    Promote a member
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kick-a-member" title="Kick a member" class="md-nav__link">
+    Kick a member
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-a-group" title="Remove a group" class="md-nav__link">
+    Remove a group
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-notifications/" title="In-app Notifications" class="md-nav__link">
+      In-app Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../realtime-chat/" title="Realtime Chat" class="md-nav__link">
+      Realtime Chat
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
+      In-app Purchase Validation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Runtime Code
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Runtime Code
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+      Function Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#search-for-groups" title="Search for groups" class="md-nav__link">
+    Search for groups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-groups" title="Join groups" class="md-nav__link">
+    Join groups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-a-users-groups" title="List a user's groups" class="md-nav__link">
+    List a user's groups
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-group-members" title="List group members" class="md-nav__link">
+    List group members
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-group" title="Create a group" class="md-nav__link">
+    Create a group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update-a-group" title="Update a group" class="md-nav__link">
+    Update a group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leave-a-group" title="Leave a group" class="md-nav__link">
+    Leave a group
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manage-groups" title="Manage groups" class="md-nav__link">
+    Manage groups
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accept-new-members" title="Accept new members" class="md-nav__link">
+    Accept new members
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promote-a-member" title="Promote a member" class="md-nav__link">
+    Promote a member
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kick-a-member" title="Kick a member" class="md-nav__link">
+    Kick a member
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-a-group" title="Remove a group" class="md-nav__link">
+    Remove a group
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="groups-and-clans">Groups and Clans</h1>
+<p>A group brings together a bunch of users into a small community or team.</p>
+<p>A group is made up of an owner or admin and members. It can be public or private which determines whether it appears in results when a user searches. Private groups are similar to how Whatsapp groups work. A user can only be added when they're invited to join by the group's admin.</p>
+<h2 id="search-for-groups">Search for groups</h2>
+<p>A user can find public groups to join by a filter on language, recently created, how many members in a group, and more. These filters make it easy to assemble new users into smaller groups for team-based play or collaboration.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">OrderByAsc</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">FilterByLang</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroup</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="k">group</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The message response for a list of groups contains a cursor. The cursor can be used to quickly retrieve the next set of results.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cursors are used across different server features to page through batches of results quickly and efficiently. It's used with storage, friends, chat history, etc.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">var</span> <span class="n">messageBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">OrderByAsc</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">FilterByLang</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">);</span>
+    <span class="p">.</span><span class="n">PageLimit</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">messageBuilder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroup</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Lets get the next page of results.</span>
+  <span class="n">INCursor</span> <span class="n">cursor</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">cursor</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">messageBuilder</span><span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">cursor</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+
+    <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroup</span><span class="p">&gt;</span> <span class="n">nextList</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="k">group</span> <span class="k">in</span> <span class="n">nextList</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+</pre></div>
+
+
+<h2 id="join-groups">Join groups</h2>
+<p>When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires an <a href="#add-new-members">admin to accept</a> the user.</p>
+<p>A user who's part of a group can join <a href="../realtime-chat/#groups">group chat</a> and access it's <a href="../realtime-chat/#message-history">message history</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When a user joins or leaves a group event messages are added to chat history. This makes it easy for members to see what's changed in the group.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupJoinMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Requested to join group.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The user will receive an <a href="../in-app-notifications/">in-app notification</a> when they've been added to the group. In a private group an admin will receive a notification when a user has requested to join.</p>
+<h2 id="list-a-users-groups">List a user's groups</h2>
+<p>Each user can list groups they've joined as a member or an admin. The list also contains groups which they've requested to join but not been accepted into yet.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupsSelfListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroup</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="k">group</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="list-group-members">List group members</h2>
+<p>A user can list all members who're part of their group. These include other users who've requested to join the private group but not been accepted into yet.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupUsersListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroupUser</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">member</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">member</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Member id &#39;{0}&#39; with name &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">Fullname</span><span class="p">);</span>
+    <span class="c1">// member.Type is one of: Admin, Member, Join.</span>
+    <span class="n">UserType</span> <span class="n">status</span> <span class="p">=</span> <span class="n">member</span><span class="p">.</span><span class="n">Type</span><span class="p">;</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Has handle &#39;{0}&#39; with status &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">status</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="create-a-group">Create a group</h2>
+<p>A group can be created with a name and other optional fields. These optional fields are used when a user <a href="#search-for-groups">searches for groups</a>. The user who creates the group becomes the admin.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="s">&quot;{&#39;my_custom_field&#39;: &#39;some value&#39;}&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupCreateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;Some unique group name&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Description</span><span class="p">(</span><span class="s">&quot;My awesome group.&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Lang</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Private</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">AvatarUrl</span><span class="p">(</span><span class="s">&quot;url://somelink&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INGroup</span> <span class="k">group</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;New group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&quot;Successfully created a private group.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>You can also create a group with server-side code. This can be useful when the group must be created together with some other record or feature.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">-- Add whatever custom fields you want.</span>
+  <span class="n">my_custom_field</span> <span class="o">=</span> <span class="s2">&quot;some value&quot;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">group</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">Name</span> <span class="o">=</span> <span class="s2">&quot;Some unique group name&quot;</span><span class="p">,</span>
+  <span class="n">Description</span> <span class="o">=</span> <span class="s2">&quot;My awesome group.&quot;</span><span class="p">,</span>
+  <span class="n">Lang</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span>
+  <span class="n">Private</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="n">CreatorId</span> <span class="o">=</span> <span class="s2">&quot;4c2ae592-b2a7-445e-98ec-697694478b1c&quot;</span><span class="p">,</span>
+  <span class="n">AvatarUrl</span> <span class="o">=</span> <span class="s2">&quot;url://somelink&quot;</span><span class="p">,</span>
+  <span class="n">Metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">new_groups</span> <span class="o">=</span> <span class="p">{</span> <span class="n">group</span> <span class="p">}</span>
+
+<span class="kd">local</span> <span class="n">success</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="n">nk</span><span class="p">.</span><span class="n">groups_create</span><span class="p">,</span> <span class="n">new_groups</span><span class="p">)</span>
+<span class="kr">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">success</span><span class="p">)</span> <span class="kr">then</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">logger_error</span><span class="p">((</span><span class="s2">&quot;Error with groups create: %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+<span class="kr">end</span>
+</pre></div>
+
+
+<h2 id="update-a-group">Update a group</h2>
+<p>When a group has been created it's admin can update optional fields.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupUpdateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">groupId</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Description</span><span class="p">(</span><span class="s">&quot;A new group description.&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully updated group.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="leave-a-group">Leave a group</h2>
+<p>A user can leave a group and will no longer be able to join <a href="../realtime-chat/#groups">group chat</a> or read <a href="../realtime-chat/#message-history">message history</a>. If the user is an admin they will only be able to leave when at least one other admin exists in the group.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any user who leaves the group will generate an event message in group chat which other members can read.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupLeaveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&quot;Successfully left the group.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">ErrorCode</span><span class="p">.</span><span class="n">GroupLastAdmin</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Must promote another admin before user can leave group.</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Unable to leave as last admin.&quot;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="manage-groups">Manage groups</h2>
+<p>Each group is managed by one or more admins. These users are members with permission to make changes to optional fields, accept or reject new members, remove members or other admins, and promote other members as admins.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>A group must have at least one admin so the last admin will have to promote another member before they can <a href="#leave-a-group">leave</a>.</p>
+</div>
+<h3 id="accept-new-members">Accept new members</h3>
+<p>When a user joins a private group it will create a join request until an admin accepts or rejects the user. The admin can add the user to the group.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupAddUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully added user to group.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The user will receive an <a href="../in-app-notifications/">in-app notification</a> when they've been added to the group. In a private group an admin will receive a notification about the join request.</p>
+<p>To reject the user from joining the group you should <a href="#kick-a-member">kick them</a>.</p>
+<h3 id="promote-a-member">Promote a member</h3>
+<p>An admin can promote another member of the group as an admin. This grants the member the same privileges to <a href="#manage-groups">manage the group</a>. A group can have one or more admins.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupPromoteUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully promoted user as an admin.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>To demote an admin as a member you can kick and re-add them.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupKickUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">completed</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">NGroupAddUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">),</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Admin user demoted to member in group.&quot;</span><span class="p">);</span>
+  <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+<span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+</pre></div>
+
+
+<h3 id="kick-a-member">Kick a member</h3>
+<p>An admin can kick a member from the group. The user is removed but can rejoin again later unless the group is private in which case an admin must accept the join request.</p>
+<p>If a user is removed from a group it does not prevent them from joining other groups.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupKickUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&quot;Successfully kicked user from group.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Sometimes a bad user needs to be kicked from the group and <a href="../friends/#ban-a-user">permanently banned</a>. This will prevent the user from being able to connect to the server and interact at all.</p>
+</div>
+<h2 id="remove-a-group">Remove a group</h2>
+<p>A group can only be removed by the admin which will disband all members. When a group is removed it's name can be re-used to <a href="#create-a-group">create a new group</a>.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;The group has been removed.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../friends/" title="Friends" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Friends
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../in-app-notifications/" title="In-app Notifications" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                In-app Notifications
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 Heroic Labs
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://heroiclabs.com" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/heroiclabs" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/heroicdev" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/heroic-labs" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
