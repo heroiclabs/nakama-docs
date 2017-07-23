@@ -4,7 +4,7 @@ Remote configuration is a way to customize the behavior of an app or game via in
 
 Developers can use remote configuration to remove the hassle of a lengthy review process or modifying the game or app and then waiting for users to update. This makes it especially useful with mobile projects.
 
-## Manage configuration settings
+## Manage In-app parameters
 
 The configuration settings sent to the app or game need to be stored on the server. The best way to store the information depends on how often the data will be changed.
 
@@ -76,7 +76,7 @@ end
 nk.register_http(remote_configuration, "rc")
 ```
 
-## Fetch settings
+## Fetch In-app parameters
 
 With either approach used to manage configuration settings you can fetch the in-app parameters with a HTTP request.
 
