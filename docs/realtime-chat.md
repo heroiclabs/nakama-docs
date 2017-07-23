@@ -53,7 +53,7 @@ if (messageType != TopicMessageType.Chat) {
 
 To send messages to other users a user must join the chat topic they want to communicate on. This will also enable messages to be [received in realtime](#receive-messages).
 
-!!! tip
+!!! Tip
     Each user can join many rooms, groups, and direct chat with their session. The same user can also be connected to the same chats from other devices because each device is identified as a separate session.
 
 ### rooms
@@ -81,7 +81,7 @@ The `roomId` variable contains an ID used to [send messages](#send-messages).
 
 A group chat can only be joined by a user who is a member of the [group](groups-clans.md). Messages are pushed in realtime to group members and they can read [historic messages](#message-history).
 
-!!! note
+!!! Note
     If a user is kicked or leaves a group they can no longer receive messages or read history.
 
 A group ID is needed when a user joins group chat and can be [listed by the user](groups-clans.md#list-groups).
@@ -107,7 +107,7 @@ The `groupTopicId` variable contains an ID used to [send messages](#send-message
 
 A user can direct message another user by ID. Each user will not receive messages in realtime until both users have joined the chat. This is important because it prevents spam messages from bad users.
 
-!!! tip
+!!! Tip
     Friends, groups, leaderboards, matchmaker, room chat, and searches in storage are all ways to find users for chat.
 
 A user will receive an [in-app notification](in-app-notifications.md) when a request to chat has been received.
@@ -129,7 +129,7 @@ client.Send(message, (INTopic topic) => {
 
 The `directTopicId` variable contains an ID used to [send messages](#send-messages).
 
-!!! note
+!!! Note
     A user can [block other users](friends.md#block-a-friend) to stop unwanted direct messages.
 
 ## List online users
@@ -140,7 +140,7 @@ A presence is made up of a unique session combined with a user ID. This makes it
 
 The user who [joins a chat topic](#join-chat) receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive "presence" changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.
 
-!!! summary
+!!! Summary
     A list of all online users is received when a user joins a chat topic you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
 
 ```csharp fct_label="Unity"
@@ -170,7 +170,7 @@ client.Send(message, (INTopic topic) => {
 });
 ```
 
-!!! tip
+!!! Tip
     The server is optimized to only push presence updates when other users join or leave the chat.
 
 ## Send messages
@@ -214,7 +214,7 @@ Every chat conversation stores a history of messages. The history also contains 
 
 Messages can be listed in order of most recent to oldest and also in reverse (oldest to newest). Messages are returned in batches of up to 100 each with a cursor for when there are more messages.
 
-!!! tip
+!!! Tip
     A user does not have to join a chat topic to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.
 
 ```csharp fct_label="Unity"

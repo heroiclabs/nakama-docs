@@ -10,7 +10,7 @@ This module contains all the core gameplay APIs, all registration functions used
 local nk = require("nakama")
 ```
 
-!!! note
+!!! Note
     All code examples assume the "nakama" module has been imported.
 
 ### base16
@@ -386,7 +386,7 @@ _Parameters_
 | func | function | A function reference which will be executed on each `msgname` message. |
 | msgname | string | The specific message name to execute the `func` function before. |
 
-!!! note
+!!! Note
     The `func` should pass the `payload` back as a return argument so the pipeline can continue to execute the standard logic.
 
 _Example_
@@ -405,7 +405,7 @@ __register_http (func, path)__
 
 Registers a HTTP endpoint within the server.
 
-!!! warning
+!!! Warning
     This should not be used to implement custom client functions instead have a look at `register_rpc`.
 
 This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks. Have a look at the section on [runtime code basics](runtime-code-basics.md).
@@ -417,7 +417,7 @@ _Parameters_
 | func | function | A function reference which will be executed on each HTTP call. |
 | path | string | The path that should be registered as a HTTP endpoint. |
 
-!!! note
+!!! Note
     The `func` can pass `nil` or `table` back as a return argument which will determine the HTTP response code returned.
 
 _Example_
@@ -455,7 +455,7 @@ _Parameters_
 | func | function | A function reference which will be executed on each RPC message. |
 | id | string | The unique identifier used to register the `func` function for RPC. |
 
-!!! note
+!!! Note
     The `func` can pass `nil` or `string` back as a return argument which will returned as bytes in the RPC response.
 
 _Example_
