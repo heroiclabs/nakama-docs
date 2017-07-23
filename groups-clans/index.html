@@ -192,18 +192,54 @@
       
       
 
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Storage Engine
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
+      Collections
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
-    <label class="md-nav__link" for="nav-1">
+    <label class="md-nav__link" for="nav-2">
       Social API
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-1">
+      <label class="md-nav__title" for="nav-2">
         Social API
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -400,13 +436,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -420,6 +456,42 @@
   <li class="md-nav__item">
     <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
       Function Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorials/remote-configuration/" title="Remote configuration" class="md-nav__link">
+      Remote configuration
     </a>
   </li>
 
@@ -556,7 +628,7 @@
                 
                 <h1 id="groups-and-clans">Groups and Clans</h1>
 <p>A group brings together a bunch of users into a small community or team.</p>
-<p>A group is made up of an owner or admin and members. It can be public or private which determines whether it appears in results when a user searches. Private groups are similar to how Whatsapp groups work. A user can only be added when they're invited to join by the group's admin.</p>
+<p>A group is made up of an owner, admins, and members. It can be public or private which determines whether it appears in results when a user searches. Private groups are similar to how Whatsapp groups work. A user can only be added when they're invited to join by one of the group's admins.</p>
 <h2 id="search-for-groups">Search for groups</h2>
 <p>A user can find public groups to join by a filter on language, recently created, how many members in a group, and more. These filters make it easy to assemble new users into smaller groups for team-based play or collaboration.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
@@ -606,7 +678,7 @@
 
 
 <h2 id="join-groups">Join groups</h2>
-<p>When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires an <a href="#add-new-members">admin to accept</a> the user.</p>
+<p>When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires an <a href="#accept-new-members">admin to accept</a> the user.</p>
 <p>A user who's part of a group can join <a href="../realtime-chat/#groups">group chat</a> and access it's <a href="../realtime-chat/#message-history">message history</a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -658,7 +730,7 @@
 
 
 <h2 id="create-a-group">Create a group</h2>
-<p>A group can be created with a name and other optional fields. These optional fields are used when a user <a href="#search-for-groups">searches for groups</a>. The user who creates the group becomes the admin.</p>
+<p>A group can be created with a name and other optional fields. These optional fields are used when a user <a href="#search-for-groups">searches for groups</a>. The user who creates the group becomes the owner and an admin for it.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="s">&quot;{&#39;my_custom_field&#39;: &#39;some value&#39;}&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupCreateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;Some unique group name&quot;</span><span class="p">)</span>
