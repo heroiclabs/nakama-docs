@@ -2,7 +2,7 @@
 
 Friends are a great way to build a social community. Users can add other users to their list of friends, see who is online or when they were last online, chat together in realtime, and interact together in gameplay or collaboration.
 
-!!! summary "Fun fact"
+!!! Summary "Fun fact"
     Nakama is a common Japanese word that directly translates to friend or comrade. Some believe the word means "people who are considered closer than family", though that is not a part of the official definition. We feel it expresses the kind of social communities we want developers to build into their games and apps!
 
 Each user builds up a list of friends by who they know already from their social networks, friend requests they send, requests they receive, and who the server recommends they should know. This information is stored in a social graph within the system as a powerful way to interact with other users. Much like how Twitter or Facebook work.
@@ -13,7 +13,7 @@ Any social community must be maintained carefully to prevent spam or abuse. To h
 
 A user can add one or more friends by that user's ID or handle. The user added will not be marked as a friend in the list until they've confirmed the friend request. The user who receives the request can confirm it by adding the user back.
 
-!!! hint
+!!! Hint
     A user who registers or links their account with Facebook or another social network will have friends from that network be added automatically into their friend list.
 
 When a friend request is sent or the user is added an in-app notification will be sent. See the [in-app notification](in-app-notifications.md#receive-notifications) section for more info.
@@ -51,7 +51,7 @@ client.Send(message, (INResultSet<INFriend> list) => {
 
 A user can remove a friend, reject a received invite, cancel a friend request sent, or unblock a user. Similar to how Friend Add works we reuse Friend Remove to cancel or undo whatever friend state is current with another user.
 
-!!! note
+!!! Note
     If a user is unblocked they are removed from the friend list entirely. To re-add them each user must add the other again.
 
 ```csharp fct_label="Unity"

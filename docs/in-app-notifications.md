@@ -10,7 +10,7 @@ These notifications are viewed within the app which makes them a great companion
 
 You can send a notification to one or more users with server-side Lua code. It can be sent to any user in the game, no need to be a friend to be able to exchange messages. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.
 
-!!! note
+!!! Note
     The code you choose for your notifications must start at "101" and upwards. See [below](#notification-codes) for reserved message codes.
 
 A notification has content which will be encoded as JSON and must be given an "expires_at" value in milliseconds which indicates how long the notification will be available before it's removed. A message cannot be sent which expires in less than 60 seconds.
@@ -75,7 +75,7 @@ client.Send(message, (INResultSet<INNotification> list) => {
 
 A list of notifications can be retrieved in batches of up to 100 at a time. To retrieve all messages you should accumulate them with the resume cursor.
 
-!!! hint
+!!! Hint
     You usually only want to list 100 notifications at a time otherwise you might cause user fatigue. A better option could be to have the UI fetch the next 100 notifications when the user scrolls to the bottom of your UI panel.
 
 ```csharp fct_label="Unity"
