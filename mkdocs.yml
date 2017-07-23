@@ -58,8 +58,8 @@ pages:
 #  - 'User accounts': 'user-accounts.md'
 #  - 'File configuration': 'file-configuration.md'
 #  - 'Resource limits': 'resource-limits.md'
-#- 'Storage engine':
-#  - 'Collections': 'storage-collections.md'
+- 'Storage Engine':
+  - 'Collections': 'storage-collections.md'
 #  - 'Design patterns': 'storage-design-patterns.md'
 #  - 'Permissions': 'storage-permissions.md'
 #  - 'Record ownership': 'record-ownership.md'
@@ -84,8 +84,8 @@ pages:
 #  - 'JavaScript/Lua comparison': 'javascript-lua-comparison.md'
 #  - 'Lua cheatsheet': 'lua-cheatsheet.md'
   - 'Function Reference': 'runtime-function-reference.md'
-#- 'Tutorials':
-#  - 'Remote configuration': 'tutorial-remote-configuration.md'
+- 'Tutorials':
+  - 'Remote configuration': 'tutorials/remote-configuration.md'
 #  - 'Ban users': 'tutorial-ban-users.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
 #  - 'Virtual wallet': 'tutorial-virtual-wallet.md'
