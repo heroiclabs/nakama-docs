@@ -46,7 +46,7 @@ markdown_extensions:
 pages:
 - 'Install and setup':
   - 'Docker quickstart': 'install-docker-quickstart.md'
-  - 'Binary installation': 'install-binary.md'
+  - 'Binary install': 'install-binary.md'
 #  - 'Managed cloud': 'managed-cloud.md'
   # - 'Production settings': 'production-settings.md'
   # - 'Upgrades': 'nakama-upgrades.md'
