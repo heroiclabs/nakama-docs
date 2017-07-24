@@ -44,18 +44,19 @@ markdown_extensions:
 
 # Nav menu
 pages:
-#- 'Install and setup':
-#  - 'Docker quickstart': 'docker-quickstart.md'
+- 'Install and setup':
+  - 'Docker quickstart': 'install-docker-quickstart.md'
+  - 'Binary installation': 'install-binary.md'
 #  - 'Managed cloud': 'managed-cloud.md'
-#  - 'Production settings': 'production-settings.md'
-#  - 'Upgrades': 'nakama-upgrades.md'
+  # - 'Production settings': 'production-settings.md'
+  # - 'Upgrades': 'nakama-upgrades.md'
 #- 'Unity engine': 'nakama-unity-engine.md'
 #- 'Unreal engine': 'nakama-unreal-engine.md'
 #- 'Android guide': 'nakama-android-guide.md'
 #- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
 #- 'JavaScript guide': 'nakama-javascript-guide.md'
-#- 'Fundamentals':
-#  - 'Nakama CLI': 'server-cli.md'
+# - 'Fundamentals':
+  # - 'Nakama CLI': 'server-cli.md'
 #  - 'Authentication': 'authentication.md'
 #  - 'User accounts': 'user-accounts.md'
 #  - 'File configuration': 'file-configuration.md'
@@ -69,7 +70,7 @@ pages:
   - 'Friends': 'friends.md'
   - 'Groups and Clans': 'groups-clans.md'
   - 'In-app Notifications': 'in-app-notifications.md'
-  - 'Realtime Chat': 'realtime-chat.md'
+  # - 'Realtime Chat': 'realtime-chat.md'
 #- 'For games':
 #  - 'Leaderboards': 'leaderboards.md'
 #  - 'Matchmaker': 'matchmaker.md'
