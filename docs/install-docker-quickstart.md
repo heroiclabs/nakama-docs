@@ -3,7 +3,7 @@
 To start developing with Nakama, you’ll first need to install it on your development machine. It’s straightforward and takes just a few minutes. In this guide we’re going to focus on installing your Nakama development instance using Docker.
 
 !!! summary "Recommended Approach"
-    Docker is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a binary to ensure all system resources are available to Nakama.
+    Docker is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a [binary](install-binary.md) to ensure all system resources are available to Nakama.
 
 There is a single, minimal Nakama image that contains all of the Nakama binary. Each binary can be run by specifying the binary as the command when running Docker. The basic format is:
 
