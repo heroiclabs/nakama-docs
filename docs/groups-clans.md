@@ -164,7 +164,7 @@ end
 
 ## Update a group
 
-When a group has been created it's admin can update optional fields.
+When a group has been created it's admins can update optional fields.
 
 ```csharp fct_label="Unity"
 byte[] groupId = group.Id; // an INGroup ID.
@@ -211,7 +211,7 @@ Each group is managed by one or more admins. These users are members with permis
 
 ### Accept new members
 
-When a user joins a private group it will create a join request until an admin accepts or rejects the user. The admin can add the user to the group.
+When a user joins a private group it will create a join request until an admin accepts or rejects the user. The admin can accept the user into the group.
 
 ```csharp fct_label="Unity"
 byte[] groupId = group.Id; // an INGroup ID.
@@ -255,9 +255,10 @@ var errorHandler = delegate(INError err) {
 byte[] groupId = group.Id; // an INGroup ID.
 byte[] userId = user.Id;   // an INUser ID.
 
-var message = NGroupKickUserMessage.Default(groupId, userId);
-client.Send(message, (bool completed) => {
-  client.Send(NGroupAddUserMessage.Default(groupId, userId), (bool done) => {
+var kickMessage = NGroupKickUserMessage.Default(groupId, userId);
+client.Send(kickMessage, (bool completed) => {
+  var addMessage = NGroupAddUserMessage.Default(groupId, userId);
+  client.Send(addMessage, (bool done) => {
     Debug.Log("Admin user demoted to member in group.");
   }, errorHandler);
 }, errorHandler);
@@ -286,7 +287,7 @@ client.Send(message, (bool done) => {
 
 ## Remove a group
 
-A group can only be removed by the admin which will disband all members. When a group is removed it's name can be re-used to [create a new group](#create-a-group).
+A group can only be removed by one of the admins which will disband all members. When a group is removed it's name can be re-used to [create a new group](#create-a-group).
 
 ```csharp fct_label="Unity"
 byte[] groupId = group.Id; // an INGroup ID.
