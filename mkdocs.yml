@@ -60,9 +60,9 @@ pages:
 #  - 'Resource limits': 'resource-limits.md'
 - 'Storage Engine':
   - 'Collections': 'storage-collections.md'
-#  - 'Design patterns': 'storage-design-patterns.md'
 #  - 'Permissions': 'storage-permissions.md'
 #  - 'Record ownership': 'record-ownership.md'
+#  - 'Design patterns': 'storage-design-patterns.md'
 - 'Social API':
   - 'Friends': 'friends.md'
   - 'Groups and Clans': 'groups-clans.md'
@@ -85,6 +85,7 @@ pages:
 #  - 'Lua cheatsheet': 'lua-cheatsheet.md'
   - 'Function Reference': 'runtime-function-reference.md'
 - 'Tutorials':
+  - 'Initialize a new user': 'tutorials/initialize-new-user.md'
   - 'Remote configuration': 'tutorials/remote-configuration.md'
 #  - 'Ban users': 'tutorial-ban-users.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
