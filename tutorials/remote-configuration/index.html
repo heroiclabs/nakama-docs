@@ -369,6 +369,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../initialize-new-user/" title="Initialize a new user" class="md-nav__link">
+      Initialize a new user
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -514,13 +526,13 @@
               
                 
                 
-                <h1 id="remote-configuration">Remote Configuration</h1>
+                <h1 id="remote-configuration">Remote configuration</h1>
 <p>Remote configuration is a way to customize the behavior of an app or game via in-app parameters stored on a remote server. This can be used to implement <a href="https://en.wikipedia.org/wiki/Feature_toggle" target="\_blank">feature flags</a> or adjust settings which change the appearance or behavior of the app or game.</p>
 <p>Developers can use remote configuration to remove the hassle of a lengthy review process or modifying the game or app and then waiting for users to update. This makes it especially useful with mobile projects.</p>
 <h2 id="manage-in-app-parameters">Manage In-app parameters</h2>
 <p>The configuration settings sent to the app or game need to be stored on the server. The best way to store the information depends on how often the data will be changed.</p>
-<p>For mostly static data it's most efficient to embed it as data structures in server-side code and for more dynamic data it's better to use a read-only <a href="storage-collections.md">storage record</a>.</p>
-<p>With both of these approaches you can access remote configuration before you've done <a href="authentication.md">register/login</a> or connected with a <a href="authentication.md#sessions">user session</a>. The in-app parameters you configure can be initialized at the earliest point of application startup.</p>
+<p>For mostly static data it's most efficient to embed it as data structures in server-side code and for more dynamic data it's better to use a read-only <a href="../../storage-collections/">storage record</a>.</p>
+<p>With both of these approaches you can access remote configuration before you've done <a href="../authentication.md">register/login</a> or connected with a <a href="../authentication.md#sessions">user session</a>. The in-app parameters you configure can be initialized at the earliest point of application startup.</p>
 <h3 id="static-parameters">Static parameters</h3>
 <p>The simplest approach uses server-side code to represent the in-app parameters as a static variable. A change to the parameters after the server has started would require an update to the Lua code and a server restart.</p>
 <p>The code could be stored in a module named <code>"rc.lua"</code> and placed in the runtime path for the server.</p>
@@ -542,7 +554,7 @@
 
 
 <h3 id="dynamic-parameters">Dynamic parameters</h3>
-<p>For in-app parameters which may be changed via Analytics or with a Liveops dashboard it's more flexible to store the configuration settings in the <a href="storage-collections.md">storage engine</a> as a read-only record.</p>
+<p>For in-app parameters which may be changed via Analytics or with a Liveops dashboard it's more flexible to store the configuration settings in the <a href="../../storage-collections/">storage engine</a> as a read-only record.</p>
 <p>Same as above we'll use server-side code with a module named <code>"rc.lua"</code> and placed in the runtime path for the server.</p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
 
@@ -662,7 +674,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../runtime-function-reference/" title="Function Reference" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../initialize-new-user/" title="Initialize a new user" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -671,7 +683,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Function Reference
+                Initialize a new user
               </span>
             </div>
           </a>

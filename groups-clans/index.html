@@ -490,6 +490,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../tutorials/initialize-new-user/" title="Initialize a new user" class="md-nav__link">
+      Initialize a new user
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../tutorials/remote-configuration/" title="Remote configuration" class="md-nav__link">
       Remote configuration
     </a>
@@ -776,7 +788,7 @@
 
 
 <h2 id="update-a-group">Update a group</h2>
-<p>When a group has been created it's admin can update optional fields.</p>
+<p>When a group has been created it's admins can update optional fields.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupUpdateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">groupId</span><span class="p">)</span>
@@ -819,7 +831,7 @@
 <p>A group must have at least one admin so the last admin will have to promote another member before they can <a href="#leave-a-group">leave</a>.</p>
 </div>
 <h3 id="accept-new-members">Accept new members</h3>
-<p>When a user joins a private group it will create a join request until an admin accepts or rejects the user. The admin can add the user to the group.</p>
+<p>When a user joins a private group it will create a join request until an admin accepts or rejects the user. The admin can accept the user into the group.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
 
@@ -856,9 +868,10 @@
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
 
-<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupKickUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">completed</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">NGroupAddUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">),</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="kt">var</span> <span class="n">kickMessage</span> <span class="p">=</span> <span class="n">NGroupKickUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">kickMessage</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">completed</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kt">var</span> <span class="n">addMessage</span> <span class="p">=</span> <span class="n">NGroupAddUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">addMessage</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Admin user demoted to member in group.&quot;</span><span class="p">);</span>
   <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
 <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
@@ -885,7 +898,7 @@
 <p>Sometimes a bad user needs to be kicked from the group and <a href="../friends/#ban-a-user">permanently banned</a>. This will prevent the user from being able to connect to the server and interact at all.</p>
 </div>
 <h2 id="remove-a-group">Remove a group</h2>
-<p>A group can only be removed by the admin which will disband all members. When a group is removed it's name can be re-used to <a href="#create-a-group">create a new group</a>.</p>
+<p>A group can only be removed by one of the admins which will disband all members. When a group is removed it's name can be re-used to <a href="#create-a-group">create a new group</a>.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>

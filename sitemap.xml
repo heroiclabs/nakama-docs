@@ -5,7 +5,7 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//storage-collections/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -15,25 +15,25 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//friends/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//groups-clans/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//in-app-notifications/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//realtime-chat/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -42,7 +42,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//in-app-purchase-validation/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -51,7 +51,7 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//runtime-function-reference/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -60,8 +60,14 @@
     
         
     <url>
+     <loc>https://heroiclabs.com/docs//tutorials/initialize-new-user/</loc>
+     <lastmod>2017-07-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>https://heroiclabs.com/docs//tutorials/remote-configuration/</loc>
-     <lastmod>2017-07-23</lastmod>
+     <lastmod>2017-07-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
