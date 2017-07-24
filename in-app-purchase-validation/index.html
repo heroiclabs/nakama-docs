@@ -16,7 +16,7 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../assets/images/favicon.png">
+        <link rel="shortcut icon" href="../images/favicon.ico">
       
       <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
@@ -70,7 +70,8 @@
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-icon md-icon--home md-header-nav__button">
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-logo md-header-nav__button">
+            <img src="../images/logo-white.svg" width="24" height="24">
           </a>
         
       </div>
@@ -155,7 +156,9 @@
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
     
-      <i class="md-icon md-icon--home md-nav__button"></i>
+      <i class="md-logo md-nav__button">
+        <img src="../images/logo-white.svg">
+      </i>
     
     Nakama server
   </label>
@@ -194,10 +197,58 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
     
     <label class="md-nav__link" for="nav-1">
-      Storage Engine
+      Install and setup
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-1">
+        Install and setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-nav__link">
+      Docker quickstart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-binary/" title="Binary install" class="md-nav__link">
+      Binary install
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
         Storage Engine
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -227,13 +278,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Social API
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Social API
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -275,18 +326,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../realtime-chat/" title="Realtime Chat" class="md-nav__link">
-      Realtime Chat
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -306,9 +345,97 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        In-app Purchase Validation
+      </label>
+    
     <a href="./" title="In-app Purchase Validation" class="md-nav__link md-nav__link--active">
       In-app Purchase Validation
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#apple" title="Apple" class="md-nav__link">
+    Apple
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" title="Setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate-purchase" title="Validate Purchase" class="md-nav__link">
+    Validate Purchase
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google" title="Google" class="md-nav__link">
+    Google
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" title="Setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate-purchase_1" title="Validate Purchase" class="md-nav__link">
+    Validate Purchase
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpreting-responses" title="Interpreting Responses" class="md-nav__link">
+    Interpreting Responses
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recovering-purchases" title="Recovering Purchases" class="md-nav__link">
+    Recovering Purchases
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -320,13 +447,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -356,13 +483,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -414,6 +541,81 @@
     
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#apple" title="Apple" class="md-nav__link">
+    Apple
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" title="Setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate-purchase" title="Validate Purchase" class="md-nav__link">
+    Validate Purchase
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google" title="Google" class="md-nav__link">
+    Google
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup_1" title="Setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validate-purchase_1" title="Validate Purchase" class="md-nav__link">
+    Validate Purchase
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpreting-responses" title="Interpreting Responses" class="md-nav__link">
+    Interpreting Responses
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recovering-purchases" title="Recovering Purchases" class="md-nav__link">
+    Recovering Purchases
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -426,6 +628,204 @@
                 
                 
                 <h1 id="in-app-purchase-validation">In-app Purchase Validation</h1>
+<p>The spectrum of monetisation models and tools is extremely varied. From ad-supported, microtransactions, freemium, one-off purchases, and everything in between. A key tool in many of these solutions is the In-App Purchase, which enables single purchases for unlocks, in-game consumables, subscriptions for premium access, and more.</p>
+<p>There are a number of readily available attacks against the most common in-app purchase implementations.</p>
+<p>These are usually focused around:</p>
+<ul>
+<li>Feeding the client fake purchase responses which indicate success.</li>
+<li>Replaying a valid purchase response multiple times.</li>
+<li>Sharing a purchase response with another client, so multiple players can receive the reward from a single purchase.</li>
+<li>...and more, with new vulnerabilities emerging occasionally.</li>
+</ul>
+<p>For in-app purchases, a trusted source of truth is required. Nakama checks and tracks purchases and purchase history, solving a significant set of possible vulnerabilities and pain points.</p>
+<p>In-App Purchase Validation is available for Apple and Google purchases, regardless of platform. Both single product and subscription purchases are supported.</p>
+<p><strong>Fake Purchases</strong></p>
+<p>Nakama directly connects to Apple and Google services to check the validity of all incoming payments. This verification is completely outside the client's code, and cannot be intercepted and tampered with.</p>
+<p>Every transaction is verified, every time, and invalid ones are rejected.</p>
+<p><strong>Replay Attacks</strong></p>
+<p>All transactions are logged, preventing multiple submissions of the same purchase token or receipt.</p>
+<p><strong>Receipt Sharing</strong></p>
+<p>Successful transactions are bound to the account that submits them. Different users cannot submit the same transaction, even a valid one, in an attempt to receive the associated reward.</p>
+<p><strong>Product Mismatches</strong></p>
+<p>The transaction is checked to ensure the correct reward is tied to each purchase. This prevents attacks that attempt to use a valid (cheap) purchase to unlock a different (expensive) reward.</p>
+<p><strong>Subscription Expiry</strong></p>
+<p>Nakama checks subscriptions to see if they've expired, and rejects the transaction as needed.</p>
+<p><strong>Purchase Cancellation</strong></p>
+<p>Valid receipts that link to cancelled purchases are flagged and rejected.</p>
+<p><strong>Single Source of Truth</strong></p>
+<p>While Nakama maintains an internal record of all transactions, the remote payment provider is always given priority. Valid purchases that have been checked, logged, then subsequently cancelled, will be rejected appropriately.</p>
+<h2 id="apple">Apple</h2>
+<p>Nakama supports validating purchases made for products and subscription in iOS.</p>
+<p>Apple purchase receipts are sent to Apple for validation. As suggested by Apple, both Production and Sandbox servers are used to validate receipts depending on the priority setup in the Nakama configuration.</p>
+<h3 id="setup">Setup</h3>
+<p>To validate receipts against the App Store, Nakama requires your app's shared secret. You can setup a shared secret in <a href="https://itunesconnect.apple.com">iTunes Connect</a>.</p>
+<p><img alt="Apple iTunes Connect" src="../images/apple_iap_1.jpg" title="Apple iTunes Connect" /></p>
+<p>Make a record of your shared secret:</p>
+<p><img alt="Apple iTunes Connect Shared Secret" src="../images/apple_iap_2.jpg" title="Apple iTunes Connect Shared Secret" /></p>
+<p>You'll need to set the value of <code>purchase.apple.password</code> to the value of the Shared Secret above. For more info, take a look at the <a href="configuration.md#purchase">configuration</a> page.</p>
+<p>If your app is in production, you'll need to set the value of <code>purchase.apple.production</code> to true to give priority Apple's Production servers.</p>
+<h3 id="validate-purchase">Validate Purchase</h3>
+<p>Nakama only supports validating iOS 7+ receipts. In addition, Nakama only validates the first item in the receipt as Apple receipts can contain more than one in-app purchase item.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">productId</span> <span class="p">=</span> <span class="s">&quot;com.yourcompany.product&quot;</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">receiptData</span> <span class="p">=</span> <span class="s">&quot;...some-base64-encoded-data...&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NPurchaseValidateMessage</span><span class="p">.</span><span class="n">Apple</span><span class="p">(</span><span class="n">productId</span><span class="p">,</span> <span class="n">receiptData</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INPurchaseRecord</span> <span class="n">record</span><span class="p">)</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(!</span><span class="n">record</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Purchase was not validation. Reason: {0}.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">SeenBefore</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// This is useful for recovering previous purchases</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;This is a valid purchase but the purchase item was redeemed once before.&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;New purchase was validated&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>receipt_data</td>
+<td>string</td>
+<td>Base-64 encoded receipt data returned by the purchase operation itself.</td>
+</tr>
+<tr>
+<td>product_id</td>
+<td>string</td>
+<td>The product, item, or subscription package ID the purchase relates to.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="google">Google</h2>
+<p>Nakama supports validating purchases made for products and subscription on Android.</p>
+<h3 id="setup_1">Setup</h3>
+<p>To validate receipts against the Play Store, Nakama requires your app's package name, as well as a service file. You can setup a service account and download the service file on <a href="https://play.google.com/apps/publish">Google Play Developer Console</a>.</p>
+<p>Firstly, you'll need to setup a Service Account in the <a href="https://console.developers.google.com/iam-admin/serviceaccounts/">Google API Console</a>.</p>
+<p><img alt="Create Service Account" src="../images/google_iap_1_create_service_account.jpg" title="Create Service Account" /></p>
+<p>Once a service account is created, you'll need to create a key:</p>
+<p><img alt="Create Key" src="../images/google_iap_2_create_key.jpg" title="Create Key" /></p>
+<p>Download the key as a JSON file. You'll need to put this file somewhere that Nakama server can access.</p>
+<p><img alt="Create Key" src="../images/google_iap_3_create_key_2.jpg" title="Create Key" /></p>
+<p>Once the key is created, navigate back to <a href="https://play.google.com/apps/publish">Google Play Developer Console</a> and navigate to <strong>Settings</strong> &gt; <strong>API Access</strong>.</p>
+<p>The service account you created in the previous steps should be listed above. You'll need to grant access to the service account to access the API:</p>
+<p><img alt="Create API Access" src="../images/google_iap_5_play_api.jpg" title="Create API Access" /></p>
+<p>Make sure that you give the service account access to <strong>Visibility</strong>, <strong>View Financial Data</strong>, and <strong>Manage Orders</strong>. These permissions are required for Nakama to validate receipts against Google Play.</p>
+<p><img alt="Grand Access" src="../images/google_iap_6_grant_access.jpg" title="Grand Access" /></p>
+<p>Navigate to <strong>Users &amp; Permissions</strong> to check that the service account is setup correctly.</p>
+<p><img alt="List users with access" src="../images/google_iap_7_play_users.jpg" title="List users with access" /></p>
+<p>Lastly, you'll need to update Nakama's configuration with the following information:</p>
+<ul>
+<li>
+<p><code>purchase.google.package_name</code>: Package name for your Android app, as you've listed in Google Play.</p>
+</li>
+<li>
+<p><code>purchase.google.service_key_file</code>: Path of the JSON file you download in previous steps. This file contains authentication information that allows Nakama to communicate with Google Play on your behalf. Make sure that the file is kept safe and is only accessible by Nakama and other authorized parties.</p>
+</li>
+</ul>
+<h3 id="validate-purchase_1">Validate Purchase</h3>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">productId</span> <span class="p">=</span> <span class="s">&quot;com.yourcompany.product&quot;</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">purchaseType</span> <span class="p">=</span> <span class="s">&quot;product&quot;</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">purchaseToken</span> <span class="p">=</span> <span class="s">&quot;some-token-from-google&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NPurchaseValidateMessage</span><span class="p">.</span><span class="n">Google</span><span class="p">(</span><span class="n">productId</span><span class="p">,</span> <span class="n">purchaseType</span><span class="p">,</span> <span class="n">purchaseToken</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INPurchaseRecord</span> <span class="n">record</span><span class="p">)</span> <span class="p">=&gt;</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(!</span><span class="n">record</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Purchase was not validation. Reason: {0}.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">SeenBefore</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// This is useful for recovering previous purchases</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;This is a valid purchase but the purchase item was redeemed once before.&quot;</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;New purchase was validated&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>product_type</td>
+<td>string</td>
+<td>Whether the purchase is for a <code>product</code> or a <code>subscription</code></td>
+</tr>
+<tr>
+<td>purchase_token</td>
+<td>string</td>
+<td>The token returned in the purchase operation response, acts as a transaction identifier.</td>
+</tr>
+<tr>
+<td>product_id</td>
+<td>string</td>
+<td>The identifier of the product or subscription being purchased.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="interpreting-responses">Interpreting Responses</h2>
+<p>Responses contain the following information:</p>
+<ul>
+<li><code>success</code> - Whether or not the transaction is valid and all the information matches.</li>
+<li><code>seen_before</code> - If this is a new transaction or if Nakama has a log of it.</li>
+<li><code>purchase_provider_reachable</code> - Indicates whether or not Nakama was able to reach the remote purchase service.</li>
+<li><code>message</code> - A string indicating why the purchase verification failed, if appropriate.</li>
+<li><code>data</code> - The complete response Nakama received from the remote service.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <code>purchase_provider_reachable</code> is <code>false</code> it indicates that Nakama was unable to query the remote purchase service. In this situation the client should use its discretion to decide if the purchase should be accepted, and must queue up the verification request for a later retry.</p>
+</div>
+<p>Each response contains all the information needed to take the appropriate action. Below is a quick reference for interpreting the key fields:</p>
+<table>
+<thead>
+<tr>
+<th><code></code></th>
+<th><code>seen_before</code> = <code>true</code></th>
+<th><code>seen_before</code> = <code>false</code></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>success</code> = <code>true</code></td>
+<td><mark>Valid, but Nakama has an existing record of it.</mark></td>
+<td>Valid and new.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>success</code> = <code>false</code></td>
+<td><mark style="background-color: pink"> Rejected, check <code>message</code> field for reason.</mark></td>
+<td><mark style="background-color: pink">Rejected, check <code>message</code> field for reason.</mark></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="recovering-purchases">Recovering Purchases</h2>
+<p>When users change devices, it's common to offer an option (or fully automated process) to re-apply the benefits of any previous purchases to their new client installation.</p>
+<p>Clients should always refer to the platform purchase provider for a list of purchases, then verify each one with Nakama. In this case clients should accommodate responses where the <code>seen_before</code> indicator is true and act accordingly.</p>
                 
                   
                 
@@ -444,7 +844,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../realtime-chat/" title="Realtime Chat" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../in-app-notifications/" title="In-app Notifications" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -453,7 +853,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Realtime Chat
+                In-app Notifications
               </span>
             </div>
           </a>

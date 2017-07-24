@@ -16,7 +16,7 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../assets/images/favicon.png">
+        <link rel="shortcut icon" href="../images/favicon.ico">
       
       <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
     
@@ -70,7 +70,8 @@
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-icon md-icon--home md-header-nav__button">
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-logo md-header-nav__button">
+            <img src="../images/logo-white.svg" width="24" height="24">
           </a>
         
       </div>
@@ -159,7 +160,9 @@
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
     
-      <i class="md-icon md-icon--home md-nav__button"></i>
+      <i class="md-logo md-nav__button">
+        <img src="../images/logo-white.svg">
+      </i>
     
     Nakama server
   </label>
@@ -198,10 +201,58 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
     
     <label class="md-nav__link" for="nav-1">
-      Storage Engine
+      Install and setup
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-1">
+        Install and setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-nav__link">
+      Docker quickstart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-binary/" title="Binary install" class="md-nav__link">
+      Binary install
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
         Storage Engine
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -233,13 +284,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Social API
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Social API
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -400,18 +451,6 @@
   </li>
 
         
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../realtime-chat/" title="Realtime Chat" class="md-nav__link">
-      Realtime Chat
-    </a>
-  </li>
-
-        
       </ul>
     </nav>
   </li>
@@ -436,13 +475,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -472,13 +511,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -691,7 +730,7 @@
 
 <h2 id="join-groups">Join groups</h2>
 <p>When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires an <a href="#accept-new-members">admin to accept</a> the user.</p>
-<p>A user who's part of a group can join <a href="../realtime-chat/#groups">group chat</a> and access it's <a href="../realtime-chat/#message-history">message history</a>.</p>
+<p>A user who's part of a group can join <a href="realtime-chat.md#groups">group chat</a> and access it's <a href="realtime-chat.md#message-history">message history</a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>When a user joins or leaves a group event messages are added to chat history. This makes it easy for members to see what's changed in the group.</p>
@@ -803,7 +842,7 @@
 
 
 <h2 id="leave-a-group">Leave a group</h2>
-<p>A user can leave a group and will no longer be able to join <a href="../realtime-chat/#groups">group chat</a> or read <a href="../realtime-chat/#message-history">message history</a>. If the user is an admin they will only be able to leave when at least one other admin exists in the group.</p>
+<p>A user can leave a group and will no longer be able to join <a href="realtime-chat.md#groups">group chat</a> or read <a href="realtime-chat.md#message-history">message history</a>. If the user is an admin they will only be able to leave when at least one other admin exists in the group.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Any user who leaves the group will generate an event message in group chat which other members can read.</p>
