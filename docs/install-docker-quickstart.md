@@ -5,7 +5,7 @@ To start developing with Nakama, you’ll first need to install it on your devel
 !!! summary "Recommended Approach"
     Docker is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a [binary](install-binary.md) to ensure all system resources are available to Nakama.
 
-There is a single, minimal Nakama image that contains all of the Nakama binary. Each binary can be run by specifying the binary as the command when running Docker. The basic format is:
+There is a single, minimal Nakama image that contains the Nakama binary. The basic format is:
 
 ```shell fct_label="Shell"
 docker run heroiclabs/nakama <command> [options]
@@ -51,7 +51,7 @@ INClient client = new NClient.Builder("defaultkey")
     .Build();
 ```
 
-## Running Without Docker-Compose
+## Running Nakama
 
 You can run Nakama and Cockroach without using Docker-Compose. This will mean you have greater control over how they are started, and various data volumes options but in return, you'll have to configure the two containers:
 
@@ -117,7 +117,7 @@ nakama:
 - On Mac and Linux systems, the path highlighted above will create a folder called `nakama` in the same directory as where you are running `docker-compose` from.
 - On Windows, you'll need to update the path above so that Docker can bind the folder properly. A valid value can look like this: `C:/users/<username>/projects/docker`.
 
-!!! warning "Windows Drive Binding"
+!!! warning "Drive Binding on Windows"
     Docker will complain about an unshared Drive if you the path above is not changed or is not available. The error looks like this:
 
     `ERROR: for bin_nakama_1 Cannot create container for service nakama: Drive has not been shared`

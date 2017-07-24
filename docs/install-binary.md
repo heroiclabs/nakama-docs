@@ -21,7 +21,7 @@ You'll first need to install CockroachDB. Follow [this guide](https://www.cockro
 !!! note "CockroachDB Alternative"
     Nakama unofficially supports [PostgreSQL](https://www.postgresql.org/download/) for environments where CockroachDB is not available.
 
-    For production settings, Nakama should be used with CockroachDB as queries are optimised due to the way CockroachDB stores data on the disk.
+    For production settings, Nakama should be used with CockroachDB as queries are optimised for the way data is stored on the disk.
 
 ## Install Nakama on MacOS
 
@@ -86,7 +86,7 @@ nakama.exe --log.stdout
 
 ## Install Nakama on Linux
 
-Using [Docker](install-docker-quickstart.md) - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure.
+Using [Docker](install-docker-quickstart.md) - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure. [Let us know](mailto:support@heroiclabs.com) if you have requests for specific package managers.
 
 First you’ll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.
 
