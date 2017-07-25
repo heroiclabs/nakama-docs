@@ -72,7 +72,7 @@ This approach avoids the tradeoff with client disconnects but requires a databas
 
 ## Initialize record when used
 
-The last way to write initial records for the user is to `"init"` the record with a storage update wherever it's written to in other application code. With this approach you never use storage writes and always perform all write operations as updates.
+The last way to write initial records for the user is to `"init"` the record with a storage update wherever it's written to in application code. With this approach you never use storage writes and always perform all write operations as updates.
 
 In our example it means wherever you will update the "mywallet" record you ensure it's been initialized first.
 
