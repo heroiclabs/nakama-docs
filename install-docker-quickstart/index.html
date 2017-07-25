@@ -274,8 +274,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker-compose-data" title="Docker-Compose Data" class="md-nav__link">
-    Docker-Compose Data
+  <a href="#data" title="Data" class="md-nav__link">
+    Data
   </a>
   
 </li>
@@ -342,10 +342,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
-      Storage Engine
+      Fundamentals
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-2">
+        Fundamentals
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../user-accounts/" title="User accounts" class="md-nav__link">
+      User accounts
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
         Storage Engine
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -375,13 +411,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Social API
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Social API
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -459,13 +495,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -495,13 +531,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
-    <label class="md-nav__link" for="nav-6">
+    <label class="md-nav__link" for="nav-7">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
+      <label class="md-nav__title" for="nav-7">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -586,8 +622,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker-compose-data" title="Docker-Compose Data" class="md-nav__link">
-    Docker-Compose Data
+  <a href="#data" title="Data" class="md-nav__link">
+    Data
   </a>
   
 </li>
@@ -703,30 +739,24 @@ docker run --link<span class="o">=</span>db -p <span class="m">7350</span>:7350 
 <p>Docker Compose simplifies running more than one Docker container in conjunction. For Nakama, we&rsquo;ll need two containers: one for Nakama itself and one for the database it relies on, CockroachDB.</p>
 <p>You can choose to configure the Nakama and CockroachDB containers without Docker Compose but we do not recommend it when you&rsquo;re starting out.</p>
 <p>Docker Compose uses YAML configuration files to declare which containers to use and how they should work together.</p>
-<ol>
-<li>Let&rsquo;s start by downloading the <a href="https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml">Nakama Docker Compose file</a>:</li>
-</ol>
+<p>1. Let&rsquo;s start by downloading the <a href="https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml">Nakama Docker Compose file</a>:</p>
 <div class="codehilite"><pre><span></span>wget https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml
 </pre></div>
 
 
 <div class="admonition warning">
 <p class="admonition-title">Windows users</p>
-<p>If you are trying to run Nakama via Docker-Compose on Windows, you'll need to make a small change to the downloaded <code>docker-compose.yml</code> file. Follow this <a href="#docker-compose-data">instruction</a> to bind the correct path.</p>
+<p>If you are trying to run Nakama via Docker-Compose on Windows, you'll need to make a small change to the downloaded <code>docker-compose.yml</code> file. Follow this <a href="#data">instruction</a> to bind the correct path.</p>
 </div>
 <p>This will download <code>docker-compose.yml</code> to your current working directory.</p>
-<ol>
-<li>Next, we&rsquo;ll ask Docker Compose to follow the instructions in the file we just downloaded:</li>
-</ol>
+<p>2. Next, we&rsquo;ll ask Docker Compose to follow the instructions in the file we just downloaded:</p>
 <div class="codehilite"><pre><span></span>docker-compose -f docker-compose.yml up
 </pre></div>
 
 
 <p>Docker Compose will download the latest CockroachDB and Nakama images published on Docker Hub.</p>
-<ol>
-<li>You now have both CockroachDB and Nakama running on your machine, available at <code>127.0.0.1:26257</code> and <code>127.0.0.1:7350</code> respectively.</li>
-</ol>
-<h3 id="docker-compose-data">Docker-Compose Data</h3>
+<p>3. You now have both CockroachDB and Nakama running on your machine, available at <code>127.0.0.1:26257</code> and <code>127.0.0.1:7350</code> respectively.</p>
+<h3 id="data">Data</h3>
 <p>Docker containers are ephemeral by design: when you remove the container, you lose the data stored inside them.</p>
 <p>For development purposes, we suggest that you bind a folder in the local machine's filesystem to the Docker file system. The easiest way to achieve this is by editing the <code>docker-compose.yml</code> file:</p>
 <div class="codehilite"><pre><span></span>...
@@ -750,7 +780,7 @@ nakama:
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Drive Binding on Windows</p>
-<p>Docker will complain about an unshared Drive if you the path above is not changed or is not available. The error looks like this:</p>
+<p>Docker will complain about an unshared Drive if the path above is not changed or is not available. The error looks like this:</p>
 <p><code>ERROR: for bin_nakama_1 Cannot create container for service nakama: Drive has not been shared</code></p>
 <p>Make sure to change the line highlighted above to the correct path and restart Nakama.</p>
 </div>
@@ -769,9 +799,9 @@ nakama:
 <p>As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.</p>
 <div class="admonition note">
 <p class="admonition-title">Schema migration</p>
-<p>When upgrading to a new version of Nakama, the process in the <code>docker-compose.yml</code> performs a migration of your data to the new database schema.</p>
+<p>When upgrading to a new version of Nakama, the process in the <code>docker-compose.yml</code> performs a migration of your data to the new database schema automatically.</p>
 </div>
-<p>you can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.</p>
+<p>You can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.</p>
 <div class="codehilite"><pre><span></span>docker-compose down <span class="c1"># top and remove both the Nakama and CockroachDB containers</span>
 docker pull heroiclabs/nakama <span class="c1"># download the latest Nakama image</span>
 docker-compose up <span class="c1"># start the containers (both Nakama and CockroachDB) as fresh installss</span>

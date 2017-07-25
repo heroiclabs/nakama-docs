@@ -348,10 +348,46 @@
       <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
     <label class="md-nav__link" for="nav-2">
-      Storage Engine
+      Fundamentals
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
       <label class="md-nav__title" for="nav-2">
+        Fundamentals
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../user-accounts/" title="User accounts" class="md-nav__link">
+      User accounts
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
         Storage Engine
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -381,13 +417,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Social API
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Social API
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -465,13 +501,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -501,13 +537,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
-    <label class="md-nav__link" for="nav-6">
+    <label class="md-nav__link" for="nav-7">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-6">
+      <label class="md-nav__title" for="nav-7">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -667,7 +703,7 @@
 <p>For production settings, Nakama should be used with CockroachDB as queries are optimised for the way data is stored on the disk.</p>
 </div>
 <h2 id="install-nakama-on-macos">Install Nakama on MacOS</h2>
-<p>You&rsquo;ll need to be running MacOS 10.9 (Mavericks) to run Nakama.</p>
+<p>You&rsquo;ll need to be running MacOS 10.9 (Mavericks) or greater to run Nakama.</p>
 <h3 id="homebrew">Homebrew</h3>
 <p>Homebrew is a community-developed package manager for MacOS. If you&rsquo;ve used <code>apt</code> or <code>yum</code> on Linux systems then you&rsquo;ll find Homebrew to be familiar.</p>
 <p>If this is your first time using Homebrew, take a look at <a href="http://brew.sh/">their website</a> for installation instructions. Once you&rsquo;ve installed Homebrew, follow the instructions below.</p>
@@ -679,25 +715,20 @@ brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/
 <p>Now you have Nakama running and you&rsquo;re ready to start developing.</p>
 <h3 id="without-homebrew">Without Homebrew</h3>
 <p>Installing the binaries directly rather than via Homebrew allows you the flexibility of placing the server in your prefered workspace. However, installing through <a href="#homebrew">Homebrew</a> is the simplest and easiest &ndash; including for updates &ndash; as everything is handled using the Homebrew workflow.</p>
-<ol>
-<li>Download the latest <a href="https://github.com/heroiclabs/nakama/releases/latest">Nakama tarball for Mac OSX</a>.</li>
-<li>Then extract the binary:</li>
-</ol>
+<p>1. Download the latest <a href="https://github.com/heroiclabs/nakama/releases/latest">Nakama tarball for MacOS</a>.</p>
+<p>2. Then extract the binary:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># replace the X.X.X with the version number you have downloaded</span>
 tar xfz nakama-X.X.X-darwin-amd64.tar.gz
 </pre></div>
 
 
-<ol>
-<li>Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</li>
-</ol>
+<p>3. Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</p>
 <div class="codehilite"><pre><span></span>cp -i nakama /usr/local/bin
 </pre></div>
 
 
-<ol>
-<li>Migrate the database schema and then start Nakama</li>
-</ol>
+<p>You may come across a permissions error. If you&rsquo;re happy to perform the action with root permissions then prefix the command with <code>sudo</code>.</p>
+<p>4. Migrate the database schema and then start Nakama</p>
 <div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
 nakama migration up
 <span class="c1"># start the server and output logs to the terminal</span>
@@ -705,7 +736,6 @@ nakama --log.stdout
 </pre></div>
 
 
-<p>You may come across a permissions error. If you&rsquo;re happy to perform the action with root permissions then prefix the command with <code>sudo</code>.</p>
 <h2 id="install-nakama-on-windows">Install Nakama on Windows</h2>
 <p>Nakama is also available as a <a href="https://github.com/heroiclabs/nakama/releases/latest">Windows binary</a>. However, <a href="../install-docker-quickstart/">Docker</a> is the recommended way to install CockroachDB and Nakama on Windows.</p>
 <ol>
@@ -723,29 +753,19 @@ nakama.exe --log.stdout
 <h2 id="install-nakama-on-linux">Install Nakama on Linux</h2>
 <p>Using <a href="../install-docker-quickstart/">Docker</a> - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure. <a href="mailto:support@heroiclabs.com">Let us know</a> if you have requests for specific package managers.</p>
 <p>First you&rsquo;ll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.</p>
-<ol>
-<li>
-<p><a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</p>
-</li>
-<li>
-<p>Then extract the binary:</p>
-</li>
-</ol>
+<p>1. <a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</p>
+<p>2. Then extract the binary:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># replace the X.X.X with the version number you have downloaded</span>
 tar xfz nakama-X.X.X-linux-amd64.tar.gz
 </pre></div>
 
 
-<ol>
-<li>Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</li>
-</ol>
+<p>3. Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</p>
 <div class="codehilite"><pre><span></span>cp -i nakama /usr/local/bin
 </pre></div>
 
 
-<ol>
-<li>Migrate the database schema and then start Nakama</li>
-</ol>
+<p>4. Migrate the database schema and then start Nakama</p>
 <div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
 nakama migration up
 <span class="c1"># start the server and output logs to the terminal</span>
@@ -760,9 +780,7 @@ nakama --log.stdout
 <p class="admonition-title">Note</p>
 <p>You&rsquo;ll need to update the paths within the systemd configuration.</p>
 </div>
-<ol>
-<li>Create the service file: <code>/usr/lib/systemd/system/nakama.service</code></li>
-</ol>
+<p>1. Create the service file: <code>/usr/lib/systemd/system/nakama.service</code></p>
 <div class="codehilite"><pre><span></span><span class="k">[Unit]</span>
 <span class="na">Description</span><span class="o">=</span><span class="s">Nakama server</span>
 
@@ -775,16 +793,12 @@ nakama --log.stdout
 </pre></div>
 
 
-<ol>
-<li>Update file permission so it's readable by the <code>systemd</code> daemon process</li>
-</ol>
+<p>2. Update file permission so it's readable by the <code>systemd</code> daemon process</p>
 <div class="codehilite"><pre><span></span>sudo chmod <span class="m">644</span> /usr/lib/systemd/system/nakama.service
 </pre></div>
 
 
-<ol>
-<li>Enable and run the service</li>
-</ol>
+<p>3. Enable and run the service</p>
 <div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> nakama
 sudo systemctl start nakama
 </pre></div>
@@ -821,13 +835,13 @@ sudo systemctl start nakama
           </a>
         
         
-          <a href="../storage-collections/" title="Collections" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../user-accounts/" title="User accounts" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Collections
+                User accounts
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
