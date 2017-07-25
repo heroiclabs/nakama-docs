@@ -8,9 +8,9 @@ Developers can use remote configuration to remove the hassle of a lengthy review
 
 The configuration settings sent to the app or game need to be stored on the server. The best way to store the information depends on how often the data will be changed.
 
-For mostly static data it's most efficient to embed it as data structures in server-side code and for more dynamic data it's better to use a read-only [storage record](../storage-collections.md).
+For mostly static data it's most efficient to embed it as data structures in server-side code and for more dynamic data it's better to use a read-only [storage record](storage-collections.md).
 
-With both of these approaches you can access remote configuration before you've done [register/login](../authentication.md) or connected with a [user session](../authentication.md#sessions). The in-app parameters you configure can be initialized at the earliest point of application startup.
+With both of these approaches you can access remote configuration before you've done [register/login](fundemental-authentication.md) or connected with a [user session](fundemental-authentication.md#sessions). The in-app parameters you configure can be initialized at the earliest point of application startup.
 
 ### Static parameters
 
@@ -37,7 +37,7 @@ nk.register_http(remote_configuration, "rc")
 
 ### Dynamic parameters
 
-For in-app parameters which may be changed via Analytics or with a Liveops dashboard it's more flexible to store the configuration settings in the [storage engine](../storage-collections.md) as a read-only record.
+For in-app parameters which may be changed via Analytics or with a Liveops dashboard it's more flexible to store the configuration settings in the [storage engine](storage-collections.md) as a read-only record.
 
 Same as above we'll use server-side code with a module named `"rc.lua"` and placed in the runtime path for the server.
 

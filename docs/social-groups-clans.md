@@ -58,7 +58,7 @@ client.Send(messageBuilder.Build(), (INResultSet<INGroup> list) => {
 
 When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires an [admin to accept](#accept-new-members) the user.
 
-A user who's part of a group can join [group chat](realtime-chat.md#groups) and access it's [message history](realtime-chat.md#message-history).
+A user who's part of a group can join [group chat](social-realtime-chat.md#groups) and access it's [message history](social-realtime-chat.md#message-history).
 
 !!! Tip
     When a user joins or leaves a group event messages are added to chat history. This makes it easy for members to see what's changed in the group.
@@ -74,7 +74,7 @@ client.Send(message, (bool done) => {
 });
 ```
 
-The user will receive an [in-app notification](in-app-notifications.md) when they've been added to the group. In a private group an admin will receive a notification when a user has requested to join.
+The user will receive an [in-app notification](social-in-app-notifications.md) when they've been added to the group. In a private group an admin will receive a notification when a user has requested to join.
 
 ## List a user's groups
 
@@ -181,7 +181,7 @@ client.Send(message, (bool done) => {
 
 ## Leave a group
 
-A user can leave a group and will no longer be able to join [group chat](realtime-chat.md#groups) or read [message history](realtime-chat.md#message-history). If the user is an admin they will only be able to leave when at least one other admin exists in the group.
+A user can leave a group and will no longer be able to join [group chat](social-realtime-chat.md#groups) or read [message history](social-realtime-chat.md#message-history). If the user is an admin they will only be able to leave when at least one other admin exists in the group.
 
 !!! Note
     Any user who leaves the group will generate an event message in group chat which other members can read.
@@ -225,7 +225,7 @@ client.Send(message, (bool done) => {
 });
 ```
 
-The user will receive an [in-app notification](in-app-notifications.md) when they've been added to the group. In a private group an admin will receive a notification about the join request.
+The user will receive an [in-app notification](social-in-app-notifications.md) when they've been added to the group. In a private group an admin will receive a notification about the join request.
 
 To reject the user from joining the group you should [kick them](#kick-a-member).
 
@@ -283,7 +283,7 @@ client.Send(message, (bool done) => {
 ```
 
 !!! Hint
-    Sometimes a bad user needs to be kicked from the group and [permanently banned](friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
+    Sometimes a bad user needs to be kicked from the group and [permanently banned](social-friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
 
 ## Remove a group
 

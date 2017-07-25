@@ -10,9 +10,9 @@ There are 3 types of topic:
 
 1. A chat room is great for public chat. Any user can join and participate without need for permission. These rooms can scale to millions of users all in simultaneous communication. This is perfect for live participation apps or games with live events or tournaments.
 
-2. A group chat is private to only users part of a [group](groups-clans.md). Each user must be a member of the group and no other users can participate. You can use group chat with team-based gameplay or collaboration.
+2. A group chat is private to only users part of a [group](social-groups-clans.md). Each user must be a member of the group and no other users can participate. You can use group chat with team-based gameplay or collaboration.
 
-3. Direct chat is private between two users. Each user will receive a [notification](in-app-notifications.md) when they've been invited to chat. Both users must join for messages to be exchanged which prevents spam from bad users.
+3. Direct chat is private between two users. Each user will receive a [notification](social-in-app-notifications.md) when they've been invited to chat. Both users must join for messages to be exchanged which prevents spam from bad users.
 
 ## Receive messages
 
@@ -79,12 +79,12 @@ The `roomId` variable contains an ID used to [send messages](#send-messages).
 
 ### groups
 
-A group chat can only be joined by a user who is a member of the [group](groups-clans.md). Messages are pushed in realtime to group members and they can read [historic messages](#message-history).
+A group chat can only be joined by a user who is a member of the [group](social-groups-clans.md). Messages are pushed in realtime to group members and they can read [historic messages](#message-history).
 
 !!! Note
     If a user is kicked or leaves a group they can no longer receive messages or read history.
 
-A group ID is needed when a user joins group chat and can be [listed by the user](groups-clans.md#list-groups).
+A group ID is needed when a user joins group chat and can be [listed by the user](social-groups-clans.md#list-groups).
 
 ```csharp fct_label="Unity"
 INTopicId groupTopicId = null;
@@ -110,7 +110,7 @@ A user can direct message another user by ID. Each user will not receive message
 !!! Tip
     Friends, groups, leaderboards, matchmaker, room chat, and searches in storage are all ways to find users for chat.
 
-A user will receive an [in-app notification](in-app-notifications.md) when a request to chat has been received.
+A user will receive an [in-app notification](social-in-app-notifications.md) when a request to chat has been received.
 
 ```csharp fct_label="Unity"
 INTopicId directTopicId = null;
@@ -130,7 +130,7 @@ client.Send(message, (INTopic topic) => {
 The `directTopicId` variable contains an ID used to [send messages](#send-messages).
 
 !!! Note
-    A user can [block other users](friends.md#block-a-friend) to stop unwanted direct messages.
+    A user can [block other users](social-friends.md#block-a-friend) to stop unwanted direct messages.
 
 ## List online users
 

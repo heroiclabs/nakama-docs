@@ -9,7 +9,7 @@ It's often useful when a new user registers to have a bunch of records setup for
 
 The simplest approach is to write records in the success callback for the register function in a client.
 
-This code demonstrates how to do it with a condensed example. In real application code you'll break up the [authentication](../authentication.md) and connect logic from the storage writes based on how you manage connect and reconnect.
+This code demonstrates how to do it with a condensed example. In real application code you'll break up the [authentication](fundemental-authentication.md) and connect logic from the storage writes based on how you manage connect and reconnect.
 
 ```csharp fct_label="Unity"
 var errorHandler = delegate(INError err) {
@@ -40,9 +40,9 @@ This option is only worth choosing when you want to avoid writing server-side co
 
 ## Server-side hook
 
-Another way to write records for the new user is to run server-side code after registration has completed. This can be done with a [register hook](../runtime-code-basics.md#register-hooks).
+Another way to write records for the new user is to run server-side code after registration has completed. This can be done with a [register hook](runtime-code-basics.md#register-hooks).
 
-The ["register_after"](../runtime-function-reference.md#register-hooks) hook can be used with one of the `"authenticaterequest_*"` message types to tell the server to run a function after that message has been processed. It's important to note that the server does not distinguish between register and login messages so we use a [conditional write](../storage-collections.md#conditional-writes) to store the records.
+The ["register_after"](runtime-function-reference.md#register-hooks) hook can be used with one of the `"authenticaterequest_*"` message types to tell the server to run a function after that message has been processed. It's important to note that the server does not distinguish between register and login messages so we use a [conditional write](storage-collections.md#conditional-writes) to store the records.
 
 ```lua
 local nk = require("nakama")
@@ -68,7 +68,7 @@ end
 nk.register_after(initialize_user, "authenticaterequest_device")
 ```
 
-This approach avoids the tradeoff with client disconnects but requires a database write to happen after every login or register message. This could be acceptable depending on how frequently you write data to the storage engine and can be minimized if you [cache a user's session](../authentication.md#cache-sessions) for quick reconnects.
+This approach avoids the tradeoff with client disconnects but requires a database write to happen after every login or register message. This could be acceptable depending on how frequently you write data to the storage engine and can be minimized if you [cache a user's session](fundemental-authentication.md#cache-sessions) for quick reconnects.
 
 ## Initialize record when used
 

@@ -16,7 +16,7 @@ A user can add one or more friends by that user's ID or handle. The user added w
 !!! Hint
     A user who registers or links their account with Facebook or another social network will have friends from that network be added automatically into their friend list.
 
-When a friend request is sent or the user is added an in-app notification will be sent. See the [in-app notification](in-app-notifications.md#receive-notifications) section for more info.
+When a friend request is sent or the user is added an in-app notification will be sent. See the [in-app notification](social-in-app-notifications.md#receive-notifications) section for more info.
 
 ```csharp fct_label="Unity"
 byte[] userId = ...; // some user ID
@@ -28,7 +28,7 @@ client.Send(message, (bool done) => {
 });
 ```
 
-When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](realtime-chat.md) section for more info.
+When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](social-realtime-chat.md) section for more info.
 
 ## List friends
 

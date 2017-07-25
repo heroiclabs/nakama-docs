@@ -71,7 +71,7 @@ Make a record of your shared secret:
 
 ![Apple iTunes Connect Shared Secret][apple_iap_2]
 
-You'll need to set the value of `purchase.apple.password` to the value of the Shared Secret above. For more info, take a look at the [configuration](configuration.md#purchase) page.
+You'll need to set the value of `purchase.apple.password` to the value of the Shared Secret above. For more info, take a look at the [configuration](install-configuration.md#purchase) page.
 
 If your app is in production, you'll need to set the value of `purchase.apple.production` to true to give priority Apple's Production servers.
 

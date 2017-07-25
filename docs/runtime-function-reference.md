@@ -321,7 +321,7 @@ nk.logger_warn(message)
 
 __notifications_send_id (new_notifications)__
 
-Send one or more in-app notifications to a user. Have a look at the section on [in-app notifications](in-app-notifications.md).
+Send one or more in-app notifications to a user. Have a look at the section on [in-app notifications](social-in-app-notifications.md).
 
 _Parameters_
 

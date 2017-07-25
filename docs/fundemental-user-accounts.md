@@ -1,6 +1,6 @@
 # User accounts
 
-A user represents an identity within the server. Every user is registered and has a profile for other users to find and become [friends](friends.md) with or join [groups](groups-clans.md) and [chat](realtime-chat.md).
+A user represents an identity within the server. Every user is registered and has a profile for other users to find and become [friends](social-friends.md) with or join [groups](social-groups-clans.md) and [chat](social-realtime-chat.md).
 
 A user can own [records](storage-record-ownership.md), share public information with other users, and login via a bunch of different social providers.
 
