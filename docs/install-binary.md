@@ -25,7 +25,7 @@ You'll first need to install CockroachDB. Follow [this guide](https://www.cockro
 
 ## Install Nakama on MacOS
 
-You’ll need to be running MacOS 10.9 (Mavericks) to run Nakama.
+You’ll need to be running MacOS 10.9 (Mavericks) or greater to run Nakama.
 
 ### Homebrew
 
@@ -44,21 +44,24 @@ Now you have Nakama running and you’re ready to start developing.
 
 Installing the binaries directly rather than via Homebrew allows you the flexibility of placing the server in your prefered workspace. However, installing through [Homebrew](#homebrew) is the simplest and easiest – including for updates – as everything is handled using the Homebrew workflow.
 
-1. Download the latest [Nakama tarball for Mac OSX](https://github.com/heroiclabs/nakama/releases/latest).
-2. Then extract the binary:
+1\. Download the latest [Nakama tarball for MacOS](https://github.com/heroiclabs/nakama/releases/latest).
+
+2\. Then extract the binary:
 
 ```shell fct_label="Shell"
 # replace the X.X.X with the version number you have downloaded
 tar xfz nakama-X.X.X-darwin-amd64.tar.gz
 ```
 
-3. Add the directory containing the binary to your `PATH`. This makes it easy to execute Nakama commands from your terminal.
+3\. Add the directory containing the binary to your `PATH`. This makes it easy to execute Nakama commands from your terminal.
 
 ```shell fct_label="Shell"
 cp -i nakama /usr/local/bin
 ```
 
-4. Migrate the database schema and then start Nakama
+You may come across a permissions error. If you’re happy to perform the action with root permissions then prefix the command with `sudo`.
+
+4\. Migrate the database schema and then start Nakama
 
 ```shell fct_label="Shell"
 # migrate schema
@@ -66,8 +69,6 @@ nakama migration up
 # start the server and output logs to the terminal
 nakama --log.stdout
 ```
-
-You may come across a permissions error. If you’re happy to perform the action with root permissions then prefix the command with `sudo`.
 
 ## Install Nakama on Windows
 
@@ -90,22 +91,22 @@ Using [Docker](install-docker-quickstart.md) - This is the recommended approach.
 
 First you’ll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.
 
-1. [Download the binary](https://github.com/heroiclabs/nakama/releases/latest) and decompress the downloaded file.
+1\. [Download the binary](https://github.com/heroiclabs/nakama/releases/latest) and decompress the downloaded file.
 
-2. Then extract the binary:
+2\. Then extract the binary:
 
 ```shell fct_label="Shell"
 # replace the X.X.X with the version number you have downloaded
 tar xfz nakama-X.X.X-linux-amd64.tar.gz
 ```
 
-3. Add the directory containing the binary to your `PATH`. This makes it easy to execute Nakama commands from your terminal.
+3\. Add the directory containing the binary to your `PATH`. This makes it easy to execute Nakama commands from your terminal.
 
 ```shell fct_label="Shell"
 cp -i nakama /usr/local/bin
 ```
 
-4. Migrate the database schema and then start Nakama
+4\. Migrate the database schema and then start Nakama
 
 ```shell fct_label="Shell"
 # migrate schema
@@ -123,7 +124,7 @@ If you prefer to run Nakama as a service, and you’re running a distro that use
 !!! Note
     You’ll need to update the paths within the systemd configuration.
 
-1. Create the service file: `/usr/lib/systemd/system/nakama.service`
+1\. Create the service file: `/usr/lib/systemd/system/nakama.service`
 ```ini fct_label="nakama.service"
 [Unit]
 Description=Nakama server
@@ -136,13 +137,13 @@ KillMode=process
 WantedBy=multi-user.target
 ```
 
-2. Update file permission so it's readable by the `systemd` daemon process
+2\. Update file permission so it's readable by the `systemd` daemon process
 
 ```shell fct_label="Shell"
 sudo chmod 644 /usr/lib/systemd/system/nakama.service
 ```
 
-3. Enable and run the service
+3\. Enable and run the service
 
 ```shell fct_label="Shell"
 sudo systemctl enable nakama

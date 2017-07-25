@@ -72,18 +72,18 @@ You can choose to configure the Nakama and CockroachDB containers without Docker
 
 Docker Compose uses YAML configuration files to declare which containers to use and how they should work together.
 
-1. Let’s start by downloading the [Nakama Docker Compose file](https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml):
+1\. Let’s start by downloading the [Nakama Docker Compose file](https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml):
 
 ```shell fct_label="Shell"
 wget https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml
 ```
 
 !!! warning "Windows users"
-    If you are trying to run Nakama via Docker-Compose on Windows, you'll need to make a small change to the downloaded `docker-compose.yml` file. Follow this [instruction](#docker-compose-data) to bind the correct path.
+    If you are trying to run Nakama via Docker-Compose on Windows, you'll need to make a small change to the downloaded `docker-compose.yml` file. Follow this [instruction](#data) to bind the correct path.
 
 This will download `docker-compose.yml` to your current working directory.
 
-2. Next, we’ll ask Docker Compose to follow the instructions in the file we just downloaded:
+2\. Next, we’ll ask Docker Compose to follow the instructions in the file we just downloaded:
 
 ```shell fct_label="Shell"
 docker-compose -f docker-compose.yml up
@@ -91,9 +91,9 @@ docker-compose -f docker-compose.yml up
 
 Docker Compose will download the latest CockroachDB and Nakama images published on Docker Hub.
 
-3. You now have both CockroachDB and Nakama running on your machine, available at `127.0.0.1:26257` and `127.0.0.1:7350` respectively.
+3\. You now have both CockroachDB and Nakama running on your machine, available at `127.0.0.1:26257` and `127.0.0.1:7350` respectively.
 
-### Docker-Compose Data
+### Data
 
 Docker containers are ephemeral by design: when you remove the container, you lose the data stored inside them.
 
@@ -118,7 +118,7 @@ nakama:
 - On Windows, you'll need to update the path above so that Docker can bind the folder properly. A valid value can look like this: `C:/users/<username>/projects/docker`.
 
 !!! warning "Drive Binding on Windows"
-    Docker will complain about an unshared Drive if you the path above is not changed or is not available. The error looks like this:
+    Docker will complain about an unshared Drive if the path above is not changed or is not available. The error looks like this:
 
     `ERROR: for bin_nakama_1 Cannot create container for service nakama: Drive has not been shared`
 
@@ -144,9 +144,9 @@ To stop the containers and purge all stored data, run `docker-compose down`.
 As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.
 
 !!! note "Schema migration"
-    When upgrading to a new version of Nakama, the process in the `docker-compose.yml` performs a migration of your data to the new database schema.
+    When upgrading to a new version of Nakama, the process in the `docker-compose.yml` performs a migration of your data to the new database schema automatically.
 
-you can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.
+You can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.
 
 ```shell fct_label="Shell"
 docker-compose down # top and remove both the Nakama and CockroachDB containers
