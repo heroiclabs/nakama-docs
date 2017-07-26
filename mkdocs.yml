@@ -44,27 +44,25 @@ markdown_extensions:
 
 # Nav menu
 pages:
-- 'Install and setup':
+- 'Install and Setup':
   - 'Docker quickstart': 'install-docker-quickstart.md'
   - 'Binary install': 'install-binary.md'
   - 'Configuration': 'install-configuration.md'
+#  - 'Nakama CLI': 'install-server-cli.md'
 #  - 'Upgrades': 'install-nakama-upgrades.md'
-#- 'Unity engine': 'nakama-unity-engine.md'
+#- 'Unity client guide': 'unity-client-guide.md'
 #- 'Unreal engine': 'nakama-unreal-engine.md'
 #- 'Android guide': 'nakama-android-guide.md'
 #- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
 #- 'JavaScript guide': 'nakama-javascript-guide.md'
-- 'Fundamentals':
-#   - 'Nakama CLI': 'fundemental-server-cli.md'
-#  - 'Authentication': 'fundemental-authentication.md'
-   - 'User accounts': 'fundemental-user-accounts.md'
-#  - 'Resource limits': 'fundemental-resource-limits.md'
+- 'Authentication': 'authentication.md'
+- 'User accounts': 'user-accounts.md'
 - 'Storage Engine':
   - 'Collections': 'storage-collections.md'
 #  - 'Permissions': 'storage-permissions.md'
 #  - 'Record ownership': 'storage-record-ownership.md'
 #  - 'Design patterns': 'storage-design-patterns.md'
-- 'Social API':
+- 'Social':
   - 'Friends': 'social-friends.md'
   - 'Groups and Clans': 'social-groups-clans.md'
   - 'In-app Notifications': 'social-in-app-notifications.md'
@@ -85,6 +83,11 @@ pages:
 #  - 'JavaScript/Lua comparison': 'runtime-javascript-lua-comparison.md'
 #  - 'Lua cheatsheet': 'runtime-lua-cheatsheet.md'
   - 'Function Reference': 'runtime-function-reference.md'
+- 'Deployment':
+#  - 'Production settings': 'deployment-production-settings.md'
+#  - 'Resource limits': 'deployment-resource-limits.md'
+#  - 'Managed Cloud': 'deployment-managed-cloud.md'
+  - 'Digital Ocean': 'deployment-digital-ocean.md'
 - 'Tutorials':
   - 'Initialize a new user': 'tutorial-initialize-new-user.md'
   - 'Remote configuration': 'tutorial-remote-configuration.md'
@@ -94,10 +97,6 @@ pages:
 #  - 'Inventory management': 'tutorial-inventory-management.md'
 #  - 'Prized leaderboards': 'tutorial-prized-leaderboards.md'
 #- 'Nakama enterprise': 'nakama-enterprise.md'
-- 'Deployment':
-#  - 'Managed cloud': 'deployment-managed-cloud.md'
-#  - 'Production settings': 'deployment-production-settings.md'
-  - 'Digital Ocean': 'deployment-digital-ocean.md'
 #- 'Internals':
 #  - 'Server architecture': 'internal-nakama-server-architecture.md'
 #  - 'Social graph engine': 'internal-nakama-social-graph-engine.md'
