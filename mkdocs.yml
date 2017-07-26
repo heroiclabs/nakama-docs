@@ -55,7 +55,7 @@ pages:
 #- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
 #- 'JavaScript guide': 'nakama-javascript-guide.md'
 - 'Fundamentals':
-   - 'Nakama CLI': 'fundemental-server-cli.md'
+#   - 'Nakama CLI': 'fundemental-server-cli.md'
 #  - 'Authentication': 'fundemental-authentication.md'
    - 'User accounts': 'fundemental-user-accounts.md'
 #  - 'Resource limits': 'fundemental-resource-limits.md'

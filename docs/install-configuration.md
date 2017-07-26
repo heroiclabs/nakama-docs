@@ -167,9 +167,3 @@ This section defined the configuration related for the embedded Dashboard.
 | Parameter | Flag             | Description
 | --------- | ----             | -----------
 | `port`    | `dashboard.port` | The port for accepting connections to the dashboard, listening on all interfaces. Default value is 7351.
-
-
-
-
-
-
