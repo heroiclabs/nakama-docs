@@ -1,0 +1,1213 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
+      
+      
+        <link rel="canonical" href="https://heroiclabs.com/docs/authentication/">
+      
+      
+        <meta name="author" content="Heroic Labs Team & contributors">
+      
+      
+        <link rel="shortcut icon" href="../images/favicon.ico">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>Authentication - Nakama server</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-logo md-header-nav__button">
+            <img src="../images/logo-white.svg" width="24" height="24">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+            
+            Authentication
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-logo md-nav__button">
+        <img src="../images/logo-white.svg">
+      </i>
+    
+    Nakama server
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      Install and setup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Install and setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-nav__link">
+      Docker quickstart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-binary/" title="Binary install" class="md-nav__link">
+      Binary install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../unity-client-guide/" title="Unity client guide" class="md-nav__link">
+      Unity client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../javascript-client-guide/" title="JavaScript client guide" class="md-nav__link">
+      JavaScript client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../swift-ios-client-guide/" title="Swift/iOS client guide" class="md-nav__link">
+      Swift/iOS client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Authentication
+      </label>
+    
+    <a href="./" title="Authentication" class="md-nav__link md-nav__link--active">
+      Authentication
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#register-or-login" title="Register or login" class="md-nav__link">
+    Register or login
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device" title="Device" class="md-nav__link">
+    Device
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#email" title="Email" class="md-nav__link">
+    Email
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#social-providers" title="Social providers" class="md-nav__link">
+    Social providers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#facebook" title="Facebook" class="md-nav__link">
+    Facebook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google" title="Google" class="md-nav__link">
+    Google
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#game-center" title="Game Center" class="md-nav__link">
+    Game Center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steam" title="Steam" class="md-nav__link">
+    Steam
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom" title="Custom" class="md-nav__link">
+    Custom
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sessions" title="Sessions" class="md-nav__link">
+    Sessions
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect" title="Connect" class="md-nav__link">
+    Connect
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#link-or-unlink" title="Link or unlink" class="md-nav__link">
+    Link or unlink
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../user-accounts/" title="User accounts" class="md-nav__link">
+      User accounts
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Storage Engine
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
+      Collections
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Social
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Social
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-friends/" title="Friends" class="md-nav__link">
+      Friends
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-groups-clans/" title="Groups and Clans" class="md-nav__link">
+      Groups and Clans
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-in-app-notifications/" title="In-app Notifications" class="md-nav__link">
+      In-app Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-realtime-chat/" title="Realtime Chat" class="md-nav__link">
+      Realtime Chat
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
+      In-app Purchase Validation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      Runtime Code
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        Runtime Code
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+      Function Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Deployment
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Deployment
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deployment-digital-ocean/" title="Digital Ocean" class="md-nav__link">
+      Digital Ocean
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+    
+    <label class="md-nav__link" for="nav-12">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-12">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-initialize-new-user/" title="Initialize a new user" class="md-nav__link">
+      Initialize a new user
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-remote-configuration/" title="Remote configuration" class="md-nav__link">
+      Remote configuration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#register-or-login" title="Register or login" class="md-nav__link">
+    Register or login
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device" title="Device" class="md-nav__link">
+    Device
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#email" title="Email" class="md-nav__link">
+    Email
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#social-providers" title="Social providers" class="md-nav__link">
+    Social providers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#facebook" title="Facebook" class="md-nav__link">
+    Facebook
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google" title="Google" class="md-nav__link">
+    Google
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#game-center" title="Game Center" class="md-nav__link">
+    Game Center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steam" title="Steam" class="md-nav__link">
+    Steam
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom" title="Custom" class="md-nav__link">
+    Custom
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sessions" title="Sessions" class="md-nav__link">
+    Sessions
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connect" title="Connect" class="md-nav__link">
+    Connect
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#link-or-unlink" title="Link or unlink" class="md-nav__link">
+    Link or unlink
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="authentication">Authentication</h1>
+<p>The server has builtin authentication so clients can only send requests and connect if they have the <a href="../install-configuration/#socket">server key</a>. When authentication is successful a client can create a session as a <a href="../user-accounts/">user</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>The default server key is "defaultkey" but it is very important to set a <a href="../install-configuration/#socket">unique value</a>. This value should be embedded within client code.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="n">INClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Host</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Port</span><span class="p">(</span><span class="m">7350</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">SSL</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="c1">// or same as above.</span>
+<span class="n">INClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p>Every user account is created from one of the <a href="#register-or-login">options used to register</a>. We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.</p>
+<h2 id="register-or-login">Register or login</h2>
+<p>Before you login a user they must first be registered. We recommend you setup your code to login the user and fallback to register the account if one does not exist. This pattern is shown in the <a href="#device">device</a> section.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The authentication system is very flexible. You could register a user with an email address, <a href="#link-or-unlink">link</a> their Facebook account, and use it to login from another device.</p>
+</div>
+<p>For a <strong>full example</strong> on the best way to handle register and login in each of the clients have a look at their guides.</p>
+<h3 id="device">Device</h3>
+<p>A device identifier can be used as a way to unobtrusively register a user with the server. This offers a frictionless user experience but can be unreliable because device identifiers can sometimes change in device updates.</p>
+<p>A device identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="s">&quot;nk.id&quot;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">id</span><span class="p">))</span> <span class="p">{</span>
+  <span class="n">id</span> <span class="p">=</span> <span class="n">SystemInfo</span><span class="p">.</span><span class="n">deviceUniqueIdentifier</span><span class="p">;</span>
+  <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.id&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span> <span class="c1">// cache device id.</span>
+<span class="p">}</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">ErrorCode</span><span class="p">.</span><span class="n">UserNotFound</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>In games it is often a better option to use <a href="#google">Google</a> or <a href="#game-center">Game Center</a> to unobtrusively register the user.</p>
+<h3 id="email">Email</h3>
+<p>Users can be registered with an email and password. The password is hashed before it's stored in the database server and cannot be read or "recovered" by administrators. This protects a user's privacy.</p>
+<p>An email address must be valid as defined by RFC-5322 and passwords must be at least 8 characters.</p>
+<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">email</span> <span class="p">=</span> <span class="s">&quot;email@example.com&quot;</span>
+<span class="kt">string</span> <span class="n">password</span> <span class="p">=</span> <span class="s">&quot;3bc8f72e95a9&quot;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Email</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Use client.Login(...) after register.</span>
+</pre></div>
+
+
+<h3 id="social-providers">Social providers</h3>
+<p>The server supports a lot of different social services with register and login. With each provider the user account will be fetched from the social service and used to setup the user. In some cases a user's <a href="../social-friends/">friends</a> will also be fetched and added to their friends list.</p>
+<p>To register or login as a user with any of the providers an OAuth or access token must be obtained from that social service.</p>
+<h4 id="facebook">Facebook</h4>
+<p>With Facebook you'll need to add the Facebook SDK to your project which can be <a href="https://developers.facebook.com/docs/" target="\_blank">downloaded online</a>. Follow their guides on how to integrate the code. With a mobile project you'll also need to complete instructions on how to configure iOS and Android.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">var</span> <span class="n">initCallback</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">FB</span><span class="p">.</span><span class="n">IsInitialized</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">FB</span><span class="p">.</span><span class="n">ActivateApp</span><span class="p">();</span>
+    <span class="c1">// use a Facebook access token to create a user account.</span>
+    <span class="kt">var</span> <span class="n">oauthToken</span> <span class="p">=</span> <span class="n">Facebook</span><span class="p">.</span><span class="n">Unity</span><span class="p">.</span><span class="n">AccessToken</span><span class="p">.</span><span class="n">CurrentAccessToken</span><span class="p">.</span><span class="n">TokenString</span><span class="p">;</span>
+
+    <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Facebook</span><span class="p">(</span><span class="n">oauthToken</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">ErrorCode</span><span class="p">.</span><span class="n">UserNotFound</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+          <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// you must call FB.Init as early as possible at startup.</span>
+<span class="k">if</span> <span class="p">(!</span><span class="n">FB</span><span class="p">.</span><span class="n">IsInitialized</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">FB</span><span class="p">.</span><span class="n">Init</span><span class="p">(</span><span class="n">initCallback</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>You can add a button to your UI to login with Facebook.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="n">FB</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="s">&quot;email&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">ILoginResult</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">FB</span><span class="p">.</span><span class="n">IsLoggedIn</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">oauthToken</span> <span class="p">=</span> <span class="n">Facebook</span><span class="p">.</span><span class="n">Unity</span><span class="p">.</span><span class="n">AccessToken</span><span class="p">.</span><span class="n">CurrentAccessToken</span><span class="p">.</span><span class="n">TokenString</span><span class="p">;</span>
+
+    <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Facebook</span><span class="p">(</span><span class="n">oauthToken</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">ErrorCode</span><span class="p">.</span><span class="n">UserNotFound</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+          <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Facebook login failed got &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h4 id="google">Google</h4>
+<p>Similar to Facebook for register and login you should use one of Google's client SDKs.</p>
+<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Google</span><span class="p">(</span><span class="n">oauthToken</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Use client.Login(...) after register.</span>
+</pre></div>
+
+
+<h4 id="game-center">Game Center</h4>
+<p>Apple devices have builtin authentication which can be done without user interaction through Game Center. The register or login process is a little complicated because of how Apple's services work.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// You&#39;ll need to use native code (Obj-C) with Unity.</span>
+<span class="c1">// The &quot;UnityEngine.SocialPlatforms.GameCenter&quot; doesn&#39;t give enough information</span>
+<span class="c1">// to enable authentication.</span>
+
+<span class="c1">// We recommend you use a library which handles native Game Center auth like</span>
+<span class="c1">// https://github.com/desertkun/GameCenterAuth</span>
+
+<span class="kt">string</span> <span class="n">playerId</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">bundleId</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">base64salt</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">base64signature</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">publicKeyUrl</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+<span class="kt">long</span> <span class="n">timestamp</span> <span class="p">=</span> <span class="m">0L</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">GameCenter</span><span class="p">(</span>
+    <span class="n">playerId</span><span class="p">,</span> <span class="n">bundleId</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">base64salt</span><span class="p">,</span> <span class="n">base64signature</span><span class="p">,</span> <span class="n">publicKeyUrl</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Use client.Login(...) after register.</span>
+</pre></div>
+
+
+<h4 id="steam">Steam</h4>
+<p>Steam requires you to configure the server before you can register a user.</p>
+<div class="admonition note">
+<p class="admonition-title">Server configuration</p>
+<p>Have a look at the <a href="../install-configuration/">configuration</a> section for what settings you need for the server.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">sessionToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Steam</span><span class="p">(</span><span class="n">sessionToken</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Use client.Login(...) after register.</span>
+</pre></div>
+
+
+<h3 id="custom">Custom</h3>
+<p>A custom identifier can be used in a similar way to a device identifier to login or register a user. This option should be used if you have an external or custom user identity service which you want to use. For example EA's Origin service handles accounts which have their own user IDs.</p>
+<p>A custom identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
+<span class="kt">string</span> <span class="n">customId</span> <span class="p">=</span> <span class="s">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Custom</span><span class="p">(</span><span class="n">customId</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// Use client.Login(...) after register.</span>
+</pre></div>
+
+
+<h2 id="sessions">Sessions</h2>
+<p>The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can change how long a session token is valid before it expires in the <a href="../install-configuration/">configuration</a> in the server. By default a session is only valid for 60 seconds.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kt">var</span> <span class="n">sessionId</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session id &#39;{0}&#39; handle &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">sessionId</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Handle</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session expired: {0}&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">HasExpired</span><span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">));</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h3 id="connect">Connect</h3>
+<p>With a session you can connect with the server and send messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.</p>
+<p>You can only send messages to the server once you've connected a client.</p>
+<div class="codehilite"><pre><span></span><span class="n">INSession</span> <span class="n">session</span> <span class="p">=</span> <span class="n">session</span><span class="p">;</span> <span class="c1">// obtained from Register or Login.</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully connected.&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="link-or-unlink">Link or unlink</h2>
+<p>You can link one or more other login option to the current user. This makes it easy to support multiple logins with each user and easily identify a user across devices.</p>
+<p>You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.</p>
+<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">SelfLinkMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully linked device ID to current user.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>You can unlink any linked login options for the current user.</p>
+<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">SelfUnlinkMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully unlinked device ID from current user.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>Like with register and login you can link or unlink many different account options.</p>
+<table>
+<thead>
+<tr>
+<th>Link</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Custom</td>
+<td>A custom identifier from another identity service.</td>
+</tr>
+<tr>
+<td>Device</td>
+<td>A unique identifier for a device which belongs to the user.</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>An email and password set by the user.</td>
+</tr>
+<tr>
+<td>Facebook</td>
+<td>A Facebook social account.</td>
+</tr>
+<tr>
+<td>Game Center</td>
+<td>An account from Apple's Game Center service.</td>
+</tr>
+<tr>
+<td>Google</td>
+<td>A Google Play social account.</td>
+</tr>
+<tr>
+<td>Steam</td>
+<td>An account from the Steam network.</td>
+</tr>
+</tbody>
+</table>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../swift-ios-client-guide/" title="Swift/iOS client guide" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Swift/iOS client guide
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../user-accounts/" title="User accounts" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                User accounts
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 Heroic Labs
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://heroiclabs.com" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/heroiclabs" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/heroicdev" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/heroic-labs" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/docs/storage-collections/">
+        <link rel="canonical" href="https://heroiclabs.com/docs/deployment-digital-ocean/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Collections - Nakama server</title>
+        <title>Digital Ocean - Nakama server</title>
       
     
     
@@ -84,11 +84,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Storage Engine
+                  Deployment
                 </span>
               
             
-            Collections
+            Digital Ocean
           
         </span>
       </div>
@@ -315,12 +315,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       Storage Engine
@@ -336,81 +334,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Collections
-      </label>
-    
-    <a href="./" title="Collections" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
       Collections
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#write-records" title="Write records" class="md-nav__link">
-    Write records
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conditional-writes" title="Conditional writes" class="md-nav__link">
-    Conditional writes
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fetch-records" title="Fetch records" class="md-nav__link">
-    Fetch records
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#update-records" title="Update records" class="md-nav__link">
-    Update records
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#remove-records" title="Remove records" class="md-nav__link">
-    Remove records
-  </a>
-  
-</li>
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -543,10 +471,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11" checked>
     
     <label class="md-nav__link" for="nav-11">
       Deployment
@@ -562,11 +492,81 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../deployment-digital-ocean/" title="Digital Ocean" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Digital Ocean
+      </label>
+    
+    <a href="./" title="Digital Ocean" class="md-nav__link md-nav__link--active">
       Digital Ocean
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#droplet-configuration" title="Droplet configuration" class="md-nav__link">
+    Droplet configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-the-droplet" title="Accessing the droplet" class="md-nav__link">
+    Accessing the droplet
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-user-to-run-nakama" title="Creating a user to run Nakama" class="md-nav__link">
+    Creating a user to run Nakama
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-docker-compose" title="Installing Docker Compose" class="md-nav__link">
+    Installing Docker Compose
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-nakama" title="Running Nakama" class="md-nav__link">
+    Running Nakama
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -644,16 +644,30 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#write-records" title="Write records" class="md-nav__link">
-    Write records
+  <a href="#droplet-configuration" title="Droplet configuration" class="md-nav__link">
+    Droplet configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-the-droplet" title="Accessing the droplet" class="md-nav__link">
+    Accessing the droplet
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#conditional-writes" title="Conditional writes" class="md-nav__link">
-    Conditional writes
+  <a href="#creating-a-user-to-run-nakama" title="Creating a user to run Nakama" class="md-nav__link">
+    Creating a user to run Nakama
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-docker-compose" title="Installing Docker Compose" class="md-nav__link">
+    Installing Docker Compose
   </a>
   
 </li>
@@ -664,22 +678,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fetch-records" title="Fetch records" class="md-nav__link">
-    Fetch records
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#update-records" title="Update records" class="md-nav__link">
-    Update records
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#remove-records" title="Remove records" class="md-nav__link">
-    Remove records
+  <a href="#running-nakama" title="Running Nakama" class="md-nav__link">
+    Running Nakama
   </a>
   
 </li>
@@ -699,58 +699,43 @@
               
                 
                 
-                <h1 id="collections">Collections</h1>
-<p>Every app or game has data which is specific to the project. This information must be stored for users, updated, retrieved, and displayed within various parts of a UI. For this purpose the server incorporates a storage engine with a design optimized for record ownership, access permissions, and batch operations.</p>
-<p>Data should be stored in collections as one or more records which are retrieved by a unique key with JSON content. A collection is created without any configuration required and are grouped into buckets. This creates a simple nested namespace which represents the location of a record.</p>
-<div class="codehilite"><pre><span></span>Bucket
-+---------------------------------------------------------------------------+
-|  Collection                                                               |
-|  +---------------------------------------------------------------------+  |
-|  |  Record                                                             |  |
-|  |  +----------+------------+-------------+-----+-------------------+  |  |
-|  |  | ?UserId? | Identifier | Permissions | ... |       Value       |  |  |
-|  |  +---------------------------------------------------------------+  |  |
-|  +---------------------------------------------------------------------+  |
-+---------------------------------------------------------------------------+
-</pre></div>
-
-
-<p>This design gives great flexibility for developers to group sets of information which belong together within a game or app.</p>
-<h2 id="write-records">Write records</h2>
-<p>A user can write one or more records which will be stored in the database server. These records will be written in a single transaction which guarantees the writes succeed together.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>In most cases you won't need to group data under multiple buckets so it can be easiest to just name it after your project. For example "Super Mario Run" could use a bucket name "smr" or similar.</p>
+                <h1 id="deploy-on-digital-ocean">Deploy on Digital Ocean</h1>
+<p>Running Nakama in a Digital Ocean droplet is a great way to develop using Nakama without needing to install it locally.</p>
+<p>You can install Nakama on your Digital Ocean droplet using the <a href="../install-docker-quickstart/">Docker installation guide</a> but first there are some things that need to be configured on the droplet.</p>
+<h2 id="droplet-configuration">Droplet configuration</h2>
+<p>Your droplet should have the following configuration:</p>
+<ul>
+<li>Linux distribution: <strong>Ubuntu 16.04 x64</strong></li>
+<li>RAM: <strong>4GB RAM</strong> / 60GB SSD Disk</li>
+<li>Storage: Optionally add block storage (you&rsquo;ll need this to keep your data intact between restarts)</li>
+<li>Region: To minimise latency, choose a region close to you.</li>
+<li>Add a new SSH Key: <strong>This is important</strong>. Follow <a href="https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets">Digital Ocean&rsquo;s guide</a> if you need help setting up a public key.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">SSH Key</p>
+<p>You must create a new SSH key and store the key safely. This is the way you'll login to your server.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{&#39;progress&#39;: 50}&quot;</span><span class="p">);</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">myStats</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{&#39;skill&#39;: 24}&quot;</span><span class="p">);</span>
-
-<span class="c1">// Write multiple different records across collections.</span>
-<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">saveGame</span><span class="p">)</span>
-    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;stats&quot;</span><span class="p">,</span> <span class="s">&quot;mystats&quot;</span><span class="p">,</span> <span class="n">myStats</span><span class="p">)</span>
-    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Successfully stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
-<span class="p">});</span>
+<h2 id="accessing-the-droplet">Accessing the droplet</h2>
+<p>Once the droplet is running, make a note of its IP address from within your Digital Ocean console.</p>
+<p><img alt="Digital Ocean Dashboard" src="../images/deployment-digital-ocean.png" title="Digital Ocean Dashboard " /></p>
+<p>For the next steps, you need to SSH into the droplet. There isn&rsquo;t a need for username/password as you&rsquo;ve pre-authorized yourself using a public key in the previous step.</p>
+<div class="codehilite"><pre><span></span>ssh root@&lt;IP ADDRESS&gt;
+<span class="c1"># you are now connected to the droplet through an SSH session.</span>
+<span class="c1"># you can type `exit` to close the session.</span>
 </pre></div>
 
 
-<h3 id="conditional-writes">Conditional writes</h3>
-<p>When records are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks as the next write occurs. This is often known as a conditional write.</p>
-<div class="codehilite"><pre><span></span>
-</pre></div>
-
-
-<h2 id="fetch-records">Fetch records</h2>
-<h2 id="update-records">Update records</h2>
-<h2 id="remove-records">Remove records</h2>
-<p>Inside the database a flattened hierarchy is used for each record with a composite key used to uniquely identify it.</p>
+<h4 id="creating-a-user-to-run-nakama">Creating a user to run Nakama</h4>
+<p>You should create a separate user, with sudo privileges, to run Nakama. You&rsquo;ll see how in this guide.</p>
+<h4 id="installing-docker-compose">Installing Docker Compose</h4>
+<p>To prepare for installing Nakama, you&rsquo;ll need to install both Docker and Docker Compose on your droplet.</p>
+<p>The most straightforward way to do that is to follow Digital Ocean&rsquo;s own guides:</p>
+<ol>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04">Install Docker on your droplet</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04">Install Docker Compose on your droplet</a></li>
+</ol>
+<h2 id="running-nakama">Running Nakama</h2>
+<p>Now that you&rsquo;ve installed Docker and Docker Compose you can follow our guide to <a href="../install-docker-quickstart/">installing Nakama using Docker</a>.</p>
                 
                   
                 
@@ -769,7 +754,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../user-accounts/" title="User accounts" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../runtime-function-reference/" title="Function Reference" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -778,19 +763,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                User accounts
+                Function Reference
               </span>
             </div>
           </a>
         
         
-          <a href="../social-friends/" title="Friends" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tutorial-initialize-new-user/" title="Initialize a new user" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Friends
+                Initialize a new user
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

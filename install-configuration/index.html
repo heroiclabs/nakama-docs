@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/docs/install-binary/">
+        <link rel="canonical" href="https://heroiclabs.com/docs/install-configuration/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Binary install - Nakama server</title>
+        <title>Configuration - Nakama server</title>
       
     
     
@@ -88,7 +88,7 @@
                 </span>
               
             
-            Binary install
+            Configuration
           
         </span>
       </div>
@@ -228,6 +228,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../install-binary/" title="Binary install" class="md-nav__link">
+      Binary install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -239,11 +251,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Binary install
+        Configuration
       </label>
     
-    <a href="./" title="Binary install" class="md-nav__link md-nav__link--active">
-      Binary install
+    <a href="./" title="Configuration" class="md-nav__link md-nav__link--active">
+      Configuration
     </a>
     
       
@@ -257,37 +269,80 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirement" title="Requirement" class="md-nav__link">
-    Requirement
+  <a href="#specifying-a-config-file" title="Specifying a config file" class="md-nav__link">
+    Specifying a config file
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-cockroachdb" title="Install CockroachDB" class="md-nav__link">
-    Install CockroachDB
+  <a href="#common-properties" title="Common properties" class="md-nav__link">
+    Common properties
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-nakama-on-macos" title="Install Nakama on MacOS" class="md-nav__link">
-    Install Nakama on MacOS
+  <a href="#server-configuration" title="Server Configuration" class="md-nav__link">
+    Server Configuration
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#homebrew" title="Homebrew" class="md-nav__link">
-    Homebrew
+  <a href="#log" title="Log" class="md-nav__link">
+    Log
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#without-homebrew" title="Without Homebrew" class="md-nav__link">
-    Without Homebrew
+  <a href="#database" title="Database" class="md-nav__link">
+    Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime" title="Runtime" class="md-nav__link">
+    Runtime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#socket" title="Socket" class="md-nav__link">
+    Socket
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session" title="Session" class="md-nav__link">
+    Session
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purchase" title="Purchase" class="md-nav__link">
+    Purchase
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apple" title="Apple" class="md-nav__link">
+    Apple
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google" title="Google" class="md-nav__link">
+    Google
   </a>
   
 </li>
@@ -296,25 +351,37 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-windows" title="Install Nakama on Windows" class="md-nav__link">
-    Install Nakama on Windows
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-linux" title="Install Nakama on Linux" class="md-nav__link">
-    Install Nakama on Linux
+        
+          <li class="md-nav__item">
+  <a href="#social" title="Social" class="md-nav__link">
+    Social
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#systemd" title="systemd" class="md-nav__link">
-    systemd
+  <a href="#notification" title="Notification" class="md-nav__link">
+    Notification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steam" title="Steam" class="md-nav__link">
+    Steam
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" title="Dashboard" class="md-nav__link">
+    Dashboard
   </a>
   
 </li>
@@ -330,18 +397,6 @@
   
 </nav>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../install-configuration/" title="Configuration" class="md-nav__link">
-      Configuration
-    </a>
   </li>
 
         
@@ -671,37 +726,80 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirement" title="Requirement" class="md-nav__link">
-    Requirement
+  <a href="#specifying-a-config-file" title="Specifying a config file" class="md-nav__link">
+    Specifying a config file
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-cockroachdb" title="Install CockroachDB" class="md-nav__link">
-    Install CockroachDB
+  <a href="#common-properties" title="Common properties" class="md-nav__link">
+    Common properties
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-nakama-on-macos" title="Install Nakama on MacOS" class="md-nav__link">
-    Install Nakama on MacOS
+  <a href="#server-configuration" title="Server Configuration" class="md-nav__link">
+    Server Configuration
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#homebrew" title="Homebrew" class="md-nav__link">
-    Homebrew
+  <a href="#log" title="Log" class="md-nav__link">
+    Log
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#without-homebrew" title="Without Homebrew" class="md-nav__link">
-    Without Homebrew
+  <a href="#database" title="Database" class="md-nav__link">
+    Database
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime" title="Runtime" class="md-nav__link">
+    Runtime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#socket" title="Socket" class="md-nav__link">
+    Socket
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session" title="Session" class="md-nav__link">
+    Session
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#purchase" title="Purchase" class="md-nav__link">
+    Purchase
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apple" title="Apple" class="md-nav__link">
+    Apple
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google" title="Google" class="md-nav__link">
+    Google
   </a>
   
 </li>
@@ -710,25 +808,37 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-windows" title="Install Nakama on Windows" class="md-nav__link">
-    Install Nakama on Windows
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-linux" title="Install Nakama on Linux" class="md-nav__link">
-    Install Nakama on Linux
+        
+          <li class="md-nav__item">
+  <a href="#social" title="Social" class="md-nav__link">
+    Social
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#systemd" title="systemd" class="md-nav__link">
-    systemd
+  <a href="#notification" title="Notification" class="md-nav__link">
+    Notification
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steam" title="Steam" class="md-nav__link">
+    Steam
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard" title="Dashboard" class="md-nav__link">
+    Dashboard
   </a>
   
 </li>
@@ -753,127 +863,378 @@
               
                 
                 
-                <h1 id="binary-install">Binary install</h1>
-<p>To start developing with Nakama, you&rsquo;ll first need to install it on your development machine. It&rsquo;s straightforward and takes just a few minutes. In this guide we&rsquo;re going to focus on installing your Nakama development instance using the binary executable.</p>
-<div class="admonition summary">
-<p class="admonition-title">Recommended Approach</p>
-<p><a href="../install-docker-quickstart/">Docker</a> is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a binary to ensure all system resources are available to Nakama.</p>
+                <h1 id="configuration">Configuration</h1>
+<p>A YAML configuration file configures many aspects of how your Nakama server runs. You can run Nakama without specifying a configuration file and rely on the the default settings instead.</p>
+<h2 id="specifying-a-config-file">Specifying a config file</h2>
+<p>You can specify a configuration file at run-time using --config flag.</p>
+<div class="codehilite"><pre><span></span>nakama --config my-special-config.yml
+</pre></div>
+
+
+<p>If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to <a href="../install-docker-quickstart/#data">setup folder binding</a>.</p>
+<h2 id="common-properties">Common properties</h2>
+<p>There are a few configuration properties that need to be changed in most environments. The full list of configurations is at the <a href="#server-configuration">bottom of the page</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>Nakama node name (must be unique) - It will default to <code>nakama-xxxx</code> where <code>xxxx</code> is 4 random characters.</td>
+</tr>
+<tr>
+<td><code>data_dir</code></td>
+<td>An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.</td>
+</tr>
+<tr>
+<td><code>runtime.path</code></td>
+<td>Path of modules to scan and load. Defaults to <code>data_dir/modules</code>.</td>
+</tr>
+<tr>
+<td><code>database.address</code></td>
+<td>List of database nodes to connect to. It should follow the form of <code>username:password@address:port/dbname</code> (<code>postgres://</code> protocol is appended to the path automatically). Defaults to <code>root@localhost:26257</code>.</td>
+</tr>
+<tr>
+<td><code>socket.server_key</code></td>
+<td>Server key to use to establish a connection to the server. Default value is <code>defaultkey</code>.</td>
+</tr>
+<tr>
+<td><code>session.encryption_key</code></td>
+<td>The encryption key used to produce the client token. Default value is <code>defaultencryptionkey</code>.</td>
+</tr>
+<tr>
+<td><code>runtime.http_key</code></td>
+<td>Key is used to protect the server's runtime HTTP invocations. Default value is <code>defaultkey</code>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Production settings</p>
+<p>You must change the values of <strong><code>socket.server_key</code></strong>, <strong><code>session.encryption_key</code></strong> and <strong><code>runtime.http_key</code></strong> before you deploy Nakama to a live production environment. </p>
+<p>Follow the <a href="deployment-production-settings.md">production settings deployment guide</a> for more information.</p>
 </div>
-<h2 id="requirement">Requirement</h2>
-<p>There are a few things you&rsquo;ll need to know or have to hand before you install Nakama:</p>
-<ul>
-<li>Operating system: Windows 10 64-bit or above, MacOS 10.9 or above, or a modern Linux.</li>
-<li>Architecture: X86_64 (64bit) processor architecture</li>
-<li>Dependent software: Nakama relies on <a href="https://cockroachlabs.com">CockroachDB</a>.</li>
-</ul>
-<h2 id="install-cockroachdb">Install CockroachDB</h2>
-<p>Nakama relies on CockroachDB as the main and only database. Nakama uses CockroachDB to store server configuration, user data, chat messages and more persistent data.</p>
-<p>You'll first need to install CockroachDB. Follow <a href="https://www.cockroachlabs.com/docs/stable/install-cockroachdb.html">this guide</a> to install CockroachDB on your machine before installing Nakama.</p>
-<div class="admonition note">
-<p class="admonition-title">CockroachDB Alternative</p>
-<p>Nakama unofficially supports <a href="https://www.postgresql.org/download/">PostgreSQL</a> for environments where CockroachDB is not available.</p>
-<p>For production settings, Nakama should be used with CockroachDB as queries are optimised for the way data is stored on the disk.</p>
+<h2 id="server-configuration">Server Configuration</h2>
+<p>Nakama has various configuration options to make it as flexible as possible for various use cases and deployment environments.</p>
+<p>Nakama ships with sane default values for all config options, therefore you'll only need to override a subset of the options. You can also setup your own config file, and override the values in the config file via command-line flags. For instance, to override Runtime Path:</p>
+<div class="codehilite"><pre><span></span>nakama --runtime.path /tmp/my-modules
+</pre></div>
+
+
+<p>If fields are not specific, default values will be used. For more information on how to override flags, have a look at the <a href="fundemental-server-cli.md">server command-line</a> page.</p>
+<div class="admonition tip">
+<p class="admonition-title">Override configuration</p>
+<p>Every configuration option can set from a config file, as a command line flag or both where the command-line argument takes precedence and will override the configuration values.</p>
 </div>
-<h2 id="install-nakama-on-macos">Install Nakama on MacOS</h2>
-<p>You&rsquo;ll need to be running MacOS 10.9 (Mavericks) or greater to run Nakama.</p>
-<h3 id="homebrew">Homebrew</h3>
-<p>Homebrew is a community-developed package manager for MacOS. If you&rsquo;ve used <code>apt</code> or <code>yum</code> on Linux systems then you&rsquo;ll find Homebrew to be familiar.</p>
-<p>If this is your first time using Homebrew, take a look at <a href="http://brew.sh/">their website</a> for installation instructions. Once you&rsquo;ve installed Homebrew, follow the instructions below.</p>
-<div class="codehilite"><pre><span></span><span class="c1"># run our brew recipe to download the Nakama code and build the binary</span>
-brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/local/nakama.rb
-</pre></div>
-
-
-<p>Now you have Nakama running and you&rsquo;re ready to start developing.</p>
-<h3 id="without-homebrew">Without Homebrew</h3>
-<p>Installing the binaries directly rather than via Homebrew allows you the flexibility of placing the server in your prefered workspace. However, installing through <a href="#homebrew">Homebrew</a> is the simplest and easiest &ndash; including for updates &ndash; as everything is handled using the Homebrew workflow.</p>
-<p>1. Download the latest <a href="https://github.com/heroiclabs/nakama/releases/latest">Nakama tarball for MacOS</a>.</p>
-<p>2. Then extract the binary:</p>
-<div class="codehilite"><pre><span></span><span class="c1"># replace the X.X.X with the version number you have downloaded</span>
-tar xfz nakama-X.X.X-darwin-amd64.tar.gz
-</pre></div>
-
-
-<p>3. Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</p>
-<div class="codehilite"><pre><span></span>cp -i nakama /usr/local/bin
-</pre></div>
-
-
-<p>You may come across a permissions error. If you&rsquo;re happy to perform the action with root permissions then prefix the command with <code>sudo</code>.</p>
-<p>4. Migrate the database schema and then start Nakama</p>
-<div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
-nakama migration up
-<span class="c1"># start the server and output logs to the terminal</span>
-nakama --log.stdout
-</pre></div>
-
-
-<h2 id="install-nakama-on-windows">Install Nakama on Windows</h2>
-<p>Nakama is also available as a <a href="https://github.com/heroiclabs/nakama/releases/latest">Windows binary</a>. However, <a href="../install-docker-quickstart/">Docker</a> is the recommended way to install CockroachDB and Nakama on Windows.</p>
-<ol>
-<li><a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</li>
-<li>Open a Powershell terminal and navigate to the folder you downloaded Nakama into.</li>
-<li>Migrate the database schema and then start Nakama</li>
-</ol>
-<div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
-nakama.exe migration up
-<span class="c1"># start the server and output logs to the terminal</span>
-nakama.exe --log.stdout
-</pre></div>
-
-
-<h2 id="install-nakama-on-linux">Install Nakama on Linux</h2>
-<p>Using <a href="../install-docker-quickstart/">Docker</a> - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure. <a href="mailto:support@heroiclabs.com">Let us know</a> if you have requests for specific package managers.</p>
-<p>First you&rsquo;ll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.</p>
-<p>1. <a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</p>
-<p>2. Then extract the binary:</p>
-<div class="codehilite"><pre><span></span><span class="c1"># replace the X.X.X with the version number you have downloaded</span>
-tar xfz nakama-X.X.X-linux-amd64.tar.gz
-</pre></div>
-
-
-<p>3. Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</p>
-<div class="codehilite"><pre><span></span>cp -i nakama /usr/local/bin
-</pre></div>
-
-
-<p>4. Migrate the database schema and then start Nakama</p>
-<div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
-nakama migration up
-<span class="c1"># start the server and output logs to the terminal</span>
-nakama --log.stdout
-</pre></div>
-
-
-<p>You may come across a permissions error. If you&rsquo;re happy to perform the action with root permissions then prefix the command with <code>sudo</code>.</p>
-<h3 id="systemd">systemd</h3>
-<p>If you prefer to run Nakama as a service, and you&rsquo;re running a distro that uses systemd, you can optionally use the following script.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You&rsquo;ll need to update the paths within the systemd configuration.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>name</code></td>
+<td>Nakama node name (must be unique) - It will default to <code>nakama-xxxx</code> where <code>xxxx</code> is 4 random characters.  This name is also used in the log files.</td>
+</tr>
+<tr>
+<td><code>data_dir</code></td>
+<td><code>data_dir</code></td>
+<td>An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="log">Log</h3>
+<p>Nakama produces logs in JSON format so various systems can interact with the logs. By default they are written to log files inside <code>data_dir/logs</code> folder.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stdout</code></td>
+<td><code>log.stdout</code></td>
+<td>Redirect logs to console standard output. The log file will no longer be used. Default is <code>false</code>.</td>
+</tr>
+<tr>
+<td><code>verbose</code></td>
+<td><code>log.verbose</code></td>
+<td>Turn on verbose logging. You'll see a lot more logs including debug-level information. This is useful for debugging purposes. Default is <code>false</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="database">Database</h3>
+<p>Nakama requires a CockroachDB server instance to be available. Nakama creates and manages its own database called <code>nakama</code> within the CockroachDB database.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>address</code></td>
+<td><code>database.address</code></td>
+<td>List of database nodes to connect to. It should follow the form of <code>username:password@address:port/dbname</code> (<code>postgres://</code> protocol is appended to the path automatically). Defaults to <code>root@localhost:26257</code>.</td>
+</tr>
+<tr>
+<td><code>conn_max_lifetime_ms</code></td>
+<td><code>database.conn_max_lifetime_ms</code></td>
+<td>Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.. Default value is 60000.</td>
+</tr>
+<tr>
+<td><code>max_open_conns</code></td>
+<td><code>database.max_open_conns</code></td>
+<td>Maximum number of allowed open connections to the database. Default value is 0 (no limit).</td>
+</tr>
+<tr>
+<td><code>max_idle_conns</code></td>
+<td><code>database.max_idle_conns</code></td>
+<td>Maximum number of allowed open but unused connections to the database. Default value is 0 (no limit).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Database addresses</p>
+<p>You can pass in multiple database addresses to Nakama via command like:</p>
+<p><code>nakama --database.address "root@db1:26257" --database.address "root@db2:26257"</code></p>
 </div>
-<p>1. Create the service file: <code>/usr/lib/systemd/system/nakama.service</code></p>
-<div class="codehilite"><pre><span></span><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Nakama server</span>
-
-<span class="k">[Service]</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/path/to/nakama --config /path/to/nakama/config.yml</span>
-<span class="na">KillMode</span><span class="o">=</span><span class="s">process</span>
-
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
-</pre></div>
-
-
-<p>2. Update file permission so it's readable by the <code>systemd</code> daemon process</p>
-<div class="codehilite"><pre><span></span>sudo chmod <span class="m">644</span> /usr/lib/systemd/system/nakama.service
-</pre></div>
-
-
-<p>3. Enable and run the service</p>
-<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> nakama
-sudo systemctl start nakama
-</pre></div>
+<h3 id="runtime">Runtime</h3>
+<p>Options related to Lua-based runtime engine.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>env</code></td>
+<td><em>N/A</em></td>
+<td>List of Key-Value properties that are exposed to the Runtime scripts as environment variables.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td><code>runtime.path</code></td>
+<td>Path of modules for the server to scan and load at startup. Default value is <code>data_dir/modules</code>.</td>
+</tr>
+<tr>
+<td><code>http_key</code></td>
+<td><code>runtime.http_key</code></td>
+<td>A key used to authenticate HTTP Runtime invocations. Default value is <code>defaultkey</code>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>You must change <code>http_key</code> before going live with your app!</p>
+</div>
+<h3 id="socket">Socket</h3>
+<p>Options related to connection socket and transport protocol between the server and clients.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>server_key</code></td>
+<td><code>socket.server_key</code></td>
+<td>Server key to use to establish a connection to the server. Default value is <code>defaultkey</code>.</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>socket.port</code></td>
+<td>The port for accepting connections from the client, listening on all interfaces. Default value is 7350.</td>
+</tr>
+<tr>
+<td><code>max_message_size_bytes</code></td>
+<td><code>socket.max_message_size_bytes</code></td>
+<td>Maximum amount of data in bytes allowed to be read from the client socket per message. Default value is 1024.</td>
+</tr>
+<tr>
+<td><code>write_wait_ms</code></td>
+<td><code>socket.write_wait_ms</code></td>
+<td>Time in milliseconds to wait for an ack from the client when writing data. Default value is 5000.</td>
+</tr>
+<tr>
+<td><code>pong_wait_ms</code></td>
+<td><code>socket.pong_wait_ms</code></td>
+<td>Time in milliseconds to wait for a pong message from the client after sending a ping. Default value is 10000.</td>
+</tr>
+<tr>
+<td><code>ping_period_ms</code></td>
+<td><code>socket.ping_period_ms</code></td>
+<td>Time in milliseconds to wait between client ping messages. This value must be less than the <code>pong_wait_ms</code>. Default value is 8000.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>You must change <code>server_key</code> before going live with your app!</p>
+</div>
+<h3 id="session">Session</h3>
+<p>You can change configuration options related to each user session, such as the encryption key used to create the token.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>encryption_key</code></td>
+<td><code>session.encryption_key</code></td>
+<td>The encryption key used to produce the client token. Default value is <code>defaultencryptionkey</code>.</td>
+</tr>
+<tr>
+<td><code>token_expiry_ms</code></td>
+<td><code>session.token_expiry_ms</code></td>
+<td>Token expiry in milliseconds. Default value is 60000.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Important</p>
+<p>You must change <code>encryption_key</code> before going live with your app!</p>
+</div>
+<h3 id="purchase">Purchase</h3>
+<p>Nakama can verify in-app purchases by connecting to various stores and keeps a ledger of valid purchases. This is useful for preventing common in-app purchase replay attacks with valid receipts, as well as restoring purchases for user accounts as needed.</p>
+<h4 id="apple">Apple</h4>
+<p>Apple In-App Purchase configuration</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>password</code></td>
+<td><code>apple.password</code></td>
+<td>Your application's shared secret.</td>
+</tr>
+<tr>
+<td><code>production</code></td>
+<td><code>apple.production</code></td>
+<td>The order in which the reciept verification server will be contacted. Set <code>false</code> for test apps and <code>true</code> for live apps. Default is <code>false</code>.</td>
+</tr>
+<tr>
+<td><code>timeout_ms</code></td>
+<td><code>apple.timeout_ms</code></td>
+<td>Connection timeout to connect to Apple services. Default value is 1500.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="google">Google</h4>
+<p>Google In-App Purchase configuration</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>package</code></td>
+<td><code>google.package</code></td>
+<td>The package name the app is published under, such as <code>com.myapp.testapp</code>.</td>
+</tr>
+<tr>
+<td><code>service_key_file</code></td>
+<td><code>google.service_key_file</code></td>
+<td>Absolute file path to the service key JSON file.</td>
+</tr>
+<tr>
+<td><code>timeout_ms</code></td>
+<td><code>google..timeout_ms</code></td>
+<td>Connection timeout to connect to Google services. Default value is 1500.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="social">Social</h3>
+<p>Nakama can connect to various social networks to fetch user information. It can also act as a notification center for delivering and persisting notifications.</p>
+<h4 id="notification">Notification</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>expiry_ms</code></td>
+<td><code>notification.expiry_ms</code></td>
+<td>Set notification expiry in milliseconds. Default value is 86400000 (1 day).</td>
+</tr>
+</tbody>
+</table>
+<h4 id="steam">Steam</h4>
+<p>Configure Steam network settings. Facebook, Google and GameCenter don't require any server settings.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>publisher_key</code></td>
+<td><code>steam.publisher_key</code></td>
+<td>Steam Publisher Key.</td>
+</tr>
+<tr>
+<td><code>app_id</code></td>
+<td><code>steam.app_id</code></td>
+<td>Steam App ID.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dashboard">Dashboard</h3>
+<p>This section defined the configuration related for the embedded Dashboard.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>port</code></td>
+<td><code>dashboard.port</code></td>
+<td>The port for accepting connections to the dashboard, listening on all interfaces. Default value is 7351.</td>
+</tr>
+</tbody>
+</table>
                 
                   
                 
@@ -892,7 +1253,7 @@ sudo systemctl start nakama
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../install-binary/" title="Binary install" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -901,19 +1262,19 @@ sudo systemctl start nakama
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Docker quickstart
+                Binary install
               </span>
             </div>
           </a>
         
         
-          <a href="../install-configuration/" title="Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../unity-client-guide/" title="Unity client guide" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Configuration
+                Unity client guide
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
