@@ -4,7 +4,7 @@
 
 Running Nakama in a Digital Ocean droplet is a great way to develop using Nakama without needing to install it locally.
 
-We’ll install Nakama on your Digital Ocean droplet using our standard [Docker installation guide](install-docker-quickstart.md) but first there are some things we need to configure on the droplet.
+You can install Nakama on your Digital Ocean droplet using the [Docker installation guide](install-docker-quickstart.md) but first there are some things that need to be configured on the droplet.
 
 ## Droplet configuration
 
@@ -19,13 +19,13 @@ Your droplet should have the following configuration:
 !!! warning "SSH Key"
     You must create a new SSH key and store the key safely. This is the way you'll login to your server.
 
-## Accesing the droplet
+## Accessing the droplet
 
 Once the droplet is running, make a note of its IP address from within your Digital Ocean console.
 
 ![Digital Ocean Dashboard][deployment-digital-ocean]
 
-For the next steps, we’ll need to SSH into the droplet. There isn’t a need for username/password as you’ve pre-authorized yourself using a public key in the previous step.
+For the next steps, you need to SSH into the droplet. There isn’t a need for username/password as you’ve pre-authorized yourself using a public key in the previous step.
 
 ```shell fct_label="Shell"
 ssh root@<IP ADDRESS>

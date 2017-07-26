@@ -34,7 +34,7 @@ There are a few configuration properties that need to be changed in most environ
 
 Nakama has various configuration options to make it as flexible as possible for various use cases and deployment environments.
 
-Nakama ships with sane default values for all config options, therefore you'll only need to override a subset of the options. You can also setup your own config file, and furthermore override the values in the config file via command-line flags. For instance, to override Runtime Path:
+Nakama ships with sane default values for all config options, therefore you'll only need to override a subset of the options. You can also setup your own config file, and override the values in the config file via command-line flags. For instance, to override Runtime Path:
 
 ```shell fct_label="Shell"
 nakama --runtime.path /tmp/my-modules
@@ -120,7 +120,7 @@ You can change configuration options related to each user session, such as the e
 
 ### Purchase
 
-Nakama can verify in-app purchases by connecting to various stores and keep a ledger of valid purchases.
+Nakama can verify in-app purchases by connecting to various stores and keeps a ledger of valid purchases. This is useful for preventing common in-app purchase replay attacks with valid receipts, as well as restoring purchases for user accounts as needed.
 
 #### Apple
 
