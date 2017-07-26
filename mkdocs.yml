@@ -47,7 +47,7 @@ pages:
 - 'Install and setup':
   - 'Docker quickstart': 'install-docker-quickstart.md'
   - 'Binary install': 'install-binary.md'
-#  - 'Configuration': 'install-configuration.md'
+  - 'Configuration': 'install-configuration.md'
 #  - 'Upgrades': 'install-nakama-upgrades.md'
 #- 'Unity engine': 'nakama-unity-engine.md'
 #- 'Unreal engine': 'nakama-unreal-engine.md'
@@ -55,9 +55,9 @@ pages:
 #- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
 #- 'JavaScript guide': 'nakama-javascript-guide.md'
 - 'Fundamentals':
-#  - 'Nakama CLI': 'fundemental-server-cli.md'
+#   - 'Nakama CLI': 'fundemental-server-cli.md'
 #  - 'Authentication': 'fundemental-authentication.md'
-  - 'User accounts': 'fundemental-user-accounts.md'
+   - 'User accounts': 'fundemental-user-accounts.md'
 #  - 'Resource limits': 'fundemental-resource-limits.md'
 - 'Storage Engine':
   - 'Collections': 'storage-collections.md'
@@ -94,10 +94,10 @@ pages:
 #  - 'Inventory management': 'tutorial-inventory-management.md'
 #  - 'Prized leaderboards': 'tutorial-prized-leaderboards.md'
 #- 'Nakama enterprise': 'nakama-enterprise.md'
-#- 'Deployment':
+- 'Deployment':
 #  - 'Managed cloud': 'deployment-managed-cloud.md'
 #  - 'Production settings': 'deployment-production-settings.md'
-#  - 'Digital Ocean': 'deployment-digital-ocean.md'
+  - 'Digital Ocean': 'deployment-digital-ocean.md'
 #- 'Internals':
 #  - 'Server architecture': 'internal-nakama-server-architecture.md'
 #  - 'Social graph engine': 'internal-nakama-social-graph-engine.md'
