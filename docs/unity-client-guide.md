@@ -1,6 +1,6 @@
 # Unity client guide
 
-The official Unity client handles all realtime communication with the server. It implements all features in the server and is compatible with Unity 5.4+. To work with our Unity client you'll need to install and setup [Unity engine](https://unity3d.com/get-unity/download).
+The official Unity client handles all communication in realtime with the server. It implements all features in the server and is compatible with Unity 5.4+. To work with our Unity client you'll need to install and setup [Unity engine](https://unity3d.com/get-unity/download).
 
 ## Download
 
@@ -9,7 +9,7 @@ The client is available on the <a href="https://www.assetstore.unity3d.com/en/#!
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-unity/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
 !!! Bug "Help and contribute"
-    The Unity client is <a href="" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us make it better.
+    The Unity client is <a href="" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
 
 ## Install and setup
 
@@ -114,7 +114,7 @@ _client.Login(message, SessionHandler, (INError err) => {
 });
 ```
 
-In the code above we use `NAuthenticateMessage.Device(id)` but for other authenticate options have a look at the [code examples](authentication.md#register-or-login).
+In the code above we use `NAuthenticateMessage.Device(id)` but for other authentication options have a look at the [code examples](authentication.md#register-or-login).
 
 A __full example__ class with all code above is [here](#full-example).
 
