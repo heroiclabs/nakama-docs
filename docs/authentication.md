@@ -3,7 +3,7 @@
 The server has builtin authentication so clients can only send requests and connect if they have the [server key](install-configuration.md#socket). When authentication is successful a client can create a session as a [user](user-accounts.md).
 
 !!! Warning "Important"
-    The default server key is "defaultkey" but it is very important to set a [unique value](install-configuration.md#socket). This value should be embedded within client code.
+    The default server key is `defaultkey` but it is very important to set a [unique value](install-configuration.md#socket). This value should be embedded within client code.
 
 ```csharp fct_label="Unity"
 INClient client = new NClient.Builder("defaultkey")

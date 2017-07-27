@@ -167,3 +167,86 @@ This section defined the configuration related for the embedded Dashboard.
 | Parameter | Flag             | Description
 | --------- | ----             | -----------
 | `port`    | `dashboard.port` | The port for accepting connections to the dashboard, listening on all interfaces. Default value is 7351.
+
+### Cluster
+
+This section configures how the nodes should connect to each to other form a cluster.
+
+!!! tip "Nakama Enterprise Only"
+    The following configuration options are available only in the Nakama Enterprise version of the Nakama server
+
+    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Managed Cloud](https://heroiclabs.com/managed-cloud) service.
+
+| Parameter            | Flag                      | Description
+| ---------            | ----                      | -----------
+| `join`               | `cluster.join`            | List of hostname and port of other Nakama nodes to connect to.
+| `gossip_bindaddr`    | `cluster.gossip_bindaddr` | Interface address to bind Nakama to for discovery. By default listening on all interfaces.
+| `gossip_bindport`    | `cluster.gossip_bindport` | Port number to bind Nakama to for discovery. Default value is 7352.
+| `rpc_port`           | `cluster.rpc_port`        | Port number to use to send data between Nakama nodes. Default value is 7353.
+
+## Example File
+
+You can use the entire file or just a subset of the configuration.
+
+```yaml
+
+name: nakama-node-1
+data_dir: "./data/"
+
+log:
+  stdout: false
+  verbose: false
+
+database:
+  address:
+    - "root@localhost:26257"
+  conn_max_lifetime_ms: 60000
+  max_open_conns: 0
+  max_idle_conns: 0
+
+runtime:
+  env:
+    - example_apikey: "example_apivalue"
+  path: "/tmp/modules/folders"
+  http_key: "defaultkey"
+
+socket:
+  server_key: "defaultkey"
+  port: 7350
+  max_message_size_bytes: 1024 # bytes
+  write_wait_ms: 5000
+  pong_wait_ms: 10000
+  ping_period_ms: 8000 # Must be less than pong_wait_ms
+
+session:
+  encryption_key: "defaultencryptionkey"
+  token_expiry_ms: 60000
+
+purchase:
+  apple:
+    password: ""
+    production: false
+    expiry_ms: 1500
+  google:
+    package: ""
+    service_key_file: ""
+    expiry_ms: 1500
+
+social:
+  notification:
+    expiry_ms: 86400000
+  steam:
+    publisher_key: ""
+    app_id: 0
+
+dashboard:
+  port: 7351
+
+cluster:
+  join:
+    - "10.0.0.2:7352"
+    - "10.0.0.3:7352"
+  gossip_bindaddr: "0.0.0.0"
+  gossip_bindport: 7352
+  rpc_port: 7353
+```
