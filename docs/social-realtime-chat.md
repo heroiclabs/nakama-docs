@@ -182,7 +182,7 @@ Every message sent returns an acknowledgement when it's received by the server. 
 ```csharp fct_label="Unity"
 INTopicId chatTopicId = topic.Topic; // A chat topic ID.
 
-var json = "{'some':'data'}";
+var json = "{\"some\":\"data\"}";
 byte[] data = Encoding.UTF8.GetBytes(json);
 var message = NTopicMessageSendMessage.Default(chatTopicId, data);
 client.Send(message, (INTopicMessageAck ack) => {

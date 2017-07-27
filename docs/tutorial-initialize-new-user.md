@@ -21,7 +21,7 @@ var id = SystemInfo.deviceUniqueIdentifier;
 var authMessage = NAuthenticateMessage.Device(id);
 client.Register(authMessage, (INSession session) => {
   client.Connect(session, (bool done) => {
-    var jsonString = "{'coins': 100, 'gems': 10, 'artifacts': 0}";
+    var jsonString = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
     byte[] json = Encoding.UTF8.GetBytes(jsonString);
 
     var message = new NStorageWriteMessage.Builder()
@@ -77,7 +77,7 @@ The last way to write initial records for the user is to `"init"` the record wit
 In our example it means wherever you will update the "mywallet" record you ensure it's been initialized first.
 
 ```csharp fct_label="Unity"
-var jsonString = "{'coins': 100, 'gems': 10, 'artifacts': 0}";
+var jsonString = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 byte[] json = Encoding.UTF8.GetBytes(jsonString);
 
 var message = new NStorageUpdateMessage.Builder()
