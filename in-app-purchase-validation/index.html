@@ -747,7 +747,7 @@
               
                 
                 
-                <h1 id="in-app-purchase-validation">In-app Purchase Validation</h1>
+                <h1 id="in-app-purchase-validation">In-app Purchase Validation<a class="headerlink" href="#in-app-purchase-validation" title="Permanent link">&para;</a></h1>
 <p>The spectrum of monetisation models and tools is extremely varied. From ad-supported, microtransactions, freemium, one-off purchases, and everything in between. A key tool in many of these solutions is the In-App Purchase, which enables single purchases for unlocks, in-game consumables, subscriptions for premium access, and more.</p>
 <p>There are a number of readily available attacks against the most common in-app purchase implementations.</p>
 <p>These are usually focused around:</p>
@@ -774,17 +774,17 @@
 <p>Valid receipts that link to cancelled purchases are flagged and rejected.</p>
 <p><strong>Single Source of Truth</strong></p>
 <p>While Nakama maintains an internal record of all transactions, the remote payment provider is always given priority. Valid purchases that have been checked, logged, then subsequently cancelled, will be rejected appropriately.</p>
-<h2 id="apple">Apple</h2>
+<h2 id="apple">Apple<a class="headerlink" href="#apple" title="Permanent link">&para;</a></h2>
 <p>Nakama supports validating purchases made for products and subscription in iOS.</p>
 <p>Apple purchase receipts are sent to Apple for validation. As suggested by Apple, both Production and Sandbox servers are used to validate receipts depending on the priority setup in the Nakama configuration.</p>
-<h3 id="setup">Setup</h3>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
 <p>To validate receipts against the App Store, Nakama requires your app's shared secret. You can setup a shared secret in <a href="https://itunesconnect.apple.com">iTunes Connect</a>.</p>
 <p><img alt="Apple iTunes Connect" src="../images/apple_iap_1.jpg" title="Apple iTunes Connect" /></p>
 <p>Make a record of your shared secret:</p>
 <p><img alt="Apple iTunes Connect Shared Secret" src="../images/apple_iap_2.jpg" title="Apple iTunes Connect Shared Secret" /></p>
 <p>You'll need to set the value of <code>purchase.apple.password</code> to the value of the Shared Secret above. For more info, take a look at the <a href="../install-configuration/#purchase">configuration</a> page.</p>
 <p>If your app is in production, you'll need to set the value of <code>purchase.apple.production</code> to true to give priority Apple's Production servers.</p>
-<h3 id="validate-purchase">Validate Purchase</h3>
+<h3 id="validate-purchase">Validate Purchase<a class="headerlink" href="#validate-purchase" title="Permanent link">&para;</a></h3>
 <p>Nakama only supports validating iOS 7+ receipts. In addition, Nakama only validates the first item in the receipt as Apple receipts can contain more than one in-app purchase item.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">productId</span> <span class="p">=</span> <span class="s">&quot;com.yourcompany.product&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">receiptData</span> <span class="p">=</span> <span class="s">&quot;...some-base64-encoded-data...&quot;</span><span class="p">;</span>
@@ -829,9 +829,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="google">Google</h2>
+<h2 id="google">Google<a class="headerlink" href="#google" title="Permanent link">&para;</a></h2>
 <p>Nakama supports validating purchases made for products and subscription on Android.</p>
-<h3 id="setup_1">Setup</h3>
+<h3 id="setup_1">Setup<a class="headerlink" href="#setup_1" title="Permanent link">&para;</a></h3>
 <p>To validate receipts against the Play Store, Nakama requires your app's package name, as well as a service file. You can setup a service account and download the service file on <a href="https://play.google.com/apps/publish">Google Play Developer Console</a>.</p>
 <p>Firstly, you'll need to setup a Service Account in the <a href="https://console.developers.google.com/iam-admin/serviceaccounts/">Google API Console</a>.</p>
 <p><img alt="Create Service Account" src="../images/google_iap_1_create_service_account.jpg" title="Create Service Account" /></p>
@@ -855,7 +855,7 @@
 <p><code>purchase.google.service_key_file</code>: Path of the JSON file you download in previous steps. This file contains authentication information that allows Nakama to communicate with Google Play on your behalf. Make sure that the file is kept safe and is only accessible by Nakama and other authorized parties.</p>
 </li>
 </ul>
-<h3 id="validate-purchase_1">Validate Purchase</h3>
+<h3 id="validate-purchase_1">Validate Purchase<a class="headerlink" href="#validate-purchase_1" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">productId</span> <span class="p">=</span> <span class="s">&quot;com.yourcompany.product&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">purchaseType</span> <span class="p">=</span> <span class="s">&quot;product&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">purchaseToken</span> <span class="p">=</span> <span class="s">&quot;some-token-from-google&quot;</span><span class="p">;</span>
@@ -905,7 +905,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="interpreting-responses">Interpreting Responses</h2>
+<h2 id="interpreting-responses">Interpreting Responses<a class="headerlink" href="#interpreting-responses" title="Permanent link">&para;</a></h2>
 <p>Responses contain the following information:</p>
 <ul>
 <li><code>success</code> - Whether or not the transaction is valid and all the information matches.</li>
@@ -943,7 +943,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="recovering-purchases">Recovering Purchases</h2>
+<h2 id="recovering-purchases">Recovering Purchases<a class="headerlink" href="#recovering-purchases" title="Permanent link">&para;</a></h2>
 <p>When users change devices, it's common to offer an option (or fully automated process) to re-apply the benefits of any previous purchases to their new client installation.</p>
 <p>Clients should always refer to the platform purchase provider for a list of purchases, then verify each one with Nakama. In this case clients should accommodate responses where the <code>seen_before</code> indicator is true and act accordingly.</p>
                 

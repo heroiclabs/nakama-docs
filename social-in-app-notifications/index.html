@@ -687,11 +687,11 @@
               
                 
                 
-                <h1 id="in-app-notifications">In-app Notifications</h1>
+                <h1 id="in-app-notifications">In-app Notifications<a class="headerlink" href="#in-app-notifications" title="Permanent link">&para;</a></h1>
 <p>In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts.</p>
 <p>A notification can be stored until read when the app is next opened or it can be pushed so only an active connected user will see it. You can also use notifications to trigger custom actions within your game and change client behavior.</p>
 <p>These notifications are viewed within the app which makes them a great companion to push notifications viewed outside the app.</p>
-<h2 id="send-notifications">Send notifications</h2>
+<h2 id="send-notifications">Send notifications<a class="headerlink" href="#send-notifications" title="Permanent link">&para;</a></h2>
 <p>You can send a notification to one or more users with server-side Lua code. It can be sent to any user in the game, no need to be a friend to be able to exchange messages. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -727,7 +727,7 @@
 </pre></div>
 
 
-<h2 id="receive-notifications">Receive notifications</h2>
+<h2 id="receive-notifications">Receive notifications<a class="headerlink" href="#receive-notifications" title="Permanent link">&para;</a></h2>
 <p>An event handler can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.</p>
 <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnNotification</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">NNotificationEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">INNotification</span> <span class="n">n</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Notification</span><span class="p">;</span>
@@ -738,7 +738,7 @@
 </pre></div>
 
 
-<h2 id="list-notifications">List notifications</h2>
+<h2 id="list-notifications">List notifications<a class="headerlink" href="#list-notifications" title="Permanent link">&para;</a></h2>
 <p>You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. It depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -800,7 +800,7 @@
 </pre></div>
 
 
-<h2 id="delete-notifications">Delete notifications</h2>
+<h2 id="delete-notifications">Delete notifications<a class="headerlink" href="#delete-notifications" title="Permanent link">&para;</a></h2>
 <p>You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.</p>
 <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
 <span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(...);</span> <span class="c1">// Add notification from your internal list</span>
@@ -813,7 +813,7 @@
 </pre></div>
 
 
-<h2 id="notification-codes">Notification codes</h2>
+<h2 id="notification-codes">Notification codes<a class="headerlink" href="#notification-codes" title="Permanent link">&para;</a></h2>
 <p>The server reserves codes 0 up to 100 for messages sent implicitly on certain events. The code is useful to decide how to display the notification in your UI.</p>
 <table>
 <thead>

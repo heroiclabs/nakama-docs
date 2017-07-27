@@ -699,7 +699,7 @@
               
                 
                 
-                <h1 id="friends">Friends</h1>
+                <h1 id="friends">Friends<a class="headerlink" href="#friends" title="Permanent link">&para;</a></h1>
 <p>Friends are a great way to build a social community. Users can add other users to their list of friends, see who is online or when they were last online, chat together in realtime, and interact together in gameplay or collaboration.</p>
 <div class="admonition summary">
 <p class="admonition-title">Fun fact</p>
@@ -707,7 +707,7 @@
 </div>
 <p>Each user builds up a list of friends by who they know already from their social networks, friend requests they send, requests they receive, and who the server recommends they should know. This information is stored in a social graph within the system as a powerful way to interact with other users. Much like how Twitter or Facebook work.</p>
 <p>Any social community must be maintained carefully to prevent spam or abuse. To help with this problem it's also possible for a user to block users they no longer want to communicate with and for the server to ban a user via server-side code to completely disable an account.</p>
-<h2 id="add-friends">Add friends</h2>
+<h2 id="add-friends">Add friends<a class="headerlink" href="#add-friends" title="Permanent link">&para;</a></h2>
 <p>A user can add one or more friends by that user's ID or handle. The user added will not be marked as a friend in the list until they've confirmed the friend request. The user who receives the request can confirm it by adding the user back.</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
@@ -725,7 +725,7 @@
 
 
 <p>When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the <a href="../social-realtime-chat/">realtime chat</a> section for more info.</p>
-<h2 id="list-friends">List friends</h2>
+<h2 id="list-friends">List friends<a class="headerlink" href="#list-friends" title="Permanent link">&para;</a></h2>
 <p>You can list all of a user's friends, blocked users, friend requests received (invited), and invites they've sent. These statuses are returned together as part of the friend list which makes it easy to display in a UI.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NFriendsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INFriend</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -740,7 +740,7 @@
 </pre></div>
 
 
-<h2 id="remove-friends">Remove friends</h2>
+<h2 id="remove-friends">Remove friends<a class="headerlink" href="#remove-friends" title="Permanent link">&para;</a></h2>
 <p>A user can remove a friend, reject a received invite, cancel a friend request sent, or unblock a user. Similar to how Friend Add works we reuse Friend Remove to cancel or undo whatever friend state is current with another user.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -757,7 +757,7 @@
 </pre></div>
 
 
-<h2 id="block-a-friend">Block a friend</h2>
+<h2 id="block-a-friend">Block a friend<a class="headerlink" href="#block-a-friend" title="Permanent link">&para;</a></h2>
 <p>You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a <a href="#remove-friends">Friend Remove</a> message.</p>
 <p>A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
@@ -771,7 +771,7 @@
 </pre></div>
 
 
-<h3 id="ban-a-user">Ban a user</h3>
+<h3 id="ban-a-user">Ban a user<a class="headerlink" href="#ban-a-user" title="Permanent link">&para;</a></h3>
 <p>A user can be banned with server-side code. This will prevent the user from being able to connect to the server and interact at all.</p>
 <p>This is best used by a moderator system within your community. You could assign particular users the capabilities to send an RPC to permanently ban a user or you may decide to ban users via your liveops support team.</p>
 <p>See the <a href="runtime-code-basics.md">runtime code basics</a> on how to write server-side code.</p>

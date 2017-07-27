@@ -741,7 +741,7 @@
               
                 
                 
-                <h1 id="docker-quickstart">Docker quickstart</h1>
+                <h1 id="docker-quickstart">Docker quickstart<a class="headerlink" href="#docker-quickstart" title="Permanent link">&para;</a></h1>
 <p>To start developing with Nakama, you&rsquo;ll first need to install it on your development machine. It&rsquo;s straightforward and takes just a few minutes. In this guide we&rsquo;re going to focus on installing your Nakama development instance using Docker.</p>
 <div class="admonition summary">
 <p class="admonition-title">Recommended Approach</p>
@@ -767,7 +767,7 @@
 <p>It also means that the installation instructions are the same whether your development machine runs Windows, MacOS and Linux.</p>
 </li>
 </ul>
-<h2 id="what-is-docker">What is Docker?</h2>
+<h2 id="what-is-docker">What is Docker?<a class="headerlink" href="#what-is-docker" title="Permanent link">&para;</a></h2>
 <p>If you&rsquo;re new to Docker, then here&rsquo;s what you need to know: Docker is an open soure containerization tool that lets you create multiple distinct Linux environments, each separate from the other.</p>
 <p>In a Docker container you run a suite of tools to do a particular job; in this case we&rsquo;ll have one container running Nakama and another running CockroachDB. You can think of Docker containers as lightweight virtual machines.</p>
 <ul>
@@ -781,7 +781,7 @@
 <p>Use the <a href="https://store.docker.com/search?offering=community&amp;q=&amp;type=edition">Docker Store</a> to find the right version of Docker Community Edition for your environment.</p>
 </li>
 </ul>
-<h2 id="connecting-the-nakama-client">Connecting the Nakama client</h2>
+<h2 id="connecting-the-nakama-client">Connecting the Nakama client<a class="headerlink" href="#connecting-the-nakama-client" title="Permanent link">&para;</a></h2>
 <p>Once Nakama is running via Docker, use the following connection detail to configure your client to connect to the server:</p>
 <p><strong>Host</strong>: <code>127.0.0.1</code> (or <code>localhost</code>)  <br />
 <strong>Port</strong> : <code>7350</code>   <br />
@@ -796,7 +796,7 @@
 </pre></div>
 
 
-<h2 id="running-nakama">Running Nakama</h2>
+<h2 id="running-nakama">Running Nakama<a class="headerlink" href="#running-nakama" title="Permanent link">&para;</a></h2>
 <p>You can run Nakama and Cockroach without using Docker-Compose. This will mean you have greater control over how they are started, and various data volumes options but in return, you'll have to configure the two containers:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Let&#39;s pull and start CockroachDB</span>
 docker run --name<span class="o">=</span>db cockroachdb/cockroach start --insecure
@@ -807,7 +807,7 @@ docker run --link<span class="o">=</span>db -p <span class="m">7350</span>:7350 
 </pre></div>
 
 
-<h2 id="using-docker-compose">Using Docker-Compose</h2>
+<h2 id="using-docker-compose">Using Docker-Compose<a class="headerlink" href="#using-docker-compose" title="Permanent link">&para;</a></h2>
 <p>Docker Compose simplifies running more than one Docker container in conjunction. For Nakama, we&rsquo;ll need two containers: one for Nakama itself and one for the database it relies on, CockroachDB.</p>
 <p>You can choose to configure the Nakama and CockroachDB containers without Docker Compose but we do not recommend it when you&rsquo;re starting out.</p>
 <p>Docker Compose uses YAML configuration files to declare which containers to use and how they should work together.</p>
@@ -828,7 +828,7 @@ docker run --link<span class="o">=</span>db -p <span class="m">7350</span>:7350 
 
 <p>Docker Compose will download the latest CockroachDB and Nakama images published on Docker Hub.</p>
 <p>3. You now have both CockroachDB and Nakama running on your machine, available at <code>127.0.0.1:26257</code> and <code>127.0.0.1:7350</code> respectively.</p>
-<h3 id="data">Data</h3>
+<h3 id="data">Data<a class="headerlink" href="#data" title="Permanent link">&para;</a></h3>
 <p>Docker containers are ephemeral by design: when you remove the container, you lose the data stored inside them.</p>
 <p>For development purposes, we suggest that you bind a folder in the local machine's filesystem to the Docker file system. The easiest way to achieve this is by editing the <code>docker-compose.yml</code> file:</p>
 <div class="codehilite"><pre><span></span>...
@@ -857,9 +857,9 @@ nakama:
 <p>Make sure to change the line highlighted above to the correct path and restart Nakama.</p>
 </div>
 <p>You can put your Lua scripts in the <code>data/modules</code> directory and restart Nakama using <code>docker-compose --restart</code>.</p>
-<h3 id="logs">Logs</h3>
+<h3 id="logs">Logs<a class="headerlink" href="#logs" title="Permanent link">&para;</a></h3>
 <p>Logs generated within the containers are printed to the console as part of the docker-compose output, and you can access them with <code>docker-compose logs</code> from within the same the directory as the <code>docker-compose.yml</code> file.</p>
-<h3 id="stopping-containers">Stopping containers</h3>
+<h3 id="stopping-containers">Stopping containers<a class="headerlink" href="#stopping-containers" title="Permanent link">&para;</a></h3>
 <p>If you need to temporarily pause the Docker containers, without losing the state of those containers, you have two options:</p>
 <ul>
 <li>In the terminal where docker-compose is currently running, hit CTRL-C.</li>
@@ -867,7 +867,7 @@ nakama:
 </ul>
 <p>You can re-activate them by running <code>docker-compose up</code>.</p>
 <p>To stop the containers and purge all stored data, run <code>docker-compose down</code>.</p>
-<h2 id="upgrade">Upgrade</h2>
+<h2 id="upgrade">Upgrade<a class="headerlink" href="#upgrade" title="Permanent link">&para;</a></h2>
 <p>As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.</p>
 <div class="admonition note">
 <p class="admonition-title">Schema migration</p>

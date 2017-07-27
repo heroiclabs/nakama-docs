@@ -815,7 +815,7 @@
               
                 
                 
-                <h1 id="authentication">Authentication</h1>
+                <h1 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h1>
 <p>The server has builtin authentication so clients can only send requests and connect if they have the <a href="../install-configuration/#socket">server key</a>. When authentication is successful a client can create a session as a <a href="../user-accounts/">user</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Important</p>
@@ -832,14 +832,14 @@
 
 
 <p>Every user account is created from one of the <a href="#register-or-login">options used to register</a>. We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.</p>
-<h2 id="register-or-login">Register or login</h2>
+<h2 id="register-or-login">Register or login<a class="headerlink" href="#register-or-login" title="Permanent link">&para;</a></h2>
 <p>Before you login a user they must first be registered. We recommend you setup your code to login the user and fallback to register the account if one does not exist. This pattern is shown in the <a href="#device">device</a> section.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The authentication system is very flexible. You could register a user with an email address, <a href="#link-or-unlink">link</a> their Facebook account, and use it to login from another device.</p>
 </div>
 <p>For a <strong>full example</strong> on the best way to handle register and login in each of the clients have a look at their guides.</p>
-<h3 id="device">Device</h3>
+<h3 id="device">Device<a class="headerlink" href="#device" title="Permanent link">&para;</a></h3>
 <p>A device identifier can be used as a way to unobtrusively register a user with the server. This offers a frictionless user experience but can be unreliable because device identifiers can sometimes change in device updates.</p>
 <p>A device identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
@@ -866,7 +866,7 @@
 
 
 <p>In games it is often a better option to use <a href="#google">Google</a> or <a href="#game-center">Game Center</a> to unobtrusively register the user.</p>
-<h3 id="email">Email</h3>
+<h3 id="email">Email<a class="headerlink" href="#email" title="Permanent link">&para;</a></h3>
 <p>Users can be registered with an email and password. The password is hashed before it's stored in the database server and cannot be read or "recovered" by administrators. This protects a user's privacy.</p>
 <p>An email address must be valid as defined by RFC-5322 and passwords must be at least 8 characters.</p>
 <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">email</span> <span class="p">=</span> <span class="s">&quot;email@example.com&quot;</span>
@@ -882,10 +882,10 @@
 </pre></div>
 
 
-<h3 id="social-providers">Social providers</h3>
+<h3 id="social-providers">Social providers<a class="headerlink" href="#social-providers" title="Permanent link">&para;</a></h3>
 <p>The server supports a lot of different social services with register and login. With each provider the user account will be fetched from the social service and used to setup the user. In some cases a user's <a href="../social-friends/">friends</a> will also be fetched and added to their friends list.</p>
 <p>To register or login as a user with any of the providers an OAuth or access token must be obtained from that social service.</p>
-<h4 id="facebook">Facebook</h4>
+<h4 id="facebook">Facebook<a class="headerlink" href="#facebook" title="Permanent link">&para;</a></h4>
 <p>With Facebook you'll need to add the Facebook SDK to your project which can be <a href="https://developers.facebook.com/docs/" target="\_blank">downloaded online</a>. Follow their guides on how to integrate the code. With a mobile project you'll also need to complete instructions on how to configure iOS and Android.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
@@ -945,7 +945,7 @@
 </pre></div>
 
 
-<h4 id="google">Google</h4>
+<h4 id="google">Google<a class="headerlink" href="#google" title="Permanent link">&para;</a></h4>
 <p>Similar to Facebook for register and login you should use one of Google's client SDKs.</p>
 <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
 
@@ -959,7 +959,7 @@
 </pre></div>
 
 
-<h4 id="game-center">Game Center</h4>
+<h4 id="game-center">Game Center<a class="headerlink" href="#game-center" title="Permanent link">&para;</a></h4>
 <p>Apple devices have builtin authentication which can be done without user interaction through Game Center. The register or login process is a little complicated because of how Apple's services work.</p>
 <div class="codehilite"><pre><span></span><span class="c1">// You&#39;ll need to use native code (Obj-C) with Unity.</span>
 <span class="c1">// The &quot;UnityEngine.SocialPlatforms.GameCenter&quot; doesn&#39;t give enough information</span>
@@ -986,7 +986,7 @@
 </pre></div>
 
 
-<h4 id="steam">Steam</h4>
+<h4 id="steam">Steam<a class="headerlink" href="#steam" title="Permanent link">&para;</a></h4>
 <p>Steam requires you to configure the server before you can register a user.</p>
 <div class="admonition note">
 <p class="admonition-title">Server configuration</p>
@@ -1004,7 +1004,7 @@
 </pre></div>
 
 
-<h3 id="custom">Custom</h3>
+<h3 id="custom">Custom<a class="headerlink" href="#custom" title="Permanent link">&para;</a></h3>
 <p>A custom identifier can be used in a similar way to a device identifier to login or register a user. This option should be used if you have an external or custom user identity service which you want to use. For example EA's Origin service handles accounts which have their own user IDs.</p>
 <p>A custom identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.</p>
 <div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
@@ -1020,7 +1020,7 @@
 </pre></div>
 
 
-<h2 id="sessions">Sessions</h2>
+<h2 id="sessions">Sessions<a class="headerlink" href="#sessions" title="Permanent link">&para;</a></h2>
 <p>The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1038,7 +1038,7 @@
 </pre></div>
 
 
-<h3 id="connect">Connect</h3>
+<h3 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">&para;</a></h3>
 <p>With a session you can connect with the server and send messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.</p>
 <p>You can only send messages to the server once you've connected a client.</p>
 <div class="codehilite"><pre><span></span><span class="n">INSession</span> <span class="n">session</span> <span class="p">=</span> <span class="n">session</span><span class="p">;</span> <span class="c1">// obtained from Register or Login.</span>
@@ -1048,7 +1048,7 @@
 </pre></div>
 
 
-<h2 id="link-or-unlink">Link or unlink</h2>
+<h2 id="link-or-unlink">Link or unlink<a class="headerlink" href="#link-or-unlink" title="Permanent link">&para;</a></h2>
 <p>You can link one or more other login option to the current user. This makes it easy to support multiple logins with each user and easily identify a user across devices.</p>
 <p>You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.</p>
 <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>

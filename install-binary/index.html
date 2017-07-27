@@ -753,20 +753,20 @@
               
                 
                 
-                <h1 id="binary-install">Binary install</h1>
+                <h1 id="binary-install">Binary install<a class="headerlink" href="#binary-install" title="Permanent link">&para;</a></h1>
 <p>To start developing with Nakama, you&rsquo;ll first need to install it on your development machine. It&rsquo;s straightforward and takes just a few minutes. In this guide we&rsquo;re going to focus on installing your Nakama development instance using the binary executable.</p>
 <div class="admonition summary">
 <p class="admonition-title">Recommended Approach</p>
 <p><a href="../install-docker-quickstart/">Docker</a> is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a binary to ensure all system resources are available to Nakama.</p>
 </div>
-<h2 id="requirement">Requirement</h2>
+<h2 id="requirement">Requirement<a class="headerlink" href="#requirement" title="Permanent link">&para;</a></h2>
 <p>There are a few things you&rsquo;ll need to know or have to hand before you install Nakama:</p>
 <ul>
 <li>Operating system: Windows 10 64-bit or above, MacOS 10.9 or above, or a modern Linux.</li>
 <li>Architecture: X86_64 (64bit) processor architecture</li>
 <li>Dependent software: Nakama relies on <a href="https://cockroachlabs.com">CockroachDB</a>.</li>
 </ul>
-<h2 id="install-cockroachdb">Install CockroachDB</h2>
+<h2 id="install-cockroachdb">Install CockroachDB<a class="headerlink" href="#install-cockroachdb" title="Permanent link">&para;</a></h2>
 <p>Nakama relies on CockroachDB as the main and only database. Nakama uses CockroachDB to store server configuration, user data, chat messages and more persistent data.</p>
 <p>You'll first need to install CockroachDB. Follow <a href="https://www.cockroachlabs.com/docs/stable/install-cockroachdb.html">this guide</a> to install CockroachDB on your machine before installing Nakama.</p>
 <div class="admonition note">
@@ -774,9 +774,9 @@
 <p>Nakama unofficially supports <a href="https://www.postgresql.org/download/">PostgreSQL</a> for environments where CockroachDB is not available.</p>
 <p>For production settings, Nakama should be used with CockroachDB as queries are optimised for the way data is stored on the disk.</p>
 </div>
-<h2 id="install-nakama-on-macos">Install Nakama on MacOS</h2>
+<h2 id="install-nakama-on-macos">Install Nakama on MacOS<a class="headerlink" href="#install-nakama-on-macos" title="Permanent link">&para;</a></h2>
 <p>You&rsquo;ll need to be running MacOS 10.9 (Mavericks) or greater to run Nakama.</p>
-<h3 id="homebrew">Homebrew</h3>
+<h3 id="homebrew">Homebrew<a class="headerlink" href="#homebrew" title="Permanent link">&para;</a></h3>
 <p>Homebrew is a community-developed package manager for MacOS. If you&rsquo;ve used <code>apt</code> or <code>yum</code> on Linux systems then you&rsquo;ll find Homebrew to be familiar.</p>
 <p>If this is your first time using Homebrew, take a look at <a href="http://brew.sh/">their website</a> for installation instructions. Once you&rsquo;ve installed Homebrew, follow the instructions below.</p>
 <div class="codehilite"><pre><span></span><span class="c1"># run our brew recipe to download the Nakama code and build the binary</span>
@@ -785,7 +785,7 @@ brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/
 
 
 <p>Now you have Nakama running and you&rsquo;re ready to start developing.</p>
-<h3 id="without-homebrew">Without Homebrew</h3>
+<h3 id="without-homebrew">Without Homebrew<a class="headerlink" href="#without-homebrew" title="Permanent link">&para;</a></h3>
 <p>Installing the binaries directly rather than via Homebrew allows you the flexibility of placing the server in your prefered workspace. However, installing through <a href="#homebrew">Homebrew</a> is the simplest and easiest &ndash; including for updates &ndash; as everything is handled using the Homebrew workflow.</p>
 <p>1. Download the latest <a href="https://github.com/heroiclabs/nakama/releases/latest">Nakama tarball for MacOS</a>.</p>
 <p>2. Then extract the binary:</p>
@@ -808,7 +808,7 @@ nakama --log.stdout
 </pre></div>
 
 
-<h2 id="install-nakama-on-windows">Install Nakama on Windows</h2>
+<h2 id="install-nakama-on-windows">Install Nakama on Windows<a class="headerlink" href="#install-nakama-on-windows" title="Permanent link">&para;</a></h2>
 <p>Nakama is also available as a <a href="https://github.com/heroiclabs/nakama/releases/latest">Windows binary</a>. However, <a href="../install-docker-quickstart/">Docker</a> is the recommended way to install CockroachDB and Nakama on Windows.</p>
 <ol>
 <li><a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</li>
@@ -822,7 +822,7 @@ nakama.exe --log.stdout
 </pre></div>
 
 
-<h2 id="install-nakama-on-linux">Install Nakama on Linux</h2>
+<h2 id="install-nakama-on-linux">Install Nakama on Linux<a class="headerlink" href="#install-nakama-on-linux" title="Permanent link">&para;</a></h2>
 <p>Using <a href="../install-docker-quickstart/">Docker</a> - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure. <a href="mailto:support@heroiclabs.com">Let us know</a> if you have requests for specific package managers.</p>
 <p>First you&rsquo;ll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.</p>
 <p>1. <a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</p>
@@ -846,7 +846,7 @@ nakama --log.stdout
 
 
 <p>You may come across a permissions error. If you&rsquo;re happy to perform the action with root permissions then prefix the command with <code>sudo</code>.</p>
-<h3 id="systemd">systemd</h3>
+<h3 id="systemd">systemd<a class="headerlink" href="#systemd" title="Permanent link">&para;</a></h3>
 <p>If you prefer to run Nakama as a service, and you&rsquo;re running a distro that uses systemd, you can optionally use the following script.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

@@ -863,16 +863,16 @@
               
                 
                 
-                <h1 id="configuration">Configuration</h1>
+                <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
 <p>A YAML configuration file configures many aspects of how your Nakama server runs. You can run Nakama without specifying a configuration file and rely on the the default settings instead.</p>
-<h2 id="specifying-a-config-file">Specifying a config file</h2>
+<h2 id="specifying-a-config-file">Specifying a config file<a class="headerlink" href="#specifying-a-config-file" title="Permanent link">&para;</a></h2>
 <p>You can specify a configuration file at run-time using --config flag.</p>
 <div class="codehilite"><pre><span></span>nakama --config my-special-config.yml
 </pre></div>
 
 
 <p>If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to <a href="../install-docker-quickstart/#data">setup folder binding</a>.</p>
-<h2 id="common-properties">Common properties</h2>
+<h2 id="common-properties">Common properties<a class="headerlink" href="#common-properties" title="Permanent link">&para;</a></h2>
 <p>There are a few configuration properties that need to be changed in most environments. The full list of configurations is at the <a href="#server-configuration">bottom of the page</a>.</p>
 <table>
 <thead>
@@ -917,7 +917,7 @@
 <p>You must change the values of <strong><code>socket.server_key</code></strong>, <strong><code>session.encryption_key</code></strong> and <strong><code>runtime.http_key</code></strong> before you deploy Nakama to a live production environment. </p>
 <p>Follow the <a href="deployment-production-settings.md">production settings deployment guide</a> for more information.</p>
 </div>
-<h2 id="server-configuration">Server Configuration</h2>
+<h2 id="server-configuration">Server Configuration<a class="headerlink" href="#server-configuration" title="Permanent link">&para;</a></h2>
 <p>Nakama has various configuration options to make it as flexible as possible for various use cases and deployment environments.</p>
 <p>Nakama ships with sane default values for all config options, therefore you'll only need to override a subset of the options. You can also setup your own config file, and override the values in the config file via command-line flags. For instance, to override Runtime Path:</p>
 <div class="codehilite"><pre><span></span>nakama --runtime.path /tmp/my-modules
@@ -950,7 +950,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="log">Log</h3>
+<h3 id="log">Log<a class="headerlink" href="#log" title="Permanent link">&para;</a></h3>
 <p>Nakama produces logs in JSON format so various systems can interact with the logs. By default they are written to log files inside <code>data_dir/logs</code> folder.</p>
 <table>
 <thead>
@@ -973,7 +973,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="database">Database</h3>
+<h3 id="database">Database<a class="headerlink" href="#database" title="Permanent link">&para;</a></h3>
 <p>Nakama requires a CockroachDB server instance to be available. Nakama creates and manages its own database called <code>nakama</code> within the CockroachDB database.</p>
 <table>
 <thead>
@@ -1011,7 +1011,7 @@
 <p>You can pass in multiple database addresses to Nakama via command like:</p>
 <p><code>nakama --database.address "root@db1:26257" --database.address "root@db2:26257"</code></p>
 </div>
-<h3 id="runtime">Runtime</h3>
+<h3 id="runtime">Runtime<a class="headerlink" href="#runtime" title="Permanent link">&para;</a></h3>
 <p>Options related to Lua-based runtime engine.</p>
 <table>
 <thead>
@@ -1043,7 +1043,7 @@
 <p class="admonition-title">Important</p>
 <p>You must change <code>http_key</code> before going live with your app!</p>
 </div>
-<h3 id="socket">Socket</h3>
+<h3 id="socket">Socket<a class="headerlink" href="#socket" title="Permanent link">&para;</a></h3>
 <p>Options related to connection socket and transport protocol between the server and clients.</p>
 <table>
 <thead>
@@ -1090,7 +1090,7 @@
 <p class="admonition-title">Important</p>
 <p>You must change <code>server_key</code> before going live with your app!</p>
 </div>
-<h3 id="session">Session</h3>
+<h3 id="session">Session<a class="headerlink" href="#session" title="Permanent link">&para;</a></h3>
 <p>You can change configuration options related to each user session, such as the encryption key used to create the token.</p>
 <table>
 <thead>
@@ -1117,9 +1117,9 @@
 <p class="admonition-title">Important</p>
 <p>You must change <code>encryption_key</code> before going live with your app!</p>
 </div>
-<h3 id="purchase">Purchase</h3>
+<h3 id="purchase">Purchase<a class="headerlink" href="#purchase" title="Permanent link">&para;</a></h3>
 <p>Nakama can verify in-app purchases by connecting to various stores and keeps a ledger of valid purchases. This is useful for preventing common in-app purchase replay attacks with valid receipts, as well as restoring purchases for user accounts as needed.</p>
-<h4 id="apple">Apple</h4>
+<h4 id="apple">Apple<a class="headerlink" href="#apple" title="Permanent link">&para;</a></h4>
 <p>Apple In-App Purchase configuration</p>
 <table>
 <thead>
@@ -1147,7 +1147,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="google">Google</h4>
+<h4 id="google">Google<a class="headerlink" href="#google" title="Permanent link">&para;</a></h4>
 <p>Google In-App Purchase configuration</p>
 <table>
 <thead>
@@ -1175,9 +1175,9 @@
 </tr>
 </tbody>
 </table>
-<h3 id="social">Social</h3>
+<h3 id="social">Social<a class="headerlink" href="#social" title="Permanent link">&para;</a></h3>
 <p>Nakama can connect to various social networks to fetch user information. It can also act as a notification center for delivering and persisting notifications.</p>
-<h4 id="notification">Notification</h4>
+<h4 id="notification">Notification<a class="headerlink" href="#notification" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -1194,7 +1194,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="steam">Steam</h4>
+<h4 id="steam">Steam<a class="headerlink" href="#steam" title="Permanent link">&para;</a></h4>
 <p>Configure Steam network settings. Facebook, Google and GameCenter don't require any server settings.</p>
 <table>
 <thead>
@@ -1217,7 +1217,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="dashboard">Dashboard</h3>
+<h3 id="dashboard">Dashboard<a class="headerlink" href="#dashboard" title="Permanent link">&para;</a></h3>
 <p>This section defined the configuration related for the embedded Dashboard.</p>
 <table>
 <thead>

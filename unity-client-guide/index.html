@@ -308,6 +308,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#handle-events" title="Handle events" class="md-nav__link">
+    Handle events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logs-and-errors" title="Logs and errors" class="md-nav__link">
     Logs and errors
   </a>
@@ -660,6 +667,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#handle-events" title="Handle events" class="md-nav__link">
+    Handle events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logs-and-errors" title="Logs and errors" class="md-nav__link">
     Logs and errors
   </a>
@@ -681,12 +695,277 @@
               
                 
                 
-                <h1 id="unity-client-guide">Unity client guide</h1>
-<h2 id="download">Download</h2>
-<h2 id="install-and-setup">Install and setup</h2>
-<h2 id="authenticate">Authenticate</h2>
-<h2 id="send-messages">Send messages</h2>
-<h2 id="logs-and-errors">Logs and errors</h2>
+                <h1 id="unity-client-guide">Unity client guide<a class="headerlink" href="#unity-client-guide" title="Permanent link">&para;</a></h1>
+<p>The official Unity client handles all realtime communication with the server. It implements all features in the server and is compatible with Unity 5.4+. To work with our Unity client you'll need to install and setup <a href="https://unity3d.com/get-unity/download">Unity engine</a>.</p>
+<h2 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h2>
+<p>The client is available on the <a href="https://www.assetstore.unity3d.com/en/#!/content/81338" target="\_blank">Unity Asset store</a> and also on <a href="https://github.com/heroiclabs/nakama-unity/releases/latest" target="\_blank">GitHub releases</a>. You can download "Nakama.unitypackage" which contains all source code and DLL dependencies required in the client code.</p>
+<p>For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-unity/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.</p>
+<div class="admonition bug">
+<p class="admonition-title">Help and contribute</p>
+<p>The Unity client is <a href="" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us make it better.</p>
+</div>
+<h2 id="install-and-setup">Install and setup<a class="headerlink" href="#install-and-setup" title="Permanent link">&para;</a></h2>
+<p>When you've <a href="#download">downloaded</a> the "Nakama.unitypackage" file you should drag or import it into your Unity editor project to install it. In the editor create a new C# script via the Assets menu with "Assets &gt; Create &gt; C# Script" and create an <code>INClient</code>.</p>
+<p>The client object is used to execute all logic against the server.</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="nn">Nakama</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">NakamaManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+  <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">INClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Host</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Port</span><span class="p">(</span><span class="m">7350</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">SSL</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>We use the builder pattern with many classes in the Unity client. Most classes have a <code>".Default()"</code> method to construct an object with default values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default the client uses connection settings "127.0.0.1" and 7350 to connect to a local Nakama server.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="c1">// quick setup a client for a local server.</span>
+<span class="n">INClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p>Unity uses an entity component system (ECS) which makes it simple to share the client across game objects. Have a read of <a href="https://docs.unity3d.com/Manual/ControllingGameObjectsComponents.html" target="\_blank">Controlling GameObjects Using Components</a> for examples on how to share a C# object across your game objects.</p>
+<h2 id="authenticate">Authenticate<a class="headerlink" href="#authenticate" title="Permanent link">&para;</a></h2>
+<p>With a client object you can authenticate against the server. You can register and/or login a <a href="../user-accounts/">user</a> with one of the <a href="../authentication/">authenticate options</a>.</p>
+<p>To authenticate you should follow our recommended pattern in your client code:</p>
+<p>&nbsp;&nbsp; 1. Build an instance of the client.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p>&nbsp;&nbsp; 2. Write a callback which will be used to connect to the server.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">_session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Session connected.&quot;</span><span class="p">);</span>
+    <span class="c1">// Store session for quick reconnects.</span>
+    <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.session&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>&nbsp;&nbsp; 3. Restore a session for quick reconnects.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionString</span> <span class="p">=</span> <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="s">&quot;nk.session&quot;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">sessionString</span><span class="p">))</span> <span class="p">{</span>
+  <span class="n">INSession</span> <span class="n">session</span> <span class="p">=</span> <span class="n">NSession</span><span class="p">.</span><span class="n">Restore</span><span class="p">(</span><span class="n">sessionString</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(!</span><span class="n">session</span><span class="p">.</span><span class="n">HasExpired</span><span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">sessionHandler</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>&nbsp;&nbsp; 4. Login or register user.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It's good practice to cache a device identifier when it's used to authenticate because they can change with device OS updates.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// See if we have a cached id in PlayerPrefs.</span>
+<span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="s">&quot;nk.id&quot;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">id</span><span class="p">))</span> <span class="p">{</span>
+  <span class="c1">// We&#39;ll use device ID for the user. See other authentication options.</span>
+  <span class="n">id</span> <span class="p">=</span> <span class="n">SystemInfo</span><span class="p">.</span><span class="n">deviceUniqueIdentifier</span><span class="p">;</span>
+  <span class="c1">// Store the identifier for next game start.</span>
+  <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.id&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="n">_client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">SessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">ErrorCode</span><span class="p">.</span><span class="n">UserNotFound</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">_client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">SessionHandler</span><span class="p">,</span> <span class="n">ErrorHandler</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">ErrorHandler</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>In the code above we use <code>NAuthenticateMessage.Device(id)</code> but for other authenticate options have a look at the <a href="../authentication/#register-or-login">code examples</a>.</p>
+<p>A <strong>full example</strong> class with all code above is <a href="#full-example">here</a>.</p>
+<h2 id="send-messages">Send messages<a class="headerlink" href="#send-messages" title="Permanent link">&para;</a></h2>
+<p>When a user has been authenticated and a session is used to connect with the server. You can send messages for all the different features in the server.</p>
+<p>This could be to <a href="../social-friends/">add friends</a>, join <a href="../social-groups-clans/">groups</a> and <a href="../social-realtime-chat/">chat</a>, or submit scores in <a href="gameplay-leaderboards.md">leaderboards</a>, and <a href="gameplay-matchmaker.md">matchmake</a> into a <a href="gameplay-realtime-multiplayer.md">multiplayer match</a>. You can also execute remote code on the server via <a href="remote-code-basics.md">RPC</a>.</p>
+<p>The server also provides a <a href="../storage-collections/">storage engine</a> to keep save games and other records owned by users. We'll use storage to introduce how messages are sent.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">json</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;jsonkey\&quot;:\&quot;jsonvalue\&quot;}&quot;</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;someBucket&quot;</span><span class="p">,</span> <span class="s">&quot;someCollection&quot;</span><span class="p">,</span> <span class="s">&quot;myRecord&quot;</span><span class="p">,</span> <span class="n">storageValue</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully wrote record.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>Have a look at other sections of documentation for more code examples.</p>
+<h2 id="handle-events">Handle events<a class="headerlink" href="#handle-events" title="Permanent link">&para;</a></h2>
+<p>The client uses event handlers which are called on various events received from the server.</p>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnError</span> <span class="p">+=</span> <span class="p">(</span><span class="n">NErrorEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">INError</span> <span class="n">err</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Error</span><span class="p">;</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">OnDisconnect</span> <span class="p">+=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Disconnected from server.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Some events only need to be implemented for the features you want to use.</p>
+<table>
+<thead>
+<tr>
+<th>Event handler</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OnDisconnect</td>
+<td>Handles an event for when the client is disconnected from the server.</td>
+</tr>
+<tr>
+<td>OnError</td>
+<td>Receives events about server errors.</td>
+</tr>
+<tr>
+<td>OnMatchData</td>
+<td>Handles <a href="gameplay-realtime-multiplayer.md">realtime match</a> messages.</td>
+</tr>
+<tr>
+<td>OnMatchmakeMatched</td>
+<td>Receives events when the <a href="gameplay-matchmaker.md">matchmaker</a> has found match participants.</td>
+</tr>
+<tr>
+<td>OnMatchPresence</td>
+<td>When in a <a href="gameplay-realtime-multiplayer.md">realtime match</a> receives events for when users join or leave.</td>
+</tr>
+<tr>
+<td>OnNotification</td>
+<td>Receives live <a href="../social-in-app-notifications/">in-app notifications</a> sent from the server.</td>
+</tr>
+<tr>
+<td>OnTopicMessage</td>
+<td>Receives <a href="../social-realtime-chat/">realtime chat</a> messages sent by other users.</td>
+</tr>
+<tr>
+<td>OnTopicPresence</td>
+<td>Similar to "OnMatchPresence" it handles join and leave events but within <a href="../social-realtime-chat/">chat</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="logs-and-errors">Logs and errors<a class="headerlink" href="#logs-and-errors" title="Permanent link">&para;</a></h2>
+<p>The <a href="../install-configuration/#log">server</a> and the client can generate logs which are helpful to debug code. To log all messages sent by the client you can enable "Trace" when you build an <code>"INClient"</code>.</p>
+<div class="codehilite"><pre><span></span><span class="cp">#if UNITY_EDITOR</span>
+<span class="n">INClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Trace</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="cp">#else</span>
+<span class="n">INClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">);</span>
+<span class="cp">#endif</span>
+</pre></div>
+
+
+<p>The <code>#if</code> preprocessor directives is used so trace is only enabled in Unity editor builds. For more complex directives with debug vs release builds have a look at <a href="https://docs.unity3d.com/Manual/PlatformDependentCompilation.html" target="\_blank">Platform dependent compilation</a>.</p>
+<p>Every error in the Unity client implements the <code>"INError"</code> interface. It contains details on the source and content of an error:</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Error code {0}&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">.</span><span class="n">Code</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Error message {0}&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p><a id="full-example"></a></p>
+<hr />
+<p>An example class used to manage a session with the Unity client.</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="nn">Nakama</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">NakamaManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+  <span class="k">private</span> <span class="n">INClient</span> <span class="n">_client</span><span class="p">;</span>
+  <span class="k">private</span> <span class="n">INSession</span> <span class="n">_session</span><span class="p">;</span>
+
+  <span class="k">public</span> <span class="nf">NakamaManager</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">_client</span> <span class="p">=</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">Awake</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">RestoreSessionAndConnect</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_session</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">LoginOrRegister</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">RestoreSessionAndConnect</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Lets check if we can restore a cached session.</span>
+    <span class="kt">var</span> <span class="n">sessionString</span> <span class="p">=</span> <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="s">&quot;nk.session&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">sessionString</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span> <span class="c1">// We have no session to restore.</span>
+    <span class="p">}</span>
+
+    <span class="kt">var</span> <span class="n">session</span> <span class="p">=</span> <span class="n">NSession</span><span class="p">.</span><span class="n">Restore</span><span class="p">(</span><span class="n">sessionString</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">HasExpired</span><span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span> <span class="c1">// We can&#39;t restore an expired session.</span>
+    <span class="p">}</span>
+
+    <span class="n">SessionHandler</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">LoginOrRegister</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// See if we have a cached id in PlayerPrefs.</span>
+    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="s">&quot;nk.id&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">id</span><span class="p">))</span> <span class="p">{</span>
+      <span class="c1">// We&#39;ll use device ID for the user. See other authentication options.</span>
+      <span class="n">id</span> <span class="p">=</span> <span class="n">SystemInfo</span><span class="p">.</span><span class="n">deviceUniqueIdentifier</span><span class="p">;</span>
+      <span class="c1">// Store the identifier for next game start.</span>
+      <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.id&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+    <span class="n">_client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">SessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">ErrorCode</span><span class="p">.</span><span class="n">UserNotFound</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">SessionHandler</span><span class="p">,</span> <span class="n">ErrorHandler</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">ErrorHandler</span><span class="p">(</span><span class="n">err</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">SessionHandler</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">_session</span> <span class="p">=</span> <span class="n">session</span><span class="p">;</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+    <span class="n">_client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">_session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Session connected.&quot;</span><span class="p">);</span>
+      <span class="c1">// Store session for quick reconnects.</span>
+      <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.session&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">ErrorHandler</span><span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
                 
                   
                 

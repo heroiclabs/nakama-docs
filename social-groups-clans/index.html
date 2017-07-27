@@ -797,10 +797,10 @@
               
                 
                 
-                <h1 id="groups-and-clans">Groups and Clans</h1>
+                <h1 id="groups-and-clans">Groups and Clans<a class="headerlink" href="#groups-and-clans" title="Permanent link">&para;</a></h1>
 <p>A group brings together a bunch of users into a small community or team.</p>
 <p>A group is made up of an owner, admins, and members. It can be public or private which determines whether it appears in results when a user searches. Private groups are similar to how Whatsapp groups work. A user can only be added when they're invited to join by one of the group's admins.</p>
-<h2 id="search-for-groups">Search for groups</h2>
+<h2 id="search-for-groups">Search for groups<a class="headerlink" href="#search-for-groups" title="Permanent link">&para;</a></h2>
 <p>A user can find public groups to join by a filter on language, recently created, how many members in a group, and more. These filters make it easy to assemble new users into smaller groups for team-based play or collaboration.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">OrderByAsc</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
@@ -848,7 +848,7 @@
 </pre></div>
 
 
-<h2 id="join-groups">Join groups</h2>
+<h2 id="join-groups">Join groups<a class="headerlink" href="#join-groups" title="Permanent link">&para;</a></h2>
 <p>When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires an <a href="#accept-new-members">admin to accept</a> the user.</p>
 <p>A user who's part of a group can join <a href="../social-realtime-chat/#groups">group chat</a> and access it's <a href="../social-realtime-chat/#message-history">message history</a>.</p>
 <div class="admonition tip">
@@ -867,7 +867,7 @@
 
 
 <p>The user will receive an <a href="../social-in-app-notifications/">in-app notification</a> when they've been added to the group. In a private group an admin will receive a notification when a user has requested to join.</p>
-<h2 id="list-a-users-groups">List a user's groups</h2>
+<h2 id="list-a-users-groups">List a user's groups<a class="headerlink" href="#list-a-users-groups" title="Permanent link">&para;</a></h2>
 <p>Each user can list groups they've joined as a member or an admin. The list also contains groups which they've requested to join but not been accepted into yet.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupsSelfListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroup</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -881,7 +881,7 @@
 </pre></div>
 
 
-<h2 id="list-group-members">List group members</h2>
+<h2 id="list-group-members">List group members<a class="headerlink" href="#list-group-members" title="Permanent link">&para;</a></h2>
 <p>A user can list all members who're part of their group. These include other users who've requested to join the private group but not been accepted into yet.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
@@ -900,7 +900,7 @@
 </pre></div>
 
 
-<h2 id="create-a-group">Create a group</h2>
+<h2 id="create-a-group">Create a group<a class="headerlink" href="#create-a-group" title="Permanent link">&para;</a></h2>
 <p>A group can be created with a name and other optional fields. These optional fields are used when a user <a href="#search-for-groups">searches for groups</a>. The user who creates the group becomes the owner and an admin for it.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="s">&quot;{&#39;my_custom_field&#39;: &#39;some value&#39;}&quot;</span><span class="p">;</span>
 
@@ -946,7 +946,7 @@
 </pre></div>
 
 
-<h2 id="update-a-group">Update a group</h2>
+<h2 id="update-a-group">Update a group<a class="headerlink" href="#update-a-group" title="Permanent link">&para;</a></h2>
 <p>When a group has been created it's admins can update optional fields.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
@@ -961,7 +961,7 @@
 </pre></div>
 
 
-<h2 id="leave-a-group">Leave a group</h2>
+<h2 id="leave-a-group">Leave a group<a class="headerlink" href="#leave-a-group" title="Permanent link">&para;</a></h2>
 <p>A user can leave a group and will no longer be able to join <a href="../social-realtime-chat/#groups">group chat</a> or read <a href="../social-realtime-chat/#message-history">message history</a>. If the user is an admin they will only be able to leave when at least one other admin exists in the group.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -983,13 +983,13 @@
 </pre></div>
 
 
-<h2 id="manage-groups">Manage groups</h2>
+<h2 id="manage-groups">Manage groups<a class="headerlink" href="#manage-groups" title="Permanent link">&para;</a></h2>
 <p>Each group is managed by one or more admins. These users are members with permission to make changes to optional fields, accept or reject new members, remove members or other admins, and promote other members as admins.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>A group must have at least one admin so the last admin will have to promote another member before they can <a href="#leave-a-group">leave</a>.</p>
 </div>
-<h3 id="accept-new-members">Accept new members</h3>
+<h3 id="accept-new-members">Accept new members<a class="headerlink" href="#accept-new-members" title="Permanent link">&para;</a></h3>
 <p>When a user joins a private group it will create a join request until an admin accepts or rejects the user. The admin can accept the user into the group.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
@@ -1005,7 +1005,7 @@
 
 <p>The user will receive an <a href="../social-in-app-notifications/">in-app notification</a> when they've been added to the group. In a private group an admin will receive a notification about the join request.</p>
 <p>To reject the user from joining the group you should <a href="#kick-a-member">kick them</a>.</p>
-<h3 id="promote-a-member">Promote a member</h3>
+<h3 id="promote-a-member">Promote a member<a class="headerlink" href="#promote-a-member" title="Permanent link">&para;</a></h3>
 <p>An admin can promote another member of the group as an admin. This grants the member the same privileges to <a href="#manage-groups">manage the group</a>. A group can have one or more admins.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
@@ -1037,7 +1037,7 @@
 </pre></div>
 
 
-<h3 id="kick-a-member">Kick a member</h3>
+<h3 id="kick-a-member">Kick a member<a class="headerlink" href="#kick-a-member" title="Permanent link">&para;</a></h3>
 <p>An admin can kick a member from the group. The user is removed but can rejoin again later unless the group is private in which case an admin must accept the join request.</p>
 <p>If a user is removed from a group it does not prevent them from joining other groups.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
@@ -1056,7 +1056,7 @@
 <p class="admonition-title">Hint</p>
 <p>Sometimes a bad user needs to be kicked from the group and <a href="../social-friends/#ban-a-user">permanently banned</a>. This will prevent the user from being able to connect to the server and interact at all.</p>
 </div>
-<h2 id="remove-a-group">Remove a group</h2>
+<h2 id="remove-a-group">Remove a group<a class="headerlink" href="#remove-a-group" title="Permanent link">&para;</a></h2>
 <p>A group can only be removed by one of the admins which will disband all members. When a group is removed it's name can be re-used to <a href="#create-a-group">create a new group</a>.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 

@@ -653,10 +653,10 @@
               
                 
                 
-                <h1 id="user-accounts">User accounts</h1>
+                <h1 id="user-accounts">User accounts<a class="headerlink" href="#user-accounts" title="Permanent link">&para;</a></h1>
 <p>A user represents an identity within the server. Every user is registered and has a profile for other users to find and become <a href="../social-friends/">friends</a> with or join <a href="../social-groups-clans/">groups</a> and <a href="../social-realtime-chat/">chat</a>.</p>
 <p>A user can own <a href="storage-record-ownership.md">records</a>, share public information with other users, and login via a bunch of different social providers.</p>
-<h2 id="fetch-self">Fetch self</h2>
+<h2 id="fetch-self">Fetch self<a class="headerlink" href="#fetch-self" title="Permanent link">&para;</a></h2>
 <p>When a user has a session you can retrieve their profile. The profile is returned for yourself and so we refer to it as "self" in client code. The profile contains lots of information which includes various "linked" social providers.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NSelfFetchMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSelf</span> <span class="n">self</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -730,7 +730,7 @@
 <p class="admonition-title">Tip</p>
 <p>We recommend you choose user metadata to store very common fields which other users will need to see. For all other information you can store records with <a href="storage-record-permissions.md">public read permissions</a> which other users can find.</p>
 </div>
-<h2 id="fetch-users">Fetch users</h2>
+<h2 id="fetch-users">Fetch users<a class="headerlink" href="#fetch-users" title="Permanent link">&para;</a></h2>
 <p>You can fetch one or more users by their IDs or handles. This is useful for displaying public profiles with other users.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INUser ID.</span>
 
@@ -763,7 +763,7 @@
 </pre></div>
 
 
-<h2 id="update-self">Update self</h2>
+<h2 id="update-self">Update self<a class="headerlink" href="#update-self" title="Permanent link">&para;</a></h2>
 <p>When a user is registered most of their profile is setup with default values. A user can update their own profile to change fields but cannot change any other user's profile.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NSelfUpdateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">AvatarUrl</span><span class="p">(</span><span class="s">&quot;http://graph.facebook.com/avatar_url&quot;</span><span class="p">)</span>

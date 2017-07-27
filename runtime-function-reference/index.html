@@ -811,9 +811,9 @@
               
                 
                 
-                <h1 id="function-reference">Function Reference</h1>
+                <h1 id="function-reference">Function Reference<a class="headerlink" href="#function-reference" title="Permanent link">&para;</a></h1>
 <p>The code runtime built into the server includes a module with functions to implement various logic and custom behavior. It is easy to define authoritative code and conditions on input received by clients.</p>
-<h2 id="nakama-module">Nakama module</h2>
+<h2 id="nakama-module">Nakama module<a class="headerlink" href="#nakama-module" title="Permanent link">&para;</a></h2>
 <p>This module contains all the core gameplay APIs, all registration functions used at server startup, utilities for various codecs, and cryptographic primitives.</p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
 </pre></div>
@@ -823,7 +823,7 @@
 <p class="admonition-title">Note</p>
 <p>All code examples assume the "nakama" module has been imported.</p>
 </div>
-<h3 id="base16">base16</h3>
+<h3 id="base16">base16<a class="headerlink" href="#base16" title="Permanent link">&para;</a></h3>
 <p><strong>base16_decode (input)</strong></p>
 <p>Base 16 decode the input.</p>
 <p><em>Parameters</em></p>
@@ -879,7 +879,7 @@
 </pre></div>
 
 
-<h3 id="base64">base64</h3>
+<h3 id="base64">base64<a class="headerlink" href="#base64" title="Permanent link">&para;</a></h3>
 <p><strong>base64_decode (input)</strong></p>
 <p>Base 64 decode the input.</p>
 <p><em>Parameters</em></p>
@@ -935,7 +935,7 @@
 </pre></div>
 
 
-<h3 id="groups">groups</h3>
+<h3 id="groups">groups<a class="headerlink" href="#groups" title="Permanent link">&para;</a></h3>
 <p><strong>groups_create (new_groups)</strong></p>
 <p>Setup one or more groups with various configuration settings. The groups will be created if they don't exist or fail if the group names are taken.</p>
 <p><em>Parameters</em></p>
@@ -973,7 +973,7 @@
 </pre></div>
 
 
-<h3 id="http">http</h3>
+<h3 id="http">http<a class="headerlink" href="#http" title="Permanent link">&para;</a></h3>
 <p><strong>http_request (url, method, headers, content)</strong></p>
 <p>Send a HTTP request and receive the result as a Lua table.</p>
 <p><em>Parameters</em></p>
@@ -1029,7 +1029,7 @@
 </pre></div>
 
 
-<h3 id="json">json</h3>
+<h3 id="json">json<a class="headerlink" href="#json" title="Permanent link">&para;</a></h3>
 <p><strong>json_decode (input)</strong></p>
 <p>Decode the JSON input as a Lua table.</p>
 <p><em>Parameters</em></p>
@@ -1086,7 +1086,7 @@
 </pre></div>
 
 
-<h3 id="leaderboard">leaderboard</h3>
+<h3 id="leaderboard">leaderboard<a class="headerlink" href="#leaderboard" title="Permanent link">&para;</a></h3>
 <p><strong>leaderboard_create (id, sort, reset, metadata, authoritative)</strong></p>
 <p>Setup a new dynamic leaderboard with the specified ID and various configuration settings. The leaderboard will be created if it doesn't already exist.</p>
 <p><em>Parameters</em></p>
@@ -1135,7 +1135,7 @@
 </pre></div>
 
 
-<h3 id="logger">logger</h3>
+<h3 id="logger">logger<a class="headerlink" href="#logger" title="Permanent link">&para;</a></h3>
 <p><strong>logger_error (message)</strong></p>
 <p>Write an ERROR level message to the server logs.</p>
 <p><em>Parameters</em></p>
@@ -1219,7 +1219,7 @@
 </pre></div>
 
 
-<h3 id="notifications">notifications</h3>
+<h3 id="notifications">notifications<a class="headerlink" href="#notifications" title="Permanent link">&para;</a></h3>
 <p><strong>notifications_send_id (new_notifications)</strong></p>
 <p>Send one or more in-app notifications to a user. Have a look at the section on <a href="../social-in-app-notifications/">in-app notifications</a>.</p>
 <p><em>Parameters</em></p>
@@ -1254,7 +1254,7 @@
 </pre></div>
 
 
-<h3 id="register-hooks">register hooks</h3>
+<h3 id="register-hooks">register hooks<a class="headerlink" href="#register-hooks" title="Permanent link">&para;</a></h3>
 <p><strong>register_after (func, msgname)</strong></p>
 <p>Register a function with the server which will be executed after every message with the specified message name.</p>
 <p>This can be used to apply custom logic to standard features in the server. Similar to the <code>register_before</code> function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
@@ -1417,7 +1417,7 @@
 </pre></div>
 
 
-<h3 id="storage">storage</h3>
+<h3 id="storage">storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
 <p><strong>storage_fetch (record_keys)</strong></p>
 <p>Fetch one or more records by their bucket/collection/keyname and optional user.</p>
 <p><em>Parameters</em></p>
@@ -1552,7 +1552,7 @@
 </pre></div>
 
 
-<h3 id="users">users</h3>
+<h3 id="users">users<a class="headerlink" href="#users" title="Permanent link">&para;</a></h3>
 <p><strong>users_ban (user_ids)</strong></p>
 <p>Ban one or more users from the server.</p>
 <p><em>Parameters</em></p>
@@ -1682,7 +1682,7 @@
 </pre></div>
 
 
-<h3 id="uuid">uuid</h3>
+<h3 id="uuid">uuid<a class="headerlink" href="#uuid" title="Permanent link">&para;</a></h3>
 <p><strong>uuid_v4 ()</strong></p>
 <p>Generate a version 4 UUID.</p>
 <p><em>Returns</em></p>

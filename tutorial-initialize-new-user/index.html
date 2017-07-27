@@ -659,13 +659,13 @@
               
                 
                 
-                <h1 id="initialize-a-new-user">Initialize a new user</h1>
+                <h1 id="initialize-a-new-user">Initialize a new user<a class="headerlink" href="#initialize-a-new-user" title="Permanent link">&para;</a></h1>
 <p>It's often useful when a new user registers to have a bunch of records setup for them. In games this could be needed for a user's virtual wallet, initial inventory items, etc. In this tutorial we'll cover a few different ways to handle this use case.</p>
 <div class="admonition summary">
 <p class="admonition-title">Summary</p>
 <p>While there are various ways to solve this use case we highly recommend you <a href="#initialize-record-when-used">initialize the records on usage</a>.</p>
 </div>
-<h2 id="after-register-callback">After register callback</h2>
+<h2 id="after-register-callback">After register callback<a class="headerlink" href="#after-register-callback" title="Permanent link">&para;</a></h2>
 <p>The simplest approach is to write records in the success callback for the register function in a client.</p>
 <p>This code demonstrates how to do it with a condensed example. In real application code you'll break up the <a href="fundemental-authentication.md">authentication</a> and connect logic from the storage writes based on how you manage connect and reconnect.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
@@ -693,7 +693,7 @@
 
 <p>This code has tradeoffs which should be noted. A disconnect can happen before the records are written to storage. This may leave the setup of the user incomplete and the application in a bad state.</p>
 <p>This option is only worth choosing when you want to avoid writing server-side code or have built retry logic on top of a client.</p>
-<h2 id="server-side-hook">Server-side hook</h2>
+<h2 id="server-side-hook">Server-side hook<a class="headerlink" href="#server-side-hook" title="Permanent link">&para;</a></h2>
 <p>Another way to write records for the new user is to run server-side code after registration has completed. This can be done with a <a href="runtime-code-basics.md#register-hooks">register hook</a>.</p>
 <p>The <a href="../runtime-function-reference/#register-hooks">"register_after"</a> hook can be used with one of the <code>"authenticaterequest_*"</code> message types to tell the server to run a function after that message has been processed. It's important to note that the server does not distinguish between register and login messages so we use a <a href="../storage-collections/#conditional-writes">conditional write</a> to store the records.</p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
@@ -721,7 +721,7 @@
 
 
 <p>This approach avoids the tradeoff with client disconnects but requires a database write to happen after every login or register message. This could be acceptable depending on how frequently you write data to the storage engine and can be minimized if you <a href="fundemental-authentication.md#cache-sessions">cache a user's session</a> for quick reconnects.</p>
-<h2 id="initialize-record-when-used">Initialize record when used</h2>
+<h2 id="initialize-record-when-used">Initialize record when used<a class="headerlink" href="#initialize-record-when-used" title="Permanent link">&para;</a></h2>
 <p>The last way to write initial records for the user is to <code>"init"</code> the record with a storage update wherever it's written to in application code. With this approach you never use storage writes and always perform all write operations as updates.</p>
 <p>In our example it means wherever you will update the "mywallet" record you ensure it's been initialized first.</p>
 <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">jsonString</span> <span class="p">=</span> <span class="s">&quot;{&#39;coins&#39;: 100, &#39;gems&#39;: 10, &#39;artifacts&#39;: 0}&quot;</span><span class="p">;</span>

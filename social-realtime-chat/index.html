@@ -755,7 +755,7 @@
               
                 
                 
-                <h1 id="realtime-chat">Realtime Chat</h1>
+                <h1 id="realtime-chat">Realtime Chat<a class="headerlink" href="#realtime-chat" title="Permanent link">&para;</a></h1>
 <p>Realtime chat makes it easy to power a live community.</p>
 <p>Users can chat with each other 1-on-1, as part of a group, and in chat rooms. Messages can contain images, links, and other content. These messages are delivered immediately to clients if the recipients are online and stored in message history so offline users can catch up when they connect.</p>
 <p>Every message which flows through the realtime chat engine belongs to a topic which is used internally to identify which users should receive the messages. Users explicitly join and leave topics when they connect. This makes it easy to selectively listen for messages which they care about or decide to "mute" certain topics when they're busy. Users can also join multiple topics at once to chat simultaneously in multiple groups or chat rooms.</p>
@@ -771,7 +771,7 @@
 <p>Direct chat is private between two users. Each user will receive a <a href="../social-in-app-notifications/">notification</a> when they've been invited to chat. Both users must join for messages to be exchanged which prevents spam from bad users.</p>
 </li>
 </ol>
-<h2 id="receive-messages">Receive messages</h2>
+<h2 id="receive-messages">Receive messages<a class="headerlink" href="#receive-messages" title="Permanent link">&para;</a></h2>
 <p>A user joins a chat topic to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.</p>
 <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnTopicMessage</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NTopicMessageEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">INTopicMessage</span> <span class="n">message</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">TopicMessage</span><span class="p">;</span>
@@ -841,13 +841,13 @@
 </tr>
 </tbody>
 </table>
-<h2 id="join-chat">Join chat</h2>
+<h2 id="join-chat">Join chat<a class="headerlink" href="#join-chat" title="Permanent link">&para;</a></h2>
 <p>To send messages to other users a user must join the chat topic they want to communicate on. This will also enable messages to be <a href="#receive-messages">received in realtime</a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Each user can join many rooms, groups, and direct chat with their session. The same user can also be connected to the same chats from other devices because each device is identified as a separate session.</p>
 </div>
-<h3 id="rooms">rooms</h3>
+<h3 id="rooms">rooms<a class="headerlink" href="#rooms" title="Permanent link">&para;</a></h3>
 <p>A room is created dynamically for users to chat. A room has a name and will be setup on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a <a href="../storage-collections/">storage record</a>.</p>
 <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">roomId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
@@ -865,7 +865,7 @@
 
 
 <p>The <code>roomId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
-<h3 id="groups">groups</h3>
+<h3 id="groups">groups<a class="headerlink" href="#groups" title="Permanent link">&para;</a></h3>
 <p>A group chat can only be joined by a user who is a member of the <a href="../social-groups-clans/">group</a>. Messages are pushed in realtime to group members and they can read <a href="#message-history">historic messages</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -888,7 +888,7 @@
 
 
 <p>The <code>groupTopicId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
-<h3 id="direct">direct</h3>
+<h3 id="direct">direct<a class="headerlink" href="#direct" title="Permanent link">&para;</a></h3>
 <p>A user can direct message another user by ID. Each user will not receive messages in realtime until both users have joined the chat. This is important because it prevents spam messages from bad users.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -915,7 +915,7 @@
 <p class="admonition-title">Note</p>
 <p>A user can <a href="../social-friends/#block-a-friend">block other users</a> to stop unwanted direct messages.</p>
 </div>
-<h2 id="list-online-users">List online users</h2>
+<h2 id="list-online-users">List online users<a class="headerlink" href="#list-online-users" title="Permanent link">&para;</a></h2>
 <p>Each user who joins a chat becomes a "presence" in the chat topic. These presences keep information about which users are connected.</p>
 <p>A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat topic.</p>
 <p>The user who <a href="#join-chat">joins a chat topic</a> receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive "presence" changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.</p>
@@ -954,7 +954,7 @@
 <p class="admonition-title">Tip</p>
 <p>The server is optimized to only push presence updates when other users join or leave the chat.</p>
 </div>
-<h2 id="send-messages">Send messages</h2>
+<h2 id="send-messages">Send messages<a class="headerlink" href="#send-messages" title="Permanent link">&para;</a></h2>
 <p>When a user has <a href="#join-chat">joined a chat topic</a> it's ID can be used to send messages with JSON encoded strings.</p>
 <p>Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.</p>
 <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
@@ -971,7 +971,7 @@
 </pre></div>
 
 
-<h2 id="leave-chat">Leave chat</h2>
+<h2 id="leave-chat">Leave chat<a class="headerlink" href="#leave-chat" title="Permanent link">&para;</a></h2>
 <p>A user can leave a chat topic to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.</p>
 <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
 
@@ -984,7 +984,7 @@
 </pre></div>
 
 
-<h2 id="message-history">Message history</h2>
+<h2 id="message-history">Message history<a class="headerlink" href="#message-history" title="Permanent link">&para;</a></h2>
 <p>Every chat conversation stores a history of messages. The history also contains <a href="#receive-messages">event messages</a> sent by the server with group chat. Each user can retrieve old messages for chat when they next connect online.</p>
 <p>Messages can be listed in order of most recent to oldest and also in reverse (oldest to newest). Messages are returned in batches of up to 100 each with a cursor for when there are more messages.</p>
 <div class="admonition tip">
