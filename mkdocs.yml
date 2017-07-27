@@ -40,21 +40,22 @@ extra:
 markdown_extensions:
   - admonition
   - codehilite(guess_lang=false)
+  - toc(permalink=true)
   - markdown_fenced_code_tabs
 
 # Nav menu
 pages:
-- 'Install and Setup':
+- 'Install and setup':
   - 'Docker quickstart': 'install-docker-quickstart.md'
   - 'Binary install': 'install-binary.md'
   - 'Configuration': 'install-configuration.md'
 #  - 'Nakama CLI': 'install-server-cli.md'
 #  - 'Upgrades': 'install-nakama-upgrades.md'
-#- 'Unity client guide': 'unity-client-guide.md'
+- 'Unity client guide': 'unity-client-guide.md'
+- 'JavaScript client guide': 'javascript-client-guide.md'
+- 'Swift/iOS client guide': 'swift-ios-client-guide.md'
 #- 'Unreal engine': 'nakama-unreal-engine.md'
 #- 'Android guide': 'nakama-android-guide.md'
-#- 'iOS/Swift guide': 'nakama-ios-swift-guide.md'
-#- 'JavaScript guide': 'nakama-javascript-guide.md'
 - 'Authentication': 'authentication.md'
 - 'User accounts': 'user-accounts.md'
 - 'Storage Engine':
