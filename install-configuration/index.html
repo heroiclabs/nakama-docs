@@ -386,8 +386,22 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cluster" title="Cluster" class="md-nav__link">
+    Cluster
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-file" title="Example File" class="md-nav__link">
+    Example File
+  </a>
   
 </li>
       
@@ -610,7 +624,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+    <a href="../runtime-code-basics/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-function-reference/" title="Function Reference" class="md-nav__link">
       Function Reference
     </a>
   </li>
@@ -675,6 +701,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+      Add custom roles to groups
+    </a>
+  </li>
+
         
           
           
@@ -843,8 +881,22 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#cluster" title="Cluster" class="md-nav__link">
+    Cluster
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-file" title="Example File" class="md-nav__link">
+    Example File
+  </a>
   
 </li>
       
@@ -1235,6 +1287,106 @@
 </tr>
 </tbody>
 </table>
+<h3 id="cluster">Cluster<a class="headerlink" href="#cluster" title="Permanent link">&para;</a></h3>
+<p>This section configures how the nodes should connect to each to other form a cluster.</p>
+<div class="admonition tip">
+<p class="admonition-title">Nakama Enterprise Only</p>
+<p>The following configuration options are available only in the Nakama Enterprise version of the Nakama server</p>
+<p>Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you&rsquo;re running <a href="https://heroiclabs.com/nakama-enterprise">Nakama Enterprise</a>. In production you can use either Nakama Enterprise or our <a href="https://heroiclabs.com/managed-cloud">Managed Cloud</a> service.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>join</code></td>
+<td><code>cluster.join</code></td>
+<td>List of hostname and port of other Nakama nodes to connect to.</td>
+</tr>
+<tr>
+<td><code>gossip_bindaddr</code></td>
+<td><code>cluster.gossip_bindaddr</code></td>
+<td>Interface address to bind Nakama to for discovery. By default listening on all interfaces.</td>
+</tr>
+<tr>
+<td><code>gossip_bindport</code></td>
+<td><code>cluster.gossip_bindport</code></td>
+<td>Port number to bind Nakama to for discovery. Default value is 7352.</td>
+</tr>
+<tr>
+<td><code>rpc_port</code></td>
+<td><code>cluster.rpc_port</code></td>
+<td>Port number to use to send data between Nakama nodes. Default value is 7353.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example-file">Example File<a class="headerlink" href="#example-file" title="Permanent link">&para;</a></h2>
+<p>You can use the entire file or just a subset of the configuration.</p>
+<div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nakama-node-1</span>
+<span class="l l-Scalar l-Scalar-Plain">data_dir</span><span class="p p-Indicator">:</span> <span class="s">&quot;./data/&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">log</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">stdout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+  <span class="l l-Scalar l-Scalar-Plain">verbose</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="l l-Scalar l-Scalar-Plain">database</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">address</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;root@localhost:26257&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">conn_max_lifetime_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">60000</span>
+  <span class="l l-Scalar l-Scalar-Plain">max_open_conns</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="l l-Scalar l-Scalar-Plain">max_idle_conns</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="l l-Scalar l-Scalar-Plain">runtime</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">env</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">example_apikey</span><span class="p p-Indicator">:</span> <span class="s">&quot;example_apivalue&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="s">&quot;/tmp/modules/folders&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">http_key</span><span class="p p-Indicator">:</span> <span class="s">&quot;defaultkey&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">socket</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">server_key</span><span class="p p-Indicator">:</span> <span class="s">&quot;defaultkey&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">7350</span>
+  <span class="l l-Scalar l-Scalar-Plain">max_message_size_bytes</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1024</span> <span class="c1"># bytes</span>
+  <span class="l l-Scalar l-Scalar-Plain">write_wait_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5000</span>
+  <span class="l l-Scalar l-Scalar-Plain">pong_wait_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10000</span>
+  <span class="l l-Scalar l-Scalar-Plain">ping_period_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">8000</span> <span class="c1"># Must be less than pong_wait_ms</span>
+
+<span class="l l-Scalar l-Scalar-Plain">session</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">encryption_key</span><span class="p p-Indicator">:</span> <span class="s">&quot;defaultencryptionkey&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">token_expiry_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">60000</span>
+
+<span class="l l-Scalar l-Scalar-Plain">purchase</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">apple</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">production</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+    <span class="l l-Scalar l-Scalar-Plain">expiry_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1500</span>
+  <span class="l l-Scalar l-Scalar-Plain">google</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">package</span><span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">service_key_file</span><span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">expiry_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1500</span>
+
+<span class="l l-Scalar l-Scalar-Plain">social</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">notification</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">expiry_ms</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">86400000</span>
+  <span class="l l-Scalar l-Scalar-Plain">steam</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">publisher_key</span><span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">app_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="l l-Scalar l-Scalar-Plain">dashboard</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">7351</span>
+
+<span class="l l-Scalar l-Scalar-Plain">cluster</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">join</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;10.0.0.2:7352&quot;</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;10.0.0.3:7352&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">gossip_bindaddr</span><span class="p p-Indicator">:</span> <span class="s">&quot;0.0.0.0&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">gossip_bindport</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">7352</span>
+  <span class="l l-Scalar l-Scalar-Plain">rpc_port</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">7353</span>
+</pre></div>
                 
                   
                 

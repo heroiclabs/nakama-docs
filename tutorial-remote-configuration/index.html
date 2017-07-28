@@ -456,7 +456,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+    <a href="../runtime-code-basics/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-function-reference/" title="Function Reference" class="md-nav__link">
       Function Reference
     </a>
   </li>
@@ -523,6 +535,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+      Add custom roles to groups
+    </a>
+  </li>
+
         
           
           
@@ -691,7 +715,7 @@
 <h2 id="manage-in-app-parameters">Manage In-app parameters<a class="headerlink" href="#manage-in-app-parameters" title="Permanent link">&para;</a></h2>
 <p>The configuration settings sent to the app or game need to be stored on the server. The best way to store the information depends on how often the data will be changed.</p>
 <p>For mostly static data it's most efficient to embed it as data structures in server-side code and for more dynamic data it's better to use a read-only <a href="../storage-collections/">storage record</a>.</p>
-<p>With both of these approaches you can access remote configuration before you've done <a href="fundemental-authentication.md">register/login</a> or connected with a <a href="fundemental-authentication.md#sessions">user session</a>. The in-app parameters you configure can be initialized at the earliest point of application startup.</p>
+<p>With both of these approaches you can access remote configuration before you've done <a href="../authentication/">register/login</a> or connected with a <a href="../authentication/#sessions">user session</a>. The in-app parameters you configure can be initialized at the earliest point of application startup.</p>
 <h3 id="static-parameters">Static parameters<a class="headerlink" href="#static-parameters" title="Permanent link">&para;</a></h3>
 <p>The simplest approach uses server-side code to represent the in-app parameters as a static variable. A change to the parameters after the server has started would require an update to the Lua code and a server restart.</p>
 <p>The code could be stored in a module named <code>"rc.lua"</code> and placed in the runtime path for the server.</p>

@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/docs/runtime-function-reference/">
+        <link rel="canonical" href="https://heroiclabs.com/docs/runtime-code-function-reference/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -456,6 +456,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-basics/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -649,6 +661,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+      Add custom roles to groups
+    </a>
+  </li>
+
         
           
           
@@ -1257,7 +1281,7 @@
 <h3 id="register-hooks">register hooks<a class="headerlink" href="#register-hooks" title="Permanent link">&para;</a></h3>
 <p><strong>register_after (func, msgname)</strong></p>
 <p>Register a function with the server which will be executed after every message with the specified message name.</p>
-<p>This can be used to apply custom logic to standard features in the server. Similar to the <code>register_before</code> function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
+<p>This can be used to apply custom logic to standard features in the server. Similar to the <code>register_before</code> function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client. Have a look at the section on <a href="../runtime-code-basics/">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -1291,7 +1315,7 @@
 <hr />
 <p><strong>register_before (func, msgname)</strong></p>
 <p>Register a function with the server which will be executed before every message with the specified message name.</p>
-<p>For example <code>register_before(somefunc, "TFriendAdd")</code> will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
+<p>For example <code>register_before(somefunc, "TFriendAdd")</code> will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on <a href="../runtime-code-basics/">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -1334,7 +1358,7 @@
 <p class="admonition-title">Warning</p>
 <p>This should not be used to implement custom client functions instead have a look at <code>register_rpc</code>.</p>
 </div>
-<p>This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
+<p>This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks. Have a look at the section on <a href="../runtime-code-basics/">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -1382,7 +1406,7 @@
 <hr />
 <p><strong>register_rpc (func, id)</strong></p>
 <p>Registers a function for use with client RPC to the server.</p>
-<p>The ID can be any string identifier and is sent by the client. The ID is used to map the client RPC message to the specific function to execute. Have a look at the section on <a href="runtime-code-basics.md">runtime code basics</a>.</p>
+<p>The ID can be any string identifier and is sent by the client. The ID is used to map the client RPC message to the specific function to execute. Have a look at the section on <a href="../runtime-code-basics/">runtime code basics</a>.</p>
 <p><em>Parameters</em></p>
 <table>
 <thead>
@@ -1709,7 +1733,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../runtime-code-basics/" title="Basics" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1718,7 +1742,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                In-app Purchase Validation
+                Basics
               </span>
             </div>
           </a>

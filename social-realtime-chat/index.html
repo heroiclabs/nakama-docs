@@ -556,7 +556,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+    <a href="../runtime-code-basics/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-function-reference/" title="Function Reference" class="md-nav__link">
       Function Reference
     </a>
   </li>
@@ -621,6 +633,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+      Add custom roles to groups
+    </a>
+  </li>
+
         
           
           
@@ -959,7 +983,7 @@
 <p>Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.</p>
 <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
 
-<span class="kt">var</span> <span class="n">json</span> <span class="p">=</span> <span class="s">&quot;{&#39;some&#39;:&#39;data&#39;}&quot;</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">json</span> <span class="p">=</span> <span class="s">&quot;{\&quot;some\&quot;:\&quot;data\&quot;}&quot;</span><span class="p">;</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NTopicMessageSendMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">chatTopicId</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopicMessageAck</span> <span class="n">ack</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>

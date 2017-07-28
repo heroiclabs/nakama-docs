@@ -583,7 +583,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../runtime-function-reference/" title="Function Reference" class="md-nav__link">
+    <a href="../runtime-code-basics/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-function-reference/" title="Function Reference" class="md-nav__link">
       Function Reference
     </a>
   </li>
@@ -648,6 +660,18 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+      Add custom roles to groups
+    </a>
+  </li>
+
         
           
           
@@ -819,7 +843,7 @@
 <p>The server has builtin authentication so clients can only send requests and connect if they have the <a href="../install-configuration/#socket">server key</a>. When authentication is successful a client can create a session as a <a href="../user-accounts/">user</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Important</p>
-<p>The default server key is "defaultkey" but it is very important to set a <a href="../install-configuration/#socket">unique value</a>. This value should be embedded within client code.</p>
+<p>The default server key is <code>defaultkey</code> but it is very important to set a <a href="../install-configuration/#socket">unique value</a>. This value should be embedded within client code.</p>
 </div>
 <div class="codehilite"><pre><span></span><span class="n">INClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Host</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">)</span>

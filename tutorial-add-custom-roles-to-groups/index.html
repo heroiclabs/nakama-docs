@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/docs/swift-ios-client-guide/">
+        <link rel="canonical" href="https://heroiclabs.com/docs/tutorial-add-custom-roles-to-groups/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Swift/iOS client guide - Nakama server</title>
+        <title>Add custom roles to groups - Nakama server</title>
       
     
     
@@ -83,8 +83,12 @@
           
             
               
+                <span class="md-header-nav__parent">
+                  Tutorials
+                </span>
+              
             
-            Swift/iOS client guide
+            Add custom roles to groups
           
         </span>
       </div>
@@ -275,20 +279,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-    <a href="./" title="Swift/iOS client guide" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../swift-ios-client-guide/" title="Swift/iOS client guide" class="md-nav__link">
       Swift/iOS client guide
     </a>
-    
   </li>
 
     
@@ -524,10 +519,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12" checked>
     
     <label class="md-nav__link" for="nav-12">
       Tutorials
@@ -543,11 +540,75 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Add custom roles to groups
+      </label>
+    
+    <a href="./" title="Add custom roles to groups" class="md-nav__link md-nav__link--active">
       Add custom roles to groups
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#builtin-roles" title="Builtin roles" class="md-nav__link">
+    Builtin roles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-a-new-role" title="Add a new role" class="md-nav__link">
+    Add a new role
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate-roles" title="Validate roles" class="md-nav__link">
+    Validate roles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disable-client-messages" title="Disable client messages" class="md-nav__link">
+    Disable client messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-custom-module" title="Full custom module" class="md-nav__link">
+    Full custom module
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -597,6 +658,48 @@
     
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#builtin-roles" title="Builtin roles" class="md-nav__link">
+    Builtin roles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-a-new-role" title="Add a new role" class="md-nav__link">
+    Add a new role
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate-roles" title="Validate roles" class="md-nav__link">
+    Validate roles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disable-client-messages" title="Disable client messages" class="md-nav__link">
+    Disable client messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-custom-module" title="Full custom module" class="md-nav__link">
+    Full custom module
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -608,11 +711,32 @@
               
                 
                 
-                <h1 id="swiftios-client-guide">Swift/iOS client guide<a class="headerlink" href="#swiftios-client-guide" title="Permanent link">&para;</a></h1>
-<p>An official Swift client is in development right now and planned for launch on September 1st.</p>
-<p>We'll announce it on <a href="https://twitter.com/heroicdev?lang=en" target="\_blank">Twitter</a> and on our <a href="https://blog.heroiclabs.com/" target="\_blank">blog</a> when it's ready. It will be open-source on <a href="https://github.com/heroiclabs" target="\_blank">GitHub</a> and available as a Swift package.</p>
-<p><br/>
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfCXKSOFFuUMtA2GYV1emm-MkOSXu7x3gMcMO5YI8eNOhe2Cw/viewform?embedded=true" width="700" height="900" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></p>
+                <h1 id="add-custom-roles-to-groups">Add custom roles to groups<a class="headerlink" href="#add-custom-roles-to-groups" title="Permanent link">&para;</a></h1>
+<p>Lots of games and apps build social communities with <a href="../social-groups-clans/">groups</a>. These groups are made up of admins and members. Sometimes it's useful to have more than two roles of authority within a group.</p>
+<p>In this tutorial we'll cover how to set max group size limits, add new custom roles for members, disable some client messages, and add validation rules which fit your gameplay or app experience.</p>
+<h2 id="builtin-roles">Builtin roles<a class="headerlink" href="#builtin-roles" title="Permanent link">&para;</a></h2>
+<p>Both "admin" and "member" are builtin roles.</p>
+<p>An admin can accept new members, promote a member as an admin, demote a user, or kick a member from the group. A member can join a group and with other members participate in <a href="../social-realtime-chat/#groups">group chat</a>. You can read more about the capabilities in <a href="../social-groups-clans/">groups</a>.</p>
+<h2 id="add-a-new-role">Add a new role<a class="headerlink" href="#add-a-new-role" title="Permanent link">&para;</a></h2>
+<p>We'll add a new role with permissions in between an admin and a member. The new "manager" role will be capable of:</p>
+<ul>
+<li>Add or reject new members.</li>
+<li>Kick a member from the group.</li>
+<li>Promote a member as a manager.</li>
+</ul>
+<p>An admin will be able to create a manager. These rules can be built with server-side code.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">promote_member</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+<span class="kr">end</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">register_before</span><span class="p">(</span><span class="n">promote_member</span><span class="p">,</span> <span class="s2">&quot;TGroupUsersPromote&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2 id="validate-roles">Validate roles<a class="headerlink" href="#validate-roles" title="Permanent link">&para;</a></h2>
+<h2 id="disable-client-messages">Disable client messages<a class="headerlink" href="#disable-client-messages" title="Permanent link">&para;</a></h2>
+<h2 id="full-custom-module">Full custom module<a class="headerlink" href="#full-custom-module" title="Permanent link">&para;</a></h2>
                 
                   
                 
@@ -631,7 +755,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../javascript-client-guide/" title="JavaScript client guide" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../deployment-digital-ocean/" title="Digital Ocean" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -640,19 +764,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                JavaScript client guide
+                Digital Ocean
               </span>
             </div>
           </a>
         
         
-          <a href="../authentication/" title="Authentication" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tutorial-initialize-new-user/" title="Initialize a new user" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Authentication
+                Initialize a new user
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

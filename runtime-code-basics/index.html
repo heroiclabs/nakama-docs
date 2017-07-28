@@ -1,0 +1,1141 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
+      
+      
+        <link rel="canonical" href="https://heroiclabs.com/docs/runtime-code-basics/">
+      
+      
+        <meta name="author" content="Heroic Labs Team & contributors">
+      
+      
+        <link rel="shortcut icon" href="../images/favicon.ico">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>Basics - Nakama server</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-logo md-header-nav__button">
+            <img src="../images/logo-white.svg" width="24" height="24">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Runtime Code
+                </span>
+              
+            
+            Basics
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-logo md-nav__button">
+        <img src="../images/logo-white.svg">
+      </i>
+    
+    Nakama server
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      Install and setup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Install and setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-nav__link">
+      Docker quickstart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-binary/" title="Binary install" class="md-nav__link">
+      Binary install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../unity-client-guide/" title="Unity client guide" class="md-nav__link">
+      Unity client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../javascript-client-guide/" title="JavaScript client guide" class="md-nav__link">
+      JavaScript client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../swift-ios-client-guide/" title="Swift/iOS client guide" class="md-nav__link">
+      Swift/iOS client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../authentication/" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../user-accounts/" title="User accounts" class="md-nav__link">
+      User accounts
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Storage Engine
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
+      Collections
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Social
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Social
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-friends/" title="Friends" class="md-nav__link">
+      Friends
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-groups-clans/" title="Groups and Clans" class="md-nav__link">
+      Groups and Clans
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-in-app-notifications/" title="In-app Notifications" class="md-nav__link">
+      In-app Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-realtime-chat/" title="Realtime Chat" class="md-nav__link">
+      Realtime Chat
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
+      In-app Purchase Validation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10" checked>
+    
+    <label class="md-nav__link" for="nav-10">
+      Runtime Code
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-10">
+        Runtime Code
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Basics
+      </label>
+    
+    <a href="./" title="Basics" class="md-nav__link md-nav__link--active">
+      Basics
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#load-modules" title="Load modules" class="md-nav__link">
+    Load modules
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" title="Simple example" class="md-nav__link">
+    Simple example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#register-hooks" title="Register hooks" class="md-nav__link">
+    Register hooks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#register_before" title="register_before" class="md-nav__link">
+    register_before
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_after" title="register_after" class="md-nav__link">
+    register_after
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_http" title="register_http" class="md-nav__link">
+    register_http
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_rpc" title="register_rpc" class="md-nav__link">
+    register_rpc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors-and-logs" title="Errors and logs" class="md-nav__link">
+    Errors and logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restrictions" title="Restrictions" class="md-nav__link">
+    Restrictions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-example-module" title="An example module" class="md-nav__link">
+    An example module
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-function-reference/" title="Function Reference" class="md-nav__link">
+      Function Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Deployment
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Deployment
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deployment-digital-ocean/" title="Digital Ocean" class="md-nav__link">
+      Digital Ocean
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+    
+    <label class="md-nav__link" for="nav-12">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-12">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+      Add custom roles to groups
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-initialize-new-user/" title="Initialize a new user" class="md-nav__link">
+      Initialize a new user
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-remote-configuration/" title="Remote configuration" class="md-nav__link">
+      Remote configuration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#load-modules" title="Load modules" class="md-nav__link">
+    Load modules
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" title="Simple example" class="md-nav__link">
+    Simple example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#register-hooks" title="Register hooks" class="md-nav__link">
+    Register hooks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#register_before" title="register_before" class="md-nav__link">
+    register_before
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_after" title="register_after" class="md-nav__link">
+    register_after
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_http" title="register_http" class="md-nav__link">
+    register_http
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_rpc" title="register_rpc" class="md-nav__link">
+    register_rpc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors-and-logs" title="Errors and logs" class="md-nav__link">
+    Errors and logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restrictions" title="Restrictions" class="md-nav__link">
+    Restrictions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-example-module" title="An example module" class="md-nav__link">
+    An example module
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="basics">Basics<a class="headerlink" href="#basics" title="Permanent link">&para;</a></h1>
+<p>The server integrates the <a href="https://www.lua.org/manual/5.1/manual.html" target="\_blank">Lua programming language</a> as a fast embedded code runtime.</p>
+<p>It is useful to run custom logic which isn’t running on the device or browser. The code you deploy with the server can be used immediately by clients so you can change behavior on the fly and add new features faster.</p>
+<p>You should use server-side code when you want to set rules around various features like how many <a href="../social-friends/">friends</a> a user may have or how many <a href="../social-groups-clans/">groups</a> can be joined. It can be used to run authoritative logic or perform validation checks as well as integrate with other services over HTTPS.</p>
+<h2 id="load-modules">Load modules<a class="headerlink" href="#load-modules" title="Permanent link">&para;</a></h2>
+<p>You can create a Lua file wherever you like on the filesystem as long as the server knows where to scan for the folder which contains your code.</p>
+<p>By default the server will scan all files within the "data/modules" folder relative to the server file or the folder specified in the YAML <a href="../install-configuration/#runtime">configuration</a> at startup. You can also specify the modules folder via a command flag when you start the server.</p>
+<div class="codehilite"><pre><span></span>nakama --runtime.path <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/some/path/&quot;</span>
+</pre></div>
+
+
+<p>All files with the ".lua" extension will be loaded and evaluated as part of the boot up sequence. Each Lua file represents a module and all code in each module will be run and can be used to register functions which can operate on messages from clients as well as execute logic on demand.</p>
+<h2 id="simple-example">Simple example<a class="headerlink" href="#simple-example" title="Permanent link">&para;</a></h2>
+<p>Lets create a module called "example.lua". In it we'll register code to be run by a client as an <a href="#register_rpc">RPC call</a>.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">some_example</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+  <span class="c1">-- we&#39;ll assume payload was sent as JSON and decode it.</span>
+  <span class="kd">local</span> <span class="n">json</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_decode</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="c1">-- log data sent to RPC call.</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">logger_info</span><span class="p">((</span><span class="s2">&quot;Payload: %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">json</span><span class="p">))</span>
+
+  <span class="kd">local</span> <span class="n">id</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">uuid_v4</span><span class="p">()</span>
+  <span class="c1">-- create a leaderboard with the json as metadata.</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">create_leaderboard</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">,</span> <span class="s2">&quot;0 0 * * 1&quot;</span><span class="p">,</span> <span class="n">json</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+
+  <span class="kr">return</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_encode</span><span class="p">({[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">id</span><span class="p">})</span>
+  <span class="c1">-- will return &quot;{&#39;id&#39;: &#39;some UUID&#39;}&quot; (JSON) as bytes</span>
+<span class="kr">end</span>
+
+<span class="n">nk</span><span class="p">.</span><span class="n">register_rpc</span><span class="p">(</span><span class="n">some_example</span><span class="p">,</span> <span class="s2">&quot;my_unique_id&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>We import the <code>"nakama"</code> module which is embedded within the server and contains lots of server-side functions which are helpful as you build your code. You can see all available functions in the <a href="../runtime-code-function-reference/">module reference</a>.</p>
+<h2 id="register-hooks">Register hooks<a class="headerlink" href="#register-hooks" title="Permanent link">&para;</a></h2>
+<p>The code in a module will be evaluated immediately and can be used to register functions which can operate on messages from clients as well as execute logic on demand.</p>
+<p>All registered functions receive a "context" table as the first argument and "payload" as the second. The "context" contains fields which depend on when the code is executed.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>context.Env</code></td>
+<td>A table of key/value pairs which are defined in the YAML <a href="../install-configuration/">configuration</a> of the server. This is useful to store API keys and other secrets which may be different between servers run in production and in development.</td>
+</tr>
+<tr>
+<td><code>context.ExecutionMode</code></td>
+<td>The mode associated with the execution context. It's one of these values: "after", "before", "http", or "rpc".</td>
+</tr>
+<tr>
+<td><code>context.UserHandle</code></td>
+<td>The user handle associated with the execution context. It will always be <code>nil</code> on <code>register_http</code>.</td>
+</tr>
+<tr>
+<td><code>context.UserId</code></td>
+<td>The user ID associated with the execution context. It will always be <code>nil</code> on <code>register_http</code>.</td>
+</tr>
+<tr>
+<td><code>context.UserSessionExp</code></td>
+<td>The user session expiry in milliseconds associated with the execution context. It will always be <code>nil</code> on <code>register_http</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>There are four ways to register a function within the runtime each of which is used to handle specific behavior between client and server.</p>
+<h3 id="register_before">register_before<a class="headerlink" href="#register_before" title="Permanent link">&para;</a></h3>
+<p>Any function may be registered to intercept a message received from a client and operate on it (or reject it) based on custom logic. This is useful to enforce specific rules on top of the standard features in the server.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">limit_friends</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+  <span class="kd">local</span> <span class="n">user</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">user_fetch_id</span><span class="p">({</span><span class="n">context</span><span class="p">.</span><span class="n">UserId</span><span class="p">})[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="c1">-- lets assume we&#39;ve stored a user&#39;s level in their metadata.</span>
+  <span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_decode</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Metadata</span><span class="p">)</span>
+  <span class="kr">if</span> <span class="n">metadata</span><span class="p">.</span><span class="n">level</span> <span class="o">&lt;=</span> <span class="mi">10</span> <span class="kr">then</span>
+    <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Must reach level 10 before you can add friends.&quot;</span><span class="p">)</span>
+  <span class="kr">end</span>
+<span class="hll">  <span class="kr">return</span> <span class="n">payload</span> <span class="c1">-- important!</span>
+</span><span class="kr">end</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">register_before</span><span class="p">(</span><span class="n">limit_friends</span><span class="p">,</span> <span class="s2">&quot;TFriendAdd&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The code above fetches the current user's profile and checks the metadata which is assumed to be JSON encoded with <code>"{level: 12}"</code> in it. If a user's level is too low an error is thrown to prevent the Friend Add message from being passed onwards in the server pipeline.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must remember to return the payload at the end of your function in the same structure as you received it. See <code>"return payload"</code> highlighted in the code above.</p>
+</div>
+<h3 id="register_after">register_after<a class="headerlink" href="#register_after" title="Permanent link">&para;</a></h3>
+<p>Similar to <a href="#register_before"><code>"register_before"</code></a> you can attach a function to operate on a message. The registered function will be called after the message has been processed in the pipeline. The custom code will be executed asynchronously after the response message has been sent to a client.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">add_reward</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+  <span class="kd">local</span> <span class="n">value</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">user_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">payload</span><span class="p">.</span><span class="n">UserId</span><span class="p">}</span>
+  <span class="p">}</span>
+  <span class="kd">local</span> <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span>
+    <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;rewards&quot;</span><span class="p">,</span>
+    <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;reward&quot;</span><span class="p">,</span>
+    <span class="n">UserId</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="n">UserId</span><span class="p">,</span>
+    <span class="n">Value</span> <span class="o">=</span> <span class="n">value</span>
+  <span class="p">}</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">storage_write</span><span class="p">({</span> <span class="n">record</span> <span class="p">})</span>
+<span class="kr">end</span>
+
+<span class="n">nk</span><span class="p">.</span><span class="n">register_after</span><span class="p">(</span><span class="n">add_reward</span><span class="p">,</span> <span class="s2">&quot;TFriendAdd&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The simple code above writes a record to a user's storage when they add a friend. Any data returned by the function will be discarded.</p>
+<h3 id="register_http">register_http<a class="headerlink" href="#register_http" title="Permanent link">&para;</a></h3>
+<p>Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. If you want to send a message from a client you should probably use <code>"register_rpc"</code> instead.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">http_handler</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+  <span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_encode</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">logger_info</span><span class="p">((</span><span class="s2">&quot;Message: %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+  <span class="kr">return</span> <span class="p">{[</span><span class="s2">&quot;context&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="p">}</span>
+<span class="kr">end</span>
+
+<span class="n">nk</span><span class="p">.</span><span class="n">register_http</span><span class="p">(</span><span class="n">http_handler</span><span class="p">,</span> <span class="s2">&quot;http_handler_path&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This function can be called with any HTTP client. For example with cURL you could execute the function with the server.</p>
+<div class="codehilite"><pre><span></span>curl -X POST <span class="s2">&quot;http://127.0.0.1:7350/runtime/http_handler_path?key=defaultkey&quot;</span> <span class="se">\</span>
+     -d <span class="s2">&quot;{&#39;some&#39;: &#39;data&#39;}&quot;</span> <span class="se">\</span>
+     -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+     -H <span class="s1">&#39;Accept: application/json&#39;</span>
+</pre></div>
+
+
+<div class="admonition warning">
+<p class="admonition-title">HTTP key</p>
+<p>You should change the default HTTP key before you deploy your code in production.</p>
+</div>
+<h3 id="register_rpc">register_rpc<a class="headerlink" href="#register_rpc" title="Permanent link">&para;</a></h3>
+<p>Some logic between client and server is best handled as RPC functions which clients can execute.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">custom_rpc_func</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">logger_info</span><span class="p">((</span><span class="s2">&quot;Payload: %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+
+  <span class="c1">-- &quot;payload&quot; is bytes sent by the client we&#39;ll JSON decode it.</span>
+  <span class="kd">local</span> <span class="n">json</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_decode</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="kr">return</span> <span class="n">nkx</span><span class="p">.</span><span class="n">json_encode</span><span class="p">(</span><span class="n">json</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="n">nk</span><span class="p">.</span><span class="n">register_rpc</span><span class="p">(</span><span class="n">custom_rpc_func</span><span class="p">,</span> <span class="s2">&quot;custom_rpc_func_id&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function and return the result. Results are always returned as a Lua string (or optionally <code>nil</code>).</p>
+<h2 id="errors-and-logs">Errors and logs<a class="headerlink" href="#errors-and-logs" title="Permanent link">&para;</a></h2>
+<p>You can handle errors like you would normally in Lua code. If you want to trap the error which occurs in the execution of a function you'll need to execute it via <code>pcall</code> as a "protected call".</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="kr">function</span> <span class="nf">will_error</span><span class="p">()</span>
+  <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;This function will always throw an error!&quot;</span><span class="p">)</span>
+<span class="kr">end</span>
+
+<span class="kr">if</span> <span class="nb">pcall</span><span class="p">(</span><span class="n">will_error</span><span class="p">)</span> <span class="kr">then</span>
+  <span class="c1">-- no errors with &quot;will_error&quot;</span>
+<span class="kr">else</span>
+  <span class="c1">-- handle errors</span>
+<span class="kr">end</span>
+</pre></div>
+
+
+<p>The function <code>will_error</code> uses the <code>error</code> function in Lua to throw an error with a reason message. The <code>pcall</code> will invoke the <code>will_error</code> function and trap any errors. We can then handle the success or error cases as needed.</p>
+<p>We recommend you use this pattern with your Lua code.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="n">nk</span><span class="p">.</span><span class="n">users_fetch_handle</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;22e9ed62&quot;</span><span class="p">})</span>
+<span class="kr">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">status</span><span class="p">)</span> <span class="kr">then</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">logger_error</span><span class="p">((</span><span class="s2">&quot;Error occurred: %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+<span class="kr">else</span>
+  <span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">u</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+  <span class="kr">do</span>
+    <span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;id: %q, fullname: %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">u</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">u</span><span class="p">.</span><span class="n">Fullname</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="c1">-- will appear in console output.</span>
+  <span class="kr">end</span>
+<span class="kr">end</span>
+</pre></div>
+
+
+<h2 id="restrictions">Restrictions<a class="headerlink" href="#restrictions" title="Permanent link">&para;</a></h2>
+<p>The Lua virtual machine embedded in the server uses a restricted set of Lua standard library modules. This ensures the code sandbox cannot tamper with operating system input/output or the filesystem.</p>
+<p>The list of available modules are: base module, "math", "os", "string", and "table".</p>
+<h2 id="an-example-module">An example module<a class="headerlink" href="#an-example-module" title="Permanent link">&para;</a></h2>
+<p>As a fun example lets use the <a href="http://pokeapi.co/">Pokéapi</a> and build a helpful module named "pokeapi.lua".</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="n">M</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="kd">local</span> <span class="n">API_BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;http://pokeapi.co/api/v2/&quot;</span>
+
+<span class="kr">function</span> <span class="nc">M</span><span class="p">.</span><span class="nf">lookup_pokemon</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+  <span class="kd">local</span> <span class="n">url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;%s/pokemon/%s&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">API_BASE_URL</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+  <span class="kd">local</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;GET&quot;</span>
+  <span class="kd">local</span> <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">[</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;Accept&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;application/json&quot;</span>
+  <span class="p">}</span>
+  <span class="kd">local</span> <span class="n">success</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="n">nk</span><span class="p">.</span><span class="n">http_request</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+  <span class="kr">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">success</span><span class="p">)</span> <span class="kr">then</span>
+    <span class="n">nk</span><span class="p">.</span><span class="n">logger_error</span><span class="p">((</span><span class="s2">&quot;Failed request %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
+    <span class="nb">error</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+  <span class="kr">elseif</span> <span class="p">(</span><span class="n">code</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">)</span> <span class="kr">then</span>
+    <span class="n">nk</span><span class="p">.</span><span class="n">logger_error</span><span class="p">((</span><span class="s2">&quot;Failed request %q %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">body</span><span class="p">))</span>
+    <span class="nb">error</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+  <span class="kr">else</span>
+    <span class="kr">return</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_decode</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+  <span class="kr">end</span>
+<span class="kr">end</span>
+
+<span class="kr">return</span> <span class="n">M</span>
+</pre></div>
+
+
+<p>We can import it into another module we'll call "pokemon.lua" which will register an RPC call.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
+<span class="kd">local</span> <span class="n">pokeapi</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;pokeapi&quot;</span><span class="p">)</span>
+
+<span class="kd">local</span> <span class="kr">function</span> <span class="nf">get_pokemon</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+  <span class="c1">-- we&#39;ll assume payload was sent as JSON and decode it.</span>
+  <span class="kd">local</span> <span class="n">json</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_decode</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+  <span class="kd">local</span> <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">pcall</span><span class="p">(</span><span class="n">pokeapi</span><span class="p">.</span><span class="n">lookup_pokemon</span><span class="p">,</span> <span class="n">json</span><span class="p">.</span><span class="n">PokemonName</span><span class="p">)</span>
+  <span class="kr">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">success</span><span class="p">)</span> <span class="kr">then</span>
+    <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Unable to lookup pokemon.&quot;</span><span class="p">)</span>
+  <span class="kr">else</span>
+    <span class="kd">local</span> <span class="n">pokemon</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">name</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>
+      <span class="n">height</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">height</span><span class="p">,</span>
+      <span class="n">weight</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">weight</span><span class="p">,</span>
+      <span class="n">image</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="n">sprites</span><span class="p">.</span><span class="n">front_default</span>
+    <span class="p">}</span>
+    <span class="kr">return</span> <span class="n">pokemon</span>
+  <span class="kr">end</span>
+<span class="kr">end</span>
+
+<span class="n">nk</span><span class="p">.</span><span class="n">register_rpc</span><span class="p">(</span><span class="n">get_pokemon</span><span class="p">,</span> <span class="s2">&quot;get_pokemon&quot;</span><span class="p">)</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                In-app Purchase Validation
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../runtime-code-function-reference/" title="Function Reference" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Function Reference
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 Heroic Labs
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://heroiclabs.com" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/heroiclabs" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/heroicdev" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/heroic-labs" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
