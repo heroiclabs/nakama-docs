@@ -138,30 +138,3 @@ If you need to temporarily pause the Docker containers, without losing the state
 You can re-activate them by running `docker-compose up`.
 
 To stop the containers and purge all stored data, run `docker-compose down`.
-
-## Upgrade
-
-As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.
-
-!!! note "Schema migration"
-    When upgrading to a new version of Nakama, the process in the `docker-compose.yml` performs a migration of your data to the new database schema automatically.
-
-You can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.
-
-```shell fct_label="Shell"
-docker-compose down # top and remove both the Nakama and CockroachDB containers
-docker pull heroiclabs/nakama # download the latest Nakama image
-docker-compose up # start the containers (both Nakama and CockroachDB) as fresh installss
-```
-
-And, similarly, here’s how to update the CockroachDB container:
-
-```shell fct_label="Shell"
-docker pull cockroachdb/cockroach # download the latest CockroachDB image
-```
-
-If you'd like to explicity run a database schema migration, issue the following command:
-
-```shell fct_label="Shell"
-docker run heroiclabs/nakama migrate up
-```
