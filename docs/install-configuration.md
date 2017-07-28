@@ -9,7 +9,7 @@ You can specify a configuration file at run-time using --config flag.
 nakama --config my-special-config.yml
 ```
 
-If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to [setup folder binding](install-docker-quickstart.md#data).
+If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to [setup folder binding](install-docker.md#data).
 
 ## Common properties
 

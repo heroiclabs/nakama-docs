@@ -160,14 +160,14 @@ Some events only need to be implemented for the features you want to use.
 
 | Event handler | Description |
 | ------------- | ----------- |
-| OnDisconnect | Handles an event for when the client is disconnected from the server. |
-| OnError | Receives events about server errors. |
-| OnMatchData | Handles [realtime match](gameplay-realtime-multiplayer.md) messages. |
-| OnMatchmakeMatched | Receives events when the [matchmaker](gameplay-matchmaker.md) has found match participants. |
-| OnMatchPresence | When in a [realtime match](gameplay-realtime-multiplayer.md) receives events for when users join or leave. |
-| OnNotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
-| OnTopicMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| OnTopicPresence | Similar to "OnMatchPresence" it handles join and leave events but within [chat](social-realtime-chat.md). |
+| `OnDisconnect` | Handles an event for when the client is disconnected from the server. |
+| `OnError` | Receives events about server errors. |
+| `OnMatchData` | Handles [realtime match](gameplay-realtime-multiplayer.md) messages. |
+| `OnMatchmakeMatched` | Receives events when the [matchmaker](gameplay-matchmaker.md) has found match participants. |
+| `OnMatchPresence` | When in a [realtime match](gameplay-realtime-multiplayer.md) receives events for when users join or leave. |
+| `OnNotification` | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
+| `OnTopicMessage` | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
+| `OnTopicPresence` | Similar to "OnMatchPresence" it handles join and leave events but within [chat](social-realtime-chat.md). |
 
 ## Logs and errors
 
