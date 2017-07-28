@@ -76,20 +76,21 @@ pages:
 #    - 'Turn-based': 'game-multiplayer-turn-based.md'
 - 'In-app Purchase Validation': 'in-app-purchase-validation.md'
 - 'Runtime Code':
-#  - 'Basics': 'runtime-code-basics.md'
+  - 'Basics': 'runtime-code-basics.md'
 #  - 'Best practices': 'runtime-code-best-practices.md'
 #  - 'Examples': 'runtime-code-examples.md'
 #  - 'Recommended modules': 'runtime-code-recommended-modules.md'
 #  - 'Lua for JavaScripters': 'runtime-lua-for-javascripters.md'
 #  - 'JavaScript/Lua comparison': 'runtime-javascript-lua-comparison.md'
 #  - 'Lua cheatsheet': 'runtime-lua-cheatsheet.md'
-  - 'Function Reference': 'runtime-function-reference.md'
+  - 'Function Reference': 'runtime-code-function-reference.md'
 - 'Deployment':
 #  - 'Production settings': 'deployment-production-settings.md'
 #  - 'Resource limits': 'deployment-resource-limits.md'
 #  - 'Managed Cloud': 'deployment-managed-cloud.md'
   - 'Digital Ocean': 'deployment-digital-ocean.md'
 - 'Tutorials':
+  - 'Add custom roles to groups': 'tutorial-add-custom-roles-to-groups.md'
   - 'Initialize a new user': 'tutorial-initialize-new-user.md'
   - 'Remote configuration': 'tutorial-remote-configuration.md'
 #  - 'Ban users': 'tutorial-ban-users.md'

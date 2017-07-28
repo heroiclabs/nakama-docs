@@ -122,7 +122,7 @@ A __full example__ class with all code above is [here](#full-example).
 
 When a user has been authenticated and a session is used to connect with the server. You can send messages for all the different features in the server.
 
-This could be to [add friends](social-friends.md), join [groups](social-groups-clans.md) and [chat](social-realtime-chat.md), or submit scores in [leaderboards](gameplay-leaderboards.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-realtime-multiplayer.md). You can also execute remote code on the server via [RPC](remote-code-basics.md).
+This could be to [add friends](social-friends.md), join [groups](social-groups-clans.md) and [chat](social-realtime-chat.md), or submit scores in [leaderboards](gameplay-leaderboards.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-realtime-multiplayer.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
 
 The server also provides a [storage engine](storage-collections.md) to keep save games and other records owned by users. We'll use storage to introduce how messages are sent.
 

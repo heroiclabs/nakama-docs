@@ -10,7 +10,7 @@ The configuration settings sent to the app or game need to be stored on the serv
 
 For mostly static data it's most efficient to embed it as data structures in server-side code and for more dynamic data it's better to use a read-only [storage record](storage-collections.md).
 
-With both of these approaches you can access remote configuration before you've done [register/login](fundemental-authentication.md) or connected with a [user session](fundemental-authentication.md#sessions). The in-app parameters you configure can be initialized at the earliest point of application startup.
+With both of these approaches you can access remote configuration before you've done [register/login](authentication.md) or connected with a [user session](authentication.md#sessions). The in-app parameters you configure can be initialized at the earliest point of application startup.
 
 ### Static parameters
 
