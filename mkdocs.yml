@@ -46,7 +46,7 @@ markdown_extensions:
 # Nav menu
 pages:
 - 'Install and setup':
-  - 'Docker quickstart': 'install-docker.md'
+  - 'Docker quickstart': 'install-docker-quickstart.md'
   - 'Binary install': 'install-binary.md'
   - 'Configuration': 'install-configuration.md'
   - 'Nakama CLI': 'install-server-cli.md'

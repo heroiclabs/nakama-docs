@@ -3,7 +3,7 @@
 To start developing with Nakama, you’ll first need to install it on your development machine. It’s straightforward and takes just a few minutes. In this guide we’re going to focus on installing your Nakama development instance using the binary executable.
 
 !!! summary "Recommended Approach"
-    [Docker](install-docker.md) is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a binary to ensure all system resources are available to Nakama.
+    [Docker](install-docker-quickstart.md) is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a binary to ensure all system resources are available to Nakama.
 
 ## Requirement
 There are a few things you’ll need to know or have to hand before you install Nakama:
@@ -72,7 +72,7 @@ nakama --log.stdout
 
 ## Install Nakama on Windows
 
-Nakama is also available as a [Windows binary](https://github.com/heroiclabs/nakama/releases/latest). However, [Docker](install-docker.md) is the recommended way to install CockroachDB and Nakama on Windows.
+Nakama is also available as a [Windows binary](https://github.com/heroiclabs/nakama/releases/latest). However, [Docker](install-docker-quickstart.md) is the recommended way to install CockroachDB and Nakama on Windows.
 
 1. [Download the binary](https://github.com/heroiclabs/nakama/releases/latest) and decompress the downloaded file.
 2. Open a Powershell terminal and navigate to the folder you downloaded Nakama into.
@@ -87,7 +87,7 @@ nakama.exe --log.stdout
 
 ## Install Nakama on Linux
 
-Using [Docker](install-docker.md) - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure. [Let us know](mailto:support@heroiclabs.com) if you have requests for specific package managers.
+Using [Docker](install-docker-quickstart.md) - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure. [Let us know](mailto:support@heroiclabs.com) if you have requests for specific package managers.
 
 First you’ll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.
 
