@@ -68,12 +68,11 @@ pages:
   - 'Groups and Clans': 'social-groups-clans.md'
   - 'In-app Notifications': 'social-in-app-notifications.md'
   - 'Realtime Chat': 'social-realtime-chat.md'
-#- 'For games':
-#  - 'Leaderboards': 'game-leaderboards.md'
-#  - 'Matchmaker': 'game-matchmaker.md'
-#  - 'Multiplayer':
-#    - 'Realtime games': 'game-multiplayer-realtime.md'
-#    - 'Turn-based': 'game-multiplayer-turn-based.md'
+- 'Gameplay':
+  - 'Leaderboards': 'gameplay-leaderboards.md'
+  - 'Matchmaker': 'gameplay-matchmaker.md'
+  - 'Realtime Multiplayer': 'gameplay-multiplayer-realtime.md'
+#  - 'Turn-based Multiplayer': 'gameplay-multiplayer-turnbased.md'
 - 'In-app Purchase Validation': 'in-app-purchase-validation.md'
 - 'Runtime Code':
   - 'Basics': 'runtime-code-basics.md'
@@ -93,7 +92,6 @@ pages:
   - 'Add custom roles to groups': 'tutorial-add-custom-roles-to-groups.md'
   - 'Initialize a new user': 'tutorial-initialize-new-user.md'
   - 'Remote configuration': 'tutorial-remote-configuration.md'
-#  - 'Ban users': 'tutorial-ban-users.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
 #  - 'Virtual wallet': 'tutorial-virtual-wallet.md'
 #  - 'Inventory management': 'tutorial-inventory-management.md'
