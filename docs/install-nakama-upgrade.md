@@ -35,7 +35,7 @@ docker run heroiclabs/nakama migrate up
 
 ## Manual upgrade
 
-You can upgrade one node or your whole cluster to latest Nakama by following the instructions below.
+You can upgrade one node or your whole cluster to the latest version of Nakama by following the instructions below.
 
 For each node in the cluster:
 

@@ -22,9 +22,9 @@ The Nakama binary contains the schema and a way to upgrade an existing database 
 
 ## `doctor`
 
-Nakama ships with a built-in diagnostic tool which is particular useful when you need support or otherwise are looking to diagnose an issue.
+Nakama ships with a built-in diagnostic tool which is particularly useful when you need support or otherwise are looking to diagnose an issue.
 
-Running `nakama doctor` generate a report that details the server's configuration and environment. By default, the diagnostic tool looks for a Nakama node to connect to on the local machine, but this can be changed:
+Running `nakama doctor` generates a report that details the server's configuration and environment. By default, the diagnostic tool looks for a Nakama node to connect to on the local machine, but this can be changed:
 
 | Flags     | description
 | -----     | -----------
