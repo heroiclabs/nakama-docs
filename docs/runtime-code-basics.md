@@ -1,6 +1,6 @@
 # Basics
 
-The server integrates the <a href="https://www.lua.org/manual/5.3/manual.html" target="\_blank">Lua programming language</a> as a fast embedded code runtime.
+The server integrates the <a href="https://www.lua.org/manual/5.1/manual.html" target="\_blank">Lua programming language</a> as a fast embedded code runtime.
 
 It is useful to run custom logic which isn’t running on the device or browser. The code you deploy with the server can be used immediately by clients so you can change behavior on the fly and add new features faster.
 
@@ -10,10 +10,10 @@ You should use server-side code when you want to set rules around various featur
 
 You can create a Lua file wherever you like on the filesystem as long as the server knows where to scan for the folder which contains your code.
 
-By default the server will scan all files within the "data/modules" folder relative to the server file or the folder specified in the YAML [configuration](install-configuration.md) at startup. You can also specify the modules folder via a command flag when you start the server.
+By default the server will scan all files within the "data/modules" folder relative to the server file or the folder specified in the YAML [configuration](install-configuration.md#runtime) at startup. You can also specify the modules folder via a command flag when you start the server.
 
 ```shell
-$> nakama --runtime.path "$HOME/some/path/"
+nakama --runtime.path "$HOME/some/path/"
 ```
 
 All files with the ".lua" extension will be loaded and evaluated as part of the boot up sequence. Each Lua file represents a module and all code in each module will be run and can be used to register functions which can operate on messages from clients as well as execute logic on demand.
@@ -83,7 +83,7 @@ nk.register_before(limit_friends, "TFriendAdd")
 The code above fetches the current user's profile and checks the metadata which is assumed to be JSON encoded with `"{level: 12}"` in it. If a user's level is too low an error is thrown to prevent the Friend Add message from being passed onwards in the server pipeline.
 
 !!! Note
-    You must remember to pass onwards the payload to the rest of the message pipeline. See `"return payload"` highlighted in the code above.
+    You must remember to return the payload at the end of your function in the same structure as you received it. See `"return payload"` highlighted in the code above.
 
 ### register_after
 
@@ -109,7 +109,7 @@ end
 nk.register_after(add_reward, "TFriendAdd")
 ```
 
-The simple code above writes a record to a user's storage when they add a friend.
+The simple code above writes a record to a user's storage when they add a friend. Any data returned by the function will be discarded.
 
 ### register_http
 
@@ -136,7 +136,7 @@ curl -X POST "http://127.0.0.1:7350/runtime/http_handler_path?key=defaultkey" \
      -H 'Accept: application/json'
 ```
 
-!!! Warning "Http key"
+!!! Warning "HTTP key"
     You should change the default HTTP key before you deploy your code in production.
 
 ### register_rpc
@@ -210,19 +210,52 @@ local nk = require("nakama")
 
 local M = {}
 
+local API_BASE_URL = "http://pokeapi.co/api/v2/"
 
+function M.lookup_pokemon(name)
+  local url = ("%s/pokemon/%s"):format(API_BASE_URL, name)
+  local method = "GET"
+  local headers = {
+    ["Content-Type"] = "application/json",
+    ["Accept"] = "application/json"
+  }
+  local success, code, _, body = pcall(nk.http_request, url, method, headers, nil)
+  if (not success) then
+    nk.logger_error(("Failed request %q"):format(code))
+    error(code)
+  elseif (code >= 400) then
+    nk.logger_error(("Failed request %q %q"):format(code, body))
+    error(body)
+  else
+    return nk.json_decode(body)
+  end
+end
 
 return M
 ```
 
-We can import it into another module which will register an RPC call.
+We can import it into another module we'll call "pokemon.lua" which will register an RPC call.
 
 ```lua
 local nk = require("nakama")
 local pokeapi = require("pokeapi")
 
-local function get_pokemon(context, payload)
+local function get_pokemon(_, payload)
+  -- we'll assume payload was sent as JSON and decode it.
+  local json = nk.json_decode(payload)
 
+  local success, result = pcall(pokeapi.lookup_pokemon, json.PokemonName)
+  if (not success) then
+    error("Unable to lookup pokemon.")
+  else
+    local pokemon = {
+      name = result.name,
+      height = result.height,
+      weight = result.weight,
+      image = result.sprites.front_default
+    }
+    return pokemon
+  end
 end
 
 nk.register_rpc(get_pokemon, "get_pokemon")
