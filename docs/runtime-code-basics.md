@@ -260,3 +260,20 @@ end
 
 nk.register_rpc(get_pokemon, "get_pokemon")
 ```
+
+We can make now make an RPC call for a pokemon from a client.
+
+```csharp fct_label="Unity"
+byte[] payload = Encoding.ASCII.GetBytes("{\"PokemonName\": \"Dragonite\"}")
+
+var message = new NRuntimeRpcMessage
+    .Builder("get_pokemon")
+    .Payload(payload)
+    .Build();
+client.Send(message, (INRuntimeRpc rpc) => {
+  var result = Encoding.UTF8.GetString(rpc.Payload);
+  Debug.LogFormat("JSON response {0}", result);
+}, (INError err) => {
+  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
