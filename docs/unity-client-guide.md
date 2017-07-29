@@ -169,6 +169,68 @@ Some events only need to be implemented for the features you want to use.
 | OnTopicMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
 | OnTopicPresence | Similar to "OnMatchPresence" it handles join and leave events but within [chat](social-realtime-chat.md). |
 
+## Main thread dispatch
+
+The client runs all callbacks on a socket thread separate to the Unity main thread. We recommend a simple pattern which can be used to run any code which calls `UnityEngine` APIs.
+
+&nbsp;&nbsp; 1\. Add a queue to your script which manages a client.
+
+```csharp
+Queue<Action> executionQueue = new Queue<Action>(1024);
+```
+
+&nbsp;&nbsp; 2\. Add code in your `Update` method so the queued actions are run.
+
+```csharp
+for (int i = 0, l = executionQueue.Count; i < l; i++) {
+  executionQueue.Dequeue()();
+}
+```
+
+&nbsp;&nbsp; 3\. Enqueue any code which uses a `UnityEngine` API.
+
+```csharp
+client.Connect(_session, (bool done) => {
+  executionQueue.Enqueue(() => {
+    Debug.Log("Session connected.");
+    // Store session for quick reconnects.
+    PlayerPrefs.SetString("nk.session", session.Token); // a UnityEngine API
+  });
+});
+```
+
+You can see a more advanced version of this pattern in the [full example](#full-example).
+
+!!! Tip
+    This code pattern is not specific to our client. It's useful for any code which executes on a separate thread.
+
+### Managed client
+
+If you don't care about explicit control over which callbacks are dispatched on the Unity main thread you can wrap your code in a helper class which will handle it for you. The `"NManagedClient"` acts as a proxy for all callbacks.
+
+You must call `.ExecuteActions()` in `Update` with the managed client or no callbacks will ever be run.
+
+```csharp hl_lines="14"
+using Nakama;
+using System.Collections;
+using UnityEngine;
+
+public class NakamaManager : MonoBehaviour {
+  private INClient _client;
+
+  public NakamaManager() {
+    var client = NClient.Default("defaultkey");
+    _client = new NManagedClient(client);
+  }
+
+  private void Update() {
+    (_client as NManagedClient).ExecuteActions(); // important!
+  }
+}
+```
+
+This makes code simpler to reason about but is slightly less performant than if you control exactly which callbacks use UnityEngine APIs and "move them" onto the main thread with an action queue.
+
 ## Logs and errors
 
 The [server](install-configuration.md#log) and the client can generate logs which are helpful to debug code. To log all messages sent by the client you can enable "Trace" when you build an `"INClient"`.
@@ -194,23 +256,28 @@ var errorHandler = delegate(INError error) {
 };
 ```
 
-<a id="full-example"></a>
-
 ---
+
+## Full example
 
 An example class used to manage a session with the Unity client.
 
 ```csharp
 using Nakama;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NakamaManager : MonoBehaviour {
   private INClient _client;
   private INSession _session;
 
+  private Queue<IEnumerator> _executionQueue;
+
   public NakamaManager() {
     _client = NClient.Default("defaultkey");
+    _executionQueue = new Queue<IEnumerator>(1024);
   }
 
   private void Awake() {
@@ -245,6 +312,7 @@ public class NakamaManager : MonoBehaviour {
       PlayerPrefs.SetString("nk.id", id);
     }
 
+    // Use whichever one of the authentication options you want.
     var message = NAuthenticateMessage.Device(id);
     _client.Login(message, SessionHandler, (INError err) => {
       if (err.Code == ErrorCode.UserNotFound) {
@@ -259,13 +327,39 @@ public class NakamaManager : MonoBehaviour {
     _session = session;
     Debug.LogFormat("Session: '{0}'.", session.Token);
     _client.Connect(_session, (bool done) => {
-      Debug.Log("Session connected.");
-      // Store session for quick reconnects.
-      PlayerPrefs.SetString("nk.session", session.Token);
+      // We enqueue callbacks which contain code which must be dispatched on
+      // the Unity main thread.
+      Enqueue(() => {
+        Debug.Log("Session connected.");
+        // Store session for quick reconnects.
+        PlayerPrefs.SetString("nk.session", session.Token);
+      });
     });
   }
 
-  private static void ErrorHandler(INError error) {
+  private void OnApplicationQuit() {
+    if (_session != null) {
+      _client.Disconnect();
+    }
+  }
+
+  private void Enqueue(Action action) {
+    lock (_executionQueue) {
+      if (_executionQueue.Count > 1024) {
+        // Prevent a memory leak if game code can't process events fast.
+        _client.Disconnect();
+      } else {
+        _executionQueue.Enqueue(ActionWrapper(action));
+      }
+    }
+  }
+
+  private IEnumerator ActionWrapper(Action action) {
+    action();
+    yield return null;
+  }
+
+  private static void ErrorHandler(INError err) {
     Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
   }
 }
