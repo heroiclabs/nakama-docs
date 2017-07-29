@@ -339,8 +339,35 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#main-thread-dispatch" title="Main thread dispatch" class="md-nav__link">
+    Main thread dispatch
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managed-client" title="Managed client" class="md-nav__link">
+    Managed client
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logs-and-errors" title="Logs and errors" class="md-nav__link">
     Logs and errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" title="Full example" class="md-nav__link">
+    Full example
   </a>
   
 </li>
@@ -691,18 +718,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
-      Add custom roles to groups
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../tutorial-initialize-new-user/" title="Initialize a new user" class="md-nav__link">
       Initialize a new user
     </a>
@@ -782,8 +797,35 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#main-thread-dispatch" title="Main thread dispatch" class="md-nav__link">
+    Main thread dispatch
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#managed-client" title="Managed client" class="md-nav__link">
+    Managed client
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logs-and-errors" title="Logs and errors" class="md-nav__link">
     Logs and errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" title="Full example" class="md-nav__link">
+    Full example
   </a>
   
 </li>
@@ -981,6 +1023,59 @@
 </tr>
 </tbody>
 </table>
+<h2 id="main-thread-dispatch">Main thread dispatch<a class="headerlink" href="#main-thread-dispatch" title="Permanent link">&para;</a></h2>
+<p>The client runs all callbacks on a socket thread separate to the Unity main thread. We recommend a simple pattern which can be used to run any code which calls <code>UnityEngine</code> APIs.</p>
+<p>&nbsp;&nbsp; 1. Add a queue to your script which manages a client.</p>
+<div class="codehilite"><pre><span></span><span class="n">Queue</span><span class="p">&lt;</span><span class="n">Action</span><span class="p">&gt;</span> <span class="n">executionQueue</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="n">Action</span><span class="p">&gt;(</span><span class="m">1024</span><span class="p">);</span>
+</pre></div>
+
+
+<p>&nbsp;&nbsp; 2. Add code in your <code>Update</code> method so the queued actions are run.</p>
+<div class="codehilite"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">l</span> <span class="p">=</span> <span class="n">executionQueue</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">l</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+  <span class="n">executionQueue</span><span class="p">.</span><span class="n">Dequeue</span><span class="p">()();</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>&nbsp;&nbsp; 3. Enqueue any code which uses a <code>UnityEngine</code> API.</p>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">_session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">executionQueue</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Session connected.&quot;</span><span class="p">);</span>
+    <span class="c1">// Store session for quick reconnects.</span>
+    <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.session&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span> <span class="c1">// a UnityEngine API</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>You can see a more advanced version of this pattern in the <a href="#full-example">full example</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This code pattern is not specific to our client. It's useful for any code which executes on a separate thread.</p>
+</div>
+<h3 id="managed-client">Managed client<a class="headerlink" href="#managed-client" title="Permanent link">&para;</a></h3>
+<p>If you don't care about explicit control over which callbacks are dispatched on the Unity main thread you can wrap your code in a helper class which will handle it for you. The <code>"NManagedClient"</code> acts as a proxy for all callbacks.</p>
+<p>You must call <code>.ExecuteActions()</code> in <code>Update</code> with the managed client or no callbacks will ever be run.</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="nn">Nakama</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">NakamaManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
+  <span class="k">private</span> <span class="n">INClient</span> <span class="n">_client</span><span class="p">;</span>
+
+  <span class="k">public</span> <span class="nf">NakamaManager</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">);</span>
+    <span class="n">_client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NManagedClient</span><span class="p">(</span><span class="n">client</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+<span class="hll">    <span class="p">(</span><span class="n">_client</span> <span class="k">as</span> <span class="n">NManagedClient</span><span class="p">).</span><span class="n">ExecuteActions</span><span class="p">();</span> <span class="c1">// important!</span>
+</span>  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>This makes code simpler to reason about but is slightly less performant than if you control exactly which callbacks use UnityEngine APIs and "move them" onto the main thread with an action queue.</p>
 <h2 id="logs-and-errors">Logs and errors<a class="headerlink" href="#logs-and-errors" title="Permanent link">&para;</a></h2>
 <p>The <a href="../install-configuration/#log">server</a> and the client can generate logs which are helpful to debug code. To log all messages sent by the client you can enable "Trace" when you build an <code>"INClient"</code>.</p>
 <div class="codehilite"><pre><span></span><span class="cp">#if UNITY_EDITOR</span>
@@ -1002,19 +1097,24 @@
 </pre></div>
 
 
-<p><a id="full-example"></a></p>
 <hr />
+<h2 id="full-example">Full example<a class="headerlink" href="#full-example" title="Permanent link">&para;</a></h2>
 <p>An example class used to manage a session with the Unity client.</p>
 <div class="codehilite"><pre><span></span><span class="k">using</span> <span class="nn">Nakama</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 
 <span class="k">public</span> <span class="k">class</span> <span class="nc">NakamaManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span> <span class="p">{</span>
   <span class="k">private</span> <span class="n">INClient</span> <span class="n">_client</span><span class="p">;</span>
   <span class="k">private</span> <span class="n">INSession</span> <span class="n">_session</span><span class="p">;</span>
 
+  <span class="k">private</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="n">IEnumerator</span><span class="p">&gt;</span> <span class="n">_executionQueue</span><span class="p">;</span>
+
   <span class="k">public</span> <span class="nf">NakamaManager</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">_client</span> <span class="p">=</span> <span class="n">NClient</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">);</span>
+    <span class="n">_executionQueue</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="p">&lt;</span><span class="n">IEnumerator</span><span class="p">&gt;(</span><span class="m">1024</span><span class="p">);</span>
   <span class="p">}</span>
 
   <span class="k">private</span> <span class="k">void</span> <span class="nf">Awake</span><span class="p">()</span> <span class="p">{</span>
@@ -1049,6 +1149,7 @@
       <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.id&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
     <span class="p">}</span>
 
+    <span class="c1">// Use whichever one of the authentication options you want.</span>
     <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
     <span class="n">_client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">SessionHandler</span><span class="p">,</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">err</span><span class="p">.</span><span class="n">Code</span> <span class="p">==</span> <span class="n">ErrorCode</span><span class="p">.</span><span class="n">UserNotFound</span><span class="p">)</span> <span class="p">{</span>
@@ -1063,13 +1164,39 @@
     <span class="n">_session</span> <span class="p">=</span> <span class="n">session</span><span class="p">;</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
     <span class="n">_client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">_session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Session connected.&quot;</span><span class="p">);</span>
-      <span class="c1">// Store session for quick reconnects.</span>
-      <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.session&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+      <span class="c1">// We enqueue callbacks which contain code which must be dispatched on</span>
+      <span class="c1">// the Unity main thread.</span>
+      <span class="n">Enqueue</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Session connected.&quot;</span><span class="p">);</span>
+        <span class="c1">// Store session for quick reconnects.</span>
+        <span class="n">PlayerPrefs</span><span class="p">.</span><span class="n">SetString</span><span class="p">(</span><span class="s">&quot;nk.session&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+      <span class="p">});</span>
     <span class="p">});</span>
   <span class="p">}</span>
 
-  <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">ErrorHandler</span><span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">OnApplicationQuit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">_session</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">_client</span><span class="p">.</span><span class="n">Disconnect</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">Enqueue</span><span class="p">(</span><span class="n">Action</span> <span class="n">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">lock</span> <span class="p">(</span><span class="n">_executionQueue</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">_executionQueue</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">1024</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Prevent a memory leak if game code can&#39;t process events fast.</span>
+        <span class="n">_client</span><span class="p">.</span><span class="n">Disconnect</span><span class="p">();</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">_executionQueue</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="n">ActionWrapper</span><span class="p">(</span><span class="n">action</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="n">IEnumerator</span> <span class="nf">ActionWrapper</span><span class="p">(</span><span class="n">Action</span> <span class="n">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">action</span><span class="p">();</span>
+    <span class="k">yield</span> <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">ErrorHandler</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -1165,6 +1292,8 @@
       
       
       <script>app.initialize({url:{base:".."}})</script>
+      
+        <script src="../js/main.js"></script>
       
     
     
