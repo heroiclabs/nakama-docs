@@ -26,7 +26,7 @@ There are a few configuration properties that need to be changed in most environ
 | `runtime.http_key`       | Key is used to protect the server's runtime HTTP invocations. Default value is `defaultkey`.
 
 !!! warning "Production settings"
-    You must change the values of **`socket.server_key`**, **`session.encryption_key`** and **`runtime.http_key`** before you deploy Nakama to a live production environment. 
+    You must change the values of **`socket.server_key`**, **`session.encryption_key`** and **`runtime.http_key`** before you deploy Nakama to a live production environment.
 
     Follow the [production settings deployment guide](deployment-production-settings.md) for more information.
 
@@ -40,7 +40,7 @@ Nakama ships with sane default values for all config options, therefore you'll o
 nakama --runtime.path /tmp/my-modules
 ```
 
-If fields are not specific, default values will be used. For more information on how to override flags, have a look at the [server command-line](fundemental-server-cli.md) page.
+If fields are not specific, default values will be used. For more information on how to override flags, have a look at the [server command-line](install-server-cli.md) page.
 
 !!! tip "Override configuration"
     Every configuration option can set from a config file, as a command line flag or both where the command-line argument takes precedence and will override the configuration values.

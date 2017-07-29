@@ -264,7 +264,7 @@ nk.register_rpc(get_pokemon, "get_pokemon")
 We can make now make an RPC call for a pokemon from a client.
 
 ```csharp fct_label="Unity"
-byte[] payload = Encoding.ASCII.GetBytes("{\"PokemonName\": \"Dragonite\"}")
+byte[] payload = Encoding.UTF8.GetBytes("{\"PokemonName\": \"Dragonite\"}");
 
 var message = new NRuntimeRpcMessage
     .Builder("get_pokemon")

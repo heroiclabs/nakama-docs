@@ -134,11 +134,11 @@ The `directTopicId` variable contains an ID used to [send messages](#send-messag
 
 ## List online users
 
-Each user who joins a chat becomes a "presence" in the chat topic. These presences keep information about which users are connected.
+Each user who joins a chat becomes a "presence" in the chat topic. These presences keep information about which users are online.
 
 A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat topic.
 
-The user who [joins a chat topic](#join-chat) receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive "presence" changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.
+The user who [joins a chat topic](#join-chat) receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive presence changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.
 
 !!! Summary
     A list of all online users is received when a user joins a chat topic you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.

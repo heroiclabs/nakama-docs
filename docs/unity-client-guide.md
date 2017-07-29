@@ -122,7 +122,7 @@ A __full example__ class with all code above is [here](#full-example).
 
 When a user has been authenticated and a session is used to connect with the server. You can send messages for all the different features in the server.
 
-This could be to [add friends](social-friends.md), join [groups](social-groups-clans.md) and [chat](social-realtime-chat.md), or submit scores in [leaderboards](gameplay-leaderboards.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-realtime-multiplayer.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
+This could be to [add friends](social-friends.md), join [groups](social-groups-clans.md) and [chat](social-realtime-chat.md), or submit scores in [leaderboards](gameplay-leaderboards.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
 
 The server also provides a [storage engine](storage-collections.md) to keep save games and other records owned by users. We'll use storage to introduce how messages are sent.
 
@@ -160,14 +160,14 @@ Some events only need to be implemented for the features you want to use.
 
 | Event handler | Description |
 | ------------- | ----------- |
-| `OnDisconnect` | Handles an event for when the client is disconnected from the server. |
-| `OnError` | Receives events about server errors. |
-| `OnMatchData` | Handles [realtime match](gameplay-realtime-multiplayer.md) messages. |
-| `OnMatchmakeMatched` | Receives events when the [matchmaker](gameplay-matchmaker.md) has found match participants. |
-| `OnMatchPresence` | When in a [realtime match](gameplay-realtime-multiplayer.md) receives events for when users join or leave. |
-| `OnNotification` | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
-| `OnTopicMessage` | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| `OnTopicPresence` | Similar to "OnMatchPresence" it handles join and leave events but within [chat](social-realtime-chat.md). |
+| OnDisconnect | Handles an event for when the client is disconnected from the server. |
+| OnError | Receives events about server errors. |
+| OnMatchData | Handles [realtime match](gameplay-multiplayer-realtime.md) messages. |
+| OnMatchmakeMatched | Receives events when the [matchmaker](gameplay-matchmaker.md) has found match participants. |
+| OnMatchPresence | When in a [realtime match](gameplay-multiplayer-realtime.md) receives events for when users join or leave. |
+| OnNotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
+| OnTopicMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
+| OnTopicPresence | Similar to "OnMatchPresence" it handles join and leave events but within [chat](social-realtime-chat.md). |
 
 ## Logs and errors
 
