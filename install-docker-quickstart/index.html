@@ -299,13 +299,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#upgrade" title="Upgrade" class="md-nav__link">
-    Upgrade
-  </a>
-  
-</li>
-      
       
       
     </ul>
@@ -335,6 +328,30 @@
   <li class="md-nav__item">
     <a href="../install-configuration/" title="Configuration" class="md-nav__link">
       Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-server-cli/" title="Nakama CLI" class="md-nav__link">
+      Nakama CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-nakama-upgrade/" title="Upgrades" class="md-nav__link">
+      Upgrades
     </a>
   </li>
 
@@ -517,6 +534,66 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Gameplay
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Gameplay
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-leaderboards/" title="Leaderboards" class="md-nav__link">
+      Leaderboards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-matchmaker/" title="Matchmaker" class="md-nav__link">
+      Matchmaker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-multiplayer-realtime/" title="Realtime Multiplayer" class="md-nav__link">
+      Realtime Multiplayer
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item">
     <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
       In-app Purchase Validation
@@ -531,13 +608,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
     
-    <label class="md-nav__link" for="nav-10">
+    <label class="md-nav__link" for="nav-11">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-11">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -579,13 +656,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-12">
       Deployment
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+      <label class="md-nav__title" for="nav-12">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -615,13 +692,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-13">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-13">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -740,13 +817,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upgrade" title="Upgrade" class="md-nav__link">
-    Upgrade
-  </a>
   
 </li>
       
@@ -891,27 +961,6 @@ nakama:
 </ul>
 <p>You can re-activate them by running <code>docker-compose up</code>.</p>
 <p>To stop the containers and purge all stored data, run <code>docker-compose down</code>.</p>
-<h2 id="upgrade">Upgrade<a class="headerlink" href="#upgrade" title="Permanent link">&para;</a></h2>
-<p>As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.</p>
-<div class="admonition note">
-<p class="admonition-title">Schema migration</p>
-<p>When upgrading to a new version of Nakama, the process in the <code>docker-compose.yml</code> performs a migration of your data to the new database schema automatically.</p>
-</div>
-<p>You can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.</p>
-<div class="codehilite"><pre><span></span>docker-compose down <span class="c1"># top and remove both the Nakama and CockroachDB containers</span>
-docker pull heroiclabs/nakama <span class="c1"># download the latest Nakama image</span>
-docker-compose up <span class="c1"># start the containers (both Nakama and CockroachDB) as fresh installss</span>
-</pre></div>
-
-
-<p>And, similarly, here&rsquo;s how to update the CockroachDB container:</p>
-<div class="codehilite"><pre><span></span>docker pull cockroachdb/cockroach <span class="c1"># download the latest CockroachDB image</span>
-</pre></div>
-
-
-<p>If you'd like to explicity run a database schema migration, issue the following command:</p>
-<div class="codehilite"><pre><span></span>docker run heroiclabs/nakama migrate up
-</pre></div>
                 
                   
                 

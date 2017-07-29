@@ -1,0 +1,1348 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
+      
+      
+        <link rel="canonical" href="https://heroiclabs.com/docs/gameplay-leaderboards/">
+      
+      
+        <meta name="author" content="Heroic Labs Team & contributors">
+      
+      
+        <link rel="shortcut icon" href="../images/favicon.ico">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>Leaderboards - Nakama server</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="https://heroiclabs.com/docs/" title="Nakama server" class="md-logo md-header-nav__button">
+            <img src="../images/logo-white.svg" width="24" height="24">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Gameplay
+                </span>
+              
+            
+            Leaderboards
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-logo md-nav__button">
+        <img src="../images/logo-white.svg">
+      </i>
+    
+    Nakama server
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      heroiclabs/nakama
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+    
+    <label class="md-nav__link" for="nav-1">
+      Install and setup
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        Install and setup
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-nav__link">
+      Docker quickstart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-binary/" title="Binary install" class="md-nav__link">
+      Binary install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-configuration/" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-server-cli/" title="Nakama CLI" class="md-nav__link">
+      Nakama CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-nakama-upgrade/" title="Upgrades" class="md-nav__link">
+      Upgrades
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../unity-client-guide/" title="Unity client guide" class="md-nav__link">
+      Unity client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../javascript-client-guide/" title="JavaScript client guide" class="md-nav__link">
+      JavaScript client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../swift-ios-client-guide/" title="Swift/iOS client guide" class="md-nav__link">
+      Swift/iOS client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../authentication/" title="Authentication" class="md-nav__link">
+      Authentication
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../user-accounts/" title="User accounts" class="md-nav__link">
+      User accounts
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Storage Engine
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Storage Engine
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
+      Collections
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      Social
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-8">
+        Social
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-friends/" title="Friends" class="md-nav__link">
+      Friends
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-groups-clans/" title="Groups and Clans" class="md-nav__link">
+      Groups and Clans
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-in-app-notifications/" title="In-app Notifications" class="md-nav__link">
+      In-app Notifications
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../social-realtime-chat/" title="Realtime Chat" class="md-nav__link">
+      Realtime Chat
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+    
+    <label class="md-nav__link" for="nav-9">
+      Gameplay
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Gameplay
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Leaderboards
+      </label>
+    
+    <a href="./" title="Leaderboards" class="md-nav__link md-nav__link--active">
+      Leaderboards
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#leaderboard-object" title="Leaderboard object" class="md-nav__link">
+    Leaderboard object
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reset-schedules" title="Reset schedules" class="md-nav__link">
+    Reset schedules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaderboard-records" title="Leaderboard records" class="md-nav__link">
+    Leaderboard records
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-fields" title="Custom fields" class="md-nav__link">
+    Custom fields
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-leaderboard" title="Create a leaderboard" class="md-nav__link">
+    Create a leaderboard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-leaderboards" title="List leaderboards" class="md-nav__link">
+    List leaderboards
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submit-a-score" title="Submit a score" class="md-nav__link">
+    Submit a score
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-operator" title="Set operator" class="md-nav__link">
+    Set operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-operator" title="Best operator" class="md-nav__link">
+    Best operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#increment-operator" title="Increment operator" class="md-nav__link">
+    Increment operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decrement-operator" title="Decrement operator" class="md-nav__link">
+    Decrement operator
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-records" title="List records" class="md-nav__link">
+    List records
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-by-score" title="List by score" class="md-nav__link">
+    List by score
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-by-filter" title="List by filter" class="md-nav__link">
+    List by filter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-by-friends" title="List by friends" class="md-nav__link">
+    List by friends
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-current-user" title="Find current user" class="md-nav__link">
+    Find current user
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-matchmaker/" title="Matchmaker" class="md-nav__link">
+      Matchmaker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-multiplayer-realtime/" title="Realtime Multiplayer" class="md-nav__link">
+      Realtime Multiplayer
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
+      In-app Purchase Validation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      Runtime Code
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-11">
+        Runtime Code
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-basics/" title="Basics" class="md-nav__link">
+      Basics
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../runtime-code-function-reference/" title="Function Reference" class="md-nav__link">
+      Function Reference
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+    
+    <label class="md-nav__link" for="nav-12">
+      Deployment
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-12">
+        Deployment
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deployment-digital-ocean/" title="Digital Ocean" class="md-nav__link">
+      Digital Ocean
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
+    
+    <label class="md-nav__link" for="nav-13">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-13">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-add-custom-roles-to-groups/" title="Add custom roles to groups" class="md-nav__link">
+      Add custom roles to groups
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-initialize-new-user/" title="Initialize a new user" class="md-nav__link">
+      Initialize a new user
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-remote-configuration/" title="Remote configuration" class="md-nav__link">
+      Remote configuration
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#leaderboard-object" title="Leaderboard object" class="md-nav__link">
+    Leaderboard object
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reset-schedules" title="Reset schedules" class="md-nav__link">
+    Reset schedules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaderboard-records" title="Leaderboard records" class="md-nav__link">
+    Leaderboard records
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-fields" title="Custom fields" class="md-nav__link">
+    Custom fields
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-leaderboard" title="Create a leaderboard" class="md-nav__link">
+    Create a leaderboard
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-leaderboards" title="List leaderboards" class="md-nav__link">
+    List leaderboards
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submit-a-score" title="Submit a score" class="md-nav__link">
+    Submit a score
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-operator" title="Set operator" class="md-nav__link">
+    Set operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-operator" title="Best operator" class="md-nav__link">
+    Best operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#increment-operator" title="Increment operator" class="md-nav__link">
+    Increment operator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decrement-operator" title="Decrement operator" class="md-nav__link">
+    Decrement operator
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-records" title="List records" class="md-nav__link">
+    List records
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-by-score" title="List by score" class="md-nav__link">
+    List by score
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-by-filter" title="List by filter" class="md-nav__link">
+    List by filter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-by-friends" title="List by friends" class="md-nav__link">
+    List by friends
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find-current-user" title="Find current user" class="md-nav__link">
+    Find current user
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="leaderboards">Leaderboards<a class="headerlink" href="#leaderboards" title="Permanent link">&para;</a></h1>
+<p>Leaderboards are a great way to add a social and competitive element to any game. They're a fun way to drive competition among your players. The server supports an <strong>unlimited</strong> number of individual leaderboards with each one as a scoreboard which tracks separate records.</p>
+<p>The server has no special requirement on what the score value should represent from your game. A leaderboard is created with a sort order on values. If you're using lap time or currency in records you'll want to order the results in ASC or DESC mode as preferred.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use a leaderboard to track any score you like. Some good examples are: highest points, longest survival time, fastest lap time, quickest level completion, and anything else which can be competed over!</p>
+</div>
+<p>Leaderboards are dynamic in the server because they don't need to be preconfigured like would be needed if you've used Google Play Games or Apple Game Center in the past. A leaderboard can be created via server-side code.</p>
+<h2 id="leaderboard-object">Leaderboard object<a class="headerlink" href="#leaderboard-object" title="Permanent link">&para;</a></h2>
+<p>Each leaderboard is a collection of records where each record is a ranked score with metadata. A leaderboard is uniquely identified by an ID.</p>
+<p>Leaderboard records are sorted based on their configured sort order: DESC (default) or ASC. The sort order is decided when a leaderboard is created and cannot be changed later. All leaderboard configuration is immutable once created. You should delete the leaderboard and create a new one if you need to change the sort order.</p>
+<h3 id="reset-schedules">Reset schedules<a class="headerlink" href="#reset-schedules" title="Permanent link">&para;</a></h3>
+<p>You can assign each leaderboard an optional reset schedule. Records contained in the leaderboard will expire based on this schedule and users will be able to submit new scores for each reset cycle.</p>
+<p>Reset schedules are defined in <a href="https://en.wikipedia.org/wiki/Cron" target="\_blank">CRON format</a> when the leaderboard is created. If a leaderboards has no reset schedule set it will never expire.</p>
+<h3 id="leaderboard-records">Leaderboard records<a class="headerlink" href="#leaderboard-records" title="Permanent link">&para;</a></h3>
+<p>Each leaderboard contains a list of records ordered by their scores.</p>
+<p>Records belong to an owner usually a user but other objects like a group ID or some other custom ID can be used. Each owner will only have one record per leaderboard. If a leaderboard expires each owner will be able to submit a new score which rolls over.</p>
+<p>The score in each record can be updated as the owner progresses. Scores can be updated as often as wanted and can increase or decrease. A record has some builtin fields like lang, location, and timezone. These values are used to filter leaderboard results.</p>
+<h4 id="custom-fields">Custom fields<a class="headerlink" href="#custom-fields" title="Permanent link">&para;</a></h4>
+<p>Each record can optionally include additional data about the score or the owner when submitted. The extra fields must be JSON encoded and submitted as the metadata. A good use case for metadata is info about race conditions in a driving game, such as weather, which can give extra UI hints when users list scores.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
+
+<span class="c1">// add custom fields with each record.</span>
+<span class="kt">var</span> <span class="n">jsonString</span> <span class="p">=</span> <span class="s">&quot;{\&quot;race_conditions\&quot;: [\&quot;sunny\&quot;, \&quot;clear\&quot;]}&quot;</span><span class="p">;</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">metadata</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">jsonString</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INLeaderboardRecord</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="create-a-leaderboard">Create a leaderboard<a class="headerlink" href="#create-a-leaderboard" title="Permanent link">&para;</a></h2>
+<p>A leaderboard can be created via server-side code at startup or within a <a href="#register-hooks">registered function</a>. The ID given to the leaderboard is used to submit scores to it.</p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">weather_conditions</span> <span class="o">=</span> <span class="s2">&quot;rain&quot;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">id</span> <span class="o">=</span> <span class="s2">&quot;4ec4f126-3f9d-11e7-84ef-b7c182b36521&quot;</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">leaderboard_create</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">,</span> <span class="s2">&quot;0 0 * * 1&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
+</pre></div>
+
+
+<h2 id="list-leaderboards">List leaderboards<a class="headerlink" href="#list-leaderboards" title="Permanent link">&para;</a></h2>
+<p>All leaderboards can be listed by a user.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboard</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Found &#39;{0}&#39; leaderboards.&quot;</span><span class="p">,</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
+
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">leaderboard</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard id &#39;{0}&#39; and sort &#39;{1}&#39;&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Sort</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">.</span><span class="n">Metadata</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>When you have more than 100 leaderboards you can fetch the next set of results with a cursor.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">var</span> <span class="n">messageBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">messageBuilder</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboard</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Lets get the next page of results.</span>
+  <span class="n">INCursor</span> <span class="n">cursor</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">cursor</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">messageBuilder</span><span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">cursor</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+
+    <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboard</span><span class="p">&gt;</span> <span class="n">nextList</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">l</span> <span class="k">in</span> <span class="n">nextList</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard id &#39;{0}&#39; and sort &#39;{1}&#39;&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">Sort</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">Metadata</span><span class="p">);</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+</pre></div>
+
+
+<h2 id="submit-a-score">Submit a score<a class="headerlink" href="#submit-a-score" title="Permanent link">&para;</a></h2>
+<p>A user can submit a score to a leaderboard and update it at any time. When a score is submitted it's sent with an operator which indicates how the new value should change the current score stored. The operators are: "set", "best", "inc", "decr".</p>
+<h3 id="set-operator">Set operator<a class="headerlink" href="#set-operator" title="Permanent link">&para;</a></h3>
+<p>The set operator will submit the score and replace any current value for the owner.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INLeaderboardRecord</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h3 id="best-operator">Best operator<a class="headerlink" href="#best-operator" title="Permanent link">&para;</a></h3>
+<p>The best operator will check the new score is better than the current score and keep which ever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Best</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INLeaderboardRecord</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h3 id="increment-operator">Increment operator<a class="headerlink" href="#increment-operator" title="Permanent link">&para;</a></h3>
+<p>The increment operator will add the score value to the current score. If no score exists the new score will be added to 0.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Increment</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INLeaderboardRecord</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h3 id="decrement-operator">Decrement operator<a class="headerlink" href="#decrement-operator" title="Permanent link">&para;</a></h3>
+<p>The decrement operator will subtract the score value from the current score. If no score exists the new score will be subtracted from 0.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Decrement</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INLeaderboardRecord</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="list-records">List records<a class="headerlink" href="#list-records" title="Permanent link">&para;</a></h2>
+<p>A user can list records from a leaderboard. This makes it easy to compare scores to other users and see their positions.</p>
+<h3 id="list-by-score">List by score<a class="headerlink" href="#list-by-score" title="Permanent link">&para;</a></h3>
+<p>The standard way to list records is ordered by score based on the sort order in the leaderboard.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>You can fetch the next set of results with a cursor.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+
+<span class="kt">var</span> <span class="n">messageBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Lets get the next page of results.</span>
+  <span class="n">INCursor</span> <span class="n">cursor</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Cursor</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">cursor</span> <span class="p">!=</span> <span class="k">null</span> <span class="p">&amp;&amp;</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">messageBuilder</span><span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">cursor</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
+
+    <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">nextList</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">nextList</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
+</pre></div>
+
+
+<h3 id="list-by-filter">List by filter<a class="headerlink" href="#list-by-filter" title="Permanent link">&para;</a></h3>
+<p>You can add a filter on one of "lang", "location", or "timezone".</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">FilterByLocation</span><span class="p">(</span><span class="s">&quot;San Francisco&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h3 id="list-by-friends">List by friends<a class="headerlink" href="#list-by-friends" title="Permanent link">&para;</a></h3>
+<p>You can use a bunch of owner IDs to filter the records to only ones owned by those users. This can be used to retrieve only scores belonging to the user's friends.</p>
+<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span> <span class="n">ownerIds</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;();</span>
+<span class="n">ownerIds</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span> <span class="c1">// an INUser Id.</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">FilterByOwnerIds</span><span class="p">(</span><span class="n">ownerIds</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h3 id="find-current-user">Find current user<a class="headerlink" href="#find-current-user" title="Permanent link">&para;</a></h3>
+<p>A leaderboard can be "scrolled" to the page which contains a record owner. This can be used to give users a view of their own position within a leaderboard.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">ownerId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser Id.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">FilterByPagingToOwnerId</span><span class="p">(</span><span class="n">ownerId</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../social-realtime-chat/" title="Realtime Chat" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Realtime Chat
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../gameplay-matchmaker/" title="Matchmaker" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Matchmaker
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2017 Heroic Labs
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://heroiclabs.com" class="md-footer-social__link fa fa-globe"></a>
+    
+      <a href="https://github.com/heroiclabs" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/heroicdev" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.linkedin.com/company/heroic-labs" class="md-footer-social__link fa fa-linkedin"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

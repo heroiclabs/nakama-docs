@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/docs/storage-collections/">
+        <link rel="canonical" href="https://heroiclabs.com/docs/install-nakama-upgrade/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Collections - Nakama server</title>
+        <title>Upgrades - Nakama server</title>
       
     
     
@@ -84,11 +84,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Storage Engine
+                  Install and setup
                 </span>
               
             
-            Collections
+            Upgrades
           
         </span>
       </div>
@@ -195,10 +195,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" checked>
     
     <label class="md-nav__link" for="nav-1">
       Install and setup
@@ -262,11 +264,54 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../install-nakama-upgrade/" title="Upgrades" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Upgrades
+      </label>
+    
+    <a href="./" title="Upgrades" class="md-nav__link md-nav__link--active">
       Upgrades
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#docker" title="Docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-upgrade" title="Manual upgrade" class="md-nav__link">
+    Manual upgrade
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -339,12 +384,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       Storage Engine
@@ -360,20 +403,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-    <a href="./" title="Collections" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
       Collections
     </a>
-    
   </li>
 
         
@@ -687,6 +721,27 @@
     
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#docker" title="Docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-upgrade" title="Manual upgrade" class="md-nav__link">
+    Manual upgrade
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -698,7 +753,63 @@
               
                 
                 
-                <h1 id="collections">Collections<a class="headerlink" href="#collections" title="Permanent link">&para;</a></h1>
+                <h1 id="upgrade-nakama">Upgrade Nakama<a class="headerlink" href="#upgrade-nakama" title="Permanent link">&para;</a></h1>
+<p>When upgrading to a new version of Nakama, you need to do three things before you run the newer version:</p>
+<ul>
+<li>Check the <a href="https://github.com/heroiclabs/nakama/blob/master/CHANGELOG.md">Release Notes</a>, in case that version has specific upgrade requirements.</li>
+<li>Migrate your data to the format supported by the new version of Nakama.</li>
+<li>Ensure that the client version you&rsquo;re running is compatible with the server deployed.</li>
+</ul>
+<h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
+<p>As new versions of Nakama, or CockroachDB, become available you might want to upgrade. Docker makes upgrading easy, as all you need to do is pull down a new version of the container image.</p>
+<div class="admonition note">
+<p class="admonition-title">Schema migration</p>
+<p>When upgrading to a new version of Nakama, the process in the <code>docker-compose.yml</code> performs a migration of your data to the new database schema automatically.</p>
+</div>
+<p>You can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.</p>
+<div class="codehilite"><pre><span></span>docker-compose down <span class="c1"># top and remove both the Nakama and CockroachDB containers</span>
+docker pull heroiclabs/nakama <span class="c1"># download the latest Nakama image</span>
+docker-compose up <span class="c1"># start the containers (both Nakama and CockroachDB) as fresh installss</span>
+</pre></div>
+
+
+<p>And, similarly, here&rsquo;s how to update the CockroachDB container:</p>
+<div class="codehilite"><pre><span></span>docker pull cockroachdb/cockroach <span class="c1"># download the latest CockroachDB image</span>
+</pre></div>
+
+
+<p>If you'd like to explicity run a database schema migration, issue the following command:</p>
+<div class="codehilite"><pre><span></span>docker run heroiclabs/nakama migrate up
+</pre></div>
+
+
+<h2 id="manual-upgrade">Manual upgrade<a class="headerlink" href="#manual-upgrade" title="Permanent link">&para;</a></h2>
+<p>You can upgrade one node or your whole cluster to the latest version of Nakama by following the instructions below.</p>
+<p>For each node in the cluster:</p>
+<p>1. Stop Nakama. If you are using <code>systemd</code> on a Linux setup, the command is:</p>
+<div class="codehilite"><pre><span></span>sudo systemctl stop nakama
+</pre></div>
+
+
+<p>2. Back-up CockroachDB</p>
+<div class="codehilite"><pre><span></span>cockroach dump nakama &gt; mydatabackup.sql --insecure
+</pre></div>
+
+
+<p>3. Download the <a href="https://github.com/heroiclabs/nakama/releases/latest">latest release</a> and replace the <code>nakama</code> binary with the newer download.
+4. Upgrade the database schema with the following command:</p>
+<div class="codehilite"><pre><span></span>nakama migrate up
+</pre></div>
+
+
+<div class="admonition tip">
+<p class="admonition-title">Downgrade</p>
+<p>To downgrade Nakama you can follow the same procedure, but replace the migration command with the following:</p>
+<p><code>nakama migrate down --limit 1</code></p>
+</div>
+<p>5. Start Nakama and verify that the upgraded version is running.</p>
+<div class="codehilite"><pre><span></span>sudo systemctl start nakama
+</pre></div>
                 
                   
                 
@@ -717,7 +828,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../user-accounts/" title="User accounts" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../install-server-cli/" title="Nakama CLI" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -726,19 +837,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                User accounts
+                Nakama CLI
               </span>
             </div>
           </a>
         
         
-          <a href="../social-friends/" title="Friends" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../unity-client-guide/" title="Unity client guide" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Friends
+                Unity client guide
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

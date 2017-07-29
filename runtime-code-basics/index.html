@@ -246,6 +246,30 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-server-cli/" title="Nakama CLI" class="md-nav__link">
+      Nakama CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-nakama-upgrade/" title="Upgrades" class="md-nav__link">
+      Upgrades
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -424,6 +448,66 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Gameplay
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Gameplay
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-leaderboards/" title="Leaderboards" class="md-nav__link">
+      Leaderboards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-matchmaker/" title="Matchmaker" class="md-nav__link">
+      Matchmaker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-multiplayer-realtime/" title="Realtime Multiplayer" class="md-nav__link">
+      Realtime Multiplayer
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item">
     <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
       In-app Purchase Validation
@@ -440,13 +524,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11" checked>
     
-    <label class="md-nav__link" for="nav-10">
+    <label class="md-nav__link" for="nav-11">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-11">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -593,13 +677,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-12">
       Deployment
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+      <label class="md-nav__title" for="nav-12">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -629,13 +713,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-13">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-13">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1040,6 +1124,22 @@
 <span class="kr">end</span>
 
 <span class="n">nk</span><span class="p">.</span><span class="n">register_rpc</span><span class="p">(</span><span class="n">get_pokemon</span><span class="p">,</span> <span class="s2">&quot;get_pokemon&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>We can make now make an RPC call for a pokemon from a client.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">payload</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;PokemonName\&quot;: \&quot;Dragonite\&quot;}&quot;</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NRuntimeRpcMessage</span>
+    <span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;get_pokemon&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Payload</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INRuntimeRpc</span> <span class="n">rpc</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">rpc</span><span class="p">.</span><span class="n">Payload</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;JSON response {0}&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
                 
                   

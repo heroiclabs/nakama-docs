@@ -242,6 +242,30 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-server-cli/" title="Nakama CLI" class="md-nav__link">
+      Nakama CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-nakama-upgrade/" title="Upgrades" class="md-nav__link">
+      Upgrades
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -491,6 +515,66 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Gameplay
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Gameplay
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-leaderboards/" title="Leaderboards" class="md-nav__link">
+      Leaderboards
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-matchmaker/" title="Matchmaker" class="md-nav__link">
+      Matchmaker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../gameplay-multiplayer-realtime/" title="Realtime Multiplayer" class="md-nav__link">
+      Realtime Multiplayer
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item">
     <a href="../in-app-purchase-validation/" title="In-app Purchase Validation" class="md-nav__link">
       In-app Purchase Validation
@@ -505,13 +589,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
     
-    <label class="md-nav__link" for="nav-10">
+    <label class="md-nav__link" for="nav-11">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-11">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -553,13 +637,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-12">
       Deployment
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+      <label class="md-nav__title" for="nav-12">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -589,13 +673,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-13">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-13">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -825,7 +909,7 @@
 <p>A <strong>full example</strong> class with all code above is <a href="#full-example">here</a>.</p>
 <h2 id="send-messages">Send messages<a class="headerlink" href="#send-messages" title="Permanent link">&para;</a></h2>
 <p>When a user has been authenticated and a session is used to connect with the server. You can send messages for all the different features in the server.</p>
-<p>This could be to <a href="../social-friends/">add friends</a>, join <a href="../social-groups-clans/">groups</a> and <a href="../social-realtime-chat/">chat</a>, or submit scores in <a href="gameplay-leaderboards.md">leaderboards</a>, and <a href="gameplay-matchmaker.md">matchmake</a> into a <a href="gameplay-realtime-multiplayer.md">multiplayer match</a>. You can also execute remote code on the server via <a href="../runtime-code-basics/">RPC</a>.</p>
+<p>This could be to <a href="../social-friends/">add friends</a>, join <a href="../social-groups-clans/">groups</a> and <a href="../social-realtime-chat/">chat</a>, or submit scores in <a href="../gameplay-leaderboards/">leaderboards</a>, and <a href="../gameplay-matchmaker/">matchmake</a> into a <a href="../gameplay-multiplayer-realtime/">multiplayer match</a>. You can also execute remote code on the server via <a href="../runtime-code-basics/">RPC</a>.</p>
 <p>The server also provides a <a href="../storage-collections/">storage engine</a> to keep save games and other records owned by users. We'll use storage to introduce how messages are sent.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">json</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;jsonkey\&quot;:\&quot;jsonvalue\&quot;}&quot;</span><span class="p">);</span>
 
@@ -873,15 +957,15 @@
 </tr>
 <tr>
 <td>OnMatchData</td>
-<td>Handles <a href="gameplay-realtime-multiplayer.md">realtime match</a> messages.</td>
+<td>Handles <a href="../gameplay-multiplayer-realtime/">realtime match</a> messages.</td>
 </tr>
 <tr>
 <td>OnMatchmakeMatched</td>
-<td>Receives events when the <a href="gameplay-matchmaker.md">matchmaker</a> has found match participants.</td>
+<td>Receives events when the <a href="../gameplay-matchmaker/">matchmaker</a> has found match participants.</td>
 </tr>
 <tr>
 <td>OnMatchPresence</td>
-<td>When in a <a href="gameplay-realtime-multiplayer.md">realtime match</a> receives events for when users join or leave.</td>
+<td>When in a <a href="../gameplay-multiplayer-realtime/">realtime match</a> receives events for when users join or leave.</td>
 </tr>
 <tr>
 <td>OnNotification</td>
@@ -1008,7 +1092,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../install-configuration/" title="Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../install-nakama-upgrade/" title="Upgrades" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1017,7 +1101,7 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Configuration
+                Upgrades
               </span>
             </div>
           </a>

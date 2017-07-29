@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/docs/storage-collections/">
+        <link rel="canonical" href="https://heroiclabs.com/docs/install-server-cli/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Collections - Nakama server</title>
+        <title>Nakama CLI - Nakama server</title>
       
     
     
@@ -84,11 +84,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Storage Engine
+                  Install and setup
                 </span>
               
             
-            Collections
+            Nakama CLI
           
         </span>
       </div>
@@ -195,10 +195,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" checked>
     
     <label class="md-nav__link" for="nav-1">
       Install and setup
@@ -250,11 +252,61 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../install-server-cli/" title="Nakama CLI" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Nakama CLI
+      </label>
+    
+    <a href="./" title="Nakama CLI" class="md-nav__link md-nav__link--active">
       Nakama CLI
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#migrate" title="migrate" class="md-nav__link">
+    migrate
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#doctor" title="doctor" class="md-nav__link">
+    doctor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-override" title="Config override" class="md-nav__link">
+    Config override
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -339,12 +391,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       Storage Engine
@@ -360,20 +410,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-    <a href="./" title="Collections" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
       Collections
     </a>
-    
   </li>
 
         
@@ -687,6 +728,34 @@
     
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#migrate" title="migrate" class="md-nav__link">
+    migrate
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#doctor" title="doctor" class="md-nav__link">
+    doctor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-override" title="Config override" class="md-nav__link">
+    Config override
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -698,7 +767,87 @@
               
                 
                 
-                <h1 id="collections">Collections<a class="headerlink" href="#collections" title="Permanent link">&para;</a></h1>
+                <h1 id="nakama-commands">Nakama Commands<a class="headerlink" href="#nakama-commands" title="Permanent link">&para;</a></h1>
+<p>Day to day operation of Nakama is straightforward, requiring minimal intervention. There are just three nakama commands that you&rsquo;ll need.</p>
+<p>Running the <code>nakama</code> command by itself will start the server with the default configuration. You can <a href="#config-override">override the configuration</a> used using command line flags.</p>
+<h2 id="migrate"><code>migrate</code><a class="headerlink" href="#migrate" title="Permanent link">&para;</a></h2>
+<p>The Nakama binary contains the schema and a way to upgrade an existing database schema. When you first run Nakama, you need to setup the database schema that Nakama interacts with. Similarly, when a new Nakama version is released, you need to migrate the data schema to that of the new version.</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>migrate up</code></td>
+<td>Creates and updates the database schema to the latest version required by nakama. By default, the schema is updated sequentially to the latest available.</td>
+</tr>
+<tr>
+<td><code>migrate down</code></td>
+<td>Downgrades the database schema to the version requested. By default, it downgrades one schema change at a time.</td>
+</tr>
+<tr>
+<td><code>migrate redo</code></td>
+<td>Downgrades one schema change, and re-applies the change.</td>
+</tr>
+<tr>
+<td><code>migrate status</code></td>
+<td>Provides information on the schema's currently applied to the database, and if there any are unapplied schemas.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Flags</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>database.address</code></td>
+<td>Database node to connect to. It should follow the form of <code>username:password@address:port/dbname</code> (<code>postgres://</code> protocol is appended to the path automatically). Defaults to <code>root@localhost:26257</code>.</td>
+</tr>
+<tr>
+<td><code>--limit</code></td>
+<td>Number of migrations to use when running either up, down, or redo.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="doctor"><code>doctor</code><a class="headerlink" href="#doctor" title="Permanent link">&para;</a></h2>
+<p>Nakama ships with a built-in diagnostic tool which is particularly useful when you need support or otherwise are looking to diagnose an issue.</p>
+<p>Running <code>nakama doctor</code> generates a report that details the server's configuration and environment. By default, the diagnostic tool looks for a Nakama node to connect to on the local machine, but this can be changed:</p>
+<table>
+<thead>
+<tr>
+<th>Flags</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>host</code></td>
+<td>The host running the Nakama instance you want to diagnose. Default value is <code>127.0.0.1</code>.</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>Dashboard port used by nakama. Default value is 7351.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="config-override">Config override<a class="headerlink" href="#config-override" title="Permanent link">&para;</a></h2>
+<p>Nakama comes with a default configuration which can be overriden by using a <a href="../install-configuration/">YML Configuration</a> file or by passing command line flags like below:</p>
+<div class="codehilite"><pre><span></span>nakama --config path/to/config.yml --purchase.apple.password <span class="s2">&quot;shared-secret&quot;</span> --database.address root@localhost:26257 --database.address root@machine-2:26257 
+</pre></div>
+
+
+<div class="admonition tip">
+<p class="admonition-title">Configuration Priority</p>
+<p>Command line flags override options set in a config file. Configuration file overrides default config options.</p>
+</div>
+<p>Have a look at <a href="../install-configuration/#server-configuration">Configuration documentation</a> for the complete list of configuration flags.</p>
                 
                   
                 
@@ -717,7 +866,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../user-accounts/" title="User accounts" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../install-configuration/" title="Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -726,19 +875,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                User accounts
+                Configuration
               </span>
             </div>
           </a>
         
         
-          <a href="../social-friends/" title="Friends" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../install-nakama-upgrade/" title="Upgrades" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Friends
+                Upgrades
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

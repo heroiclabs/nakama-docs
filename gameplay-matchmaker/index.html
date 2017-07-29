@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/docs/storage-collections/">
+        <link rel="canonical" href="https://heroiclabs.com/docs/gameplay-matchmaker/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Collections - Nakama server</title>
+        <title>Matchmaker - Nakama server</title>
       
     
     
@@ -84,11 +84,11 @@
             
               
                 <span class="md-header-nav__parent">
-                  Storage Engine
+                  Gameplay
                 </span>
               
             
-            Collections
+            Matchmaker
           
         </span>
       </div>
@@ -339,12 +339,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
     
     <label class="md-nav__link" for="nav-7">
       Storage Engine
@@ -360,20 +358,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-    <a href="./" title="Collections" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../storage-collections/" title="Collections" class="md-nav__link">
       Collections
     </a>
-    
   </li>
 
         
@@ -458,10 +447,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
     
     <label class="md-nav__link" for="nav-9">
       Gameplay
@@ -489,11 +480,74 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../gameplay-matchmaker/" title="Matchmaker" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Matchmaker
+      </label>
+    
+    <a href="./" title="Matchmaker" class="md-nav__link md-nav__link--active">
       Matchmaker
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#request-opponents" title="Request opponents" class="md-nav__link">
+    Request opponents
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#receive-matchmake-results" title="Receive matchmake results" class="md-nav__link">
+    Receive matchmake results
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cancel-a-request" title="Cancel a request" class="md-nav__link">
+    Cancel a request
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-a-match" title="Join a match" class="md-nav__link">
+    Join a match
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -687,6 +741,47 @@
     
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#request-opponents" title="Request opponents" class="md-nav__link">
+    Request opponents
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#receive-matchmake-results" title="Receive matchmake results" class="md-nav__link">
+    Receive matchmake results
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cancel-a-request" title="Cancel a request" class="md-nav__link">
+    Cancel a request
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-a-match" title="Join a match" class="md-nav__link">
+    Join a match
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -698,7 +793,84 @@
               
                 
                 
-                <h1 id="collections">Collections<a class="headerlink" href="#collections" title="Permanent link">&para;</a></h1>
+                <h1 id="matchmaker">Matchmaker<a class="headerlink" href="#matchmaker" title="Permanent link">&para;</a></h1>
+<p>In realtime and turn-based games it's important to be able to find active opponents to play against. A matchmaker system is designed to provide this kind of behavior.</p>
+<p>In the server we've taken the design further and decoupled how you're matched from the realtime multiplayer engine. This makes it easy to use the matchmaker system to find opponents even if the gameplay isn't realtime. It could be a casual social game where you want to find random new users to become friends with or an asynchronous PvP game where gameplay happens in a simulated battle.</p>
+<p>There's many kinds of gameplay experiences where you'd like to find other users outside of a realtime match.</p>
+<h2 id="request-opponents">Request opponents<a class="headerlink" href="#request-opponents" title="Permanent link">&para;</a></h2>
+<p>The distributed server maintains a pool of users who've requested to be matched together with a specific number of opponents. Each user can add themselves to the matchmaker pool and register an event handler to be notified when enough users meet their criteria to be matched.</p>
+<p>You can send a message to add the user to the matchmaker pool.</p>
+<div class="codehilite"><pre><span></span><span class="n">INMatchmakeTicket</span> <span class="n">matchmake</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+
+<span class="c1">// Look for a match for two participants. Yourself and one more.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchmakeAddMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INMatchmakeTicket</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Added user to matchmaker pool.&quot;</span><span class="p">);</span>
+
+  <span class="kt">var</span> <span class="n">cancelTicket</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Ticket</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;The cancellation code {0}&quot;</span><span class="p">,</span> <span class="n">cancelTicket</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted.</p>
+<p>This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.</p>
+<h3 id="receive-matchmake-results">Receive matchmake results<a class="headerlink" href="#receive-matchmake-results" title="Permanent link">&para;</a></h3>
+<p>You can register an event handler which is called when the server has found opponents for the user.</p>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NMatchmakeMatchedEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">INMatchmakeMatched</span> <span class="n">matched</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Matched</span><span class="p">;</span>
+  <span class="c1">// a match token is used to join the match.</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Match token: &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">matched</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+
+  <span class="c1">// a list of users who&#39;ve been matched as opponents.</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">presence</span> <span class="k">in</span> <span class="n">matched</span><span class="p">.</span><span class="n">Presence</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;User id: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">presence</span><span class="p">.</span><span class="n">UserId</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;User handle: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">presence</span><span class="p">.</span><span class="n">Handle</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<h2 id="cancel-a-request">Cancel a request<a class="headerlink" href="#cancel-a-request" title="Permanent link">&para;</a></h2>
+<p>After a user has sent a message to add themselves to the matchmaker pool you'll receive a ticket which can be used to cancel the action at some later point.</p>
+<p>Users may cancel matchmake actions at any point after they've added themselves to the pool but before they've been matched. Once matching completes for the ticket it can no longer be used to cancel.</p>
+<div class="codehilite"><pre><span></span><span class="n">INMatchmakeTicket</span> <span class="n">cancelTicket</span> <span class="p">=</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// See above.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchmakeRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">cancelTicket</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;User removed from matchmaker pool.&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>The user is now removed from the matchmaker pool.</p>
+<div class="admonition note">
+<p class="admonition-title">Removed on disconnect</p>
+<p>A user will automatically be removed from the matchmaker pool by the server when they disconnect.</p>
+</div>
+<h2 id="join-a-match">Join a match<a class="headerlink" href="#join-a-match" title="Permanent link">&para;</a></h2>
+<p>To join a match after the event handler has notified the user their criteria is met and they've been given opponents you can use the match token.</p>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NMatchmakeMatchedEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">INMatchmakeMatched</span> <span class="n">matched</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Matched</span><span class="p">;</span>
+
+  <span class="c1">// The match token is used to join a multiplayer match.</span>
+  <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchJoinMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">matched</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INMatch</span> <span class="n">match</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined match.&quot;</span><span class="p">);</span>
+  <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p>The token makes it easy to join a match. The token enables the server to know that these users wanted to join a match and is able to create a match dynamically for them.</p>
+<p>Tokens are short-lived and must be used to join a match as soon as possible. When a token expires it can no longer be used or refreshed.</p>
+<p>The match token is also used to prevent unwanted users from attempting to join a match they were not matched into. The rest of the multiplayer match code in the same as in the <a href="../gameplay-multiplayer-realtime/">realtime multiplayer section</a>.</p>
                 
                   
                 
@@ -717,7 +889,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../user-accounts/" title="User accounts" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../gameplay-leaderboards/" title="Leaderboards" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -726,19 +898,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                User accounts
+                Leaderboards
               </span>
             </div>
           </a>
         
         
-          <a href="../social-friends/" title="Friends" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../gameplay-multiplayer-realtime/" title="Realtime Multiplayer" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Friends
+                Realtime Multiplayer
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
