@@ -17,6 +17,9 @@ copyright: 'Copyright &copy; 2017 Heroic Labs'
 # Documentation and theme
 theme: 'material'
 
+extra_javascript:
+  - 'js/main.js'
+
 # Options
 extra:
   logo: 'images/logo-white.svg'
@@ -89,7 +92,7 @@ pages:
 #  - 'Managed Cloud': 'deployment-managed-cloud.md'
   - 'Digital Ocean': 'deployment-digital-ocean.md'
 - 'Tutorials':
-  - 'Add custom roles to groups': 'tutorial-add-custom-roles-to-groups.md'
+#  - 'Add custom roles to groups': 'tutorial-add-custom-roles-to-groups.md'
   - 'Initialize a new user': 'tutorial-initialize-new-user.md'
   - 'Remote configuration': 'tutorial-remote-configuration.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
