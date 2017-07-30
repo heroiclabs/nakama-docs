@@ -196,15 +196,27 @@
       
 
 
+  <li class="md-nav__item">
+    <a href=".." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
     
-    <label class="md-nav__link" for="nav-1">
+    <label class="md-nav__link" for="nav-2">
       Install and setup
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-1">
+      <label class="md-nav__title" for="nav-2">
         Install and setup
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -342,13 +354,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
     
-    <label class="md-nav__link" for="nav-7">
+    <label class="md-nav__link" for="nav-8">
       Storage Engine
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-7">
+      <label class="md-nav__title" for="nav-8">
         Storage Engine
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -378,13 +390,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
     
-    <label class="md-nav__link" for="nav-8">
+    <label class="md-nav__link" for="nav-9">
       Social
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-8">
+      <label class="md-nav__title" for="nav-9">
         Social
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -450,13 +462,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
     
-    <label class="md-nav__link" for="nav-9">
+    <label class="md-nav__link" for="nav-10">
       Gameplay
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
+      <label class="md-nav__title" for="nav-10">
         Gameplay
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -524,13 +536,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12" checked>
     
-    <label class="md-nav__link" for="nav-11">
+    <label class="md-nav__link" for="nav-12">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-11">
+      <label class="md-nav__title" for="nav-12">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -698,13 +710,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-13">
       Deployment
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-13">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -734,13 +746,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
     
-    <label class="md-nav__link" for="nav-13">
+    <label class="md-nav__link" for="nav-14">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-13">
+      <label class="md-nav__title" for="nav-14">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -1066,6 +1078,103 @@
 <span class="p">}</span>
 <span class="kd">local</span> <span class="n">new_groups</span> <span class="o">=</span> <span class="p">{</span> <span class="n">group</span> <span class="p">}</span>
 <span class="n">nk</span><span class="p">.</span><span class="n">groups_create</span><span class="p">(</span><span class="n">new_groups</span><span class="p">)</span>
+</pre></div>
+
+
+<p><strong>groups_update (update_groups)</strong></p>
+<p>Update one or more groups with various configuration settings. The groups which are updated can change some or all of their fields.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>update_groups</td>
+<td>table</td>
+<td>A Lua table of groups to be updated.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">some_field</span> <span class="o">=</span> <span class="s2">&quot;some value&quot;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">group</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">GroupId</span> <span class="o">=</span> <span class="s2">&quot;f00fa79a-750f-11e7-8626-0fb79f45ff97&quot;</span><span class="p">,</span>
+  <span class="n">Description</span> <span class="o">=</span> <span class="s2">&quot;An updated description.&quot;</span><span class="p">,</span>
+  <span class="n">Metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">update_groups</span> <span class="o">=</span> <span class="p">{</span> <span class="n">group</span> <span class="p">}</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">groups_update</span><span class="p">(</span><span class="n">update_groups</span><span class="p">)</span>
+</pre></div>
+
+
+<p><strong>groups_user_list (user_id)</strong></p>
+<p>List all groups which a user belongs to and whether they've been accepted into the group or if it's an invite.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+<td>string</td>
+<td>The Id of the user who's groups you want to list.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>A list of groups for the user.</p>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">user_id</span> <span class="o">=</span> <span class="s2">&quot;64ef6cb0-7512-11e7-9e52-d7789d80b70b&quot;</span>
+<span class="kd">local</span> <span class="n">groups</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">groups_user_list</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">g</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+<span class="kr">do</span>
+  <span class="kd">local</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Group name %q with id %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">g</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">g</span><span class="p">.</span><span class="n">Id</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+
+
+<p><strong>group_users_list (group_id)</strong></p>
+<p>List all members and admins which belong to a group.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>group_id</td>
+<td>string</td>
+<td>The Id of the group who's members and admins you want to list.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>The members and admins for the group.</p>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">group_id</span> <span class="o">=</span> <span class="s2">&quot;a1aafe16-7540-11e7-9738-13777fcc7cd8&quot;</span>
+<span class="kd">local</span> <span class="n">members</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">group_users_list</span><span class="p">(</span><span class="n">group_id</span><span class="p">)</span>
+<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">m</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">members</span><span class="p">)</span>
+<span class="kr">do</span>
+  <span class="kd">local</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Member handle %q has status %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">m</span><span class="p">.</span><span class="n">Type</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="kr">end</span>
 </pre></div>
 
 
