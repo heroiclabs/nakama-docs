@@ -48,6 +48,7 @@ markdown_extensions:
 
 # Nav menu
 pages:
+- 'Introduction': 'index.md'
 - 'Install and setup':
   - 'Docker quickstart': 'install-docker-quickstart.md'
   - 'Binary install': 'install-binary.md'
@@ -93,6 +94,7 @@ pages:
   - 'Digital Ocean': 'deployment-digital-ocean.md'
 - 'Tutorials':
 #  - 'Add custom roles to groups': 'tutorial-add-custom-roles-to-groups.md'
+#  - 'Authenticate with Game Center': 'tutorial-authenticate-with-game-center.md'
   - 'Initialize a new user': 'tutorial-initialize-new-user.md'
   - 'Remote configuration': 'tutorial-remote-configuration.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'

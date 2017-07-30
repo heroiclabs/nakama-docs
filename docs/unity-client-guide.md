@@ -9,7 +9,7 @@ The client is available on the <a href="https://www.assetstore.unity3d.com/en/#!
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-unity/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
 !!! Bug "Help and contribute"
-    The Unity client is <a href="" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
+    The Unity client is <a href="https://github.com/heroiclabs/nakama-unity" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
 
 ## Install and setup
 
