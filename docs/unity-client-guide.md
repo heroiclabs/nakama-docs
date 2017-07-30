@@ -22,7 +22,7 @@ using Nakama;
 using System.Collections;
 using UnityEngine;
 
-public class NakamaManager : MonoBehaviour {
+public class NakamaSessionManager : MonoBehaviour {
   void Start() {
     INClient client = new NClient.Builder("defaultkey")
         .Host("127.0.0.1")
@@ -42,7 +42,7 @@ We use the builder pattern with many classes in the Unity client. Most classes h
     By default the client uses connection settings "127.0.0.1" and 7350 to connect to a local Nakama server.
 
 ```csharp
-// quick setup a client for a local server.
+// Quickly setup a client for a local server.
 INClient client = NClient.Default("defaultkey");
 ```
 
@@ -50,7 +50,7 @@ Unity uses an entity component system (ECS) which makes it simple to share the c
 
 ## Authenticate
 
-With a client object you can authenticate against the server. You can register and/or login a [user](user-accounts.md) with one of the [authenticate options](authentication.md).
+With a client object you can authenticate against the server. You can register or login a [user](user-accounts.md) with one of the [authenticate options](authentication.md).
 
 To authenticate you should follow our recommended pattern in your client code:
 
@@ -85,7 +85,7 @@ if (!string.IsNullOrEmpty(sessionString)) {
 }
 ```
 
-&nbsp;&nbsp; 4\. Login or register user.
+&nbsp;&nbsp; 4\. Login or register a user.
 
 !!! Tip
     It's good practice to cache a device identifier when it's used to authenticate because they can change with device OS updates.
@@ -120,7 +120,7 @@ A __full example__ class with all code above is [here](#full-example).
 
 ## Send messages
 
-When a user has been authenticated and a session is used to connect with the server. You can send messages for all the different features in the server.
+When a user has been authenticated a session is used to connect with the server. You can then send messages for all the different features in the server.
 
 This could be to [add friends](social-friends.md), join [groups](social-groups-clans.md) and [chat](social-realtime-chat.md), or submit scores in [leaderboards](gameplay-leaderboards.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
 
@@ -171,7 +171,11 @@ Some events only need to be implemented for the features you want to use.
 
 ## Main thread dispatch
 
-The client runs all callbacks on a socket thread separate to the Unity main thread. We recommend a simple pattern which can be used to run any code which calls `UnityEngine` APIs.
+The client runs all callbacks on a socket thread separate to the Unity main thread.
+
+Unity engine does not let code which executes on another thread call one of it's APIs because of how it manages code execution within the game loop. This can causes errors which look something like "<SomeMethod\> can only be called from the main thread".
+
+We recommend a simple pattern which can be used to run any code which calls `UnityEngine` APIs.
 
 &nbsp;&nbsp; 1\. Add a queue to your script which manages a client.
 
@@ -202,7 +206,7 @@ client.Connect(_session, (bool done) => {
 You can see a more advanced version of this pattern in the [full example](#full-example).
 
 !!! Tip
-    This code pattern is not specific to our client. It's useful for any code which executes on a separate thread.
+    This code pattern is not specific to our client. It's useful for any code which executes on a separate thread with Unity engine.
 
 ### Managed client
 
@@ -215,10 +219,10 @@ using Nakama;
 using System.Collections;
 using UnityEngine;
 
-public class NakamaManager : MonoBehaviour {
+public class NakamaSessionManager : MonoBehaviour {
   private INClient _client;
 
-  public NakamaManager() {
+  public NakamaSessionManager() {
     var client = NClient.Default("defaultkey");
     _client = new NManagedClient(client);
   }
@@ -269,13 +273,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NakamaManager : MonoBehaviour {
+public class NakamaSessionManager : MonoBehaviour {
   private INClient _client;
   private INSession _session;
 
   private Queue<IEnumerator> _executionQueue;
 
-  public NakamaManager() {
+  public NakamaSessionManager() {
     _client = NClient.Default("defaultkey");
     _executionQueue = new Queue<IEnumerator>(1024);
   }
