@@ -136,6 +136,83 @@ local new_groups = { group }
 nk.groups_create(new_groups)
 ```
 
+__groups_update (update_groups)__
+
+Update one or more groups with various configuration settings. The groups which are updated can change some or all of their fields.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| update_groups | table | A Lua table of groups to be updated. |
+
+_Example_
+
+```lua
+local metadata = {
+  some_field = "some value"
+}
+local group = {
+  GroupId = "f00fa79a-750f-11e7-8626-0fb79f45ff97",
+  Description = "An updated description.",
+  Metadata = metadata
+}
+local update_groups = { group }
+nk.groups_update(update_groups)
+```
+
+__groups_user_list (user_id)__
+
+List all groups which a user belongs to and whether they've been accepted into the group or if it's an invite.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | The Id of the user who's groups you want to list. |
+
+_Returns_
+
+A list of groups for the user.
+
+_Example_
+
+```lua
+local user_id = "64ef6cb0-7512-11e7-9e52-d7789d80b70b"
+local groups = nk.groups_user_list(user_id)
+for _, g in ipairs(groups)
+do
+  local msg = ("Group name %q with id %q"):format(g.Name, g.Id)
+  print(msg)
+end
+```
+
+__group_users_list (group_id)__
+
+List all members and admins which belong to a group.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| group_id | string | The Id of the group who's members and admins you want to list. |
+
+_Returns_
+
+The members and admins for the group.
+
+_Example_
+
+```lua
+local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+local members = nk.group_users_list(group_id)
+for _, m in ipairs(members)
+do
+  local msg = ("Member handle %q has status %q"):format(m.Handle, m.Type)
+  print(msg)
+end
+```
+
 ### http
 
 __http_request (url, method, headers, content)__
