@@ -82,10 +82,13 @@ Each user can list groups they've joined as a member or an admin. The list also 
 
 ```csharp fct_label="Unity"
 var message = NGroupsSelfListMessage.Default();
-client.Send(message, (INResultSet<INGroup> list) => {
+client.Send(message, (INResultSet<INGroupSelf> list) => {
   foreach (var group in list.Results) {
     var id = Encoding.UTF8.GetString(group.Id);  // convert byte[].
     Debug.LogFormat("Group: name '{0}' id '{1}'.", group.Name, id);
+    // group.State is one of: Admin, Member, or Join.
+    GroupState state = group.State;
+    Debug.LogFormat("Group's state is '{0}'.", state);
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -104,9 +107,9 @@ client.Send(message, (INResultSet<INGroupUser> list) => {
   foreach (var member in list.Results) {
     var id = Encoding.UTF8.GetString(member.Id);  // convert byte[].
     Debug.LogFormat("Member id '{0}' with name '{1}'.", id, member.Fullname);
-    // member.Type is one of: Admin, Member, Join.
-    UserType status = member.Type;
-    Debug.LogFormat("Has handle '{0}' with status '{1}'.", member.Handle, status);
+    // member.State is one of: Admin, Member, or Join.
+    UserState state = member.State;
+    Debug.LogFormat("Has handle '{0}' with state '{1}'.", member.Handle, state);
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);

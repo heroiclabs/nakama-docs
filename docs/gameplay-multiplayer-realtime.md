@@ -61,16 +61,14 @@ When a user joins a match they receive an initial list of connected opponents. A
 ```csharp fct_label="Unity"
 IList<INUserPresence> connectedOpponents = new List<INUserPresence>();
 
-client.OnMatchPresence += (object source, NMatchPresenceEventArgs args) => {
-  INMatchPresence presenceUpdate = args.MatchPresence;
-
+client.OnMatchPresence = (INMatchPresence presences) => {
   // Remove all users who left.
-  foreach (var user in presenceUpdate.Leave) {
+  foreach (var user in presences.Leave) {
     connectedOpponents.Remove(user);
   }
 
   // Add all users who joined.
-  connectedOpponents.AddRange(presenceUpdate.Join);
+  connectedOpponents.AddRange(presences.Join);
 };
 ```
 
@@ -106,10 +104,9 @@ A client can add a callback for incoming match data messages. This should be don
     The server delivers data in the order it processes data messages from clients.
 
 ```csharp fct_label="Unity"
-client.OnMatchData += (object source, NMatchDataEventArgs args) => {
-  INMatchData m = args.Data;
+client.OnMatchData = (INMatchData m) => {
   var content = Encoding.UTF8.GetString(m.Data);
-  switch (data.OpCode) {
+  switch (m.OpCode) {
   case 101L:
     Debug.Log("A custom opcode.");
     break;

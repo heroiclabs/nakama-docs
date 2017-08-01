@@ -143,23 +143,23 @@ Have a look at other sections of documentation for more code examples.
 
 ## Handle events
 
-The client uses event handlers which are called on various events received from the server.
+The client has callbacks which are called on various events received from the server.
 
 ```csharp
-client.OnError += (NErrorEventArgs args) => {
-  INError err = args.Error;
+client.OnError = (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 };
 
-client.OnDisconnect += () => {
+client.OnDisconnect = (INDisconnectEvent evt) => {
   Debug.Log("Disconnected from server.");
+  Debug.LogFormat("Reason '{0}'", evt.Reason);
 }
 ```
 
 Some events only need to be implemented for the features you want to use.
 
-| Event handler | Description |
-| ------------- | ----------- |
+| Callbacks | Description |
+| --------- | ----------- |
 | OnDisconnect | Handles an event for when the client is disconnected from the server. |
 | OnError | Receives events about server errors. |
 | OnMatchData | Handles [realtime match](gameplay-multiplayer-realtime.md) messages. |

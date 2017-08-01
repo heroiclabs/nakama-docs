@@ -47,11 +47,10 @@ nk.notification_send_id(notifications)
 
 ## Receive notifications
 
-An event handler can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.
+A callback can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.
 
 ```csharp fct_label="Unity"
-client.OnNotification += (object sender, NNotificationEventArgs args) => {
-  INNotification n = args.Notification;
+client.OnNotification = (INNotification n) => {
   Debug.LogFormat("Received code '{0}' and subject '{1}'.", n.Code, n.Subject);
   var content = Encoding.UTF8.GetString(n.Content); // convert byte[].
   Debug.LogFormat("Received id '{0}' and content '{1}'.", n.Id, content);

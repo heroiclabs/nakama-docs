@@ -36,8 +36,7 @@ This is useful for some games where a user can cancel their action to matchmake 
 You can register an event handler which is called when the server has found opponents for the user.
 
 ```csharp fct_label="Unity"
-client.OnMatchmakeMatched += (object source, NMatchmakeMatchedEventArgs args) => {
-  INMatchmakeMatched matched = args.Matched;
+client.OnMatchmakeMatched = (INMatchmakeMatched matched) => {
   // a match token is used to join the match.
   Debug.LogFormat("Match token: '{0}'", matched.Token);
 
@@ -76,9 +75,7 @@ The user is now removed from the matchmaker pool.
 To join a match after the event handler has notified the user their criteria is met and they've been given opponents you can use the match token.
 
 ```csharp fct_label="Unity"
-client.OnMatchmakeMatched += (object source, NMatchmakeMatchedEventArgs args) => {
-  INMatchmakeMatched matched = args.Matched;
-
+client.OnMatchmakeMatched = (INMatchmakeMatched matched) => {
   // The match token is used to join a multiplayer match.
   var message = NMatchJoinMessage.Default(matched.Token);
   client.Send(message, (INMatch match) => {

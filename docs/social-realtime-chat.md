@@ -19,8 +19,7 @@ There are 3 types of topic:
 A user joins a chat topic to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.
 
 ```csharp fct_label="Unity"
-client.OnTopicMessage += (object source, NTopicMessageEventArgs args) => {
-  INTopicMessage message = args.TopicMessage;
+client.OnTopicMessage = (INTopicMessage message) => {
   // TopicType will be one of DirectMessage, Room, or Group.
   Debug.LogFormat("Received a '{0}' message.", message.Topic.TopicType);
   var id = Encoding.UTF8.GetString(message.Topic.Id);     // convert byte[].
@@ -138,7 +137,7 @@ Each user who joins a chat becomes a "presence" in the chat topic. These presenc
 
 A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat topic.
 
-The user who [joins a chat topic](#join-chat) receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive presence changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.
+The user who [joins a chat topic](#join-chat) receives an initial presence list of all other connected users in the chat topic. A callback can be used to receive presence changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.
 
 !!! Summary
     A list of all online users is received when a user joins a chat topic you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
@@ -146,14 +145,13 @@ The user who [joins a chat topic](#join-chat) receives an initial presence list 
 ```csharp fct_label="Unity"
 IList<INUserPresence> onlineUsers = new List<INUserPresence>();
 
-client.OnTopicPresence += (object source, NTopicPresenceEventArgs args) => {
-  INTopicPresence presenceUpdate = args.TopicPresence;
+client.OnTopicPresence = (INTopicPresence presences) => {
   // Remove all users who left.
-  foreach (var user in presenceUpdate.Leave) {
+  foreach (var user in presences.Leave) {
     onlineUsers.Remove(user);
   }
   // Add all users who joined.
-  onlineUsers.AddRange(presenceUpdate.Join);
+  onlineUsers.AddRange(presences.Join);
 };
 
 byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.

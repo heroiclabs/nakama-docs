@@ -82,7 +82,7 @@ byte[] json = Encoding.UTF8.GetBytes(jsonString);
 
 var message = new NStorageUpdateMessage.Builder()
     .Update("mygame", "wallets", "mywallet", new StorageUpdateBuilder()
-        .Init("/", json)     // make sure record is setup.
+        .Init("", json)     // make sure record is setup.
         .Incr("/coins", -10) // perform other updates to the record.
         .Build())
     .Build();
@@ -104,7 +104,7 @@ local value = {
   artifacts = 0
 }
 local update_ops = {
-  { Op = "init", Path = "/", Value = value }, -- make sure record is setup.
+  { Op = "init", Path = "", Value = value }, -- make sure record is setup.
 
   -- perform other updates to the record.
   { Op = "incr", Path = "/coins", Value = -10 }
