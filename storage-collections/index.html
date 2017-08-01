@@ -428,9 +428,36 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#list-records" title="List records" class="md-nav__link">
+    List records
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#update-records" title="Update records" class="md-nav__link">
     Update records
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operations" title="Operations" class="md-nav__link">
+    Operations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paths" title="Paths" class="md-nav__link">
+    Paths
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -779,9 +806,36 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#list-records" title="List records" class="md-nav__link">
+    List records
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#update-records" title="Update records" class="md-nav__link">
     Update records
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operations" title="Operations" class="md-nav__link">
+    Operations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paths" title="Paths" class="md-nav__link">
+    Paths
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -808,8 +862,9 @@
                 
                 
                 <h1 id="collections">Collections<a class="headerlink" href="#collections" title="Permanent link">&para;</a></h1>
-<p>Every app or game has data which is specific to the project. This information must be stored for users, updated, retrieved, and displayed within various parts of a UI. For this purpose the server incorporates a storage engine with a design optimized for record ownership, access permissions, and batch operations.</p>
-<p>Data should be stored in collections as one or more records which are retrieved by a unique key with JSON content. A collection is created without any configuration required and are grouped into buckets. This creates a simple nested namespace which represents the location of a record.</p>
+<p>Every app or game has data which is specific to the project.</p>
+<p>This information must be stored for users, updated, retrieved, and displayed within various parts of a UI. For this purpose the server incorporates a storage engine with a design optimized for record ownership, access permissions, and batch operations.</p>
+<p>Data is stored in collections with one or more records which contain a unique key with JSON content. A collection is created without any configuration required and are grouped into buckets. This creates a simple nested namespace which represents the location of a record.</p>
 <div class="codehilite"><pre><span></span>Bucket
 +---------------------------------------------------------------------------+
 |  Collection                                                               |
@@ -830,13 +885,15 @@
 <p class="admonition-title">Tip</p>
 <p>In most cases you won't need to group data under multiple buckets so it can be easiest to just name it after your project. For example "Super Mario Run" could use a bucket name "smr" or similar.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{&#39;progress&#39;: 50}&quot;</span><span class="p">);</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">myStats</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{&#39;skill&#39;: 24}&quot;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="p">);</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">myStats</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;skill\&quot;: 24}&quot;</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">bucket</span> <span class="p">=</span> <span class="s">&quot;myapp&quot;</span><span class="p">;</span>
 
 <span class="c1">// Write multiple different records across collections.</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
-    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">saveGame</span><span class="p">)</span>
-    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;stats&quot;</span><span class="p">,</span> <span class="s">&quot;mystats&quot;</span><span class="p">,</span> <span class="n">myStats</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">saveGame</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s">&quot;stats&quot;</span><span class="p">,</span> <span class="s">&quot;mystats&quot;</span><span class="p">,</span> <span class="n">myStats</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
@@ -850,15 +907,193 @@
 
 
 <h3 id="conditional-writes">Conditional writes<a class="headerlink" href="#conditional-writes" title="Permanent link">&para;</a></h3>
-<p>When records are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks as the next write occurs. This is often known as a conditional write.</p>
-<div class="codehilite"><pre><span></span>
+<p>When records are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is often known as a conditional write.</p>
+<p>A conditional write ensures a client can only update the record if they've seen the previous version of the record already. The goal is to prevent a change to the record if another client has changed the value between when the first client's read and it's next write.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="p">);</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">saveGame</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">version</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// cache updated version for next write.</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>We support another kind of conditional write which is used to write a record only if none already exists for that record's key name.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 1}&quot;</span><span class="p">);</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">);</span> <span class="c1">// represents &quot;no version&quot;.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">saveGame</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">version</span> <span class="p">=</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// cache updated version for next write.</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
 
 
 <h2 id="fetch-records">Fetch records<a class="headerlink" href="#fetch-records" title="Permanent link">&para;</a></h2>
+<p>Just like with <a href="#write-records">writing records</a> you can fetch one or more records from the database server.</p>
+<p>Each record has an owner and permissions. A record can only be fetched if the permissions allow it. A record which has no owner can be fetched with <code>null</code> and is useful for global records which all users should be able to read.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageFetchMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Fetch</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Fetch</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;configuration&quot;</span><span class="p">,</span> <span class="s">&quot;config&quot;</span><span class="p">,</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageData</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record value &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;{0}&#39; write &#39;{1}&#39;&quot;</span><span class="p">,</span>
+        <span class="n">record</span><span class="p">.</span><span class="n">PermissionRead</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">PermissionWrite</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<h2 id="list-records">List records<a class="headerlink" href="#list-records" title="Permanent link">&para;</a></h2>
+<p>You can list records in a collection and page through results. The records returned can be filter to those owned by the user or <code>"null"</code> for public records which aren't owned by a user.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Bucket</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Collection</span><span class="p">(</span><span class="s">&quot;saves&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">UserId</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageData</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record value &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;{0}&#39; write &#39;{1}&#39;&quot;</span><span class="p">,</span>
+        <span class="n">record</span><span class="p">.</span><span class="n">PermissionRead</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">PermissionWrite</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
 <h2 id="update-records">Update records<a class="headerlink" href="#update-records" title="Permanent link">&para;</a></h2>
+<p>Every record's value is required to be a JSON object. To update the value you can fetch the object modify it and write it back; but a more efficient option is to update the value on the server based on a set of "operations".</p>
+<h3 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">&para;</a></h3>
+<p>You can create a sequence of operations which are applied to the JSON object. If any of the operations fail, then the update is aborted, and none of the changes are applied. Each operation has a code and makes a specific change to the object.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add</td>
+<td>Add field or value to array at the path.</td>
+</tr>
+<tr>
+<td>append</td>
+<td>Append a value or array of values at the path.</td>
+</tr>
+<tr>
+<td>copy</td>
+<td>Copy value at the path to another path.</td>
+</tr>
+<tr>
+<td>incr</td>
+<td>Add a positive/negative value to the value at the path.</td>
+</tr>
+<tr>
+<td>init</td>
+<td>Initialize the value at the path only if it's not already present.</td>
+</tr>
+<tr>
+<td>merge</td>
+<td>Perform a merge of the object at the path.</td>
+</tr>
+<tr>
+<td>move</td>
+<td>Move a value from one path to another and remove from the original path.</td>
+</tr>
+<tr>
+<td>remove</td>
+<td>Remove the value or array at the path.</td>
+</tr>
+<tr>
+<td>replace</td>
+<td>Replaces an existing value at the specified path.</td>
+</tr>
+<tr>
+<td>test</td>
+<td>Tests equality of the value at the path. The entire patch set fails if the test fails.</td>
+</tr>
+<tr>
+<td>compare</td>
+<td>Performs a comparator which returns -1, 0, or 1 depending on whether the value is less than, the same, or greater than the value in the path.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="paths">Paths<a class="headerlink" href="#paths" title="Permanent link">&para;</a></h3>
+<p>Paths are used to refer to certain parts of a JSON object. They're separated by forward slashes <code>"/name/first"</code> and will be interpreted as a <a href="http://tools.ietf.org/html/rfc6901" target="\_blank">JSON Pointer</a>.</p>
+<p>Array positions in a path are indicated using a zero-indexed integer <code>"stash.4.item_name"</code>. You can append to the end of the array with the 'append' operation. If the value specified in the append is an array all of the entries in the value will be appended to the array in the path.</p>
+<p>You can update one or more records with different update operations.</p>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">jsonString</span> <span class="p">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="p">;</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">json</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">jsonString</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageUpdateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Update</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;wallets&quot;</span><span class="p">,</span> <span class="s">&quot;wallet&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">NStorageUpdateMessage</span><span class="p">.</span><span class="n">StorageUpdateBuilder</span><span class="p">()</span>
+        <span class="p">.</span><span class="n">Init</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">json</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Incr</span><span class="p">(</span><span class="s">&quot;/coins&quot;</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Incr</span><span class="p">(</span><span class="s">&quot;/gems&quot;</span><span class="p">,</span> <span class="m">50</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Build</span><span class="p">())</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">var</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Successfully stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
 <h2 id="remove-records">Remove records<a class="headerlink" href="#remove-records" title="Permanent link">&para;</a></h2>
-<p>Inside the database a flattened hierarchy is used for each record with a composite key used to uniquely identify it.</p>
+<p>A user can remove a record if it has the correct permissions and they own it.</p>
+<div class="admonition note">
+<p class="admonition-title">Soft delete</p>
+<p>A record is not permanently deleted from the server when removed. It remains until overwritten but cannot be read by the client. This is useful in case you need to restore a user's records later.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageRemoveMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Removed user&#39;s record(s).&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>You can also conditionally remove an object if the object version matches the version sent by the client.</p>
+<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
+
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageRemoveMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Removed user&#39;s record(s).&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
                 
                   
                 

@@ -819,8 +819,7 @@
 <p>This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.</p>
 <h3 id="receive-matchmake-results">Receive matchmake results<a class="headerlink" href="#receive-matchmake-results" title="Permanent link">&para;</a></h3>
 <p>You can register an event handler which is called when the server has found opponents for the user.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NMatchmakeMatchedEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">INMatchmakeMatched</span> <span class="n">matched</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Matched</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchmakeMatched</span> <span class="n">matched</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// a match token is used to join the match.</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Match token: &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">matched</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
 
@@ -854,9 +853,7 @@
 </div>
 <h2 id="join-a-match">Join a match<a class="headerlink" href="#join-a-match" title="Permanent link">&para;</a></h2>
 <p>To join a match after the event handler has notified the user their criteria is met and they've been given opponents you can use the match token.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NMatchmakeMatchedEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">INMatchmakeMatched</span> <span class="n">matched</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Matched</span><span class="p">;</span>
-
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchmakeMatched</span> <span class="n">matched</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// The match token is used to join a multiplayer match.</span>
   <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchJoinMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">matched</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
   <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INMatch</span> <span class="n">match</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>

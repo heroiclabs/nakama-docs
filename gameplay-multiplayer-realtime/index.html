@@ -860,16 +860,14 @@
 <p>When a user joins a match they receive an initial list of connected opponents. As other users join or leave the server will push events to clients which can be used to update the list of connected opponents.</p>
 <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">connectedOpponents</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
 
-<span class="n">client</span><span class="p">.</span><span class="n">OnMatchPresence</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NMatchPresenceEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">INMatchPresence</span> <span class="n">presenceUpdate</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">MatchPresence</span><span class="p">;</span>
-
+<span class="n">client</span><span class="p">.</span><span class="n">OnMatchPresence</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchPresence</span> <span class="n">presences</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// Remove all users who left.</span>
-  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">user</span> <span class="k">in</span> <span class="n">presenceUpdate</span><span class="p">.</span><span class="n">Leave</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">user</span> <span class="k">in</span> <span class="n">presences</span><span class="p">.</span><span class="n">Leave</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">connectedOpponents</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
   <span class="p">}</span>
 
   <span class="c1">// Add all users who joined.</span>
-  <span class="n">connectedOpponents</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">presenceUpdate</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span>
+  <span class="n">connectedOpponents</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">presences</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 
@@ -899,10 +897,9 @@
 <p class="admonition-title">Message sequences</p>
 <p>The server delivers data in the order it processes data messages from clients.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchData</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NMatchDataEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">INMatchData</span> <span class="n">m</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchData</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchData</span> <span class="n">m</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kt">var</span> <span class="n">content</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
-  <span class="k">switch</span> <span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">OpCode</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">OpCode</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">case</span> <span class="m">101L</span><span class="p">:</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;A custom opcode.&quot;</span><span class="p">);</span>
     <span class="k">break</span><span class="p">;</span>

@@ -980,14 +980,14 @@
 
 <p>Have a look at other sections of documentation for more code examples.</p>
 <h2 id="handle-events">Handle events<a class="headerlink" href="#handle-events" title="Permanent link">&para;</a></h2>
-<p>The client uses event handlers which are called on various events received from the server.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnError</span> <span class="p">+=</span> <span class="p">(</span><span class="n">NErrorEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">INError</span> <span class="n">err</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">Error</span><span class="p">;</span>
+<p>The client has callbacks which are called on various events received from the server.</p>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnError</span> <span class="p">=</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="n">client</span><span class="p">.</span><span class="n">OnDisconnect</span> <span class="p">+=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">OnDisconnect</span> <span class="p">=</span> <span class="p">(</span><span class="n">INDisconnectEvent</span> <span class="n">evt</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Disconnected from server.&quot;</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Reason &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">evt</span><span class="p">.</span><span class="n">Reason</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -996,7 +996,7 @@
 <table>
 <thead>
 <tr>
-<th>Event handler</th>
+<th>Callbacks</th>
 <th>Description</th>
 </tr>
 </thead>

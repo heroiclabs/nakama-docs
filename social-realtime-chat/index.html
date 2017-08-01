@@ -881,8 +881,7 @@
 </ol>
 <h2 id="receive-messages">Receive messages<a class="headerlink" href="#receive-messages" title="Permanent link">&para;</a></h2>
 <p>A user joins a chat topic to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnTopicMessage</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NTopicMessageEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">INTopicMessage</span> <span class="n">message</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">TopicMessage</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnTopicMessage</span> <span class="p">=</span> <span class="p">(</span><span class="n">INTopicMessage</span> <span class="n">message</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// TopicType will be one of DirectMessage, Room, or Group.</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received a &#39;{0}&#39; message.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">TopicType</span><span class="p">);</span>
   <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>     <span class="c1">// convert byte[].</span>
@@ -1026,21 +1025,20 @@
 <h2 id="list-online-users">List online users<a class="headerlink" href="#list-online-users" title="Permanent link">&para;</a></h2>
 <p>Each user who joins a chat becomes a "presence" in the chat topic. These presences keep information about which users are online.</p>
 <p>A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat topic.</p>
-<p>The user who <a href="#join-chat">joins a chat topic</a> receives an initial presence list of all other connected users in the chat topic. An event handler can be used to receive presence changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.</p>
+<p>The user who <a href="#join-chat">joins a chat topic</a> receives an initial presence list of all other connected users in the chat topic. A callback can be used to receive presence changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.</p>
 <div class="admonition summary">
 <p class="admonition-title">Summary</p>
 <p>A list of all online users is received when a user joins a chat topic you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.</p>
 </div>
 <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">onlineUsers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
 
-<span class="n">client</span><span class="p">.</span><span class="n">OnTopicPresence</span> <span class="p">+=</span> <span class="p">(</span><span class="kt">object</span> <span class="n">source</span><span class="p">,</span> <span class="n">NTopicPresenceEventArgs</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">INTopicPresence</span> <span class="n">presenceUpdate</span> <span class="p">=</span> <span class="n">args</span><span class="p">.</span><span class="n">TopicPresence</span><span class="p">;</span>
+<span class="n">client</span><span class="p">.</span><span class="n">OnTopicPresence</span> <span class="p">=</span> <span class="p">(</span><span class="n">INTopicPresence</span> <span class="n">presences</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// Remove all users who left.</span>
-  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">user</span> <span class="k">in</span> <span class="n">presenceUpdate</span><span class="p">.</span><span class="n">Leave</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">user</span> <span class="k">in</span> <span class="n">presences</span><span class="p">.</span><span class="n">Leave</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">onlineUsers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="c1">// Add all users who joined.</span>
-  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">presenceUpdate</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">presences</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span>
 <span class="p">};</span>
 
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
