@@ -726,7 +726,7 @@ local user_ids = {
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936"
 }
-local users = nk.user_fetch_id(user_ids)
+local users = nk.users_fetch_id(user_ids)
 for _, u in ipairs(users)
 do
   local message = ("handle: %q, fullname: %q"):format(u.Handle, u.Fullname)

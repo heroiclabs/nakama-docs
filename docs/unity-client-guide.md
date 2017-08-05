@@ -341,6 +341,14 @@ public class NakamaSessionManager : MonoBehaviour {
     });
   }
 
+  private void Update() {
+    lock (_executionQueue) {
+      for (int i = 0, len = _executionQueue.Count; i < len; i++) {
+        StartCoroutine(_executionQueue.Dequeue());
+      }
+    }
+  }
+
   private void OnApplicationQuit() {
     if (_session != null) {
       _client.Disconnect();
@@ -349,11 +357,10 @@ public class NakamaSessionManager : MonoBehaviour {
 
   private void Enqueue(Action action) {
     lock (_executionQueue) {
+      _executionQueue.Enqueue(ActionWrapper(action));
       if (_executionQueue.Count > 1024) {
-        // Prevent a memory leak if game code can't process events fast.
+        Debug.LogWarning("Queued actions not consumed fast enough.");
         _client.Disconnect();
-      } else {
-        _executionQueue.Enqueue(ActionWrapper(action));
       }
     }
   }
