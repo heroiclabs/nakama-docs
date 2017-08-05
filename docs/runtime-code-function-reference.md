@@ -445,7 +445,7 @@ _Example_
 local function my_func(context, payload)
   -- run some code
 end
-nk.register_after(my_func, "TFriendsAdd")
+nk.register_after(my_func, "tfriendsadd")
 ```
 
 ---
@@ -454,7 +454,7 @@ __register_before (func, msgname)__
 
 Register a function with the server which will be executed before every message with the specified message name.
 
-For example `register_before(somefunc, "TFriendAdd")` will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on [runtime code basics](runtime-code-basics.md).
+For example `register_before(somefunc, "tfriendsadd")` will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
 _Parameters_
 
@@ -473,7 +473,7 @@ local function my_func(context, payload)
   -- run some code
   return payload -- important!
 end
-nk.register_before(my_func, "TFriendsAdd")
+nk.register_before(my_func, "tfriendsadd")
 ```
 
 ---
@@ -763,7 +763,7 @@ end
 
 __uuid_v4 ()__
 
-Generate a version 4 UUID.
+Generate a version 4 UUID in the standard 36-character string representation.
 
 _Returns_
 
@@ -774,4 +774,52 @@ _Example_
 ```lua
 local uuid = nk.uuid_v4()
 print(uuid)
+```
+
+---
+
+__uuid_bytes_to_string (uuid_bytes)__
+
+Convert the 16-byte raw representation of a UUID into the equivalent 36-character standard UUID string representation. Will raise an error if the input is not valid and cannot be converted.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| uuid_bytes | string | The UUID bytes to convert. |
+
+_Returns_
+
+A string containing the equivalent 36-character standard representation of the UUID.
+
+_Example_
+
+```lua
+local uuid_bytes = "\78\196\241\38\63\157\17\231\132\239\183\193\130\179\101\33" -- some uuid bytes.
+local uuid_string = nk.uuid_bytes_to_string(uuid_bytes)
+print(uuid_string)
+```
+
+---
+
+__uuid_string_to_bytes (uuid_string)__
+
+Convert the 36-character string representation of a UUID into the equivalent 16-byte raw UUID representation. Will raise an error if the input is not valid and cannot be converted.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| uuid_string | string | The UUID string to convert. |
+
+_Returns_
+
+A string containing the equivalent 16-byte representation of the UUID.
+
+_Example_
+
+```lua
+local uuid_string = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some uuid string.
+local uuid_bytes = nk.uuid_string_to_bytes(uuid_string)
+print(uuid_bytes)
 ```

@@ -71,13 +71,12 @@ local nk = require("nakama")
 local function limit_friends(context, payload)
   local user = nk.user_fetch_id({context.UserId})[1]
   -- lets assume we've stored a user's level in their metadata.
-  local metadata = nk.json_decode(user.Metadata)
-  if metadata.level <= 10 then
+  if user.Metadata.level <= 10 then
     error("Must reach level 10 before you can add friends.")
   end
   return payload -- important!
 end
-nk.register_before(limit_friends, "TFriendAdd")
+nk.register_before(limit_friends, "tfriendsadd")
 ```
 
 The code above fetches the current user's profile and checks the metadata which is assumed to be JSON encoded with `"{level: 12}"` in it. If a user's level is too low an error is thrown to prevent the Friend Add message from being passed onwards in the server pipeline.
@@ -106,7 +105,7 @@ local function add_reward(context, payload)
   nk.storage_write({ record })
 end
 
-nk.register_after(add_reward, "TFriendAdd")
+nk.register_after(add_reward, "tfriendsadd")
 ```
 
 The simple code above writes a record to a user's storage when they add a friend. Any data returned by the function will be discarded.
