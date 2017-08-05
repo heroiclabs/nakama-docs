@@ -65,7 +65,7 @@ You may come across a permissions error. If you’re happy to perform the action
 
 ```shell fct_label="Shell"
 # migrate schema
-nakama migration up
+nakama migrate up
 # start the server and output logs to the terminal
 nakama --log.stdout
 ```
@@ -80,7 +80,7 @@ Nakama is also available as a [Windows binary](https://github.com/heroiclabs/nak
 
 ```shell fct_label="Powershell"
 # migrate schema
-nakama.exe migration up
+nakama.exe migrate up
 # start the server and output logs to the terminal
 nakama.exe --log.stdout
 ```
@@ -110,7 +110,7 @@ cp -i nakama /usr/local/bin
 
 ```shell fct_label="Shell"
 # migrate schema
-nakama migration up
+nakama migrate up
 # start the server and output logs to the terminal
 nakama --log.stdout
 ```
