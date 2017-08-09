@@ -132,7 +132,7 @@ byte[] json = Encoding.UTF8.GetBytes("{\"jsonkey\":\"jsonvalue\"}");
 var message = new NStorageWriteMessage.Builder()
     .Write("someBucket", "someCollection", "myRecord", storageValue)
     .Build();
-client.Send(message, (bool done) => {
+client.Send(message, (INResultSet<INStorageKey> list) => {
   Debug.Log("Successfully wrote record.");
 }, (INError error) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);

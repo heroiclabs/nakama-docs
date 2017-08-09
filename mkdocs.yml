@@ -56,10 +56,10 @@ pages:
   - 'Nakama CLI': 'install-server-cli.md'
   - 'Upgrades': 'install-nakama-upgrade.md'
 - 'Unity client guide': 'unity-client-guide.md'
+- 'Android client guide': 'android-java-client-guide.md'
 - 'JavaScript client guide': 'javascript-client-guide.md'
 - 'Swift/iOS client guide': 'swift-ios-client-guide.md'
 #- 'Unreal engine': 'nakama-unreal-engine.md'
-#- 'Android guide': 'nakama-android-guide.md'
 - 'Authentication': 'authentication.md'
 - 'User accounts': 'user-accounts.md'
 - 'Storage Engine':
@@ -95,6 +95,7 @@ pages:
 - 'Tutorials':
 #  - 'Add custom roles to groups': 'tutorial-add-custom-roles-to-groups.md'
 #  - 'Authenticate with Game Center': 'tutorial-authenticate-with-game-center.md'
+  - 'Develop with LibGDX': 'tutorial-develop-with-libgdx.md'
   - 'Initialize a new user': 'tutorial-initialize-new-user.md'
   - 'Remote configuration': 'tutorial-remote-configuration.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
