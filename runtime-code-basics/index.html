@@ -305,6 +305,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../android-java-client-guide/" title="Android client guide" class="md-nav__link">
+      Android client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../javascript-client-guide/" title="JavaScript client guide" class="md-nav__link">
       JavaScript client guide
     </a>
@@ -354,13 +366,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
     
-    <label class="md-nav__link" for="nav-8">
+    <label class="md-nav__link" for="nav-9">
       Storage Engine
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-8">
+      <label class="md-nav__title" for="nav-9">
         Storage Engine
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -390,13 +402,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
     
-    <label class="md-nav__link" for="nav-9">
+    <label class="md-nav__link" for="nav-10">
       Social
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
+      <label class="md-nav__title" for="nav-10">
         Social
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -462,13 +474,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
     
-    <label class="md-nav__link" for="nav-10">
+    <label class="md-nav__link" for="nav-11">
       Gameplay
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-11">
         Gameplay
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -536,13 +548,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13" checked>
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-13">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-13">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -689,13 +701,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
     
-    <label class="md-nav__link" for="nav-13">
+    <label class="md-nav__link" for="nav-14">
       Deployment
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-13">
+      <label class="md-nav__title" for="nav-14">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -725,17 +737,29 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
     
-    <label class="md-nav__link" for="nav-14">
+    <label class="md-nav__link" for="nav-15">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-14">
+      <label class="md-nav__title" for="nav-15">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-develop-with-libgdx/" title="Develop with LibGDX" class="md-nav__link">
+      Develop with LibGDX
+    </a>
+  </li>
+
         
           
           
@@ -954,13 +978,12 @@
 <span class="kd">local</span> <span class="kr">function</span> <span class="nf">limit_friends</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
   <span class="kd">local</span> <span class="n">user</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">user_fetch_id</span><span class="p">({</span><span class="n">context</span><span class="p">.</span><span class="n">UserId</span><span class="p">})[</span><span class="mi">1</span><span class="p">]</span>
   <span class="c1">-- lets assume we&#39;ve stored a user&#39;s level in their metadata.</span>
-  <span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">json_decode</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Metadata</span><span class="p">)</span>
-  <span class="kr">if</span> <span class="n">metadata</span><span class="p">.</span><span class="n">level</span> <span class="o">&lt;=</span> <span class="mi">10</span> <span class="kr">then</span>
+  <span class="kr">if</span> <span class="n">user</span><span class="p">.</span><span class="n">Metadata</span><span class="p">.</span><span class="n">level</span> <span class="o">&lt;=</span> <span class="mi">10</span> <span class="kr">then</span>
     <span class="nb">error</span><span class="p">(</span><span class="s2">&quot;Must reach level 10 before you can add friends.&quot;</span><span class="p">)</span>
   <span class="kr">end</span>
-<span class="hll">  <span class="kr">return</span> <span class="n">payload</span> <span class="c1">-- important!</span>
-</span><span class="kr">end</span>
-<span class="n">nk</span><span class="p">.</span><span class="n">register_before</span><span class="p">(</span><span class="n">limit_friends</span><span class="p">,</span> <span class="s2">&quot;TFriendAdd&quot;</span><span class="p">)</span>
+  <span class="kr">return</span> <span class="n">payload</span> <span class="c1">-- important!</span>
+<span class="hll"><span class="kr">end</span>
+</span><span class="n">nk</span><span class="p">.</span><span class="n">register_before</span><span class="p">(</span><span class="n">limit_friends</span><span class="p">,</span> <span class="s2">&quot;tfriendsadd&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -987,7 +1010,7 @@
   <span class="n">nk</span><span class="p">.</span><span class="n">storage_write</span><span class="p">({</span> <span class="n">record</span> <span class="p">})</span>
 <span class="kr">end</span>
 
-<span class="n">nk</span><span class="p">.</span><span class="n">register_after</span><span class="p">(</span><span class="n">add_reward</span><span class="p">,</span> <span class="s2">&quot;TFriendAdd&quot;</span><span class="p">)</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">register_after</span><span class="p">(</span><span class="n">add_reward</span><span class="p">,</span> <span class="s2">&quot;tfriendsadd&quot;</span><span class="p">)</span>
 </pre></div>
 
 

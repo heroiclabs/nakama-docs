@@ -399,6 +399,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../android-java-client-guide/" title="Android client guide" class="md-nav__link">
+      Android client guide
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../javascript-client-guide/" title="JavaScript client guide" class="md-nav__link">
       JavaScript client guide
     </a>
@@ -448,13 +460,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
     
-    <label class="md-nav__link" for="nav-8">
+    <label class="md-nav__link" for="nav-9">
       Storage Engine
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-8">
+      <label class="md-nav__title" for="nav-9">
         Storage Engine
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -484,13 +496,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
     
-    <label class="md-nav__link" for="nav-9">
+    <label class="md-nav__link" for="nav-10">
       Social
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-9">
+      <label class="md-nav__title" for="nav-10">
         Social
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -556,13 +568,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
     
-    <label class="md-nav__link" for="nav-10">
+    <label class="md-nav__link" for="nav-11">
       Gameplay
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-10">
+      <label class="md-nav__title" for="nav-11">
         Gameplay
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -628,13 +640,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
     
-    <label class="md-nav__link" for="nav-12">
+    <label class="md-nav__link" for="nav-13">
       Runtime Code
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-12">
+      <label class="md-nav__title" for="nav-13">
         Runtime Code
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -676,13 +688,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
     
-    <label class="md-nav__link" for="nav-13">
+    <label class="md-nav__link" for="nav-14">
       Deployment
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-13">
+      <label class="md-nav__title" for="nav-14">
         Deployment
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -712,17 +724,29 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
     
-    <label class="md-nav__link" for="nav-14">
+    <label class="md-nav__link" for="nav-15">
       Tutorials
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-14">
+      <label class="md-nav__title" for="nav-15">
         Tutorials
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tutorial-develop-with-libgdx/" title="Develop with LibGDX" class="md-nav__link">
+      Develop with LibGDX
+    </a>
+  </li>
+
         
           
           
@@ -970,7 +994,7 @@
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;someBucket&quot;</span><span class="p">,</span> <span class="s">&quot;someCollection&quot;</span><span class="p">,</span> <span class="s">&quot;myRecord&quot;</span><span class="p">,</span> <span class="n">storageValue</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully wrote record.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
@@ -1188,6 +1212,14 @@
     <span class="p">});</span>
   <span class="p">}</span>
 
+  <span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">lock</span> <span class="p">(</span><span class="n">_executionQueue</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">len</span> <span class="p">=</span> <span class="n">_executionQueue</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> <span class="p">{</span>
+        <span class="n">StartCoroutine</span><span class="p">(</span><span class="n">_executionQueue</span><span class="p">.</span><span class="n">Dequeue</span><span class="p">());</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
   <span class="k">private</span> <span class="k">void</span> <span class="nf">OnApplicationQuit</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">_session</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
       <span class="n">_client</span><span class="p">.</span><span class="n">Disconnect</span><span class="p">();</span>
@@ -1196,11 +1228,10 @@
 
   <span class="k">private</span> <span class="k">void</span> <span class="nf">Enqueue</span><span class="p">(</span><span class="n">Action</span> <span class="n">action</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">lock</span> <span class="p">(</span><span class="n">_executionQueue</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">_executionQueue</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="n">ActionWrapper</span><span class="p">(</span><span class="n">action</span><span class="p">));</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">_executionQueue</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">1024</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// Prevent a memory leak if game code can&#39;t process events fast.</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogWarning</span><span class="p">(</span><span class="s">&quot;Queued actions not consumed fast enough.&quot;</span><span class="p">);</span>
         <span class="n">_client</span><span class="p">.</span><span class="n">Disconnect</span><span class="p">();</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">_executionQueue</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span><span class="n">ActionWrapper</span><span class="p">(</span><span class="n">action</span><span class="p">));</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">}</span>
@@ -1248,13 +1279,13 @@
           </a>
         
         
-          <a href="../javascript-client-guide/" title="JavaScript client guide" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../android-java-client-guide/" title="Android client guide" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                JavaScript client guide
+                Android client guide
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
