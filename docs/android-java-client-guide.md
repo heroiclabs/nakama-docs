@@ -77,43 +77,39 @@ Client client = DefaultClient.defaults("defaultkey");
 ```java
 String id = UUID.randomUUID().toString();
 AuthenticateMessage message = AuthenticateMessage.Builder.device(id);
-client.login(message)
-    .addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
-      @Override
-      public Deferred<Session> call(Session session) throws Exception {
-        return client.connect(session);
-      }
-    })
-    .addErrback(new Callback<Deferred<Session>, Error>() {
-      @Override
-      public Deferred<Session> call(Error err) throws Exception {
-        if (err.getCode() == Error.ErrorCode.USER_NOT_FOUND) {
-          System.out.println("User not found, we'll register the user.");
-          return client.register(message);
-        }
-        throw err;
-      }
-    })
-    .addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
-      @Override
-      public Deferred<Session> call(Session session) throws Exception {
-        return client.connect(session);
-      }
-    })
-    .addCallback(new Callback<Session, Session>() { // See step (3).
-      @Override
-      public Session call(Session session) throws Exception {
-        System.out.format("Session connected: '%s'", session.getToken());
-        return session;
-      }
-    })
-    .addErrback(new Callback<Error, Error>() {
-      @Override
-      public Error call(Error err) throws Exception {
-        System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-        return err;
-      }
-    });
+Deferred<Session> deferred = client.login(message)
+deferred.addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
+  @Override
+  public Deferred<Session> call(Session session) throws Exception {
+    return client.connect(session);
+  }
+}).addErrback(new Callback<Deferred<Session>, Error>() {
+  @Override
+  public Deferred<Session> call(Error err) throws Exception {
+    if (err.getCode() == Error.ErrorCode.USER_NOT_FOUND) {
+      System.out.println("User not found, we'll register the user.");
+      return client.register(message);
+    }
+    throw err;
+  }
+}).addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
+  @Override
+  public Deferred<Session> call(Session session) throws Exception {
+    return client.connect(session);
+  }
+}).addCallback(new Callback<Session, Session>() { // See step (3).
+  @Override
+  public Session call(Session session) throws Exception {
+    System.out.format("Session connected: '%s'", session.getToken());
+    return session;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
 ```
 
 In the code above we use `AuthenticateMessage.Builder.device(id)` but for other authentication options have a look at the [code examples](authentication.md#register-or-login).
@@ -155,24 +151,23 @@ byte[] json = "{\"jsonkey\":\"jsonvalue\"}".getBytes();
 CollatedMessage<ResultSet<RecordId>> message = new StorageWriteMessage.Builder()
     .write("someBucket", "someCollection", "myRecord", json)
     .build();
-client.send(message)
-    .addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
-      @Override
-      public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
-        for (RecordId recordId : list) {
-          String version = new String(recordId.getVersion());
-          System.out.format("Record stored '%s'", version);
-        }
-        return list;
-      }
-    })
-    .addErrback(new Callback<Error, Error>() {
-      @Override
-      public Error call(Error err) throws Exception {
-        System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-        return err;
-      }
-    });
+Deferred<ResultSet<RecordId>> deferred = client.send(message)
+deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
+  @Override
+  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
+    for (RecordId recordId : list) {
+      String version = new String(recordId.getVersion());
+      System.out.format("Record stored '%s'", version);
+    }
+    return list;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
 ```
 
 Have a look at other sections of documentation for more code examples.
