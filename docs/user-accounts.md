@@ -82,7 +82,9 @@ client.Send(message, (INResultSet<INUser> list) => {
 ```java fct_label="Android/Java"
 byte[] id = user.getId(); // a User object Id.
 
-CollatedMessage<ResultSet<User>> message = UsersFetchMessage.Builder.defaults(id);
+CollatedMessage<ResultSet<User>> message = UsersFetchMessage.Builder.newBuilder()
+  .id(id)
+  .build();
 Deferred<ResultSet<User>> deferred = client.send(message);
 deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
   @Override
@@ -137,7 +139,7 @@ client.Send(message, (bool done) => {
 ```
 
 ```java fct_label="Android/Java"
-CollatedMessage<Boolean> message = new SelfUpdateMessage.Builder()
+CollatedMessage<Boolean> message = SelfUpdateMessage.Builder.newBuilder()
     .avatarUrl("http://graph.facebook.com/avatar_url")
     .fullname("My New Name")
     .location("San Francisco")

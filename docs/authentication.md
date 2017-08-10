@@ -422,12 +422,12 @@ client.Connect(session, (bool done) => {
 
 ```java fct_label="Android/Java"
 Session session = someSession; // obtained from register or login.
-Deferred<Boolean> deferred = client.connect(session);
-deferred.addCallback(new Callback<Boolean, Boolean>() {
+Deferred<Session> deferred = client.connect(session);
+deferred.addCallback(new Callback<Session, Session>() {
   @Override
-  public Boolean call(Boolean done) throws Exception {
+  public Session call(Session session) throws Exception {
     System.out.println("Successfully connected.");
-    return done;
+    return session;
   }
 });
 ```

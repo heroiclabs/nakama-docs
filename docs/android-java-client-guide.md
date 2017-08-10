@@ -148,8 +148,8 @@ The server also provides a [storage engine](storage-collections.md) to keep pref
 ```java
 byte[] json = "{\"jsonkey\":\"jsonvalue\"}".getBytes();
 
-CollatedMessage<ResultSet<RecordId>> message = new StorageWriteMessage.Builder()
-    .write("someBucket", "someCollection", "myRecord", json)
+CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
+    .record("someBucket", "someCollection", "myRecord", json)
     .build();
 Deferred<ResultSet<RecordId>> deferred = client.send(message)
 deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {

@@ -54,9 +54,9 @@ byte[] saveGame = "{\"progress\": 50}".getBytes();
 byte[] myStats = "{\"skill\": 24}".getBytes();
 
 String bucket = "myapp";
-CollatedMessage<ResultSet<RecordId>> message = new StorageWriteMessage.Builder()
-    .write(bucket, "saves", "savegame", saveGame)
-    .write(bucket, "stats", "mystats", myStats)
+CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
+    .record(bucket, "saves", "savegame", saveGame)
+    .record(bucket, "stats", "mystats", myStats)
     .build();
 Deferred<ResultSet<RecordId>> deferred = client.send(message);
 deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
@@ -101,8 +101,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 byte[] saveGame = "{\"progress\": 54}".getBytes();
 byte[] version = record.getVersion(); // a RecordId object's version.
 
-CollatedMessage<ResultSet<RecordId>> message = new StorageWriteMessage.Builder()
-    .write("myapp", "saves", "savegame", saveGame, version)
+CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", saveGame, version)
     .build();
 Deferred<ResultSet<RecordId>> deferred = client.send(message);
 deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
@@ -141,8 +141,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 byte[] saveGame = "{\"progress\": 54}".getBytes();
 byte[] version = "*".getBytes(); // represents "no version".
 
-CollatedMessage<ResultSet<RecordId>> message = new StorageWriteMessage.Builder()
-    .write("myapp", "saves", "savegame", saveGame, version)
+CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", saveGame, version)
     .build();
 Deferred<ResultSet<RecordId>> deferred = client.send(message);
 deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
@@ -189,9 +189,9 @@ client.Send(message, (INResultSet<INStorageData> list) => {
 ```java fct_label="Android/Java"
 byte[] userId = session.getId(); // a Session object's Id.
 
-CollatedMessage<ResultSet<StorageRecord>> message = new StorageFetchMessage.Builder()
-    .fetch("myapp", "saves", "savegame", userId)
-    .fetch("myapp", "configuration", "config", null)
+CollatedMessage<ResultSet<StorageRecord>> message = StorageFetchMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", userId)
+    .record("myapp", "configuration", "config", null)
     .build();
 Deferred<ResultSet<StorageRecord>> deferred = client.send(message);
 deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRecord>>() {
@@ -241,10 +241,9 @@ client.Send(message, (INResultSet<INStorageData> list) => {
 ```java fct_label="Android/Java"
 byte[] userId = session.getId(); // a Session object's Id.
 
-CollatedMessage<ResultSet<StorageRecord>> message = new StorageListMessage.Builder()
+CollatedMessage<ResultSet<StorageRecord>> message = StorageListMessage.Builder.newBuilder(userId)
     .bucket("myapp")
     .collection("saves")
-    .userId(userId)
     .build();
 Deferred<ResultSet<StorageRecord>> deferred = client.send(message);
 deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRecord>>() {
@@ -321,8 +320,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```java fct_label="Android/Java"
 byte[] json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}".getBytes();
 
-CollatedMessage<ResultSet<RecordId>> message = new StorageUpdateMessage.Builder()
-    .update("myapp", "wallets", "wallet", new StorageUpdateMessage.StorageUpdateBuilder()
+CollatedMessage<ResultSet<RecordId>> message = StorageUpdateMessage.Builder.newBuilder()
+    .record("myapp", "wallets", "wallet", new StorageUpdateMessage.OpBuilder.newBuilder()
         .init("", json)
         .incr("/coins", 10)
         .incr("/gems", 50)
@@ -366,8 +365,8 @@ client.Send(message, (bool done) => {
 ```
 
 ```java fct_label="Android/Java"
-CollatedMessage<Boolean> message = new StorageRemoveMessage.Builder()
-    .remove("myapp", "saves", "savegame")
+CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame")
     .build();
 Deferred<Boolean> deferred = client.send(message);
 deferred.addCallback(new Callback<Boolean, Boolean>() {
@@ -403,8 +402,8 @@ client.Send(message, (bool done) => {
 ```java fct_label="Android/Java"
 byte[] version = record.getVersion(); // a RecordId object's version.
 
-CollatedMessage<Boolean> message = new StorageRemoveMessage.Builder()
-    .remove("myapp", "saves", "savegame", version)
+CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", version)
     .build();
 Deferred<Boolean> deferred = client.send(message);
 deferred.addCallback(new Callback<Boolean, Boolean>() {

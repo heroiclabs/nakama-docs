@@ -280,7 +280,7 @@ client.Send(message, (INRuntimeRpc rpc) => {
 ```java fct_label="Android/Java"
 byte[] payload = "{\"PokemonName\": \"Dragonite\"}".getBytes();
 
-CollatedMessage<RpcResult> message = new RpcMessage.Builder("get_pokemon")
+CollatedMessage<RpcResult> message = RpcMessage.Builder.newBuilder("get_pokemon")
     .payload(payload)
     .build();
 Deferred<RpcResult> deferred = client.send(message);
