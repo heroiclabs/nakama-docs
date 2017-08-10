@@ -1168,7 +1168,7 @@
 <p>To register or login as a user with any of the providers an OAuth or access token must be obtained from that social service.</p>
 <h4 id="facebook">Facebook<a class="headerlink" href="#facebook" title="Permanent link">&para;</a></h4>
 <p>With Facebook you'll need to add the Facebook SDK to your project which can be <a href="https://developers.facebook.com/docs/" target="\_blank">downloaded online</a>. Follow their guides on how to integrate the code. With a mobile project you'll also need to complete instructions on how to configure iOS and Android.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INSession</span><span class="p">&gt;</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
   <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
 <span class="p">};</span>
@@ -1200,7 +1200,7 @@
 
 
 <p>You can add a button to your UI to login with Facebook.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INSession</span><span class="p">&gt;</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
   <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
 <span class="p">};</span>

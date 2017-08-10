@@ -932,7 +932,7 @@
 
 
 <p>&nbsp;&nbsp; 2. Write a callback which will be used to connect to the server.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INSession</span><span class="p">&gt;</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
   <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">_session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Session connected.&quot;</span><span class="p">);</span>
@@ -959,7 +959,7 @@
 <p class="admonition-title">Tip</p>
 <p>It's good practice to cache a device identifier when it's used to authenticate because they can change with device OS updates.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INError</span><span class="p">&gt;</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
 
@@ -1128,7 +1128,7 @@
 
 <p>The <code>#if</code> preprocessor directives is used so trace is only enabled in Unity editor builds. For more complex directives with debug vs release builds have a look at <a href="https://docs.unity3d.com/Manual/PlatformDependentCompilation.html" target="\_blank">Platform dependent compilation</a>.</p>
 <p>Every error in the Unity client implements the <code>"INError"</code> interface. It contains details on the source and content of an error:</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INError</span><span class="p">&gt;</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Error code {0}&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">.</span><span class="n">Code</span><span class="p">);</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Error message {0}&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
