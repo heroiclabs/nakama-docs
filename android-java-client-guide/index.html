@@ -932,43 +932,39 @@
 </div>
 <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
 <span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
-<span class="n">client</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">()</span> <span class="o">==</span> <span class="n">Error</span><span class="o">.</span><span class="na">ErrorCode</span><span class="o">.</span><span class="na">USER_NOT_FOUND</span><span class="o">)</span> <span class="o">{</span>
-          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;User not found, we&#39;ll register the user.&quot;</span><span class="o">);</span>
-          <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="k">throw</span> <span class="n">err</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span> <span class="c1">// See step (3).</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session connected: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">});</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">()</span> <span class="o">==</span> <span class="n">Error</span><span class="o">.</span><span class="na">ErrorCode</span><span class="o">.</span><span class="na">USER_NOT_FOUND</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;User not found, we&#39;ll register the user.&quot;</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">throw</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span> <span class="c1">// See step (3).</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session connected: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
 </pre></div>
 
 
@@ -998,27 +994,26 @@
 <p>The server also provides a <a href="../storage-collections/">storage engine</a> to keep preferences and other records owned by users. We'll use storage to introduce how messages are sent.</p>
 <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">json</span> <span class="o">=</span> <span class="s">&quot;{\&quot;jsonkey\&quot;:\&quot;jsonvalue\&quot;}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
 
-<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">&quot;someBucket&quot;</span><span class="o">,</span> <span class="s">&quot;someCollection&quot;</span><span class="o">,</span> <span class="s">&quot;myRecord&quot;</span><span class="o">,</span> <span class="n">json</span><span class="o">)</span>
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;someBucket&quot;</span><span class="o">,</span> <span class="s">&quot;someCollection&quot;</span><span class="o">,</span> <span class="s">&quot;myRecord&quot;</span><span class="o">,</span> <span class="n">json</span><span class="o">)</span>
     <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-<span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">RecordId</span> <span class="n">recordId</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
-          <span class="n">String</span> <span class="n">version</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">recordId</span><span class="o">.</span><span class="na">getVersion</span><span class="o">());</span>
-          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Record stored &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">version</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">});</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">RecordId</span> <span class="n">recordId</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">version</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">recordId</span><span class="o">.</span><span class="na">getVersion</span><span class="o">());</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Record stored &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">version</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
 </pre></div>
 
 

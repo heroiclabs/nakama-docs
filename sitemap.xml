@@ -4,7 +4,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,31 +13,31 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//install-docker-quickstart/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//install-binary/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//install-configuration/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//install-server-cli/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//install-nakama-upgrade/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -46,7 +46,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//unity-client-guide/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -54,7 +54,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//android-java-client-guide/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -62,7 +62,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//javascript-client-guide/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -70,7 +70,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//swift-ios-client-guide/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -78,7 +78,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//authentication/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -86,7 +86,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//user-accounts/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -95,7 +95,7 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//storage-collections/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -105,25 +105,25 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//social-friends/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//social-groups-clans/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//social-in-app-notifications/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//social-realtime-chat/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -133,19 +133,19 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//gameplay-leaderboards/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//gameplay-matchmaker/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//gameplay-multiplayer-realtime/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -154,7 +154,7 @@
     
     <url>
      <loc>https://heroiclabs.com/docs//in-app-purchase-validation/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -163,13 +163,13 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//runtime-code-basics/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//runtime-code-function-reference/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -179,7 +179,7 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//deployment-digital-ocean/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -189,19 +189,19 @@
         
     <url>
      <loc>https://heroiclabs.com/docs//tutorial-develop-with-libgdx/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//tutorial-initialize-new-user/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://heroiclabs.com/docs//tutorial-remote-configuration/</loc>
-     <lastmod>2017-08-10</lastmod>
+     <lastmod>2017-08-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

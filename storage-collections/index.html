@@ -909,7 +909,25 @@
 <p class="admonition-title">Tip</p>
 <p>In most cases you won't need to group data under multiple buckets so it can be easiest to just name it after your project. For example "Super Mario Run" could use a bucket name "smr" or similar.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="p">);</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-java" aria-controls="tab-0-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="p">);</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">myStats</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;skill\&quot;: 24}&quot;</span><span class="p">);</span>
 
 <span class="kt">var</span> <span class="n">bucket</span> <span class="p">=</span> <span class="s">&quot;myapp&quot;</span><span class="p">;</span>
@@ -922,18 +940,71 @@
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">var</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Successfully stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-java">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">myStats</span> <span class="o">=</span> <span class="s">&quot;{\&quot;skill\&quot;: 24}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
 
+<span class="n">String</span> <span class="n">bucket</span> <span class="o">=</span> <span class="s">&quot;myapp&quot;</span><span class="o">;</span>
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="n">bucket</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">,</span> <span class="n">saveGame</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="n">bucket</span><span class="o">,</span> <span class="s">&quot;stats&quot;</span><span class="o">,</span> <span class="s">&quot;mystats&quot;</span><span class="o">,</span> <span class="n">myStats</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">RecordId</span> <span class="n">recordId</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">version</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">recordId</span><span class="o">.</span><span class="na">getVersion</span><span class="o">());</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Stored record has version &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">version</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="conditional-writes">Conditional writes<a class="headerlink" href="#conditional-writes" title="Permanent link">&para;</a></h3>
 <p>When records are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is often known as a conditional write.</p>
 <p>A conditional write ensures a client can only update the record if they've seen the previous version of the record already. The goal is to prevent a change to the record if another client has changed the value between when the first client's read and it's next write.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="p">);</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-java" aria-controls="tab-1-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="p">);</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
@@ -946,9 +1017,58 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-java">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">version</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">getVersion</span><span class="o">();</span> <span class="c1">// a RecordId object&#39;s version.</span>
 
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">,</span> <span class="n">saveGame</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="c1">// Cache updated version for next write.</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">getResults</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getVersion</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>We support another kind of conditional write which is used to write a record only if none already exists for that record's key name.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 1}&quot;</span><span class="p">);</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-java" aria-controls="tab-2-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 1}&quot;</span><span class="p">);</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">);</span> <span class="c1">// represents &quot;no version&quot;.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
@@ -961,11 +1081,60 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-java">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span> <span class="c1">// represents &quot;no version&quot;.</span>
 
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">,</span> <span class="n">saveGame</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="c1">// Cache updated version for next write.</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">getResults</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getVersion</span><span class="o">();</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="fetch-records">Fetch records<a class="headerlink" href="#fetch-records" title="Permanent link">&para;</a></h2>
 <p>Just like with <a href="#write-records">writing records</a> you can fetch one or more records from the database server.</p>
 <p>Each record has an owner and permissions. A record can only be fetched if the permissions allow it. A record which has no owner can be fetched with <code>null</code> and is useful for global records which all users should be able to read.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-java" aria-controls="tab-3-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageFetchMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Fetch</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">)</span>
@@ -983,10 +1152,63 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-java">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">getId</span><span class="o">();</span> <span class="c1">// a Session object&#39;s Id.</span>
 
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageFetchMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">,</span> <span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;configuration&quot;</span><span class="o">,</span> <span class="s">&quot;config&quot;</span><span class="o">,</span> <span class="kc">null</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">StorageRecord</span> <span class="n">record</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Record value &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Record permissions read &#39;%s&#39; write &#39;%s&#39;&quot;</span><span class="o">,</span>
+          <span class="n">record</span><span class="o">.</span><span class="na">getPermissionRead</span><span class="o">(),</span> <span class="n">record</span><span class="o">.</span><span class="na">getPermissionWrite</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="list-records">List records<a class="headerlink" href="#list-records" title="Permanent link">&para;</a></h2>
 <p>You can list records in a collection and page through results. The records returned can be filter to those owned by the user or <code>"null"</code> for public records which aren't owned by a user.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-java" aria-controls="tab-4-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Bucket</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">)</span>
@@ -1005,7 +1227,42 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-java">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">getId</span><span class="o">();</span> <span class="c1">// a Session object&#39;s Id.</span>
 
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageListMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">bucket</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">collection</span><span class="o">(</span><span class="s">&quot;saves&quot;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">StorageRecord</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">StorageRecord</span> <span class="n">record</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Record value &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Record permissions read &#39;%s&#39; write &#39;%s&#39;&quot;</span><span class="o">,</span>
+          <span class="n">record</span><span class="o">.</span><span class="na">getPermissionRead</span><span class="o">(),</span> <span class="n">record</span><span class="o">.</span><span class="na">getPermissionWrite</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="update-records">Update records<a class="headerlink" href="#update-records" title="Permanent link">&para;</a></h2>
 <p>Every record's value is required to be a JSON object. To update the value you can fetch the object modify it and write it back; but a more efficient option is to update the value on the server based on a set of "operations".</p>
 <h3 id="operations">Operations<a class="headerlink" href="#operations" title="Permanent link">&para;</a></h3>
@@ -1068,7 +1325,25 @@
 <p>Paths are used to refer to certain parts of a JSON object. They're separated by forward slashes <code>"/name/first"</code> and will be interpreted as a <a href="http://tools.ietf.org/html/rfc6901" target="\_blank">JSON Pointer</a>.</p>
 <p>Array positions in a path are indicated using a zero-indexed integer <code>"stash.4.item_name"</code>. You can append to the end of the array with the 'append' operation. If the value specified in the append is an array all of the entries in the value will be appended to the array in the path.</p>
 <p>You can update one or more records with different update operations.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">jsonString</span> <span class="p">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-java" aria-controls="tab-5-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">jsonString</span> <span class="p">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="p">;</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">json</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">jsonString</span><span class="p">);</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageUpdateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
@@ -1081,21 +1356,75 @@
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">var</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Successfully stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-java">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">json</span> <span class="o">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
 
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageUpdateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;wallets&quot;</span><span class="o">,</span> <span class="s">&quot;wallet&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">StorageUpdateMessage</span><span class="o">.</span><span class="na">OpBuilder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">,</span> <span class="n">json</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">incr</span><span class="o">(</span><span class="s">&quot;/coins&quot;</span><span class="o">,</span> <span class="mi">10</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">incr</span><span class="o">(</span><span class="s">&quot;/gems&quot;</span><span class="o">,</span> <span class="mi">50</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">build</span><span class="o">())</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">RecordId</span> <span class="n">recordId</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">String</span> <span class="n">version</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">recordId</span><span class="o">.</span><span class="na">getVersion</span><span class="o">());</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Stored record has version &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">version</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="remove-records">Remove records<a class="headerlink" href="#remove-records" title="Permanent link">&para;</a></h2>
 <p>A user can remove a record if it has the correct permissions and they own it.</p>
 <div class="admonition note">
 <p class="admonition-title">Soft delete</p>
 <p>A record is not permanently deleted from the server when removed. It remains until overwritten but cannot be read by the client. This is useful in case you need to restore a user's records later.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageRemoveMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-java" aria-controls="tab-6-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageRemoveMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1105,9 +1434,54 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-java">
+            <div class="codehilite"><pre><span></span><span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageRemoveMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">,</span> <span class="n">Boolean</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Boolean</span> <span class="nf">call</span><span class="o">(</span><span class="n">Boolean</span> <span class="n">done</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Removed user&#39;s record(s).&quot;</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">done</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>You can also conditionally remove an object if the object version matches the version sent by the client.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-17-csharp" aria-controls="tab-17-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-17-java" aria-controls="tab-17-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-17-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageRemoveMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
@@ -1118,6 +1492,37 @@
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-17-java">
+            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">version</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">getVersion</span><span class="o">();</span> <span class="c1">// a RecordId object&#39;s version.</span>
+
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageRemoveMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">,</span> <span class="n">Boolean</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Boolean</span> <span class="nf">call</span><span class="o">(</span><span class="n">Boolean</span> <span class="n">done</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Removed user&#39;s record(s).&quot;</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">done</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
                 
                   
                 

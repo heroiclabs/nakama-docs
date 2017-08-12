@@ -1054,43 +1054,39 @@
         <div role="tabpanel" class="tab-pane " id="tab-1-java">
             <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
 <span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
-<span class="n">client</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">()</span> <span class="o">==</span> <span class="n">Error</span><span class="o">.</span><span class="na">ErrorCode</span><span class="o">.</span><span class="na">USER_NOT_FOUND</span><span class="o">)</span> <span class="o">{</span>
-          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;User not found, we&#39;ll register the user.&quot;</span><span class="o">);</span>
-          <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="k">throw</span> <span class="n">err</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span> <span class="c1">// See step (3).</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session connected: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">});</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">()</span> <span class="o">==</span> <span class="n">Error</span><span class="o">.</span><span class="na">ErrorCode</span><span class="o">.</span><span class="na">USER_NOT_FOUND</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;User not found, we&#39;ll register the user.&quot;</span><span class="o">);</span>
+      <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">throw</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session connected: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
 </pre></div>
 
         </div>
@@ -1136,25 +1132,25 @@
         </div>
     
         <div role="tabpanel" class="tab-pane " id="tab-2-java">
-            <div class="codehilite"><pre><span></span><span class="n">string</span> <span class="n">email</span> <span class="o">=</span> <span class="s">&quot;email@example.com&quot;</span>
-<span class="n">string</span> <span class="n">password</span> <span class="o">=</span> <span class="s">&quot;3bc8f72e95a9&quot;</span>
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">email</span> <span class="o">=</span> <span class="s">&quot;email@example.com&quot;</span>
+<span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="s">&quot;3bc8f72e95a9&quot;</span>
 
 <span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">email</span><span class="o">(</span><span class="n">email</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
-<span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">})</span>
-    <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
-      <span class="nd">@Override</span>
-      <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
-        <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">});</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+<span class="c1">// Use client.login(...) after register.</span>
 </pre></div>
 
         </div>
@@ -1228,7 +1224,25 @@
 
 <h4 id="google">Google<a class="headerlink" href="#google" title="Permanent link">&para;</a></h4>
 <p>Similar to Facebook for register and login you should use one of Google's client SDKs.</p>
-<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-java" aria-controls="tab-3-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Google</span><span class="p">(</span><span class="n">oauthToken</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1239,10 +1253,56 @@
 <span class="c1">// Use client.Login(...) after register.</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-java">
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">oauthToken</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span><span class="o">;</span>
 
+<span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">google</span><span class="o">(</span><span class="n">oauthToken</span><span class="o">);</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+<span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h4 id="game-center">Game Center<a class="headerlink" href="#game-center" title="Permanent link">&para;</a></h4>
 <p>Apple devices have builtin authentication which can be done without user interaction through Game Center. The register or login process is a little complicated because of how Apple's services work.</p>
-<div class="codehilite"><pre><span></span><span class="c1">// You&#39;ll need to use native code (Obj-C) with Unity.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-java" aria-controls="tab-4-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="c1">// You&#39;ll need to use native code (Obj-C) with Unity.</span>
 <span class="c1">// The &quot;UnityEngine.SocialPlatforms.GameCenter&quot; doesn&#39;t give enough information</span>
 <span class="c1">// to enable authentication.</span>
 
@@ -1266,14 +1326,43 @@
 <span class="c1">// Use client.Login(...) after register.</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-java">
+            <div class="codehilite"><pre><span></span><span class="c1">// Not applicable with Android.</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h4 id="steam">Steam<a class="headerlink" href="#steam" title="Permanent link">&para;</a></h4>
 <p>Steam requires you to configure the server before you can register a user.</p>
 <div class="admonition note">
 <p class="admonition-title">Server configuration</p>
 <p>Have a look at the <a href="../install-configuration/">configuration</a> section for what settings you need for the server.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">sessionToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-java" aria-controls="tab-5-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">sessionToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Steam</span><span class="p">(</span><span class="n">sessionToken</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Register</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1284,11 +1373,57 @@
 <span class="c1">// Use client.Login(...) after register.</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-java">
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">sessionToken</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span><span class="o">;</span>
 
+<span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">steam</span><span class="o">(</span><span class="n">sessionToken</span><span class="o">);</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+<span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="custom">Custom<a class="headerlink" href="#custom" title="Permanent link">&para;</a></h3>
 <p>A custom identifier can be used in a similar way to a device identifier to login or register a user. This option should be used if you have an external or custom user identity service which you want to use. For example EA's Origin service handles accounts which have their own user IDs.</p>
 <p>A custom identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.</p>
-<div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-java" aria-controls="tab-6-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
+            <div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
 <span class="kt">string</span> <span class="n">customId</span> <span class="p">=</span> <span class="s">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Custom</span><span class="p">(</span><span class="n">customId</span><span class="p">);</span>
@@ -1300,39 +1435,170 @@
 <span class="c1">// Use client.Login(...) after register.</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-java">
+            <div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
+<span class="n">String</span> <span class="n">customId</span> <span class="o">=</span> <span class="s">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span><span class="o">;</span>
 
+<span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">google</span><span class="o">(</span><span class="n">customId</span><span class="o">);</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+<span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="sessions">Sessions<a class="headerlink" href="#sessions" title="Permanent link">&para;</a></h2>
 <p>The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can change how long a session token is valid before it expires in the <a href="../install-configuration/">configuration</a> in the server. By default a session is only valid for 60 seconds.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-7-csharp" aria-controls="tab-7-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-java" aria-controls="tab-7-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-7-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">sessionId</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session id &#39;{0}&#39; handle &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">sessionId</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Handle</span><span class="p">);</span>
+  <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session id &#39;{0}&#39; handle &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Handle</span><span class="p">);</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session expired: {0}&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">HasExpired</span><span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">));</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-7-java">
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span><span class="o">;</span>
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">userId</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session id &#39;%s&#39; handle &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">userId</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getHandle</span><span class="o">());</span>
+    <span class="kt">long</span> <span class="n">now</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session expired: &#39;%s&#39;&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">IsExpired</span><span class="o">(</span><span class="n">now</span><span class="o">));</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="connect">Connect<a class="headerlink" href="#connect" title="Permanent link">&para;</a></h3>
 <p>With a session you can connect with the server and send messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.</p>
 <p>You can only send messages to the server once you've connected a client.</p>
-<div class="codehilite"><pre><span></span><span class="n">INSession</span> <span class="n">session</span> <span class="p">=</span> <span class="n">session</span><span class="p">;</span> <span class="c1">// obtained from Register or Login.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-8-csharp" aria-controls="tab-8-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-java" aria-controls="tab-8-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-8-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INSession</span> <span class="n">session</span> <span class="p">=</span> <span class="n">someSession</span><span class="p">;</span> <span class="c1">// obtained from Register or Login.</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully connected.&quot;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-8-java">
+            <div class="codehilite"><pre><span></span><span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">someSession</span><span class="o">;</span> <span class="c1">// obtained from register or login.</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Successfully connected.&quot;</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="link-or-unlink">Link or unlink<a class="headerlink" href="#link-or-unlink" title="Permanent link">&para;</a></h2>
 <p>You can link one or more other login option to the current user. This makes it easy to support multiple logins with each user and easily identify a user across devices.</p>
 <p>You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.</p>
-<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-9-csharp" aria-controls="tab-9-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-9-java" aria-controls="tab-9-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-9-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">SelfLinkMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1342,9 +1608,54 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-9-java">
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="o">;</span>
 
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">SelfLinkMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">,</span> <span class="n">Boolean</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Boolean</span> <span class="nf">call</span><span class="o">(</span><span class="n">Boolean</span> <span class="n">done</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Successfully linked device ID to current user.&quot;</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">done</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>You can unlink any linked login options for the current user.</p>
-<div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-10-csharp" aria-controls="tab-10-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-10-java" aria-controls="tab-10-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-10-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">SelfUnlinkMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1354,7 +1665,34 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-10-java">
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="o">;</span>
 
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">SelfUnlinkMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+<span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">,</span> <span class="n">Boolean</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Boolean</span> <span class="nf">call</span><span class="o">(</span><span class="n">Boolean</span> <span class="n">done</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Successfully unlinked device ID from current user.&quot;</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">done</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}).</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>Like with register and login you can link or unlink many different account options.</p>
 <table>
 <thead>

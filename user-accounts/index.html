@@ -945,7 +945,9 @@
         <div role="tabpanel" class="tab-pane " id="tab-1-java">
             <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">id</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="na">getId</span><span class="o">();</span> <span class="c1">// a User object Id.</span>
 
-<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">UsersFetchMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">defaults</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+<span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">UsersFetchMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+  <span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="n">id</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
 <span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;,</span> <span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;&gt;()</span> <span class="o">{</span>
   <span class="nd">@Override</span>
@@ -1022,7 +1024,7 @@
         </div>
     
         <div role="tabpanel" class="tab-pane " id="tab-2-java">
-            <div class="codehilite"><pre><span></span><span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SelfUpdateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+            <div class="codehilite"><pre><span></span><span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">SelfUpdateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
     <span class="o">.</span><span class="na">avatarUrl</span><span class="o">(</span><span class="s">&quot;http://graph.facebook.com/avatar_url&quot;</span><span class="o">)</span>
     <span class="o">.</span><span class="na">fullname</span><span class="o">(</span><span class="s">&quot;My New Name&quot;</span><span class="o">)</span>
     <span class="o">.</span><span class="na">location</span><span class="o">(</span><span class="s">&quot;San Francisco&quot;</span><span class="o">)</span>
