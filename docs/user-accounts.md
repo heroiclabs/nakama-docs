@@ -20,6 +20,25 @@ client.Send(message, (INSelf self) => {
 });
 ```
 
+```java fct_label="Android/Java"
+CollatedMessage<Self> message = SelfFetchMessage.Builder.build();
+Deferred<Self> deferred = client.send(message);
+deferred.addCallback(new Callback<Self, Self>() {
+  @Override
+  public Self call(Self self) throws Exception {
+    String metadata = new String(self.getMetadata());
+    System.out.format("User has JSON metadata '%s'.", metadata);
+    return self;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+```
+
 Some information like social IDs are private but part of the profile is visible to other users.
 
 | Public field | Description |
@@ -60,6 +79,31 @@ client.Send(message, (INResultSet<INUser> list) => {
 });
 ```
 
+```java fct_label="Android/Java"
+byte[] id = user.getId(); // a User object Id.
+
+CollatedMessage<ResultSet<User>> message = UsersFetchMessage.Builder.newBuilder()
+  .id(id)
+  .build();
+Deferred<ResultSet<User>> deferred = client.send(message);
+deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
+  @Override
+  public ResultSet<User> call(ResultSet<User> list) throws Exception {
+    for (User user : list) {
+      String userId = new String(user.getId());
+      System.out.format("User(id=%s, handle=%s)", id, user.getHandle());
+    }
+    return self;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+```
+
 You can also fetch one or more users in server-side code.
 
 ```lua
@@ -91,6 +135,28 @@ client.Send(message, (bool done) => {
   Debug.Log("Successfully updated yourself.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+CollatedMessage<Boolean> message = SelfUpdateMessage.Builder.newBuilder()
+    .avatarUrl("http://graph.facebook.com/avatar_url")
+    .fullname("My New Name")
+    .location("San Francisco")
+    .build();
+Deferred<Boolean> deferred = client.send(message);
+deferred.addCallback(new Callback<Boolean, Boolean>() {
+  @Override
+  public Boolean call(Boolean done) throws Exception {
+    System.out.println("Successfully updated yourself.");
+    return done;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
 

@@ -63,7 +63,7 @@ var client = NClient.Default("defaultkey");
 &nbsp;&nbsp; 2\. Write a callback which will be used to connect to the server.
 
 ```csharp
-var sessionHandler = delegate(INSession session) {
+Action<INSession> sessionHandler = delegate(INSession session) {
   Debug.LogFormat("Session: '{0}'.", session.Token);
   client.Connect(_session, (bool done) => {
     Debug.Log("Session connected.");
@@ -91,7 +91,7 @@ if (!string.IsNullOrEmpty(sessionString)) {
     It's good practice to cache a device identifier when it's used to authenticate because they can change with device OS updates.
 
 ```csharp
-var errorHandler = delegate(INError err) {
+Action<INError> errorHandler = delegate(INError err) {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 };
 
@@ -132,7 +132,7 @@ byte[] json = Encoding.UTF8.GetBytes("{\"jsonkey\":\"jsonvalue\"}");
 var message = new NStorageWriteMessage.Builder()
     .Write("someBucket", "someCollection", "myRecord", storageValue)
     .Build();
-client.Send(message, (bool done) => {
+client.Send(message, (INResultSet<INStorageKey> list) => {
   Debug.Log("Successfully wrote record.");
 }, (INError error) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -254,7 +254,7 @@ The `#if` preprocessor directives is used so trace is only enabled in Unity edit
 Every error in the Unity client implements the `"INError"` interface. It contains details on the source and content of an error:
 
 ```csharp
-var errorHandler = delegate(INError error) {
+Action<INError> errorHandler = delegate(INError error) {
   Debug.LogFormat("Error code {0}", error.Code);
   Debug.LogFormat("Error message {0}", error.Message);
 };

@@ -42,10 +42,38 @@ var message = new NStorageWriteMessage.Builder()
 client.Send(message, (INResultSet<INStorageKey> list) => {
   foreach (var record in list.Results) {
     var version = Encoding.UTF8.GetString(record.Version);
-    Debug.LogFormat("Successfully stored record has version '{0}'", version);
+    Debug.LogFormat("Stored record has version '{0}'", version);
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+byte[] saveGame = "{\"progress\": 50}".getBytes();
+byte[] myStats = "{\"skill\": 24}".getBytes();
+
+String bucket = "myapp";
+CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
+    .record(bucket, "saves", "savegame", saveGame)
+    .record(bucket, "stats", "mystats", myStats)
+    .build();
+Deferred<ResultSet<RecordId>> deferred = client.send(message);
+deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
+  @Override
+  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
+    for (RecordId recordId : list) {
+      String version = new String(recordId.getVersion());
+      System.out.format("Stored record has version '%s'", version);
+    }
+    return list;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
 
@@ -69,6 +97,30 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 });
 ```
 
+```java fct_label="Android/Java"
+byte[] saveGame = "{\"progress\": 54}".getBytes();
+byte[] version = record.getVersion(); // a RecordId object's version.
+
+CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", saveGame, version)
+    .build();
+Deferred<ResultSet<RecordId>> deferred = client.send(message);
+deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
+  @Override
+  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
+    // Cache updated version for next write.
+    version = list.getResults().get(0).getVersion();
+    return list;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+```
+
 We support another kind of conditional write which is used to write a record only if none already exists for that record's key name.
 
 ```csharp fct_label="Unity"
@@ -82,6 +134,30 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
   version = list.Results[0].Version; // cache updated version for next write.
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+byte[] saveGame = "{\"progress\": 54}".getBytes();
+byte[] version = "*".getBytes(); // represents "no version".
+
+CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", saveGame, version)
+    .build();
+Deferred<ResultSet<RecordId>> deferred = client.send(message);
+deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
+  @Override
+  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
+    // Cache updated version for next write.
+    version = list.getResults().get(0).getVersion();
+    return list;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
 
@@ -110,6 +186,34 @@ client.Send(message, (INResultSet<INStorageData> list) => {
 });
 ```
 
+```java fct_label="Android/Java"
+byte[] userId = session.getId(); // a Session object's Id.
+
+CollatedMessage<ResultSet<StorageRecord>> message = StorageFetchMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", userId)
+    .record("myapp", "configuration", "config", null)
+    .build();
+Deferred<ResultSet<StorageRecord>> deferred = client.send(message);
+deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRecord>>() {
+  @Override
+  public ResultSet<StorageRecord> call(ResultSet<StorageRecord> list) throws Exception {
+    for (StorageRecord record : list) {
+      String value = new String(record.getValue());
+      System.out.format("Record value '%s'", value);
+      System.out.format("Record permissions read '%s' write '%s'",
+          record.getPermissionRead(), record.getPermissionWrite());
+    }
+    return list;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+```
+
 ## List records
 
 You can list records in a collection and page through results. The records returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
@@ -131,6 +235,34 @@ client.Send(message, (INResultSet<INStorageData> list) => {
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+byte[] userId = session.getId(); // a Session object's Id.
+
+CollatedMessage<ResultSet<StorageRecord>> message = StorageListMessage.Builder.newBuilder(userId)
+    .bucket("myapp")
+    .collection("saves")
+    .build();
+Deferred<ResultSet<StorageRecord>> deferred = client.send(message);
+deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRecord>>() {
+  @Override
+  public ResultSet<StorageRecord> call(ResultSet<StorageRecord> list) throws Exception {
+    for (StorageRecord record : list) {
+      String value = new String(record.getValue());
+      System.out.format("Record value '%s'", value);
+      System.out.format("Record permissions read '%s' write '%s'",
+          record.getPermissionRead(), record.getPermissionWrite());
+    }
+    return list;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
 
@@ -178,10 +310,39 @@ var message = new NStorageUpdateMessage.Builder()
 client.Send(message, (INResultSet<INStorageKey> list) => {
   foreach (var record in list.Results) {
     var version = Encoding.UTF8.GetString(record.Version);
-    Debug.LogFormat("Successfully stored record has version '{0}'", version);
+    Debug.LogFormat("Stored record has version '{0}'", version);
   }
 }, (INError error) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+byte[] json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}".getBytes();
+
+CollatedMessage<ResultSet<RecordId>> message = StorageUpdateMessage.Builder.newBuilder()
+    .record("myapp", "wallets", "wallet", new StorageUpdateMessage.OpBuilder.newBuilder()
+        .init("", json)
+        .incr("/coins", 10)
+        .incr("/gems", 50)
+        .build())
+    .build();
+Deferred<ResultSet<RecordId>> deferred = client.send(message);
+deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
+  @Override
+  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
+    for (RecordId recordId : list) {
+      String version = new String(recordId.getVersion());
+      System.out.format("Stored record has version '%s'", version);
+    }
+    return list;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
 
@@ -203,6 +364,26 @@ client.Send(message, (bool done) => {
 });
 ```
 
+```java fct_label="Android/Java"
+CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame")
+    .build();
+Deferred<Boolean> deferred = client.send(message);
+deferred.addCallback(new Callback<Boolean, Boolean>() {
+  @Override
+  public Boolean call(Boolean done) throws Exception {
+    System.out.println("Removed user's record(s).");
+    return done;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+```
+
 You can also conditionally remove an object if the object version matches the version sent by the client.
 
 ```csharp fct_label="Unity"
@@ -215,5 +396,27 @@ client.Send(message, (bool done) => {
   Debug.Log("Removed user's record(s).");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+byte[] version = record.getVersion(); // a RecordId object's version.
+
+CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
+    .record("myapp", "saves", "savegame", version)
+    .build();
+Deferred<Boolean> deferred = client.send(message);
+deferred.addCallback(new Callback<Boolean, Boolean>() {
+  @Override
+  public Boolean call(Boolean done) throws Exception {
+    System.out.println("Removed user's record(s).");
+    return done;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```

@@ -15,6 +15,16 @@ INClient client = new NClient.Builder("defaultkey")
 INClient client = NClient.Default("defaultkey");
 ```
 
+```java fct_label="Android/Java"
+Client client = DefaultClient.builder("defaultkey")
+    .host("127.0.0.1")
+    .port(7350)
+    .ssl(false)
+    .build();
+// or same as above.
+Client client = DefaultClient.defaults("defaultkey");
+```
+
 Every user account is created from one of the [options used to register](#register-or-login). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
 
 ## Register or login
@@ -55,6 +65,44 @@ client.Login(message, sessionHandler, (INError err) => {
 });
 ```
 
+```java fct_label="Android/Java"
+String id = UUID.randomUUID().toString();
+AuthenticateMessage message = AuthenticateMessage.Builder.device(id);
+Deferred<Session> deferred = client.login(message);
+deferred.addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
+  @Override
+  public Deferred<Session> call(Session session) throws Exception {
+    return client.connect(session);
+  }
+}).addErrback(new Callback<Deferred<Session>, Error>() {
+  @Override
+  public Deferred<Session> call(Error err) throws Exception {
+    if (err.getCode() == Error.ErrorCode.USER_NOT_FOUND) {
+      System.out.println("User not found, we'll register the user.");
+      return client.register(message);
+    }
+    throw err;
+  }
+}).addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
+  @Override
+  public Deferred<Session> call(Session session) throws Exception {
+    return client.connect(session);
+  }
+}).addCallback(new Callback<Session, Session>() {
+  @Override
+  public Session call(Session session) throws Exception {
+    System.out.format("Session connected: '%s'", session.getToken());
+    return session;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+```
+
 In games it is often a better option to use [Google](#google) or [Game Center](#game-center) to unobtrusively register the user.
 
 ### Email
@@ -76,6 +124,28 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
+```java fct_label="Android/Java"
+String email = "email@example.com"
+String password = "3bc8f72e95a9"
+
+AuthenticateMessage message = AuthenticateMessage.Builder.email(email, password);
+Deferred<Session> deferred = client.register(message);
+deferred.addCallback(new Callback<Session, Session>() {
+  @Override
+  public Session call(Session session) throws Exception {
+    System.out.format("Session: '%s'", session.getToken());
+    return session;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+// Use client.login(...) after register.
+```
+
 ### Social providers
 
 The server supports a lot of different social services with register and login. With each provider the user account will be fetched from the social service and used to setup the user. In some cases a user's [friends](social-friends.md) will also be fetched and added to their friends list.
@@ -87,7 +157,7 @@ To register or login as a user with any of the providers an OAuth or access toke
 With Facebook you'll need to add the Facebook SDK to your project which can be <a href="https://developers.facebook.com/docs/" target="\_blank">downloaded online</a>. Follow their guides on how to integrate the code. With a mobile project you'll also need to complete instructions on how to configure iOS and Android.
 
 ```csharp fct_label="Unity"
-var sessionHandler = delegate(INSession session) {
+Action<INSession> sessionHandler = delegate(INSession session) {
   Debug.LogFormat("Session: '{0}'.", session.Token);
   client.Connect(session);
 };
@@ -120,7 +190,7 @@ if (!FB.IsInitialized) {
 You can add a button to your UI to login with Facebook.
 
 ```csharp fct_label="Unity"
-var sessionHandler = delegate(INSession session) {
+Action<INSession> sessionHandler = delegate(INSession session) {
   Debug.LogFormat("Session: '{0}'.", session.Token);
   client.Connect(session);
 };
@@ -161,6 +231,27 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
+```java fct_label="Android/Java"
+String oauthToken = "...";
+
+AuthenticateMessage message = AuthenticateMessage.Builder.google(oauthToken);
+Deferred<Session> deferred = client.register(message);
+deferred.addCallback(new Callback<Session, Session>() {
+  @Override
+  public Session call(Session session) throws Exception {
+    System.out.format("Session: '%s'", session.getToken());
+    return session;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+// Use client.login(...) after register.
+```
+
 #### Game Center
 
 Apple devices have builtin authentication which can be done without user interaction through Game Center. The register or login process is a little complicated because of how Apple's services work.
@@ -190,6 +281,10 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
+```java fct_label="Android/Java"
+// Not applicable with Android.
+```
+
 #### Steam
 
 Steam requires you to configure the server before you can register a user.
@@ -207,6 +302,27 @@ client.Register(message, (INSession session) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
 // Use client.Login(...) after register.
+```
+
+```java fct_label="Android/Java"
+String sessionToken = "...";
+
+AuthenticateMessage message = AuthenticateMessage.Builder.steam(sessionToken);
+Deferred<Session> deferred = client.register(message);
+deferred.addCallback(new Callback<Session, Session>() {
+  @Override
+  public Session call(Session session) throws Exception {
+    System.out.format("Session: '%s'", session.getToken());
+    return session;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+// Use client.login(...) after register.
 ```
 
 ### Custom
@@ -228,6 +344,28 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
+```java fct_label="Android/Java"
+// Some id from another service.
+String customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
+
+AuthenticateMessage message = AuthenticateMessage.Builder.google(customId);
+Deferred<Session> deferred = client.register(message);
+deferred.addCallback(new Callback<Session, Session>() {
+  @Override
+  public Session call(Session session) throws Exception {
+    System.out.format("Session: '%s'", session.getToken());
+    return session;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+// Use client.login(...) after register.
+```
+
 ## Sessions
 
 The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.
@@ -239,11 +377,33 @@ The register and login messages return a session on success. The session contain
 string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 var message = NAuthenticateMessage.Device(id);
 client.Login(message, (INSession session) => {
-  var sessionId = Encoding.UTF8.GetString(session.Id);
-  Debug.LogFormat("Session id '{0}' handle '{1}'.", sessionId, session.Handle);
+  var userId = Encoding.UTF8.GetString(session.Id);
+  Debug.LogFormat("Session id '{0}' handle '{1}'.", userId, session.Handle);
   Debug.LogFormat("Session expired: {0}", session.HasExpired(DateTime.UtcNow));
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+String id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+CollatedMessage<Session> message = AuthenticateMessage.Builder.device(id);
+Deferred<Session> deferred = client.login(message);
+deferred.addCallback(new Callback<Session, Session>() {
+  @Override
+  public Session call(Session session) throws Exception {
+    String userId = new String(session.getId());
+    System.out.format("Session id '%s' handle '%s'", userId, session.getHandle());
+    long now = System.currentTimeMillis();
+    System.out.format("Session expired: '%s'", session.IsExpired(now));
+    return session;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
 
@@ -254,9 +414,21 @@ With a session you can connect with the server and send messages. Most of our cl
 You can only send messages to the server once you've connected a client.
 
 ```csharp fct_label="Unity"
-INSession session = session; // obtained from Register or Login.
+INSession session = someSession; // obtained from Register or Login.
 client.Connect(session, (bool done) => {
   Debug.Log("Successfully connected.");
+});
+```
+
+```java fct_label="Android/Java"
+Session session = someSession; // obtained from register or login.
+Deferred<Session> deferred = client.connect(session);
+deferred.addCallback(new Callback<Session, Session>() {
+  @Override
+  public Session call(Session session) throws Exception {
+    System.out.println("Successfully connected.");
+    return session;
+  }
 });
 ```
 
@@ -277,6 +449,26 @@ client.Send(message, (bool done) => {
 });
 ```
 
+```java fct_label="Android/Java"
+String id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
+
+CollatedMessage<Session> message = SelfLinkMessage.Builder.device(id);
+Deferred<Boolean> deferred = client.send(message);
+deferred.addCallback(new Callback<Boolean, Boolean>() {
+  @Override
+  public Boolean call(Boolean done) throws Exception {
+    System.out.println("Successfully linked device ID to current user.");
+    return done;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
+});
+```
+
 You can unlink any linked login options for the current user.
 
 ```csharp fct_label="Unity"
@@ -287,6 +479,26 @@ client.Send(message, (bool done) => {
   Debug.Log("Successfully unlinked device ID from current user.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+String id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
+
+CollatedMessage<Session> message = SelfUnlinkMessage.Builder.device(id);
+Deferred<Boolean> deferred = client.send(message);
+deferred.addCallback(new Callback<Boolean, Boolean>() {
+  @Override
+  public Boolean call(Boolean done) throws Exception {
+    System.out.println("Successfully unlinked device ID from current user.");
+    return done;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
 

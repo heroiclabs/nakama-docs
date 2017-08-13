@@ -65,7 +65,7 @@ There are four ways to register a function within the runtime each of which is u
 
 Any function may be registered to intercept a message received from a client and operate on it (or reject it) based on custom logic. This is useful to enforce specific rules on top of the standard features in the server.
 
-```lua hl_lines="10"
+```lua hl_lines="9"
 local nk = require("nakama")
 
 local function limit_friends(context, payload)
@@ -274,5 +274,28 @@ client.Send(message, (INRuntimeRpc rpc) => {
   Debug.LogFormat("JSON response {0}", result);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```java fct_label="Android/Java"
+byte[] payload = "{\"PokemonName\": \"Dragonite\"}".getBytes();
+
+CollatedMessage<RpcResult> message = RpcMessage.Builder.newBuilder("get_pokemon")
+    .payload(payload)
+    .build();
+Deferred<RpcResult> deferred = client.send(message);
+deferred.addCallback(new Callback<RpcResult, RpcResult>() {
+  @Override
+  public RpcResult call(RpcResult rpc) throws Exception {
+    String result = new String(rpc.getPayload());
+    System.out.format("JSON response %s", result);
+    return rpc;
+  }
+}).addErrback(new Callback<Error, Error>() {
+  @Override
+  public Error call(Error err) throws Exception {
+    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+    return err;
+  }
 });
 ```
