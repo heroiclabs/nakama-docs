@@ -16,6 +16,12 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 When you've downloaded the jar package you should include it in your project or if you use Gradle add the client as a dependency to your "build.gradle".
 
 ```groovy
+repositories {
+    maven {
+        url 'https://dl.bintray.com/heroiclabs/default/'
+    }
+}
+
 dependencies {
   compile(group: 'com.heroiclabs.nakama', name: 'client', version: '+')
 }
