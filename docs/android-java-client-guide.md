@@ -288,5 +288,120 @@ Callback<Error, Error> errback = new Callback<Error, Error>() {
 An example class used to manage a session with the Java client.
 
 ```java
+package com.heroiclabs.nakama.example;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.heroiclabs.nakama.*;
+import com.heroiclabs.nakama.Error;
+import com.heroiclabs.nakama.Error.ErrorCode;
+import com.stumbleupon.async.*;
+
+public class NakamaSessionManager {
+  private final Client client;
+  private final Callback<Error, Error> errback;
+  private Session session;
+
+  public NakamaSessionManager() {
+    client = DefaultClient.builder("defaultkey").build();
+    errback = new Callback<Error, Error>() {
+      @Override
+      public Error call(Error err) throws Exception {
+        System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
+        return err;
+      }
+    };
+  }
+
+  /** Get the Client reference to send/receive messages from the server. */
+  public Client getClient() {
+    return client;
+  }
+
+  /**
+   * Login (or register) and connect a user using a device ID.
+   * @param activity The Activity calling this method.
+   * @param deviceId The Device ID to login with.
+   */
+  public void connect(final Activity activity, String deviceId) {
+    final AuthenticateMessage message = AuthenticateMessage.Builder.device(deviceId);
+    client.login(message)
+      .addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
+        @Override
+        public Deferred<Session> call(Session session) throws Exception {
+          // Login was successful.
+          // Store the session for later use.
+          SharedPreferences pref = activity.getPreferences(Context.MODE_PRIVATE);
+          pref.edit()
+            .putString("nk.session", session.getToken())
+            .apply();
+
+          return client.connect(session);
+        }
+      })
+      .addErrback(new Callback<Deferred<Session>, Error>() {
+        @Override
+        public Deferred<Session> call(Error err) throws Exception {
+          if (err.getCode() == ErrorCode.USER_NOT_FOUND) {
+            // Login failed because this is a new user.
+            // Let's register instead.
+            System.out.println("User not found, registering.");
+            return client.register(message);
+          }
+          throw err;
+        }
+      })
+      .addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
+        @Override
+        public Deferred<Session> call(Session session) throws Exception {
+          // Registration has succeeded, try connecting again.
+          // Store the session for later use.
+          SharedPreferences pref = activity.getPreferences(Context.MODE_PRIVATE);
+          pref.edit().putString("nk.session", session.getToken()).apply();
+
+          return client.connect(session);
+        }
+      })
+      .addCallback(new Callback<Session, Session>() {
+        @Override
+        public Session call(Session session) throws Exception {
+          // We're connected to the server!
+          System.out.println("Connected!");
+          return session;
+        }
+      })
+      .addErrback(errback);
+  }
+
+  /**
+   * Attempt to restore a Session from SharedPreferences and connect.
+   * @param activity The Activity calling this method.
+   */
+  private void restoreSessionAndConnect(Activity activity) {
+    SharedPreferences pref = activity.getPreferences(Context.MODE_PRIVATE);
+    // Lets check if we can restore a cached session.
+    String sessionString = pref.getString("nk.session", null);
+    if (sessionString == null || sessionString.isEmpty()) {
+      return; // We have no session to restore.
+    }
+
+    Session session = DefaultSession.restore(sessionString);
+    if (session.isExpired(System.currentTimeMillis())) {
+      return; // We can't restore an expired session.
+    }
+
+    final NakamaSessionManager self = this;
+    client.connect(session)
+      .addCallback(new Callback<Session, Session>() {
+        @Override
+        public Session call(Session session) throws Exception {
+          System.out.format("Session connected: '%s'.", session.getToken());
+          self.session = session;
+          return session;
+        }
+      });
+  }
+}
 ```
