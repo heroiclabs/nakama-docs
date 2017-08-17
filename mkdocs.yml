@@ -17,6 +17,9 @@ copyright: 'Copyright &copy; 2017 Heroic Labs'
 # Documentation and theme
 theme: 'material'
 
+extra_css:
+  - 'css/code-tabs.css'
+
 extra_javascript:
   - 'js/main.js'
 
