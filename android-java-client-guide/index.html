@@ -878,7 +878,13 @@
 </div>
 <h2 id="install-and-setup">Install and setup<a class="headerlink" href="#install-and-setup" title="Permanent link">&para;</a></h2>
 <p>When you've downloaded the jar package you should include it in your project or if you use Gradle add the client as a dependency to your "build.gradle".</p>
-<div class="codehilite"><pre><span></span><span class="n">dependencies</span> <span class="o">{</span>
+<div class="codehilite"><pre><span></span><span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">maven</span> <span class="o">{</span>
+        <span class="n">url</span> <span class="s1">&#39;https://dl.bintray.com/heroiclabs/default/&#39;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
   <span class="n">compile</span><span class="o">(</span><span class="nl">group:</span> <span class="s1">&#39;com.heroiclabs.nakama&#39;</span><span class="o">,</span> <span class="nl">name:</span> <span class="s1">&#39;client&#39;</span><span class="o">,</span> <span class="nl">version:</span> <span class="s1">&#39;+&#39;</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
@@ -1119,7 +1125,122 @@ Some events only need to be implemented for the features you want to use.
 
 <h2 id="full-android-example">Full Android example<a class="headerlink" href="#full-android-example" title="Permanent link">&para;</a></h2>
 <p>An example class used to manage a session with the Java client.</p>
-<div class="codehilite"><pre><span></span>
+<div class="codehilite"><pre><span></span><span class="kn">package</span> <span class="nn">com.heroiclabs.nakama.example</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.Context</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">android.content.SharedPreferences</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.heroiclabs.nakama.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.heroiclabs.nakama.Error</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.heroiclabs.nakama.Error.ErrorCode</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.stumbleupon.async.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">NakamaSessionManager</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="n">Client</span> <span class="n">client</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;</span> <span class="n">errback</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Session</span> <span class="n">session</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">NakamaSessionManager</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">DefaultClient</span><span class="o">.</span><span class="na">builder</span><span class="o">(</span><span class="s">&quot;defaultkey&quot;</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+    <span class="n">errback</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Error</span><span class="o">,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="n">Error</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error(&#39;%s&#39;, &#39;%s&#39;)&quot;</span><span class="o">,</span> <span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">(),</span> <span class="n">err</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
+      <span class="o">}</span>
+    <span class="o">};</span>
+  <span class="o">}</span>
+
+  <span class="cm">/** Get the Client reference to send/receive messages from the server. */</span>
+  <span class="kd">public</span> <span class="n">Client</span> <span class="nf">getClient</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * Login (or register) and connect a user using a device ID.</span>
+<span class="cm">   * @param activity The Activity calling this method.</span>
+<span class="cm">   * @param deviceId The Device ID to login with.</span>
+<span class="cm">   */</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">connect</span><span class="o">(</span><span class="kd">final</span> <span class="n">Activity</span> <span class="n">activity</span><span class="o">,</span> <span class="n">String</span> <span class="n">deviceId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">deviceId</span><span class="o">);</span>
+    <span class="n">client</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">message</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+          <span class="c1">// Login was successful.</span>
+          <span class="c1">// Store the session for later use.</span>
+          <span class="n">SharedPreferences</span> <span class="n">pref</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="na">getPreferences</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">MODE_PRIVATE</span><span class="o">);</span>
+          <span class="n">pref</span><span class="o">.</span><span class="na">edit</span><span class="o">()</span>
+            <span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">&quot;nk.session&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">())</span>
+            <span class="o">.</span><span class="na">apply</span><span class="o">();</span>
+
+          <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">})</span>
+      <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Error</span><span class="o">&gt;()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Error</span> <span class="n">err</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+          <span class="k">if</span> <span class="o">(</span><span class="n">err</span><span class="o">.</span><span class="na">getCode</span><span class="o">()</span> <span class="o">==</span> <span class="n">ErrorCode</span><span class="o">.</span><span class="na">USER_NOT_FOUND</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// Login failed because this is a new user.</span>
+            <span class="c1">// Let&#39;s register instead.</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;User not found, registering.&quot;</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+          <span class="o">}</span>
+          <span class="k">throw</span> <span class="n">err</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">})</span>
+      <span class="o">.</span><span class="na">addCallbackDeferring</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+          <span class="c1">// Registration has succeeded, try connecting again.</span>
+          <span class="c1">// Store the session for later use.</span>
+          <span class="n">SharedPreferences</span> <span class="n">pref</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="na">getPreferences</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">MODE_PRIVATE</span><span class="o">);</span>
+          <span class="n">pref</span><span class="o">.</span><span class="na">edit</span><span class="o">().</span><span class="na">putString</span><span class="o">(</span><span class="s">&quot;nk.session&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">()).</span><span class="na">apply</span><span class="o">();</span>
+
+          <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
+        <span class="o">}</span>
+      <span class="o">})</span>
+      <span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+          <span class="c1">// We&#39;re connected to the server!</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Connected!&quot;</span><span class="o">);</span>
+          <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">})</span>
+      <span class="o">.</span><span class="na">addErrback</span><span class="o">(</span><span class="n">errback</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="cm">/**</span>
+<span class="cm">   * Attempt to restore a Session from SharedPreferences and connect.</span>
+<span class="cm">   * @param activity The Activity calling this method.</span>
+<span class="cm">   */</span>
+  <span class="kd">private</span> <span class="kt">void</span> <span class="nf">restoreSessionAndConnect</span><span class="o">(</span><span class="n">Activity</span> <span class="n">activity</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">SharedPreferences</span> <span class="n">pref</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="na">getPreferences</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">MODE_PRIVATE</span><span class="o">);</span>
+    <span class="c1">// Lets check if we can restore a cached session.</span>
+    <span class="n">String</span> <span class="n">sessionString</span> <span class="o">=</span> <span class="n">pref</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;nk.session&quot;</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">sessionString</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">sessionString</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+      <span class="k">return</span><span class="o">;</span> <span class="c1">// We have no session to restore.</span>
+    <span class="o">}</span>
+
+    <span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">DefaultSession</span><span class="o">.</span><span class="na">restore</span><span class="o">(</span><span class="n">sessionString</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">session</span><span class="o">.</span><span class="na">isExpired</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()))</span> <span class="o">{</span>
+      <span class="k">return</span><span class="o">;</span> <span class="c1">// We can&#39;t restore an expired session.</span>
+    <span class="o">}</span>
+
+    <span class="kd">final</span> <span class="n">NakamaSessionManager</span> <span class="n">self</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+    <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">)</span>
+      <span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">Session</span> <span class="nf">call</span><span class="o">(</span><span class="n">Session</span> <span class="n">session</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+          <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Session connected: &#39;%s&#39;.&quot;</span><span class="o">,</span> <span class="n">session</span><span class="o">.</span><span class="na">getToken</span><span class="o">());</span>
+          <span class="n">self</span><span class="o">.</span><span class="na">session</span> <span class="o">=</span> <span class="n">session</span><span class="o">;</span>
+          <span class="k">return</span> <span class="n">session</span><span class="o">;</span>
+        <span class="o">}</span>
+      <span class="o">});</span>
+  <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
                 
                   

@@ -966,6 +966,10 @@
             <a href="#tab-0-java" aria-controls="tab-0-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
@@ -990,6 +994,18 @@
     <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 <span class="c1">// or same as above.</span>
 <span class="n">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="n">DefaultClient</span><span class="o">.</span><span class="na">defaults</span><span class="o">(</span><span class="s">&quot;defaultkey&quot;</span><span class="o">);</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">client</span> <span class="p">:</span> <span class="n">Client</span> <span class="p">=</span> <span class="n">Builder</span><span class="p">(</span><span class="s">&quot;defaultkey&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">host</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">port</span><span class="p">(</span><span class="mi">7350</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">ssl</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+<span class="c1">// or same as above.</span>
+<span class="kd">let</span> <span class="nv">client</span> <span class="p">:</span> <span class="n">Client</span> <span class="p">=</span> <span class="n">Builder</span><span class="p">.</span><span class="n">defaults</span><span class="p">(</span><span class="n">serverKey</span><span class="p">:</span> <span class="s">&quot;defaultkey&quot;</span><span class="p">)</span>
 </pre></div>
 
         </div>
@@ -1020,6 +1036,10 @@
     
         <li class="nav-item ">
             <a href="#tab-1-java" aria-controls="tab-1-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1091,6 +1111,35 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-1-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">defaults</span> <span class="p">=</span> <span class="n">UserDefaults</span><span class="p">.</span><span class="n">standard</span>
+<span class="kd">let</span> <span class="nv">deviceKey</span> <span class="p">=</span> <span class="s">&quot;device_id&quot;</span>
+
+<span class="kd">var</span> <span class="nv">deviceId</span> <span class="p">:</span> <span class="nb">String</span><span class="p">?</span> <span class="p">=</span> <span class="n">NakamaSessionManager</span><span class="p">.</span><span class="n">defaults</span><span class="p">.</span><span class="n">string</span><span class="p">(</span><span class="n">forKey</span><span class="p">:</span> <span class="n">deviceKey</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">deviceId</span> <span class="p">==</span> <span class="kc">nil</span> <span class="p">{</span>
+  <span class="n">deviceId</span> <span class="p">=</span> <span class="bp">UIDevice</span><span class="p">.</span><span class="n">current</span><span class="p">.</span><span class="n">identifierForVendor</span><span class="p">!.</span><span class="n">uuidString</span>
+  <span class="n">NakamaSessionManager</span><span class="p">.</span><span class="n">defaults</span><span class="p">.</span><span class="kr">set</span><span class="p">(</span><span class="n">deviceId</span><span class="p">!,</span> <span class="n">forKey</span><span class="p">:</span> <span class="n">deviceKey</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">deviceId</span><span class="p">!)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Login successful&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span><span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="k">is</span> <span class="n">NakamaError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">.</span><span class="n">userNotFound</span><span class="p">(</span><span class="kc">_</span><span class="p">):</span>
+      <span class="kd">let</span> <span class="nv">_</span> <span class="p">=</span> <span class="kc">self</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">)</span>
+      <span class="k">return</span>
+    <span class="k">default</span><span class="p">:</span>
+      <span class="k">break</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="bp">print</span><span class="p">(</span><span class="s">&quot;Could not login: %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1110,6 +1159,10 @@
     
         <li class="nav-item ">
             <a href="#tab-2-java" aria-controls="tab-2-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1150,6 +1203,21 @@
     <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
   <span class="o">}</span>
 <span class="o">});</span>
+<span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">email</span> <span class="p">=</span> <span class="s">&quot;email@example.com&quot;</span>
+<span class="kd">let</span> <span class="nv">password</span> <span class="p">=</span> <span class="s">&quot;3bc8f72e95a9&quot;</span>
+
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="n">password</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
 <span class="c1">// Use client.login(...) after register.</span>
 </pre></div>
 
@@ -1237,6 +1305,10 @@
             <a href="#tab-3-java" aria-controls="tab-3-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
@@ -1278,6 +1350,19 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
+
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">google</span><span class="p">:</span> <span class="n">oauthToken</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1295,6 +1380,10 @@
     
         <li class="nav-item ">
             <a href="#tab-4-java" aria-controls="tab-4-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1334,6 +1423,27 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-4-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">playerID</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
+<span class="kd">let</span> <span class="nv">bundleID</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
+<span class="kd">let</span> <span class="nv">base64salt</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
+<span class="kd">let</span> <span class="nv">base64signature</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
+<span class="kd">let</span> <span class="nv">publicKeyURL</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
+<span class="kd">let</span> <span class="nv">timestamp</span> <span class="p">:</span> <span class="nb">Int</span> <span class="p">=</span> <span class="mi">0</span>
+
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span>
+    <span class="n">gamecenter</span><span class="p">:</span> <span class="n">bundleID</span><span class="p">,</span> <span class="n">playerID</span><span class="p">:</span> <span class="n">playerID</span><span class="p">,</span> <span class="n">publicKeyURL</span><span class="p">:</span> <span class="n">publicKeyURL</span><span class="p">,</span>
+    <span class="n">salt</span><span class="p">:</span> <span class="n">base64salt</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">signature</span><span class="p">:</span> <span class="n">base64signature</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1355,6 +1465,10 @@
     
         <li class="nav-item ">
             <a href="#tab-5-java" aria-controls="tab-5-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-swift" aria-controls="tab-5-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1398,6 +1512,20 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-5-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">sessionToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
+
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">steam</span><span class="p">:</span> <span class="n">sessionToken</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1416,6 +1544,10 @@
     
         <li class="nav-item ">
             <a href="#tab-6-java" aria-controls="tab-6-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-swift" aria-controls="tab-6-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1461,6 +1593,21 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-6-swift">
+            <div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
+<span class="kd">let</span> <span class="nv">customID</span> <span class="p">=</span> <span class="s">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span>
+
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">custom</span><span class="p">:</span> <span class="n">customID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1482,6 +1629,10 @@
     
         <li class="nav-item ">
             <a href="#tab-7-java" aria-controls="tab-7-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-swift" aria-controls="tab-7-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1526,6 +1677,20 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-7-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span>
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="kd">let</span> <span class="nv">expired</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">isExpired</span><span class="p">(</span><span class="n">currentTimeSince1970</span><span class="p">:</span> <span class="n">Date</span><span class="p">().</span><span class="n">timeIntervalSince1970</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session id &#39;@%&#39; handle &#39;@%&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">userID</span><span class="p">.</span><span class="n">uuidString</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">handle</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session expired: &#39;@%&#39;&quot;</span><span class="p">,</span> <span class="n">expired</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1544,6 +1709,10 @@
     
         <li class="nav-item ">
             <a href="#tab-8-java" aria-controls="tab-8-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-swift" aria-controls="tab-8-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1573,6 +1742,15 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-8-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">session</span> <span class="p">:</span> <span class="n">Session</span> <span class="p">=</span> <span class="n">someSession</span> <span class="c1">// obtained from register or login.</span>
+<span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">session</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully connected.&quot;</span><span class="p">)</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1591,6 +1769,10 @@
     
         <li class="nav-item ">
             <a href="#tab-9-java" aria-controls="tab-9-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-9-swift" aria-controls="tab-9-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1632,6 +1814,19 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-9-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">SelfLinkMessage</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">id</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully linked device ID to current user.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1648,6 +1843,10 @@
     
         <li class="nav-item ">
             <a href="#tab-10-java" aria-controls="tab-10-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-10-swift" aria-controls="tab-10-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
@@ -1685,6 +1884,19 @@
     <span class="k">return</span> <span class="n">err</span><span class="o">;</span>
   <span class="o">}</span>
 <span class="o">});</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-10-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">SelfUnlinkMessage</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">id</span><span class="p">);</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully unlinked device ID from current user.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
 </pre></div>
 
         </div>
