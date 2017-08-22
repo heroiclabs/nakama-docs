@@ -77,6 +77,23 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 });
 ```
 
+```swift fct_label="Swift"
+let saveGame = "{\"progress\": 50}".data(using: .utf8)!
+let myStats = "{\"skill\": 24}".data(using: .utf8)!
+
+let bucket = "myapp"
+var message = StorageWriteMessage()
+message.write(bucket: bucket, collection: "saves", key: "savegame", value: saveGame)
+message.write(bucket: bucket, collection: "saves", key: "mystats", value: myStats)
+client.send(message: message).then { list in
+  for recordId in list {
+    NSLog("Stored record has version '@%'", recordId.version)
+  }
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 ### Conditional writes
 
 When records are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is often known as a conditional write.
@@ -121,6 +138,19 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 });
 ```
 
+```swift fct_label="Swift"
+let saveGame = "{\"progress\": 54}".data(using: .utf8)!
+var version = record.version // a StorageRecordId object's version.
+
+var message = StorageWriteMessage()
+message.write(bucket: "myapp", collection: "saves", key: "savegame", value: saveGame, version: version)
+client.send(message: message).then { list in
+  version = list[0].version // Cache updated version for next write.
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 We support another kind of conditional write which is used to write a record only if none already exists for that record's key name.
 
 ```csharp fct_label="Unity"
@@ -138,7 +168,7 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
-byte[] saveGame = "{\"progress\": 54}".getBytes();
+byte[] saveGame = "{\"progress\": 1}".getBytes();
 byte[] version = "*".getBytes(); // represents "no version".
 
 CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
@@ -159,6 +189,19 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
     return err;
   }
 });
+```
+
+```swift fct_label="Swift"
+let saveGame = "{\"progress\": 1}".data(using: .utf8)!
+var version = "*".data(using: .utf8)! // represents "no version".
+
+var message = StorageWriteMessage()
+message.write(bucket: "myapp", collection: "saves", key: "savegame", value: saveGame, version: version)
+client.send(message: message).then { list in
+  version = list[0].version // Cache updated version for next write.
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```
 
 ## Fetch records
@@ -214,6 +257,23 @@ deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRec
 });
 ```
 
+```swift fct_label="Swift"
+let userId = session.userID // a Session object's Id.
+
+var message = StorageFetchMessage()
+message.fetch(bucket: "myapp", collection: "saves", key: "savegame", userID: userId)
+message.fetch(bucket: "myapp", collection: "configuration", key: "config", userID: nil)
+client.send(message: message).then { list in
+  for record in list {
+    NSLog("Record value '@%'", record.value)
+    NSLog("Record permissions read '@%' write '@%'",
+        record.permissionRead, record.permissionWrite)
+  }
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 ## List records
 
 You can list records in a collection and page through results. The records returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
@@ -264,6 +324,23 @@ deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRec
     return err;
   }
 });
+```
+
+```swift fct_label="Swift"
+let userId = session.userID // a Session object's Id.
+
+var message = StorageListMessage(bucket: "myapp")
+message.collection = "saves"
+message.userID = userId
+client.send(message: message).then { list in
+  for record in list {
+    NSLog("Record value '@%'", record.value)
+    NSLog("Record permissions read '@%' write '@%'",
+        record.permissionRead, record.permissionWrite)
+  }
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```
 
 ## Update records
@@ -346,6 +423,27 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 });
 ```
 
+```swift fct_label="Swift"
+let json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}"
+let value = json.data(using: .utf8)!
+
+let ops = [
+  StorageOp(init_: "/foo", value: value),
+  StorageOp(incr: "/foo/coins", value: 10)
+  StorageOp(incr: "/foo/gems", value: 50)
+]
+
+var message = StorageUpdateMessage()
+message.update(bucket: "myapp", collection: "wallets", key: "wallet", ops: ops)
+client.send(message: message).then { list in
+  for record in list {
+    NSLog("Stored record has version '@%'", record.version)
+  }
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 ## Remove records
 
 A user can remove a record if it has the correct permissions and they own it.
@@ -384,6 +482,16 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 });
 ```
 
+```swift fct_label="Swift"
+var message = StorageRemoveMessage()
+message.remove(bucket: "myapp", collection: "saves", key: "savegame")
+client.send(message: message).then {
+  NSLog("Removed user's record(s).")
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 You can also conditionally remove an object if the object version matches the version sent by the client.
 
 ```csharp fct_label="Unity"
@@ -419,4 +527,16 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
     return err;
   }
 });
+```
+
+```swift fct_label="Swift"
+let version = record.version // a StorageRecordId object's version.
+
+var message = StorageRemoveMessage()
+message.remove(bucket: "myapp", collection: "saves", key: "savegame", version: version)
+client.send(message: message).then {
+  NSLog("Removed user's record(s).")
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```

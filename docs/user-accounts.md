@@ -39,6 +39,16 @@ deferred.addCallback(new Callback<Self, Self>() {
 });
 ```
 
+```swift fct_label="Swift"
+let message = SelfFetchMessage()
+client.send(message: message).then { selfuser in
+  NSLog("User id '@%' and handle '@%'", selfuser.id, selfuser.handle)
+  NSLog("User has JSON metadata '@%'", selfuser.metadata)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 Some information like social IDs are private but part of the profile is visible to other users.
 
 | Public field | Description |
@@ -91,7 +101,7 @@ deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
   public ResultSet<User> call(ResultSet<User> list) throws Exception {
     for (User user : list) {
       String userId = new String(user.getId());
-      System.out.format("User(id=%s, handle=%s)", id, user.getHandle());
+      System.out.format("User(id=%s, handle=%s)", userId, user.getHandle());
     }
     return self;
   }
@@ -102,6 +112,21 @@ deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
     return err;
   }
 });
+```
+
+```swift fct_label="Swift"
+let userID = UUID() // a User ID
+
+var message = UsersFetchMessage()
+message.userIDs.append(userID)
+
+client.send(message: message).then { users in
+  for user in users {
+    NSLog("User id '@%' and handle '@%'", user.id, user.handle)
+  }
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```
 
 You can also fetch one or more users in server-side code.
@@ -158,6 +183,18 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
     return err;
   }
 });
+```
+
+```swift fct_label="Swift"
+var message = SelfUpdateMessage()
+message.avatarUrl = "http://graph.facebook.com/avatar_url"
+message.fullname = "My New Name"
+message.location = "San Francisco"
+client.send(message: message).then {
+  NSLog("Successfully updated yourself.")
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```
 
 With server-side code it's possible to update one or more user's profiles.

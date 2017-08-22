@@ -25,6 +25,16 @@ Client client = DefaultClient.builder("defaultkey")
 Client client = DefaultClient.defaults("defaultkey");
 ```
 
+```swift fct_label="Swift"
+let client : Client = Builder("defaultkey")
+    .host("127.0.0.1")
+    .port(7350)
+    .ssl(false)
+    .build()
+// or same as above.
+let client : Client = Builder.defaults(serverKey: "defaultkey")
+```
+
 Every user account is created from one of the [options used to register](#register-or-login). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
 
 ## Register or login
@@ -103,6 +113,33 @@ deferred.addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
 });
 ```
 
+```swift fct_label="Swift"
+let defaults = UserDefaults.standard
+let deviceKey = "device_id"
+
+var deviceId : String? = NakamaSessionManager.defaults.string(forKey: deviceKey)
+if deviceId == nil {
+  deviceId = UIDevice.current.identifierForVendor!.uuidString
+  NakamaSessionManager.defaults.set(deviceId!, forKey: deviceKey)
+}
+
+let message = AuthenticateMessage(device: deviceId!)
+client.login(with: message).then { session in
+  print("Login successful")
+}.catch{ err in
+  if (err is NakamaError) {
+    switch err as! NakamaError {
+    case .userNotFound(_):
+      let _ = self.client.register(with: message)
+      return
+    default:
+      break
+    }
+  }
+  print("Could not login: %@", err)
+}
+```
+
 In games it is often a better option to use [Google](#google) or [Game Center](#game-center) to unobtrusively register the user.
 
 ### Email
@@ -143,6 +180,19 @@ deferred.addCallback(new Callback<Session, Session>() {
     return err;
   }
 });
+// Use client.login(...) after register.
+```
+
+```swift fct_label="Swift"
+let email = "email@example.com"
+let password = "3bc8f72e95a9"
+
+let message = AuthenticateMessage(email: email, password: password);
+client.register(with: message).then { session in
+  NSLog("Session: @%", session.token)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 // Use client.login(...) after register.
 ```
 
@@ -252,6 +302,17 @@ deferred.addCallback(new Callback<Session, Session>() {
 // Use client.login(...) after register.
 ```
 
+```swift fct_label="Swift"
+let oauthToken = "..."
+
+let message = AuthenticateMessage(google: oauthToken);
+client.register(with: message).then { session in
+  NSLog("Session: @%", session.token)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 #### Game Center
 
 Apple devices have builtin authentication which can be done without user interaction through Game Center. The register or login process is a little complicated because of how Apple's services work.
@@ -283,6 +344,25 @@ client.Register(message, (INSession session) => {
 
 ```java fct_label="Android/Java"
 // Not applicable with Android.
+```
+
+```swift fct_label="Swift"
+let playerID : String = "..."
+let bundleID : String = "..."
+let base64salt : String = "..."
+let base64signature : String = "..."
+let publicKeyURL : String = "..."
+let timestamp : Int = 0
+
+let message = AuthenticateMessage(
+    gamecenter: bundleID, playerID: playerID, publicKeyURL: publicKeyURL,
+    salt: base64salt, timestamp: timestamp, signature: base64signature)
+client.register(with: message).then { session in
+  NSLog("Session: @%", session.token)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+// Use client.login(...) after register.
 ```
 
 #### Steam
@@ -322,6 +402,18 @@ deferred.addCallback(new Callback<Session, Session>() {
     return err;
   }
 });
+// Use client.login(...) after register.
+```
+
+```swift fct_label="Swift"
+let sessionToken = "..."
+
+let message = AuthenticateMessage(steam: sessionToken)
+client.register(with: message).then { session in
+  NSLog("Session: @%", session.token)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 // Use client.login(...) after register.
 ```
 
@@ -366,6 +458,19 @@ deferred.addCallback(new Callback<Session, Session>() {
 // Use client.login(...) after register.
 ```
 
+```swift fct_label="Swift"
+// Some id from another service.
+let customID = "a1fca336-7191-11e7-bdab-df34f6f90285"
+
+let message = AuthenticateMessage(custom: customID)
+client.register(with: message).then { session in
+  NSLog("Session: @%", session.token)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+// Use client.login(...) after register.
+```
+
 ## Sessions
 
 The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.
@@ -407,6 +512,18 @@ deferred.addCallback(new Callback<Session, Session>() {
 });
 ```
 
+```swift fct_label="Swift"
+let id = "3e70fd52-7192-11e7-9766-cb3ce5609916"
+let message = AuthenticateMessage(device: id)
+client.login(with: message).then { session in
+  let expired = session.isExpired(currentTimeSince1970: Date().timeIntervalSince1970)
+  NSLog("Session id '@%' handle '@%'.", session.userID.uuidString, session.handle)
+  NSLog("Session expired: '@%'", expired)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 ### Connect
 
 With a session you can connect with the server and send messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.
@@ -429,6 +546,13 @@ deferred.addCallback(new Callback<Session, Session>() {
     System.out.println("Successfully connected.");
     return session;
   }
+});
+```
+
+```swift fct_label="Swift"
+let session : Session = someSession // obtained from register or login.
+client.connect(with: session).then { _ in
+  NSLog("Successfully connected.")
 });
 ```
 
@@ -469,6 +593,17 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 });
 ```
 
+```swift fct_label="Swift"
+let id = "062b0916-7196-11e7-8371-9fcee9f0b20c"
+
+var message = SelfLinkMessage(device: id);
+client.send(with: message).then {
+  NSLog("Successfully linked device ID to current user.")
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
 You can unlink any linked login options for the current user.
 
 ```csharp fct_label="Unity"
@@ -500,6 +635,17 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
     return err;
   }
 });
+```
+
+```swift fct_label="Swift"
+let id = "062b0916-7196-11e7-8371-9fcee9f0b20c"
+
+var message = SelfUnlinkMessage(device: id);
+client.send(with: message).then {
+  NSLog("Successfully unlinked device ID from current user.")
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```
 
 Like with register and login you can link or unlink many different account options.

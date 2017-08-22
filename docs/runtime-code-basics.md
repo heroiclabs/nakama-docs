@@ -299,3 +299,15 @@ deferred.addCallback(new Callback<RpcResult, RpcResult>() {
   }
 });
 ```
+
+```swift fct_label="Swift"
+let payload = "{\"PokemonName\": \"Dragonite\"}"
+
+let message = RPCMessage(id: "client_rpc_echo")
+message.payload = payload
+client.send(message: message).then { result in
+  NSLog("JSON response %@", result.payload)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
