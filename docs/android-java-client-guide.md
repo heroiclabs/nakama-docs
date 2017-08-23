@@ -379,7 +379,7 @@ public class NakamaSessionManager {
    * Attempt to restore a Session from SharedPreferences and connect.
    * @param activity The Activity calling this method.
    */
-  private void restoreSessionAndConnect(Activity activity) {
+  public void restoreSessionAndConnect(Activity activity) {
     SharedPreferences pref = activity.getPreferences(Context.MODE_PRIVATE);
     // Lets check if we can restore a cached session.
     String sessionString = pref.getString("nk.session", null);

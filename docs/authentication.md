@@ -117,10 +117,10 @@ deferred.addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
 let defaults = UserDefaults.standard
 let deviceKey = "device_id"
 
-var deviceId : String? = NakamaSessionManager.defaults.string(forKey: deviceKey)
+var deviceId : String? = defaults.string(forKey: deviceKey)
 if deviceId == nil {
   deviceId = UIDevice.current.identifierForVendor!.uuidString
-  NakamaSessionManager.defaults.set(deviceId!, forKey: deviceKey)
+  defaults.set(deviceId!, forKey: deviceKey)
 }
 
 let message = AuthenticateMessage(device: deviceId!)

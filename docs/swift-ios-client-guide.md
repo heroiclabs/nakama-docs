@@ -168,7 +168,29 @@ internal class NakamaSessionManager {
     client = Builder.defaults(serverKey: "defaultkey")
   }
 
-  func loginOrRegister() {
+  func start() {
+    restoreSessionAndConnect()
+    if session == nil {
+      loginOrRegister()
+    }
+  }
+
+  private func restoreSessionAndConnect() {
+    // Lets check if we can restore a cached session
+    let sessionString : String? = NakamaSessionManager.defaults.string(forKey: NakamaSessionManager.sessionKey)
+    if sessionString == nil {
+      return
+    }
+
+    let session = DefaultSession.restore(token: sessionString!)
+    if session.isExpired(currentTimeSince1970: Date().timeIntervalSince1970) {
+      return
+    }
+
+    connect(with: session)
+  }
+
+  private func loginOrRegister() {
     var deviceId : String? = NakamaSessionManager.defaults.string(forKey: NakamaSessionManager.deviceKey)
     if deviceId == nil {
       deviceId = UIDevice.current.identifierForVendor!.uuidString
@@ -178,41 +200,34 @@ internal class NakamaSessionManager {
     let message = AuthenticateMessage(device: deviceId!)
     client.login(with: message).then { session in
       NakamaSessionManager.defaults.set(session.token, forKey: NakamaSessionManager.sessionKey)
-      self.restoreSessionAndConnect()
-    }.catch{ err in
-      if (err is NakamaError) {
-        switch err as! NakamaError {
-        case .userNotFound(_):
-          let _ = self.client.register(with: message)
-          return
-        default:
-          break
+      self.connect(with: session)
+      }.catch{ err in
+        if (err is NakamaError) {
+          switch err as! NakamaError {
+          case .userNotFound(_):
+            self.client.register(with: message).then { session in
+              self.connect(with: session)
+              }.catch{ err in
+                print("Could not register: %@", err)
+            }
+            return
+          default:
+            break
+          }
         }
-      }
-      print("Could not login: %@", err)
+        print("Could not login: %@", err)
     }
   }
 
-  func restoreSessionAndConnect() {
-    // Lets check if we can restore a cached session
 
-    let sessionString : String? = NakamaSessionManager.defaults.string(forKey: NakamaSessionManager.sessionKey)
-    if sessionString == nil {
-      return
-    }
-
-    let _session = DefaultSession.restore(token: sessionString!)
-    if _session.isExpired(currentTimeSince1970: Date().timeIntervalSince1970) {
-      return
-    }
-
-    client.connect(to: _session).then { validSession in
-      self.session = _session
+  private func connect(with session: Session) {
+    client.connect(to: session).then { _ in
+      self.session = session
 
       // Store session for quick reconnects.
-      NakamaSessionManager.defaults.set(_session.token, forKey: NakamaSessionManager.sessionKey)
-    }.catch{ err in
-      print("Failed to connect to server: %@", err)
+      NakamaSessionManager.defaults.set(session.token, forKey: NakamaSessionManager.sessionKey)
+      }.catch{ err in
+        print("Failed to connect to server: %@", err)
     }
   }
 }
