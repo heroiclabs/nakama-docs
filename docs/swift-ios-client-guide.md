@@ -69,7 +69,24 @@ let client : Client = Builder.defaults(serverKey: "defaultkey")
     It's good practice to cache a device identifier on iOS when it's used to authenticate because they can change with device OS updates.
 
 ```swift
-
+let message = AuthenticateMessage(device: deviceId!)
+client.login(with: message).then { session in
+  // connect to the server with the session
+}.catch{ err in
+  if (err is NakamaError) {
+    switch err as! NakamaError {
+    case .userNotFound(_):
+      self.client.register(with: message).then { session in
+        // connect to the server with the session
+      }.catch{ err in
+        print("Could not register: %@", err)
+      }
+    default:
+      break
+    }
+  }
+  print("Could not login: %@", err)
+}
 ```
 
 In the code above we use `AuthenticateMessage.device(id: deviceID)` but for other authentication options have a look at the [code examples](authentication.md#register-or-login).
@@ -81,7 +98,8 @@ The client uses [promise chains](#promise-chains) for an easy way to execute asy
 We can replace the callback marked in step 2 with a callback which stores the session object on iOS.
 
 ```swift
-
+let defaults = UserDefaults.standard
+defaults.set(session.token, forKey: "session")
 ```
 
 A __full example__ class with all code above is [here](#full-example).
@@ -95,7 +113,20 @@ This could be to [add friends](social-friends.md), join [groups](social-groups-c
 The server also provides a [storage engine](storage-collections.md) to keep preferences and other records owned by users. We'll use storage to introduce how messages are sent.
 
 ```swift
+let saveGame = "{\"progress\": 50}".data(using: .utf8)!
+let myStats = "{\"skill\": 24}".data(using: .utf8)!
 
+let bucket = "myapp"
+var message = StorageWriteMessage()
+message.write(bucket: bucket, collection: "saves", key: "savegame", value: saveGame)
+message.write(bucket: bucket, collection: "saves", key: "mystats", value: myStats)
+client.send(message: message).then { list in
+  for recordId in list {
+    NSLog("Stored record has version '@%'", recordId.version)
+  }
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```
 
 Have a look at other sections of documentation for more code examples.
@@ -129,12 +160,22 @@ The client uses promises to represent asynchronous actions with the <a href="htt
 A deferred object is created when messages are sent and can attach callbacks and error handlers for working on the deferred result.
 
 ```swift
+var message = StorageWriteMessage()
+message.write(bucket: bucket, collection: "saves", key: "savegame", value: saveGame)
+
+let promise : Promise<StorageRecordID> = client.send(with: message)
 ```
 
 You can chain callbacks because each callback returns a `Promise<T>`. Each method on the `Client` returns a `Promise<T>` so you can chain calls with `.then { }`.
 
 ```swift
-
+promise.then { _ in
+  return client.send(with: message)
+}.then { _ in
+  //...
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
 ```
 
 ## Logs and errors
@@ -150,7 +191,20 @@ let client : Client = new Builder("defaultkey")
 Every error in the Swift client implements the `"NakamaError"` class. It contains details on the source and content of an error:
 
 ```swift
+let promise = ...
 
+promise.catch { err in
+  if (err is NakamaError) {
+    switch err as! NakamaError {
+    case .storageRejected(let msg):
+      print("Storage rejected: %@", msg)
+    case ...
+    default:
+      break
+    }
+  }
+  print("Operation failed: %@", err)
+}
 ```
 
 ## Full example
