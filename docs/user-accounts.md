@@ -68,7 +68,7 @@ Some information like social IDs are private but part of the profile is visible 
 You can store additional fields for a user in `"Metadata"` which is useful to share data you want to be public to other users. Metadata is limited to 16KB per user.
 
 !!! Tip
-    We recommend you choose user metadata to store very common fields which other users will need to see. For all other information you can store records with [public read permissions](storage-record-permissions.md) which other users can find.
+    We recommend you choose user metadata to store very common fields which other users will need to see. For all other information you can store records with [public read permissions](storage-collections.md) which other users can find.
 
 ## Fetch users
 

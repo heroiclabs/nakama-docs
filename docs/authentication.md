@@ -565,7 +565,7 @@ You can only link device Ids, custom Ids, and social provider IDs which are not 
 ```csharp fct_label="Unity"
 string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
 
-var message = SelfLinkMessage.Device(id);
+var message = NSelfLinkMessage.Device(id);
 client.Send(message, (bool done) => {
   Debug.Log("Successfully linked device ID to current user.");
 }, (INError err) => {
@@ -609,7 +609,7 @@ You can unlink any linked login options for the current user.
 ```csharp fct_label="Unity"
 string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
 
-var message = SelfUnlinkMessage.Device(id);
+var message = NSelfUnlinkMessage.Device(id);
 client.Send(message, (bool done) => {
   Debug.Log("Successfully unlinked device ID from current user.");
 }, (INError err) => {
