@@ -54,7 +54,7 @@ client.Send(message, (INLeaderboardRecord result) => {
 
 ## Create a leaderboard
 
-A leaderboard can be created via server-side code at startup or within a [registered function](#register-hooks). The ID given to the leaderboard is used to submit scores to it.
+A leaderboard can be created via server-side code at startup or within a [registered function](runtime-code-function-reference.md#register-hooks). The ID given to the leaderboard is used to submit scores to it.
 
 ```lua
 local metadata = {
