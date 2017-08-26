@@ -45,8 +45,10 @@ var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Set(score)
     .Metadata(metadata)
     .Build();
-client.Send(message, (INLeaderboardRecord result) => {
-  Debug.LogFormat("Record handle '{0}' score '{1}'.", result.Handle, result.Score);
+client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+  foreach (var r in list.Results) {
+    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
+  }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
@@ -125,8 +127,10 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Set(score)
     .Build();
-client.Send(message, (INLeaderboardRecord result) => {
-  Debug.LogFormat("Record handle '{0}' score '{1}'.", result.Handle, result.Score);
+client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+  foreach (var r in list.Results) {
+    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
+  }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
@@ -143,8 +147,10 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Best(score)
     .Build();
-client.Send(message, (INLeaderboardRecord result) => {
-  Debug.LogFormat("Record handle '{0}' score '{1}'.", result.Handle, result.Score);
+client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+  foreach (var r in list.Results) {
+    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
+  }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
@@ -161,8 +167,10 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Increment(score)
     .Build();
-client.Send(message, (INLeaderboardRecord result) => {
-  Debug.LogFormat("Record handle '{0}' score '{1}'.", result.Handle, result.Score);
+client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+  foreach (var r in list.Results) {
+    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
+  }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
@@ -179,8 +187,10 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Decrement(score)
     .Build();
-client.Send(message, (INLeaderboardRecord result) => {
-  Debug.LogFormat("Record handle '{0}' score '{1}'.", result.Handle, result.Score);
+client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+  foreach (var r in list.Results) {
+    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
+  }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
