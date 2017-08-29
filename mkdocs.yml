@@ -2,7 +2,7 @@
 site_name: 'Nakama server'
 site_description: 'Documentation for the Nakama realtime and social server for games and apps.'
 site_author: 'Heroic Labs Team & contributors'
-site_url: 'https://heroiclabs.com/docs/'
+site_url: 'https://heroiclabs.com/'
 site_favicon: 'images/favicon.ico'
 remote_name: 'origin'
 remote_branch: 'gh-pages'
@@ -88,6 +88,8 @@ pages:
 #  - 'JavaScript/Lua comparison': 'runtime-javascript-lua-comparison.md'
 #  - 'Lua cheatsheet': 'runtime-lua-cheatsheet.md'
   - 'Function Reference': 'runtime-code-function-reference.md'
+#- 'Nakama enterprise': 'nakama-enterprise.md'
+- 'Benchmarks': 'benchmarks.md'
 - 'Deployment':
 #  - 'Production settings': 'deployment-production-settings.md'
 #  - 'Resource limits': 'deployment-resource-limits.md'
@@ -103,7 +105,6 @@ pages:
 #  - 'Virtual wallet': 'tutorial-virtual-wallet.md'
 #  - 'Inventory management': 'tutorial-inventory-management.md'
 #  - 'Prized leaderboards': 'tutorial-prized-leaderboards.md'
-#- 'Nakama enterprise': 'nakama-enterprise.md'
 #- 'Internals':
 #  - 'Server architecture': 'internal-nakama-server-architecture.md'
 #  - 'Social graph engine': 'internal-nakama-social-graph-engine.md'
