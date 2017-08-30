@@ -1,6 +1,6 @@
 # Download
 
-All Nakama versions are available for download from GitHub Release page. In addition, pre-build Docker images are available on Docker Hub.
+All Nakama versions are available for download from the GitHub Release page. In addition, Docker images are available on Docker Hub.
 
 ## Docker
 
@@ -10,9 +10,9 @@ Nakama is available to be pulled in via Docker:
 docker run heroiclabs/nakama
 ```
 
-Follow [the quickstart guide](install-docker-quickstart.md) to install and run Nakama and dependencies on your machine.
+Follow the [quickstart guide](install-docker-quickstart.md) to install and run Nakama and dependencies on your machine.
 
-There is also a [`docker-compose`](install-docker-quickstart.md#using-docker-compose) script that autoconfigures Nakama and its dependencies for development purposes.
+There is also a [`docker-compose`](install-docker-quickstart.md#using-docker-compose) script that autoconfigures Nakama and its dependencies for development.
 
 ## Binary Downloads
 

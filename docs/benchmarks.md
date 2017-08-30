@@ -30,24 +30,21 @@ All workloads are conducted on Google Compute Engine.
 |---             |---                    |
 | OS             | Ubuntu 16.04 LTS      |
 | Instance Type  | n1-standard-4         |
-| CPU            | 4                     |
-| Mem            | 15GB                  |
+| CPU / Mem      | 4 / 15GB              |
 
 | Nakama server                         ||
 |---             |---                    |
 | OS             | Ubuntu 16.04 LTS      |
 | Version        | Nakama 1.0.1          |
 | Instance Type  | n1-standard-1         |
-| CPU            | 1                     |
-| Mem            | 3.75GB                |
+| CPU / Mem      | 1 / 3.75GB            |
 
 | CockroachDB server                    ||
 |---             |---                    |
 | OS             | Ubuntu 16.04 LTS      |
 | Version        | Nakama 1.0.4          |
 | Instance Type  | n1-standard-2         |
-| CPU            | 2                     |
-| Mem            | 7.5GB                 |
+| CPU / Mem      | 2 / 7.5GB             |
 
 ## Workload #1 - Register new user
 
@@ -78,14 +75,9 @@ This workload shows read operations via Nakama to the database server to login a
 This workload shows sustained concurrent connected clients which hold a socket open for 100 seconds each.
 
 !!! Summary
-    A single Nakama server can handle a peak CCU count of **11,000 users**.
+    A single Nakama server can handle a peak CCU count of 11,000 users.
 
 | CCU benchmark results                                                ||
 |---                                                                   ||
 | ![Benchmark CCU][benchmark_ccu_1] | ![Benchmark CCU][benchmark_ccu_2] |
 | ![Benchmark CCU][benchmark_ccu_3]                                    ||
-
-
-
-
-
