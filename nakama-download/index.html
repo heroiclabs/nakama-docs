@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation for the Nakama realtime and social server for games and apps.">
       
       
-        <link rel="canonical" href="https://heroiclabs.com/install-binary/">
+        <link rel="canonical" href="https://heroiclabs.com/nakama-download/">
       
       
         <meta name="author" content="Heroic Labs Team & contributors">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Binary install - Nakama server</title>
+        <title>Download - Nakama server</title>
       
     
     
@@ -83,12 +83,8 @@
           
             
               
-                <span class="md-header-nav__parent">
-                  Install and setup
-                </span>
-              
             
-            Binary install
+            Download
           
         </span>
       </div>
@@ -207,11 +203,81 @@
       
       
 
+  
 
-  <li class="md-nav__item">
-    <a href="../nakama-download/" title="Download" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Download
+      </label>
+    
+    <a href="./" title="Download" class="md-nav__link md-nav__link--active">
       Download
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#docker" title="Docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binary-downloads" title="Binary Downloads" class="md-nav__link">
+    Binary Downloads
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" title="Windows" class="md-nav__link">
+    Windows
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos" title="MacOS" class="md-nav__link">
+    MacOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linux" title="Linux" class="md-nav__link">
+    Linux
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
     
@@ -219,12 +285,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
     <label class="md-nav__link" for="nav-3">
       Install and setup
@@ -252,108 +316,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="toc">
-        Binary install
-      </label>
-    
-    <a href="./" title="Binary install" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../install-binary/" title="Binary install" class="md-nav__link">
       Binary install
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#requirement" title="Requirement" class="md-nav__link">
-    Requirement
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-cockroachdb" title="Install CockroachDB" class="md-nav__link">
-    Install CockroachDB
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-macos" title="Install Nakama on MacOS" class="md-nav__link">
-    Install Nakama on MacOS
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#homebrew" title="Homebrew" class="md-nav__link">
-    Homebrew
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#without-homebrew" title="Without Homebrew" class="md-nav__link">
-    Without Homebrew
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-windows" title="Install Nakama on Windows" class="md-nav__link">
-    Install Nakama on Windows
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-linux" title="Install Nakama on Linux" class="md-nav__link">
-    Install Nakama on Linux
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#systemd" title="systemd" class="md-nav__link">
-    systemd
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -839,64 +806,37 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirement" title="Requirement" class="md-nav__link">
-    Requirement
+  <a href="#docker" title="Docker" class="md-nav__link">
+    Docker
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-cockroachdb" title="Install CockroachDB" class="md-nav__link">
-    Install CockroachDB
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-macos" title="Install Nakama on MacOS" class="md-nav__link">
-    Install Nakama on MacOS
+  <a href="#binary-downloads" title="Binary Downloads" class="md-nav__link">
+    Binary Downloads
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#homebrew" title="Homebrew" class="md-nav__link">
-    Homebrew
+  <a href="#windows" title="Windows" class="md-nav__link">
+    Windows
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#without-homebrew" title="Without Homebrew" class="md-nav__link">
-    Without Homebrew
+  <a href="#macos" title="MacOS" class="md-nav__link">
+    MacOS
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-windows" title="Install Nakama on Windows" class="md-nav__link">
-    Install Nakama on Windows
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-nakama-on-linux" title="Install Nakama on Linux" class="md-nav__link">
-    Install Nakama on Linux
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#systemd" title="systemd" class="md-nav__link">
-    systemd
+  <a href="#linux" title="Linux" class="md-nav__link">
+    Linux
   </a>
   
 </li>
@@ -921,127 +861,29 @@
               
                 
                 
-                <h1 id="binary-install">Binary install<a class="headerlink" href="#binary-install" title="Permanent link">&para;</a></h1>
-<p>To start developing with Nakama, you&rsquo;ll first need to install it on your development machine. It&rsquo;s straightforward and takes just a few minutes. In this guide we&rsquo;re going to focus on installing your Nakama development instance using the binary executable.</p>
-<div class="admonition summary">
-<p class="admonition-title">Recommended Approach</p>
-<p><a href="../install-docker-quickstart/">Docker</a> is the quickest way to download and get started with Nakama for development purposes. For production settings, we recommend that you install Nakama as a binary to ensure all system resources are available to Nakama.</p>
-</div>
-<h2 id="requirement">Requirement<a class="headerlink" href="#requirement" title="Permanent link">&para;</a></h2>
-<p>There are a few things you&rsquo;ll need to know or have to hand before you install Nakama:</p>
-<ul>
-<li>Operating system: Windows 10 64-bit or above, MacOS 10.9 or above, or a modern Linux.</li>
-<li>Architecture: X86_64 (64bit) processor architecture</li>
-<li>Dependent software: Nakama relies on <a href="https://cockroachlabs.com">CockroachDB</a>.</li>
-</ul>
-<h2 id="install-cockroachdb">Install CockroachDB<a class="headerlink" href="#install-cockroachdb" title="Permanent link">&para;</a></h2>
-<p>Nakama relies on CockroachDB as the main and only database. Nakama uses CockroachDB to store server configuration, user data, chat messages and more persistent data.</p>
-<p>You'll first need to install CockroachDB. Follow <a href="https://www.cockroachlabs.com/docs/stable/install-cockroachdb.html">this guide</a> to install CockroachDB on your machine before installing Nakama.</p>
-<div class="admonition note">
-<p class="admonition-title">CockroachDB Alternative</p>
-<p>Nakama unofficially supports <a href="https://www.postgresql.org/download/">PostgreSQL</a> for environments where CockroachDB is not available.</p>
-<p>For production settings, Nakama should be used with CockroachDB as queries are optimised for the way data is stored on the disk.</p>
-</div>
-<h2 id="install-nakama-on-macos">Install Nakama on MacOS<a class="headerlink" href="#install-nakama-on-macos" title="Permanent link">&para;</a></h2>
-<p>You&rsquo;ll need to be running MacOS 10.9 (Mavericks) or greater to run Nakama.</p>
-<h3 id="homebrew">Homebrew<a class="headerlink" href="#homebrew" title="Permanent link">&para;</a></h3>
-<p>Homebrew is a community-developed package manager for MacOS. If you&rsquo;ve used <code>apt</code> or <code>yum</code> on Linux systems then you&rsquo;ll find Homebrew to be familiar.</p>
-<p>If this is your first time using Homebrew, take a look at <a href="http://brew.sh/">their website</a> for installation instructions. Once you&rsquo;ve installed Homebrew, follow the instructions below.</p>
-<div class="codehilite"><pre><span></span><span class="c1"># run our brew recipe to download the Nakama code and build the binary</span>
-brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/local/nakama.rb
+                <h1 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h1>
+<p>All Nakama versions are available for download from the GitHub Release page. In addition, Docker images are available on Docker Hub.</p>
+<h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
+<p>Nakama is available to be pulled in via Docker:</p>
+<div class="codehilite"><pre><span></span>docker run heroiclabs/nakama
 </pre></div>
 
 
-<p>Now you have Nakama running and you&rsquo;re ready to start developing.</p>
-<h3 id="without-homebrew">Without Homebrew<a class="headerlink" href="#without-homebrew" title="Permanent link">&para;</a></h3>
-<p>Installing the binaries directly rather than via Homebrew allows you the flexibility of placing the server in your prefered workspace. However, installing through <a href="#homebrew">Homebrew</a> is the simplest and easiest &ndash; including for updates &ndash; as everything is handled using the Homebrew workflow.</p>
-<p>1. Download the latest <a href="https://github.com/heroiclabs/nakama/releases/latest">Nakama tarball for MacOS</a>.</p>
-<p>2. Then extract the binary:</p>
-<div class="codehilite"><pre><span></span><span class="c1"># replace the X.X.X with the version number you have downloaded</span>
-tar xfz nakama-X.X.X-darwin-amd64.tar.gz
-</pre></div>
-
-
-<p>3. Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</p>
-<div class="codehilite"><pre><span></span>cp -i nakama /usr/local/bin
-</pre></div>
-
-
-<p>You may come across a permissions error. If you&rsquo;re happy to perform the action with root permissions then prefix the command with <code>sudo</code>.</p>
-<p>4. Migrate the database schema and then start Nakama</p>
-<div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
-nakama migrate up
-<span class="c1"># start the server and output logs to the terminal</span>
-nakama --log.stdout
-</pre></div>
-
-
-<h2 id="install-nakama-on-windows">Install Nakama on Windows<a class="headerlink" href="#install-nakama-on-windows" title="Permanent link">&para;</a></h2>
-<p>Nakama is also available as a <a href="https://github.com/heroiclabs/nakama/releases/latest">Windows binary</a>. However, <a href="../install-docker-quickstart/">Docker</a> is the recommended way to install CockroachDB and Nakama on Windows.</p>
-<ol>
-<li><a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</li>
-<li>Open a Powershell terminal and navigate to the folder you downloaded Nakama into.</li>
-<li>Migrate the database schema and then start Nakama</li>
-</ol>
-<div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
-nakama.exe migrate up
-<span class="c1"># start the server and output logs to the terminal</span>
-nakama.exe --log.stdout
-</pre></div>
-
-
-<h2 id="install-nakama-on-linux">Install Nakama on Linux<a class="headerlink" href="#install-nakama-on-linux" title="Permanent link">&para;</a></h2>
-<p>Using <a href="../install-docker-quickstart/">Docker</a> - This is the recommended approach. We will soon provide packages for various Linux package managers to ease the installation procedure. <a href="mailto:support@heroiclabs.com">Let us know</a> if you have requests for specific package managers.</p>
-<p>First you&rsquo;ll need to create a suitable directory to install Nakama. To some extent its location will depend on your particular flavor of Linux and your own preferences.</p>
-<p>1. <a href="https://github.com/heroiclabs/nakama/releases/latest">Download the binary</a> and decompress the downloaded file.</p>
-<p>2. Then extract the binary:</p>
-<div class="codehilite"><pre><span></span><span class="c1"># replace the X.X.X with the version number you have downloaded</span>
-tar xfz nakama-X.X.X-linux-amd64.tar.gz
-</pre></div>
-
-
-<p>3. Add the directory containing the binary to your <code>PATH</code>. This makes it easy to execute Nakama commands from your terminal.</p>
-<div class="codehilite"><pre><span></span>cp -i nakama /usr/local/bin
-</pre></div>
-
-
-<p>4. Migrate the database schema and then start Nakama</p>
-<div class="codehilite"><pre><span></span><span class="c1"># migrate schema</span>
-nakama migrate up
-<span class="c1"># start the server and output logs to the terminal</span>
-nakama --log.stdout
-</pre></div>
-
-
-<p>You may come across a permissions error. If you&rsquo;re happy to perform the action with root permissions then prefix the command with <code>sudo</code>.</p>
-<h3 id="systemd">systemd<a class="headerlink" href="#systemd" title="Permanent link">&para;</a></h3>
-<p>If you prefer to run Nakama as a service, and you&rsquo;re running a distro that uses systemd, you can optionally use the following script.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You&rsquo;ll need to update the paths within the systemd configuration.</p>
-</div>
-<p>1. Create the service file: <code>/usr/lib/systemd/system/nakama.service</code></p>
-<div class="codehilite"><pre><span></span><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">Nakama server</span>
-
-<span class="k">[Service]</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/path/to/nakama --config /path/to/nakama/config.yml</span>
-<span class="na">KillMode</span><span class="o">=</span><span class="s">process</span>
-
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
-</pre></div>
-
-
-<p>2. Update file permission so it's readable by the <code>systemd</code> daemon process</p>
-<div class="codehilite"><pre><span></span>sudo chmod <span class="m">644</span> /usr/lib/systemd/system/nakama.service
-</pre></div>
-
-
-<p>3. Enable and run the service</p>
-<div class="codehilite"><pre><span></span>sudo systemctl <span class="nb">enable</span> nakama
-sudo systemctl start nakama
-</pre></div>
+<p>Follow the <a href="../install-docker-quickstart/">quickstart guide</a> to install and run Nakama and dependencies on your machine.</p>
+<p>There is also a <a href="../install-docker-quickstart/#using-docker-compose"><code>docker-compose</code></a> script that autoconfigures Nakama and its dependencies for development.</p>
+<h2 id="binary-downloads">Binary Downloads<a class="headerlink" href="#binary-downloads" title="Permanent link">&para;</a></h2>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<p>Compatible with Windows 7+ 64-bit architecture.</p>
+<p><a href="https://github.com/heroiclabs/nakama/releases/latest" target="_blank"><b>Download</b> &#x21A6;</a></p>
+<p>Follow <a href="#install-binary.md#install-nakama-on-windows">this guide</a> to install Nakama on your Linux machine.</p>
+<h3 id="macos">MacOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<p>Compatible with MacOS 10.10 and greater.</p>
+<p><a href="https://github.com/heroiclabs/nakama/releases/latest" target="_blank"><b>Download</b> &#x21A6;</a></p>
+<p>Follow <a href="#install-binary.md#install-nakama-on-macos">this guide</a> to install Nakama on your Linux machine.</p>
+<h3 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h3>
+<p>Compatible with most 64-bit Linux distribution.</p>
+<p><a href="https://github.com/heroiclabs/nakama/releases/latest" target="_blank"><b>Download</b> &#x21A6;</a></p>
+<p>Follow <a href="#install-binary.md#install-nakama-on-linux">this guide</a> to install Nakama on your Linux machine.</p>
                 
                   
                 
@@ -1060,7 +902,7 @@ sudo systemctl start nakama
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1069,19 +911,19 @@ sudo systemctl start nakama
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Docker quickstart
+                Introduction
               </span>
             </div>
           </a>
         
         
-          <a href="../install-configuration/" title="Configuration" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../install-docker-quickstart/" title="Docker quickstart" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Configuration
+                Docker quickstart
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
