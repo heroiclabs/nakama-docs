@@ -325,6 +325,49 @@ local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 nk.leaderboard_create(id, "desc", "0 0 * * 1", metadata, false)
 ```
 
+---
+
+__leaderboard_submit_set (id, value, owner, handle, lang, location, timezone, metadata)__
+
+The set operator will submit the value and replace any current value for the owner.
+
+__leaderboard_submit_best (id, value, owner, handle, lang, location, timezone, metadata)__
+
+The best operator will check the new score is better than the current score and keep whichever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".
+
+__leaderboard_submit_incr (id, value, owner, handle, lang, location, timezone, metadata)__
+
+The increment operator will add the score value to the current score. If no score exists the new score will be added to 0.
+
+__leaderboard_submit_decr (id, value, owner, handle, lang, location, timezone, metadata)__
+
+The decrement operator will subtract the score value from the current score. If no score exists the new score will be subtracted from 0.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the new leaderboard. This is used by clients to submit scores. Mandatory field. |
+| value | number | The value to update the leaderboard with. Mandatory field. |
+| owner | string | The owner of this submission. Mandatory field. |
+| handle | string | The owner handle of this submission. Optional. |
+| lang | string | The language you want to associate with this submission. Optional. |
+| location | string | The location you want to associate with this submission. Optional. |
+| timezone | string | The timezone you want to associate with this submission. Optional. |
+| metadata | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. |
+
+_Example_
+
+```lua
+local metadata = {
+  weather_conditions = "rain"
+}
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owner_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+local handle = "02ebb2c8"
+nk.leaderboard_submit_set(id, 10, owner_id, handle, "", "", "", metadata)
+```
+
 ### logger
 
 __logger_error (message)__
@@ -579,6 +622,38 @@ end
 
 ---
 
+__storage_list (user_id, bucket, collection, limit, cursor)__
+
+You can list records in a collection and page through results. The records returned can be filtered to those owned by the user or "" for public records which aren't owned by a user.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | User ID or "" (empty string) for public records. |
+| bucket | string | Bucket to list data from. |
+| collection | string | Collection to list data from. |
+| limit | number | Limit number of records retrieved. Min 10, Max 100. |
+| cursor | string | Pagination cursor from previous result. If none available set to nil or "" (empty string). |
+
+_Returns_
+
+A table array of the records result set.
+
+_Example_
+
+```lua
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
+local records = nk.storage_list(user_id, "bucket", "collection", 10, "")
+for _, r in ipairs(records)
+do
+  local message = ("read: %q, write: %q, value: %q"):format(r.PermissionRead, r.PermissionWrite, r.Value)
+  print(message)
+end
+```
+
+---
+
 __storage_remove (record_keys)__
 
 Remove one or more records by their bucket/collection/keyname and optional user.
@@ -593,10 +668,11 @@ _Example_
 
 ```lua
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
+local friend_user_id = "8d98ee3f-8c9f-42c5-b6c9-c8f79ad1b820" -- friend ID.
 local record_keys = {
   {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id},
   {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id},
-  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id}
+  {Bucket = "mygame", Collection = "public", Record = "progress", UserId = friend_user_id}
 }
 nk.storage_remove(record_keys)
 ```
