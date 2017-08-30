@@ -624,7 +624,7 @@ local update_ops = {
   {Op = "replace", Path = "/updated_at", Value = now}
 }
 local record_keys = {
-  {Bucket = "b", Collection = "c", Record = "r", UserId = user_id, UpdateOps = update_ops}
+  {Bucket = "b", Collection = "c", Record = "r", UserId = user_id, Update = update_ops}
 }
 nk.storage_update(record_keys)
 ```

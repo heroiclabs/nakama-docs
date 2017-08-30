@@ -101,6 +101,7 @@ pages:
   - 'Develop with LibGDX': 'tutorial-develop-with-libgdx.md'
   - 'Initialize a new user': 'tutorial-initialize-new-user.md'
   - 'Remote configuration': 'tutorial-remote-configuration.md'
+  - 'Send push messages': 'tutorial-send-push-messages.md'
 #  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
 #  - 'Virtual wallet': 'tutorial-virtual-wallet.md'
 #  - 'Inventory management': 'tutorial-inventory-management.md'
