@@ -333,7 +333,7 @@ The set operator will submit the value and replace any current value for the own
 
 __leaderboard_submit_best (id, value, owner, handle, lang, location, timezone, metadata)__
 
-The best operator will check the new score is better than the current score and keep which ever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".
+The best operator will check the new score is better than the current score and keep whichever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".
 
 __leaderboard_submit_incr (id, value, owner, handle, lang, location, timezone, metadata)__
 
@@ -624,7 +624,7 @@ end
 
 __storage_list (user_id, bucket, collection, limit, cursor)__
 
-You can list records in a collection and page through results. The records returned can be filter to those owned by the user or "" for public records which aren't owned by a user.
+You can list records in a collection and page through results. The records returned can be filtered to those owned by the user or "" for public records which aren't owned by a user.
 
 _Parameters_
 
@@ -634,7 +634,7 @@ _Parameters_
 | bucket | string | Bucket to list data from. |
 | collection | string | Collection to list data from. |
 | limit | number | Limit number of records retrieved. Min 10, Max 100. |
-| cursor | string | Pagination cursor from previous result. If none available set to "" (empty string). |
+| cursor | string | Pagination cursor from previous result. If none available set to nil or "" (empty string). |
 
 _Returns_
 
