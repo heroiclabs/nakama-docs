@@ -923,7 +923,7 @@
                 
                 <h1 id="send-push-messages">Send push messages<a class="headerlink" href="#send-push-messages" title="Permanent link">&para;</a></h1>
 <p>Push messages are a great complement to <a href="../social-in-app-notifications/">in-app notifications</a> in Nakama. You can use in-app notifications for when a user is online but for when the app is closed or backgrounded and you want to bring the user back or re-engage push messages are a great option.</p>
-<p>There's many different push providers available which you can integrate into your client code and combine it with the server but for this tutorial we'll use the One Signal service. They provide a HTTP API to register devices and send push messages to segments of users.</p>
+<p>There are many different push providers available which you can integrate into your client code and combine it with the server but for this tutorial we'll use the One Signal service. They provide a HTTP API to register devices and send push messages to segments of users.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <p>We can easily write a Lua module which provides the One Signal HTTP API as a set of functions which can be imported into other code but instead we'll import one written by the Heroic Labs team and maintained with the community. You can find the code in the <a href="https://github.com/heroiclabs/nakama-modules" target="\_blank">official repository</a> of modules.</p>
 <p><a href="https://github.com/heroiclabs/nakama-modules/blob/master/modules/onesignal.lua">https://github.com/heroiclabs/nakama-modules/blob/master/modules/onesignal.lua</a></p>

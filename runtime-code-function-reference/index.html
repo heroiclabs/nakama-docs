@@ -1400,6 +1400,78 @@
 </pre></div>
 
 
+<hr />
+<p><strong>leaderboard_submit_set (id, value, owner, handle, lang, location, timezone, metadata)</strong></p>
+<p>The set operator will submit the value and replace any current value for the owner.</p>
+<p><strong>leaderboard_submit_best (id, value, owner, handle, lang, location, timezone, metadata)</strong></p>
+<p>The best operator will check the new score is better than the current score and keep whichever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".</p>
+<p><strong>leaderboard_submit_incr (id, value, owner, handle, lang, location, timezone, metadata)</strong></p>
+<p>The increment operator will add the score value to the current score. If no score exists the new score will be added to 0.</p>
+<p><strong>leaderboard_submit_decr (id, value, owner, handle, lang, location, timezone, metadata)</strong></p>
+<p>The decrement operator will subtract the score value from the current score. If no score exists the new score will be subtracted from 0.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>The unique identifier for the new leaderboard. This is used by clients to submit scores. Mandatory field.</td>
+</tr>
+<tr>
+<td>value</td>
+<td>number</td>
+<td>The value to update the leaderboard with. Mandatory field.</td>
+</tr>
+<tr>
+<td>owner</td>
+<td>string</td>
+<td>The owner of this submission. Mandatory field.</td>
+</tr>
+<tr>
+<td>handle</td>
+<td>string</td>
+<td>The owner handle of this submission. Optional.</td>
+</tr>
+<tr>
+<td>lang</td>
+<td>string</td>
+<td>The language you want to associate with this submission. Optional.</td>
+</tr>
+<tr>
+<td>location</td>
+<td>string</td>
+<td>The location you want to associate with this submission. Optional.</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>string</td>
+<td>The timezone you want to associate with this submission. Optional.</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>table</td>
+<td>The metadata you want associated to this submission. Some good examples are weather conditions for a racing game.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">weather_conditions</span> <span class="o">=</span> <span class="s2">&quot;rain&quot;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">id</span> <span class="o">=</span> <span class="s2">&quot;4ec4f126-3f9d-11e7-84ef-b7c182b36521&quot;</span>
+<span class="kd">local</span> <span class="n">owner_id</span> <span class="o">=</span> <span class="s2">&quot;4c2ae592-b2a7-445e-98ec-697694478b1c&quot;</span>
+<span class="kd">local</span> <span class="n">handle</span> <span class="o">=</span> <span class="s2">&quot;02ebb2c8&quot;</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">leaderboard_submit_set</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">owner_id</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+</pre></div>
+
+
 <h3 id="logger">logger<a class="headerlink" href="#logger" title="Permanent link">&para;</a></h3>
 <p><strong>logger_error (message)</strong></p>
 <p>Write an ERROR level message to the server logs.</p>
@@ -1721,6 +1793,59 @@
 
 
 <hr />
+<p><strong>storage_list (user_id, bucket, collection, limit, cursor)</strong></p>
+<p>You can list records in a collection and page through results. The records returned can be filtered to those owned by the user or "" for public records which aren't owned by a user.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user_id</td>
+<td>string</td>
+<td>User ID or "" (empty string) for public records.</td>
+</tr>
+<tr>
+<td>bucket</td>
+<td>string</td>
+<td>Bucket to list data from.</td>
+</tr>
+<tr>
+<td>collection</td>
+<td>string</td>
+<td>Collection to list data from.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>number</td>
+<td>Limit number of records retrieved. Min 10, Max 100.</td>
+</tr>
+<tr>
+<td>cursor</td>
+<td>string</td>
+<td>Pagination cursor from previous result. If none available set to nil or "" (empty string).</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>A table array of the records result set.</p>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">user_id</span> <span class="o">=</span> <span class="s2">&quot;4ec4f126-3f9d-11e7-84ef-b7c182b36521&quot;</span> <span class="c1">-- some user ID.</span>
+<span class="kd">local</span> <span class="n">records</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">storage_list</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="s2">&quot;bucket&quot;</span><span class="p">,</span> <span class="s2">&quot;collection&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">r</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+<span class="kr">do</span>
+  <span class="kd">local</span> <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;read: %q, write: %q, value: %q&quot;</span><span class="p">):</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">PermissionRead</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">PermissionWrite</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Value</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+
+
+<hr />
 <p><strong>storage_remove (record_keys)</strong></p>
 <p>Remove one or more records by their bucket/collection/keyname and optional user.</p>
 <p><em>Parameters</em></p>
@@ -1742,10 +1867,11 @@
 </table>
 <p><em>Example</em></p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">user_id</span> <span class="o">=</span> <span class="s2">&quot;4ec4f126-3f9d-11e7-84ef-b7c182b36521&quot;</span> <span class="c1">-- some user ID.</span>
+<span class="kd">local</span> <span class="n">friend_user_id</span> <span class="o">=</span> <span class="s2">&quot;8d98ee3f-8c9f-42c5-b6c9-c8f79ad1b820&quot;</span> <span class="c1">-- friend ID.</span>
 <span class="kd">local</span> <span class="n">record_keys</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save1&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">},</span>
   <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save2&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">},</span>
-  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save3&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">}</span>
+  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;progress&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">friend_user_id</span><span class="p">}</span>
 <span class="p">}</span>
 <span class="n">nk</span><span class="p">.</span><span class="n">storage_remove</span><span class="p">(</span><span class="n">record_keys</span><span class="p">)</span>
 </pre></div>
