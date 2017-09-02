@@ -51,6 +51,9 @@ project(":core") {
     dependencies {
         // ...
         compile "com.heroiclabs.nakama:client:0.1.0" // set your version
+        compile('org.slf4j:slf4j-api:1.7.25') {
+            force = true // don't upgrade to "1.8.0-alpha2"
+        }
     }
 }
 ```

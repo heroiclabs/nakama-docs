@@ -24,6 +24,9 @@ repositories {
 
 dependencies {
   compile(group: 'com.heroiclabs.nakama', name: 'client', version: '+')
+  compile('org.slf4j:slf4j-api:1.7.25') {
+    force = true // don't upgrade to "1.8.0-alpha2"
+  }
 }
 ```
 
