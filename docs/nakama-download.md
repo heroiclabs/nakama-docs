@@ -22,7 +22,7 @@ Compatible with Windows 7+ 64-bit architecture.
 
 <a href="https://github.com/heroiclabs/nakama/releases/latest" target="_blank"><b>Download</b> &#x21A6;</a>
 
-Follow [this guide](#install-binary.md#install-nakama-on-windows) to install Nakama on your Linux machine.
+Follow [this guide](install-binary.md#install-nakama-on-windows) to install Nakama on your Windows machine.
 
 ### MacOS
 
@@ -30,7 +30,7 @@ Compatible with MacOS 10.10 and greater.
 
 <a href="https://github.com/heroiclabs/nakama/releases/latest" target="_blank"><b>Download</b> &#x21A6;</a>
 
-Follow [this guide](#install-binary.md#install-nakama-on-macos) to install Nakama on your Linux machine.
+Follow [this guide](install-binary.md#install-nakama-on-macos) to install Nakama on your Mac machine.
 
 ### Linux
 
@@ -38,4 +38,4 @@ Compatible with most 64-bit Linux distribution.
 
 <a href="https://github.com/heroiclabs/nakama/releases/latest" target="_blank"><b>Download</b> &#x21A6;</a>
 
-Follow [this guide](#install-binary.md#install-nakama-on-linux) to install Nakama on your Linux machine.
+Follow [this guide](install-binary.md#install-nakama-on-linux) to install Nakama on your Linux machine.
