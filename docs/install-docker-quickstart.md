@@ -37,10 +37,10 @@ In a Docker container you run a suite of tools to do a particular job; in this c
 
 Once Nakama is running via Docker, use the following connection detail to configure your client to connect to the server:
 
-**Host**: `127.0.0.1` (or `localhost`)    
-**Port** : `7350`     
-**SSL**: `False`    
-**Server Key**: `defaultkey`     
+**Host**: `127.0.0.1` (or `localhost`)
+**Port** : `7350`
+**SSL**: `False`
+**Server Key**: `defaultkey`
 
 In the Unity client, you can create an `NClient` like this:
 ```csharp fct_label="Unity"
@@ -59,9 +59,9 @@ You can run Nakama and Cockroach without using Docker-Compose. This will mean yo
 # Let's pull and start CockroachDB
 docker run --name=db cockroachdb/cockroach start --insecure
 # Let's pull and migrate the database
-docker run --link=db heroiclabs/nakama migrate up --db root@db:26257
+docker run --link=db heroiclabs/nakama migrate up --database.address root@db:26257
 # start Nakama server
-docker run --link=db -p 7350:7350 heroiclabs/nakama --db root@db:26257
+docker run --link=db -p 7350:7350 heroiclabs/nakama --database.address root@db:26257
 ```
 
 ## Using Docker-Compose
