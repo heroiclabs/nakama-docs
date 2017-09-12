@@ -127,7 +127,7 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Set(score)
     .Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+client.Send(message, (INResultSet<INLeaderboardRecord> list) => {
   foreach (var r in list.Results) {
     Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
   }
@@ -147,7 +147,7 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Best(score)
     .Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+client.Send(message, (INResultSet<INLeaderboardRecord> list) => {
   foreach (var r in list.Results) {
     Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
   }
@@ -167,7 +167,7 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Increment(score)
     .Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+client.Send(message, (INResultSet<INLeaderboardRecord> list) => {
   foreach (var r in list.Results) {
     Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
   }
@@ -187,7 +187,7 @@ var score = 1200;
 var message = new NLeaderboardRecordWriteMessage.Builder(id)
     .Decrement(score)
     .Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
+client.Send(message, (INResultSet<INLeaderboardRecord> list) => {
   foreach (var r in list.Results) {
     Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
   }
