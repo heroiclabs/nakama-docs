@@ -347,7 +347,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| id | string | The unique identifier for the new leaderboard. This is used by clients to submit scores. Mandatory field. |
+| id | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
 | value | number | The value to update the leaderboard with. Mandatory field. |
 | owner | string | The owner of this submission. Mandatory field. |
 | handle | string | The owner handle of this submission. Optional. |
@@ -366,6 +366,65 @@ local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owner_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
 local handle = "02ebb2c8"
 nk.leaderboard_submit_set(id, 10, owner_id, handle, "", "", "", metadata)
+```
+
+---
+
+__leaderboard_records_list_user (id, owner, limit)__
+
+List records on the specified leaderboard, automatically paginating down to where the given user is on this leaderboard. If the user has no record on the given leaderboard will return no records.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier of the leaderboard to list from. Mandatory field. |
+| owner | string | The record owner to find in the leaderboard. Mandatory field. |
+| limit | number | The maximum number of records to return, from 10 to 100. Mandatory field. |
+
+_Returns_
+
+A page of leaderboard records and optionally a cursor that can be used to retrieve the next page, if any.
+
+_Example_
+
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owner_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+local limit = 10
+local records, cursor = nk.leaderboard_records_list_user(id, owner_id, limit)
+```
+
+---
+
+__leaderboard_records_list_users (id, owners, limit)__
+
+List records on the specified leaderboard, filtering to only the records owned by the given list of users. If one or more of the given users have no record on the given leaderboard they will be omitted from the results.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier of the leaderboard to list from. Mandatory field. |
+| owners | table | A set of owner IDs to retrieve records for. Mandatory field. |
+| limit | number | The maximum number of records to return, from 10 to 100. Mandatory field. |
+| cursor | string | A previous cursor value if paginating to the next page of results. Optional. |
+
+_Returns_
+
+A page of leaderboard records and optionally a cursor that can be used to retrieve the next page, if any.
+
+_Example_
+
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owners = {
+  "4c2ae592-b2a7-445e-98ec-697694478b1c",
+  "f15526e8-6cf8-49a8-b4c8-0b1e4c32a1d7"
+}
+local limit = 10
+local previous_cursor = nil
+local records, cursor = nk.leaderboard_records_list_users(id, owner_ids, limit, previous_cursor)
 ```
 
 ### logger

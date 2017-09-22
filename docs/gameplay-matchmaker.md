@@ -78,7 +78,7 @@ To join a match after the event handler has notified the user their criteria is 
 client.OnMatchmakeMatched = (INMatchmakeMatched matched) => {
   // The match token is used to join a multiplayer match.
   var message = NMatchJoinMessage.Default(matched.Token);
-  client.Send(message, (INMatch match) => {
+  client.Send(message, (INResultSet<INMatch> matches) => {
     Debug.Log("Successfully joined match.");
   }, (INError error) => {
     Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
