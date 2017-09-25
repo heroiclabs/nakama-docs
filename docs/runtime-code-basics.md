@@ -130,7 +130,7 @@ This function can be called with any HTTP client. For example with cURL you coul
 
 ```shell
 curl -X POST "http://127.0.0.1:7350/runtime/http_handler_path?key=defaultkey" \
-     -d "{'some': 'data'}" \
+     -d '{"some": "data"}' \
      -H 'Content-Type: application/json' \
      -H 'Accept: application/json'
 ```
