@@ -33,18 +33,18 @@ A user can join a specific match by ID. Matches can be joined at any point until
 byte[] id = match.Id; // an INMatch Id.
 
 var message = NMatchJoinMessage.Default(id);
-client.Send(message, (INMatch match) => {
+client.Send(message, (INResultSet<INMatch> matches) => {
   Debug.Log("Successfully joined match.");
 
   IList<INUserPresence> connectedOpponents = new List<INUserPresence>();
   // Add list of connected opponents.
-  connectedOpponents.AddRange(match.Presence);
+  connectedOpponents.AddRange(matches.Results[0].Presence);
   // Remove your own user from list.
-  connectedOpponents.Remove(match.Self);
+  connectedOpponents.Remove(matches.Results[0].Self);
 
   foreach (var presence in connectedOpponents) {
     var userId = Encoding.UTF8.GetString(presence.UserId);
-    var handle = Encoding.UTF8.GetString(presence.Handle);
+    var handle = presence.Handle;
     Debug.LogFormat("User id '{0}' handle '{1}'.", userId, handle);
   }
 }, (INError err) => {
