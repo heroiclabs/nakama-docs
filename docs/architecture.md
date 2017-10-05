@@ -12,13 +12,17 @@ You should run Nakama behind a load balancer when running a cluster of Nakama no
 !!! warning "Firewall Rules"
     For security purposes, it is essential that you run Nakama behind a firewall to prevent malicious attacks and behaviour. You will want to "hide" or "disallow" Nakama's dashboard which runs on port 7351 in your firewall rules. The main API port is 7350 and should be left exposed for your users to connect.
 
-# Deployment Best Practices
+# Hardware Requirements
 
-For prototyping and testing, you can run Nakama and CockroachDB on the same instance. However, in production each should run on their own, independent instance for stability and resource availability. The CockroachDB team recommends a bare minimum of 1 CPU and 2 GB of RAM per node. In production, we recommend a minimum of 4 GB and ideally 6 GB+. 
+For prototyping and testing, you can run Nakama and CockroachDB on the same instance. However, in production each should run on their own, independent instance for stability and resource availability. The CockroachDB team recommends a bare minimum of 1 CPU and 2 GB of RAM per node. In production, we recommend a minimum of 4 GB and ideally 6 GB+. It is also recommended to run CockroachDB on an SSD rather than an HDD for performance benefits. 
 
 Nakama itself should run with 1 CPU and a minimum of 1gb of ram for testing. In production, 3 GB+ is the minimum recommended hardware. As all active connections are stored in-memory for the presence system, memory is often the first point of pressure for Nakama and you should over-provision where possible.
 
+# Deployment Best Practices
 
+Nakama should be run on its own instance and installed onto a fresh environment. We recommend a minimum of 3 nodes in production for failover and tolerance. At the very minimum you should run 2 nodes to guarantee availability for your users.    
+
+For the database, the CockroachDB team recommends running 3 nodes to ensure that the majority of the replicas (2/3) remain available if one node were to fail. It is better to deploy many smaller nodes than a few large ones as the strength in CockroachDB is its data replication across nodes for failover and backup. 
 
 
     
