@@ -1008,7 +1008,8 @@ _Example_
 
 ```lua
 -- This example query deletes all expired leaderboard records.
-local query = "DELETE FROM leaderboard_record WHERE expires_at > 0 AND expires_at <= $1"
+local query = [[DELETE FROM leaderboard_record
+                WHERE expires_at > 0 AND expires_at <= $1]]
 local parameters = {os.time() * 1000}
 local affected_rows_count = nk.sql_exec(query, parameters)
 ```
@@ -1038,8 +1039,11 @@ A Lua table containing the result rows in the format:
 _Example_
 
 ```lua
--- This example fetches a list of handles for the 100 most recetly signed up users.
-local query = "SELECT handle, updated_at FROM users ORDER BY created_at DESC LIMIT 100"
+-- Example fetching a list of handles for the 100 most recetly signed up users.
+local query = [[SELECT handle, updated_at
+                FROM users
+                ORDER BY created_at DESC
+                LIMIT 100]]
 local parameters = {}
 local rows = nk.sql_query(query, parameters)
 
