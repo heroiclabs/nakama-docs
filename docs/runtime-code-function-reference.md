@@ -105,6 +105,33 @@ local encoded = nk.base64_encode("Hello world")
 print(encoded) -- outputs "SGVsbG8gd29ybGQ="
 ```
 
+### cron
+
+__cron_next (expression, timestamp)__
+
+Parses a CRON expression and a timestamp in UTC seconds, and returns the next matching timestamp in UTC seconds.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| expression | string | A valid CRON expression in standard format, for example "* * * * *". |
+| timestamp  | number | A time value expressed as UTC seconds. |
+
+_Returns_
+
+The next UTC seconds timestamp that matches the given CRON expression, and is immediately after the given timestamp.
+
+_Example_
+
+```lua
+-- Based on the current time, return the UTC seconds value representing the
+-- nearest upcoming Monday at 00:00 UTC (midnight.)
+local expr = "0 0 * * 1"
+local ts = os.time()
+local next = nk.cron_next(expr, ts)
+```
+
 ### groups
 
 __groups_create (new_groups)__
@@ -957,4 +984,65 @@ _Example_
 local uuid_string = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some uuid string.
 local uuid_bytes = nk.uuid_string_to_bytes(uuid_string)
 print(uuid_bytes)
+```
+
+### sql
+
+__sql_exec (query, parameters)__
+
+Execute an arbitrary SQL query and return the number of rows affected. Typically an `INSERT`, `DELETE`, or `UPDATE` statement with no return columns.
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| query | string | A SQL query to execute. |
+| parameters | table | Arbitrary parameters to pass to placeholders in the query. |
+
+_Returns_
+
+A single number indicating the number of rows affected by the query.
+
+_Example_
+
+```lua
+-- This example query deletes all expired leaderboard records.
+local query = "DELETE FROM leaderboard_record WHERE expires_at > 0 AND expires_at <= $1"
+local parameters = {os.time() * 1000}
+local affected_rows_count = nk.sql_exec(query, parameters)
+```
+
+---
+
+__sql_query (query, parameters)__
+
+Execute an arbitrary SQL query that is expected to return row data. Typically a `SELECT` statement.
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| query | string | A SQL query to execute. |
+| parameters | table | Arbitrary parameters to pass to placeholders in the query. |
+
+_Returns_
+
+A Lua table containing the result rows in the format:
+```lua
+{
+  {column1 = "value1", column2 = "value2", ...}, -- Row 1.
+  {column1 = "value1", column2 = "value2", ...}, -- Row 2.
+  ...
+}
+```
+
+_Example_
+
+```lua
+-- This example fetches a list of handles for the 100 most recetly signed up users.
+local query = "SELECT handle, updated_at FROM users ORDER BY created_at DESC LIMIT 100"
+local parameters = {}
+local rows = nk.sql_query(query, parameters)
+
+-- Example of processing the rows.
+nk.logger_info("Selected " .. #rows .. " rows.")
+for i, row in ipairs(rows) do
+  nk.logger_info("User handle " .. row.handle .. " created at " .. row.created_at)
+end
 ```
