@@ -66,8 +66,8 @@ byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.
 var message = new NTopicJoinMessage.Builder()
     .TopicRoom(roomName)
     .Build();
-client.Send(message, (INTopic topic) => {
-  roomId = topic.Topic;
+client.Send(message, (INResultSet<INTopic> topics) => {
+  roomId = topics.Results[0].Topic;
   Debug.Log("Successfully joined the room.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -92,8 +92,8 @@ byte[] groupId = group.Id; // an INGroup ID.
 var message = new NTopicJoinMessage.Builder()
     .TopicGroup(groupId)
     .Build();
-client.Send(message, (INTopic topic) => {
-  groupTopicId = topic.Topic;
+client.Send(message, (INResultSet<INTopic> topics) => {
+  groupTopicId = topics.Results[0].Topic;
   Debug.Log("Successfully joined the group chat.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -118,8 +118,8 @@ byte[] userId = user.Id; // an INUser ID.
 var message = new NTopicJoinMessage.Builder()
     .TopicDirectMessage(userId)
     .Build();
-client.Send(message, (INTopic topic) => {
-  directTopicId = topic.Topic;
+client.Send(message, (INResultSet<INTopic> topics) => {
+  directTopicId = topics.Results[0].Topic;
   Debug.Log("Successfully joined the direct chat.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -158,11 +158,11 @@ byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.
 var message = new NTopicJoinMessage.Builder()
     .TopicRoom(roomName)
     .Build();
-client.Send(message, (INTopic topic) => {
+client.Send(message, (INResultSet<INTopic> topics) => {
   // Setup initial online user list.
-  onlineUsers.AddRange(topic.Presences);
+  onlineUsers.AddRange(topics.Results[0].Presences);
   // Remove your own user from list.
-  onlineUsers.Remove(topic.Self);
+  onlineUsers.Remove(topics.Results[0].Self);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
