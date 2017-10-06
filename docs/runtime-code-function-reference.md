@@ -988,6 +988,9 @@ print(uuid_bytes)
 
 ### sql
 
+!!! Note
+    These functions allow your Lua scripts to run arbitrary SQL staments beyond the ones built into Nakama itself. It is your responsibility to manage the performance of these queries.
+
 __sql_exec (query, parameters)__
 
 Execute an arbitrary SQL query and return the number of rows affected. Typically an `INSERT`, `DELETE`, or `UPDATE` statement with no return columns.
