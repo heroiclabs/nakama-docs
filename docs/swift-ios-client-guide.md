@@ -11,7 +11,26 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 !!! Bug "Help and contribute"
     The Swift client is <a href="https://github.com/heroiclabs/nakama-swift" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
 
-## Install and setup
+## Install
+
+There are three ways to import the Swift client into your project:
+
+1. Cocoapods
+
+Add the client as a dependency to your "Podfile":
+
+```ruby
+use_frameworks!
+pod 'Nakama', '~> 0.1'
+```
+
+Ensure that the dependencies are built as Frameworks. Download and integrate it into your Xcode project:
+
+```shell
+pod install
+```
+
+2. Swift Package Manager
 
 Add the client as a dependency to your "Package.swift" file.
 
@@ -23,6 +42,8 @@ let package = Package(
   ]
 )
 ```
+
+## Setup
 
 The client object is used to execute all logic against the server.
 
