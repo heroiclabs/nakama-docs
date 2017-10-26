@@ -13,7 +13,7 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 
 ## Install
 
-There are three ways to import the Swift client into your project:
+There are a few ways to import the Swift client into your project:
 
 1. Cocoapods
 
@@ -21,7 +21,7 @@ Add the client as a dependency to your "Podfile":
 
 ```ruby
 use_frameworks!
-pod 'Nakama', '~> 0.1'
+pod 'Nakama', '~> 0.2'
 ```
 
 Ensure that the dependencies are built as Frameworks. Download and integrate it into your Xcode project:
@@ -38,7 +38,7 @@ Add the client as a dependency to your "Package.swift" file.
 let package = Package(
   // ...
   dependencies: [
-    .Package(url: "https://github.com/heroiclabs/nakama-swift.git", Version(0,1,0)),
+    .Package(url: "https://github.com/heroiclabs/nakama-swift.git", Version(0,2,0)),
   ]
 )
 ```
