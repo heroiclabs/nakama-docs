@@ -127,7 +127,7 @@ This could be to [add friends](social-friends.md), join [groups](social-groups-c
 The server also provides a [storage engine](storage-collections.md) to keep save games and other records owned by users. We'll use storage to introduce how messages are sent.
 
 ```csharp
-byte[] json = Encoding.UTF8.GetBytes("{\"jsonkey\":\"jsonvalue\"}");
+string json = "{\"jsonkey\":\"jsonvalue\"}";
 
 var message = new NStorageWriteMessage.Builder()
     .Write("someBucket", "someCollection", "myRecord", storageValue)

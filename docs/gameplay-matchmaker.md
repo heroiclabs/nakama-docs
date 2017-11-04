@@ -20,7 +20,7 @@ var message = NMatchmakeAddMessage.Default(2);
 client.Send(message, (INMatchmakeTicket result) => {
   Debug.Log("Added user to matchmaker pool.");
 
-  var cancelTicket = Encoding.UTF8.GetString(result.Ticket);
+  var cancelTicket = result.Ticket;
   Debug.LogFormat("The cancellation code {0}", cancelTicket);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);

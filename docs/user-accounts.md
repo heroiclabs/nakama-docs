@@ -11,10 +11,8 @@ When a user has a session you can retrieve their profile. The profile is returne
 ```csharp fct_label="Unity"
 var message = NSelfFetchMessage.Default();
 client.Send(message, (INSelf self) => {
-  var id = Encoding.UTF8.GetString(self.Id);
-  Debug.LogFormat("User has id '{0}' and handle '{1}'.", id, self.Handle);
-  var metadata = Encoding.UTF8.GetString(self.Metadata);
-  Debug.LogFormat("User has JSON metadata '{0}'.", metadata);
+  Debug.LogFormat("User has id '{0}' and handle '{1}'.", self.id, self.Handle);
+  Debug.LogFormat("User has JSON metadata '{0}'.", self.metadata);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
@@ -42,11 +40,21 @@ deferred.addCallback(new Callback<Self, Self>() {
 ```swift fct_label="Swift"
 let message = SelfFetchMessage()
 client.send(message: message).then { selfuser in
-  NSLog("User id '@%' and handle '@%'", selfuser.id, selfuser.handle)
-  NSLog("User has JSON metadata '@%'", selfuser.metadata)
+  NSLog("User id '%@' and handle '%@'", selfuser.id, selfuser.handle)
+  NSLog("User has JSON metadata '%@'", selfuser.metadata)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var message = new nakamajs.SelfFetchRequest();
+client.send(message).then(function(result) {
+  console.log("User id '%o' and handle '%o'.", result.self.id, result.self.handle);
+  console.log("User has JSON metadata: %o", result.self.metadata);
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 Some information like social IDs are private but part of the profile is visible to other users.
@@ -75,14 +83,13 @@ You can store additional fields for a user in `"Metadata"` which is useful to sh
 You can fetch one or more users by their IDs or handles. This is useful for displaying public profiles with other users.
 
 ```csharp fct_label="Unity"
-byte[] id = user.Id; // an INUser ID.
+string id = user.Id; // an INUser ID.
 
 var message = NUsersFetchMessage.Default(id);
 client.Send(message, (INResultSet<INUser> list) => {
   Debug.LogFormat("Fetched '{0}' users.", list.Results.Count);
   foreach (var user in list.Results) {
-    var id = Encoding.UTF8.GetString(user.Id);
-    Debug.LogFormat("User has id '{0}' and handle '{1}'.", id, user.Handle);
+    Debug.LogFormat("User has id '{0}' and handle '{1}'.", user.Id, user.Handle);
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -115,18 +122,33 @@ deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
 ```
 
 ```swift fct_label="Swift"
-let userID = UUID() // a User ID
+let userID // a User ID
 
 var message = UsersFetchMessage()
 message.userIDs.append(userID)
 
 client.send(message: message).then { users in
   for user in users {
-    NSLog("User id '@%' and handle '@%'", user.id, user.handle)
+    NSLog("User id '%@' and handle '%@'", user.id, user.handle)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+string userId = "" // a User ID
+
+var message = new nakamajs.UsersFetchMessage();
+message.userIds.push(userId);
+
+client.send(message).then(function(result) {
+  result.users.foreach(function(user){
+    console.log("User id '%o' and handle '%o'.", user.id, user.handle);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 You can also fetch one or more users in server-side code.
@@ -193,9 +215,23 @@ message.location = "San Francisco"
 client.send(message: message).then {
   NSLog("Successfully updated yourself.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
+
+```js fct_label="Javascript"
+var message = new nakamajs.SelfUpdateMessage();
+message.avatarUrl = "http://graph.facebook.com/avatar_url"
+message.fullname = "My New Name"
+message.location = "San Francisco"
+
+client.send(message).then(function() {
+  console.log("Successfully updated yourself.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 
 With server-side code it's possible to update one or more user's profiles.
 

@@ -29,8 +29,8 @@ A user can write one or more records which will be stored in the database server
     In most cases you won't need to group data under multiple buckets so it can be easiest to just name it after your project. For example "Super Mario Run" could use a bucket name "smr" or similar.
 
 ```csharp fct_label="Unity"
-byte[] saveGame = Encoding.UTF8.GetBytes("{\"progress\": 50}");
-byte[] myStats = Encoding.UTF8.GetBytes("{\"skill\": 24}");
+string saveGame = "{\"progress\": 50}";
+string myStats = "{\"skill\": 24}";
 
 var bucket = "myapp";
 
@@ -41,8 +41,7 @@ var message = new NStorageWriteMessage.Builder()
     .Build();
 client.Send(message, (INResultSet<INStorageKey> list) => {
   foreach (var record in list.Results) {
-    var version = Encoding.UTF8.GetString(record.Version);
-    Debug.LogFormat("Stored record has version '{0}'", version);
+    Debug.LogFormat("Stored record has version '{0}'", record.Version);
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -87,12 +86,32 @@ message.write(bucket: bucket, collection: "saves", key: "savegame", value: saveG
 message.write(bucket: bucket, collection: "saves", key: "mystats", value: myStats)
 client.send(message: message).then { list in
   for recordId in list {
-    NSLog("Stored record has version '@%'", recordId.version)
+    NSLog("Stored record has version '%@'", recordId.version)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
+
+```js fct_label="Javascript"
+var saveGame = {"progress": 50};
+var myStats = {"skill": 24};
+var bucket = "myapp"
+
+var message = new nakamajs.StorageWriteRequest();
+message.write(bucket, "saves", "savegame", saveGame);
+message.write(bucket, "saves", "mystats", myStats);
+client.send(message).then(function(result){
+  result.keys.forEach(function(storageKey) {
+    console.log("Stored record has version %o", storageKey.version);
+  })
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
+!!! Hint
+    In Swift, make your objects conform to the `Codable` interface to allow for easy interoperability with Nakama's storage operations. For more info, please follow this [guide](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types#overview).
 
 ### Conditional writes
 
@@ -101,8 +120,8 @@ When records are successfully stored a version is returned which can be used wit
 A conditional write ensures a client can only update the record if they've seen the previous version of the record already. The goal is to prevent a change to the record if another client has changed the value between when the first client's read and it's next write.
 
 ```csharp fct_label="Unity"
-byte[] saveGame = Encoding.UTF8.GetBytes("{\"progress\": 54}");
-byte[] version = record.Version; // an INStorageKey object.
+string saveGame = "{\"progress\": 54}";
+string version = record.Version; // an INStorageKey object.
 
 var message = new NStorageWriteMessage.Builder()
     .Write("myapp", "saves", "savegame", saveGame, version)
@@ -147,15 +166,28 @@ message.write(bucket: "myapp", collection: "saves", key: "savegame", value: save
 client.send(message: message).then { list in
   version = list[0].version // Cache updated version for next write.
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var saveGame = {"progress": 50};
+var version = record.version // a storage object's version.
+
+var message = new nakamajs.StorageWriteRequest();
+message.write("myapp", "saves", "savegame", saveGame, version);
+client.send(message).then(function(result){
+  version = result.keys[0].version; // Cache updated version for next write.
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 We support another kind of conditional write which is used to write a record only if none already exists for that record's key name.
 
 ```csharp fct_label="Unity"
-byte[] saveGame = Encoding.UTF8.GetBytes("{\"progress\": 1}");
-byte[] version = Encoding.UTF8.GetBytes("*"); // represents "no version".
+string saveGame = "{\"progress\": 1}";
+string version = "*"; // represents "no version".
 
 var message = new NStorageWriteMessage.Builder()
     .Write("myapp", "saves", "savegame", saveGame, version)
@@ -193,15 +225,28 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 
 ```swift fct_label="Swift"
 let saveGame = "{\"progress\": 1}".data(using: .utf8)!
-var version = "*".data(using: .utf8)! // represents "no version".
+var version = "*" // represents "no version".
 
 var message = StorageWriteMessage()
 message.write(bucket: "myapp", collection: "saves", key: "savegame", value: saveGame, version: version)
 client.send(message: message).then { list in
   version = list[0].version // Cache updated version for next write.
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var saveGame = {"progress": 1};
+var version = "*" // a storage object's version.
+
+var message = new nakamajs.StorageWriteRequest();
+message.write("myapp", "saves", "savegame", saveGame, version);
+client.send(message).then(function(result){
+  version = result.keys[0].version; // Cache updated version for next write.
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Fetch records
@@ -211,7 +256,7 @@ Just like with [writing records](#write-records) you can fetch one or more recor
 Each record has an owner and permissions. A record can only be fetched if the permissions allow it. A record which has no owner can be fetched with `null` and is useful for global records which all users should be able to read.
 
 ```csharp fct_label="Unity"
-byte[] userId = session.Id; // an INSession object.
+string userId = session.Id; // an INSession object.
 
 var message = new NStorageFetchMessage.Builder()
     .Fetch("myapp", "saves", "savegame", userId)
@@ -219,8 +264,7 @@ var message = new NStorageFetchMessage.Builder()
     .Build();
 client.Send(message, (INResultSet<INStorageData> list) => {
   foreach (var record in list.Results) {
-    var data = Encoding.UTF8.GetString(record.Data);
-    Debug.LogFormat("Record value '{0}'", data);
+    Debug.LogFormat("Record value '{0}'", record.Data);
     Debug.LogFormat("Record permissions read '{0}' write '{1}'",
         record.PermissionRead, record.PermissionWrite);
   }
@@ -258,20 +302,36 @@ deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRec
 ```
 
 ```swift fct_label="Swift"
-let userId = session.userID // a Session object's Id.
+let userID = session.userID // a Session object's Id.
 
 var message = StorageFetchMessage()
-message.fetch(bucket: "myapp", collection: "saves", key: "savegame", userID: userId)
+message.fetch(bucket: "myapp", collection: "saves", key: "savegame", userID: userID)
 message.fetch(bucket: "myapp", collection: "configuration", key: "config", userID: nil)
 client.send(message: message).then { list in
   for record in list {
-    NSLog("Record value '@%'", record.value)
-    NSLog("Record permissions read '@%' write '@%'",
+    NSLog("Record value '%@'", record.value)
+    NSLog("Record permissions read '%@' write '%@'",
         record.permissionRead, record.permissionWrite)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var userId = session.id // a Session object's Id.
+
+var message = new nakamajs.StorageFetchRequest();
+message.fetch("myapp", "saves", "savegame", userId);
+message.fetch("myapp", "configuration", "config", nil);
+client.send(message).then(function(records){
+  records.data.forEach(function(record) {
+    console.log("Record value '%o'", record.value);
+    console.log("Record permissions read '%o' write '%o'",record.permissionRead, record.permissionWrite);
+  })
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## List records
@@ -279,7 +339,7 @@ client.send(message: message).then { list in
 You can list records in a collection and page through results. The records returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
 
 ```csharp fct_label="Unity"
-byte[] userId = session.Id; // an INSession object.
+string userId = session.Id; // an INSession object.
 
 var message = new NStorageListMessage.Builder()
     .Bucket("myapp")
@@ -288,8 +348,7 @@ var message = new NStorageListMessage.Builder()
     .Build();
 client.Send(message, (INResultSet<INStorageData> list) => {
   foreach (var record in list.Results) {
-    var data = Encoding.UTF8.GetString(record.Data);
-    Debug.LogFormat("Record value '{0}'", data);
+    Debug.LogFormat("Record value '{0}'", record.Data);
     Debug.LogFormat("Record permissions read '{0}' write '{1}'",
         record.PermissionRead, record.PermissionWrite);
   }
@@ -334,13 +393,31 @@ message.collection = "saves"
 message.userID = userId
 client.send(message: message).then { list in
   for record in list {
-    NSLog("Record value '@%'", record.value)
-    NSLog("Record permissions read '@%' write '@%'",
+    NSLog("Record value '%@'", record.value)
+    NSLog("Record permissions read '%@' write '%@'",
         record.permissionRead, record.permissionWrite)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var userId = session.id // a Session object's Id.
+
+var message = new nakamajs.StorageListRequest();
+message.userId = userId
+message.bucket = "myapp"
+message.collection = "saves"
+
+client.send(message).then(function(records){
+  records.data.forEach(function(record) {
+    console.log("Record value '%o'", record.value);
+    console.log("Record permissions read '%o' write '%o'",record.permissionRead, record.permissionWrite);
+  })
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Update records
@@ -374,8 +451,7 @@ Array positions in a path are indicated using a zero-indexed integer `"stash.4.i
 You can update one or more records with different update operations.
 
 ```csharp fct_label="Unity"
-var jsonString = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
-byte[] json = Encoding.UTF8.GetBytes(jsonString);
+var json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 
 var message = new NStorageUpdateMessage.Builder()
     .Update("myapp", "wallets", "wallet", new NStorageUpdateMessage.StorageUpdateBuilder()
@@ -386,7 +462,7 @@ var message = new NStorageUpdateMessage.Builder()
     .Build();
 client.Send(message, (INResultSet<INStorageKey> list) => {
   foreach (var record in list.Results) {
-    var version = Encoding.UTF8.GetString(record.Version);
+    var version = record.Version;
     Debug.LogFormat("Stored record has version '{0}'", version);
   }
 }, (INError error) => {
@@ -429,7 +505,7 @@ let value = json.data(using: .utf8)!
 
 let ops = [
   StorageOp(init_: "/foo", value: value),
-  StorageOp(incr: "/foo/coins", value: 10)
+  StorageOp(incr: "/foo/coins", value: 10),
   StorageOp(incr: "/foo/gems", value: 50)
 ]
 
@@ -437,11 +513,31 @@ var message = StorageUpdateMessage()
 message.update(bucket: "myapp", collection: "wallets", key: "wallet", ops: ops)
 client.send(message: message).then { list in
   for record in list {
-    NSLog("Stored record has version '@%'", record.version)
+    NSLog("Stored record has version '%@'", record.version)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+let value = {"coins": 100, "gems": 10, "artifacts": 0};
+
+var ops = [
+  nakamajs.StorageUpdateRequest.init_("/foo", value),
+  nakamajs.StorageUpdateRequest.incr("/foo/coins", 10),
+  nakamajs.StorageUpdateRequest.incr("/foo/gems", 50)
+];
+
+var message = new nakamajs.StorageUpdateRequest();
+message.update("myapp", "wallet", "wallet", ops);
+client.send(message).then(function(results){
+  results.keys.forEach(function(storageKey) {
+    console.log("Stored record has version %o", storageKey.version);
+  })
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Remove records
@@ -488,14 +584,24 @@ message.remove(bucket: "myapp", collection: "saves", key: "savegame")
 client.send(message: message).then {
   NSLog("Removed user's record(s).")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var message = new nakamajs.StorageRemoveRequest();
+message.remove("myapp", "saves", "savegame");
+client.send(message).then(function(){
+  console.log("Removed user's record(s).");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 You can also conditionally remove an object if the object version matches the version sent by the client.
 
 ```csharp fct_label="Unity"
-byte[] version = record.Version; // an INStorageKey object.
+string version = record.Version; // an INStorageKey object.
 
 var message = new NStorageRemoveMessage.Builder()
     .Remove("myapp", "saves", "savegame", version)
@@ -537,6 +643,18 @@ message.remove(bucket: "myapp", collection: "saves", key: "savegame", version: v
 client.send(message: message).then {
   NSLog("Removed user's record(s).")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var version = record.version // a record's version.
+
+var message = new nakamajs.StorageRemoveRequest();
+message.remove("myapp", "saves", "savegame", version);
+client.send(message).then(function(){
+  console.log("Removed user's record(s).");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```

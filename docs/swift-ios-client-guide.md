@@ -143,10 +143,10 @@ message.write(bucket: bucket, collection: "saves", key: "savegame", value: saveG
 message.write(bucket: bucket, collection: "saves", key: "mystats", value: myStats)
 client.send(message: message).then { list in
   for recordId in list {
-    NSLog("Stored record has version '@%'", recordId.version)
+    NSLog("Stored record has version '%@'", recordId.version)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -195,7 +195,7 @@ promise.then { _ in
 }.then { _ in
   //...
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 

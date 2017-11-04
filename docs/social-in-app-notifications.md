@@ -52,9 +52,22 @@ A callback can be registered for notifications received when a client is connect
 ```csharp fct_label="Unity"
 client.OnNotification = (INNotification n) => {
   Debug.LogFormat("Received code '{0}' and subject '{1}'.", n.Code, n.Subject);
-  var content = Encoding.UTF8.GetString(n.Content); // convert byte[].
-  Debug.LogFormat("Received id '{0}' and content '{1}'.", n.Id, content);
+  Debug.LogFormat("Received id '{0}' and content '{1}'.", n.Id, n.Content);
 };
+```
+
+```swift fct_label="Swift"
+client.onNotification = { notification in
+  NSLog("Received code %d and subject %@", notification.code, notification.subject)
+  NSLog("Received id %d and content %@", notification.id, notification.content)
+}
+```
+
+```js fct_label="Javascript"
+client.onnotification = function(notification) {
+  console.log("Received code %o and subject %o", notification.code, notification.subject);
+  console.log("Received id %o and content %o", notification.id, notification.content);
+}
 ```
 
 ## List notifications
@@ -70,6 +83,28 @@ client.Send(message, (INResultSet<INNotification> list) => {
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+var message = NotificationListMessage(limit: 100)
+client.send(message: message).then { notifications in
+  for notification in notifications {
+    NSLog("Notice code %d and subject %@.", notification.code, notification.subject)
+  }
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var message = new nakamajs.NotificationsListRequest();
+client.send(message).then(function(result){
+  result.notifications.forEach(function(notification) {
+    console.log("Notice code %o and subject %o.", notification.code, notification.subject);
+  })
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 A list of notifications can be retrieved in batches of up to 100 at a time. To retrieve all messages you should accumulate them with the resume cursor.
@@ -105,6 +140,58 @@ client.Send(message, (INResultSet<INNotification> list) => {
 });
 ```
 
+```swift fct_label="Swift"
+var allNotifications : [Notification] = []
+
+let accumulateNotifications = { cursor in
+  var message = NotificationListMessage(limit: 100)
+  message.cursor = cursor
+  client.send(message).then { notifications in
+    if notifications.count == 0 {
+      return
+    }
+
+    allNotifications.append(notifications)
+    accumulateNotifications(notifications.cursor) // recursive async call
+  }.catch { err in
+    NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+  }
+}
+
+var message = NotificationListMessage(limit: 100)
+client.send(message: message).then { notifications in
+  allNotifications.append(notifications)
+  accumulateNotifications(notifications.cursor)
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+
+var allNotifications = [];
+var accumulateNotifications = function(cursor) {
+  var message = new nakamajs.NotificationsListRequest();
+  client.send(message).then(function(result){
+    if (result.notifications.length == 0) {
+      return;
+    }
+    allNotifications.concat(result.notifications.notifications);
+    accumulateNotifications(result.resumableCursor); // recursive async call
+  }).catch(function(error){
+    console.log("An error occured: %o", error);
+  })
+}
+
+var message = new nakamajs.NotificationsListRequest();
+client.send(message).then(function(result){
+  allNotifications.concat(result.notifications);
+  accumulateNotifications(result.resumableCursor);
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the resume cursor returned with each list message.
 
 The resume cursor marks the position of the most recent notification retrieved. We recommend you store the resume cursor in device storage and use it when the client makes it's next request for recent notifications.
@@ -123,6 +210,30 @@ client.Send(message, (INResultSet<INNotification> list) => {
 });
 ```
 
+```swift fct_label="Swift"
+var resumableCursor = ...; // stored from last list retrieval.
+
+var message = NotificationListMessage(limit: 100)
+message.cursor = resumableCursor
+client.send(message: message).then { notifications in
+  resumableCursor = notifications.cursor
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var resumableCursor = ...; // stored from last list retrieval.
+
+var message = new nakamajs.NotificationsListRequest();
+message.cursor = resumableCursor;
+client.send(message).then(function(result){
+  resumableCursor = result.cursor;
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ## Delete notifications
 
 You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.
@@ -136,6 +247,26 @@ client.Send(message, (bool done) => {
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+var message = NotificationRemoveMessage()
+message.notificationIds.append(...) // Add notification from your internal list
+client.send(message: message).then {
+  NSLog("Notifications were removed.")
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var message = new nakamajs.NotificationsRemoveRequest();
+message.notifications.push(...) // Add notification from your internal list
+client.send(message).then(function(){
+  console.log("Notifications were removed.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Notification codes
