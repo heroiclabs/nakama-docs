@@ -19,13 +19,31 @@ A user can add one or more friends by that user's ID or handle. The user added w
 When a friend request is sent or the user is added an in-app notification will be sent. See the [in-app notification](social-in-app-notifications.md#receive-notifications) section for more info.
 
 ```csharp fct_label="Unity"
-byte[] userId = ...; // some user ID
+string userId = ...; // some user ID
 var message = NFriendAddMessage.Default(userId);
 client.Send(message, (bool done) => {
   Debug.Log("Friend added or request sent.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+let userID : UUID = ... // some user ID
+var message = FriendAddMessage()
+message.userIds.append(userID)
+client.send(message: message).catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var userId = ...; // some user ID
+var message = new nakamajs.FriendsAddRequest();
+message.userIds.push(userId);
+client.send(message).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](social-realtime-chat.md) section for more info.
@@ -38,13 +56,37 @@ You can list all of a user's friends, blocked users, friend requests received (i
 var message = NFriendsListMessage.Default();
 client.Send(message, (INResultSet<INFriend> list) => {
   foreach (var f in list.Results) {
-    var id = Encoding.UTF8.GetString(f.Id); // convert byte[].
     // f.State is one of: Friend, Invite, Invited, Blocked.
-    Debug.LogFormat("User {0} has state {1}.", id, f.State);
+    Debug.LogFormat("User {0} has state {1}.", f.Id, f.State);
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+var message = FriendListMessage()
+client.send(message: message).then { friends in
+  for friend in friends {
+    // friend.State is one of: Friend, Invite, Invited, Blocked.
+    NSLog("User %@ has state %@.", friend.id, friend.state.rawValue)
+  }
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var message = new nakamajs.FriendsListRequest();
+message.userIds.push(userId);
+client.send(message).then(function(friends){
+  friends.foreach(function(friend){
+    // friend.State is one of: Friend, Invite, Invited, Blocked.
+    console.log("User %o has state: %o", friend.id, friend.state);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Remove friends
@@ -55,14 +97,35 @@ A user can remove a friend, reject a received invite, cancel a friend request se
     If a user is unblocked they are removed from the friend list entirely. To re-add them each user must add the other again.
 
 ```csharp fct_label="Unity"
-byte[] userId = ...; // some user ID
+string userId = ...; // some user ID
 var message = NFriendRemoveMessage.Default(userId);
 client.Send(message, (bool done) => {
-  var idString = Encoding.UTF8.GetString(userId); // convert byte[].
-  Debug.Log("User {0} has been removed.", idString);
+  Debug.Log("User {0} has been removed.", userId);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+let userID : UUID = ... // some user ID
+var message = FriendRemoveMessage()
+message.userIds.append(userID)
+client.send(message: message).then { _ in
+  NSLog("User %@ has been removed", userID.uuidString)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var userId = ...; // some user ID
+var message = new nakamajs.FriendsRemoveRequest();
+message.userIds.push(userId);
+client.send(message).then(function(){
+  console.log("User %o has been removed.", userId);
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Block a friend
@@ -72,14 +135,35 @@ You can stop a user from using 1-on-1 chat or other social features with a user 
 A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
 
 ```csharp fct_label="Unity"
-byte[] userId = ...; // some user ID
+string userId = ...; // some user ID
 var message = NFriendBlockMessage.Default(userId);
 client.Send(message, (bool done) => {
-  var idString = Encoding.UTF8.GetString(id); // convert byte[].
-  Debug.Log("User {0} has been blocked.", idString);
+  Debug.Log("User {0} has been blocked.", userId);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+let userID : UUID = ... // some user ID
+var message = FriendBlockMessage()
+message.userIds.append(userID)
+client.send(message: message).then { _ in
+  NSLog("User %@ has been blocked", userID.uuidString)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var userId = ...; // some user ID
+var message = new nakamajs.FriendsBlockRequest();
+message.userIds.push(userId);
+client.send(message).then(function(){
+  console.log("User %o has been blocked.", userId);
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ### Ban a user

@@ -35,6 +35,14 @@ let client : Client = Builder("defaultkey")
 let client : Client = Builder.defaults(serverKey: "defaultkey")
 ```
 
+```js fct_label="Javascript"
+var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
+client.ssl = false;
+
+// or same as above.
+var client = new nakamajs.Client("defaultkey");
+```
+
 Every user account is created from one of the [options used to register](#register-or-login). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
 
 ## Register or login
@@ -140,6 +148,43 @@ client.login(with: message).then { session in
 }
 ```
 
+```js fct_label="Javascript"
+
+// The following example is only applicable to React Native apps:
+var deviceInfo = require('react-native-device-info');
+
+var deviceId = null;
+try {
+  const value = await AsyncStorage.getItem('@MyApp:deviceKey');
+  if (value !== null){
+    deviceId = value
+  } else {
+    deviceId = deviceInfo.getUniqueID();
+    AsyncStorage.setItem('@MyApp:deviceKey', deviceId).catch(function(error){
+      console.log("An error occured: %o", error);
+    });
+  }
+} catch (error) {
+  console.log("An error occured: %o", error);
+}
+
+var message = nakamajs.AuthenticateRequest.device(deviceId);
+client.login(message).then(function(session){
+  console.log("Successfully logged in, session: %o", session);
+}).catch(function(error) {
+   // USER_NOT_FOUND
+  if (error.code == 5) {
+      client.register(message).then(function(session){
+        console.log("Successfully registered, session: %o", session);
+      }).catch(function(error) {
+        console.log("Could not register: %o", error);
+      });
+  } else {
+      console.log("Could not login: %o", error);
+  }
+});
+```
+
 In games it is often a better option to use [Google](#google) or [Game Center](#game-center) to unobtrusively register the user.
 
 ### Email
@@ -187,13 +232,34 @@ deferred.addCallback(new Callback<Session, Session>() {
 let email = "email@example.com"
 let password = "3bc8f72e95a9"
 
-let message = AuthenticateMessage(email: email, password: password);
+let message = AuthenticateMessage(email: email, password: password)
 client.register(with: message).then { session in
   NSLog("Session: @%", session.token)
 }.catch { err in
   NSLog("Error @% : @%", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
+```
+
+```js fct_label="Javascript"
+var email = "email@example.com"
+var password = "3bc8f72e95a9"
+
+var message = nakamajs.AuthenticateRequest.email(email, password);
+client.login(message).then(function(session){
+  console.log("Successfully logged in, session: %o", session);
+}).catch(function(error) {
+   // USER_NOT_FOUND
+  if (error.code == 5) {
+      client.register(message).then(function(session){
+        console.log("Successfully registered, session: %o", session);
+      }).catch(function(error) {
+        console.log("Could not register: %o", error);
+      });
+  } else {
+      console.log("Could not login: %o", error);
+  }
+});
 ```
 
 ### Social providers
@@ -235,6 +301,28 @@ var initCallback = delegate() {
 if (!FB.IsInitialized) {
   FB.Init(initCallback);
 }
+```
+
+```swift fct_label="Swift"
+let oauthToken = "..."
+
+let message = AuthenticateMessage(facebook: oauthToken)
+client.register(with: message).then { session in
+  NSLog("Session: @%", session.token)
+}.catch { err in
+  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var oauthToken = "..."
+
+var message = nakamajs.AuthenticateRequest.facebook(oauthToken);
+client.login(message).then(function(session){
+  console.log("session: %o", session);
+}).catch(function(error) {
+  console.log("Could not login: %o", error);
+});
 ```
 
 You can add a button to your UI to login with Facebook.
@@ -305,12 +393,23 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```swift fct_label="Swift"
 let oauthToken = "..."
 
-let message = AuthenticateMessage(google: oauthToken);
+let message = AuthenticateMessage(google: oauthToken)
 client.register(with: message).then { session in
   NSLog("Session: @%", session.token)
 }.catch { err in
   NSLog("Error @% : @%", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var oauthToken = "..."
+
+var message = nakamajs.AuthenticateRequest.google(oauthToken);
+client.login(message).then(function(session){
+  console.log("session: %o", session);
+}).catch(function(error) {
+  console.log("Could not login: %o", error);
+});
 ```
 
 #### Game Center
@@ -340,10 +439,6 @@ client.Register(message, (INSession session) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
 // Use client.Login(...) after register.
-```
-
-```java fct_label="Android/Java"
-// Not applicable with Android.
 ```
 
 ```swift fct_label="Swift"
@@ -471,6 +566,17 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
+```js fct_label="Javascript"
+var customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
+
+var message = nakamajs.AuthenticateRequest.custom(customId);
+client.login(message).then(function(session){
+  console.log("session: %o", session);
+}).catch(function(error) {
+  console.log("Could not login: %o", error);
+});
+```
+
 ## Sessions
 
 The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.
@@ -524,6 +630,17 @@ client.login(with: message).then { session in
 }
 ```
 
+```js fct_label="Javascript"
+var id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+var message = nakamajs.AuthenticateRequest.device(id);
+client.login(message).then (function(session){
+  console.log("Session id '%o', handle '%o.", session.id, session.handle);
+  console.log("Session expired: %o", session.isexpired(new Date()));
+}).catch(function(error) {
+  console.log("Could not login: %o", error);
+});
+```
+
 ### Connect
 
 With a session you can connect with the server and send messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.
@@ -553,6 +670,15 @@ deferred.addCallback(new Callback<Session, Session>() {
 let session : Session = someSession // obtained from register or login.
 client.connect(with: session).then { _ in
   NSLog("Successfully connected.")
+});
+```
+
+```js fct_label="Javascript"
+var session = // obtained from register or login
+client.connect(session).then (function(session){
+  console.log("Successfully connected.");
+}).catch(function(error) {
+  console.log("An error occured: %o", error);
 });
 ```
 
@@ -604,6 +730,18 @@ client.send(with: message).then {
 }
 ```
 
+```js fct_label="Javascript"
+var id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
+
+var message = new nakamajs.LinkRequest()
+message.device = id;
+client.send(session).then (function(session){
+  console.log("Successfully linked device ID to current user.");
+}).catch(function(error) {
+  console.log("An error occured: %o", error);
+});
+```
+
 You can unlink any linked login options for the current user.
 
 ```csharp fct_label="Unity"
@@ -646,6 +784,18 @@ client.send(with: message).then {
 }.catch { err in
   NSLog("Error @% : @%", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
+
+var message = new nakamajs.UnlinkRequest()
+message.device = id;
+client.send(session).then (function(session){
+  console.log("Successfully unlinked device ID from current user.");
+}).catch(function(error) {
+  console.log("An error occured: %o", error);
+});
 ```
 
 Like with register and login you can link or unlink many different account options.
