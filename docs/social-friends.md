@@ -29,7 +29,7 @@ client.Send(message, (bool done) => {
 ```
 
 ```swift fct_label="Swift"
-let userID : UUID = ... // some user ID
+let userID = ... // some user ID
 var message = FriendAddMessage()
 message.userIds.append(userID)
 client.send(message: message).catch { err in
@@ -107,11 +107,11 @@ client.Send(message, (bool done) => {
 ```
 
 ```swift fct_label="Swift"
-let userID : UUID = ... // some user ID
+let userID = ... // some user ID
 var message = FriendRemoveMessage()
 message.userIds.append(userID)
 client.send(message: message).then { _ in
-  NSLog("User %@ has been removed", userID.uuidString)
+  NSLog("User %@ has been removed", userID)
 }.catch { err in
   NSLog("Error @% : @%", err, (err as! NakamaError).message)
 }
@@ -145,11 +145,11 @@ client.Send(message, (bool done) => {
 ```
 
 ```swift fct_label="Swift"
-let userID : UUID = ... // some user ID
+let userID = ... // some user ID
 var message = FriendBlockMessage()
 message.userIds.append(userID)
 client.send(message: message).then { _ in
-  NSLog("User %@ has been blocked", userID.uuidString)
+  NSLog("User %@ has been blocked", userID)
 }.catch { err in
   NSLog("Error @% : @%", err, (err as! NakamaError).message)
 }

@@ -623,7 +623,7 @@ let id = "3e70fd52-7192-11e7-9766-cb3ce5609916"
 let message = AuthenticateMessage(device: id)
 client.login(with: message).then { session in
   let expired = session.isExpired(currentTimeSince1970: Date().timeIntervalSince1970)
-  NSLog("Session id '@%' handle '@%'.", session.userID.uuidString, session.handle)
+  NSLog("Session id '@%' handle '@%'.", session.userID, session.handle)
   NSLog("Session expired: '@%'", expired)
 }.catch { err in
   NSLog("Error @% : @%", err, (err as! NakamaError).message)
