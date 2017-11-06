@@ -22,10 +22,23 @@ A user joins a chat topic to start receiving messages in realtime. Each new mess
 client.OnTopicMessage = (INTopicMessage message) => {
   // TopicType will be one of DirectMessage, Room, or Group.
   Debug.LogFormat("Received a '{0}' message.", message.Topic.TopicType);
-  var id = Encoding.UTF8.GetString(message.Topic.Id);     // convert byte[].
-  var data = Encoding.UTF8.GetString(message.Topic.Data); // convert byte[].
-  Debug.LogFormat("Message has id '{0}' and content '{1}'.", id, data);
+  Debug.LogFormat("Message has id '{0}' and content '{1}'.", message.Topic.Id, message.Topic.Data);
 };
+```
+
+```swift fct_label="Swift"
+client.onTopicMessage = { message in
+  // Topic will be one of DirectMessage, Room, or Group.
+  NSLog("Received a %@ message", message.topic.description)
+  NSLog("Message content: %@.", message.data)
+}
+```
+
+```js fct_label="Javascript"
+client.ontopicmessage = function(message) {
+  console.log("Received a %o message", message.topic);
+  console.log("Message content: %@.", message.data);
+}
 ```
 
 In group chat a user will receive other messages from the server. These messages contain events on users who join or leave the group, when someone is promoted as an admin, etc. You may want users to see these messages in the chat stream or ignore them in the UI.
@@ -36,6 +49,22 @@ You can identify event messages from chat messages by the message "Type".
 TopicMessageType messageType = message.Type; // enum
 if (messageType != TopicMessageType.Chat) {
   Debug.LogFormat("Received message with event type '{0}'.", messageType);
+}
+```
+
+```swift fct_label="Swift"
+let messageType = message.type; // enum
+switch messageType {
+  case .chat:
+    NSLog("Recieved a chat message")
+  default:
+    NSLog("Received message with event type %d", messageType.rawValue)
+}
+```
+
+```js fct_label="Javascript"
+if (message.type != 0) {
+  console.log("Received message with event type %o", message.type)
 }
 ```
 
@@ -62,7 +91,7 @@ A room is created dynamically for users to chat. A room has a name and will be s
 ```csharp fct_label="Unity"
 INTopicId roomId = null;
 
-byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.
+string roomName = "Room-Name";
 var message = new NTopicJoinMessage.Builder()
     .TopicRoom(roomName)
     .Build();
@@ -72,6 +101,34 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+var roomId : TopicId?
+let roomName = "Room-Name"
+
+var message = TopicJoinMessage()
+message.rooms.append(roomName)
+client.send(message: message).then { topics in
+  roomId = topics[0].topic
+  NSLog("Successfully joined the room.")
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var roomId;
+var roomName = "Room-Name"
+
+var message = new nakamajs.TopicsJoinRequest();
+message.room(roomName);
+client.send(message).then(function(topics) {
+  roomId = topics[0].topic;
+  console.log("Successfully joined the room.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 The `roomId` variable contains an ID used to [send messages](#send-messages).
@@ -88,7 +145,7 @@ A group ID is needed when a user joins group chat and can be [listed by the user
 ```csharp fct_label="Unity"
 INTopicId groupTopicId = null;
 
-byte[] groupId = group.Id; // an INGroup ID.
+string groupId = group.Id; // an INGroup ID.
 var message = new NTopicJoinMessage.Builder()
     .TopicGroup(groupId)
     .Build();
@@ -98,6 +155,34 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+var groupTopicId : TopicId?
+let groupId = group.id
+
+var message = TopicJoinMessage()
+message.groups.append(groupId)
+client.send(message: message).then { topics in
+  groupTopicId = topics[0].topic
+  NSLog("Successfully joined the group chat.")
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var groupTopicId;
+var groupId = group.id
+
+var message = new nakamajs.TopicsJoinRequest();
+message.group(groupId);
+client.send(message).then(function(topics) {
+  groupTopicId = topics[0].topic;
+  console.log("Successfully joined the group chat.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 The `groupTopicId` variable contains an ID used to [send messages](#send-messages).
@@ -114,7 +199,7 @@ A user will receive an [in-app notification](social-in-app-notifications.md) whe
 ```csharp fct_label="Unity"
 INTopicId directTopicId = null;
 
-byte[] userId = user.Id; // an INUser ID.
+string userId = user.Id; // an INUser ID.
 var message = new NTopicJoinMessage.Builder()
     .TopicDirectMessage(userId)
     .Build();
@@ -124,6 +209,34 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+var directTopicId : TopicId?
+let userId = user.id
+
+var message = TopicJoinMessage()
+message.userIds.append(userIds)
+client.send(message: message).then { topics in
+  directTopicId = topics[0].topic
+  NSLog("Successfully joined the direct chat.")
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var directTopicId;
+var userId = user.id
+
+var message = new nakamajs.TopicsJoinRequest();
+message.dm(userId);
+client.send(message).then(function(topics) {
+  directTopicId = topics[0].topic;
+  console.log("Successfully joined the direct chat.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 The `directTopicId` variable contains an ID used to [send messages](#send-messages).
@@ -154,7 +267,7 @@ client.OnTopicPresence = (INTopicPresence presences) => {
   onlineUsers.AddRange(presences.Join);
 };
 
-byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.
+string roomName = "Room-Name";
 var message = new NTopicJoinMessage.Builder()
     .TopicRoom(roomName)
     .Build();
@@ -166,6 +279,60 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+var onlineUsers : [UserPresence] = []
+
+client.onTopicPresence = { presence in
+  // Remove all users who left.
+  for user in presence.leave {
+    onlineUsers.removeAtIndex(onlineUsers.indexOf(user))
+  }
+  // Add all users who joined.
+  onlineUsers.append(contentOf: presence.join)
+}
+
+let roomName = "Room-Name"
+
+var message = TopicJoinMessage()
+message.rooms.append(roomName)
+client.send(message: message).then { topics in
+  // Setup initial online user list.
+  onlineUsers.append(contentOf: topic[0].presences)
+  // Remove your own user from list.
+  onlineUsers.removeAtIndex(onlineUsers.indexOf(topic[0].self))
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var onlineUsers = []
+
+client.ontopicpresence = function(presence) {
+  // Remove all users who left.
+  onlineUsers = onlineUsers.filter(function(user) {
+    return !presence.leave.includes(user);
+  })
+
+  // Add all users who joined.
+  onlineUsers.concat(presence.join);
+}
+
+var roomName = "Room-Name"
+var message = new nakamajs.TopicsJoinRequest();
+message.room(roomName);
+client.send(message).then(function(topics) {
+  // Setup initial online user list.
+  onlineUsers.concat(topics[0].presences);
+  // Remove your own user from list.
+  onlineUsers = onlineUsers.filter(function(user) {
+    return user != topics[0].self;
+  })
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 !!! Tip
@@ -181,14 +348,40 @@ Every message sent returns an acknowledgement when it's received by the server. 
 INTopicId chatTopicId = topic.Topic; // A chat topic ID.
 
 var json = "{\"some\":\"data\"}";
-byte[] data = Encoding.UTF8.GetBytes(json);
-var message = NTopicMessageSendMessage.Default(chatTopicId, data);
+var message = NTopicMessageSendMessage.Default(chatTopicId, json);
 client.Send(message, (INTopicMessageAck ack) => {
-  var messageId = Encoding.UTF8.GetString(ack.MessageId); // convert byte[].
-  Debug.LogFormat("New message sent has id '{0}'.", messageId);
+  Debug.LogFormat("New message sent has id '{0}'.", ack.MessageId);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+let chatTopicID = ... // A chat topic ID
+let json = "{\"some\":\"data\"}".data(using: .utf8)!
+
+var message = TopicMessageSendMessage()
+message.topicId = chatTopicID
+message.data = json
+client.send(message: message).then { ack in
+  NSLog("New message sent has id %@.", ack.messageID)
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var chatTopicId = ... // A chat topic ID
+var data = {"some":"data"};
+
+var message = new nakamajs.TopicMessageSendRequest();
+message.topic = chatTopicId;
+message.data = data;
+client.send(message).then(function(ack) {
+  console.log("New message sent has id %@.", ack.messageId);
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Leave chat
@@ -206,6 +399,30 @@ client.Send(message, (bool done) => {
 });
 ```
 
+```swift fct_label="Swift"
+let chatTopicID = ... // A chat topic ID
+
+var message = TopicLeaveMessage()
+message.topics.append(chatTopicID)
+client.send(message: message).then {
+  NSLog("Successfully left chat.")
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var chatTopicId = ... // A chat topic ID
+
+var message = new nakamajs.TopicsLeaveRequest();
+message.topics.push(chatTopicId);
+client.send(message).then(function() {
+  console.log("Successfully left chat.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ## Message history
 
 Every chat conversation stores a history of messages. The history also contains [event messages](#receive-messages) sent by the server with group chat. Each user can retrieve old messages for chat when they next connect online.
@@ -216,7 +433,7 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
     A user does not have to join a chat topic to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.
 
 ```csharp fct_label="Unity"
-byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.
+string roomName = "Room-Name";
 // Fetch 10 messages on the chat room with oldest first.
 var message = new NTopicMessagesListMessage.Builder()
     .TopicRoom(roomName)
@@ -225,13 +442,47 @@ var message = new NTopicMessagesListMessage.Builder()
     .Build();
 client.Send(message, (INResultSet<INTopicMessage> list) => {
   foreach (var msg in list.Results) {
-    var id = Encoding.UTF8.GetString(msg.Topic.Id);     // convert byte[].
-    var data = Encoding.UTF8.GetString(msg.Topic.Data); // convert byte[].
+    var id = msg.Topic.Id;
+    var data = msg.Topic.Data;
     Debug.LogFormat("Message has id '{0}' and content '{1}'.", id, data);
   }
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
+```
+
+```swift fct_label="Swift"
+let roomName = "Room-Name";
+
+// Fetch 10 messages on the chat room with oldest first.
+var message = TopicMessagesListMessage(room: roomName)
+message.forward(false)
+message.limit(10)
+client.send(message: message).then { messages in
+  for message in messages {
+    NSLog("Message has id %@ and content %@", message.topicId.description, message.data)
+  }
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var roomName = "Room-Name";
+
+// Fetch 10 messages on the chat room with oldest first.
+var message = new nakamajs.TopicMessagesListRequest();
+message.room = roomName;
+message.forward = false;
+message.limit = 10;
+
+client.send(message).then(function(messages) {
+  messages.messages.forEach(function(message) {
+    console.log("Message has id %o and content %o", message.topicId, message.data);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 A cursor can be used to page after a batch of messages for the next set of results.
@@ -243,7 +494,7 @@ var errorHandler = delegate(INError err) {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 };
 
-byte[] roomName = Encoding.UTF8.GetBytes("Room-Name"); // convert string.
+string roomName = "Room-Name";
 var messageBuilder = new NTopicMessagesListMessage.Builder()
     .TopicRoom(roomName)
     .Limit(100);
@@ -255,11 +506,55 @@ client.Send(messageBuilder.Build(), (INResultSet<INTopicMessage> list) => {
 
     client.Send(message, (INResultSet<INTopicMessage> nextList) => {
       foreach (var msg in nextList.Results) {
-        var id = Encoding.UTF8.GetString(msg.Topic.Id);     // convert byte[].
-        var data = Encoding.UTF8.GetString(msg.Topic.Data); // convert byte[].
+        var id = msg.Topic.Id;
+        var data = msg.Topic.Data;
         Debug.LogFormat("Message has id '{0}' and content '{1}'.", id, data);
       }
     }, errorHandler);
   }
 }, errorHandler);
+```
+
+```swift fct_label="Swift"
+let roomName = "Room-Name";
+
+var message = TopicMessagesListMessage(room: roomName)
+message.limit(100)
+client.send(message: message).then { messages in
+  if let _cursor = messages.cursor && messages.count > 0 {
+    message.cursor = _cursor
+    client.send(message: message).then { messages in
+      for message in messages {
+        NSLog("Message has id %@ and content %@", message.topicId.description, message.data)
+      }
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+  }
+}.catch { err in
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```js fct_label="Javascript"
+var roomName = "Room-Name";
+
+var message = new nakamajs.TopicMessagesListRequest();
+message.room = roomName;
+message.limit = 100;
+
+client.send(message).then(function(messages) {
+  if messages.cursor && messages.messages.length > 0 {
+    message.cursor = messages.cursor;
+    client.send(message).then(function(messages) {
+      messages.messages.forEach(function(message) {
+        console.log("Message has id %o and content %o", message.topicId, message.data);
+      });
+    }).catch(function(error){
+      console.log("An error occured: %o", error);
+    })
+  }
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
