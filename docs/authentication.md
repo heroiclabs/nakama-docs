@@ -234,9 +234,9 @@ let password = "3bc8f72e95a9"
 
 let message = AuthenticateMessage(email: email, password: password)
 client.register(with: message).then { session in
-  NSLog("Session: @%", session.token)
+  NSLog("Session: %@", session.token)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
 ```
@@ -308,9 +308,9 @@ let oauthToken = "..."
 
 let message = AuthenticateMessage(facebook: oauthToken)
 client.register(with: message).then { session in
-  NSLog("Session: @%", session.token)
+  NSLog("Session: %@", session.token)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -395,9 +395,9 @@ let oauthToken = "..."
 
 let message = AuthenticateMessage(google: oauthToken)
 client.register(with: message).then { session in
-  NSLog("Session: @%", session.token)
+  NSLog("Session: %@", session.token)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -453,9 +453,9 @@ let message = AuthenticateMessage(
     gamecenter: bundleID, playerID: playerID, publicKeyURL: publicKeyURL,
     salt: base64salt, timestamp: timestamp, signature: base64signature)
 client.register(with: message).then { session in
-  NSLog("Session: @%", session.token)
+  NSLog("Session: %@", session.token)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
 ```
@@ -505,9 +505,9 @@ let sessionToken = "..."
 
 let message = AuthenticateMessage(steam: sessionToken)
 client.register(with: message).then { session in
-  NSLog("Session: @%", session.token)
+  NSLog("Session: %@", session.token)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
 ```
@@ -559,9 +559,9 @@ let customID = "a1fca336-7191-11e7-bdab-df34f6f90285"
 
 let message = AuthenticateMessage(custom: customID)
 client.register(with: message).then { session in
-  NSLog("Session: @%", session.token)
+  NSLog("Session: %@", session.token)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
 ```
@@ -623,10 +623,10 @@ let id = "3e70fd52-7192-11e7-9766-cb3ce5609916"
 let message = AuthenticateMessage(device: id)
 client.login(with: message).then { session in
   let expired = session.isExpired(currentTimeSince1970: Date().timeIntervalSince1970)
-  NSLog("Session id '@%' handle '@%'.", session.userID, session.handle)
-  NSLog("Session expired: '@%'", expired)
+  NSLog("Session id '%@' handle '%@'.", session.userID, session.handle)
+  NSLog("Session expired: '%@'", expired)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -726,7 +726,7 @@ var message = SelfLinkMessage(device: id);
 client.send(with: message).then {
   NSLog("Successfully linked device ID to current user.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -782,7 +782,7 @@ var message = SelfUnlinkMessage(device: id);
 client.send(with: message).then {
   NSLog("Successfully unlinked device ID from current user.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 

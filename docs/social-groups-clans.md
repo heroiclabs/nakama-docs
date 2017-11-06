@@ -31,7 +31,7 @@ client.send(message: message).then { groups in
     NSLog("Group: name '%@' id '%@'.", group.name, group.id)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -94,7 +94,7 @@ client.send(message: message).then { groups in
     }
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -143,7 +143,7 @@ message.groupIds.append(groupID)
 client.send(message: message).then { _ in
   NSLog("Requested to join group.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -187,7 +187,7 @@ client.send(message: message).then { groups in
     NSLog("Group's state is '%d'", group.state.rawValue)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -234,7 +234,7 @@ client.send(message: message).then { users in
     NSLog("Member's state is '%d'", member.state.rawValue)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -281,6 +281,7 @@ groupCreate.description = "My awesome group."
 groupCreate.lang = "en"
 groupCreate.privateGroup = true
 groupCreate.avatarURL = "url://somelink"
+groupCreate.metadata = "{'my_custom_field': 'some value'}".data(using: .utf8)!
 
 var message = GroupCreateMessage()
 message.groupsCreate.append(groupCreate)
@@ -288,7 +289,7 @@ client.send(message: message).then { group in
   NSLog("New group: id '%@' with name '%@", group.id, group.name)
   NSLog("Successfully created a private group.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -357,7 +358,7 @@ message.groupsUpdate.append(groupUpdate)
 client.send(message: message).then { _ in
   NSLog("Successfully updated group.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -407,7 +408,7 @@ client.send(message: message).then { _ in
     case .groupLastAdmin:
       NSLog("Unable to leave as last admin.")
     default:
-      NSLog("Error @% : @%", err, nkErr.message)
+      NSLog("Error %@ : %@", err, nkErr.message)
   }
 }
 ```
@@ -463,7 +464,7 @@ message.groupUsers.append(addUser)
 client.send(message: message).then { _ in
   NSLog("Successfully added user to group.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -511,7 +512,7 @@ message.groupUsers.append(promoteUser)
 client.send(message: message).then { _ in
   NSLog("Successfully promoted user as an admin.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -562,7 +563,7 @@ client.send(message: message).then { _ -> Promise<Void> in
 }.then { in _
   NSLog("Admin user demoted to member in group.");
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -612,7 +613,7 @@ message.groupUsers.append(groupUser)
 client.send(message: message).then { _ in
   NSLog("Successfully kicked user from group.");
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -654,7 +655,7 @@ message.groupIds.append(groupID)
 client.send(message: message).then { _ in
   NSLog("The group has been removed.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 

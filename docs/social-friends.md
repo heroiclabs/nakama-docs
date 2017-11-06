@@ -33,7 +33,7 @@ let userID = ... // some user ID
 var message = FriendAddMessage()
 message.userIds.append(userID)
 client.send(message: message).catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -72,7 +72,7 @@ client.send(message: message).then { friends in
     NSLog("User %@ has state %@.", friend.id, friend.state.rawValue)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -113,7 +113,7 @@ message.userIds.append(userID)
 client.send(message: message).then { _ in
   NSLog("User %@ has been removed", userID)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -151,7 +151,7 @@ message.userIds.append(userID)
 client.send(message: message).then { _ in
   NSLog("User %@ has been blocked", userID)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 

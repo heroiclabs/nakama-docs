@@ -308,6 +308,6 @@ message.payload = payload
 client.send(message: message).then { result in
   NSLog("JSON response %@", result.payload)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```

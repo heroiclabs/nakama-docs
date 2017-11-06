@@ -40,10 +40,10 @@ deferred.addCallback(new Callback<Self, Self>() {
 ```swift fct_label="Swift"
 let message = SelfFetchMessage()
 client.send(message: message).then { selfuser in
-  NSLog("User id '@%' and handle '@%'", selfuser.id, selfuser.handle)
-  NSLog("User has JSON metadata '@%'", selfuser.metadata)
+  NSLog("User id '%@' and handle '%@'", selfuser.id, selfuser.handle)
+  NSLog("User has JSON metadata '%@'", selfuser.metadata)
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -129,10 +129,10 @@ message.userIDs.append(userID)
 
 client.send(message: message).then { users in
   for user in users {
-    NSLog("User id '@%' and handle '@%'", user.id, user.handle)
+    NSLog("User id '%@' and handle '%@'", user.id, user.handle)
   }
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
@@ -215,7 +215,7 @@ message.location = "San Francisco"
 client.send(message: message).then {
   NSLog("Successfully updated yourself.")
 }.catch { err in
-  NSLog("Error @% : @%", err, (err as! NakamaError).message)
+  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
 
