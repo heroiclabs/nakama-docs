@@ -122,7 +122,7 @@ deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
 ```
 
 ```swift fct_label="Swift"
-let userID = UUID() // a User ID
+let userID // a User ID
 
 var message = UsersFetchMessage()
 message.userIDs.append(userID)
