@@ -86,7 +86,7 @@ The binary content in each data message should be as __small as possible__. It i
 string id = match.Id; // an INMatch Id.
 
 long opCode = 001L;
-string data = "{\"move\": {\"dir\": \"left\", \"steps\": 4}}";
+string data = Encoding.UTF8.GetBytes("{\"move\": {\"dir\": \"left\", \"steps\": 4}}");
 
 var message = NMatchDataSendMessage.Default(matchId, opCode, data);
 client.Send(message, (bool done) => {
