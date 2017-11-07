@@ -588,7 +588,7 @@ The register and login messages return a session on success. The session contain
 string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 var message = NAuthenticateMessage.Device(id);
 client.Login(message, (INSession session) => {
-  var userId = Encoding.UTF8.GetString(session.Id);
+  var userId = session.Id;
   Debug.LogFormat("Session id '{0}' handle '{1}'.", userId, session.Handle);
   Debug.LogFormat("Session expired: {0}", session.HasExpired(DateTime.UtcNow));
 }, (INError err) => {

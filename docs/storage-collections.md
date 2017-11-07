@@ -186,8 +186,8 @@ client.send(message).then(function(result){
 We support another kind of conditional write which is used to write a record only if none already exists for that record's key name.
 
 ```csharp fct_label="Unity"
-byte[] saveGame = Encoding.UTF8.GetBytes("{\"progress\": 1}");
-byte[] version = Encoding.UTF8.GetBytes("*"); // represents "no version".
+string saveGame = "{\"progress\": 1}";
+string version = "*"; // represents "no version".
 
 var message = new NStorageWriteMessage.Builder()
     .Write("myapp", "saves", "savegame", saveGame, version)
@@ -451,8 +451,7 @@ Array positions in a path are indicated using a zero-indexed integer `"stash.4.i
 You can update one or more records with different update operations.
 
 ```csharp fct_label="Unity"
-var jsonString = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
-byte[] json = Encoding.UTF8.GetBytes(jsonString);
+var json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 
 var message = new NStorageUpdateMessage.Builder()
     .Update("myapp", "wallets", "wallet", new NStorageUpdateMessage.StorageUpdateBuilder()
@@ -463,7 +462,7 @@ var message = new NStorageUpdateMessage.Builder()
     .Build();
 client.Send(message, (INResultSet<INStorageKey> list) => {
   foreach (var record in list.Results) {
-    var version = Encoding.UTF8.GetString(record.Version);
+    var version = record.Version;
     Debug.LogFormat("Stored record has version '{0}'", version);
   }
 }, (INError error) => {

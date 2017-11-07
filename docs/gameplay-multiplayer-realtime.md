@@ -13,7 +13,7 @@ A match can be created by a user. The server will assign a unique ID which can b
 ```csharp fct_label="Unity"
 var message = NMatchCreateMessage.Default();
 client.Send(message, (INMatch match) => {
-  byte[] id = match.Id;
+  string id = match.Id;
   Debug.Log("Successfully created match.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -30,7 +30,7 @@ A user can join a specific match by ID. Matches can be joined at any point until
     To find a match instead of specify one by ID use the [matchmaker](gameplay-matchmaker.md).
 
 ```csharp fct_label="Unity"
-byte[] id = match.Id; // an INMatch Id.
+string id = match.Id; // an INMatch Id.
 
 var message = NMatchJoinMessage.Default(id);
 client.Send(message, (INResultSet<INMatch> matches) => {
@@ -43,7 +43,7 @@ client.Send(message, (INResultSet<INMatch> matches) => {
   connectedOpponents.Remove(matches.Results[0].Self);
 
   foreach (var presence in connectedOpponents) {
-    var userId = Encoding.UTF8.GetString(presence.UserId);
+    var userId = presence.UserId;
     var handle = presence.Handle;
     Debug.LogFormat("User id '{0}' handle '{1}'.", userId, handle);
   }
@@ -83,10 +83,10 @@ An Op code is a numeric identifier for the type of message sent. These can be us
 The binary content in each data message should be as __small as possible__. It is common to use JSON or preferable to use a compact binary format like <a href="https://developers.google.com/protocol-buffers/" target="\_blank">Protocol Buffers</a> or <a href="https://google.github.io/flatbuffers/" target="\_blank">FlatBuffers</a>.
 
 ```csharp fct_label="Unity"
-byte[] id = match.Id; // an INMatch Id.
+string id = match.Id; // an INMatch Id.
 
 long opCode = 001L;
-byte[] data = Encoding.UTF8.GetBytes("{\"move\": {\"dir\": \"left\", \"steps\": 4}}");
+string data = "{\"move\": {\"dir\": \"left\", \"steps\": 4}}";
 
 var message = NMatchDataSendMessage.Default(matchId, opCode, data);
 client.Send(message, (bool done) => {
@@ -121,7 +121,7 @@ client.OnMatchData = (INMatchData m) => {
 Users can leave a match at any point. A match ends when all users have left.
 
 ```csharp fct_label="Unity"
-byte[] id = match.Id; // an INMatch Id.
+string id = match.Id; // an INMatch Id.
 
 var message = NMatchLeaveMessage.Default(id);
 client.Send(message, (bool complete) => {
