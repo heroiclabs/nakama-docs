@@ -1,6 +1,6 @@
 # JavaScript client guide
 
-The official Javascript client handles all communication in realtime with the server. It implements all features in the server and can be used in a browser, NodeJS environments and be embdedded inside React Native applications.
+The official Javascript client handles all communication in realtime with the server. It implements all features in the server and can be used in a browser and be embdedded inside React Native applications.
 
 ## Download
 

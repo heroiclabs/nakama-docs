@@ -79,8 +79,8 @@ client.send(message: message).then { friends in
 ```js fct_label="Javascript"
 var message = new nakamajs.FriendsListRequest();
 message.userIds.push(userId);
-client.send(message).then(function(friends){
-  friends.foreach(function(friend){
+client.send(message).then(function(result){
+  result.friends.foreach(function(friend){
     // friend.State is one of: Friend, Invite, Invited, Blocked.
     console.log("User %o has state: %o", friend.id, friend.state);
   });

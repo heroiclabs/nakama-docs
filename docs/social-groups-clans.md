@@ -39,8 +39,8 @@ client.send(message: message).then { groups in
 var message = new nakamajs.GroupsListRequest();
 message.lang = "en"
 message.orderByAsc = true;
-client.send(message).then(function(groups) {
-  groups.forEach(function(group) {
+client.send(message).then(function(result) {
+  result.groups.forEach(function(group) {
     console.log("Group: name '%o' id '%o'.", group.name, group.id);
   })
 }).catch(function(error){
@@ -102,9 +102,9 @@ client.send(message: message).then { groups in
 var message = new nakamajs.GroupsListRequest();
 message.lang = "en"
 message.orderByAsc = true;
-client.send(message).then(function(groups) {
-  if (groups.length > 0 && groups.cursor) {
-    message.cursor = groups.cursor
+client.send(message).then(function(result) {
+  if (result.groups.length > 0 && result.cursor) {
+    message.cursor = result.cursor
     client.send(message).then(function(nextGroups) {
       // ...
     }).catch(function (error) {
@@ -193,8 +193,8 @@ client.send(message: message).then { groups in
 
 ```js fct_label="Javascript"
 var message = new nakamajs.GroupsSelfListRequest();
-client.send(message).then(function(groups) {
-  groups.forEach(function(group){
+client.send(message).then(function(result) {
+  result.groups.forEach(function(group){
     console.log("Group: name '%o' id '%o'.", group.name, group.id);
     // group.State is one of: Admin, Member, or Join.
     console.log("Group's state is %o.", group.state);
@@ -241,8 +241,8 @@ client.send(message: message).then { users in
 ```js fct_label="Javascript"
 var groupId = ... // a GroupId
 var message = new nakamajs.GroupUsersListRequest(groupId);
-client.send(message).then(function(users) {
-  users.forEach(function(user){
+client.send(message).then(function(result) {
+  result.users.forEach(function(user){
     console.log("Member: name '%o' id '%o'.", member.fullname, member.id);
     // member.state is one of: Admin, Member, or Join.
     console.log("Member's state is %o.", member.state);
@@ -285,9 +285,11 @@ groupCreate.metadata = "{'my_custom_field': 'some value'}".data(using: .utf8)!
 
 var message = GroupCreateMessage()
 message.groupsCreate.append(groupCreate)
-client.send(message: message).then { group in
-  NSLog("New group: id '%@' with name '%@", group.id, group.name)
-  NSLog("Successfully created a private group.")
+client.send(message: message).then { groups in
+  for group in groups {
+    NSLog("New group: id '%@' with name '%@", group.id, group.name)
+    NSLog("Successfully created a group.")
+  }
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
@@ -297,9 +299,11 @@ client.send(message: message).then { group in
 var metadata = {'my_custom_field': 'some value'};
 var message = new nakamajs.GroupsCreateRequest();
 message.create("Some unique group name", "My awesome group.", "url://somelink", "en", metadata, true);
-client.send(message).then(function(group) {
-  console.log("New group: id '%@' with name '%@", group.id, group.name);
-  console.log("Successfully created a private group.");
+client.send(message).then(function(result) {
+  result.groups.forEach(function(group) {
+    console.log("New group: id '%@' with name '%@", group.id, group.name);
+    console.log("Successfully created a private group.");
+  });
 }).catch(function(error){
   console.log("An error occured: %o", error);
 })

@@ -49,9 +49,9 @@ client.send(message: message).then { selfuser in
 
 ```js fct_label="Javascript"
 var message = new nakamajs.SelfFetchRequest();
-client.send(message).then(function(self) {
-  console.log("User id '%o' and handle '%o'.", self.id, self.handle);
-  console.log("User has JSON metadata: %o", self.metadata);
+client.send(message).then(function(result) {
+  console.log("User id '%o' and handle '%o'.", result.self.id, result.self.handle);
+  console.log("User has JSON metadata: %o", result.self.metadata);
 }).catch(function(error){
   console.log("An error occured: %o", error);
 })
@@ -142,8 +142,8 @@ string userId = "" // a User ID
 var message = new nakamajs.UsersFetchMessage();
 message.userIds.push(userId);
 
-client.send(message).then(function(users) {
-  users.foreach(function(user){
+client.send(message).then(function(result) {
+  result.users.foreach(function(user){
     console.log("User id '%o' and handle '%o'.", user.id, user.handle);
   });
 }).catch(function(error){

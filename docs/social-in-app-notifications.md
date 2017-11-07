@@ -98,8 +98,8 @@ client.send(message: message).then { notifications in
 
 ```js fct_label="Javascript"
 var message = new nakamajs.NotificationsListRequest();
-client.send(message).then(function(notifications){
-  notifications.forEach(function(notification) {
+client.send(message).then(function(result){
+  result.notifications.forEach(function(notification) {
     console.log("Notice code %o and subject %o.", notification.code, notification.subject);
   })
 }).catch(function(error){
@@ -172,21 +172,21 @@ client.send(message: message).then { notifications in
 var allNotifications = [];
 var accumulateNotifications = function(cursor) {
   var message = new nakamajs.NotificationsListRequest();
-  client.send(message).then(function(notifications){
-    if (notifications.length == 0) {
+  client.send(message).then(function(result){
+    if (result.notifications.length == 0) {
       return;
     }
-    allNotifications.concat(notifications.notifications);
-    accumulateNotifications(notifications.resumableCursor); // recursive async call
+    allNotifications.concat(result.notifications.notifications);
+    accumulateNotifications(result.resumableCursor); // recursive async call
   }).catch(function(error){
     console.log("An error occured: %o", error);
   })
 }
 
 var message = new nakamajs.NotificationsListRequest();
-client.send(message).then(function(notifications){
-  allNotifications.concat(notifications.notifications);
-  accumulateNotifications(notifications.resumableCursor);
+client.send(message).then(function(result){
+  allNotifications.concat(result.notifications);
+  accumulateNotifications(result.resumableCursor);
 }).catch(function(error){
   console.log("An error occured: %o", error);
 })
@@ -227,8 +227,8 @@ var resumableCursor = ...; // stored from last list retrieval.
 
 var message = new nakamajs.NotificationsListRequest();
 message.cursor = resumableCursor;
-client.send(message).then(function(notifications){
-  resumableCursor = notifications.cursor;
+client.send(message).then(function(result){
+  resumableCursor = result.cursor;
 }).catch(function(error){
   console.log("An error occured: %o", error);
 })
@@ -262,7 +262,7 @@ client.send(message: message).then {
 ```js fct_label="Javascript"
 var message = new nakamajs.NotificationsRemoveRequest();
 message.notifications.push(...) // Add notification from your internal list
-client.send(message).then(function(notifications){
+client.send(message).then(function(){
   console.log("Notifications were removed.");
 }).catch(function(error){
   console.log("An error occured: %o", error);

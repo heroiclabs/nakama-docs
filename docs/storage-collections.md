@@ -101,8 +101,8 @@ var bucket = "myapp"
 var message = new nakamajs.StorageWriteRequest();
 message.write(bucket, "saves", "savegame", saveGame);
 message.write(bucket, "saves", "mystats", myStats);
-client.send(message).then(function(storageKeys){
-  storageKeys.forEach(function(storageKey) {
+client.send(message).then(function(result){
+  result.keys.forEach(function(storageKey) {
     console.log("Stored record has version %o", storageKey.version);
   })
 }).catch(function(error){
@@ -176,8 +176,8 @@ var version = record.version // a storage object's version.
 
 var message = new nakamajs.StorageWriteRequest();
 message.write("myapp", "saves", "savegame", saveGame, version);
-client.send(message).then(function(storageKeys){
-  version = storageKeys[0].version; // Cache updated version for next write.
+client.send(message).then(function(result){
+  version = result.keys[0].version; // Cache updated version for next write.
 }).catch(function(error){
   console.log("An error occured: %o", error);
 })
@@ -242,8 +242,8 @@ var version = "*" // a storage object's version.
 
 var message = new nakamajs.StorageWriteRequest();
 message.write("myapp", "saves", "savegame", saveGame, version);
-client.send(message).then(function(storageKeys){
-  version = storageKeys[0].version; // Cache updated version for next write.
+client.send(message).then(function(result){
+  version = result.keys[0].version; // Cache updated version for next write.
 }).catch(function(error){
   console.log("An error occured: %o", error);
 })
@@ -325,7 +325,7 @@ var message = new nakamajs.StorageFetchRequest();
 message.fetch("myapp", "saves", "savegame", userId);
 message.fetch("myapp", "configuration", "config", nil);
 client.send(message).then(function(records){
-  records.forEach(function(record) {
+  records.data.forEach(function(record) {
     console.log("Record value '%o'", record.value);
     console.log("Record permissions read '%o' write '%o'",record.permissionRead, record.permissionWrite);
   })
@@ -411,7 +411,7 @@ message.bucket = "myapp"
 message.collection = "saves"
 
 client.send(message).then(function(records){
-  records.forEach(function(record) {
+  records.data.forEach(function(record) {
     console.log("Record value '%o'", record.value);
     console.log("Record permissions read '%o' write '%o'",record.permissionRead, record.permissionWrite);
   })
@@ -532,8 +532,8 @@ var ops = [
 
 var message = new nakamajs.StorageUpdateRequest();
 message.update("myapp", "wallet", "wallet", ops);
-client.send(message).then(function(storageKeys){
-  storageKeys.forEach(function(storageKey) {
+client.send(message).then(function(results){
+  results.keys.forEach(function(storageKey) {
     console.log("Stored record has version %o", storageKey.version);
   })
 }).catch(function(error){

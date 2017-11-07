@@ -123,8 +123,8 @@ var roomName = "Room-Name"
 
 var message = new nakamajs.TopicsJoinRequest();
 message.room(roomName);
-client.send(message).then(function(topics) {
-  roomId = topics[0].topic;
+client.send(message).then(function(result) {
+  roomId = result.topics[0].topic;
   console.log("Successfully joined the room.");
 }).catch(function(error){
   console.log("An error occured: %o", error);
@@ -177,8 +177,8 @@ var groupId = group.id
 
 var message = new nakamajs.TopicsJoinRequest();
 message.group(groupId);
-client.send(message).then(function(topics) {
-  groupTopicId = topics[0].topic;
+client.send(message).then(function(result) {
+  groupTopicId = result.topics[0].topic;
   console.log("Successfully joined the group chat.");
 }).catch(function(error){
   console.log("An error occured: %o", error);
@@ -231,8 +231,8 @@ var userId = user.id
 
 var message = new nakamajs.TopicsJoinRequest();
 message.dm(userId);
-client.send(message).then(function(topics) {
-  directTopicId = topics[0].topic;
+client.send(message).then(function(result) {
+  directTopicId = result.topics[0].topic;
   console.log("Successfully joined the direct chat.");
 }).catch(function(error){
   console.log("An error occured: %o", error);
@@ -323,12 +323,12 @@ client.ontopicpresence = function(presence) {
 var roomName = "Room-Name"
 var message = new nakamajs.TopicsJoinRequest();
 message.room(roomName);
-client.send(message).then(function(topics) {
+client.send(message).then(function(result) {
   // Setup initial online user list.
-  onlineUsers.concat(topics[0].presences);
+  onlineUsers.concat(result.topics[0].presences);
   // Remove your own user from list.
   onlineUsers = onlineUsers.filter(function(user) {
-    return user != topics[0].self;
+    return user != result.topics[0].self;
   })
 }).catch(function(error){
   console.log("An error occured: %o", error);
@@ -476,8 +476,8 @@ message.room = roomName;
 message.forward = false;
 message.limit = 10;
 
-client.send(message).then(function(messages) {
-  messages.messages.forEach(function(message) {
+client.send(message).then(function(result) {
+  result.messages.forEach(function(message) {
     console.log("Message has id %o and content %o", message.topicId, message.data);
   });
 }).catch(function(error){
@@ -543,9 +543,9 @@ var message = new nakamajs.TopicMessagesListRequest();
 message.room = roomName;
 message.limit = 100;
 
-client.send(message).then(function(messages) {
-  if messages.cursor && messages.messages.length > 0 {
-    message.cursor = messages.cursor;
+client.send(message).then(function(result) {
+  if result.cursor && result.messages.length > 0 {
+    message.cursor = result.cursor;
     client.send(message).then(function(messages) {
       messages.messages.forEach(function(message) {
         console.log("Message has id %o and content %o", message.topicId, message.data);
