@@ -263,14 +263,14 @@ nk.register_rpc(get_pokemon, "get_pokemon")
 We can make now make an RPC call for a pokemon from a client.
 
 ```csharp fct_label="Unity"
-byte[] payload = Encoding.UTF8.GetBytes("{\"PokemonName\": \"Dragonite\"}");
+string payload = "{\"PokemonName\": \"Dragonite\"}";
 
 var message = new NRuntimeRpcMessage
     .Builder("get_pokemon")
     .Payload(payload)
     .Build();
 client.Send(message, (INRuntimeRpc rpc) => {
-  var result = Encoding.UTF8.GetString(rpc.Payload);
+  var result = rpc.Payload;
   Debug.LogFormat("JSON response {0}", result);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
@@ -301,7 +301,7 @@ deferred.addCallback(new Callback<RpcResult, RpcResult>() {
 ```
 
 ```swift fct_label="Swift"
-let payload = "{\"PokemonName\": \"Dragonite\"}"
+let payload = "{\"PokemonName\": \"Dragonite\"}".data(using: .utf8)!
 
 let message = RPCMessage(id: "client_rpc_echo")
 message.payload = payload
@@ -310,4 +310,16 @@ client.send(message: message).then { result in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var message = new nakamajs.RpcRequest();
+message.id = "client_rpc_echo"
+message.payload = { PokemonName: "Dragonite" };
+
+client.send(message).then(function(result){
+  console.log("JSON response %o", result);
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
