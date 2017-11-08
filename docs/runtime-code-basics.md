@@ -278,7 +278,7 @@ client.Send(message, (INRuntimeRpc rpc) => {
 ```
 
 ```java fct_label="Android/Java"
-byte[] payload = "{\"PokemonName\": \"Dragonite\"}".getBytes();
+String payload = "{\"PokemonName\": \"Dragonite\"}";
 
 CollatedMessage<RpcResult> message = RpcMessage.Builder.newBuilder("get_pokemon")
     .payload(payload)

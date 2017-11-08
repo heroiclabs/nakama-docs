@@ -49,8 +49,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
-byte[] saveGame = "{\"progress\": 50}".getBytes();
-byte[] myStats = "{\"skill\": 24}".getBytes();
+String saveGame = "{\"progress\": 50}";
+String myStats = "{\"skill\": 24}";
 
 String bucket = "myapp";
 CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
@@ -134,8 +134,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
-byte[] saveGame = "{\"progress\": 54}".getBytes();
-byte[] version = record.getVersion(); // a RecordId object's version.
+String saveGame = "{\"progress\": 54}";
+String version = record.getVersion(); // a RecordId object's version.
 
 CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
     .record("myapp", "saves", "savegame", saveGame, version)
@@ -200,8 +200,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
-byte[] saveGame = "{\"progress\": 1}".getBytes();
-byte[] version = "*".getBytes(); // represents "no version".
+String saveGame = "{\"progress\": 1}";
+String version = "*"; // represents "no version".
 
 CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
     .record("myapp", "saves", "savegame", saveGame, version)
@@ -471,7 +471,7 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
-byte[] json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}".getBytes();
+String json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 
 CollatedMessage<ResultSet<RecordId>> message = StorageUpdateMessage.Builder.newBuilder()
     .record("myapp", "wallets", "wallet", new StorageUpdateMessage.OpBuilder.newBuilder()

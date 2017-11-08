@@ -155,7 +155,7 @@ This could be to [add friends](social-friends.md), join [groups](social-groups-c
 The server also provides a [storage engine](storage-collections.md) to keep preferences and other records owned by users. We'll use storage to introduce how messages are sent.
 
 ```java
-byte[] json = "{\"jsonkey\":\"jsonvalue\"}".getBytes();
+String json = "{\"jsonkey\":\"jsonvalue\"}";
 
 CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
     .record("someBucket", "someCollection", "myRecord", json)
