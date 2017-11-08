@@ -1,6 +1,6 @@
 # JavaScript client guide
 
-The official Javascript client handles all communication in realtime with the server. It implements all features in the server and can be used in a browser and be embdedded inside React Native applications.
+The official JavaScript client handles all communication in realtime with the server. It implements all features in the server and can be used in a browser and be embdedded inside React Native applications.
 
 ## Download
 
@@ -27,7 +27,7 @@ If you are using Bower, add the following to your `bower.json`:
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-js/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
 !!! Bug "Help and contribute"
-    The Javascript client is <a href="https://github.com/heroiclabs/nakama-js" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
+    The JavaScript client is <a href="https://github.com/heroiclabs/nakama-js" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
 
 ## Install and setup
 
@@ -37,7 +37,7 @@ When you've [downloaded](#download) the "Nakama-js.umd.js" file you should impor
 <script src="path/to/dist/nakama-js.umd.js"></script>
 ```
 
-The client object is used to execute all logic against the server. In your main Javascript function, you'll need to instatiate a Client object:
+The client object is used to execute all logic against the server. In your main JavaScript function, you'll need to instatiate a Client object:
 
 ```js
 var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
