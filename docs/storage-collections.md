@@ -323,7 +323,7 @@ var userId = session.id // a Session object's Id.
 
 var message = new nakamajs.StorageFetchRequest();
 message.fetch("myapp", "saves", "savegame", userId);
-message.fetch("myapp", "configuration", "config", nil);
+message.fetch("myapp", "configuration", "config", null);
 client.send(message).then(function(records){
   records.data.forEach(function(record) {
     console.log("Record value '%o'", record.value);
@@ -455,9 +455,9 @@ var json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 
 var message = new NStorageUpdateMessage.Builder()
     .Update("myapp", "wallets", "wallet", new NStorageUpdateMessage.StorageUpdateBuilder()
-        .Init("", json)
-        .Incr("/coins", 10)
-        .Incr("/gems", 50)
+        .Init("/foo", json)
+        .Incr("/foo/coins", 10)
+        .Incr("/foo/gems", 50)
         .Build())
     .Build();
 client.Send(message, (INResultSet<INStorageKey> list) => {
@@ -474,10 +474,10 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 String json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 
 CollatedMessage<ResultSet<RecordId>> message = StorageUpdateMessage.Builder.newBuilder()
-    .record("myapp", "wallets", "wallet", new StorageUpdateMessage.OpBuilder.newBuilder()
-        .init("", json)
-        .incr("/coins", 10)
-        .incr("/gems", 50)
+    .record("myapp", "wallets", "wallet", StorageUpdateMessage.OpBuilder.newBuilder()
+        .init("/foo", json)
+        .incr("/foo/coins", 10)
+        .incr("/foo/gems", 50)
         .build())
     .build();
 Deferred<ResultSet<RecordId>> deferred = client.send(message);
