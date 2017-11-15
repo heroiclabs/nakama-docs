@@ -4,11 +4,28 @@ In realtime and turn-based games it's important to be able to find active oppone
 
 In the server we've taken the design further and decoupled how you're matched from the realtime multiplayer engine. This makes it easy to use the matchmaker system to find opponents even if the gameplay isn't realtime. It could be a casual social game where you want to find random new users to become friends with or an asynchronous PvP game where gameplay happens in a simulated battle.
 
-There's many kinds of gameplay experiences where you'd like to find other users outside of a realtime match.
+## Properties and filters
+
+The matchmaking system holds a pool of users that are waiting to be matched in memory. These candidates are evaluated as soon as a new matchmaking request is received. Each candidate is then cross-matched with each other as well as the new matchmaking request to find a set of users that satisfy all the matchmaking conditions.
+
+The matchmaking system has the concept of **Properties** and **Filters**.
+
+Properties are key-value pairs that describe the user's state in the game. Rank information, connecting region information, or selected match types are good examples of data that should be stored in Properties. You can store extra Properties that are relevant to the clients without affecting the matchmaking system.
+
+Filters are matched against the values stored in the corresponding Properties that match the same name and data type.
+
+The matchmaker can filter users using 4 different filtering criteria:
+
+- User Count: The exact number of users to match against. This is a required parameter that determines when the matchmaking algorithm has found enough users to satisfy the matchmaking request.
+- Term Filter: String terms that must match. You can set this filter to match any of the supplied terms, or all the terms.
+- Numeric Range Filter: An integer filter with lowerbound and upperbound requirements. If the property value is not within the specified range, the user is filtered out.
+- Boolean check filters: A simple boolean check.
+
+A matchmaking request can be setup to have complex criteria by using a combination of these filters. Once the matchmaker is successful, the properties and filters of each matched user will be redistributed to every matched user.
 
 ## Request opponents
 
-The distributed server maintains a pool of users who've requested to be matched together with a specific number of opponents. Each user can add themselves to the matchmaker pool and register an event handler to be notified when enough users meet their criteria to be matched.
+The server maintains a pool of users who've requested to be matched together with a specific number of opponents. Each user can add themselves to the matchmaker pool and register an event handler to be notified when enough users meet their criteria to be matched.
 
 You can send a message to add the user to the matchmaker pool.
 
@@ -27,9 +44,9 @@ client.Send(message, (INMatchmakeTicket result) => {
 });
 ```
 
-The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted.
+The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted. This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.
 
-This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.
+Have a look at [this section](#advanced-matchmaking) for more advanced matchmaking examples.
 
 ### Receive matchmake results
 
@@ -45,7 +62,114 @@ client.OnMatchmakeMatched = (INMatchmakeMatched matched) => {
     Debug.LogFormat("User id: '{0}'.", presence.UserId);
     Debug.LogFormat("User handle: '{0}'.", presence.Handle);
   }
+
+  // list of all match properties
+  foreach (var userProperty in matched.UserProperties) {
+    foreach(KeyValuePair<string, string> entry in userProperty.Properties) {
+      Debug.LogFormat("Property '{0}' for user '{1}' has value '{2}'.", entry.Key, userProperty.Id, entry.Value);
+    }
+
+    foreach(KeyValuePair<string, INMatchmakeFilter> entry in userProperty.Filters) {
+      Debug.LogFormat("Filter '{0}' for user '{1}' has value '{2}'.", entry.Key, userProperty.Id, entry.Value.ToString());
+    }
+  }
 };
+```
+
+## Advanced matchmaking
+
+In the example above, only the required user count was set. This is the most loose matchmaking request. Below, we'll look at more complex matchmaking requests and how they are represented in Nakama.
+
+We'll use a popular car racing game as an example to demonstrate how matchmaking can be setup. In this game, a player can play as a cop or a racer, and has two different ranks based on whichever character they play. The player can have a custom car with specific boosters which other players will need to know about.
+
+### Using term filters
+
+Term filters use one or more string terms as matching criteria. This is useful to match users who are all interested in certain game types, only want to play certain maps, or battle opponents with specific characteristics.
+
+```csharp fct_label="Unity"
+// Look for a match for 8 participants. Yourself and 7 more.
+var message = new NMatchmakeAddMessage.Builder(8);
+
+// Setup player's properties
+// Whitelist of maps that the player prefers to play
+message.AddProperty("interested-maps", new HashSet<string> {"vegas", "downtown-la"});
+
+// This player is playing as a "cop"
+message.AddProperty("player-type", "cop");
+
+// This player's car boosters - this is only used as extra metadata information
+message.AddProperty("car-boosters", new HashSet<string> {"bullets", "spikes", "emp-shockwave"});
+
+// Let's add the matchmaking criteria
+// Whitelist of maps that the player can play
+message.AddTermFilter("interested-maps", new HashSet<string> {"vegas", "downtown-la", "santa-cruz"}, false);
+
+// The player wants to only play with racers
+message.AddTermFilter("player-type", new HashSet<string> {"racer"}, true);
+
+client.Send(message.Build(), (INMatchmakeTicket ticket) => {
+  //... save ticket for later cancellation, if needed.
+}, (INError err) => {
+  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+### Using range filters
+
+Range filters operate on an inclusive lowerbound and an inclusive upperbound integer. The property should be within the two numbers for the matchmaking candidate to be considered.
+
+```csharp fct_label="Unity"
+// Look for a match for 2 participants. Yourself and someone else.
+var message = new NMatchmakeAddMessage.Builder(2);
+
+// Set the player's cop rank
+message.AddProperty("cop-rank", 12);
+message.AddProperty("racer-rank", 41);
+
+// Look for players with between given ranks, to ensure the match feels somewhat fair
+message.AddRangeFilter("cop-rank", 8, 12);
+message.AddRangeFilter("racer-rank", 30, 50);
+
+client.Send(message.Build(), (INMatchmakeTicket ticket) => {
+  //... save ticket for later cancellation, if needed.
+}, (INError err) => {
+  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+### Multi-filter matchmaking
+
+You can of course mix and match various filters to enhance the matchmaking search.
+
+```csharp fct_label="Unity"
+// Look for a match for 4 participants. Yourself and 3 other users.
+var message = new NMatchmakeAddMessage.Builder(4);
+
+// This player is playing as a "cop"
+message.AddProperty("player-type", "cop");
+
+// Set the player's ranks
+message.AddProperty("cop-rank", 12);
+message.AddProperty("racer-rank", 41);
+
+// Set a boolean property on whether the player has prestiged or not
+message.AddProperty("has-prestiged", true);
+
+// The player wants to only play with either racers or cops
+message.AddTermFilter("player-type", new HashSet<string> {"racer", "cop"}, false);
+
+// Look for players with between two ranks, to ensure the match feels somewhat fair
+message.AddRangeFilter("cop-rank", 8, 12);
+message.AddRangeFilter("racer-rank", 40, 45);
+
+// Look only for players that have prestiged
+message.AddCheckFilter("has-prestiged", true)
+
+client.Send(message.Build(), (INMatchmakeTicket ticket) => {
+  //... save ticket for later cancellation, if needed.
+}, (INError err) => {
+  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
 ```
 
 ## Cancel a request

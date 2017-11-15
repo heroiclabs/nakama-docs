@@ -11,8 +11,8 @@ When a user has a session you can retrieve their profile. The profile is returne
 ```csharp fct_label="Unity"
 var message = NSelfFetchMessage.Default();
 client.Send(message, (INSelf self) => {
-  Debug.LogFormat("User has id '{0}' and handle '{1}'.", self.id, self.Handle);
-  Debug.LogFormat("User has JSON metadata '{0}'.", self.metadata);
+  Debug.LogFormat("User has id '{0}' and handle '{1}'.", self.Id, self.Handle);
+  Debug.LogFormat("User has JSON metadata '{0}'.", self.Metadata);
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });

@@ -786,7 +786,9 @@ local update_ops = {
   {Op = "replace", Path = "/updated_at", Value = now}
 }
 local record_keys = {
-  {Bucket = "b", Collection = "c", Record = "r", UserId = user_id, Update = update_ops}
+  {Bucket = "b", Collection = "c", Record = "r", UserId = user_id, Update = update_ops},
+  {Bucket = "b", Collection = "c", Record = "r2", UserId = user_id, Update = update_ops, PermissionRead = 2, PermissionWrite = 1}
+  {Bucket = "b", Collection = "c", Record = "r3", UserId = user_id, Update = update_ops, Version="*", PermissionRead = 1, PermissionWrite = 1}
 }
 nk.storage_update(record_keys)
 ```
@@ -810,7 +812,8 @@ local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
 local new_records = {
   {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id, Value = {}},
   {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id, Value = {}},
-  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id, Value = {}}
+  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id, Value = {}, PermissionRead = 2, PermissionWrite = 1},
+  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id, Value = {}, Version="*", PermissionRead = 1, PermissionWrite = 1}
 }
 nk.storage_write(new_records)
 ```
