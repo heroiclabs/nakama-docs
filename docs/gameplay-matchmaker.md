@@ -51,6 +51,20 @@ client.Send(message, (INMatchmakeTicket result) => {
 });
 ```
 
+```js fct_label="Javascript"
+var matchmakeTicket = null;
+
+// Look for a match for two participants. Yourself and one more.
+var message = new nakamajs.MatchmakeAddRequest(2);
+client.send(message).then(function(ticket) {
+  console.log("Added user to matchmaker pool.");
+  matchmakeTicket = ticket.ticket;
+  console.log("The cancellation ticket is %o", matchmakeTicket);
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+});
+```
+
 The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted. This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.
 
 Have a look at [this section](#advanced-matchmaking) for more advanced matchmaking examples.
@@ -83,6 +97,25 @@ client.OnMatchmakeMatched = (INMatchmakeMatched matched) => {
 };
 ```
 
+```js fct_label="Javascript"
+client.onmatchmakematched = function(matched) {
+  // a match token is used to join the match.
+  console.log("Match token: %o", matched.token);
+
+  // a list of users who've been matched as opponents.
+  matched.presences.forEach(function(presence) {
+    console.log("User id: %o.", presence.userId);
+    console.log("User handle: %o.", presence.handle);
+  });
+
+  // list of all match properties
+  matched.properties.forEach(function(property) {
+    console.log("User %o has properties: %o", property.userId, property.properties);
+    console.log("User %o has filter: %o", property.userId, property.filters);
+  });
+};
+```
+
 ## Advanced matchmaking
 
 In the example above, only the required user count was set. This is the most loose matchmaking request that will select users randomly. Below we'll look at more complex matchmaking requests and how they are represented in Nakama.
@@ -102,7 +135,7 @@ var message = new NMatchmakeAddMessage.Builder(8);
 message.AddProperty("interested-maps", new HashSet<string> {"vegas", "downtown-la"});
 
 // This player is playing as a "cop".
-message.AddProperty("player-type", "cop");
+message.AddProperty("player-type", new HashSet<string> {"cop"});
 
 // This player's car boosters - this is only used as extra metadata information.
 message.AddProperty("car-boosters", new HashSet<string> {"bullets", "spikes", "emp-shockwave"});
@@ -118,6 +151,34 @@ client.Send(message.Build(), (INMatchmakeTicket ticket) => {
   //... save ticket for later cancellation, if needed.
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```js fct_label="Javascript"
+// Look for a match for 8 participants. Yourself and 7 more.
+var message = new nakamajs.MatchmakeAddRequest(8);
+
+// Set player's properties.
+// Whitelist of maps that the player is willing to play.
+message.addStringSetProperty("interested-maps", ["vegas", "downtown-la"]);
+
+// This player is playing as a "cop".
+message.addStringSetProperty("player-type", "cop");
+
+// This player's car boosters - this is only used as extra metadata information.
+message.addStringSetProperty("car-boosters", ["bullets", "spikes", "emp-shockwave"]);
+
+// Let's add the matchmaking criteria.
+// Whitelist of maps that the opponents must be willing to play.
+message.addTermFilter("interested-maps", ["vegas", "downtown-la", "santa-cruz"], false);
+
+// The player wants to only play with racers.
+message.addTermFilter("player-type", ["racer"], true);
+
+client.send(message).then(function(ticket) {
+  //... save ticket for later cancellation, if needed.
+}).catch(function(error){
+  console.log("An error occured: %o", error);
 });
 ```
 
@@ -144,6 +205,25 @@ client.Send(message.Build(), (INMatchmakeTicket ticket) => {
 });
 ```
 
+```js fct_label="Javascript"
+// Look for a match for 2 participants. Yourself and someone else.
+var message = new nakamajs.MatchmakeAddRequest(2);
+
+// Set the player's cop rank.
+message.addIntegerProperty("cop-rank", 12);
+message.addIntegerProperty("racer-rank", 41);
+
+// Look for players with between given ranks, to ensure the match is fair.
+message.addRangeFilter("cop-rank", 8, 12);
+message.addRangeFilter("racer-rank", 30, 50);
+
+client.send(message).then(function(ticket) {
+  //... save ticket for later cancellation, if needed.
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+});
+```
+
 ### Multi-filter matchmaking
 
 You can of course mix and match various filters to enhance the matchmaking search.
@@ -153,7 +233,7 @@ You can of course mix and match various filters to enhance the matchmaking searc
 var message = new NMatchmakeAddMessage.Builder(4);
 
 // This player is playing as a "cop".
-message.AddProperty("player-type", "cop");
+message.AddProperty("player-type", new HashSet<string> {"cop"});
 
 // Set the player's ranks.
 message.AddProperty("cop-rank", 12);
@@ -179,6 +259,37 @@ client.Send(message.Build(), (INMatchmakeTicket ticket) => {
 });
 ```
 
+```js fct_label="Javascript"
+// Look for a match for 3 participants. Yourself and 3 more.
+var message = new nakamajs.MatchmakeAddRequest(4);
+
+// This player is playing as a "cop".
+message.addStringSetProperty("player-type", "cop");
+
+// Set the player's ranks.
+message.addIntegerProperty("cop-rank", 12);
+message.addIntegerProperty("racer-rank", 41);
+
+// Set a boolean property on whether the player has prestiged or not.
+message.addBooleanProperty("has-prestiged", true);
+
+// The player wants to only play with either racers or cops.
+message.addTermFilter("player-type", ["racer", "cop"], false);
+
+// Look for players with between two ranks, to ensure the match is fair.
+message.addRangeFilter("cop-rank", 8, 12);
+message.addRangeFilter("racer-rank", 40, 45);
+
+// Look only for players that have prestiged.
+message.addCheckFilter("has-prestiged", true)
+
+client.send(message).then(function(ticket) {
+  //... save ticket for later cancellation, if needed.
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+});
+```
+
 ## Cancel a request
 
 After a user has sent a message to add themselves to the matchmaker pool you'll receive a ticket which can be used to cancel the action at some later point.
@@ -193,6 +304,17 @@ client.Send(message, (bool done) => {
   Debug.Log("User removed from matchmaker pool.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```js fct_label="Javascript"
+var matchmakeTicket = result; // See above.
+
+var message = new nakamajs.MatchmakeRemoveRequest(result.ticket);
+client.send(message).then(function() {
+  console.log("User removed from matchmaker pool.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
 });
 ```
 
@@ -213,6 +335,19 @@ client.OnMatchmakeMatched = (INMatchmakeMatched matched) => {
     Debug.Log("Successfully joined match.");
   }, (INError error) => {
     Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+  });
+};
+```
+
+```js fct_label="Javascript"
+client.onmatchmakematched = function(matched) {
+  // The match token is used to join a multiplayer match.
+  var message = new nakamajs.MatchesJoinRequest();
+  message.tokens.push(matched.token);
+  client.send(message).then(function(matches) {
+    console.log("Successfully joined match.");
+  }).catch(function(error){
+    console.log("An error occured: %o", error);
   });
 };
 ```

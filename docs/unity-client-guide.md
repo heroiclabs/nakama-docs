@@ -65,7 +65,7 @@ var client = NClient.Default("defaultkey");
 ```csharp
 Action<INSession> sessionHandler = delegate(INSession session) {
   Debug.LogFormat("Session: '{0}'.", session.Token);
-  client.Connect(_session, (bool done) => {
+  client.Connect(session, (bool done) => {
     Debug.Log("Session connected.");
     // Store session for quick reconnects.
     PlayerPrefs.SetString("nk.session", session.Token);
@@ -105,9 +105,9 @@ if (string.IsNullOrEmpty(id)) {
 }
 
 var message = NAuthenticateMessage.Device(id);
-_client.Login(message, SessionHandler, (INError err) => {
+_client.Login(message, sessionHandler, (INError err) => {
   if (err.Code == ErrorCode.UserNotFound) {
-    _client.Register(message, SessionHandler, ErrorHandler);
+    _client.Register(message, sessionHandler, errorHandler);
   } else {
     ErrorHandler(err);
   }
