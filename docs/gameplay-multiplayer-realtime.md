@@ -20,6 +20,16 @@ client.Send(message, (INMatch match) => {
 });
 ```
 
+```js fct_label="Javascript"
+var message = new nakamajs.MatchCreateRequest();
+client.send(message).then(function() {
+  var id = match.id;
+  console.log("Successfully created match.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+});
+```
+
 A user can [leave a match](#leave-a-match) at any point which will notify all other users.
 
 ## Join a match
@@ -52,6 +62,27 @@ client.Send(message, (INResultSet<INMatch> matches) => {
 });
 ```
 
+```js fct_label="Javascript"
+var id = match.Id; // an INMatch Id.
+
+var message = new nakamajs.MatchesJoinRequest();
+message.matchIds.push(id);
+client.send(message).then(function(matches) {
+  console.log("Successfully joined match.");
+
+  var connectedOpponents = matches[0].presences.filter(function(presence) {
+    // Remove your own user from list.
+    return presence.userId != matches[0].self.userId;
+  });
+
+  connectedOpponents.forEach(function(opponent) {
+    console.log("User id %o handle %o.", opponent.userId, opponent.handle);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+});
+```
+
 The list of match opponents returned in the success callback might not include all users. It contains users who are connected to the match so far.
 
 ## List opponents
@@ -72,6 +103,26 @@ client.OnMatchPresence = (INMatchPresence presences) => {
 };
 ```
 
+```js fct_label="Javascript"
+var connectedOpponents = [];
+
+client.onmatchpresence = function(presences) {
+  // Remove all users who left.
+  connectedOpponents = connectedOpponents.filter(function(co) {
+    var stillConnectedOpponent = true;
+    presences.leaves.forEach(function(leftOpponent) {
+      if (leftOpponent.userId == co.userId) {
+        stillConnectedOpponent = false;
+      }
+    });
+    return stillConnectedOpponent;
+  });
+
+  // Add all users who joined.
+  connectedOpponents = connectedOpponents.concat(presences.joins);
+};
+```
+
 No server updates are sent if there are no changes to the presence list.
 
 ## Send data messages
@@ -88,11 +139,29 @@ string id = match.Id; // an INMatch Id.
 long opCode = 001L;
 byte[] data = Encoding.UTF8.GetBytes("{\"move\": {\"dir\": \"left\", \"steps\": 4}}");
 
-var message = NMatchDataSendMessage.Default(matchId, opCode, data);
+var message = NMatchDataSendMessage.Default(id, opCode, data);
 client.Send(message, (bool done) => {
   Debug.Log("Successfully sent data message.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```js fct_label="Javascript"
+var id = match.Id; // an INMatch Id.
+
+var opCode = 1;
+var data = {"move": {"dir": "left", "steps": 4}};
+
+var message = new nakamajs.MatchDataSendRequest();
+message.matchId = id;
+message.opCode = opCode;
+message.data = data;
+
+client.send(message).then(function() {
+  console.log("Successfully sent data message.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
 });
 ```
 
@@ -116,6 +185,19 @@ client.OnMatchData = (INMatchData m) => {
 };
 ```
 
+```js fct_label="Javascript"
+client.onmatchdata = function(data) {
+  var content = data.data;
+  switch (data.opCode) {
+    case 101:
+      console.log("A custom opcode.");
+      break;
+    default:
+      console.log("User handle %o sent %o", data.presence.handle, content);
+  }
+};
+```
+
 ## Leave a match
 
 Users can leave a match at any point. A match ends when all users have left.
@@ -128,6 +210,18 @@ client.Send(message, (bool complete) => {
   Debug.Log("Successfully left match.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+});
+```
+
+```js fct_label="Javascript"
+var id = match.Id; // an INMatch Id.
+
+var message = new nakamajs.MatchesLeaveRequest();
+message.matchIds.push(id);
+client.send(message).then(function() {
+  console.log("Successfully left match.");
+}).catch(function(error){
+  console.log("An error occured: %o", error);
 });
 ```
 
