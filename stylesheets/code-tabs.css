@@ -2,6 +2,8 @@
   background: #fff;
   border: 1px solid #ebebeb;
   margin: 16px 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .code-nav-container > .nav-tabs {
@@ -11,6 +13,8 @@
   border-bottom: 1px solid #ebebeb;
   height: 48px;
   white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .code-nav-container > .nav-tabs > li {
