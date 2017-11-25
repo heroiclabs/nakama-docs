@@ -1,0 +1,69 @@
+.code-nav-container {
+  background: #fff;
+  border: 1px solid #ebebeb;
+  margin: 16px 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.code-nav-container > .nav-tabs {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border-bottom: 1px solid #ebebeb;
+  height: 48px;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.code-nav-container > .nav-tabs > li {
+  position: relative;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+  border-top: 2px solid transparent;
+  height: 47px;
+  max-width: 200px;
+  margin: 0;
+  overflow: hidden;
+  padding: 0 24px;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.code-nav-container > .nav-tabs > li.active {
+  border-bottom-color: #039be5;
+}
+
+.code-nav-container > .nav-tabs > li > a {
+  color: #757575;
+  font: 500 14px/43px sans-serif;
+}
+
+.code-nav-container > .nav-tabs > li > a:hover,
+.code-nav-container > .nav-tabs > li > a:focus,
+.code-nav-container > .nav-tabs > li.active > a,
+.code-nav-container > .nav-tabs > li.active > a:hover,
+.code-nav-container > .nav-tabs > li.active > a:focus {
+  text-decoration: none;
+  color: #039be5;
+}
+
+.code-nav-container > .tab-content > .tab-pane {
+  display: none;
+}
+
+.code-nav-container > .tab-content > .active {
+  display: block;
+}
+
+.code-nav-container > .tab-content > .tab-pane:before {
+    content: none !important;
+}
+
+.code-nav-container > .tab-content > .tab-pane > .codehilite {
+    margin-top: 0;
+    margin-bottom: 0;
+}

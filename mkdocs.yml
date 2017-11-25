@@ -3,7 +3,9 @@ site_name: 'Nakama server'
 site_description: 'Documentation for the Nakama realtime and social server for games and apps.'
 site_author: 'Heroic Labs Team & contributors'
 site_url: 'https://heroiclabs.com/'
-site_favicon: 'images/favicon.ico'
+edit_uri: 'https://github.com/heroiclabs/nakama-docs/edit/master/docs/'
+
+# Deployment
 remote_name: 'origin'
 remote_branch: 'gh-pages'
 
@@ -15,20 +17,28 @@ repo_url: 'https://github.com/heroiclabs/nakama'
 copyright: 'Copyright &copy; 2017 Heroic Labs'
 
 # Documentation and theme
-theme: 'material'
-
-extra_javascript:
-  - 'js/main.js'
-
-# Options
-extra:
+theme:
+  name: 'material'
+  language: 'en'
   logo: 'images/logo-white.svg'
+  favicon: 'images/favicon.ico'
   palette:
     primary: 'indigo'
     accent: 'indigo'
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
+
+extra_css:
+  - 'stylesheets/code-tabs.css'
+
+extra_javascript:
+  - 'javascripts/main.js'
+
+# Options
+extra:
+  search:
+    language: 'en'
   social:
   - type: 'globe'
     link: 'https://heroiclabs.com'
@@ -42,9 +52,13 @@ extra:
 # Extensions
 markdown_extensions:
   - admonition
-  - codehilite(guess_lang=false)
-  - toc(permalink=true)
-  - markdown_fenced_code_tabs
+  - codehilite:
+      linenums: False
+      guess_lang: False
+  - toc:
+      permalink: True
+  - markdown_fenced_code_tabs:
+      single_block_as_tab: False
 
 # Nav menu
 pages:

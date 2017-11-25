@@ -8,10 +8,10 @@ This project uses Markdown for documentation which is compiled with [mkdocs](htt
 ## Install and setup
 
 ```shell
-pip install --upgrade pip
-pip install mkdocs
-pip install mkdocs-material
-pip install markdown-fenced-code-tabs
+pip install pip --upgrade
+pip install mkdocs --upgrade
+pip install mkdocs-material --upgrade
+pip install markdown-fenced-code-tabs --upgrade
 ```
 
 ## Development

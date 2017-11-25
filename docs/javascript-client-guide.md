@@ -10,7 +10,7 @@ If you are using NPM to manage your dependecies, simply add the following to you
 ```json
 //...
 "dependencies": {
-  "nakama-js": "^0.1.0"
+  "@heroiclabs/nakama-js": "^0.1.0"
 }
 //...
 ```
@@ -19,7 +19,7 @@ If you are using Bower, add the following to your `bower.json`:
 ```json
 //...
 "dependencies": {
-  "nakama-js": "^0.1.0"
+  "@heroiclabs/nakama-js": "^0.1.0"
 }
 //...
 ```
