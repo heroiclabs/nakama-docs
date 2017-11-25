@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,41 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Swift/iOS client guide
+              </span>
             
-            Swift/iOS client guide
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -112,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -123,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -145,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -155,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -170,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -371,8 +395,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-and-setup" title="Install and setup" class="md-nav__link">
-    Install and setup
+  <a href="#install" title="Install" class="md-nav__link">
+    Install
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" title="Setup" class="md-nav__link">
+    Setup
   </a>
   
 </li>
@@ -821,8 +852,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-and-setup" title="Install and setup" class="md-nav__link">
-    Install and setup
+  <a href="#install" title="Install" class="md-nav__link">
+    Install
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" title="Setup" class="md-nav__link">
+    Setup
   </a>
   
 </li>
@@ -876,6 +914,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/swift-ios-client-guide.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="swiftios-client-guide">Swift/iOS client guide<a class="headerlink" href="#swiftios-client-guide" title="Permanent link">&para;</a></h1>
 <p>The official Swift client handles all communication in realtime with the server and is specifically optimized for iOS projects. It implements all features in the server and is compatible with Swift 3.1+. To work with the Swift client you'll need the <a href="https://swift.org/download/" target="\_blank">Swift distribution</a> and an editor/IDE like Atom or <a href="https://itunes.apple.com/app/xcode/id497799835" target="\_blank">XCode 8.3+</a>.</p>
@@ -886,17 +926,36 @@
 <p class="admonition-title">Help and contribute</p>
 <p>The Swift client is <a href="https://github.com/heroiclabs/nakama-swift" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.</p>
 </div>
-<h2 id="install-and-setup">Install and setup<a class="headerlink" href="#install-and-setup" title="Permanent link">&para;</a></h2>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<p>There are a few ways to import the Swift client into your project:</p>
+<ol>
+<li>Cocoapods</li>
+</ol>
+<p>Add the client as a dependency to your "Podfile":</p>
+<div class="codehilite"><pre><span></span><span class="n">use_frameworks!</span>
+<span class="n">pod</span> <span class="s1">&#39;Nakama&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 0.2&#39;</span>
+</pre></div>
+
+
+<p>Ensure that the dependencies are built as Frameworks. Download and integrate it into your Xcode project:</p>
+<div class="codehilite"><pre><span></span>pod install
+</pre></div>
+
+
+<ol>
+<li>Swift Package Manager</li>
+</ol>
 <p>Add the client as a dependency to your "Package.swift" file.</p>
 <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">package</span> <span class="p">=</span> <span class="n">Package</span><span class="p">(</span>
   <span class="c1">// ...</span>
   <span class="n">dependencies</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">.</span><span class="n">Package</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="s">&quot;https://github.com/heroiclabs/nakama-swift.git&quot;</span><span class="p">,</span> <span class="n">Version</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span>
+    <span class="p">.</span><span class="n">Package</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="s">&quot;https://github.com/heroiclabs/nakama-swift.git&quot;</span><span class="p">,</span> <span class="n">Version</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span>
   <span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 
 
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <p>The client object is used to execute all logic against the server.</p>
 <div class="codehilite"><pre><span></span><span class="kd">import</span> <span class="nc">Nakama</span>
 
@@ -980,10 +1039,10 @@
 <span class="n">message</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">collection</span><span class="p">:</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;mystats&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">myStats</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">recordId</span> <span class="k">in</span> <span class="n">list</span> <span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;@%&#39;&quot;</span><span class="p">,</span> <span class="n">recordId</span><span class="p">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;%@&#39;&quot;</span><span class="p">,</span> <span class="n">recordId</span><span class="p">.</span><span class="n">version</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -998,7 +1057,7 @@ The client has listeners which are called on various events received from the se
 
 
 
-wzxhzdk:7
+wzxhzdk:9
 
 Some events only need to be implemented for the features you want to use.
 
@@ -1030,7 +1089,7 @@ Some events only need to be implemented for the features you want to use.
 <span class="p">}.</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
   <span class="c1">//...</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -1197,9 +1256,9 @@ Some events only need to be implemented for the features you want to use.
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1225,12 +1284,11 @@ Some events only need to be implemented for the features you want to use.
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

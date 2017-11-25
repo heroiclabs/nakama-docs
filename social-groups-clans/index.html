@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Social
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Groups and Clans
+              </span>
             
-            Groups and Clans
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -964,33 +984,113 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/social-groups-clans.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="groups-and-clans">Groups and Clans<a class="headerlink" href="#groups-and-clans" title="Permanent link">&para;</a></h1>
 <p>A group brings together a bunch of users into a small community or team.</p>
 <p>A group is made up of an owner, admins, and members. It can be public or private which determines whether it appears in results when a user searches. Private groups are similar to how Whatsapp groups work. A user can only be added when they're invited to join by one of the group's admins.</p>
 <h2 id="search-for-groups">Search for groups<a class="headerlink" href="#search-for-groups" title="Permanent link">&para;</a></h2>
 <p>A user can find public groups to join by a filter on language, recently created, how many members in a group, and more. These filters make it easy to assemble new users into smaller groups for team-based play or collaboration.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">OrderByAsc</span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
     <span class="p">.</span><span class="n">FilterByLang</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroup</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="k">group</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupsListMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">lang</span> <span class="p">=</span> <span class="s">&quot;en&quot;</span>
+<span class="n">message</span><span class="p">.</span><span class="n">orderAscending</span> <span class="p">=</span> <span class="kc">true</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">groups</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">group</span> <span class="k">in</span> <span class="n">groups</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Group: name &#39;%@&#39; id &#39;%@&#39;.&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsListRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">lang</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">orderByAsc</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">group</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Group: name &#39;%o&#39; id &#39;%o&#39;.&quot;</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The message response for a list of groups contains a cursor. The cursor can be used to quickly retrieve the next set of results.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Cursors are used across different server features to page through batches of results quickly and efficiently. It's used with storage, friends, chat history, etc.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
 
@@ -1007,15 +1107,61 @@
 
     <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroup</span><span class="p">&gt;</span> <span class="n">nextList</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="k">group</span> <span class="k">in</span> <span class="n">nextList</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
-        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupsListMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">lang</span> <span class="p">=</span> <span class="s">&quot;en&quot;</span>
+<span class="n">message</span><span class="p">.</span><span class="n">orderAscending</span> <span class="p">=</span> <span class="kc">true</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">groups</span> <span class="k">in</span>
 
+  <span class="c1">// Lets get the next page of results.</span>
+  <span class="k">if</span> <span class="kd">let</span> <span class="nv">_cursor</span> <span class="p">=</span> <span class="n">groups</span><span class="p">.</span><span class="n">cursor</span> <span class="o">&amp;&amp;</span> <span class="n">groups</span><span class="p">.</span><span class="bp">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+    <span class="n">message</span><span class="p">.</span><span class="n">cursor</span> <span class="p">=</span> <span class="n">_cursor</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">nextGroups</span> <span class="k">in</span>
+      <span class="c1">// ...</span>
+    <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+      <span class="k">throw</span> <span class="n">err</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsListRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">lang</span> <span class="o">=</span> <span class="s2">&quot;en&quot;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">orderByAsc</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">cursor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">message</span><span class="p">.</span><span class="nx">cursor</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">cursor</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">nextGroups</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// ...</span>
+    <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="nx">error</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="join-groups">Join groups<a class="headerlink" href="#join-groups" title="Permanent link">&para;</a></h2>
 <p>When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires an <a href="#accept-new-members">admin to accept</a> the user.</p>
 <p>A user who's part of a group can join <a href="../social-realtime-chat/#groups">group chat</a> and access it's <a href="../social-realtime-chat/#message-history">message history</a>.</p>
@@ -1023,7 +1169,29 @@
 <p class="admonition-title">Tip</p>
 <p>When a user joins or leaves a group event messages are added to chat history. This makes it easy for members to see what's changed in the group.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupJoinMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1033,15 +1201,67 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupJoinMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Requested to join group.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsJoinRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">groupId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Requested to join group.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The user will receive an <a href="../social-in-app-notifications/">in-app notification</a> when they've been added to the group. In a private group an admin will receive a notification when a user has requested to join.</p>
 <h2 id="list-a-users-groups">List a user's groups<a class="headerlink" href="#list-a-users-groups" title="Permanent link">&para;</a></h2>
 <p>Each user can list groups they've joined as a member or an admin. The list also contains groups which they've requested to join but not been accepted into yet.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupsSelfListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupsSelfListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroupSelf</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="k">group</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
     <span class="c1">// group.State is one of: Admin, Member, or Join.</span>
     <span class="n">GroupState</span> <span class="n">state</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">State</span><span class="p">;</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Group&#39;s state is &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span>
@@ -1051,16 +1271,72 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupsSelfListMessage</span><span class="p">()</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">groups</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">group</span> <span class="k">in</span> <span class="n">groups</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Group: name &#39;%@&#39; id &#39;%@&#39;&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="c1">// group.State is one of: Admin, Member, or Join.</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Group&#39;s state is &#39;%d&#39;&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsSelfListRequest</span><span class="p">();</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">group</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Group: name &#39;%o&#39; id &#39;%o&#39;.&quot;</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+    <span class="c1">// group.State is one of: Admin, Member, or Join.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Group&#39;s state is %o.&quot;</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">state</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="list-group-members">List group members<a class="headerlink" href="#list-group-members" title="Permanent link">&para;</a></h2>
 <p>A user can list all members who're part of their group. These include other users who've requested to join the private group but not been accepted into yet.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-js" aria-controls="tab-4-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupUsersListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INGroupUser</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">member</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">member</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Member id &#39;{0}&#39; with name &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">Fullname</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Member id &#39;{0}&#39; with name &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">Fullname</span><span class="p">);</span>
     <span class="c1">// member.State is one of: Admin, Member, or Join.</span>
     <span class="n">UserState</span> <span class="n">state</span> <span class="p">=</span> <span class="n">member</span><span class="p">.</span><span class="n">State</span><span class="p">;</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Has handle &#39;{0}&#39; with state &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span>
@@ -1070,10 +1346,69 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a GroupId</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupUsersListMessage</span><span class="p">(</span><span class="n">groupID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">users</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">user</span> <span class="k">in</span> <span class="n">users</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Member id &#39;%@&#39; with name &#39;%@&quot;</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">fullname</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="c1">// member.state is one of: Admin, Member, or Join.</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Member&#39;s state is &#39;%d&#39;&quot;</span><span class="p">,</span> <span class="n">member</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span> <span class="o">=</span> <span class="p">...</span> <span class="c1">// a GroupId</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupUsersListRequest</span><span class="p">(</span><span class="nx">groupId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">users</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">user</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Member: name &#39;%o&#39; id &#39;%o&#39;.&quot;</span><span class="p">,</span> <span class="nx">member</span><span class="p">.</span><span class="nx">fullname</span><span class="p">,</span> <span class="nx">member</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+    <span class="c1">// member.state is one of: Admin, Member, or Join.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Member&#39;s state is %o.&quot;</span><span class="p">,</span> <span class="nx">member</span><span class="p">.</span><span class="nx">state</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="create-a-group">Create a group<a class="headerlink" href="#create-a-group" title="Permanent link">&para;</a></h2>
 <p>A group can be created with a name and other optional fields. These optional fields are used when a user <a href="#search-for-groups">searches for groups</a>. The user who creates the group becomes the owner and an admin for it.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="s">&quot;{&#39;my_custom_field&#39;: &#39;some value&#39;}&quot;</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-swift" aria-controls="tab-5-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-js" aria-controls="tab-5-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="s">&quot;{&#39;my_custom_field&#39;: &#39;some value&#39;}&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupCreateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;Some unique group name&quot;</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Description</span><span class="p">(</span><span class="s">&quot;My awesome group.&quot;</span><span class="p">)</span>
@@ -1084,15 +1419,57 @@
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INGroup</span> <span class="k">group</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>  <span class="c1">// convert byte[].</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;New group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;New group: name &#39;{0}&#39; id &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&quot;Successfully created a private group.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">groupCreate</span> <span class="p">=</span> <span class="n">GroupCreate</span><span class="p">(</span><span class="s">&quot;Some unique group name&quot;</span><span class="p">)</span>
+<span class="n">groupCreate</span><span class="p">.</span><span class="n">description</span> <span class="p">=</span> <span class="s">&quot;My awesome group.&quot;</span>
+<span class="n">groupCreate</span><span class="p">.</span><span class="n">lang</span> <span class="p">=</span> <span class="s">&quot;en&quot;</span>
+<span class="n">groupCreate</span><span class="p">.</span><span class="n">privateGroup</span> <span class="p">=</span> <span class="kc">true</span>
+<span class="n">groupCreate</span><span class="p">.</span><span class="n">avatarURL</span> <span class="p">=</span> <span class="s">&quot;url://somelink&quot;</span>
+<span class="n">groupCreate</span><span class="p">.</span><span class="n">metadata</span> <span class="p">=</span> <span class="s">&quot;{&#39;my_custom_field&#39;: &#39;some value&#39;}&quot;</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="n">using</span><span class="p">:</span> <span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupCreateMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupsCreate</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupCreate</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">groups</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">group</span> <span class="k">in</span> <span class="n">groups</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;New group: id &#39;%@&#39; with name &#39;%@&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">group</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully created a group.&quot;</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;my_custom_field&#39;</span><span class="o">:</span> <span class="s1">&#39;some value&#39;</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsCreateRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s2">&quot;Some unique group name&quot;</span><span class="p">,</span> <span class="s2">&quot;My awesome group.&quot;</span><span class="p">,</span> <span class="s2">&quot;url://somelink&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="nx">metadata</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">group</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;New group: id &#39;%@&#39; with name &#39;%@&quot;</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully created a private group.&quot;</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>You can also create a group with server-side code. This can be useful when the group must be created together with some other record or feature.</p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">nk</span> <span class="o">=</span> <span class="nb">require</span><span class="p">(</span><span class="s2">&quot;nakama&quot;</span><span class="p">)</span>
 
@@ -1119,7 +1496,29 @@
 
 <h2 id="update-a-group">Update a group<a class="headerlink" href="#update-a-group" title="Permanent link">&para;</a></h2>
 <p>When a group has been created it's admins can update optional fields.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-swift" aria-controls="tab-6-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-js" aria-controls="tab-6-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NGroupUpdateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">groupId</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Description</span><span class="p">(</span><span class="s">&quot;A new group description.&quot;</span><span class="p">)</span>
@@ -1131,14 +1530,71 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// an INGroup ID.</span>
 
+<span class="kd">var</span> <span class="nv">groupUpdate</span> <span class="p">=</span> <span class="n">GroupUpdate</span><span class="p">(</span><span class="n">groupID</span><span class="p">)</span>
+<span class="n">groupUpdate</span><span class="p">.</span><span class="n">description</span> <span class="p">=</span> <span class="s">&quot;A new group description.&quot;</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupUpdateMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupsUpdate</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupUpdate</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully updated group.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span> <span class="o">=</span> <span class="p">...</span> <span class="c1">// an INGroup ID.</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsUpdateRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">groupId</span><span class="p">,</span> <span class="s2">&quot;Some unique group name&quot;</span><span class="p">,</span> <span class="s2">&quot;A new group description.&quot;</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully updated group.&quot;</span><span class="p">)</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="leave-a-group">Leave a group<a class="headerlink" href="#leave-a-group" title="Permanent link">&para;</a></h2>
 <p>A user can leave a group and will no longer be able to join <a href="../social-realtime-chat/#groups">group chat</a> or read <a href="../social-realtime-chat/#message-history">message history</a>. If the user is an admin they will only be able to leave when at least one other admin exists in the group.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Any user who leaves the group will generate an event message in group chat which other members can read.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-7-csharp" aria-controls="tab-7-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-swift" aria-controls="tab-7-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-js" aria-controls="tab-7-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-7-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupLeaveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1153,7 +1609,49 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-7-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupLeaveMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully left the group.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="kd">let</span> <span class="nv">nkErr</span> <span class="p">=</span> <span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span>
+  <span class="k">switch</span> <span class="n">nkErr</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">.</span><span class="n">groupLastAdmin</span><span class="p">:</span>
+      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Unable to leave as last admin.&quot;</span><span class="p">)</span>
+    <span class="k">default</span><span class="p">:</span>
+      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">nkErr</span><span class="p">.</span><span class="n">message</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-7-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsLeaveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">groupId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully left the group.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// GROUP_LAST_ADMIN</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">12</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Unable to leave as last admin.&quot;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="manage-groups">Manage groups<a class="headerlink" href="#manage-groups" title="Permanent link">&para;</a></h2>
 <p>Each group is managed by one or more admins. These users are members with permission to make changes to optional fields, accept or reject new members, remove members or other admins, and promote other members as admins.</p>
 <div class="admonition warning">
@@ -1162,8 +1660,30 @@
 </div>
 <h3 id="accept-new-members">Accept new members<a class="headerlink" href="#accept-new-members" title="Permanent link">&para;</a></h3>
 <p>When a user joins a private group it will create a join request until an admin accepts or rejects the user. The admin can accept the user into the group.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-8-csharp" aria-controls="tab-8-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-swift" aria-controls="tab-8-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-js" aria-controls="tab-8-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-8-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupAddUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1173,13 +1693,73 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-8-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a group ID</span>
+<span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a user Id</span>
 
+<span class="c1">// A tuple that represents which group the user is added to</span>
+<span class="kd">let</span> <span class="nv">addUser</span> <span class="p">=</span> <span class="p">(</span><span class="n">groupID</span><span class="p">:</span> <span class="n">groupID</span><span class="p">,</span> <span class="n">userID</span><span class="p">:</span> <span class="n">userID</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupAddUserMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupUsers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">addUser</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully added user to group.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-8-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nx">userId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupUsersAddRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">groupId</span><span class="p">,</span> <span class="nx">userId</span><span class="p">)</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully added user to group.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The user will receive an <a href="../social-in-app-notifications/">in-app notification</a> when they've been added to the group. In a private group an admin will receive a notification about the join request.</p>
 <p>To reject the user from joining the group you should <a href="#kick-a-member">kick them</a>.</p>
 <h3 id="promote-a-member">Promote a member<a class="headerlink" href="#promote-a-member" title="Permanent link">&para;</a></h3>
 <p>An admin can promote another member of the group as an admin. This grants the member the same privileges to <a href="#manage-groups">manage the group</a>. A group can have one or more admins.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-9-csharp" aria-controls="tab-9-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-9-swift" aria-controls="tab-9-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-9-js" aria-controls="tab-9-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-9-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupPromoteUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1189,14 +1769,73 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-9-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a group ID</span>
+<span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a user Id</span>
 
+<span class="kd">let</span> <span class="nv">promoteUser</span> <span class="p">=</span> <span class="p">(</span><span class="n">groupID</span><span class="p">:</span> <span class="n">groupID</span><span class="p">,</span> <span class="n">userID</span><span class="p">:</span> <span class="n">userID</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupPromoteUserMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupUsers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">promoteUser</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully promoted user as an admin.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-9-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nx">userId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupUsersPromoteRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">promote</span><span class="p">(</span><span class="nx">groupId</span><span class="p">,</span> <span class="nx">userId</span><span class="p">)</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully promoted user as an admin.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>To demote an admin as a member you can kick and re-add them.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-10-csharp" aria-controls="tab-10-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-10-swift" aria-controls="tab-10-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-10-js" aria-controls="tab-10-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-10-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+<span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
 
 <span class="kt">var</span> <span class="n">kickMessage</span> <span class="p">=</span> <span class="n">NGroupKickUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">kickMessage</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">completed</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1207,12 +1846,79 @@
 <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-10-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a group ID</span>
+<span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a user Id</span>
 
+<span class="kd">let</span> <span class="nv">groupUser</span> <span class="p">=</span> <span class="p">(</span><span class="n">groupID</span><span class="p">:</span> <span class="n">groupID</span><span class="p">,</span> <span class="n">userID</span><span class="p">:</span> <span class="n">userID</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupKickUserMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupUsers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupUser</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="p">-&gt;</span> <span class="n">Promise</span><span class="p">&lt;</span><span class="nb">Void</span><span class="p">&gt;</span> <span class="k">in</span>
+  <span class="kd">var</span> <span class="nv">message2</span> <span class="p">=</span> <span class="n">GroupAddUserMessage</span><span class="p">()</span>
+  <span class="n">message</span><span class="p">.</span><span class="n">groupUsers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupUser</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message2</span><span class="p">)</span>
+<span class="p">}.</span><span class="n">then</span> <span class="p">{</span> <span class="k">in</span> <span class="kc">_</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Admin user demoted to member in group.&quot;</span><span class="p">);</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-10-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nx">userId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupUsersKickRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">kick</span><span class="p">(</span><span class="nx">groupId</span><span class="p">,</span> <span class="nx">userId</span><span class="p">)</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupUsersAddRequest</span><span class="p">();</span>
+  <span class="nx">message</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">groupId</span><span class="p">,</span> <span class="nx">userId</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Admin user demoted to member in group.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="kick-a-member">Kick a member<a class="headerlink" href="#kick-a-member" title="Permanent link">&para;</a></h3>
 <p>An admin can kick a member from the group. The user is removed but can rejoin again later unless the group is private in which case an admin must accept the join request.</p>
 <p>If a user is removed from a group it does not prevent them from joining other groups.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-11-csharp" aria-controls="tab-11-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-11-swift" aria-controls="tab-11-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-11-js" aria-controls="tab-11-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-11-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupKickUserMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1222,14 +1928,73 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-11-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a group ID</span>
+<span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a user Id</span>
 
+<span class="kd">let</span> <span class="nv">groupUser</span> <span class="p">=</span> <span class="p">(</span><span class="n">groupID</span><span class="p">:</span> <span class="n">groupID</span><span class="p">,</span> <span class="n">userID</span><span class="p">:</span> <span class="n">userID</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupKickUserMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupUsers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupUser</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully kicked user from group.&quot;</span><span class="p">);</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-11-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nx">userId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupUsersKickRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">kick</span><span class="p">(</span><span class="nx">groupId</span><span class="p">,</span> <span class="nx">userId</span><span class="p">)</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully kicked user from group.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>Sometimes a bad user needs to be kicked from the group and <a href="../social-friends/#ban-a-user">permanently banned</a>. This will prevent the user from being able to connect to the server and interact at all.</p>
 </div>
 <h2 id="remove-a-group">Remove a group<a class="headerlink" href="#remove-a-group" title="Permanent link">&para;</a></h2>
 <p>A group can only be removed by one of the admins which will disband all members. When a group is removed it's name can be re-used to <a href="#create-a-group">create a new group</a>.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-40-csharp" aria-controls="tab-40-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-40-swift" aria-controls="tab-40-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-40-js" aria-controls="tab-40-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-40-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NGroupRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">groupId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1238,6 +2003,39 @@
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-40-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">groupID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">GroupRemoveMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groupIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;The group has been removed.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-40-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupId</span><span class="p">;</span> <span class="c1">// a group ID</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">GroupsRemoveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">groupId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The group has been removed.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
                 
                   
                 
@@ -1297,9 +2095,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1325,12 +2123,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

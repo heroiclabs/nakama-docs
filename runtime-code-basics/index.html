@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Runtime Code
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Basics
+              </span>
             
-            Basics
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -936,6 +956,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/runtime-code-basics.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="basics">Basics<a class="headerlink" href="#basics" title="Permanent link">&para;</a></h1>
 <p>The server integrates the <a href="https://www.lua.org/manual/5.1/manual.html" target="\_blank">Lua programming language</a> as a fast embedded code runtime.</p>
@@ -1067,7 +1089,7 @@
 
 <p>This function can be called with any HTTP client. For example with cURL you could execute the function with the server.</p>
 <div class="codehilite"><pre><span></span>curl -X POST <span class="s2">&quot;http://127.0.0.1:7350/runtime/http_handler_path?key=defaultkey&quot;</span> <span class="se">\</span>
-     -d <span class="s2">&quot;{&#39;some&#39;: &#39;data&#39;}&quot;</span> <span class="se">\</span>
+     -d <span class="s1">&#39;{&quot;some&quot;: &quot;data&quot;}&#39;</span> <span class="se">\</span>
      -H <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
      -H <span class="s1">&#39;Accept: application/json&#39;</span>
 </pre></div>
@@ -1193,30 +1215,34 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-14-csharp" aria-controls="tab-14-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-15-csharp" aria-controls="tab-15-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-14-java" aria-controls="tab-14-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-15-java" aria-controls="tab-15-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-14-swift" aria-controls="tab-14-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-15-swift" aria-controls="tab-15-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-15-js" aria-controls="tab-15-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-14-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">payload</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;PokemonName\&quot;: \&quot;Dragonite\&quot;}&quot;</span><span class="p">);</span>
+        <div role="tabpanel" class="tab-pane active" id="tab-15-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">payload</span> <span class="p">=</span> <span class="s">&quot;{\&quot;PokemonName\&quot;: \&quot;Dragonite\&quot;}&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NRuntimeRpcMessage</span>
     <span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="s">&quot;get_pokemon&quot;</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Payload</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INRuntimeRpc</span> <span class="n">rpc</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">rpc</span><span class="p">.</span><span class="n">Payload</span><span class="p">);</span>
+  <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="n">rpc</span><span class="p">.</span><span class="n">Payload</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;JSON response {0}&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
@@ -1225,8 +1251,8 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-14-java">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">payload</span> <span class="o">=</span> <span class="s">&quot;{\&quot;PokemonName\&quot;: \&quot;Dragonite\&quot;}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+        <div role="tabpanel" class="tab-pane " id="tab-15-java">
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">payload</span> <span class="o">=</span> <span class="s">&quot;{\&quot;PokemonName\&quot;: \&quot;Dragonite\&quot;}&quot;</span><span class="o">;</span>
 
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">RpcResult</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">RpcMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">(</span><span class="s">&quot;get_pokemon&quot;</span><span class="o">)</span>
     <span class="o">.</span><span class="na">payload</span><span class="o">(</span><span class="n">payload</span><span class="o">)</span>
@@ -1250,16 +1276,30 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-14-swift">
-            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">payload</span> <span class="p">=</span> <span class="s">&quot;{</span><span class="se">\&quot;</span><span class="s">PokemonName</span><span class="se">\&quot;</span><span class="s">: </span><span class="se">\&quot;</span><span class="s">Dragonite</span><span class="se">\&quot;</span><span class="s">}&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-15-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">payload</span> <span class="p">=</span> <span class="s">&quot;{</span><span class="se">\&quot;</span><span class="s">PokemonName</span><span class="se">\&quot;</span><span class="s">: </span><span class="se">\&quot;</span><span class="s">Dragonite</span><span class="se">\&quot;</span><span class="s">}&quot;</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="n">using</span><span class="p">:</span> <span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
 
 <span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">RPCMessage</span><span class="p">(</span><span class="n">id</span><span class="p">:</span> <span class="s">&quot;client_rpc_echo&quot;</span><span class="p">)</span>
 <span class="n">message</span><span class="p">.</span><span class="n">payload</span> <span class="p">=</span> <span class="n">payload</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
   <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;JSON response %@&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="n">payload</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-15-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">RpcRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="s2">&quot;client_rpc_echo&quot;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">PokemonName</span><span class="o">:</span> <span class="s2">&quot;Dragonite&quot;</span> <span class="p">};</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;JSON response %o&quot;</span><span class="p">,</span> <span class="nx">result</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1327,9 +1367,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1355,12 +1395,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

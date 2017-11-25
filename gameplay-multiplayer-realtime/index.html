@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Gameplay
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Realtime Multiplayer
+              </span>
             
-            Realtime Multiplayer
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -868,6 +888,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/gameplay-multiplayer-realtime.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="realtime-multiplayer">Realtime Multiplayer<a class="headerlink" href="#realtime-multiplayer" title="Permanent link">&para;</a></h1>
 <p>The realtime multiplayer engine makes it easy for users to set up and join matches where they can rapidly exchange data with opponents.</p>
@@ -875,16 +897,51 @@
 <p>Any data sent through a match is immediately routed to all other match opponents. Matches are kept in-memory but can be persisted as needed.</p>
 <h2 id="create-a-match">Create a match<a class="headerlink" href="#create-a-match" title="Permanent link">&para;</a></h2>
 <p>A match can be created by a user. The server will assign a unique ID which can be shared with other users for them to <a href="#join-a-match">join the match</a>. All users within a match are equal and it is up to the clients to decide on a host.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchCreateMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchCreateMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INMatch</span> <span class="n">match</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully created match.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchCreateRequest</span><span class="p">();</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">match</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully created match.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>A user can <a href="#leave-a-match">leave a match</a> at any point which will notify all other users.</p>
 <h2 id="join-a-match">Join a match<a class="headerlink" href="#join-a-match" title="Permanent link">&para;</a></h2>
 <p>A user can join a specific match by ID. Matches can be joined at any point until the last participant leaves.</p>
@@ -892,21 +949,39 @@
 <p class="admonition-title">Hint</p>
 <p>To find a match instead of specify one by ID use the <a href="../gameplay-matchmaker/">matchmaker</a>.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchJoinMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INMatch</span> <span class="n">match</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INMatch</span><span class="p">&gt;</span> <span class="n">matches</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined match.&quot;</span><span class="p">);</span>
 
   <span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">connectedOpponents</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
   <span class="c1">// Add list of connected opponents.</span>
-  <span class="n">connectedOpponents</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">match</span><span class="p">.</span><span class="n">Presence</span><span class="p">);</span>
+  <span class="n">connectedOpponents</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">matches</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Presence</span><span class="p">);</span>
   <span class="c1">// Remove your own user from list.</span>
-  <span class="n">connectedOpponents</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">match</span><span class="p">.</span><span class="n">Self</span><span class="p">);</span>
+  <span class="n">connectedOpponents</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">matches</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Self</span><span class="p">);</span>
 
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">presence</span> <span class="k">in</span> <span class="n">connectedOpponents</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">presence</span><span class="p">.</span><span class="n">UserId</span><span class="p">);</span>
-    <span class="kt">var</span> <span class="n">handle</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">presence</span><span class="p">.</span><span class="n">Handle</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">presence</span><span class="p">.</span><span class="n">UserId</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">handle</span> <span class="p">=</span> <span class="n">presence</span><span class="p">.</span><span class="n">Handle</span><span class="p">;</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;User id &#39;{0}&#39; handle &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">,</span> <span class="n">handle</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -914,11 +989,57 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">match</span><span class="p">.</span><span class="nx">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
 
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchesJoinRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">matchIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">matches</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully joined match.&quot;</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="nx">connectedOpponents</span> <span class="o">=</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">presences</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">presence</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Remove your own user from list.</span>
+    <span class="k">return</span> <span class="nx">presence</span><span class="p">.</span><span class="nx">userId</span> <span class="o">!=</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">self</span><span class="p">.</span><span class="nx">userId</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="nx">connectedOpponents</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">opponent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User id %o handle %o.&quot;</span><span class="p">,</span> <span class="nx">opponent</span><span class="p">.</span><span class="nx">userId</span><span class="p">,</span> <span class="nx">opponent</span><span class="p">.</span><span class="nx">handle</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The list of match opponents returned in the success callback might not include all users. It contains users who are connected to the match so far.</p>
 <h2 id="list-opponents">List opponents<a class="headerlink" href="#list-opponents" title="Permanent link">&para;</a></h2>
 <p>When a user joins a match they receive an initial list of connected opponents. As other users join or leave the server will push events to clients which can be used to update the list of connected opponents.</p>
-<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">connectedOpponents</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">connectedOpponents</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
 
 <span class="n">client</span><span class="p">.</span><span class="n">OnMatchPresence</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchPresence</span> <span class="n">presences</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// Remove all users who left.</span>
@@ -931,18 +1052,63 @@
 <span class="p">};</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">connectedOpponents</span> <span class="o">=</span> <span class="p">[];</span>
 
+<span class="nx">client</span><span class="p">.</span><span class="nx">onmatchpresence</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">presences</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Remove all users who left.</span>
+  <span class="nx">connectedOpponents</span> <span class="o">=</span> <span class="nx">connectedOpponents</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">co</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">stillConnectedOpponent</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">presences</span><span class="p">.</span><span class="nx">leaves</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">leftOpponent</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">leftOpponent</span><span class="p">.</span><span class="nx">userId</span> <span class="o">==</span> <span class="nx">co</span><span class="p">.</span><span class="nx">userId</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">stillConnectedOpponent</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">stillConnectedOpponent</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="c1">// Add all users who joined.</span>
+  <span class="nx">connectedOpponents</span> <span class="o">=</span> <span class="nx">connectedOpponents</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">presences</span><span class="p">.</span><span class="nx">joins</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>No server updates are sent if there are no changes to the presence list.</p>
 <h2 id="send-data-messages">Send data messages<a class="headerlink" href="#send-data-messages" title="Permanent link">&para;</a></h2>
 <p>A user in a match can send data messages which will be received by all other opponents. These messages are streamed in realtime to other users and can contain any binary content. To identify each message as a specific "command" it contains an Op code as well as the payload.</p>
 <p>An Op code is a numeric identifier for the type of message sent. These can be used to define commands within the gameplay which belong to certain user actions.</p>
 <p>The binary content in each data message should be as <strong>small as possible</strong>. It is common to use JSON or preferable to use a compact binary format like <a href="https://developers.google.com/protocol-buffers/" target="\_blank">Protocol Buffers</a> or <a href="https://google.github.io/flatbuffers/" target="\_blank">FlatBuffers</a>.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
 
 <span class="kt">long</span> <span class="n">opCode</span> <span class="p">=</span> <span class="m">001L</span><span class="p">;</span>
 <span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;move\&quot;: {\&quot;dir\&quot;: \&quot;left\&quot;, \&quot;steps\&quot;: 4}}&quot;</span><span class="p">);</span>
 
-<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchDataSendMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">matchId</span><span class="p">,</span> <span class="n">opCode</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchDataSendMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">opCode</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully sent data message.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -950,14 +1116,57 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">match</span><span class="p">.</span><span class="nx">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
 
+<span class="kd">var</span> <span class="nx">opCode</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;move&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;dir&quot;</span><span class="o">:</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;steps&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">}};</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchDataSendRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">matchId</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">opCode</span> <span class="o">=</span> <span class="nx">opCode</span><span class="p">;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully sent data message.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="receive-data-messages">Receive data messages<a class="headerlink" href="#receive-data-messages" title="Permanent link">&para;</a></h2>
 <p>A client can add a callback for incoming match data messages. This should be done before they create (or join) and leave a match.</p>
 <div class="admonition note">
 <p class="admonition-title">Message sequences</p>
 <p>The server delivers data in the order it processes data messages from clients.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchData</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchData</span> <span class="n">m</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-js" aria-controls="tab-4-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchData</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchData</span> <span class="n">m</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="kt">var</span> <span class="n">content</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
   <span class="k">switch</span> <span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">OpCode</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">case</span> <span class="m">101L</span><span class="p">:</span>
@@ -969,10 +1178,48 @@
 <span class="p">};</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-js">
+            <div class="codehilite"><pre><span></span><span class="nx">client</span><span class="p">.</span><span class="nx">onmatchdata</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">opCode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">101</span><span class="o">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;A custom opcode.&quot;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User handle %o sent %o&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">presence</span><span class="p">.</span><span class="nx">handle</span><span class="p">,</span> <span class="nx">content</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="leave-a-match">Leave a match<a class="headerlink" href="#leave-a-match" title="Permanent link">&para;</a></h2>
 <p>Users can leave a match at any point. A match ends when all users have left.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-js" aria-controls="tab-5-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">match</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchLeaveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">complete</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -982,7 +1229,26 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">match</span><span class="p">.</span><span class="nx">Id</span><span class="p">;</span> <span class="c1">// an INMatch Id.</span>
 
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchesLeaveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">matchIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully left match.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When all opponents leave a match it's ID becomes invalid and cannot be re-used to join again.</p>
@@ -1046,9 +1312,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1074,12 +1340,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

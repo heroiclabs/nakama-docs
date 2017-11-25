@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Gameplay
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Matchmaker
+              </span>
             
-            Matchmaker
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -545,6 +565,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#properties-and-filters" title="Properties and filters" class="md-nav__link">
+    Properties and filters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#request-opponents" title="Request opponents" class="md-nav__link">
     Request opponents
   </a>
@@ -555,6 +582,40 @@
           <li class="md-nav__item">
   <a href="#receive-matchmake-results" title="Receive matchmake results" class="md-nav__link">
     Receive matchmake results
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-matchmaking" title="Advanced matchmaking" class="md-nav__link">
+    Advanced matchmaking
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-term-filters" title="Using term filters" class="md-nav__link">
+    Using term filters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-range-filters" title="Using range filters" class="md-nav__link">
+    Using range filters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-filter-matchmaking" title="Multi-filter matchmaking" class="md-nav__link">
+    Multi-filter matchmaking
   </a>
   
 </li>
@@ -805,6 +866,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#properties-and-filters" title="Properties and filters" class="md-nav__link">
+    Properties and filters
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#request-opponents" title="Request opponents" class="md-nav__link">
     Request opponents
   </a>
@@ -815,6 +883,40 @@
           <li class="md-nav__item">
   <a href="#receive-matchmake-results" title="Receive matchmake results" class="md-nav__link">
     Receive matchmake results
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-matchmaking" title="Advanced matchmaking" class="md-nav__link">
+    Advanced matchmaking
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-term-filters" title="Using term filters" class="md-nav__link">
+    Using term filters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-range-filters" title="Using range filters" class="md-nav__link">
+    Using range filters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-filter-matchmaking" title="Multi-filter matchmaking" class="md-nav__link">
+    Multi-filter matchmaking
   </a>
   
 </li>
@@ -852,34 +954,111 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/gameplay-matchmaker.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="matchmaker">Matchmaker<a class="headerlink" href="#matchmaker" title="Permanent link">&para;</a></h1>
 <p>In realtime and turn-based games it's important to be able to find active opponents to play against. A matchmaker system is designed to provide this kind of behavior.</p>
 <p>In the server we've taken the design further and decoupled how you're matched from the realtime multiplayer engine. This makes it easy to use the matchmaker system to find opponents even if the gameplay isn't realtime. It could be a casual social game where you want to find random new users to become friends with or an asynchronous PvP game where gameplay happens in a simulated battle.</p>
-<p>There's many kinds of gameplay experiences where you'd like to find other users outside of a realtime match.</p>
+<p>The matchmaker receives and tracks matchmaking requests, then groups users together based on the criteria they've expressed in their properties and filters.</p>
+<h2 id="properties-and-filters">Properties and filters<a class="headerlink" href="#properties-and-filters" title="Permanent link">&para;</a></h2>
+<p>The matchmaking system has the concept of <strong>Properties</strong> and <strong>Filters</strong>, which clients send to the server to decide how their teammates or opponents are selected.</p>
+<p><strong>Properties</strong> are key-value pairs that describe the user's state in the game. Rank information, connecting region information, or selected match types are good examples of data that should be stored in Properties. When matchmaking completes these properties are visible to the matched users, so if needed you can store extra information without affecting the matchmaking process itself if it's useful to clients.</p>
+<p>These properties define information about the user. Good examples of properties are "skill rating = 150" or "player level = 20".</p>
+<p><strong>Filters</strong> are criteria definitions the server will check against the properties of other users in the matchmaking pool. These determine if the user would accept being matched with others.</p>
+<p>Filters define information about how the user wants their matched users to be selected. Good examples of filters are "skill rating 100 to 200" or "player level 15 to 25" indicating the user is looking for others that have properties in the given ranges.</p>
+<p>The matchmaker can filter users using 4 different filtering criteria:</p>
+<ul>
+<li>User Count: The exact number of total users required to form a match. This is a required parameter that determines when the matchmaking algorithm has found enough users to satisfy the matchmaking request.</li>
+<li>Term Filter: String terms that must match. You can set this filter to match any of the supplied terms, or all the terms.</li>
+<li>Numeric Range Filter: An integer filter with lowerbound and upperbound requirements. If the property value is not within the specified range, the user is filtered out.</li>
+<li>Boolean check filters: A simple boolean check.</li>
+</ul>
+<p>A matchmaking request can have complex criteria by using a combination of these filters. Once the matchmaker is successful, the properties and filters of each matched user will be redistributed to every matched user.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <a href="#advanced-matchmaking">Advanced matchmaking</a> section has details on how each filter type works and how to compose filters to achieve complex matchmaking rules.</p>
+</div>
 <h2 id="request-opponents">Request opponents<a class="headerlink" href="#request-opponents" title="Permanent link">&para;</a></h2>
-<p>The distributed server maintains a pool of users who've requested to be matched together with a specific number of opponents. Each user can add themselves to the matchmaker pool and register an event handler to be notified when enough users meet their criteria to be matched.</p>
+<p>The server maintains a pool of users who've requested to be matched together with a specific number of opponents and each user's properties and filters if specified. Each user can add themselves to the matchmaker pool and register an event handler to be notified when enough users meet their criteria to be matched.</p>
 <p>You can send a message to add the user to the matchmaker pool.</p>
-<div class="codehilite"><pre><span></span><span class="n">INMatchmakeTicket</span> <span class="n">matchmake</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INMatchmakeTicket</span> <span class="n">matchmake</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
 <span class="c1">// Look for a match for two participants. Yourself and one more.</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchmakeAddMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INMatchmakeTicket</span> <span class="n">result</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Added user to matchmaker pool.&quot;</span><span class="p">);</span>
 
-  <span class="kt">var</span> <span class="n">cancelTicket</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Ticket</span><span class="p">);</span>
+  <span class="kt">var</span> <span class="n">cancelTicket</span> <span class="p">=</span> <span class="n">result</span><span class="p">.</span><span class="n">Ticket</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;The cancellation code {0}&quot;</span><span class="p">,</span> <span class="n">cancelTicket</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">matchmakeTicket</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 
-<p>The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted.</p>
-<p>This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.</p>
+<span class="c1">// Look for a match for two participants. Yourself and one more.</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchmakeAddRequest</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ticket</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Added user to matchmaker pool.&quot;</span><span class="p">);</span>
+  <span class="nx">matchmakeTicket</span> <span class="o">=</span> <span class="nx">ticket</span><span class="p">.</span><span class="nx">ticket</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The cancellation ticket is %o&quot;</span><span class="p">,</span> <span class="nx">matchmakeTicket</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted. This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.</p>
+<p>Have a look at <a href="#advanced-matchmaking">this section</a> for more advanced matchmaking examples.</p>
 <h3 id="receive-matchmake-results">Receive matchmake results<a class="headerlink" href="#receive-matchmake-results" title="Permanent link">&para;</a></h3>
 <p>You can register an event handler which is called when the server has found opponents for the user.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchmakeMatched</span> <span class="n">matched</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchmakeMatched</span> <span class="n">matched</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// a match token is used to join the match.</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Match token: &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">matched</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
 
@@ -888,14 +1067,309 @@
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;User id: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">presence</span><span class="p">.</span><span class="n">UserId</span><span class="p">);</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;User handle: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">presence</span><span class="p">.</span><span class="n">Handle</span><span class="p">);</span>
   <span class="p">}</span>
+
+  <span class="c1">// list of all match properties</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">userProperty</span> <span class="k">in</span> <span class="n">matched</span><span class="p">.</span><span class="n">UserProperties</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">foreach</span><span class="p">(</span><span class="n">KeyValuePair</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">entry</span> <span class="k">in</span> <span class="n">userProperty</span><span class="p">.</span><span class="n">Properties</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Property &#39;{0}&#39; for user &#39;{1}&#39; has value &#39;{2}&#39;.&quot;</span><span class="p">,</span> <span class="n">entry</span><span class="p">.</span><span class="n">Key</span><span class="p">,</span> <span class="n">userProperty</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">entry</span><span class="p">.</span><span class="n">Value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">foreach</span><span class="p">(</span><span class="n">KeyValuePair</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">INMatchmakeFilter</span><span class="p">&gt;</span> <span class="n">entry</span> <span class="k">in</span> <span class="n">userProperty</span><span class="p">.</span><span class="n">Filters</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Filter &#39;{0}&#39; for user &#39;{1}&#39; has value &#39;{2}&#39;.&quot;</span><span class="p">,</span> <span class="n">entry</span><span class="p">.</span><span class="n">Key</span><span class="p">,</span> <span class="n">userProperty</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">entry</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="nx">client</span><span class="p">.</span><span class="nx">onmatchmakematched</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">matched</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// a match token is used to join the match.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Match token: %o&quot;</span><span class="p">,</span> <span class="nx">matched</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span>
 
+  <span class="c1">// a list of users who&#39;ve been matched as opponents.</span>
+  <span class="nx">matched</span><span class="p">.</span><span class="nx">presences</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">presence</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User id: %o.&quot;</span><span class="p">,</span> <span class="nx">presence</span><span class="p">.</span><span class="nx">userId</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User handle: %o.&quot;</span><span class="p">,</span> <span class="nx">presence</span><span class="p">.</span><span class="nx">handle</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// list of all match properties</span>
+  <span class="nx">matched</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">property</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User %o has properties: %o&quot;</span><span class="p">,</span> <span class="nx">property</span><span class="p">.</span><span class="nx">userId</span><span class="p">,</span> <span class="nx">property</span><span class="p">.</span><span class="nx">properties</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User %o has filter: %o&quot;</span><span class="p">,</span> <span class="nx">property</span><span class="p">.</span><span class="nx">userId</span><span class="p">,</span> <span class="nx">property</span><span class="p">.</span><span class="nx">filters</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<h2 id="advanced-matchmaking">Advanced matchmaking<a class="headerlink" href="#advanced-matchmaking" title="Permanent link">&para;</a></h2>
+<p>In the example above, only the required user count was set. This is the most loose matchmaking request that will select users randomly. Below we'll look at more complex matchmaking requests and how they are represented in Nakama.</p>
+<p>We'll use a popular car racing game as an example to demonstrate how matchmaking can be set up. In this game a player can play as a cop or a racer, and has two different ranks based on whichever character they play. The player can have a custom car with specific boosters which other players will need to know about.</p>
+<h3 id="using-term-filters">Using term filters<a class="headerlink" href="#using-term-filters" title="Permanent link">&para;</a></h3>
+<p>Term filters use one or more string terms as matching criteria. This is useful to match users who are all interested in certain game types, only want to play certain maps, or battle opponents with specific characteristics.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="c1">// Look for a match for 8 participants. Yourself and 7 more.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NMatchmakeAddMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">8</span><span class="p">);</span>
+
+<span class="c1">// Set player&#39;s properties.</span>
+<span class="c1">// Whitelist of maps that the player is willing to play.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;interested-maps&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span><span class="s">&quot;vegas&quot;</span><span class="p">,</span> <span class="s">&quot;downtown-la&quot;</span><span class="p">});</span>
+
+<span class="c1">// This player is playing as a &quot;cop&quot;.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;player-type&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span><span class="s">&quot;cop&quot;</span><span class="p">});</span>
+
+<span class="c1">// This player&#39;s car boosters - this is only used as extra metadata information.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;car-boosters&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span><span class="s">&quot;bullets&quot;</span><span class="p">,</span> <span class="s">&quot;spikes&quot;</span><span class="p">,</span> <span class="s">&quot;emp-shockwave&quot;</span><span class="p">});</span>
+
+<span class="c1">// Let&#39;s add the matchmaking criteria.</span>
+<span class="c1">// Whitelist of maps that the opponents must be willing to play.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddTermFilter</span><span class="p">(</span><span class="s">&quot;interested-maps&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span><span class="s">&quot;vegas&quot;</span><span class="p">,</span> <span class="s">&quot;downtown-la&quot;</span><span class="p">,</span> <span class="s">&quot;santa-cruz&quot;</span><span class="p">},</span> <span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// The player wants to only play with racers.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddTermFilter</span><span class="p">(</span><span class="s">&quot;player-type&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span><span class="s">&quot;racer&quot;</span><span class="p">},</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INMatchmakeTicket</span> <span class="n">ticket</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">//... save ticket for later cancellation, if needed.</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="c1">// Look for a match for 8 participants. Yourself and 7 more.</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchmakeAddRequest</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+
+<span class="c1">// Set player&#39;s properties.</span>
+<span class="c1">// Whitelist of maps that the player is willing to play.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addStringSetProperty</span><span class="p">(</span><span class="s2">&quot;interested-maps&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;vegas&quot;</span><span class="p">,</span> <span class="s2">&quot;downtown-la&quot;</span><span class="p">]);</span>
+
+<span class="c1">// This player is playing as a &quot;cop&quot;.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addStringSetProperty</span><span class="p">(</span><span class="s2">&quot;player-type&quot;</span><span class="p">,</span> <span class="s2">&quot;cop&quot;</span><span class="p">);</span>
+
+<span class="c1">// This player&#39;s car boosters - this is only used as extra metadata information.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addStringSetProperty</span><span class="p">(</span><span class="s2">&quot;car-boosters&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;bullets&quot;</span><span class="p">,</span> <span class="s2">&quot;spikes&quot;</span><span class="p">,</span> <span class="s2">&quot;emp-shockwave&quot;</span><span class="p">]);</span>
+
+<span class="c1">// Let&#39;s add the matchmaking criteria.</span>
+<span class="c1">// Whitelist of maps that the opponents must be willing to play.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addTermFilter</span><span class="p">(</span><span class="s2">&quot;interested-maps&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;vegas&quot;</span><span class="p">,</span> <span class="s2">&quot;downtown-la&quot;</span><span class="p">,</span> <span class="s2">&quot;santa-cruz&quot;</span><span class="p">],</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="c1">// The player wants to only play with racers.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addTermFilter</span><span class="p">(</span><span class="s2">&quot;player-type&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;racer&quot;</span><span class="p">],</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ticket</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//... save ticket for later cancellation, if needed.</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<h3 id="using-range-filters">Using range filters<a class="headerlink" href="#using-range-filters" title="Permanent link">&para;</a></h3>
+<p>Range filters operate on an inclusive lowerbound and an inclusive upperbound integer. The property should be within the two numbers for the matchmaking candidate to be considered.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="c1">// Look for a match for 2 participants. Yourself and someone else.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NMatchmakeAddMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+
+<span class="c1">// Set the player&#39;s cop rank.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="m">12</span><span class="p">);</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="m">41</span><span class="p">);</span>
+
+<span class="c1">// Look for players with between given ranks, to ensure the match is fair.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddRangeFilter</span><span class="p">(</span><span class="s">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">12</span><span class="p">);</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddRangeFilter</span><span class="p">(</span><span class="s">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">50</span><span class="p">);</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INMatchmakeTicket</span> <span class="n">ticket</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// ... save ticket for later cancellation, if needed.</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="c1">// Look for a match for 2 participants. Yourself and someone else.</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchmakeAddRequest</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="c1">// Set the player&#39;s cop rank.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addIntegerProperty</span><span class="p">(</span><span class="s2">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addIntegerProperty</span><span class="p">(</span><span class="s2">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="mi">41</span><span class="p">);</span>
+
+<span class="c1">// Look for players with between given ranks, to ensure the match is fair.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addRangeFilter</span><span class="p">(</span><span class="s2">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addRangeFilter</span><span class="p">(</span><span class="s2">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ticket</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//... save ticket for later cancellation, if needed.</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<h3 id="multi-filter-matchmaking">Multi-filter matchmaking<a class="headerlink" href="#multi-filter-matchmaking" title="Permanent link">&para;</a></h3>
+<p>You can of course mix and match various filters to enhance the matchmaking search.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-js" aria-controls="tab-4-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="c1">// Look for a match for 4 participants. Yourself and 3 other users.</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NMatchmakeAddMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">4</span><span class="p">);</span>
+
+<span class="c1">// This player is playing as a &quot;cop&quot;.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;player-type&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span><span class="s">&quot;cop&quot;</span><span class="p">});</span>
+
+<span class="c1">// Set the player&#39;s ranks.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="m">12</span><span class="p">);</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="m">41</span><span class="p">);</span>
+
+<span class="c1">// Set a boolean property on whether the player has prestiged or not.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddProperty</span><span class="p">(</span><span class="s">&quot;has-prestiged&quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">// The player wants to only play with either racers or cops.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddTermFilter</span><span class="p">(</span><span class="s">&quot;player-type&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">HashSet</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span><span class="s">&quot;racer&quot;</span><span class="p">,</span> <span class="s">&quot;cop&quot;</span><span class="p">},</span> <span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// Look for players with between two ranks, to ensure the match is fair.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddRangeFilter</span><span class="p">(</span><span class="s">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">12</span><span class="p">);</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddRangeFilter</span><span class="p">(</span><span class="s">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="m">40</span><span class="p">,</span> <span class="m">45</span><span class="p">);</span>
+
+<span class="c1">// Look only for players that have prestiged.</span>
+<span class="n">message</span><span class="p">.</span><span class="n">AddCheckFilter</span><span class="p">(</span><span class="s">&quot;has-prestiged&quot;</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span>
+
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INMatchmakeTicket</span> <span class="n">ticket</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="c1">//... save ticket for later cancellation, if needed.</span>
+<span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-js">
+            <div class="codehilite"><pre><span></span><span class="c1">// Look for a match for 3 participants. Yourself and 3 more.</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchmakeAddRequest</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+
+<span class="c1">// This player is playing as a &quot;cop&quot;.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addStringSetProperty</span><span class="p">(</span><span class="s2">&quot;player-type&quot;</span><span class="p">,</span> <span class="s2">&quot;cop&quot;</span><span class="p">);</span>
+
+<span class="c1">// Set the player&#39;s ranks.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addIntegerProperty</span><span class="p">(</span><span class="s2">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addIntegerProperty</span><span class="p">(</span><span class="s2">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="mi">41</span><span class="p">);</span>
+
+<span class="c1">// Set a boolean property on whether the player has prestiged or not.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addBooleanProperty</span><span class="p">(</span><span class="s2">&quot;has-prestiged&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="c1">// The player wants to only play with either racers or cops.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addTermFilter</span><span class="p">(</span><span class="s2">&quot;player-type&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;racer&quot;</span><span class="p">,</span> <span class="s2">&quot;cop&quot;</span><span class="p">],</span> <span class="kc">false</span><span class="p">);</span>
+
+<span class="c1">// Look for players with between two ranks, to ensure the match is fair.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addRangeFilter</span><span class="p">(</span><span class="s2">&quot;cop-rank&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addRangeFilter</span><span class="p">(</span><span class="s2">&quot;racer-rank&quot;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">);</span>
+
+<span class="c1">// Look only for players that have prestiged.</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">addCheckFilter</span><span class="p">(</span><span class="s2">&quot;has-prestiged&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ticket</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//... save ticket for later cancellation, if needed.</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="cancel-a-request">Cancel a request<a class="headerlink" href="#cancel-a-request" title="Permanent link">&para;</a></h2>
 <p>After a user has sent a message to add themselves to the matchmaker pool you'll receive a ticket which can be used to cancel the action at some later point.</p>
 <p>Users may cancel matchmake actions at any point after they've added themselves to the pool but before they've been matched. Once matching completes for the ticket it can no longer be used to cancel.</p>
-<div class="codehilite"><pre><span></span><span class="n">INMatchmakeTicket</span> <span class="n">cancelTicket</span> <span class="p">=</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// See above.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-js" aria-controls="tab-5-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INMatchmakeTicket</span> <span class="n">cancelTicket</span> <span class="p">=</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// See above.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchmakeRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">cancelTicket</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -905,7 +1379,25 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">matchmakeTicket</span> <span class="o">=</span> <span class="nx">result</span><span class="p">;</span> <span class="c1">// See above.</span>
 
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchmakeRemoveRequest</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">ticket</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User removed from matchmaker pool.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The user is now removed from the matchmaker pool.</p>
 <div class="admonition note">
 <p class="admonition-title">Removed on disconnect</p>
@@ -913,10 +1405,28 @@
 </div>
 <h2 id="join-a-match">Join a match<a class="headerlink" href="#join-a-match" title="Permanent link">&para;</a></h2>
 <p>To join a match after the event handler has notified the user their criteria is met and they've been given opponents you can use the match token.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchmakeMatched</span> <span class="n">matched</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-js" aria-controls="tab-6-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnMatchmakeMatched</span> <span class="p">=</span> <span class="p">(</span><span class="n">INMatchmakeMatched</span> <span class="n">matched</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// The match token is used to join a multiplayer match.</span>
   <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NMatchJoinMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">matched</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
-  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INMatch</span> <span class="n">match</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INMatch</span><span class="p">&gt;</span> <span class="n">matches</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined match.&quot;</span><span class="p">);</span>
   <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
@@ -924,7 +1434,27 @@
 <span class="p">};</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-js">
+            <div class="codehilite"><pre><span></span><span class="nx">client</span><span class="p">.</span><span class="nx">onmatchmakematched</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">matched</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// The match token is used to join a multiplayer match.</span>
+  <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">MatchesJoinRequest</span><span class="p">();</span>
+  <span class="nx">message</span><span class="p">.</span><span class="nx">tokens</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">matched</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">matches</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully joined match.&quot;</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">};</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The token makes it easy to join a match. The token enables the server to know that these users wanted to join a match and is able to create a match dynamically for them.</p>
 <p>Tokens are short-lived and must be used to join a match as soon as possible. When a token expires it can no longer be used or refreshed.</p>
 <p>The match token is also used to prevent unwanted users from attempting to join a match they were not matched into. The rest of the multiplayer match code in the same as in the <a href="../gameplay-multiplayer-realtime/">realtime multiplayer section</a>.</p>
@@ -987,9 +1517,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1015,12 +1545,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

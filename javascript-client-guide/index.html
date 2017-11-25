@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,41 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                JavaScript client guide
+              </span>
             
-            JavaScript client guide
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -112,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -123,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -145,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -155,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -170,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -333,9 +357,78 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        JavaScript client guide
+      </label>
+    
     <a href="./" title="JavaScript client guide" class="md-nav__link md-nav__link--active">
       JavaScript client guide
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#download" title="Download" class="md-nav__link">
+    Download
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-and-setup" title="Install and setup" class="md-nav__link">
+    Install and setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticate" title="Authenticate" class="md-nav__link">
+    Authenticate
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#send-messages" title="Send messages" class="md-nav__link">
+    Send messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handle-events" title="Handle events" class="md-nav__link">
+    Handle events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs-and-errors" title="Logs and errors" class="md-nav__link">
+    Logs and errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" title="Full example" class="md-nav__link">
+    Full example
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -741,6 +834,62 @@
     
   
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#download" title="Download" class="md-nav__link">
+    Download
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-and-setup" title="Install and setup" class="md-nav__link">
+    Install and setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticate" title="Authenticate" class="md-nav__link">
+    Authenticate
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#send-messages" title="Send messages" class="md-nav__link">
+    Send messages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handle-events" title="Handle events" class="md-nav__link">
+    Handle events
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logs-and-errors" title="Logs and errors" class="md-nav__link">
+    Logs and errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-example" title="Full example" class="md-nav__link">
+    Full example
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -751,12 +900,261 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/javascript-client-guide.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="javascript-client-guide">JavaScript client guide<a class="headerlink" href="#javascript-client-guide" title="Permanent link">&para;</a></h1>
-<p>An official JavaScript client is in development right now and planned for launch on September 1st.</p>
-<p>We'll announce it on <a href="https://twitter.com/heroicdev?lang=en" target="\_blank">Twitter</a> and on our <a href="https://blog.heroiclabs.com/" target="\_blank">blog</a> when it's ready. It will be open-source on <a href="https://github.com/heroiclabs" target="\_blank">GitHub</a> and available on NPM.</p>
-<p><br/>
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScNkq6Et3yVOU2M6eHPTrl_Filn_PHnth_yK_wqnFpj_7xxaA/viewform?embedded=true" width="700" height="900" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></p>
+<p>The official JavaScript client handles all communication in realtime with the server. It implements all features in the server and can be used in a browser and be embdedded inside React Native applications.</p>
+<h2 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h2>
+<p>The client is available on <a href="https://www.npmjs.com/package/nakama-js" target="\_blank">NPM</a>, Bower and on the <a href="https://github.com/heroiclabs/nakama-js/releases/latest" target="\_blank">GitHub releases page</a>. You can download <code>nakama-js.umd.js</code> which contains the Nakama-js module and UMD module loader.</p>
+<p>If you are using NPM to manage your dependecies, simply add the following to your <code>package.json</code>:</p>
+<div class="codehilite"><pre><span></span><span class="err">//...</span>
+<span class="s2">&quot;dependencies&quot;</span><span class="err">:</span> <span class="p">{</span>
+  <span class="nt">&quot;nakama-js&quot;</span><span class="p">:</span> <span class="s2">&quot;^0.1.0&quot;</span>
+<span class="p">}</span>
+<span class="err">//...</span>
+</pre></div>
+
+
+<p>If you are using Bower, add the following to your <code>bower.json</code>:</p>
+<div class="codehilite"><pre><span></span><span class="err">//...</span>
+<span class="s2">&quot;dependencies&quot;</span><span class="err">:</span> <span class="p">{</span>
+  <span class="nt">&quot;nakama-js&quot;</span><span class="p">:</span> <span class="s2">&quot;^0.1.0&quot;</span>
+<span class="p">}</span>
+<span class="err">//...</span>
+</pre></div>
+
+
+<p>For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-js/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.</p>
+<div class="admonition bug">
+<p class="admonition-title">Help and contribute</p>
+<p>The JavaScript client is <a href="https://github.com/heroiclabs/nakama-js" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.</p>
+</div>
+<h2 id="install-and-setup">Install and setup<a class="headerlink" href="#install-and-setup" title="Permanent link">&para;</a></h2>
+<p>When you've <a href="#download">downloaded</a> the "Nakama-js.umd.js" file you should import it into your project to use it.</p>
+<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;path/to/dist/nakama-js.umd.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<p>The client object is used to execute all logic against the server. In your main JavaScript function, you'll need to instatiate a Client object:</p>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;defaultkey&quot;</span><span class="p">,</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">7350</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">ssl</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</pre></div>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default the client uses connection settings "127.0.0.1" and 7350 to connect to a local Nakama server.</p>
+</div>
+<div class="codehilite"><pre><span></span><span class="c1">// Quickly setup a client for a local server.</span>
+<span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;defaultkey&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<h2 id="authenticate">Authenticate<a class="headerlink" href="#authenticate" title="Permanent link">&para;</a></h2>
+<p>With a client object you can authenticate against the server. You can register or login a <a href="../user-accounts/">user</a> with one of the <a href="../authentication/">authenticate options</a>.</p>
+<p>To authenticate you should follow our recommended pattern in your client code:</p>
+<p>&nbsp;&nbsp; 1. Build an instance of the client.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Quickly setup a client for a local server.</span>
+<span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;defaultkey&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p>&nbsp;&nbsp; 2. Write a callback which will be used to connect to the server.</p>
+<p>If you are in an environment that supports <code>localStorage</code> then use the following code to store the session:</p>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">sessionHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">session</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session connected.&quot;</span><span class="p">);</span>
+
+    <span class="c1">// Store session for quick reconnects.</span>
+    <span class="nx">localStorage</span><span class="p">.</span><span class="nx">nakamaToken</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">token</span><span class="p">;</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured during session connection: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>For React Native, you should use the following:</p>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">sessionHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">session</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session connected.&quot;</span><span class="p">);</span>
+
+    <span class="c1">// Store session for quick reconnects.</span>
+    <span class="c1">// This returns a promise - if it fails, we are catching the error in the `error` callback below</span>
+    <span class="k">return</span> <span class="nx">AsyncStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;@MyApp:nakamaToken&#39;</span><span class="p">,</span> <span class="nx">session</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured during session connection: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>&nbsp;&nbsp; 4. Login or register a user.</p>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">errorHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">email</span><span class="p">(</span><span class="s2">&quot;hello@world.com&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// USER_NOT_FOUND</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">client</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">errorHandler</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">errorHandler</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>In the code above we use <code>AuthenticateRequest.email(emailAddress, password)</code> but for other authentication options have a look at the <a href="../authentication/#register-or-login">code examples</a>.</p>
+<p>A <strong>full example</strong> with all code above is <a href="#full-example">here</a>.</p>
+<h2 id="send-messages">Send messages<a class="headerlink" href="#send-messages" title="Permanent link">&para;</a></h2>
+<p>When a user has been authenticated a session is used to connect with the server. You can then send messages for all the different features in the server.</p>
+<p>This could be to <a href="../social-friends/">add friends</a>, join <a href="../social-groups-clans/">groups</a> and <a href="../social-realtime-chat/">chat</a>, or submit scores in <a href="../gameplay-leaderboards/">leaderboards</a>, and <a href="../gameplay-matchmaker/">matchmake</a> into a <a href="../gameplay-multiplayer-realtime/">multiplayer match</a>. You can also execute remote code on the server via <a href="../runtime-code-basics/">RPC</a>.</p>
+<p>The server also provides a <a href="../storage-collections/">storage engine</a> to keep save games and other records owned by users. We'll use storage to introduce how messages are sent.</p>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;jsonKey&quot;</span><span class="o">:</span> <span class="s2">&quot;jsonValue&quot;</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageWriteRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;someBucket&quot;</span><span class="p">,</span> <span class="s2">&quot;someCollection&quot;</span><span class="p">,</span> <span class="s2">&quot;myRecord&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully wrote record.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">errorHandler</span><span class="p">);</span>
+</pre></div>
+
+
+<p>Have a look at other sections of documentation for more code examples.</p>
+<h2 id="handle-events">Handle events<a class="headerlink" href="#handle-events" title="Permanent link">&para;</a></h2>
+<p>The client has callbacks which are called on various events received from the server.</p>
+<div class="codehilite"><pre><span></span><span class="nx">client</span><span class="p">.</span><span class="nx">ondisconnect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Disconnected from the server. Event: %o&quot;</span><span class="p">,</span> <span class="nx">event</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">onnotification</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">notification</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Recieved a live notification: %o&quot;</span><span class="p">,</span> <span class="nx">notification</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">ontopicpresence</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">presence</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Recieved a presence update: %o&quot;</span><span class="p">,</span> <span class="nx">presence</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">ontopicmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Recieved a new chat message: %o&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Some events only need to be implemented for the features you want to use.</p>
+<table>
+<thead>
+<tr>
+<th>Callbacks</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ondisconnect</td>
+<td>Handles an event for when the client is disconnected from the server.</td>
+</tr>
+<tr>
+<td>onerror</td>
+<td>Receives events about server errors.</td>
+</tr>
+<tr>
+<td>onnotification</td>
+<td>Receives live <a href="../social-in-app-notifications/">in-app notifications</a> sent from the server.</td>
+</tr>
+<tr>
+<td>ontopicmessage</td>
+<td>Receives <a href="../social-realtime-chat/">realtime chat</a> messages sent by other users.</td>
+</tr>
+<tr>
+<td>ontopicpresence</td>
+<td>It handles join and leave events within <a href="../social-realtime-chat/">chat</a>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="logs-and-errors">Logs and errors<a class="headerlink" href="#logs-and-errors" title="Permanent link">&para;</a></h2>
+<p>The <a href="../install-configuration/#log">server</a> and the client can generate logs which are helpful to debug code. To log all messages sent by the client you can enable <code>verbose</code> when you build a <code>client</code>.</p>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;defaultkey&quot;</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">verbose</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</pre></div>
+
+
+<hr />
+<h2 id="full-example">Full example<a class="headerlink" href="#full-example" title="Permanent link">&para;</a></h2>
+<p>An example class used to manage a session with the Unity client.</p>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">NClient</span><span class="p">.</span><span class="nx">Default</span><span class="p">(</span><span class="s2">&quot;defaultkey&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">currentSession</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">errorHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">sessionHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">currentSession</span> <span class="o">=</span> <span class="nx">session</span><span class="p">;</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">session</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session connected.&quot;</span><span class="p">);</span>
+
+    <span class="c1">// Store session for quick reconnects.</span>
+    <span class="c1">// This returns a promise - if it fails, we are catching the error in the `error` callback below</span>
+    <span class="k">return</span> <span class="nx">AsyncStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;@MyApp:nakamaToken&#39;</span><span class="p">,</span> <span class="nx">session</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured during session connection: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">restoreSessionAndConnect</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">sessionString</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">Storage</span><span class="p">)</span> <span class="o">!==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">sessionString</span> <span class="o">=</span> <span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;nakamaToken&quot;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// We are assuming that you are using React Native...</span>
+    <span class="nx">AsyncStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;@MyApp:nakamaToken&#39;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">sessionString</span> <span class="o">=</span> <span class="nx">token</span><span class="p">;</span>
+    <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not fetch data, error: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Lets check if we can restore a cached session.</span>
+  <span class="k">if</span> <span class="o">!</span><span class="nx">sessionString</span> <span class="o">||</span> <span class="nx">sessionString</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="p">{</span>
+    <span class="k">return</span>
+  <span class="p">}</span>
+
+  <span class="kd">var</span> <span class="nx">session</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">Session</span><span class="p">.</span><span class="nx">Restore</span><span class="p">(</span><span class="nx">sessionString</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">session</span><span class="p">.</span><span class="nx">isexpired</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()))</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span> <span class="c1">// We can&#39;t restore an expired session.</span>
+  <span class="p">}</span>
+
+  <span class="nx">sessionHandler</span><span class="p">(</span><span class="nx">session</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">loginOrRegister</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">email</span><span class="p">(</span><span class="s2">&quot;hello@world.com&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">);</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+     <span class="c1">// USER_NOT_FOUND</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">sessionHandler</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">errorHandler</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">errorHandler</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// Let&#39;s begin here...</span>
+<span class="nx">restoreSessionAndConnect</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">currentSession</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">LoginOrRegister</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
                 
                   
                 
@@ -816,9 +1214,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -844,12 +1242,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

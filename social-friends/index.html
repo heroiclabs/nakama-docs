@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Social
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Friends
+              </span>
             
-            Friends
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -866,6 +886,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/social-friends.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="friends">Friends<a class="headerlink" href="#friends" title="Permanent link">&para;</a></h1>
 <p>Friends are a great way to build a social community. Users can add other users to their list of friends, see who is online or when they were last online, chat together in realtime, and interact together in gameplay or collaboration.</p>
@@ -882,7 +904,29 @@
 <p>A user who registers or links their account with Facebook or another social network will have friends from that network be added automatically into their friend list.</p>
 </div>
 <p>When a friend request is sent or the user is added an in-app notification will be sent. See the <a href="../social-in-app-notifications/#receive-notifications">in-app notification</a> section for more info.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NFriendAddMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Friend added or request sent.&quot;</span><span class="p">);</span>
@@ -891,54 +935,240 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// some user ID</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">FriendAddMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">userIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">userID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">FriendsAddRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">userIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the <a href="../social-realtime-chat/">realtime chat</a> section for more info.</p>
 <h2 id="list-friends">List friends<a class="headerlink" href="#list-friends" title="Permanent link">&para;</a></h2>
 <p>You can list all of a user's friends, blocked users, friend requests received (invited), and invites they've sent. These statuses are returned together as part of the friend list which makes it easy to display in a UI.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NFriendsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NFriendsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INFriend</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">f</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">f</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
     <span class="c1">// f.State is one of: Friend, Invite, Invited, Blocked.</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;User {0} has state {1}.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="n">State</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;User {0} has state {1}.&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="n">State</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">FriendListMessage</span><span class="p">()</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">friends</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">friend</span> <span class="k">in</span> <span class="n">friends</span> <span class="p">{</span>
+    <span class="c1">// friend.State is one of: Friend, Invite, Invited, Blocked.</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;User %@ has state %@.&quot;</span><span class="p">,</span> <span class="n">friend</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">friend</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">FriendsListRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">userIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">friends</span><span class="p">.</span><span class="nx">foreach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">friend</span><span class="p">){</span>
+    <span class="c1">// friend.State is one of: Friend, Invite, Invited, Blocked.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User %o has state: %o&quot;</span><span class="p">,</span> <span class="nx">friend</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">friend</span><span class="p">.</span><span class="nx">state</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="remove-friends">Remove friends<a class="headerlink" href="#remove-friends" title="Permanent link">&para;</a></h2>
 <p>A user can remove a friend, reject a received invite, cancel a friend request sent, or unblock a user. Similar to how Friend Add works we reuse Friend Remove to cancel or undo whatever friend state is current with another user.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If a user is unblocked they are removed from the friend list entirely. To re-add them each user must add the other again.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NFriendRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">idString</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;User {0} has been removed.&quot;</span><span class="p">,</span> <span class="n">idString</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;User {0} has been removed.&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// some user ID</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">FriendRemoveMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">userIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">userID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;User %@ has been removed&quot;</span><span class="p">,</span> <span class="n">userID</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">FriendsRemoveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">userIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User %o has been removed.&quot;</span><span class="p">,</span> <span class="nx">userId</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="block-a-friend">Block a friend<a class="headerlink" href="#block-a-friend" title="Permanent link">&para;</a></h2>
 <p>You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a <a href="#remove-friends">Friend Remove</a> message.</p>
 <p>A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NFriendBlockMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">idString</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">id</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;User {0} has been blocked.&quot;</span><span class="p">,</span> <span class="n">idString</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;User {0} has been blocked.&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// some user ID</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">FriendBlockMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">userIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">userID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;User %@ has been blocked&quot;</span><span class="p">,</span> <span class="n">userID</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// some user ID</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">FriendsBlockRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">userIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;User %o has been blocked.&quot;</span><span class="p">,</span> <span class="nx">userId</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="ban-a-user">Ban a user<a class="headerlink" href="#ban-a-user" title="Permanent link">&para;</a></h3>
 <p>A user can be banned with server-side code. This will prevent the user from being able to connect to the server and interact at all.</p>
 <p>This is best used by a moderator system within your community. You could assign particular users the capabilities to send an RPC to permanently ban a user or you may decide to ban users via your liveops support team.</p>
@@ -1011,9 +1241,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1039,12 +1269,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

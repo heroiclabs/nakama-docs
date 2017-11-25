@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Storage Engine
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Collections
+              </span>
             
-            Collections
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -920,6 +940,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/storage-collections.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="collections">Collections<a class="headerlink" href="#collections" title="Permanent link">&para;</a></h1>
 <p>Every app or game has data which is specific to the project.</p>
@@ -962,13 +984,17 @@
             <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
             
         <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="p">);</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">myStats</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;skill\&quot;: 24}&quot;</span><span class="p">);</span>
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">myStats</span> <span class="p">=</span> <span class="s">&quot;{\&quot;skill\&quot;: 24}&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">bucket</span> <span class="p">=</span> <span class="s">&quot;myapp&quot;</span><span class="p">;</span>
 
@@ -979,8 +1005,7 @@
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
@@ -990,8 +1015,8 @@
         </div>
     
         <div role="tabpanel" class="tab-pane " id="tab-0-java">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
-<span class="kt">byte</span><span class="o">[]</span> <span class="n">myStats</span> <span class="o">=</span> <span class="s">&quot;{\&quot;skill\&quot;: 24}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 50}&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">myStats</span> <span class="o">=</span> <span class="s">&quot;{\&quot;skill\&quot;: 24}&quot;</span><span class="o">;</span>
 
 <span class="n">String</span> <span class="n">bucket</span> <span class="o">=</span> <span class="s">&quot;myapp&quot;</span><span class="o">;</span>
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
@@ -1029,11 +1054,30 @@
 <span class="n">message</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">collection</span><span class="p">:</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;mystats&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">myStats</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">recordId</span> <span class="k">in</span> <span class="n">list</span> <span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;@%&#39;&quot;</span><span class="p">,</span> <span class="n">recordId</span><span class="p">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;%@&#39;&quot;</span><span class="p">,</span> <span class="n">recordId</span><span class="p">.</span><span class="n">version</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">saveGame</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;progress&quot;</span><span class="o">:</span> <span class="mi">50</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">myStats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;skill&quot;</span><span class="o">:</span> <span class="mi">24</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">bucket</span> <span class="o">=</span> <span class="s2">&quot;myapp&quot;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageWriteRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;savegame&quot;</span><span class="p">,</span> <span class="nx">saveGame</span><span class="p">);</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">bucket</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;mystats&quot;</span><span class="p">,</span> <span class="nx">myStats</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">storageKey</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Stored record has version %o&quot;</span><span class="p">,</span> <span class="nx">storageKey</span><span class="p">.</span><span class="nx">version</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1042,6 +1086,10 @@
     
                 </div>
                     </p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>In Swift, make your objects conform to the <code>Codable</code> interface to allow for easy interoperability with Nakama's storage operations. For more info, please follow this <a href="https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types#overview">guide</a>.</p>
+</div>
 <h3 id="conditional-writes">Conditional writes<a class="headerlink" href="#conditional-writes" title="Permanent link">&para;</a></h3>
 <p>When records are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is often known as a conditional write.</p>
 <p>A conditional write ensures a client can only update the record if they've seen the previous version of the record already. The goal is to prevent a change to the record if another client has changed the value between when the first client's read and it's next write.</p>
@@ -1062,13 +1110,17 @@
             <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
             
         <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="p">);</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">saveGame</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
@@ -1083,8 +1135,8 @@
         </div>
     
         <div role="tabpanel" class="tab-pane " id="tab-1-java">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
-<span class="kt">byte</span><span class="o">[]</span> <span class="n">version</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">getVersion</span><span class="o">();</span> <span class="c1">// a RecordId object&#39;s version.</span>
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 54}&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">version</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">getVersion</span><span class="o">();</span> <span class="c1">// a RecordId object&#39;s version.</span>
 
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
     <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">,</span> <span class="n">saveGame</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
@@ -1117,8 +1169,23 @@
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
   <span class="n">version</span> <span class="p">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">version</span> <span class="c1">// Cache updated version for next write.</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">saveGame</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;progress&quot;</span><span class="o">:</span> <span class="mi">50</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">version</span> <span class="o">=</span> <span class="nx">record</span><span class="p">.</span><span class="nx">version</span> <span class="c1">// a storage object&#39;s version.</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageWriteRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;savegame&quot;</span><span class="p">,</span> <span class="nx">saveGame</span><span class="p">,</span> <span class="nx">version</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">version</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">version</span><span class="p">;</span> <span class="c1">// Cache updated version for next write.</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1145,13 +1212,17 @@
             <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
             
         <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;{\&quot;progress\&quot;: 1}&quot;</span><span class="p">);</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">);</span> <span class="c1">// represents &quot;no version&quot;.</span>
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">saveGame</span> <span class="p">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 1}&quot;</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">version</span> <span class="p">=</span> <span class="s">&quot;*&quot;</span><span class="p">;</span> <span class="c1">// represents &quot;no version&quot;.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">saveGame</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
@@ -1166,8 +1237,8 @@
         </div>
     
         <div role="tabpanel" class="tab-pane " id="tab-2-java">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 1}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
-<span class="kt">byte</span><span class="o">[]</span> <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span> <span class="c1">// represents &quot;no version&quot;.</span>
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">saveGame</span> <span class="o">=</span> <span class="s">&quot;{\&quot;progress\&quot;: 1}&quot;</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span><span class="o">;</span> <span class="c1">// represents &quot;no version&quot;.</span>
 
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageWriteMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
     <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;saves&quot;</span><span class="o">,</span> <span class="s">&quot;savegame&quot;</span><span class="o">,</span> <span class="n">saveGame</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
@@ -1193,15 +1264,30 @@
     
         <div role="tabpanel" class="tab-pane " id="tab-2-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">saveGame</span> <span class="p">=</span> <span class="s">&quot;{</span><span class="se">\&quot;</span><span class="s">progress</span><span class="se">\&quot;</span><span class="s">: 1}&quot;</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="n">using</span><span class="p">:</span> <span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
-<span class="kd">var</span> <span class="nv">version</span> <span class="p">=</span> <span class="s">&quot;*&quot;</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="n">using</span><span class="p">:</span> <span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span> <span class="c1">// represents &quot;no version&quot;.</span>
+<span class="kd">var</span> <span class="nv">version</span> <span class="p">=</span> <span class="s">&quot;*&quot;</span> <span class="c1">// represents &quot;no version&quot;.</span>
 
 <span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">StorageWriteMessage</span><span class="p">()</span>
 <span class="n">message</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="n">collection</span><span class="p">:</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">saveGame</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">version</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
   <span class="n">version</span> <span class="p">=</span> <span class="n">list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">version</span> <span class="c1">// Cache updated version for next write.</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">saveGame</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;progress&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">version</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span> <span class="c1">// a storage object&#39;s version.</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageWriteRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;savegame&quot;</span><span class="p">,</span> <span class="nx">saveGame</span><span class="p">,</span> <span class="nx">version</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">version</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">version</span><span class="p">;</span> <span class="c1">// Cache updated version for next write.</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1230,12 +1316,16 @@
             <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
             
         <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageFetchMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Fetch</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">)</span>
@@ -1243,8 +1333,7 @@
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageData</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record value &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record value &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;{0}&#39; write &#39;{1}&#39;&quot;</span><span class="p">,</span>
         <span class="n">record</span><span class="p">.</span><span class="n">PermissionRead</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">PermissionWrite</span><span class="p">);</span>
   <span class="p">}</span>
@@ -1286,20 +1375,38 @@
         </div>
     
         <div role="tabpanel" class="tab-pane " id="tab-3-swift">
-            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">userID</span> <span class="c1">// a Session object&#39;s Id.</span>
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">userID</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">userID</span> <span class="c1">// a Session object&#39;s Id.</span>
 
 <span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">StorageFetchMessage</span><span class="p">()</span>
-<span class="n">message</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="n">collection</span><span class="p">:</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">userID</span><span class="p">:</span> <span class="n">userId</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="n">collection</span><span class="p">:</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">userID</span><span class="p">:</span> <span class="n">userID</span><span class="p">)</span>
 <span class="n">message</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="n">collection</span><span class="p">:</span> <span class="s">&quot;configuration&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;config&quot;</span><span class="p">,</span> <span class="n">userID</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span> <span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record value &#39;@%&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;@%&#39; write &#39;@%&#39;&quot;</span><span class="p">,</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record value &#39;%@&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;%@&#39; write &#39;%@&#39;&quot;</span><span class="p">,</span>
         <span class="n">record</span><span class="p">.</span><span class="n">permissionRead</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">permissionWrite</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">id</span> <span class="c1">// a Session object&#39;s Id.</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageFetchRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;savegame&quot;</span><span class="p">,</span> <span class="nx">userId</span><span class="p">);</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;configuration&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">records</span><span class="p">){</span>
+  <span class="nx">records</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Record value &#39;%o&#39;&quot;</span><span class="p">,</span> <span class="nx">record</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Record permissions read &#39;%o&#39; write &#39;%o&#39;&quot;</span><span class="p">,</span><span class="nx">record</span><span class="p">.</span><span class="nx">permissionRead</span><span class="p">,</span> <span class="nx">record</span><span class="p">.</span><span class="nx">permissionWrite</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1327,12 +1434,16 @@
             <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-4-js" aria-controls="tab-4-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
             
         <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INSession object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Bucket</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">)</span>
@@ -1341,8 +1452,7 @@
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageData</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record value &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record value &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;{0}&#39; write &#39;{1}&#39;&quot;</span><span class="p">,</span>
         <span class="n">record</span><span class="p">.</span><span class="n">PermissionRead</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">PermissionWrite</span><span class="p">);</span>
   <span class="p">}</span>
@@ -1391,13 +1501,33 @@
 <span class="n">message</span><span class="p">.</span><span class="n">userID</span> <span class="p">=</span> <span class="n">userId</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span> <span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record value &#39;@%&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;@%&#39; write &#39;@%&#39;&quot;</span><span class="p">,</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record value &#39;%@&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record permissions read &#39;%@&#39; write &#39;%@&#39;&quot;</span><span class="p">,</span>
         <span class="n">record</span><span class="p">.</span><span class="n">permissionRead</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">permissionWrite</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">session</span><span class="p">.</span><span class="nx">id</span> <span class="c1">// a Session object&#39;s Id.</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageListRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">userId</span> <span class="o">=</span> <span class="nx">userId</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">bucket</span> <span class="o">=</span> <span class="s2">&quot;myapp&quot;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">collection</span> <span class="o">=</span> <span class="s2">&quot;saves&quot;</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">records</span><span class="p">){</span>
+  <span class="nx">records</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Record value &#39;%o&#39;&quot;</span><span class="p">,</span> <span class="nx">record</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Record permissions read &#39;%o&#39; write &#39;%o&#39;&quot;</span><span class="p">,</span><span class="nx">record</span><span class="p">.</span><span class="nx">permissionRead</span><span class="p">,</span> <span class="nx">record</span><span class="p">.</span><span class="nx">permissionWrite</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1485,24 +1615,27 @@
             <a href="#tab-5-swift" aria-controls="tab-5-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
+        <li class="nav-item ">
+            <a href="#tab-5-js" aria-controls="tab-5-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
         </ul>
     
         <div class="tab-content">
             
         <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">jsonString</span> <span class="p">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="p">;</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">json</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">jsonString</span><span class="p">);</span>
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">json</span> <span class="p">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageUpdateMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Update</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;wallets&quot;</span><span class="p">,</span> <span class="s">&quot;wallet&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">NStorageUpdateMessage</span><span class="p">.</span><span class="n">StorageUpdateBuilder</span><span class="p">()</span>
-        <span class="p">.</span><span class="n">Init</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">json</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">Incr</span><span class="p">(</span><span class="s">&quot;/coins&quot;</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
-        <span class="p">.</span><span class="n">Incr</span><span class="p">(</span><span class="s">&quot;/gems&quot;</span><span class="p">,</span> <span class="m">50</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Init</span><span class="p">(</span><span class="s">&quot;/foo&quot;</span><span class="p">,</span> <span class="n">json</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Incr</span><span class="p">(</span><span class="s">&quot;/foo/coins&quot;</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+        <span class="p">.</span><span class="n">Incr</span><span class="p">(</span><span class="s">&quot;/foo/gems&quot;</span><span class="p">,</span> <span class="m">50</span><span class="p">)</span>
         <span class="p">.</span><span class="n">Build</span><span class="p">())</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INStorageKey</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">version</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1513,13 +1646,13 @@
         </div>
     
         <div role="tabpanel" class="tab-pane " id="tab-5-java">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">json</span> <span class="o">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+            <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="s">&quot;{\&quot;coins\&quot;: 100, \&quot;gems\&quot;: 10, \&quot;artifacts\&quot;: 0}&quot;</span><span class="o">;</span>
 
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageUpdateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;wallets&quot;</span><span class="o">,</span> <span class="s">&quot;wallet&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">StorageUpdateMessage</span><span class="o">.</span><span class="na">OpBuilder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
-        <span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">,</span> <span class="n">json</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">incr</span><span class="o">(</span><span class="s">&quot;/coins&quot;</span><span class="o">,</span> <span class="mi">10</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">incr</span><span class="o">(</span><span class="s">&quot;/gems&quot;</span><span class="o">,</span> <span class="mi">50</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">record</span><span class="o">(</span><span class="s">&quot;myapp&quot;</span><span class="o">,</span> <span class="s">&quot;wallets&quot;</span><span class="o">,</span> <span class="s">&quot;wallet&quot;</span><span class="o">,</span> <span class="n">StorageUpdateMessage</span><span class="o">.</span><span class="na">OpBuilder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="s">&quot;/foo&quot;</span><span class="o">,</span> <span class="n">json</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">incr</span><span class="o">(</span><span class="s">&quot;/foo/coins&quot;</span><span class="o">,</span> <span class="mi">10</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">incr</span><span class="o">(</span><span class="s">&quot;/foo/gems&quot;</span><span class="o">,</span> <span class="mi">50</span><span class="o">)</span>
         <span class="o">.</span><span class="na">build</span><span class="o">())</span>
     <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">ResultSet</span><span class="o">&lt;</span><span class="n">RecordId</span><span class="o">&gt;&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
@@ -1549,7 +1682,7 @@
 
 <span class="kd">let</span> <span class="nv">ops</span> <span class="p">=</span> <span class="p">[</span>
   <span class="n">StorageOp</span><span class="p">(</span><span class="n">init_</span><span class="p">:</span> <span class="s">&quot;/foo&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">value</span><span class="p">),</span>
-  <span class="n">StorageOp</span><span class="p">(</span><span class="n">incr</span><span class="p">:</span> <span class="s">&quot;/foo/coins&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="n">StorageOp</span><span class="p">(</span><span class="n">incr</span><span class="p">:</span> <span class="s">&quot;/foo/coins&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="mi">10</span><span class="p">),</span>
   <span class="n">StorageOp</span><span class="p">(</span><span class="n">incr</span><span class="p">:</span> <span class="s">&quot;/foo/gems&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="mi">50</span><span class="p">)</span>
 <span class="p">]</span>
 
@@ -1557,11 +1690,33 @@
 <span class="n">message</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">bucket</span><span class="p">:</span> <span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="n">collection</span><span class="p">:</span> <span class="s">&quot;wallets&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="s">&quot;wallet&quot;</span><span class="p">,</span> <span class="n">ops</span><span class="p">:</span> <span class="n">ops</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">list</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">list</span> <span class="p">{</span>
-    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;@%&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">version</span><span class="p">)</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Stored record has version &#39;%@&#39;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">version</span><span class="p">)</span>
   <span class="p">}</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-js">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nx">value</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;coins&quot;</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;gems&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;artifacts&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">ops</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageUpdateRequest</span><span class="p">.</span><span class="nx">init_</span><span class="p">(</span><span class="s2">&quot;/foo&quot;</span><span class="p">,</span> <span class="nx">value</span><span class="p">),</span>
+  <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageUpdateRequest</span><span class="p">.</span><span class="nx">incr</span><span class="p">(</span><span class="s2">&quot;/foo/coins&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+  <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageUpdateRequest</span><span class="p">.</span><span class="nx">incr</span><span class="p">(</span><span class="s2">&quot;/foo/gems&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="p">];</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageUpdateRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;wallet&quot;</span><span class="p">,</span> <span class="s2">&quot;wallet&quot;</span><span class="p">,</span> <span class="nx">ops</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">){</span>
+  <span class="nx">results</span><span class="p">.</span><span class="nx">keys</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">storageKey</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Stored record has version %o&quot;</span><span class="p">,</span> <span class="nx">storageKey</span><span class="p">.</span><span class="nx">version</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1591,6 +1746,10 @@
     
         <li class="nav-item ">
             <a href="#tab-6-swift" aria-controls="tab-6-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-js" aria-controls="tab-6-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
@@ -1638,8 +1797,20 @@
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
   <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Removed user&#39;s record(s).&quot;</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageRemoveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;savegame&quot;</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Removed user&#39;s record(s).&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1655,23 +1826,27 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-25-csharp" aria-controls="tab-25-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-33-csharp" aria-controls="tab-33-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-25-java" aria-controls="tab-25-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-33-java" aria-controls="tab-33-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-25-swift" aria-controls="tab-25-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-33-swift" aria-controls="tab-33-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-33-js" aria-controls="tab-33-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-25-csharp">
-            <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
+        <div role="tabpanel" class="tab-pane active" id="tab-33-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">Version</span><span class="p">;</span> <span class="c1">// an INStorageKey object.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NStorageRemoveMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;myapp&quot;</span><span class="p">,</span> <span class="s">&quot;saves&quot;</span><span class="p">,</span> <span class="s">&quot;savegame&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
@@ -1685,7 +1860,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-25-java">
+        <div role="tabpanel" class="tab-pane " id="tab-33-java">
             <div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="o">[]</span> <span class="n">version</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="na">getVersion</span><span class="o">();</span> <span class="c1">// a RecordId object&#39;s version.</span>
 
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">StorageRemoveMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">newBuilder</span><span class="o">()</span>
@@ -1709,7 +1884,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-25-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-33-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">version</span> <span class="p">=</span> <span class="n">record</span><span class="p">.</span><span class="n">version</span> <span class="c1">// a StorageRecordId object&#39;s version.</span>
 
 <span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">StorageRemoveMessage</span><span class="p">()</span>
@@ -1717,8 +1892,22 @@
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
   <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Removed user&#39;s record(s).&quot;</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-33-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">version</span> <span class="o">=</span> <span class="nx">record</span><span class="p">.</span><span class="nx">version</span> <span class="c1">// a record&#39;s version.</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">StorageRemoveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;saves&quot;</span><span class="p">,</span> <span class="s2">&quot;savegame&quot;</span><span class="p">,</span> <span class="nx">version</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Removed user&#39;s record(s).&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
 </pre></div>
 
         </div>
@@ -1786,9 +1975,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1814,12 +2003,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

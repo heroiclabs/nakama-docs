@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Social
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                In-app Notifications
+              </span>
             
-            In-app Notifications
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -854,6 +874,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/social-in-app-notifications.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="in-app-notifications">In-app Notifications<a class="headerlink" href="#in-app-notifications" title="Permanent link">&para;</a></h1>
 <p>In-app notifications make it easy to broadcast a message to one or more users. They are great for sending announcements, alerts, or notices of in-game rewards and gifts.</p>
@@ -897,17 +919,83 @@
 
 <h2 id="receive-notifications">Receive notifications<a class="headerlink" href="#receive-notifications" title="Permanent link">&para;</a></h2>
 <p>A callback can be registered for notifications received when a client is connected. The handler will be called whenever a message is received. When multiple messages are returned (batched for performance) the handler will be called for each notification.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnNotification</span> <span class="p">=</span> <span class="p">(</span><span class="n">INNotification</span> <span class="n">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnNotification</span> <span class="p">=</span> <span class="p">(</span><span class="n">INNotification</span> <span class="n">n</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received code &#39;{0}&#39; and subject &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Subject</span><span class="p">);</span>
-  <span class="kt">var</span> <span class="n">content</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">Content</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">content</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Content</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-swift">
+            <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">onNotification</span> <span class="p">=</span> <span class="p">{</span> <span class="n">notification</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Received code %d and subject %@&quot;</span><span class="p">,</span> <span class="n">notification</span><span class="p">.</span><span class="n">code</span><span class="p">,</span> <span class="n">notification</span><span class="p">.</span><span class="n">subject</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Received id %d and content %@&quot;</span><span class="p">,</span> <span class="n">notification</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">notification</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="nx">client</span><span class="p">.</span><span class="nx">onnotification</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">notification</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Received code %o and subject %o&quot;</span><span class="p">,</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">code</span><span class="p">,</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">subject</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Received id %o and content %o&quot;</span><span class="p">,</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="list-notifications">List notifications<a class="headerlink" href="#list-notifications" title="Permanent link">&para;</a></h2>
 <p>You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. It depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">n</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Notice code &#39;{0}&#39; and subject &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">n</span><span class="p">.</span><span class="n">Subject</span><span class="p">);</span>
@@ -917,13 +1005,66 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">NotificationListMessage</span><span class="p">(</span><span class="n">limit</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">notifications</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">notification</span> <span class="k">in</span> <span class="n">notifications</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Notice code %d and subject %@.&quot;</span><span class="p">,</span> <span class="n">notification</span><span class="p">.</span><span class="n">code</span><span class="p">,</span> <span class="n">notification</span><span class="p">.</span><span class="n">subject</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">NotificationsListRequest</span><span class="p">();</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">notification</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Notice code %o and subject %o.&quot;</span><span class="p">,</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">code</span><span class="p">,</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">subject</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>A list of notifications can be retrieved in batches of up to 100 at a time. To retrieve all messages you should accumulate them with the resume cursor.</p>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>You usually only want to list 100 notifications at a time otherwise you might cause user fatigue. A better option could be to have the UI fetch the next 100 notifications when the user scrolls to the bottom of your UI panel.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">allNotifications</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">allNotifications</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
 
 <span class="n">Action</span> <span class="n">accumulateNotifications</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INCursor</span> <span class="n">resumeCursor</span><span class="p">)</span> <span class="p">{</span>
   <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
@@ -950,10 +1091,92 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">allNotifications</span> <span class="p">:</span> <span class="p">[</span><span class="n">Notification</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span>
 
+<span class="kd">let</span> <span class="nv">accumulateNotifications</span> <span class="p">=</span> <span class="p">{</span> <span class="n">cursor</span> <span class="k">in</span>
+  <span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">NotificationListMessage</span><span class="p">(</span><span class="n">limit</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+  <span class="n">message</span><span class="p">.</span><span class="n">cursor</span> <span class="p">=</span> <span class="n">cursor</span>
+  <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">notifications</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">notifications</span><span class="p">.</span><span class="bp">count</span> <span class="p">==</span> <span class="mi">0</span> <span class="p">{</span>
+      <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="n">allNotifications</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">notifications</span><span class="p">)</span>
+    <span class="n">accumulateNotifications</span><span class="p">(</span><span class="n">notifications</span><span class="p">.</span><span class="n">cursor</span><span class="p">)</span> <span class="c1">// recursive async call</span>
+  <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">NotificationListMessage</span><span class="p">(</span><span class="n">limit</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">notifications</span> <span class="k">in</span>
+  <span class="n">allNotifications</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">notifications</span><span class="p">)</span>
+  <span class="n">accumulateNotifications</span><span class="p">(</span><span class="n">notifications</span><span class="p">.</span><span class="n">cursor</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">allNotifications</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">var</span> <span class="nx">accumulateNotifications</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">cursor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">NotificationsListRequest</span><span class="p">();</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">allNotifications</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">notifications</span><span class="p">);</span>
+    <span class="nx">accumulateNotifications</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">resumableCursor</span><span class="p">);</span> <span class="c1">// recursive async call</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">NotificationsListRequest</span><span class="p">();</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">allNotifications</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">notifications</span><span class="p">);</span>
+  <span class="nx">accumulateNotifications</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">resumableCursor</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the resume cursor returned with each list message.</p>
 <p>The resume cursor marks the position of the most recent notification retrieved. We recommend you store the resume cursor in device storage and use it when the client makes it's next request for recent notifications.</p>
-<div class="codehilite"><pre><span></span><span class="n">INCursor</span> <span class="n">resumeCursor</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INCursor</span> <span class="n">resumeCursor</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NNotificationsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="m">100</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">resumeCursor</span><span class="p">)</span>
@@ -966,10 +1189,65 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">resumableCursor</span> <span class="p">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">NotificationListMessage</span><span class="p">(</span><span class="n">limit</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">cursor</span> <span class="p">=</span> <span class="n">resumableCursor</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">notifications</span> <span class="k">in</span>
+  <span class="n">resumableCursor</span> <span class="p">=</span> <span class="n">notifications</span><span class="p">.</span><span class="n">cursor</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">resumableCursor</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// stored from last list retrieval.</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">NotificationsListRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">cursor</span> <span class="o">=</span> <span class="nx">resumableCursor</span><span class="p">;</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+  <span class="nx">resumableCursor</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">cursor</span><span class="p">;</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="delete-notifications">Delete notifications<a class="headerlink" href="#delete-notifications" title="Permanent link">&para;</a></h2>
 <p>You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted (or it expires), all record of the message is removed from the system and it cannot be restored.</p>
-<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-js" aria-controls="tab-4-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;</span> <span class="n">list</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INNotification</span><span class="p">&gt;();</span>
 <span class="n">list</span><span class="p">.</span><span class="n">Add</span><span class="p">(...);</span> <span class="c1">// Add notification from your internal list</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NNotificationsRemoveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -979,7 +1257,36 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">NotificationRemoveMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">notificationIds</span><span class="p">.</span><span class="n">append</span><span class="p">(...)</span> <span class="c1">// Add notification from your internal list</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Notifications were removed.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">NotificationsRemoveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">push</span><span class="p">(...)</span> <span class="c1">// Add notification from your internal list</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Notifications were removed.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="notification-codes">Notification codes<a class="headerlink" href="#notification-codes" title="Permanent link">&para;</a></h2>
 <p>The server reserves codes 0 up to 100 for messages sent implicitly on certain events. The code is useful to decide how to display the notification in your UI.</p>
 <table>
@@ -1075,9 +1382,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1103,12 +1410,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

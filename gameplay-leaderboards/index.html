@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Gameplay
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Leaderboards
+              </span>
             
-            Leaderboards
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -1056,6 +1076,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/gameplay-leaderboards.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="leaderboards">Leaderboards<a class="headerlink" href="#leaderboards" title="Permanent link">&para;</a></h1>
 <p>Leaderboards are a great way to add a social and competitive element to any game. They're a fun way to drive competition among your players. The server supports an <strong>unlimited</strong> number of individual leaderboards with each one as a scoreboard which tracks separate records.</p>
@@ -1077,12 +1099,29 @@
 <p>The score in each record can be updated as the owner progresses. Scores can be updated as often as wanted and can increase or decrease. A record has some builtin fields like lang, location, and timezone. These values are used to filter leaderboard results.</p>
 <h4 id="custom-fields">Custom fields<a class="headerlink" href="#custom-fields" title="Permanent link">&para;</a></h4>
 <p>Each record can optionally include additional data about the score or the owner when submitted. The extra fields must be JSON encoded and submitted as the metadata. A good use case for metadata is info about race conditions in a driving game, such as weather, which can give extra UI hints when users list scores.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 <span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
 
 <span class="c1">// add custom fields with each record.</span>
-<span class="kt">var</span> <span class="n">jsonString</span> <span class="p">=</span> <span class="s">&quot;{\&quot;race_conditions\&quot;: [\&quot;sunny\&quot;, \&quot;clear\&quot;]}&quot;</span><span class="p">;</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">metadata</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">jsonString</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="s">&quot;{\&quot;race_conditions\&quot;: [\&quot;sunny\&quot;, \&quot;clear\&quot;]}&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
@@ -1097,7 +1136,34 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">//a Leaderboard ID.</span>
+<span class="kd">let</span> <span class="nv">score</span> <span class="p">=</span> <span class="mi">1200</span>
+<span class="kd">let</span> <span class="nv">metadata</span> <span class="p">=</span> <span class="s">&quot;{</span><span class="se">\&quot;</span><span class="s">race_conditions</span><span class="se">\&quot;</span><span class="s">: [</span><span class="se">\&quot;</span><span class="s">sunny</span><span class="se">\&quot;</span><span class="s">, </span><span class="se">\&quot;</span><span class="s">clear</span><span class="se">\&quot;</span><span class="s">]}&quot;</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="n">using</span><span class="p">:</span> <span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
 
+<span class="kd">var</span> <span class="nv">recordWrite</span> <span class="p">:</span> <span class="n">LeaderboardRecordWrite</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">recordWrite</span><span class="p">.</span><span class="kr">set</span> <span class="p">=</span> <span class="n">score</span>
+<span class="n">recordWrite</span><span class="p">.</span><span class="n">metadata</span> <span class="p">=</span> <span class="n">metadata</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordWriteMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">leaderboardRecords</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">recordWrite</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="create-a-leaderboard">Create a leaderboard<a class="headerlink" href="#create-a-leaderboard" title="Permanent link">&para;</a></h2>
 <p>A leaderboard can be created via server-side code at startup or within a <a href="../runtime-code-function-reference/#register-hooks">registered function</a>. The ID given to the leaderboard is used to submit scores to it.</p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
@@ -1110,24 +1176,78 @@
 
 <h2 id="list-leaderboards">List leaderboards<a class="headerlink" href="#list-leaderboards" title="Permanent link">&para;</a></h2>
 <p>All leaderboards can be listed by a user.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">().</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboard</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Found &#39;{0}&#39; leaderboards.&quot;</span><span class="p">,</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">.</span><span class="n">Count</span><span class="p">);</span>
 
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">leaderboard</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard id &#39;{0}&#39; and sort &#39;{1}&#39;&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Sort</span><span class="p">);</span>
-    <span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">leaderboard</span><span class="p">.</span><span class="n">Metadata</span><span class="p">);</span>
-    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard id &#39;{0}&#39; and sort &#39;{1}&#39;&quot;</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Sort</span><span class="p">);</span>
+    <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Metadata</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardsListMessage</span><span class="p">()</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">leaderboards</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Found %d leaderboards.&quot;</span><span class="p">,</span> <span class="n">leaderboards</span><span class="p">.</span><span class="bp">count</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">leaderboard</span> <span class="k">in</span> <span class="n">leaderboards</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Leaderboard id %@ and sort %d.&quot;</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="bp">sort</span><span class="p">)</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata %@&quot;</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">metadata</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>When you have more than 100 leaderboards you can fetch the next set of results with a cursor.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
 
@@ -1140,28 +1260,72 @@
 
     <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboard</span><span class="p">&gt;</span> <span class="n">nextList</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">l</span> <span class="k">in</span> <span class="n">nextList</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
-        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard id &#39;{0}&#39; and sort &#39;{1}&#39;&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">Sort</span><span class="p">);</span>
-        <span class="kt">var</span> <span class="n">metadata</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">Metadata</span><span class="p">);</span>
-        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">);</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard id &#39;{0}&#39; and sort &#39;{1}&#39;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">Sort</span><span class="p">);</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata &#39;{0}&#39;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">Metadata</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardsListMessage</span><span class="p">()</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">leaderboards</span> <span class="k">in</span>
+  <span class="c1">// Lets get the next page of results.</span>
+  <span class="k">if</span> <span class="kd">let</span> <span class="nv">cursor</span> <span class="p">=</span> <span class="n">leaderboards</span><span class="p">.</span><span class="n">cursor</span> <span class="o">&amp;&amp;</span> <span class="n">leaderboards</span><span class="p">.</span><span class="bp">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+    <span class="n">message</span><span class="p">.</span><span class="n">cursor</span> <span class="p">=</span> <span class="n">cursor</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">ls</span> <span class="k">in</span>
+      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Found %d leaderboards.&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="p">.</span><span class="bp">count</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">leaderboard</span> <span class="k">in</span> <span class="n">ls</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Leaderboard id %@ and sort %d.&quot;</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="bp">sort</span><span class="p">)</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Leaderboard metadata %@&quot;</span><span class="p">,</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">metadata</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="submit-a-score">Submit a score<a class="headerlink" href="#submit-a-score" title="Permanent link">&para;</a></h2>
 <p>A user can submit a score to a leaderboard and update it at any time. When a score is submitted it's sent with an operator which indicates how the new value should change the current score stored. The operators are: "set", "best", "inc", "decr".</p>
 <h3 id="set-operator">Set operator<a class="headerlink" href="#set-operator" title="Permanent link">&para;</a></h3>
 <p>The set operator will submit the score and replace any current value for the owner.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 <span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">results</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
   <span class="p">}</span>
@@ -1170,16 +1334,59 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">//a Leaderboard ID.</span>
+<span class="kd">let</span> <span class="nv">score</span> <span class="p">=</span> <span class="mi">1200</span>
 
+<span class="kd">var</span> <span class="nv">recordWrite</span> <span class="p">:</span> <span class="n">LeaderboardRecordWrite</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">recordWrite</span><span class="p">.</span><span class="kr">set</span> <span class="p">=</span> <span class="n">score</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordWriteMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">leaderboardRecords</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">recordWrite</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="best-operator">Best operator<a class="headerlink" href="#best-operator" title="Permanent link">&para;</a></h3>
 <p>The best operator will check the new score is better than the current score and keep which ever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 <span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Best</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">results</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
   <span class="p">}</span>
@@ -1188,16 +1395,59 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">//a Leaderboard ID.</span>
+<span class="kd">let</span> <span class="nv">score</span> <span class="p">=</span> <span class="mi">1200</span>
 
+<span class="kd">var</span> <span class="nv">recordWrite</span> <span class="p">:</span> <span class="n">LeaderboardRecordWrite</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">recordWrite</span><span class="p">.</span><span class="n">best</span> <span class="p">=</span> <span class="n">score</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordWriteMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">leaderboardRecords</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">recordWrite</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="increment-operator">Increment operator<a class="headerlink" href="#increment-operator" title="Permanent link">&para;</a></h3>
 <p>The increment operator will add the score value to the current score. If no score exists the new score will be added to 0.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-swift" aria-controls="tab-5-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 <span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Increment</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">results</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
   <span class="p">}</span>
@@ -1206,16 +1456,59 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">//a Leaderboard ID.</span>
+<span class="kd">let</span> <span class="nv">score</span> <span class="p">=</span> <span class="mi">1200</span>
 
+<span class="kd">var</span> <span class="nv">recordWrite</span> <span class="p">:</span> <span class="n">LeaderboardRecordWrite</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">recordWrite</span><span class="p">.</span><span class="n">increment</span> <span class="p">=</span> <span class="n">score</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordWriteMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">leaderboardRecords</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">recordWrite</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="decrement-operator">Decrement operator<a class="headerlink" href="#decrement-operator" title="Permanent link">&para;</a></h3>
 <p>The decrement operator will subtract the score value from the current score. If no score exists the new score will be subtracted from 0.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-swift" aria-controls="tab-6-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 <span class="kt">var</span> <span class="n">score</span> <span class="p">=</span> <span class="m">1200</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordWriteMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Decrement</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">results</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Record handle &#39;{0}&#39; score &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Handle</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">Score</span><span class="p">);</span>
   <span class="p">}</span>
@@ -1224,12 +1517,55 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">//a Leaderboard ID.</span>
+<span class="kd">let</span> <span class="nv">score</span> <span class="p">=</span> <span class="mi">1200</span>
 
+<span class="kd">var</span> <span class="nv">recordWrite</span> <span class="p">:</span> <span class="n">LeaderboardRecordWrite</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">recordWrite</span><span class="p">.</span><span class="n">decrement</span> <span class="p">=</span> <span class="n">score</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordWriteMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">leaderboardRecords</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">recordWrite</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="list-records">List records<a class="headerlink" href="#list-records" title="Permanent link">&para;</a></h2>
 <p>A user can list records from a leaderboard. This makes it easy to compare scores to other users and see their positions.</p>
 <h3 id="list-by-score">List by score<a class="headerlink" href="#list-by-score" title="Permanent link">&para;</a></h3>
 <p>The standard way to list records is ordered by score based on the sort order in the leaderboard.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-7-csharp" aria-controls="tab-7-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-swift" aria-controls="tab-7-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-7-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">).</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1241,13 +1577,50 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-7-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">//a Leaderboard ID.</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordsListMessage</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>You can fetch the next set of results with a cursor.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-8-csharp" aria-controls="tab-8-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-swift" aria-controls="tab-8-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-8-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 
 <span class="kt">var</span> <span class="n">messageBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Build</span><span class="p">(),</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INLeaderboardRecord</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1265,10 +1638,55 @@
 <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-8-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">//a Leaderboard ID.</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordsListMessage</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
 
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="kd">let</span> <span class="nv">cursor</span> <span class="p">=</span> <span class="n">records</span><span class="p">.</span><span class="n">cursor</span> <span class="o">&amp;&amp;</span> <span class="n">records</span><span class="p">.</span><span class="bp">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+    <span class="n">message</span><span class="p">.</span><span class="n">cursor</span> <span class="p">=</span> <span class="n">cursor</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">r</span> <span class="k">in</span>
+      <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">r</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="list-by-filter">List by filter<a class="headerlink" href="#list-by-filter" title="Permanent link">&para;</a></h3>
 <p>You can add a filter on one of "lang", "location", or "timezone".</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-9-csharp" aria-controls="tab-9-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-9-swift" aria-controls="tab-9-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-9-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">FilterByLocation</span><span class="p">(</span><span class="s">&quot;San Francisco&quot;</span><span class="p">)</span>
@@ -1282,12 +1700,50 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-9-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">// a Leaderboard ID.</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordsListMessage</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">filterByLocation</span> <span class="p">=</span> <span class="s">&quot;San Francisco&quot;</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="list-by-friends">List by friends<a class="headerlink" href="#list-by-friends" title="Permanent link">&para;</a></h3>
 <p>You can use a bunch of owner IDs to filter the records to only ones owned by those users. This can be used to retrieve only scores belonging to the user's friends.</p>
-<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span> <span class="n">ownerIds</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-10-csharp" aria-controls="tab-10-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-10-swift" aria-controls="tab-10-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-10-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">ownerIds</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
 <span class="n">ownerIds</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span> <span class="c1">// an INUser Id.</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">FilterByOwnerIds</span><span class="p">(</span><span class="n">ownerIds</span><span class="p">)</span>
@@ -1301,11 +1757,52 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-10-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">// a Leaderboard ID.</span>
+<span class="kd">let</span> <span class="nv">ownerIds</span> <span class="p">:</span> <span class="p">[</span><span class="nb">String</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span>
+<span class="n">ownersIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">id</span><span class="p">)</span> <span class="c1">// a user ID</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordsListMessage</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">filterByOwnerIds</span> <span class="p">=</span> <span class="n">ownerIds</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="find-current-user">Find current user<a class="headerlink" href="#find-current-user" title="Permanent link">&para;</a></h3>
 <p>A leaderboard can be "scrolled" to the page which contains a record owner. This can be used to give users a view of their own position within a leaderboard.</p>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">ownerId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser Id.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-25-csharp" aria-controls="tab-25-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-25-swift" aria-controls="tab-25-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-25-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INLeaderboard Id.</span>
+<span class="kt">string</span> <span class="n">ownerId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>   <span class="c1">// an INUser Id.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLeaderboardRecordsListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
     <span class="p">.</span><span class="n">FilterByPagingToOwnerId</span><span class="p">(</span><span class="n">ownerId</span><span class="p">)</span>
@@ -1318,6 +1815,30 @@
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-25-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="n">leaderboard</span><span class="p">.</span><span class="n">id</span> <span class="c1">// a Leaderboard ID.</span>
+<span class="n">string</span> <span class="n">ownerID</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">id</span> <span class="c1">// a user ID.</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">LeaderboardRecordsListMessage</span><span class="p">(</span><span class="n">leaderboardID</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">filterByPagingToOwnerID</span> <span class="p">=</span> <span class="n">ownerID</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">records</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">record</span> <span class="k">in</span> <span class="n">records</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Record handle %@ and score %d.&quot;</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">record</span><span class="p">.</span><span class="n">score</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
                 
                   
                 
@@ -1377,9 +1898,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1405,12 +1926,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

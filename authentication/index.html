@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,41 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Authentication
+              </span>
             
-            Authentication
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -112,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -123,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -145,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -155,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -170,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -982,6 +1006,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/authentication.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h1>
 <p>The server has builtin authentication so clients can only send requests and connect if they have the <a href="../install-configuration/#socket">server key</a>. When authentication is successful a client can create a session as a <a href="../user-accounts/">user</a>.</p>
@@ -1004,6 +1030,10 @@
     
         <li class="nav-item ">
             <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
@@ -1046,6 +1076,16 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;defaultkey&quot;</span><span class="p">,</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">7350</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">ssl</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+<span class="c1">// or same as above.</span>
+<span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">Client</span><span class="p">(</span><span class="s2">&quot;defaultkey&quot;</span><span class="p">);</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1076,6 +1116,10 @@
     
         <li class="nav-item ">
             <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
@@ -1176,6 +1220,44 @@
 
         </div>
     
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="c1">// The following example is only applicable to React Native apps:</span>
+<span class="kd">var</span> <span class="nx">deviceInfo</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;react-native-device-info&#39;</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">deviceId</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">AsyncStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;@MyApp:deviceKey&#39;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">){</span>
+    <span class="nx">deviceId</span> <span class="o">=</span> <span class="nx">value</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">deviceId</span> <span class="o">=</span> <span class="nx">deviceInfo</span><span class="p">.</span><span class="nx">getUniqueID</span><span class="p">();</span>
+    <span class="nx">AsyncStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;@MyApp:deviceKey&#39;</span><span class="p">,</span> <span class="nx">deviceId</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">device</span><span class="p">(</span><span class="nx">deviceId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully logged in, session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// USER_NOT_FOUND</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">client</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully registered, session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+      <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not register: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+      <span class="p">});</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not login: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
         </div>
     
                 </div>
@@ -1199,6 +1281,10 @@
     
         <li class="nav-item ">
             <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
@@ -1248,13 +1334,36 @@
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">email</span> <span class="p">=</span> <span class="s">&quot;email@example.com&quot;</span>
 <span class="kd">let</span> <span class="nv">password</span> <span class="p">=</span> <span class="s">&quot;3bc8f72e95a9&quot;</span>
 
-<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="n">password</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="n">password</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: %@&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">email</span> <span class="o">=</span> <span class="s2">&quot;email@example.com&quot;</span>
+<span class="kd">var</span> <span class="nx">password</span> <span class="o">=</span> <span class="s2">&quot;3bc8f72e95a9&quot;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">email</span><span class="p">(</span><span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully logged in, session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// USER_NOT_FOUND</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">client</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully registered, session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+      <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not register: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+      <span class="p">});</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not login: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 </pre></div>
 
         </div>
@@ -1268,7 +1377,29 @@
 <p>To register or login as a user with any of the providers an OAuth or access token must be obtained from that social service.</p>
 <h4 id="facebook">Facebook<a class="headerlink" href="#facebook" title="Permanent link">&para;</a></h4>
 <p>With Facebook you'll need to add the Facebook SDK to your project which can be <a href="https://developers.facebook.com/docs/" target="\_blank">downloaded online</a>. Follow their guides on how to integrate the code. With a mobile project you'll also need to complete instructions on how to configure iOS and Android.</p>
-<div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INSession</span><span class="p">&gt;</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INSession</span><span class="p">&gt;</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
   <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
 <span class="p">};</span>
@@ -1298,7 +1429,38 @@
 <span class="p">}</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
 
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">facebook</span><span class="p">:</span> <span class="n">oauthToken</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: %@&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">oauthToken</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">facebook</span><span class="p">(</span><span class="nx">oauthToken</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not login: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>You can add a button to your UI to login with Facebook.</p>
 <div class="codehilite"><pre><span></span><span class="n">Action</span><span class="p">&lt;</span><span class="n">INSession</span><span class="p">&gt;</span> <span class="n">sessionHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session: &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Token</span><span class="p">);</span>
@@ -1334,22 +1496,26 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-3-java" aria-controls="tab-3-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-4-java" aria-controls="tab-4-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-js" aria-controls="tab-4-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
             <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Google</span><span class="p">(</span><span class="n">oauthToken</span><span class="p">);</span>
@@ -1363,7 +1529,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-java">
+        <div role="tabpanel" class="tab-pane " id="tab-4-java">
             <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">oauthToken</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span><span class="o">;</span>
 
 <span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">google</span><span class="o">(</span><span class="n">oauthToken</span><span class="o">);</span>
@@ -1386,15 +1552,28 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-4-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">oauthToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
 
-<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">google</span><span class="p">:</span> <span class="n">oauthToken</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">google</span><span class="p">:</span> <span class="n">oauthToken</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: %@&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">oauthToken</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">google</span><span class="p">(</span><span class="nx">oauthToken</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not login: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
 
         </div>
@@ -1411,22 +1590,18 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-4-java" aria-controls="tab-4-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
-        </li>
-    
-        <li class="nav-item ">
-            <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-5-swift" aria-controls="tab-5-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
             <div class="codehilite"><pre><span></span><span class="c1">// You&#39;ll need to use native code (Obj-C) with Unity.</span>
 <span class="c1">// The &quot;UnityEngine.SocialPlatforms.GameCenter&quot; doesn&#39;t give enough information</span>
 <span class="c1">// to enable authentication.</span>
@@ -1453,13 +1628,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-java">
-            <div class="codehilite"><pre><span></span><span class="c1">// Not applicable with Android.</span>
-</pre></div>
-
-        </div>
-    
-        <div role="tabpanel" class="tab-pane " id="tab-4-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-5-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">playerID</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
 <span class="kd">let</span> <span class="nv">bundleID</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
 <span class="kd">let</span> <span class="nv">base64salt</span> <span class="p">:</span> <span class="nb">String</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
@@ -1471,9 +1640,9 @@
     <span class="n">gamecenter</span><span class="p">:</span> <span class="n">bundleID</span><span class="p">,</span> <span class="n">playerID</span><span class="p">:</span> <span class="n">playerID</span><span class="p">,</span> <span class="n">publicKeyURL</span><span class="p">:</span> <span class="n">publicKeyURL</span><span class="p">,</span>
     <span class="n">salt</span><span class="p">:</span> <span class="n">base64salt</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">signature</span><span class="p">:</span> <span class="n">base64signature</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: %@&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">// Use client.login(...) after register.</span>
 </pre></div>
@@ -1496,22 +1665,22 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-5-java" aria-controls="tab-5-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-6-java" aria-controls="tab-6-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-5-swift" aria-controls="tab-5-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-6-swift" aria-controls="tab-6-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
             <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">sessionToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Steam</span><span class="p">(</span><span class="n">sessionToken</span><span class="p">);</span>
@@ -1525,7 +1694,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-java">
+        <div role="tabpanel" class="tab-pane " id="tab-6-java">
             <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">sessionToken</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span><span class="o">;</span>
 
 <span class="n">AuthenticateMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">steam</span><span class="o">(</span><span class="n">sessionToken</span><span class="o">);</span>
@@ -1548,14 +1717,14 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-6-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">sessionToken</span> <span class="p">=</span> <span class="s">&quot;...&quot;</span>
 
 <span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">steam</span><span class="p">:</span> <span class="n">sessionToken</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: %@&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">// Use client.login(...) after register.</span>
 </pre></div>
@@ -1575,22 +1744,26 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-7-csharp" aria-controls="tab-7-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-6-java" aria-controls="tab-6-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-7-java" aria-controls="tab-7-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-6-swift" aria-controls="tab-6-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-7-swift" aria-controls="tab-7-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-js" aria-controls="tab-7-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-7-csharp">
             <div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
 <span class="kt">string</span> <span class="n">customId</span> <span class="p">=</span> <span class="s">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span><span class="p">;</span>
 
@@ -1605,7 +1778,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-java">
+        <div role="tabpanel" class="tab-pane " id="tab-7-java">
             <div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
 <span class="n">String</span> <span class="n">customId</span> <span class="o">=</span> <span class="s">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span><span class="o">;</span>
 
@@ -1629,17 +1802,30 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-7-swift">
             <div class="codehilite"><pre><span></span><span class="c1">// Some id from another service.</span>
 <span class="kd">let</span> <span class="nv">customID</span> <span class="p">=</span> <span class="s">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span>
 
 <span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">custom</span><span class="p">:</span> <span class="n">customID</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: @%&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session: %@&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">token</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">// Use client.login(...) after register.</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-7-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">customId</span> <span class="o">=</span> <span class="s2">&quot;a1fca336-7191-11e7-bdab-df34f6f90285&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">custom</span><span class="p">(</span><span class="nx">customId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;session: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not login: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
 
         </div>
@@ -1660,26 +1846,30 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-7-csharp" aria-controls="tab-7-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-8-csharp" aria-controls="tab-8-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-7-java" aria-controls="tab-7-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-8-java" aria-controls="tab-8-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-7-swift" aria-controls="tab-7-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-8-swift" aria-controls="tab-8-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-js" aria-controls="tab-8-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-7-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-8-csharp">
             <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NAuthenticateMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Login</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INSession</span> <span class="n">session</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+  <span class="kt">var</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session id &#39;{0}&#39; handle &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">userId</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">Handle</span><span class="p">);</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Session expired: {0}&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">HasExpired</span><span class="p">(</span><span class="n">DateTime</span><span class="p">.</span><span class="n">UtcNow</span><span class="p">));</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1689,7 +1879,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-7-java">
+        <div role="tabpanel" class="tab-pane " id="tab-8-java">
             <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span><span class="o">;</span>
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">AuthenticateMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
 <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
@@ -1713,16 +1903,29 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-7-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-8-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="s">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span>
 <span class="kd">let</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">AuthenticateMessage</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">id</span><span class="p">)</span>
 <span class="n">client</span><span class="p">.</span><span class="n">login</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">session</span> <span class="k">in</span>
   <span class="kd">let</span> <span class="nv">expired</span> <span class="p">=</span> <span class="n">session</span><span class="p">.</span><span class="n">isExpired</span><span class="p">(</span><span class="n">currentTimeSince1970</span><span class="p">:</span> <span class="n">Date</span><span class="p">().</span><span class="n">timeIntervalSince1970</span><span class="p">)</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session id &#39;@%&#39; handle &#39;@%&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">userID</span><span class="p">.</span><span class="n">uuidString</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">handle</span><span class="p">)</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session expired: &#39;@%&#39;&quot;</span><span class="p">,</span> <span class="n">expired</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session id &#39;%@&#39; handle &#39;%@&#39;.&quot;</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">userID</span><span class="p">,</span> <span class="n">session</span><span class="p">.</span><span class="n">handle</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Session expired: &#39;%@&#39;&quot;</span><span class="p">,</span> <span class="n">expired</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-8-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="s2">&quot;3e70fd52-7192-11e7-9766-cb3ce5609916&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">AuthenticateRequest</span><span class="p">.</span><span class="nx">device</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session id &#39;%o&#39;, handle &#39;%o.&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">session</span><span class="p">.</span><span class="nx">handle</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Session expired: %o&quot;</span><span class="p">,</span> <span class="nx">session</span><span class="p">.</span><span class="nx">isexpired</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()));</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Could not login: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
 
         </div>
@@ -1740,22 +1943,26 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-8-csharp" aria-controls="tab-8-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-9-csharp" aria-controls="tab-9-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-8-java" aria-controls="tab-8-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-9-java" aria-controls="tab-9-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-8-swift" aria-controls="tab-8-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-9-swift" aria-controls="tab-9-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-9-js" aria-controls="tab-9-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-8-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-9-csharp">
             <div class="codehilite"><pre><span></span><span class="n">INSession</span> <span class="n">session</span> <span class="p">=</span> <span class="n">someSession</span><span class="p">;</span> <span class="c1">// obtained from Register or Login.</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully connected.&quot;</span><span class="p">);</span>
@@ -1764,7 +1971,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-8-java">
+        <div role="tabpanel" class="tab-pane " id="tab-9-java">
             <div class="codehilite"><pre><span></span><span class="n">Session</span> <span class="n">session</span> <span class="o">=</span> <span class="n">someSession</span><span class="o">;</span> <span class="c1">// obtained from register or login.</span>
 <span class="n">Deferred</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">deferred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">session</span><span class="o">);</span>
 <span class="n">deferred</span><span class="o">.</span><span class="na">addCallback</span><span class="o">(</span><span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">,</span> <span class="n">Session</span><span class="o">&gt;()</span> <span class="o">{</span>
@@ -1778,10 +1985,21 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-8-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-9-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">session</span> <span class="p">:</span> <span class="n">Session</span> <span class="p">=</span> <span class="n">someSession</span> <span class="c1">// obtained from register or login.</span>
 <span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">session</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="kc">_</span> <span class="k">in</span>
   <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully connected.&quot;</span><span class="p">)</span>
+<span class="p">});</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-9-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">session</span> <span class="o">=</span> <span class="c1">// obtained from register or login</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">session</span><span class="p">).</span><span class="nx">then</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully connected.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
@@ -1800,22 +2018,26 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-9-csharp" aria-controls="tab-9-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-10-csharp" aria-controls="tab-10-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-9-java" aria-controls="tab-9-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-10-java" aria-controls="tab-10-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-9-swift" aria-controls="tab-9-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-10-swift" aria-controls="tab-10-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-10-js" aria-controls="tab-10-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-9-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-10-csharp">
             <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NSelfLinkMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
@@ -1828,7 +2050,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-9-java">
+        <div role="tabpanel" class="tab-pane " id="tab-10-java">
             <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="o">;</span>
 
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">SelfLinkMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
@@ -1850,15 +2072,29 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-9-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-10-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span>
 
 <span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">SelfLinkMessage</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
   <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully linked device ID to current user.&quot;</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-10-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="s2">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">LinkRequest</span><span class="p">()</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">device</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">session</span><span class="p">).</span><span class="nx">then</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully linked device ID to current user.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
 
         </div>
@@ -1874,22 +2110,26 @@
         <ul class="nav nav-tabs">
             
         <li class="nav-item active">
-            <a href="#tab-10-csharp" aria-controls="tab-10-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+            <a href="#tab-11-csharp" aria-controls="tab-11-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-10-java" aria-controls="tab-10-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
+            <a href="#tab-11-java" aria-controls="tab-11-java" role="tab" data-toggle="tab" data-lang="java">Android/Java</a>
         </li>
     
         <li class="nav-item ">
-            <a href="#tab-10-swift" aria-controls="tab-10-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+            <a href="#tab-11-swift" aria-controls="tab-11-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-11-js" aria-controls="tab-11-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-10-csharp">
+        <div role="tabpanel" class="tab-pane active" id="tab-11-csharp">
             <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NSelfUnlinkMessage</span><span class="p">.</span><span class="n">Device</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
@@ -1902,7 +2142,7 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-10-java">
+        <div role="tabpanel" class="tab-pane " id="tab-11-java">
             <div class="codehilite"><pre><span></span><span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="o">;</span>
 
 <span class="n">CollatedMessage</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="n">SelfUnlinkMessage</span><span class="o">.</span><span class="na">Builder</span><span class="o">.</span><span class="na">device</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
@@ -1924,15 +2164,29 @@
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-10-swift">
+        <div role="tabpanel" class="tab-pane " id="tab-11-swift">
             <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">id</span> <span class="p">=</span> <span class="s">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span>
 
 <span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">SelfUnlinkMessage</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">id</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">with</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
   <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully unlinked device ID from current user.&quot;</span><span class="p">)</span>
 <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
-  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error @% : @%&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
 <span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-11-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="s2">&quot;062b0916-7196-11e7-8371-9fcee9f0b20c&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">UnlinkRequest</span><span class="p">()</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">device</span> <span class="o">=</span> <span class="nx">id</span><span class="p">;</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">session</span><span class="p">).</span><span class="nx">then</span> <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">session</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully unlinked device ID from current user.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">});</span>
 </pre></div>
 
         </div>
@@ -2039,9 +2293,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -2067,12 +2321,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

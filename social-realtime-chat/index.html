@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Social
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Realtime Chat
+              </span>
             
-            Realtime Chat
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -922,6 +942,8 @@
             <article class="md-content__inner md-typeset">
               
                 
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/social-realtime-chat.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
                 
                 <h1 id="realtime-chat">Realtime Chat<a class="headerlink" href="#realtime-chat" title="Permanent link">&para;</a></h1>
 <p>Realtime chat makes it easy to power a live community.</p>
@@ -941,25 +963,116 @@
 </ol>
 <h2 id="receive-messages">Receive messages<a class="headerlink" href="#receive-messages" title="Permanent link">&para;</a></h2>
 <p>A user joins a chat topic to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.</p>
-<div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnTopicMessage</span> <span class="p">=</span> <span class="p">(</span><span class="n">INTopicMessage</span> <span class="n">message</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-0-csharp" aria-controls="tab-0-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-swift" aria-controls="tab-0-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-0-js" aria-controls="tab-0-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">OnTopicMessage</span> <span class="p">=</span> <span class="p">(</span><span class="n">INTopicMessage</span> <span class="n">message</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// TopicType will be one of DirectMessage, Room, or Group.</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received a &#39;{0}&#39; message.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">TopicType</span><span class="p">);</span>
-  <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>     <span class="c1">// convert byte[].</span>
-  <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Message has id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Message has id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-swift">
+            <div class="codehilite"><pre><span></span><span class="n">client</span><span class="p">.</span><span class="n">onTopicMessage</span> <span class="p">=</span> <span class="p">{</span> <span class="n">message</span> <span class="k">in</span>
+  <span class="c1">// Topic will be one of DirectMessage, Room, or Group.</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Received a %@ message&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">topic</span><span class="p">.</span><span class="n">description</span><span class="p">)</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Message content: %@.&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-js">
+            <div class="codehilite"><pre><span></span><span class="nx">client</span><span class="p">.</span><span class="nx">ontopicmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Received a %o message&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">topic</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Message content: %@.&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>In group chat a user will receive other messages from the server. These messages contain events on users who join or leave the group, when someone is promoted as an admin, etc. You may want users to see these messages in the chat stream or ignore them in the UI.</p>
 <p>You can identify event messages from chat messages by the message "Type".</p>
-<div class="codehilite"><pre><span></span><span class="n">TopicMessageType</span> <span class="n">messageType</span> <span class="p">=</span> <span class="n">message</span><span class="p">.</span><span class="n">Type</span><span class="p">;</span> <span class="c1">// enum</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-1-csharp" aria-controls="tab-1-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-swift" aria-controls="tab-1-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-1-js" aria-controls="tab-1-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">TopicMessageType</span> <span class="n">messageType</span> <span class="p">=</span> <span class="n">message</span><span class="p">.</span><span class="n">Type</span><span class="p">;</span> <span class="c1">// enum</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">messageType</span> <span class="p">!=</span> <span class="n">TopicMessageType</span><span class="p">.</span><span class="n">Chat</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Received message with event type &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">messageType</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">messageType</span> <span class="p">=</span> <span class="n">message</span><span class="p">.</span><span class="n">type</span><span class="p">;</span> <span class="c1">// enum</span>
+<span class="k">switch</span> <span class="n">messageType</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="p">.</span><span class="n">chat</span><span class="p">:</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Recieved a chat message&quot;</span><span class="p">)</span>
+  <span class="k">default</span><span class="p">:</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Received message with event type %d&quot;</span><span class="p">,</span> <span class="n">messageType</span><span class="p">.</span><span class="n">rawValue</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-js">
+            <div class="codehilite"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">type</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Received message with event type %o&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <table>
 <thead>
 <tr>
@@ -1016,21 +1129,80 @@
 </div>
 <h3 id="rooms">rooms<a class="headerlink" href="#rooms" title="Permanent link">&para;</a></h3>
 <p>A room is created dynamically for users to chat. A room has a name and will be setup on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a <a href="../storage-collections/">storage record</a>.</p>
-<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">roomId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-2-csharp" aria-controls="tab-2-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-swift" aria-controls="tab-2-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-2-js" aria-controls="tab-2-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">roomId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<span class="kt">string</span> <span class="n">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">roomId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopic</span><span class="p">&gt;</span> <span class="n">topics</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">roomId</span> <span class="p">=</span> <span class="n">topics</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Topic</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined the room.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">roomId</span> <span class="p">:</span> <span class="n">TopicId</span><span class="p">?</span>
+<span class="kd">let</span> <span class="nv">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicJoinMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">rooms</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">topics</span> <span class="k">in</span>
+  <span class="n">roomId</span> <span class="p">=</span> <span class="n">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">topic</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully joined the room.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">roomId</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">roomName</span> <span class="o">=</span> <span class="s2">&quot;Room-Name&quot;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicsJoinRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">room</span><span class="p">(</span><span class="nx">roomName</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">roomId</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">topic</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully joined the room.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The <code>roomId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
 <h3 id="groups">groups<a class="headerlink" href="#groups" title="Permanent link">&para;</a></h3>
 <p>A group chat can only be joined by a user who is a member of the <a href="../social-groups-clans/">group</a>. Messages are pushed in realtime to group members and they can read <a href="#message-history">historic messages</a>.</p>
@@ -1039,21 +1211,80 @@
 <p>If a user is kicked or leaves a group they can no longer receive messages or read history.</p>
 </div>
 <p>A group ID is needed when a user joins group chat and can be <a href="../social-groups-clans/#list-groups">listed by the user</a>.</p>
-<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">groupTopicId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-3-csharp" aria-controls="tab-3-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-swift" aria-controls="tab-3-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-3-js" aria-controls="tab-3-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">groupTopicId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
+<span class="kt">string</span> <span class="n">groupId</span> <span class="p">=</span> <span class="k">group</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INGroup ID.</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">TopicGroup</span><span class="p">(</span><span class="n">groupId</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">groupTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopic</span><span class="p">&gt;</span> <span class="n">topics</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">groupTopicId</span> <span class="p">=</span> <span class="n">topics</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Topic</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined the group chat.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">groupTopicId</span> <span class="p">:</span> <span class="n">TopicId</span><span class="p">?</span>
+<span class="kd">let</span> <span class="nv">groupId</span> <span class="p">=</span> <span class="n">group</span><span class="p">.</span><span class="n">id</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicJoinMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">groups</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">groupId</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">topics</span> <span class="k">in</span>
+  <span class="n">groupTopicId</span> <span class="p">=</span> <span class="n">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">topic</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully joined the group chat.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">groupTopicId</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">groupId</span> <span class="o">=</span> <span class="nx">group</span><span class="p">.</span><span class="nx">id</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicsJoinRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">group</span><span class="p">(</span><span class="nx">groupId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">groupTopicId</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">topic</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully joined the group chat.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The <code>groupTopicId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
 <h3 id="direct">direct<a class="headerlink" href="#direct" title="Permanent link">&para;</a></h3>
 <p>A user can direct message another user by ID. Each user will not receive messages in realtime until both users have joined the chat. This is important because it prevents spam messages from bad users.</p>
@@ -1062,21 +1293,80 @@
 <p>Friends, groups, leaderboards, matchmaker, room chat, and searches in storage are all ways to find users for chat.</p>
 </div>
 <p>A user will receive an <a href="../social-in-app-notifications/">in-app notification</a> when a request to chat has been received.</p>
-<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">directTopicId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-4-csharp" aria-controls="tab-4-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-swift" aria-controls="tab-4-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-4-js" aria-controls="tab-4-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">directTopicId</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
 
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INUser ID.</span>
+<span class="kt">string</span> <span class="n">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span> <span class="c1">// an INUser ID.</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">TopicDirectMessage</span><span class="p">(</span><span class="n">userId</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="n">directTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopic</span><span class="p">&gt;</span> <span class="n">topics</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="n">directTopicId</span> <span class="p">=</span> <span class="n">topics</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Topic</span><span class="p">;</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;Successfully joined the direct chat.&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">directTopicId</span> <span class="p">:</span> <span class="n">TopicId</span><span class="p">?</span>
+<span class="kd">let</span> <span class="nv">userId</span> <span class="p">=</span> <span class="n">user</span><span class="p">.</span><span class="n">id</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicJoinMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">userIds</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">userIds</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">topics</span> <span class="k">in</span>
+  <span class="n">directTopicId</span> <span class="p">=</span> <span class="n">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">topic</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully joined the direct chat.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">directTopicId</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicsJoinRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">dm</span><span class="p">(</span><span class="nx">userId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">directTopicId</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">topic</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully joined the direct chat.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>The <code>directTopicId</code> variable contains an ID used to <a href="#send-messages">send messages</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1090,7 +1380,29 @@
 <p class="admonition-title">Summary</p>
 <p>A list of all online users is received when a user joins a chat topic you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">onlineUsers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-5-csharp" aria-controls="tab-5-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-swift" aria-controls="tab-5-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-5-js" aria-controls="tab-5-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">IList</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;</span> <span class="n">onlineUsers</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">INUserPresence</span><span class="p">&gt;();</span>
 
 <span class="n">client</span><span class="p">.</span><span class="n">OnTopicPresence</span> <span class="p">=</span> <span class="p">(</span><span class="n">INTopicPresence</span> <span class="n">presences</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// Remove all users who left.</span>
@@ -1101,21 +1413,84 @@
   <span class="n">onlineUsers</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">presences</span><span class="p">.</span><span class="n">Join</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<span class="kt">string</span> <span class="n">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicJoinMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
-<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopic</span> <span class="n">topic</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopic</span><span class="p">&gt;</span> <span class="n">topics</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="c1">// Setup initial online user list.</span>
-  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">topic</span><span class="p">.</span><span class="n">Presences</span><span class="p">);</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">AddRange</span><span class="p">(</span><span class="n">topics</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Presences</span><span class="p">);</span>
   <span class="c1">// Remove your own user from list.</span>
-  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">topic</span><span class="p">.</span><span class="n">Self</span><span class="p">);</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">topics</span><span class="p">.</span><span class="n">Results</span><span class="p">[</span><span class="m">0</span><span class="p">].</span><span class="n">Self</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nv">onlineUsers</span> <span class="p">:</span> <span class="p">[</span><span class="n">UserPresence</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span>
 
+<span class="n">client</span><span class="p">.</span><span class="n">onTopicPresence</span> <span class="p">=</span> <span class="p">{</span> <span class="n">presence</span> <span class="k">in</span>
+  <span class="c1">// Remove all users who left.</span>
+  <span class="k">for</span> <span class="n">user</span> <span class="k">in</span> <span class="n">presence</span><span class="p">.</span><span class="n">leave</span> <span class="p">{</span>
+    <span class="n">onlineUsers</span><span class="p">.</span><span class="bp">removeAtIndex</span><span class="p">(</span><span class="n">onlineUsers</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="n">user</span><span class="p">))</span>
+  <span class="p">}</span>
+  <span class="c1">// Add all users who joined.</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">contentOf</span><span class="p">:</span> <span class="n">presence</span><span class="p">.</span><span class="bp">join</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nv">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicJoinMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">rooms</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">topics</span> <span class="k">in</span>
+  <span class="c1">// Setup initial online user list.</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">contentOf</span><span class="p">:</span> <span class="n">topic</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">presences</span><span class="p">)</span>
+  <span class="c1">// Remove your own user from list.</span>
+  <span class="n">onlineUsers</span><span class="p">.</span><span class="bp">removeAtIndex</span><span class="p">(</span><span class="n">onlineUsers</span><span class="p">.</span><span class="n">indexOf</span><span class="p">(</span><span class="n">topic</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="kc">self</span><span class="p">))</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">onlineUsers</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">ontopicpresence</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">presence</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Remove all users who left.</span>
+  <span class="nx">onlineUsers</span> <span class="o">=</span> <span class="nx">onlineUsers</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">!</span><span class="nx">presence</span><span class="p">.</span><span class="nx">leave</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+  <span class="p">})</span>
+
+  <span class="c1">// Add all users who joined.</span>
+  <span class="nx">onlineUsers</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">presence</span><span class="p">.</span><span class="nx">join</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">roomName</span> <span class="o">=</span> <span class="s2">&quot;Room-Name&quot;</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicsJoinRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">room</span><span class="p">(</span><span class="nx">roomName</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Setup initial online user list.</span>
+  <span class="nx">onlineUsers</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">presences</span><span class="p">);</span>
+  <span class="c1">// Remove your own user from list.</span>
+  <span class="nx">onlineUsers</span> <span class="o">=</span> <span class="nx">onlineUsers</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">user</span> <span class="o">!=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">topics</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">self</span><span class="p">;</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The server is optimized to only push presence updates when other users join or leave the chat.</p>
@@ -1123,23 +1498,102 @@
 <h2 id="send-messages">Send messages<a class="headerlink" href="#send-messages" title="Permanent link">&para;</a></h2>
 <p>When a user has <a href="#join-chat">joined a chat topic</a> it's ID can be used to send messages with JSON encoded strings.</p>
 <p>Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.</p>
-<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-6-csharp" aria-controls="tab-6-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-swift" aria-controls="tab-6-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-6-js" aria-controls="tab-6-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-6-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
 
 <span class="kt">var</span> <span class="n">json</span> <span class="p">=</span> <span class="s">&quot;{\&quot;some\&quot;:\&quot;data\&quot;}&quot;</span><span class="p">;</span>
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
-<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NTopicMessageSendMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">chatTopicId</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NTopicMessageSendMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">chatTopicId</span><span class="p">,</span> <span class="n">json</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INTopicMessageAck</span> <span class="n">ack</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kt">var</span> <span class="n">messageId</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">ack</span><span class="p">.</span><span class="n">MessageId</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
-  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;New message sent has id &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">messageId</span><span class="p">);</span>
+  <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;New message sent has id &#39;{0}&#39;.&quot;</span><span class="p">,</span> <span class="n">ack</span><span class="p">.</span><span class="n">MessageId</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">chatTopicID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// A chat topic ID</span>
+<span class="kd">let</span> <span class="nv">json</span> <span class="p">=</span> <span class="s">&quot;{</span><span class="se">\&quot;</span><span class="s">some</span><span class="se">\&quot;</span><span class="s">:</span><span class="se">\&quot;</span><span class="s">data</span><span class="se">\&quot;</span><span class="s">}&quot;</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="n">using</span><span class="p">:</span> <span class="p">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicMessageSendMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">topicId</span> <span class="p">=</span> <span class="n">chatTopicID</span>
+<span class="n">message</span><span class="p">.</span><span class="n">data</span> <span class="p">=</span> <span class="n">json</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">ack</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;New message sent has id %@.&quot;</span><span class="p">,</span> <span class="n">ack</span><span class="p">.</span><span class="n">messageID</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">chatTopicId</span> <span class="o">=</span> <span class="p">...</span> <span class="c1">// A chat topic ID</span>
+<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;some&quot;</span><span class="o">:</span><span class="s2">&quot;data&quot;</span><span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicMessageSendRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">topic</span> <span class="o">=</span> <span class="nx">chatTopicId</span><span class="p">;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ack</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;New message sent has id %@.&quot;</span><span class="p">,</span> <span class="nx">ack</span><span class="p">.</span><span class="nx">messageId</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="leave-chat">Leave chat<a class="headerlink" href="#leave-chat" title="Permanent link">&para;</a></h2>
 <p>A user can leave a chat topic to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.</p>
-<div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-7-csharp" aria-controls="tab-7-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-swift" aria-controls="tab-7-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-7-js" aria-controls="tab-7-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-7-csharp">
+            <div class="codehilite"><pre><span></span><span class="n">INTopicId</span> <span class="n">chatTopicId</span> <span class="p">=</span> <span class="n">topic</span><span class="p">.</span><span class="n">Topic</span><span class="p">;</span> <span class="c1">// A chat topic ID.</span>
 
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="n">NTopicLeaveMessage</span><span class="p">.</span><span class="n">Default</span><span class="p">(</span><span class="n">chatTopicId</span><span class="p">);</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="kt">bool</span> <span class="n">done</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1149,7 +1603,40 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-7-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">chatTopicID</span> <span class="p">=</span> <span class="p">...</span> <span class="c1">// A chat topic ID</span>
 
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicLeaveMessage</span><span class="p">()</span>
+<span class="n">message</span><span class="p">.</span><span class="n">topics</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">chatTopicID</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Successfully left chat.&quot;</span><span class="p">)</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-7-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">chatTopicId</span> <span class="o">=</span> <span class="p">...</span> <span class="c1">// A chat topic ID</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicsLeaveRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">topics</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">chatTopicId</span><span class="p">);</span>
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Successfully left chat.&quot;</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="message-history">Message history<a class="headerlink" href="#message-history" title="Permanent link">&para;</a></h2>
 <p>Every chat conversation stores a history of messages. The history also contains <a href="#receive-messages">event messages</a> sent by the server with group chat. Each user can retrieve old messages for chat when they next connect online.</p>
 <p>Messages can be listed in order of most recent to oldest and also in reverse (oldest to newest). Messages are returned in batches of up to 100 each with a cursor for when there are more messages.</p>
@@ -1157,7 +1644,29 @@
 <p class="admonition-title">Tip</p>
 <p>A user does not have to join a chat topic to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-8-csharp" aria-controls="tab-8-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-swift" aria-controls="tab-8-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-8-js" aria-controls="tab-8-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-8-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">string</span> <span class="n">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span><span class="p">;</span>
 <span class="c1">// Fetch 10 messages on the chat room with oldest first.</span>
 <span class="kt">var</span> <span class="n">message</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicMessagesListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
@@ -1166,8 +1675,8 @@
     <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
 <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopicMessage</span><span class="p">&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">msg</span> <span class="k">in</span> <span class="n">list</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>     <span class="c1">// convert byte[].</span>
-    <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
+    <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>
+    <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
     <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Message has id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
@@ -1175,14 +1684,79 @@
 <span class="p">});</span>
 </pre></div>
 
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-8-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span><span class="p">;</span>
 
+<span class="c1">// Fetch 10 messages on the chat room with oldest first.</span>
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicMessagesListMessage</span><span class="p">(</span><span class="n">room</span><span class="p">:</span> <span class="n">roomName</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">forward</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">messages</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">message</span> <span class="k">in</span> <span class="n">messages</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Message has id %@ and content %@&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">topicId</span><span class="p">.</span><span class="n">description</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-8-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">roomName</span> <span class="o">=</span> <span class="s2">&quot;Room-Name&quot;</span><span class="p">;</span>
+
+<span class="c1">// Fetch 10 messages on the chat room with oldest first.</span>
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicMessagesListRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">room</span> <span class="o">=</span> <span class="nx">roomName</span><span class="p">;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">forward</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">limit</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Message has id %o and content %o&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">topicId</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <p>A cursor can be used to page after a batch of messages for the next set of results.</p>
 <p>We recommend you only list the most recent 100 messages in your UI. A good user experience could be to fetch the next 100 older messages when the user scrolls to the bottom of your UI panel.</p>
-<div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item active">
+            <a href="#tab-30-csharp" aria-controls="tab-30-csharp" role="tab" data-toggle="tab" data-lang="csharp">Unity</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-30-swift" aria-controls="tab-30-swift" role="tab" data-toggle="tab" data-lang="swift">Swift</a>
+        </li>
+    
+        <li class="nav-item ">
+            <a href="#tab-30-js" aria-controls="tab-30-js" role="tab" data-toggle="tab" data-lang="js">Javascript</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-30-csharp">
+            <div class="codehilite"><pre><span></span><span class="kt">var</span> <span class="n">errorHandler</span> <span class="p">=</span> <span class="k">delegate</span><span class="p">(</span><span class="n">INError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Debug</span><span class="p">.</span><span class="n">LogErrorFormat</span><span class="p">(</span><span class="s">&quot;Error: code &#39;{0}&#39; with &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Code</span><span class="p">,</span> <span class="n">err</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="kt">byte</span><span class="p">[]</span> <span class="n">roomName</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">&quot;Room-Name&quot;</span><span class="p">);</span> <span class="c1">// convert string.</span>
+<span class="kt">string</span> <span class="n">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span><span class="p">;</span>
 <span class="kt">var</span> <span class="n">messageBuilder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NTopicMessagesListMessage</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
     <span class="p">.</span><span class="n">TopicRoom</span><span class="p">(</span><span class="n">roomName</span><span class="p">)</span>
     <span class="p">.</span><span class="n">Limit</span><span class="p">(</span><span class="m">100</span><span class="p">);</span>
@@ -1194,14 +1768,69 @@
 
     <span class="n">client</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">INResultSet</span><span class="p">&lt;</span><span class="n">INTopicMessage</span><span class="p">&gt;</span> <span class="n">nextList</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
       <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">msg</span> <span class="k">in</span> <span class="n">nextList</span><span class="p">.</span><span class="n">Results</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>     <span class="c1">// convert byte[].</span>
-        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">);</span> <span class="c1">// convert byte[].</span>
+        <span class="kt">var</span> <span class="n">id</span> <span class="p">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>
+        <span class="kt">var</span> <span class="n">data</span> <span class="p">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">Topic</span><span class="p">.</span><span class="n">Data</span><span class="p">;</span>
         <span class="n">Debug</span><span class="p">.</span><span class="n">LogFormat</span><span class="p">(</span><span class="s">&quot;Message has id &#39;{0}&#39; and content &#39;{1}&#39;.&quot;</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">},</span> <span class="n">errorHandler</span><span class="p">);</span>
 </pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-30-swift">
+            <div class="codehilite"><pre><span></span><span class="kd">let</span> <span class="nv">roomName</span> <span class="p">=</span> <span class="s">&quot;Room-Name&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nv">message</span> <span class="p">=</span> <span class="n">TopicMessagesListMessage</span><span class="p">(</span><span class="n">room</span><span class="p">:</span> <span class="n">roomName</span><span class="p">)</span>
+<span class="n">message</span><span class="p">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">messages</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="kd">let</span> <span class="nv">_cursor</span> <span class="p">=</span> <span class="n">messages</span><span class="p">.</span><span class="n">cursor</span> <span class="o">&amp;&amp;</span> <span class="n">messages</span><span class="p">.</span><span class="bp">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+    <span class="n">message</span><span class="p">.</span><span class="n">cursor</span> <span class="p">=</span> <span class="n">_cursor</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">message</span><span class="p">).</span><span class="n">then</span> <span class="p">{</span> <span class="n">messages</span> <span class="k">in</span>
+      <span class="k">for</span> <span class="n">message</span> <span class="k">in</span> <span class="n">messages</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Message has id %@ and content %@&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">topicId</span><span class="p">.</span><span class="n">description</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+      <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="s">&quot;Error %@ : %@&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="p">(</span><span class="n">err</span> <span class="k">as</span><span class="p">!</span> <span class="n">NakamaError</span><span class="p">).</span><span class="n">message</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-30-js">
+            <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">roomName</span> <span class="o">=</span> <span class="s2">&quot;Room-Name&quot;</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">nakamajs</span><span class="p">.</span><span class="nx">TopicMessagesListRequest</span><span class="p">();</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">room</span> <span class="o">=</span> <span class="nx">roomName</span><span class="p">;</span>
+<span class="nx">message</span><span class="p">.</span><span class="nx">limit</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">cursor</span> <span class="o">&amp;&amp;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+    <span class="nx">message</span><span class="p">.</span><span class="nx">cursor</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">cursor</span><span class="p">;</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">messages</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">messages</span><span class="p">.</span><span class="nx">messages</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Message has id %o and content %o&quot;</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">topicId</span><span class="p">,</span> <span class="nx">message</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;An error occured: %o&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">})</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
                 
                   
                 
@@ -1261,9 +1890,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -1289,12 +1918,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     

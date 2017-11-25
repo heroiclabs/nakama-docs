@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
@@ -16,9 +19,22 @@
         <meta name="author" content="Heroic Labs Team & contributors">
       
       
-        <link rel="shortcut icon" href="../images/favicon.ico">
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
       
-      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.2, mkdocs-material-2.2.0">
     
     
       
@@ -26,32 +42,32 @@
       
     
     
-      <script src="../assets/javascripts/modernizr-1df76c4e58.js"></script>
-    
-    
-      <link rel="stylesheet" href="../assets/stylesheets/application-769c285a91.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.5d3fffba.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-02c2a4388f.palette.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.fbd935c7.css">
       
     
     
+      <script src="../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
       
-        
-        
-        
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
     
+      <link rel="stylesheet" href="../stylesheets/code-tabs.css">
+    
     
   </head>
   
-  
-  
-  
-    <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
+    
+    
+      <body data-md-color-primary="indigo" data-md-color-accent="indigo">
+    
   
     <svg class="md-svg">
       <defs>
@@ -69,45 +85,46 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        
-          <a href="https://heroiclabs.com/" title="Nakama server" class="md-logo md-header-nav__button">
+        <a href="https://heroiclabs.com/" title="Nakama server" class="md-header-nav__button md-logo">
+          
             <img src="../images/logo-white.svg" width="24" height="24">
-          </a>
-        
+          
+        </a>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
       </div>
       <div class="md-flex__cell md-flex__cell--stretch">
-        <span class="md-flex__ellipsis md-header-nav__title">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Runtime Code
-                </span>
-              
+              <span class="md-header-nav__topic">
+                Nakama server
+              </span>
+              <span class="md-header-nav__topic">
+                Function Reference
+              </span>
             
-            Function Reference
           
-        </span>
+        </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
           
-<div class="md-search" data-md-component="search">
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="search"></label>
   <div class="md-search__inner">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
       <label class="md-icon md-search__icon" for="search"></label>
-      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
-          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
           <ol class="md-search-result__list"></ol>
@@ -116,6 +133,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -127,7 +145,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -149,6 +167,8 @@
     
     <div class="md-container">
       
+        
+      
       
       <main class="md-main">
         <div class="md-main__inner md-grid" data-md-component="container">
@@ -159,11 +179,11 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="drawer">
-    
-      <i class="md-logo md-nav__button">
-        <img src="../images/logo-white.svg">
-      </i>
-    
+    <span class="md-nav__button md-logo">
+      
+        <img src="../images/logo-white.svg" width="24" height="24">
+      
+    </span>
     Nakama server
   </label>
   
@@ -174,7 +194,7 @@
   
 
 
-  <a href="https://github.com/heroiclabs/nakama" title="Go to repository" class="md-source" data-md-source="github">
+  <a href="https://github.com/heroiclabs/nakama/" title="Go to repository" class="md-source" data-md-source="github">
     
       <div class="md-source__icon">
         <svg viewBox="0 0 24 24" width="24" height="24">
@@ -639,6 +659,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cron" title="cron" class="md-nav__link">
+    cron
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#groups" title="groups" class="md-nav__link">
     groups
   </a>
@@ -704,6 +731,13 @@
           <li class="md-nav__item">
   <a href="#uuid" title="uuid" class="md-nav__link">
     uuid
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql" title="sql" class="md-nav__link">
+    sql
   </a>
   
 </li>
@@ -890,6 +924,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cron" title="cron" class="md-nav__link">
+    cron
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#groups" title="groups" class="md-nav__link">
     groups
   </a>
@@ -959,6 +1000,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sql" title="sql" class="md-nav__link">
+    sql
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -977,6 +1025,8 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
+                
+                  <a href="https://github.com/heroiclabs/nakama/edit/master/docs/runtime-code-function-reference.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="function-reference">Function Reference<a class="headerlink" href="#function-reference" title="Permanent link">&para;</a></h1>
@@ -1100,6 +1150,42 @@
 <p><em>Example</em></p>
 <div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">encoded</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">base64_encode</span><span class="p">(</span><span class="s2">&quot;Hello world&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span> <span class="c1">-- outputs &quot;SGVsbG8gd29ybGQ=&quot;</span>
+</pre></div>
+
+
+<h3 id="cron">cron<a class="headerlink" href="#cron" title="Permanent link">&para;</a></h3>
+<p><strong>cron_next (expression, timestamp)</strong></p>
+<p>Parses a CRON expression and a timestamp in UTC seconds, and returns the next matching timestamp in UTC seconds.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>expression</td>
+<td>string</td>
+<td>A valid CRON expression in standard format, for example "<em> * </em> * *".</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>number</td>
+<td>A time value expressed as UTC seconds.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>The next UTC seconds timestamp that matches the given CRON expression, and is immediately after the given timestamp.</p>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="c1">-- Based on the current time, return the UTC seconds value representing the</span>
+<span class="c1">-- nearest upcoming Monday at 00:00 UTC (midnight.)</span>
+<span class="kd">local</span> <span class="n">expr</span> <span class="o">=</span> <span class="s2">&quot;0 0 * * 1&quot;</span>
+<span class="kd">local</span> <span class="n">ts</span> <span class="o">=</span> <span class="nb">os.time</span><span class="p">()</span>
+<span class="kd">local</span> <span class="nb">next</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">cron_next</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span>
 </pre></div>
 
 
@@ -1422,7 +1508,7 @@
 <tr>
 <td>id</td>
 <td>string</td>
-<td>The unique identifier for the new leaderboard. This is used by clients to submit scores. Mandatory field.</td>
+<td>The unique identifier for the leaderboard to submit to. Mandatory field.</td>
 </tr>
 <tr>
 <td>value</td>
@@ -1469,6 +1555,95 @@
 <span class="kd">local</span> <span class="n">owner_id</span> <span class="o">=</span> <span class="s2">&quot;4c2ae592-b2a7-445e-98ec-697694478b1c&quot;</span>
 <span class="kd">local</span> <span class="n">handle</span> <span class="o">=</span> <span class="s2">&quot;02ebb2c8&quot;</span>
 <span class="n">nk</span><span class="p">.</span><span class="n">leaderboard_submit_set</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">owner_id</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+</pre></div>
+
+
+<hr />
+<p><strong>leaderboard_records_list_user (id, owner, limit)</strong></p>
+<p>List records on the specified leaderboard, automatically paginating down to where the given user is on this leaderboard. If the user has no record on the given leaderboard will return no records.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>The unique identifier of the leaderboard to list from. Mandatory field.</td>
+</tr>
+<tr>
+<td>owner</td>
+<td>string</td>
+<td>The record owner to find in the leaderboard. Mandatory field.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>number</td>
+<td>The maximum number of records to return, from 10 to 100. Mandatory field.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>A page of leaderboard records and optionally a cursor that can be used to retrieve the next page, if any.</p>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">id</span> <span class="o">=</span> <span class="s2">&quot;4ec4f126-3f9d-11e7-84ef-b7c182b36521&quot;</span>
+<span class="kd">local</span> <span class="n">owner_id</span> <span class="o">=</span> <span class="s2">&quot;4c2ae592-b2a7-445e-98ec-697694478b1c&quot;</span>
+<span class="kd">local</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="kd">local</span> <span class="n">records</span><span class="p">,</span> <span class="n">cursor</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">leaderboard_records_list_user</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">owner_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+</pre></div>
+
+
+<hr />
+<p><strong>leaderboard_records_list_users (id, owners, limit)</strong></p>
+<p>List records on the specified leaderboard, filtering to only the records owned by the given list of users. If one or more of the given users have no record on the given leaderboard they will be omitted from the results.</p>
+<p><em>Parameters</em></p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>The unique identifier of the leaderboard to list from. Mandatory field.</td>
+</tr>
+<tr>
+<td>owners</td>
+<td>table</td>
+<td>A set of owner IDs to retrieve records for. Mandatory field.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>number</td>
+<td>The maximum number of records to return, from 10 to 100. Mandatory field.</td>
+</tr>
+<tr>
+<td>cursor</td>
+<td>string</td>
+<td>A previous cursor value if paginating to the next page of results. Optional.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>A page of leaderboard records and optionally a cursor that can be used to retrieve the next page, if any.</p>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="kd">local</span> <span class="n">id</span> <span class="o">=</span> <span class="s2">&quot;4ec4f126-3f9d-11e7-84ef-b7c182b36521&quot;</span>
+<span class="kd">local</span> <span class="n">owners</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;4c2ae592-b2a7-445e-98ec-697694478b1c&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;f15526e8-6cf8-49a8-b4c8-0b1e4c32a1d7&quot;</span>
+<span class="p">}</span>
+<span class="kd">local</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="kd">local</span> <span class="n">previous_cursor</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="kd">local</span> <span class="n">records</span><span class="p">,</span> <span class="n">cursor</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">leaderboard_records_list_users</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">owner_ids</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">previous_cursor</span><span class="p">)</span>
 </pre></div>
 
 
@@ -1906,7 +2081,9 @@
   <span class="p">{</span><span class="n">Op</span> <span class="o">=</span> <span class="s2">&quot;replace&quot;</span><span class="p">,</span> <span class="n">Path</span> <span class="o">=</span> <span class="s2">&quot;/updated_at&quot;</span><span class="p">,</span> <span class="n">Value</span> <span class="o">=</span> <span class="n">now</span><span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">local</span> <span class="n">record_keys</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Update</span> <span class="o">=</span> <span class="n">update_ops</span><span class="p">}</span>
+  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Update</span> <span class="o">=</span> <span class="n">update_ops</span><span class="p">},</span>
+  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;r2&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Update</span> <span class="o">=</span> <span class="n">update_ops</span><span class="p">,</span> <span class="n">PermissionRead</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">PermissionWrite</span> <span class="o">=</span> <span class="mi">1</span><span class="p">}</span>
+  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;r3&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Update</span> <span class="o">=</span> <span class="n">update_ops</span><span class="p">,</span> <span class="n">Version</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">PermissionRead</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">PermissionWrite</span> <span class="o">=</span> <span class="mi">1</span><span class="p">}</span>
 <span class="p">}</span>
 <span class="n">nk</span><span class="p">.</span><span class="n">storage_update</span><span class="p">(</span><span class="n">record_keys</span><span class="p">)</span>
 </pre></div>
@@ -1937,7 +2114,8 @@
 <span class="kd">local</span> <span class="n">new_records</span> <span class="o">=</span> <span class="p">{</span>
   <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save1&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Value</span> <span class="o">=</span> <span class="p">{}},</span>
   <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save2&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Value</span> <span class="o">=</span> <span class="p">{}},</span>
-  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save3&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Value</span> <span class="o">=</span> <span class="p">{}}</span>
+  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save3&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Value</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">PermissionRead</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">PermissionWrite</span> <span class="o">=</span> <span class="mi">1</span><span class="p">},</span>
+  <span class="p">{</span><span class="n">Bucket</span> <span class="o">=</span> <span class="s2">&quot;mygame&quot;</span><span class="p">,</span> <span class="n">Collection</span> <span class="o">=</span> <span class="s2">&quot;save&quot;</span><span class="p">,</span> <span class="n">Record</span> <span class="o">=</span> <span class="s2">&quot;save3&quot;</span><span class="p">,</span> <span class="n">UserId</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">Value</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">Version</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">PermissionRead</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">PermissionWrite</span> <span class="o">=</span> <span class="mi">1</span><span class="p">}</span>
 <span class="p">}</span>
 <span class="n">nk</span><span class="p">.</span><span class="n">storage_write</span><span class="p">(</span><span class="n">new_records</span><span class="p">)</span>
 </pre></div>
@@ -2140,6 +2318,96 @@
 <span class="kd">local</span> <span class="n">uuid_bytes</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">uuid_string_to_bytes</span><span class="p">(</span><span class="n">uuid_string</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">uuid_bytes</span><span class="p">)</span>
 </pre></div>
+
+
+<h3 id="sql">sql<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These functions allow your Lua scripts to run arbitrary SQL staments beyond the ones built into Nakama itself. It is your responsibility to manage the performance of these queries.</p>
+</div>
+<p><strong>sql_exec (query, parameters)</strong></p>
+<p>Execute an arbitrary SQL query and return the number of rows affected. Typically an <code>INSERT</code>, <code>DELETE</code>, or <code>UPDATE</code> statement with no return columns.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>string</td>
+<td>A SQL query to execute.</td>
+</tr>
+<tr>
+<td>parameters</td>
+<td>table</td>
+<td>Arbitrary parameters to pass to placeholders in the query.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>A single number indicating the number of rows affected by the query.</p>
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="c1">-- This example query deletes all expired leaderboard records.</span>
+<span class="kd">local</span> <span class="n">query</span> <span class="o">=</span> <span class="s">[[DELETE FROM leaderboard_record</span>
+<span class="s">                WHERE expires_at &gt; 0 AND expires_at &lt;= $1]]</span>
+<span class="kd">local</span> <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="nb">os.time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">}</span>
+<span class="kd">local</span> <span class="n">affected_rows_count</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">sql_exec</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+</pre></div>
+
+
+<hr />
+<p><strong>sql_query (query, parameters)</strong></p>
+<p>Execute an arbitrary SQL query that is expected to return row data. Typically a <code>SELECT</code> statement.</p>
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>query</td>
+<td>string</td>
+<td>A SQL query to execute.</td>
+</tr>
+<tr>
+<td>parameters</td>
+<td>table</td>
+<td>Arbitrary parameters to pass to placeholders in the query.</td>
+</tr>
+</tbody>
+</table>
+<p><em>Returns</em></p>
+<p>A Lua table containing the result rows in the format:</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="p">{</span><span class="n">column1</span> <span class="o">=</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span> <span class="n">column2</span> <span class="o">=</span> <span class="s2">&quot;value2&quot;</span><span class="p">,</span> <span class="p">...},</span> <span class="c1">-- Row 1.</span>
+  <span class="p">{</span><span class="n">column1</span> <span class="o">=</span> <span class="s2">&quot;value1&quot;</span><span class="p">,</span> <span class="n">column2</span> <span class="o">=</span> <span class="s2">&quot;value2&quot;</span><span class="p">,</span> <span class="p">...},</span> <span class="c1">-- Row 2.</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><em>Example</em></p>
+<div class="codehilite"><pre><span></span><span class="c1">-- Example fetching a list of handles for the 100 most recetly signed up users.</span>
+<span class="kd">local</span> <span class="n">query</span> <span class="o">=</span> <span class="s">[[SELECT handle, updated_at</span>
+<span class="s">                FROM users</span>
+<span class="s">                ORDER BY created_at DESC</span>
+<span class="s">                LIMIT 100]]</span>
+<span class="kd">local</span> <span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="kd">local</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">nk</span><span class="p">.</span><span class="n">sql_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+
+<span class="c1">-- Example of processing the rows.</span>
+<span class="n">nk</span><span class="p">.</span><span class="n">logger_info</span><span class="p">(</span><span class="s2">&quot;Selected &quot;</span> <span class="o">..</span> <span class="o">#</span><span class="n">rows</span> <span class="o">..</span> <span class="s2">&quot; rows.&quot;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="kr">in</span> <span class="nb">ipairs</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="kr">do</span>
+  <span class="n">nk</span><span class="p">.</span><span class="n">logger_info</span><span class="p">(</span><span class="s2">&quot;User handle &quot;</span> <span class="o">..</span> <span class="n">row</span><span class="p">.</span><span class="n">handle</span> <span class="o">..</span> <span class="s2">&quot; created at &quot;</span> <span class="o">..</span> <span class="n">row</span><span class="p">.</span><span class="n">created_at</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
                 
                   
                 
@@ -2199,9 +2467,9 @@
           </div>
         
         powered by
-        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        <a href="http://www.mkdocs.org">MkDocs</a>
         and
-        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+        <a href="https://squidfunk.github.io/mkdocs-material/">
           Material for MkDocs</a>
       </div>
       
@@ -2227,12 +2495,11 @@
       
     </div>
     
-      <script src="../assets/javascripts/application-c35428f87f.js"></script>
+      <script src="../assets/javascripts/application.6cdc17f0.js"></script>
       
+      <script>app.initialize({version:"0.17.2",url:{base:".."}})</script>
       
-      <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../js/main.js"></script>
+        <script src="../javascripts/main.js"></script>
       
     
     
