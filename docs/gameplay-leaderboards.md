@@ -73,6 +73,22 @@ client.send(message: message).then { records in
 }
 ```
 
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+var score = 1200
+var metadata = {"race_conditions": ["sunny", "clear"]}
+
+var message = new nakamajs.LeaderboardRecordWriteRequest();
+message.set(id, score, metadata);
+client.send(message).then(function(records) {
+  records.foreach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ## Create a leaderboard
 
 A leaderboard can be created via server-side code at startup or within a [registered function](runtime-code-function-reference.md#register-hooks). The ID given to the leaderboard is used to submit scores to it.
@@ -116,6 +132,19 @@ client.send(message: message).then { leaderboards in
 }
 ```
 
+```js fct_label="Javascript"
+var message = new nakamajs.LeaderboardsListRequest();
+client.send(message).then(function(leaderboards) {
+  console.log("Found %o leaderboards.", leaderboards.length)
+  leaderboards.leaderboards.forEach(function(leaderboard) {
+    console.log("Leaderboard id %o and sort %o", leaderboard.id, leaderboard.sort);
+    console.log("Leaderboard metadata %o", leaderboard.metadata);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 When you have more than 100 leaderboards you can fetch the next set of results with a cursor.
 
 ```csharp fct_label="Unity"
@@ -141,7 +170,6 @@ client.Send(messageBuilder.Build(), (INResultSet<INLeaderboard> list) => {
 ```
 
 ```swift fct_label="Swift"
-
 var message = LeaderboardsListMessage()
 client.send(message: message).then { leaderboards in
   // Lets get the next page of results.
@@ -160,6 +188,27 @@ client.send(message: message).then { leaderboards in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var message = new nakamajs.LeaderboardsListRequest();
+client.send(message).then(function(leaderboards) {
+  // Lets get the next page of results.
+  if (leaderboards.cursor && leaderboards.length > 0) {
+    message.cursor = leaderboards.cursor
+    client.send(message).then(function(ls) {
+      console.log("Found %o leaderboards.", ls.length)
+      ls.records.forEach(function(leaderboard) {
+        console.log("Leaderboard id %o and sort %o", leaderboard.id, leaderboard.sort);
+        console.log("Leaderboard metadata %o", leaderboard.metadata);
+      });
+    }).catch(function(error) {
+      console.log("An error occured: %o", error);
+    })
+  }
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ## Submit a score
@@ -204,6 +253,21 @@ client.send(message: message).then { records in
 }
 ```
 
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+var score = 1200
+
+var message = new nakamajs.LeaderboardRecordWriteRequest();
+message.set(id, score);
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ### Best operator
 
 The best operator will check the new score is better than the current score and keep which ever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".
@@ -240,6 +304,21 @@ client.send(message: message).then { records in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+var score = 1200
+
+var message = new nakamajs.LeaderboardRecordWriteRequest();
+message.best(id, score);
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ### Increment operator
@@ -280,6 +359,21 @@ client.send(message: message).then { records in
 }
 ```
 
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+var score = 1200
+
+var message = new nakamajs.LeaderboardRecordWriteRequest();
+message.increment(id, score);
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ### Decrement operator
 
 The decrement operator will subtract the score value from the current score. If no score exists the new score will be subtracted from 0.
@@ -318,6 +412,21 @@ client.send(message: message).then { records in
 }
 ```
 
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+var score = 1200
+
+var message = new nakamajs.LeaderboardRecordWriteRequest();
+message.decrement(id, score);
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ## List records
 
 A user can list records from a leaderboard. This makes it easy to compare scores to other users and see their positions.
@@ -349,6 +458,20 @@ client.send(message: message).then { records in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+
+var message = new nakamajs.LeaderboardRecordsListRequest();
+message.leaderboardId = id;
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 You can fetch the next set of results with a cursor.
@@ -396,6 +519,28 @@ client.send(message: message).then { records in
 }
 ```
 
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+
+var message = new nakamajs.LeaderboardRecordsListRequest();
+message.leaderboardId = id;
+client.send(message).then(function(records) {
+  // Lets get the next page of results.
+  if (records.cursor && records.length > 0) {
+    message.cursor = records.cursor;
+    client.send(message).then(function(rs) {
+      rs.records.forEach(function(record) {
+        console.log("Record handle %o and score %o", record.handle, record.score);
+      });
+    }).catch(function(error) {
+      console.log("An error occured: %o", error);
+    })
+  }
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ### List by filter
 
 You can add a filter on one of "lang", "location", or "timezone".
@@ -426,6 +571,21 @@ client.send(message: message).then { records in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+
+var message = new nakamajs.LeaderboardRecordsListRequest();
+message.leaderboardId = id;
+message.location = "San Francisco";
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
 
 ### List by friends
@@ -465,6 +625,23 @@ client.send(message: message).then { records in
 }
 ```
 
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+var ownerIds = [];
+ownerIds.push(user.id); // a user ID
+
+var message = new nakamajs.LeaderboardRecordsListRequest();
+message.leaderboardId = id;
+message.ownerIds = ownerIds;
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
+```
+
 ### Find current user
 
 A leaderboard can be "scrolled" to the page which contains a record owner. This can be used to give users a view of their own position within a leaderboard.
@@ -498,4 +675,20 @@ client.send(message: message).then { records in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```js fct_label="Javascript"
+var id = leaderboard.id //a Leaderboard ID.
+ownerId = user.id; // a user ID
+
+var message = new nakamajs.LeaderboardRecordsListRequest();
+message.leaderboardId = id;
+message.ownerId = ownerId;
+client.send(message).then(function(records) {
+  records.records.forEach(function(record) {
+    console.log("Record handle %o and score %o", record.handle, record.score);
+  });
+}).catch(function(error){
+  console.log("An error occured: %o", error);
+})
 ```
