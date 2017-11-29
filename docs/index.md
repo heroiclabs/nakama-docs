@@ -1,8 +1,8 @@
 # Nakama server
 
-Distributed server for social and realtime games and apps.
+Nakama is a scalable server for social and realtime games and apps.
 
-Nakama is a suite of APIs that will make you a more productive developer. It is built by <a href="https://heroiclabs.com" target="\_blank">Heroic Labs</a> to handle the difficult but essential services that go into all social and realtime games and apps.
+With Nakama server you can add user authentication, social networking, storage, and realtime data exchange into your apps and games. It is developed by <a href="https://heroiclabs.com" target="\_blank">Heroic Labs</a> to handle the difficult but essential services that go into all social and realtime games and apps.
 
 The server is designed to run at massive scale. Nakama works as a <a href="https://heroiclabs.com/nakama-enterprise/" target="\_blank">distributed cluster</a> so when your game or app gets featured in the App Store then all you need do is launch a few more instances and you'll handle the extra load with ease.
 

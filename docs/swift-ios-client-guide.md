@@ -307,3 +307,7 @@ internal class NakamaSessionManager {
   }
 }
 ```
+
+## Client reference
+
+You can find the Swift Client Reference [here](https://heroiclabs.github.io/nakama-swift/).
