@@ -2,7 +2,7 @@
 
 Distributed server for social and realtime games and apps.
 
-Nakama is a suite of APIs that will make you a more productive developer. It is built by <a href="https://heroiclabs.com" target="\_blank">Heroic Labs</a> to handle the difficult but essential services that go into all social and realtime games and apps.
+With Nakama server you can add social networking, storage, and realtime into your apps and games. It is developed by <a href="https://heroiclabs.com" target="\_blank">Heroic Labs</a> to handle the difficult but essential services that go into all social and realtime games and apps.
 
 The server is designed to run at massive scale. Nakama works as a <a href="https://heroiclabs.com/nakama-enterprise/" target="\_blank">distributed cluster</a> so when your game or app gets featured in the App Store then all you need do is launch a few more instances and you'll handle the extra load with ease.
 
@@ -69,3 +69,18 @@ Build the next big hit for mobile, console, desktop, and web with Nakama. We hav
 To get the most out of Nakama you should follow the rest of this guide. And if you need help <a href="mailto:support@heroiclabs.com">get in touch</a> with the Heroic Labs team about our developer training.
 
 The first step to building your project with Nakama is to [install it](install-docker-quickstart.md).
+
+<div style="display: flex">
+  <div style="flex: 1; margin: 0 1em 0 0">
+    <ul>
+      <li><a href="https://heroiclabs.com/docs/">Client libraries</a></li>
+      <li><a href="https://heroiclabs.com/docs/">etc..</a></li>
+    </ul>
+  </div>
+  <div style="flex: 1">
+    <ul>
+      <li><a href="https://heroiclabs.com/docs/">Client libraries</a></li>
+      <li><a href="https://heroiclabs.com/docs/">etc..</a></li>
+    </ul>
+  </div>
+</div>
