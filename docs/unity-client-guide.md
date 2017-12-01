@@ -375,3 +375,7 @@ public class NakamaSessionManager : MonoBehaviour {
   }
 }
 ```
+
+## Client reference
+
+You can find the C# Client Reference [here](https://heroiclabs.github.io/nakama-unity/generated/namespace_nakama.html).

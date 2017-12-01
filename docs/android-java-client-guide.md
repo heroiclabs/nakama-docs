@@ -408,3 +408,7 @@ public class NakamaSessionManager {
   }
 }
 ```
+
+## Client reference
+
+You can find the Java Client Reference [here](https://heroiclabs.github.io/nakama-java/current/).
