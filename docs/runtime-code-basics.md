@@ -151,7 +151,7 @@ local function custom_rpc_func(context, payload)
   -- "payload" is bytes sent by the client we'll JSON decode it.
   local json = nk.json_decode(payload)
 
-  return nkx.json_encode(json)
+  return nk.json_encode(json)
 end
 
 nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
