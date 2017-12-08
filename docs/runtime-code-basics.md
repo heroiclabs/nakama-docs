@@ -209,7 +209,7 @@ local nk = require("nakama")
 
 local M = {}
 
-local API_BASE_URL = "http://pokeapi.co/api/v2/"
+local API_BASE_URL = "http://pokeapi.co/api/v2"
 
 function M.lookup_pokemon(name)
   local url = ("%s/pokemon/%s"):format(API_BASE_URL, name)
@@ -263,7 +263,7 @@ nk.register_rpc(get_pokemon, "get_pokemon")
 We can make now make an RPC call for a pokemon from a client.
 
 ```csharp fct_label="Unity"
-string payload = "{\"PokemonName\": \"Dragonite\"}";
+string payload = "{\"PokemonName\": \"dragonite\"}";
 
 var message = new NRuntimeRpcMessage
     .Builder("get_pokemon")
@@ -278,7 +278,7 @@ client.Send(message, (INRuntimeRpc rpc) => {
 ```
 
 ```java fct_label="Android/Java"
-String payload = "{\"PokemonName\": \"Dragonite\"}";
+String payload = "{\"PokemonName\": \"dragonite\"}";
 
 CollatedMessage<RpcResult> message = RpcMessage.Builder.newBuilder("get_pokemon")
     .payload(payload)
@@ -301,7 +301,7 @@ deferred.addCallback(new Callback<RpcResult, RpcResult>() {
 ```
 
 ```swift fct_label="Swift"
-let payload = "{\"PokemonName\": \"Dragonite\"}".data(using: .utf8)!
+let payload = "{\"PokemonName\": \"dragonite\"}".data(using: .utf8)!
 
 let message = RPCMessage(id: "client_rpc_echo")
 message.payload = payload
@@ -315,7 +315,7 @@ client.send(message: message).then { result in
 ```js fct_label="Javascript"
 var message = new nakamajs.RpcRequest();
 message.id = "client_rpc_echo"
-message.payload = { PokemonName: "Dragonite" };
+message.payload = { PokemonName: "dragonite" };
 
 client.send(message).then(function(result){
   console.log("JSON response %o", result);

@@ -28,7 +28,7 @@ The matchmaker can filter users using 4 different filtering criteria:
 A matchmaking request can have complex criteria by using a combination of these filters. Once the matchmaker is successful, the properties and filters of each matched user will be redistributed to every matched user.
 
 !!! Tip
-    The [Advanced matchmaking](#advanced-matchmaking) section has details on how each filter type works and how to compose filters to achieve complex matchmaking rules.
+    The [Rule-based matchmaking](#rule-based-matchmaking) section has details on how each filter type works and how to compose filters to achieve complex matchmaking rules.
 
 ## Request opponents
 
@@ -67,7 +67,7 @@ client.send(message).then(function(ticket) {
 
 The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted. This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.
 
-Have a look at [this section](#advanced-matchmaking) for more advanced matchmaking examples.
+Have a look at [this section](#rule-based-matchmaking) for more advanced matchmaking examples.
 
 ### Receive matchmake results
 
@@ -116,7 +116,7 @@ client.onmatchmakematched = function(matched) {
 };
 ```
 
-## Advanced matchmaking
+## Rule-based matchmaking
 
 In the example above, only the required user count was set. This is the most loose matchmaking request that will select users randomly. Below we'll look at more complex matchmaking requests and how they are represented in Nakama.
 
