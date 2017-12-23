@@ -42,7 +42,7 @@ do
   table.insert(notifications, notification)
 end
 
-nk.notification_send_id(notifications)
+nk.notifications_send_id(notifications)
 ```
 
 ## Receive notifications
