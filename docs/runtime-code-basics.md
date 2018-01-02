@@ -69,7 +69,7 @@ Any function may be registered to intercept a message received from a client and
 local nk = require("nakama")
 
 local function limit_friends(context, payload)
-  local user = nk.user_fetch_id({context.UserId})[1]
+  local user = nk.users_fetch_id({context.UserId})[1]
   -- lets assume we've stored a user's level in their metadata.
   if user.Metadata.level <= 10 then
     error("Must reach level 10 before you can add friends.")
