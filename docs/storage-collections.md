@@ -465,7 +465,7 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
     var version = record.Version;
     Debug.LogFormat("Stored record has version '{0}'", version);
   }
-}, (INError error) => {
+}, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 });
 ```
