@@ -264,117 +264,27 @@ Action<INError> errorHandler = delegate(INError error) {
 
 ## Full example
 
-An example class used to manage a session with the Unity client.
+Nakama Showreel is a Unity 2017.1 project which you can find on the Asset Store and on [GitHub](https://github.com/heroiclabs/nakama-examples/tree/master/unity/nakama-showreel).
 
-```csharp
-using Nakama;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+The project is divided into two sections:
+- Showreel: C# specific code responsible for scenes and interactions in the Showreel project. Study this code to learn how to interact with Nakama domain objects and display them in a Unity scene.
+- Framework: Unity-specific helper code that interacts directly with the Nakama client (available on the [Asset Store](https://assetstore.unity.com/packages/tools/network/nakama-81338)).
 
-public class NakamaSessionManager : MonoBehaviour {
-  private INClient _client;
-  private INSession _session;
+The `Framework` package has the following classes:
 
-  private Queue<IEnumerator> _executionQueue;
+- `Logger.cs`: A helper class that enables logging output based on the target output in Unity. This is a simple wrapper around the Unity Debug class.
+- `Singleton.cs`: An abstract class responsible for managing the lifecycle of a Singleton class. [This guide](http://wiki.unity3d.com/index.php/Singleton) can tell you about Singleton patterns.
+- `StateManager.cs`: This class is responsible for storing state retrieved from the Nakama server. Use it to store read-only state retrieved from the remote server, and then rendered in a view. Best to use `C# Properties` as much as possible and avoid `Null` state to simplify code and remove runtime bugs.
+- `NakamaManager.cs`: This is a wrapper around the Nakama `INClient` object.
+    -- This class enables you to authenticate a user and store their session token to the local storage on device for later retrieval.
+    - Perform smart (exponential) reconnect behaviour to the server if the connection drops.
+    - Updates state stored in the `StateManager` when data is returned from the server.
+    - Disconnect and reconnect to the server automatically when the application focus is lost/gained.
+    - Run network activity on a non-UI thread to avoid game UI freezing.
 
-  public NakamaSessionManager() {
-    _client = NClient.Default("defaultkey");
-    _executionQueue = new Queue<IEnumerator>(1024);
-  }
+We recommend that you directly copy the `Framework` package into your project and append extra logic into the `StateManager` and `NakamaManager` classes as you wish.
 
-  private void Awake() {
-    RestoreSessionAndConnect();
-    if (_session == null) {
-      LoginOrRegister();
-    }
-  }
-
-  private void RestoreSessionAndConnect() {
-    // Lets check if we can restore a cached session.
-    var sessionString = PlayerPrefs.GetString("nk.session");
-    if (string.IsNullOrEmpty(sessionString)) {
-      return; // We have no session to restore.
-    }
-
-    var session = NSession.Restore(sessionString);
-    if (session.HasExpired(DateTime.UtcNow)) {
-      return; // We can't restore an expired session.
-    }
-
-    SessionHandler(session);
-  }
-
-  private void LoginOrRegister() {
-    // See if we have a cached id in PlayerPrefs.
-    var id = PlayerPrefs.GetString("nk.id");
-    if (string.IsNullOrEmpty(id)) {
-      // We'll use device ID for the user. See other authentication options.
-      id = SystemInfo.deviceUniqueIdentifier;
-      // Store the identifier for next game start.
-      PlayerPrefs.SetString("nk.id", id);
-    }
-
-    // Use whichever one of the authentication options you want.
-    var message = NAuthenticateMessage.Device(id);
-    _client.Login(message, SessionHandler, (INError err) => {
-      if (err.Code == ErrorCode.UserNotFound) {
-        _client.Register(message, SessionHandler, ErrorHandler);
-      } else {
-        ErrorHandler(err);
-      }
-    });
-  }
-
-  private void SessionHandler(INSession session) {
-    _session = session;
-    Debug.LogFormat("Session: '{0}'.", session.Token);
-    _client.Connect(_session, (bool done) => {
-      // We enqueue callbacks which contain code which must be dispatched on
-      // the Unity main thread.
-      Enqueue(() => {
-        Debug.Log("Session connected.");
-        // Store session for quick reconnects.
-        PlayerPrefs.SetString("nk.session", session.Token);
-      });
-    });
-  }
-
-  private void Update() {
-    lock (_executionQueue) {
-      for (int i = 0, len = _executionQueue.Count; i < len; i++) {
-        StartCoroutine(_executionQueue.Dequeue());
-      }
-    }
-  }
-
-  private void OnApplicationQuit() {
-    if (_session != null) {
-      _client.Disconnect();
-    }
-  }
-
-  private void Enqueue(Action action) {
-    lock (_executionQueue) {
-      _executionQueue.Enqueue(ActionWrapper(action));
-      if (_executionQueue.Count > 1024) {
-        Debug.LogWarning("Queued actions not consumed fast enough.");
-        _client.Disconnect();
-      }
-    }
-  }
-
-  private IEnumerator ActionWrapper(Action action) {
-    action();
-    yield return null;
-  }
-
-  private static void ErrorHandler(INError err) {
-    Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-  }
-}
-```
+The Showreel project uses the MVC (Model-View-Controller) pattern to store-update-render state data. The MVC pattern allows you to de-couple rendering logic from gameplay logic and network logic that is asynchronous. This is done to separate internal representations of information from the ways information is presented to, and accepted from, the user. The MVC design pattern decouples these major components allowing for efficient code reuse and parallel development. Follow [this guide](http://engineering.socialpoint.es/MVC-pattern-unity3d-ui.html) to learn more about the MVC pattern and how to set it up in your project.
 
 ## Client reference
 
