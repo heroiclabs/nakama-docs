@@ -67,6 +67,7 @@ pages:
 - 'Install and setup':
   - 'Docker quickstart': 'install-docker-quickstart.md'
   - 'Binary install': 'install-binary.md'
+  - 'Start server': 'install-start-server.md'
   - 'Configuration': 'install-configuration.md'
   - 'Nakama CLI': 'install-server-cli.md'
   - 'Upgrades': 'install-nakama-upgrade.md'
