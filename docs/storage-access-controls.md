@@ -117,7 +117,6 @@ When storing/updating records from the client, the default permission of a recor
 ```csharp fct_label="Unity"
 string armySetup = "{\"soldiers\": 50}";
 
-// Write multiple different records across collections.
 var message = new NStorageWriteMessage.Builder()
     .Write("myapp", "battle", "army", armySetup, StoragePermissionRead.PublicRead, StoragePermissionWrite.OwnerWrite)
     .Build();
