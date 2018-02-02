@@ -264,7 +264,7 @@ var message = new NStorageFetchMessage.Builder()
     .Build();
 client.Send(message, (INResultSet<INStorageData> list) => {
   foreach (var record in list.Results) {
-    Debug.LogFormat("Record value '{0}'", record.Data);
+    Debug.LogFormat("Record value '{0}'", record.Value);
     Debug.LogFormat("Record permissions read '{0}' write '{1}'",
         record.PermissionRead, record.PermissionWrite);
   }
