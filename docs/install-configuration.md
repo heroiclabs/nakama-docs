@@ -98,6 +98,7 @@ Options related to connection socket and transport protocol between the server a
 | ---------                 | ----                            | -----------
 | `server_key`              | `socket.server_key`             | Server key to use to establish a connection to the server. Default value is `defaultkey`.
 | `port`                    | `socket.port`                   | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
+| `public_address`          | `socker.public_address`         | IP address to advertise to clients. This is used for rUDP connections. Default is `127.0.0.1`.
 | `max_message_size_bytes`  | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Default value is 1024.
 | `write_wait_ms`           | `socket.write_wait_ms`          | Time in milliseconds to wait for an ack from the client when writing data. Default value is 5000.
 | `pong_wait_ms`            | `socket.pong_wait_ms`           | Time in milliseconds to wait for a pong message from the client after sending a ping. Default value is 10000.
@@ -105,6 +106,9 @@ Options related to connection socket and transport protocol between the server a
 
 !!! warning "Important"
     You must change `server_key` before going live with your app!
+
+!!! info "Public Address"
+    Public Address is the direct addressable IP address of your server. This value is cached in session tokens with clients to enable fast reconnects. If the IP address changes clients will need to re-authenticate with the server.
 
 ### Session
 

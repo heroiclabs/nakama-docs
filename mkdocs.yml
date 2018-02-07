@@ -67,6 +67,7 @@ pages:
 - 'Install and setup':
   - 'Docker quickstart': 'install-docker-quickstart.md'
   - 'Binary install': 'install-binary.md'
+  - 'Start server': 'install-start-server.md'
   - 'Configuration': 'install-configuration.md'
   - 'Nakama CLI': 'install-server-cli.md'
   - 'Upgrades': 'install-nakama-upgrade.md'
@@ -79,8 +80,7 @@ pages:
 - 'User accounts': 'user-accounts.md'
 - 'Storage Engine':
   - 'Collections': 'storage-collections.md'
-#  - 'Permissions': 'storage-permissions.md'
-#  - 'Record ownership': 'storage-record-ownership.md'
+  - 'Access controls': 'storage-access-controls.md'
 #  - 'Design patterns': 'storage-design-patterns.md'
 - 'Social':
   - 'Friends': 'social-friends.md'
