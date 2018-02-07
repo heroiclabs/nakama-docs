@@ -108,7 +108,7 @@ Options related to connection socket and transport protocol between the server a
     You must change `server_key` before going live with your app!
 
 !!! info "Public Address"
-    Public Address is the direct addressable IP address of your server. If you change this, you'll need to invalidate any cached session tokens on your device as this value is embedded in the generated token for the client to use.
+    Public Address is the direct addressable IP address of your server. This value is cached in session tokens with clients to enable fast reconnects. If the IP address changes clients will need to re-authenticate with the server.
 
 ### Session
 

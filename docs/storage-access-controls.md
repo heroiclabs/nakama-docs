@@ -1,12 +1,14 @@
 # Access controls
 
-The storage engine built-in to Nakama has two main concepts around data access controls. They are record permissions and record ownership. We'll cover both in detail below.
+The storage engine has two features which control access to records. Record ownership and access permissions.
 
 ## Record Ownership
 
-A storage record in Nakama always have an owner: It's either has a explicit owner which is the user or an implicit owner which is the the system (if owner is not set when the record is written).
+A storage record is created with an owner. The owner is either the user who created it, the system owner, or an owner assigned when the record is created with the code runtime.
 
-The following code sample shows how to fetch a record that is owned by the system from the client:
+A record which is system owned must have public read access permissions before it can be fetched by clients. Access permissions are covered below.
+
+These code examples show how to retrieve a record owned by the system (marked with public read).
 
 ```csharp fct_label="Unity"
 string userId = session.Id; // an INSession object.
@@ -80,7 +82,7 @@ client.send(message).then(function(records){
 })
 ```
 
-You can also use the script runtime to fetch a record owned by the system:
+You can also use the code runtime to fetch a record. The code runtime is exempt from the standard rules around access permissions because it is run by the server as authoritative code.
 
 ```lua
 local record_keys = {
@@ -94,25 +96,25 @@ do
 end
 ```
 
-Owner of a record is automatically set to the currently logged in user when writing new records from the client. However, the owner of a record is set to System when writing records from the script runtime.
+A user who writes a storage record from a client will be set as the owner by default while from the code runtime the owner is implied to be the system unless explicitly set.
 
 ## Record Permissions
 
 A record has permissions which are enforced for the owner of that record when writing or updating the record:
 
-- `ReadPermission` can have `Public Read` (2), `Owner Read` (1), `No Read` (0).
-- `WritePermission` is simpler with just `Owner Write` (1), and `No Write` (0).
+- __ReadPermission__ can have "Public Read" (2), "Owner Read" (1), or "No Read" (0).
+- __WritePermission__ can have "Owner Write" (1), or "No Write" (0).
 
-These permissions are ignored when interacting with the storage engine via the script runtime as the server is authoritative and can always read/write records. This means that `No Read`/`No Write` actually means that no client can read/write the record.
+These permissions are ignored when interacting with the storage engine via the code runtime as the server is authoritative and can always read/write records. This means that "No Read"/"No Write" means that no client can read/write the record.
 
-Records with permission `Owner Read` and `Owner Write` dictate that they are readable/writable by the owner of the record. No other clients can access or update this record.
+Records with permission "Owner Read" and "Owner Write" may only be accessed or modified by the user who owns it. No other client may access the record.
 
-Finally `Public Read` means that any user can read that record. A great fit for using this permission is for scenarios where you have users with their own "Army" record and they want to battle each other. So each user will need to know the army setup of the opponent so that it can be rendered on each others' clients.
+"Public Read" means that any user can read that record. This is very useful for gameplay where users need to share their game state or parts of it with other users. For example you might have users with their own "Army" record who want to battle each other. Each user can write their own record with public read and it can be fetched by the other user so that it can be rendered on each others' devices.
 
-When storing/updating records from the client, the default permission of a record is set to `Owner Read` and `Owner Write`. However, when storing/updating records from the script runtime, the default permission of a record is set to `No Read` and `No Write`.
+When modifying records from the client, the default permission of a record is set to "Owner Read" and "Owner Write". When modifying records from the code runtime, the default permission of a record is set to "No Read" and "No Write".
 
 !!! note "Listing records"
-    When listing records, you'll only get back records with appropriate permissions.
+    When listing records you'll only get back records with appropriate permissions.
 
 ```csharp fct_label="Unity"
 string armySetup = "{\"soldiers\": 50}";
@@ -184,12 +186,12 @@ client.send(message).then(function(result){
 })
 ```
 
-You can store a record via the script runtime with custom permissions like this:
+You can store a record with custom permissions from the code runtime.
 
 ```lua
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
 local new_records = {
-  {Bucket = "myapp", Collection = "battle", Record = "army", UserId = user_id, Value = {}, PermissionRead = 2, PermissionWrite = 1},
+  {Bucket = "myapp", Collection = "battle", Record = "army", UserId = user_id, Value = {}, PermissionRead = 2, PermissionWrite = 1}
 }
 nk.storage_write(new_records)
 ```
