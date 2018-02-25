@@ -6,7 +6,7 @@ The official JavaScript client handles all communication in realtime with the se
 
 The client is available on <a href="https://www.npmjs.com/package/nakama-js" target="\_blank">NPM</a>, Bower and on the <a href="https://github.com/heroiclabs/nakama-js/releases/latest" target="\_blank">GitHub releases page</a>. You can download `nakama-js.umd.js` which contains the Nakama-js module and UMD module loader.
 
-If you are using NPM to manage your dependecies, simply add the following to your `package.json`:
+If you are using NPM to manage your dependencies, simply add the following to your `package.json`:
 ```json
 //...
 "dependencies": {
@@ -193,7 +193,7 @@ An example class used to manage a session with the Unity client.
 
 ```js
 
-var client = NClient.Default("defaultkey");
+var client = new nakamajs.Client("defaultkey");
 var currentSession = null;
 
 var errorHandler = function(error) {
@@ -229,7 +229,7 @@ function restoreSessionAndConnect() {
   }
 
   // Lets check if we can restore a cached session.
-  if !sessionString || sessionString == "" {
+  if (!sessionString || sessionString == "") {
     return
   }
 
@@ -256,7 +256,7 @@ function loginOrRegister() {
 // Let's begin here...
 restoreSessionAndConnect();
 if (currentSession == null) {
-  LoginOrRegister();
+  loginOrRegister();
 }
 ```
 
