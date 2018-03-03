@@ -139,7 +139,7 @@ client.send(message: message).then { users in
 ```js fct_label="Javascript"
 string userId = "" // a User ID
 
-var message = new nakamajs.UsersFetchMessage();
+var message = new nakamajs.UsersFetchRequest();
 message.userIds.push(userId);
 
 client.send(message).then(function(result) {
@@ -220,7 +220,7 @@ client.send(message: message).then {
 ```
 
 ```js fct_label="Javascript"
-var message = new nakamajs.SelfUpdateMessage();
+var message = new nakamajs.SelfUpdateRequest();
 message.avatarUrl = "http://graph.facebook.com/avatar_url"
 message.fullname = "My New Name"
 message.location = "San Francisco"

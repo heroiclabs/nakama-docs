@@ -34,7 +34,7 @@ local function some_example(context, payload)
 
   local id = nk.uuid_v4()
   -- create a leaderboard with the json as metadata.
-  nk.create_leaderboard(id, "desc", "0 0 * * 1", json, false)
+  nk.leaderboard_create(id, "desc", "0 0 * * 1", json, false)
 
   return nk.json_encode({["id"] = id})
   -- will return "{'id': 'some UUID'}" (JSON) as bytes
