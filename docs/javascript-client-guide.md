@@ -76,7 +76,7 @@ var sessionHandler = function(session) {
     console.log("Session connected.");
 
     // Store session for quick reconnects.
-    localStorage.nakamaToken = session.token;
+    localStorage.nakamaToken = session.token_;
   }).catch(function(error) {
     console.log("An error occured during session connection: %o", error);
   });
@@ -209,7 +209,7 @@ var sessionHandler = function(session) {
 
     // Store session for quick reconnects.
     // This returns a promise - if it fails, we are catching the error in the `error` callback below
-    return AsyncStorage.setItem('@MyApp:nakamaToken', session.token);
+    return AsyncStorage.setItem('@MyApp:nakamaToken', session.token_);
   }).catch(function(error) {
     console.log("An error occured during session connection: %o", error);
   });
@@ -233,7 +233,7 @@ function restoreSessionAndConnect() {
     return
   }
 
-  var session = nakamajs.Session.Restore(sessionString);
+  var session = nakamajs.Session.restore(sessionString);
   if (session.isexpired(new Date())) {
     return; // We can't restore an expired session.
   }
