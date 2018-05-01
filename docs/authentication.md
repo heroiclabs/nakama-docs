@@ -5,6 +5,14 @@ The server has builtin authentication so clients can only send requests and conn
 !!! Warning "Important"
     The default server key is `defaultkey` but it is very important to set a [unique value](install-configuration.md#socket). This value should be embedded within client code.
 
+```js fct_label="Javascript"
+var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
+client.ssl = false;
+
+// or same as above.
+var client = new nakamajs.Client("defaultkey");
+```
+
 ```csharp fct_label="Unity"
 INClient client = new NClient.Builder("defaultkey")
     .Host("127.0.0.1")
@@ -35,22 +43,14 @@ let client : Client = Builder("defaultkey")
 let client : Client = Builder.defaults(serverKey: "defaultkey")
 ```
 
-```js fct_label="Javascript"
-var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
-client.ssl = false;
+Every user account is created from one of the [options used to authenticate](#authenticate). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
 
-// or same as above.
-var client = new nakamajs.Client("defaultkey");
-```
+## Authenticate
 
-Every user account is created from one of the [options used to register](#register-or-login). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
+Before you interact with the server, you must obtain a session token by authenticating with the system. The authentication system is very flexible. You could register a user with an email address, [link](#link-or-unlink) their Facebook account, and use it to login from another device.
 
-## Register or login
-
-Before you login a user they must first be registered. We recommend you setup your code to login the user and fallback to register the account if one does not exist. This pattern is shown in the [device](#device) section.
-
-!!! Tip
-    The authentication system is very flexible. You could register a user with an email address, [link](#link-or-unlink) their Facebook account, and use it to login from another device.
+!!! Note
+    The system automatically will create a user automatically if the identifier used to authenticate did not previously exist in the system. This pattern is shown in the [device](#device) section.
 
 For a __full example__ on the best way to handle register and login in each of the clients have a look at their guides.
 
@@ -58,7 +58,57 @@ For a __full example__ on the best way to handle register and login in each of t
 
 A device identifier can be used as a way to unobtrusively register a user with the server. This offers a frictionless user experience but can be unreliable because device identifiers can sometimes change in device updates.
 
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
 A device identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
+  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
+  --header 'content-type: application/json' \
+  --data '{"id":"uniqueidentifier"}'
+```
+
+```js fct_label="Javascript"
+
+// The following example is only applicable to React Native apps:
+var deviceInfo = require('react-native-device-info');
+
+var deviceId = null;
+try {
+  const value = await AsyncStorage.getItem('@MyApp:deviceKey');
+  if (value !== null){
+    deviceId = value
+  } else {
+    deviceId = deviceInfo.getUniqueID();
+    AsyncStorage.setItem('@MyApp:deviceKey', deviceId).catch(function(error){
+      console.log("An error occured: %o", error);
+    });
+  }
+} catch (error) {
+  console.log("An error occured: %o", error);
+}
+
+try {
+  var session = await client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" })
+  console.log("Successfully authenticated, session: %o", session);
+} catch(e) {
+  console.log("Could not authenticate: %o", error);
+}
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/device?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "id": "uniqueidentifier"
+}
+```
 
 ```csharp fct_label="Unity"
 var sessionHandler = delegate(INSession session) {
@@ -148,50 +198,48 @@ client.login(with: message).then { session in
 }
 ```
 
-```js fct_label="Javascript"
-
-// The following example is only applicable to React Native apps:
-var deviceInfo = require('react-native-device-info');
-
-var deviceId = null;
-try {
-  const value = await AsyncStorage.getItem('@MyApp:deviceKey');
-  if (value !== null){
-    deviceId = value
-  } else {
-    deviceId = deviceInfo.getUniqueID();
-    AsyncStorage.setItem('@MyApp:deviceKey', deviceId).catch(function(error){
-      console.log("An error occured: %o", error);
-    });
-  }
-} catch (error) {
-  console.log("An error occured: %o", error);
-}
-
-var message = nakamajs.AuthenticateRequest.device(deviceId);
-client.login(message).then(function(session){
-  console.log("Successfully logged in, session: %o", session);
-}).catch(function(error) {
-   // USER_NOT_FOUND
-  if (error.code == 5) {
-      client.register(message).then(function(session){
-        console.log("Successfully registered, session: %o", session);
-      }).catch(function(error) {
-        console.log("Could not register: %o", error);
-      });
-  } else {
-      console.log("Could not login: %o", error);
-  }
-});
-```
-
 In games it is often a better option to use [Google](#google) or [Game Center](#game-center) to unobtrusively register the user.
 
 ### Email
 
 Users can be registered with an email and password. The password is hashed before it's stored in the database server and cannot be read or "recovered" by administrators. This protects a user's privacy.
 
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
 An email address must be valid as defined by RFC-5322 and passwords must be at least 8 characters.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername \
+  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
+  --header 'content-type: application/json' \
+  --data '{"email":"email@example.com", "password": "3bc8f72e95a9"}'
+```
+
+```js fct_label="Javascript"
+var email = "email@example.com"
+var password = "3bc8f72e95a9"
+
+try {
+  var session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
+  console.log("Successfully authenticated, session: %o", session);
+} catch(e) {
+  console.log("Could not authenticate: %o", error);
+}
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/email?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "email": "email@example.com",
+  "password": "password"
+}
+```
 
 ```csharp fct_label="Unity"
 string email = "email@example.com"
@@ -241,27 +289,6 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
-```js fct_label="Javascript"
-var email = "email@example.com"
-var password = "3bc8f72e95a9"
-
-var message = nakamajs.AuthenticateRequest.email(email, password);
-client.login(message).then(function(session){
-  console.log("Successfully logged in, session: %o", session);
-}).catch(function(error) {
-   // USER_NOT_FOUND
-  if (error.code == 5) {
-      client.register(message).then(function(session){
-        console.log("Successfully registered, session: %o", session);
-      }).catch(function(error) {
-        console.log("Could not register: %o", error);
-      });
-  } else {
-      console.log("Could not login: %o", error);
-  }
-});
-```
-
 ### Social providers
 
 The server supports a lot of different social services with register and login. With each provider the user account will be fetched from the social service and used to setup the user. In some cases a user's [friends](social-friends.md) will also be fetched and added to their friends list.
@@ -271,6 +298,41 @@ To register or login as a user with any of the providers an OAuth or access toke
 #### Facebook
 
 With Facebook you'll need to add the Facebook SDK to your project which can be <a href="https://developers.facebook.com/docs/" target="\_blank">downloaded online</a>. Follow their guides on how to integrate the code. With a mobile project you'll also need to complete instructions on how to configure iOS and Android.
+
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
+You can optionally import Facebook friends into Nakama's [friend graph](social-friends.md) when authenticating. To do this, set `import` to true.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true \
+  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
+  --header 'content-type: application/json' \
+  --data '{"token":"valid-oauth-token"}'
+```
+
+```js fct_label="Javascript"
+var oauthToken = "...";
+
+try {
+  var session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
+  console.log("Successfully authenticated, session: %o", session);
+} catch(e) {
+  console.log("Could not authenticate: %o", error);
+}
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "token": "...",
+}
+```
 
 ```csharp fct_label="Unity"
 Action<INSession> sessionHandler = delegate(INSession session) {
@@ -314,17 +376,6 @@ client.register(with: message).then { session in
 }
 ```
 
-```js fct_label="Javascript"
-var oauthToken = "..."
-
-var message = nakamajs.AuthenticateRequest.facebook(oauthToken);
-client.login(message).then(function(session){
-  console.log("session: %o", session);
-}).catch(function(error) {
-  console.log("Could not login: %o", error);
-});
-```
-
 You can add a button to your UI to login with Facebook.
 
 ```csharp fct_label="Unity"
@@ -356,6 +407,39 @@ FB.Login("email", (ILoginResult result) => {
 #### Google
 
 Similar to Facebook for register and login you should use one of Google's client SDKs.
+
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername \
+  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
+  --header 'content-type: application/json' \
+  --data '{"token":"valid-oauth-token"}'
+```
+
+```js fct_label="Javascript"
+var oauthToken = "...";
+
+try {
+  var session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" })
+  console.log("Successfully authenticated, session: %o", session);
+} catch(e) {
+  console.log("Could not authenticate: %o", error);
+}
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/google?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "token": "...",
+}
+```
 
 ```csharp fct_label="Unity"
 string oauthToken = "...";
@@ -401,20 +485,35 @@ client.register(with: message).then { session in
 }
 ```
 
-```js fct_label="Javascript"
-var oauthToken = "..."
-
-var message = nakamajs.AuthenticateRequest.google(oauthToken);
-client.login(message).then(function(session){
-  console.log("session: %o", session);
-}).catch(function(error) {
-  console.log("Could not login: %o", error);
-});
-```
-
 #### Game Center
 
 Apple devices have builtin authentication which can be done without user interaction through Game Center. The register or login process is a little complicated because of how Apple's services work.
+
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername \
+  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
+  --header 'content-type: application/json' \
+  --data '{"player_id":"player_id", "bundle_id":"com.heroiclabs.nakama", "timestamp_seconds":0, "salt":"some-salt", "public_key_url":"key_url"}'
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/gamecenter?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "player_id": "player_id",
+  "bundle_id": "com.heroiclabs.nakama",
+  "timestamp_seconds": 0,
+  "salt": "some-salt",
+  "public_key_url": "key_url"
+}
+```
 
 ```csharp fct_label="Unity"
 // You'll need to use native code (Obj-C) with Unity.
@@ -467,6 +566,28 @@ Steam requires you to configure the server before you can register a user.
 !!! Note "Server configuration"
     Have a look at the [configuration](install-configuration.md) section for what settings you need for the server.
 
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername \
+  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
+  --header 'content-type: application/json' \
+  --data '{"token":"valid-steam-token"}'
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/steam?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "token": "...",
+}
+```
+
 ```csharp fct_label="Unity"
 string sessionToken = "...";
 
@@ -518,6 +639,39 @@ A custom identifier can be used in a similar way to a device identifier to login
 
 A custom identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.
 
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
+  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
+  --header 'content-type: application/json' \
+  --data '{"id":"some-custom-id"}'
+```
+
+```js fct_label="Javascript"
+var customId = "some-custom-id";
+
+try {
+  var session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" })
+  console.log("Successfully authenticated, session: %o", session);
+} catch(e) {
+  console.log("Could not authenticate: %o", error);
+}
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/custom?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "id": "...",
+}
+```
+
 ```csharp fct_label="Unity"
 // Some id from another service.
 string customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
@@ -566,23 +720,24 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
-```js fct_label="Javascript"
-var customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
-
-var message = nakamajs.AuthenticateRequest.custom(customId);
-client.login(message).then(function(session){
-  console.log("session: %o", session);
-}).catch(function(error) {
-  console.log("Could not login: %o", error);
-});
-```
-
 ## Sessions
 
 The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.
 
 !!! Tip
     You can change how long a session token is valid before it expires in the [configuration](install-configuration.md) in the server. By default a session is only valid for 60 seconds.
+
+```js fct_label="Javascript"
+var id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+
+try {
+  var session = await client.authenticateDevice({ id: id })
+  console.log("Session id '%o', handle '%o.", session.user_id, session.handle);
+  console.log("Session expired: %o", session.isexpired(new Date()));
+} catch(e) {
+  console.log("Could not authenticate: %o", error);
+}
+```
 
 ```csharp fct_label="Unity"
 string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
@@ -630,22 +785,22 @@ client.login(with: message).then { session in
 }
 ```
 
-```js fct_label="Javascript"
-var id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-var message = nakamajs.AuthenticateRequest.device(id);
-client.login(message).then (function(session){
-  console.log("Session id '%o', handle '%o.", session.id, session.handle);
-  console.log("Session expired: %o", session.isexpired(new Date()));
-}).catch(function(error) {
-  console.log("Could not login: %o", error);
-});
-```
-
 ### Connect
 
-With a session you can connect with the server and send messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.
+With a session you can connect with the server and exchange realtime messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.
 
 You can only send messages to the server once you've connected a client.
+
+```js fct_label="Javascript"
+var session = ... // obtained by authentication
+var socket = client.createSocket();
+try {
+  await socket.connect(session);
+  console.log("Successfully connected.");
+} catch(error) {
+  console.log("An error occured: %o", error);
+}
+```
 
 ```csharp fct_label="Unity"
 INSession session = someSession; // obtained from Register or Login.
@@ -673,20 +828,43 @@ client.connect(with: session).then { _ in
 });
 ```
 
-```js fct_label="Javascript"
-var session = // obtained from register or login
-client.connect(session).then (function(session){
-  console.log("Successfully connected.");
-}).catch(function(error) {
-  console.log("An error occured: %o", error);
-});
-```
-
 ## Link or unlink
 
 You can link one or more other login option to the current user. This makes it easy to support multiple logins with each user and easily identify a user across devices.
 
 You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.
+
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/link/custom \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer $session' \
+  --header 'Content-Type: application/json' \
+  --data '{"id":"some-custom-id"}'
+```
+
+```js fct_label="Javascript"
+var customId = "some-custom-id";
+
+try {
+  var success = await client.linkCustom(session, { id: customId });
+  console.log("Successfully linked custom ID to current user.");
+} catch(e) {
+  console.log("An error occured: %o", error);
+}
+```
+
+```fct_label="REST"
+POST /v2/account/link/custom
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer SessionToken
+
+{
+  "id":"some-custom-id"
+}
+```
 
 ```csharp fct_label="Unity"
 string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
@@ -730,19 +908,39 @@ client.send(with: message).then {
 }
 ```
 
-```js fct_label="Javascript"
-var id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
+You can unlink any linked login options for the current user.
 
-var message = new nakamajs.LinkRequest()
-message.device = id;
-client.send(session).then (function(session){
-  console.log("Successfully linked device ID to current user.");
-}).catch(function(error) {
-  console.log("An error occured: %o", error);
-});
+```sh fct_label="cURL"
+curl -X POST \
+  --url http://127.0.0.1:7350/v2/account/unlink/custom \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer $session' \
+  --header 'Content-Type: application/json' \
+  --data '{"id":"some-custom-id"}'
 ```
 
-You can unlink any linked login options for the current user.
+```js fct_label="Javascript"
+var customId = "some-custom-id";
+
+try {
+  var success = await client.unlinkCustom(session, { id: customId });
+  console.log("Successfully unlinked custom ID from the current user.");
+} catch(e) {
+  console.log("An error occured: %o", error);
+}
+```
+
+```fct_label="REST"
+POST /v2/account/unlink/custom
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer SessionToken
+
+{
+  "id":"some-custom-id"
+}
+```
 
 ```csharp fct_label="Unity"
 string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
@@ -786,26 +984,14 @@ client.send(with: message).then {
 }
 ```
 
-```js fct_label="Javascript"
-var id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
-
-var message = new nakamajs.UnlinkRequest()
-message.device = id;
-client.send(session).then (function(session){
-  console.log("Successfully unlinked device ID from current user.");
-}).catch(function(error) {
-  console.log("An error occured: %o", error);
-});
-```
-
-Like with register and login you can link or unlink many different account options.
+You can link or unlink many different account options.
 
 | Link | Description |
 | ---- | ----------- |
 | Custom | A custom identifier from another identity service. |
 | Device | A unique identifier for a device which belongs to the user. |
 | Email | An email and password set by the user. |
-| Facebook | A Facebook social account. |
+| Facebook | A Facebook social account. You can optionally import Facebook Friends upon linking. |
 | Game Center | An account from Apple's Game Center service. |
 | Google | A Google Play social account. |
 | Steam | An account from the Steam network. |
