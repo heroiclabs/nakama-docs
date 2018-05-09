@@ -171,7 +171,7 @@ var messageAck = await socket.send({
 console.log("Successfully sent chat message - ack: %o", messageAck);
 ```
 
-There is a lot more information about various chat feature available [here](social-in-app-notifications.md).
+You can find more information about the various chat features available [here](social-in-app-notifications.md).
 
 ## Handle events
 

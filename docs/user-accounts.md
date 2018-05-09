@@ -2,11 +2,11 @@
 
 A user represents an identity within the server. Every user is registered and has a profile for other users to find and become [friends](social-friends.md) with or join [groups](social-groups-clans.md) and [chat](social-realtime-chat.md).
 
-A user can own [records](storage-access-controls.md), share public information with other users, and authenticate via a bunch of different social providers.
+A user can own [records](storage-access-controls.md), share public information with other users, and authenticate via a variety of different social providers.
 
 ## Fetch account
 
-When a user has a session you can retrieve their account. The profile contains lots of information which includes various "linked" social providers.
+When a user has a session you can retrieve their account. The profile contains a variety of information which includes various "linked" social providers.
 
 ```sh fct_label="cURL"
 curl -X GET \
@@ -114,7 +114,7 @@ You can store additional fields for a user in `user.metadata` which is useful to
 
 ### Virtual wallet
 
-Nakama has the concept of a virtual wallet and transaction ledger. Nakama allows developers to create, update and list changes to the user's wallet. This operation has transactional guarantuees and is only achievable with the [script runtime](runtime-code-basics.md).
+Nakama has the concept of a virtual wallet and transaction ledger. Nakama allows developers to create, update and list changes to the user's wallet. This operation has transactional guarantees and is only achievable with the [script runtime](runtime-code-basics.md).
 
 With server-side code it's possible to update the user's wallet.
 
