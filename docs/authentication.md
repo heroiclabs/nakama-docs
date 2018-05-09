@@ -50,7 +50,7 @@ Every user account is created from one of the [options used to authenticate](#au
 Before you interact with the server, you must obtain a session token by authenticating with the system. The authentication system is very flexible. You could register a user with an email address, [link](#link-or-unlink) their Facebook account, and use it to login from another device.
 
 !!! Note
-    The system automatically will create a user automatically if the identifier used to authenticate did not previously exist in the system. This pattern is shown in the [device](#device) section.
+    By default the system will create a user automatically if the identifier used to authenticate did not previously exist in the system. This pattern is shown in the [device](#device) section.
 
 For a __full example__ on the best way to handle register and login in each of the clients have a look at their guides.
 

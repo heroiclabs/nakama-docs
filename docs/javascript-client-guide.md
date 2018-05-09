@@ -186,11 +186,11 @@ client.onnotification = function(notification) {
   console.log("Recieved a live notification: %o", notification);
 };
 
-client.ontopicpresence = function(presence) {
+client.onchannelpresence = function(presence) {
   console.log("Recieved a presence update: %o", presence);
 };
 
-client.ontopicmessage = function(message) {
+client.onchannelmessage = function(message) {
   console.log("Recieved a new chat message: %o", message);
 }
 
@@ -226,8 +226,8 @@ Some events only need to be implemented for the features you want to use.
 | ondisconnect | Handles an event for when the client is disconnected from the server. |
 | onerror | Receives events about server errors. |
 | onnotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
-| ontopicmessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| ontopicpresence | It handles join and leave events within [chat](social-realtime-chat.md). |
+| onchannelmessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
+| onchannelpresence | It handles join and leave events within [chat](social-realtime-chat.md). |
 | onmatchdata | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
 | onmatchpresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
 | onmatchmakermatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
