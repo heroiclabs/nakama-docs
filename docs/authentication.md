@@ -496,7 +496,7 @@ curl -X POST \
   --url http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername \
   --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
   --header 'content-type: application/json' \
-  --data '{"player_id":"player_id", "bundle_id":"com.heroiclabs.nakama", "timestamp_seconds":0, "salt":"some-salt", "public_key_url":"key_url"}'
+  --data '{"player_id":"...", "bundle_id":"...", "timestamp_seconds":0, "salt":"...", "public_key_url":"..."}'
 ```
 
 ```fct_label="REST"
@@ -507,11 +507,11 @@ Content-Type: application/json
 Authorization: Basic base64(ServerKey:)
 
 {
-  "player_id": "player_id",
-  "bundle_id": "com.heroiclabs.nakama",
+  "player_id": "...",
+  "bundle_id": "...",
   "timestamp_seconds": 0,
-  "salt": "some-salt",
-  "public_key_url": "key_url"
+  "salt": "...",
+  "public_key_url": "..."
 }
 ```
 

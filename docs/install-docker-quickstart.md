@@ -61,7 +61,7 @@ docker run --name=db cockroachdb/cockroach start --insecure
 # Let's pull and migrate the database
 docker run --link=db heroiclabs/nakama migrate up --database.address root@db:26257
 # start Nakama server
-docker run --link=db -p 7350:7350 heroiclabs/nakama --database.address root@db:26257
+docker run --link=db -p 7350:7350 -p 7351:7351 heroiclabs/nakama --database.address root@db:26257
 ```
 
 ## Using Docker-Compose
@@ -72,16 +72,57 @@ You can choose to configure the Nakama and CockroachDB containers without Docker
 
 Docker Compose uses YAML configuration files to declare which containers to use and how they should work together.
 
-1\. Let’s start by downloading the [Nakama Docker Compose file](https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml):
+1\. Let’s start by creating the Nakama Docker-Compose file:
 
-```shell fct_label="Shell"
-curl -o docker-compose.yml https://raw.githubusercontent.com/heroiclabs/nakama/master/install/docker/docker-compose.yml
+Create a file called `docker-compose.yml` and edit it in your favourite text editor:
+
+```yaml fct_label="docker-compose.yml"
+version: '3'
+services:
+  cockroachdb:
+    image: cockroachdb/cockroach:v2.0.1
+    command: start --insecure --store=attrs=ssd,path=/var/lib/cockroach/
+    restart: always
+    volumes:
+      - data:/var/lib/cockroach
+    expose:
+      - "8080"
+      - "26257"
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+  nakama:
+    image: heroiclabs/nakama:1.4.1
+    entrypoint:
+      - "/bin/bash"
+      - "-ecx"
+      - >
+          /nakama/nakama migrate up --database.address root@cockroachdb:26257 &&
+          /nakama/nakama --name nakama1 --database.address root@cockroachdb:26257 --log.verbose --log.stdout
+    restart: always
+    links:
+      - "cockroachdb:db"
+    depends_on:
+      - cockroachdb
+    volumes:
+      - ./:/nakama/data
+    expose:
+      - "7350"
+      - "7351"
+    ports:
+      - "7350:7350"
+      - "7351:7351"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7350/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  data:
 ```
 
 !!! warning "Windows users"
     If you are trying to run Nakama via Docker-Compose on Windows, you'll need to make a small change to the downloaded `docker-compose.yml` file. Follow this [instruction](#data) to bind the correct path.
-
-This will download `docker-compose.yml` to your current working directory.
 
 2\. Next, we’ll ask Docker Compose to follow the instructions in the file we just downloaded:
 
@@ -99,18 +140,11 @@ Docker containers are ephemeral by design: when you remove the container, you lo
 
 For development purposes, we suggest that you bind a folder in the local machine's filesystem to the Docker file system. The easiest way to achieve this is by editing the `docker-compose.yml` file:
 
-``` yml hl_lines="9" fct_label="docker-compose.yml"
+``` yaml hl_lines="4" fct_label="docker-compose.yml"
 ...
-nakama:
-  image: heroiclabs/nakama:latest
-  entrypoint:
-    - /bin/bash
-    - -ecx
-    - /nakama/nakama migrate up --db "root@cockroachdb:26257" && /nakama/nakama --db "root@cockroachdb:26257"
-  volumes:
-    - ./nakama/data:/nakama/data # Edit this line
-  expose:
-    - "7350"
+  nakama:
+    volumes:
+      - ./nakama/data:/nakama/data # Edit this line
 ...
 ```
 
