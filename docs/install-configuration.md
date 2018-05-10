@@ -17,13 +17,14 @@ There are a few configuration properties that need to be changed in most environ
 
 | Parameter                | Description
 | ---------                | -----------
-| `name`                   | Nakama node name (must be unique) - It will default to `nakama-xxxx` where `xxxx` is 4 random characters.
-| `data_dir`               | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
-| `runtime.path`           | Path of modules to scan and load. Defaults to `data_dir/modules`.
-| `database.address`       | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
-| `socket.server_key`      | Server key to use to establish a connection to the server. Default value is `defaultkey`.
-| `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
-| `runtime.http_key`       | Key is used to protect the server's runtime HTTP invocations. Default value is `defaultkey`.
+| `name`                    | Nakama node name (must be unique) - It will default to `nakama-xxxx` where `xxxx` is 4 random characters.
+| `data_dir`                | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
+| `runtime.path`            | Path of modules to scan and load. Defaults to `data_dir/modules`.
+| `database.address`        | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
+| `session.token_expiry_sec` | Session token expiry in seconds. Default value is 60.
+| `socket.server_key`       | Server key to use to establish a connection to the server. Default value is `defaultkey`.
+| `session.encryption_key`  | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
+| `runtime.http_key`        | Key is used to protect the server's runtime HTTP invocations. Default value is `defaultkey`.
 
 !!! warning "Production settings"
     You must change the values of **`socket.server_key`**, **`session.encryption_key`** and **`runtime.http_key`** before you deploy Nakama to a live production environment.
@@ -114,10 +115,10 @@ Options related to connection socket and transport protocol between the server a
 
 You can change configuration options related to each user session, such as the encryption key used to create the token.
 
-| Parameter         | Flag                      | Description
-| ---------         | ----                      | -----------
-| `encryption_key`  | `session.encryption_key`  | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
-| `token_expiry_ms` | `session.token_expiry_ms` | Token expiry in milliseconds. Default value is 60000.
+| Parameter          | Flag                       | Description
+| ---------          | ----                       | -----------
+| `encryption_key`   | `session.encryption_key`   | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
+| `token_expiry_sec` | `session.token_expiry_sec` | Token expiry in milliseconds. Default value is 60.
 
 !!! warning "Important"
     You must change `encryption_key` before going live with your app!

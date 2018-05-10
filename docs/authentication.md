@@ -828,6 +828,24 @@ client.connect(with: session).then { _ in
 });
 ```
 
+### Expiry
+
+Sessions can expire and become invalid. If this happens, you'll need to reauthenticate with the server and get a new session.
+
+You can check the expiry of a session using the following code:
+
+```js fct_label="Javascript"
+var session = ... // obtained by authentication
+
+const nowUnixEpoch = Math.floor(Date.now() / 1000);
+
+if (session.isexpired(nowUnixEpoch)) {
+  console.log("Session has expired. You'll need to re-authenticate with the server.")
+}
+```
+
+You can also prolong the session expiry time by changing the `token_expiry_sec` in the [Session configuration](#install-configuration.md#session) page.
+
 ## Link or unlink
 
 You can link one or more other login option to the current user. This makes it easy to support multiple logins with each user and easily identify a user across devices.
