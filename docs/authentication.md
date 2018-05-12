@@ -14,6 +14,7 @@ var client = new nakamajs.Client("defaultkey");
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INClient client = new NClient.Builder("defaultkey")
     .Host("127.0.0.1")
     .Port(7350)
@@ -23,7 +24,8 @@ INClient client = new NClient.Builder("defaultkey")
 INClient client = NClient.Default("defaultkey");
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 Client client = DefaultClient.builder("defaultkey")
     .host("127.0.0.1")
     .port(7350)
@@ -34,6 +36,7 @@ Client client = DefaultClient.defaults("defaultkey");
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let client : Client = Builder("defaultkey")
     .host("127.0.0.1")
     .port(7350)
@@ -63,15 +66,12 @@ You can choose a custom username when creating the account. To do this, set `use
 A device identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
-  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
-  --header 'content-type: application/json' \
+curl http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
+  --user 'defaultkey:' \
   --data '{"id":"uniqueidentifier"}'
 ```
 
 ```js fct_label="Javascript"
-
 // The following example is only applicable to React Native apps:
 var deviceInfo = require('react-native-device-info');
 
@@ -90,12 +90,8 @@ try {
   console.log("An error occured: %o", error);
 }
 
-try {
-  var session = await client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" })
-  console.log("Successfully authenticated, session: %o", session);
-} catch(e) {
-  console.log("Could not authenticate: %o", error);
-}
+const session = await client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" });
+console.info("Successfully authenticated:", session);
 ```
 
 ```fct_label="REST"
@@ -111,6 +107,7 @@ Authorization: Basic base64(ServerKey:)
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 var sessionHandler = delegate(INSession session) {
   Debug.LogFormat("Session: '{0}'.", session.Token);
 };
@@ -133,7 +130,8 @@ client.Login(message, sessionHandler, (INError err) => {
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 String id = UUID.randomUUID().toString();
 AuthenticateMessage message = AuthenticateMessage.Builder.device(id);
 Deferred<Session> deferred = client.login(message);
@@ -172,6 +170,7 @@ deferred.addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let defaults = UserDefaults.standard
 let deviceKey = "device_id"
 
@@ -209,23 +208,16 @@ You can choose a custom username when creating the account. To do this, set `use
 An email address must be valid as defined by RFC-5322 and passwords must be at least 8 characters.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername \
-  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
-  --header 'content-type: application/json' \
+curl http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername \
+  --user 'defaultkey:' \
   --data '{"email":"email@example.com", "password": "3bc8f72e95a9"}'
 ```
 
 ```js fct_label="Javascript"
-var email = "email@example.com"
-var password = "3bc8f72e95a9"
-
-try {
-  var session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
-  console.log("Successfully authenticated, session: %o", session);
-} catch(e) {
-  console.log("Could not authenticate: %o", error);
-}
+const email = "email@example.com"
+const password = "3bc8f72e95a9"
+const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
+console.info("Successfully authenticated:", session);
 ```
 
 ```fct_label="REST"
@@ -242,6 +234,7 @@ Authorization: Basic base64(ServerKey:)
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string email = "email@example.com"
 string password = "3bc8f72e95a9"
 
@@ -254,7 +247,8 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 String email = "email@example.com"
 String password = "3bc8f72e95a9"
 
@@ -277,6 +271,7 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let email = "email@example.com"
 let password = "3bc8f72e95a9"
 
@@ -304,22 +299,15 @@ You can choose a custom username when creating the account. To do this, set `use
 You can optionally import Facebook friends into Nakama's [friend graph](social-friends.md) when authenticating. To do this, set `import` to true.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true \
-  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
-  --header 'content-type: application/json' \
+curl http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true \
+  --user 'defaultkey:' \
   --data '{"token":"valid-oauth-token"}'
 ```
 
 ```js fct_label="Javascript"
-var oauthToken = "...";
-
-try {
-  var session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
-  console.log("Successfully authenticated, session: %o", session);
-} catch(e) {
-  console.log("Could not authenticate: %o", error);
-}
+const oauthToken = "...";
+const session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true });
+console.log("Successfully authenticated:", session);
 ```
 
 ```fct_label="REST"
@@ -335,6 +323,7 @@ Authorization: Basic base64(ServerKey:)
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 Action<INSession> sessionHandler = delegate(INSession session) {
   Debug.LogFormat("Session: '{0}'.", session.Token);
   client.Connect(session);
@@ -366,6 +355,7 @@ if (!FB.IsInitialized) {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let oauthToken = "..."
 
 let message = AuthenticateMessage(facebook: oauthToken)
@@ -379,6 +369,7 @@ client.register(with: message).then { session in
 You can add a button to your UI to login with Facebook.
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 Action<INSession> sessionHandler = delegate(INSession session) {
   Debug.LogFormat("Session: '{0}'.", session.Token);
   client.Connect(session);
@@ -411,22 +402,15 @@ Similar to Facebook for register and login you should use one of Google's client
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername \
-  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
-  --header 'content-type: application/json' \
+curl http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername \
+  --user 'defaultkey:' \
   --data '{"token":"valid-oauth-token"}'
 ```
 
 ```js fct_label="Javascript"
-var oauthToken = "...";
-
-try {
-  var session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" })
-  console.log("Successfully authenticated, session: %o", session);
-} catch(e) {
-  console.log("Could not authenticate: %o", error);
-}
+const oauthToken = "...";
+const session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" });
+console.info("Successfully authenticated: %o", session);
 ```
 
 ```fct_label="REST"
@@ -442,6 +426,7 @@ Authorization: Basic base64(ServerKey:)
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string oauthToken = "...";
 
 var message = NAuthenticateMessage.Google(oauthToken);
@@ -453,7 +438,8 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 String oauthToken = "...";
 
 AuthenticateMessage message = AuthenticateMessage.Builder.google(oauthToken);
@@ -475,6 +461,7 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let oauthToken = "..."
 
 let message = AuthenticateMessage(google: oauthToken)
@@ -492,10 +479,8 @@ Apple devices have builtin authentication which can be done without user interac
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername \
-  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
-  --header 'content-type: application/json' \
+curl http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername \
+  --user 'defaultkey:' \
   --data '{"player_id":"...", "bundle_id":"...", "timestamp_seconds":0, "salt":"...", "public_key_url":"..."}'
 ```
 
@@ -516,6 +501,8 @@ Authorization: Basic base64(ServerKey:)
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 // You'll need to use native code (Obj-C) with Unity.
 // The "UnityEngine.SocialPlatforms.GameCenter" doesn't give enough information
 // to enable authentication.
@@ -541,6 +528,7 @@ client.Register(message, (INSession session) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let playerID : String = "..."
 let bundleID : String = "..."
 let base64salt : String = "..."
@@ -569,10 +557,8 @@ Steam requires you to configure the server before you can register a user.
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername \
-  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
-  --header 'content-type: application/json' \
+curl http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername \
+  --user 'defaultkey' \
   --data '{"token":"valid-steam-token"}'
 ```
 
@@ -589,6 +575,7 @@ Authorization: Basic base64(ServerKey:)
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string sessionToken = "...";
 
 var message = NAuthenticateMessage.Steam(sessionToken);
@@ -600,7 +587,8 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 String sessionToken = "...";
 
 AuthenticateMessage message = AuthenticateMessage.Builder.steam(sessionToken);
@@ -622,6 +610,7 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let sessionToken = "..."
 
 let message = AuthenticateMessage(steam: sessionToken)
@@ -642,22 +631,15 @@ A custom identifier must contain alphanumeric characters with dashes and be betw
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
-  --header 'authorization: Basic ZGVmYXVsdGtleTo=' \
-  --header 'content-type: application/json' \
+curl http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
+  --user 'defaultkey:' \
   --data '{"id":"some-custom-id"}'
 ```
 
 ```js fct_label="Javascript"
-var customId = "some-custom-id";
-
-try {
-  var session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" })
-  console.log("Successfully authenticated, session: %o", session);
-} catch(e) {
-  console.log("Could not authenticate: %o", error);
-}
+const customId = "some-custom-id";
+const session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" });
+console.info("Successfully authenticated:", session);
 ```
 
 ```fct_label="REST"
@@ -673,6 +655,8 @@ Authorization: Basic base64(ServerKey:)
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 // Some id from another service.
 string customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
 
@@ -685,7 +669,9 @@ client.Register(message, (INSession session) => {
 // Use client.Login(...) after register.
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
+
 // Some id from another service.
 String customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
 
@@ -708,6 +694,8 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 // Some id from another service.
 let customID = "a1fca336-7191-11e7-bdab-df34f6f90285"
 
@@ -728,18 +716,15 @@ The register and login messages return a session on success. The session contain
     You can change how long a session token is valid before it expires in the [configuration](install-configuration.md) in the server. By default a session is only valid for 60 seconds.
 
 ```js fct_label="Javascript"
-var id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+const id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 
-try {
-  var session = await client.authenticateDevice({ id: id })
-  console.log("Session id '%o', handle '%o.", session.user_id, session.handle);
-  console.log("Session expired: %o", session.isexpired(new Date()));
-} catch(e) {
-  console.log("Could not authenticate: %o", error);
-}
+const session = await client.authenticateDevice({ id: id })
+console.info("Session id:", session.user_id, "handle:", session.handle);
+console.info("Session expired:", session.isexpired(Date.now() / 1000));
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 var message = NAuthenticateMessage.Device(id);
 client.Login(message, (INSession session) => {
@@ -751,7 +736,8 @@ client.Login(message, (INSession session) => {
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 String id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 CollatedMessage<Session> message = AuthenticateMessage.Builder.device(id);
 Deferred<Session> deferred = client.login(message);
@@ -774,6 +760,7 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let id = "3e70fd52-7192-11e7-9766-cb3ce5609916"
 let message = AuthenticateMessage(device: id)
 client.login(with: message).then { session in
@@ -792,24 +779,22 @@ With a session you can connect with the server and exchange realtime messages. M
 You can only send messages to the server once you've connected a client.
 
 ```js fct_label="Javascript"
-var session = ... // obtained by authentication
 var socket = client.createSocket();
-try {
-  await socket.connect(session);
-  console.log("Successfully connected.");
-} catch(error) {
-  console.log("An error occured: %o", error);
-}
+var session = ""; // obtained by authentication.
+session = await socket.connect(session);
+console.info("Successfully connected.");
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INSession session = someSession; // obtained from Register or Login.
 client.Connect(session, (bool done) => {
   Debug.Log("Successfully connected.");
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 Session session = someSession; // obtained from register or login.
 Deferred<Session> deferred = client.connect(session);
 deferred.addCallback(new Callback<Session, Session>() {
@@ -822,6 +807,7 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let session : Session = someSession // obtained from register or login.
 client.connect(with: session).then { _ in
   NSLog("Successfully connected.")
@@ -835,13 +821,11 @@ Sessions can expire and become invalid. If this happens, you'll need to reauthen
 You can check the expiry of a session using the following code:
 
 ```js fct_label="Javascript"
-var session = ... // obtained by authentication
-
+const session = ""; // obtained by authentication.
 const nowUnixEpoch = Math.floor(Date.now() / 1000);
-
 if (session.isexpired(nowUnixEpoch)) {
-  console.log("Session has expired. You'll need to re-authenticate with the server.")
-}
+  console.log("Session has expired. You'll need to re-authenticate with the server.");
+};
 ```
 
 You can also prolong the session expiry time by changing the `token_expiry_sec` in the [Session configuration](#install-configuration.md#session) page.
@@ -853,23 +837,15 @@ You can link one or more other login option to the current user. This makes it e
 You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/link/custom \
-  --header 'Accept: application/json' \
+curl http://127.0.0.1:7350/v2/account/link/custom \
   --header 'Authorization: Bearer $session' \
-  --header 'Content-Type: application/json' \
   --data '{"id":"some-custom-id"}'
 ```
 
 ```js fct_label="Javascript"
-var customId = "some-custom-id";
-
-try {
-  var success = await client.linkCustom(session, { id: customId });
-  console.log("Successfully linked custom ID to current user.");
-} catch(e) {
-  console.log("An error occured: %o", error);
-}
+const customId = "some-custom-id";
+const success = await client.linkCustom(session, { id: customId });
+console.log("Successfully linked custom ID to current user.");
 ```
 
 ```fct_label="REST"
@@ -885,6 +861,7 @@ Authorization: Bearer SessionToken
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
 
 var message = NSelfLinkMessage.Device(id);
@@ -895,7 +872,8 @@ client.Send(message, (bool done) => {
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 String id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
 
 CollatedMessage<Session> message = SelfLinkMessage.Builder.device(id);
@@ -916,6 +894,7 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let id = "062b0916-7196-11e7-8371-9fcee9f0b20c"
 
 var message = SelfLinkMessage(device: id);
@@ -929,23 +908,15 @@ client.send(with: message).then {
 You can unlink any linked login options for the current user.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  --url http://127.0.0.1:7350/v2/account/unlink/custom \
-  --header 'Accept: application/json' \
+curl http://127.0.0.1:7350/v2/account/unlink/custom \
   --header 'Authorization: Bearer $session' \
-  --header 'Content-Type: application/json' \
   --data '{"id":"some-custom-id"}'
 ```
 
 ```js fct_label="Javascript"
-var customId = "some-custom-id";
-
-try {
-  var success = await client.unlinkCustom(session, { id: customId });
-  console.log("Successfully unlinked custom ID from the current user.");
-} catch(e) {
-  console.log("An error occured: %o", error);
-}
+const customId = "some-custom-id";
+const success = await client.unlinkCustom(session, { id: customId });
+console.info("Successfully unlinked custom ID from the current user.");
 ```
 
 ```fct_label="REST"
@@ -961,6 +932,7 @@ Authorization: Bearer SessionToken
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
 
 var message = NSelfUnlinkMessage.Device(id);
@@ -971,7 +943,8 @@ client.Send(message, (bool done) => {
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 String id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
 
 CollatedMessage<Session> message = SelfUnlinkMessage.Builder.device(id);
@@ -992,6 +965,7 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let id = "062b0916-7196-11e7-8371-9fcee9f0b20c"
 
 var message = SelfUnlinkMessage(device: id);
