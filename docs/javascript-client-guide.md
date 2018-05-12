@@ -120,9 +120,10 @@ You first need to create a realtime socket to the server:
 ```js
 const useSSL = false;
 const verboseLogging = false;
+const createStatus = false; // Used to tell the server to send status presence updates to other clients
 const socket = client.createSocket(useSSL, verboseLogging);
 var session = ""; // obtained by authentication.
-session = await socket.connect(session);
+session = await socket.connect(session, createStatus);
 ```
 
 Then proceed to join a chat channel and send a message:
