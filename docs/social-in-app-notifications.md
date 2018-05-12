@@ -38,13 +38,14 @@ nk.notification_send(user_id, subject, content, code, sender_id, persistent)
 A callback can be registered for notifications received when a client is connected. The handler will be called whenever a notification is received as long as the client socket remains connected. When multiple messages are returned (batched for performance) the handler will be called once for each notification.
 
 ```js fct_label="Javascript"
-socket.onnotification = function(notification) {
+socket.onnotification = (notification) => {
   console.log("Received code %o and subject %o", notification.code, notification.subject);
   console.log("Received id %o and content %o", notification.id, notification.content);
 }
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 client.OnNotification = (INNotification n) => {
   Debug.LogFormat("Received code '{0}' and subject '{1}'.", n.Code, n.Subject);
   Debug.LogFormat("Received id '{0}' and content '{1}'.", n.Id, n.Content);
@@ -52,6 +53,7 @@ client.OnNotification = (INNotification n) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 client.onNotification = { notification in
   NSLog("Received code %d and subject %@", notification.code, notification.subject)
   NSLog("Received id %d and content %@", notification.id, notification.content)
@@ -63,18 +65,16 @@ client.onNotification = { notification in
 You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. It depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  --url http://127.0.0.1:7350/v2/notification \
-  --header 'authorization: Bearer <session token>' \
-  --header 'content-type: application/json'
+curl http://127.0.0.1:7350/v2/notification \
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
-var result = await client.listNotifications(session, 10);
-result.notifications.forEach(function(notification) {
-  console.log("Notification code %o and subject %o.", notification.code, notification.subject);
-})
-console.log("To fetch more, use the cursor %o.", result.cacheable_cursor);
+const result = await client.listNotifications(session, 10);
+result.notifications.forEach(notification => {
+  console.info("Notification code %o and subject %o.", notification.code, notification.subject);
+});
+console.info("To fetch more results use the cursor:", result.cacheable_cursor);
 ```
 
 ```fct_label="REST"
@@ -86,6 +86,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 var message = NNotificationsListMessage.Default(100);
 client.Send(message, (INResultSet<INNotification> list) => {
   foreach (var n in list.Results) {
@@ -97,6 +98,7 @@ client.Send(message, (INResultSet<INNotification> list) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var message = NotificationListMessage(limit: 100)
 client.send(message: message).then { notifications in
   for notification in notifications {
@@ -113,16 +115,14 @@ A list of notifications can be retrieved in batches of up to 100 at a time. To r
     You usually only want to list 100 notifications at a time otherwise you might cause user fatigue. A better option could be to have the UI fetch the next 100 notifications when the user scrolls to the bottom of your UI panel.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  --url http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cursor> \
-  --header 'authorization: Bearer <session token>' \
-  --header 'content-type: application/json'
+curl http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cursor> \
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
 var allNotifications = [];
 
-var accumulateNotifications = function(cursor) {
+var accumulateNotifications = (cursor) => {
   var result = await client.listNotifications(session, 10, cursor);
   if (result.notifications.length == 0) {
     return;
@@ -142,6 +142,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 IList<INNotification> allNotifications = new List<INNotification>();
 
 Action accumulateNotifications = delegate(INCursor resumeCursor) {
@@ -170,6 +171,7 @@ client.Send(message, (INResultSet<INNotification> list) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var allNotifications : [Notification] = []
 
 let accumulateNotifications = { cursor in
@@ -201,15 +203,13 @@ It can be useful to retrieve only notifications which have been added since the 
 The cacheable cursor marks the position of the most recent notification retrieved. We recommend you store the cacheable cursor in device storage and use it when the client makes its next request for recent notifications.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  --url http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cacheableCursor> \
-  --header 'authorization: Bearer <session token>' \
-  --header 'content-type: application/json'
+curl http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cacheableCursor> \
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
-var cacheableCursor = "..."; // stored from last list retrieval.
-var results = await client.listNotifications(session, 10, cacheableCursor);
+const cacheableCursor = ""; // stored from last list retrieval.
+const results = await client.listNotifications(session, 10, cacheableCursor);
 ```
 
 ```fct_label="REST"
@@ -221,6 +221,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INCursor resumeCursor = ...; // stored from last list retrieval.
 
 var message = new NNotificationsListMessage.Builder(100)
@@ -235,6 +236,7 @@ client.Send(message, (INResultSet<INNotification> list) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var resumableCursor = ...; // stored from last list retrieval.
 
 var message = NotificationListMessage(limit: 100)
@@ -252,14 +254,13 @@ You can delete one or more notifications from the client. This is useful to purg
 
 ```sh fct_label="cURL"
 curl -X DELETE \
-  --url http://127.0.0.1:7350/v2/notification?ids=<notificationId>&ids=<notificationId> \
-  --header 'authorization: Bearer <session token>' \
-  --header 'content-type: application/json'
+  --url "http://127.0.0.1:7350/v2/notification?ids=<notificationId>&ids=<notificationId>" \
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
-var notificationIDs = ["notification id to delete"];
-await client.deleteNotifications(session, notificationIDs);
+const notificationIds = ["notificationid"];
+await client.deleteNotifications(session, notificationIds);
 ```
 
 ```fct_label="REST"
@@ -271,6 +272,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 IList<INNotification> list = new List<INNotification>();
 list.Add(...); // Add notification from your internal list
 var message = NNotificationsRemoveMessage.Default(list);
@@ -282,6 +284,7 @@ client.Send(message, (bool done) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var message = NotificationRemoveMessage()
 message.notificationIds.append(...) // Add notification from your internal list
 client.send(message: message).then {
