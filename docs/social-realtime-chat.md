@@ -31,13 +31,14 @@ Users can opt to hide their channel presence when connecting, so they will not g
 A user joins a chat channel to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.
 
 ```js fct_label="Javascript"
-socket.onchannelmessage = function(message) {
-  console.log("Received a message on channel: %o", message.channel_id);
+socket.onchannelmessage = (message) => {
+  console.info("Received a message on channel:", message.channel_id);
   console.log("Message content: %@.", message.data);
-}
+};
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 client.OnTopicMessage = (INTopicMessage message) => {
   // TopicType will be one of DirectMessage, Room, or Group.
   Debug.LogFormat("Received a '{0}' message.", message.Topic.TopicType);
@@ -46,6 +47,7 @@ client.OnTopicMessage = (INTopicMessage message) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 client.onTopicMessage = { message in
   // Topic will be one of DirectMessage, Room, or Group.
   NSLog("Received a %@ message", message.topic.description)
@@ -59,11 +61,12 @@ You can identify event messages from chat messages by the message "Type".
 
 ```js fct_label="Javascript"
 if (message.code != 0) {
-  console.log("Received message with code %o", message.code)
-}
+  console.info("Received message with code:", message.code);
+};
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 TopicMessageType messageType = message.Type; // enum
 if (messageType != TopicMessageType.Chat) {
   Debug.LogFormat("Received message with event type '{0}'.", messageType);
@@ -71,6 +74,7 @@ if (messageType != TopicMessageType.Chat) {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let messageType = message.type; // enum
 switch messageType {
   case .chat:
@@ -103,18 +107,19 @@ To send messages to other users a user must join the chat channel they want to c
 A room is created dynamically for users to chat. A room has a name and will be setup on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a [storage record](storage-collections.md).
 
 ```js fct_label="Javascript"
-var roomName = "Room-Name"
+const roomname = "Room-Name";
 
-var channel = await socket.send({ channel_join: {
-  type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
-  target: roomName,
-  persistence: true,
-  hidden: false
+const channel = await socket.send({ channel_join: {
+    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: roomname,
+    persistence: true,
+    hidden: false
 } });
-console.log("You can now send messages to channel ID: %o", channel.id);
+console.info("You can now send messages to channel id:", channel.id);
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INTopicId roomId = null;
 
 string roomName = "Room-Name";
@@ -130,6 +135,7 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var roomId : TopicId?
 let roomName = "Room-Name"
 
@@ -155,18 +161,18 @@ A group chat can only be joined by a user who is a member of the [group](social-
 A group ID is needed when a user joins group chat and can be [listed by the user](social-groups-clans.md#list-groups).
 
 ```js fct_label="Javascript"
-var groupId = group.id
-
-var channel = await socket.send({ channel_join: {
-  type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
-  target: groupId,
-  persistence: true,
-  hidden: false
+const groupId = group.id;
+const channel = await socket.send({ channel_join: {
+    type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: groupId,
+    persistence: true,
+    hidden: false
 } });
-console.log("You can now send messages to channel ID: %o", channel.id);
+console.info("You can now send messages to channel id:", channel.id);
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INTopicId groupTopicId = null;
 
 string groupId = group.Id; // an INGroup ID.
@@ -182,6 +188,7 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var groupTopicId : TopicId?
 let groupId = group.id
 
@@ -207,18 +214,18 @@ A user can direct message another user by ID. Each user will not receive message
 A user will receive an [in-app notification](social-in-app-notifications.md) when a request to chat has been received.
 
 ```js fct_label="Javascript"
-var userId = user.id
-
-var channel = await socket.send({ channel_join: {
-  type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
-  target: groupId,
-  persistence: true,
-  hidden: false
+const userId = user.id;
+const channel = await socket.send({ channel_join: {
+    type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: userId,
+    persistence: true,
+    hidden: false
 } });
-console.log("You can now send messages to channel ID: %o", channel.id);
+console.info("You can now send messages to channel id:", channel.id);
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INTopicId directTopicId = null;
 
 string userId = user.Id; // an INUser ID.
@@ -234,6 +241,7 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var directTopicId : TopicId?
 let userId = user.id
 
@@ -266,32 +274,33 @@ The user who [joins a chat channel](#join-chat) receives an initial presence lis
 ```js fct_label="Javascript"
 var onlineUsers = [];
 
-socket.onchannelpresence = function(presences) {
+socket.onchannelpresence = (presences) => {
   // Remove all users who left.
-  onlineUsers = onlineUsers.filter(function(user) {
+  onlineUsers = onlineUsers.filter((user) => {
     return !presences.leave.includes(user);
-  })
+  });
   // Add all users who joined.
   onlineUsers.concat(presences.join);
-}
+};
 
-var roomName = "Room-Name";
-var channel = await socket.send({ channel_join: {
-  type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
-  target: roomName,
-  persistence: true,
-  hidden: false
+const roomname = "Room-Name";
+const channel = await socket.send({ channel_join: {
+    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: roomname,
+    persistence: true,
+    hidden: false
 } });
 
 // Setup initial online user list.
 onlineUsers.concat(channel.presences);
 // Remove your own user from list.
-onlineUsers = onlineUsers.filter(function(user) {
+onlineUsers = onlineUsers.filter((user) => {
   return user != channel.self;
-})
+});
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 IList<INUserPresence> onlineUsers = new List<INUserPresence>();
 
 client.OnTopicPresence = (INTopicPresence presences) => {
@@ -318,6 +327,7 @@ client.Send(message, (INResultSet<INTopic> topics) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var onlineUsers : [UserPresence] = []
 
 client.onTopicPresence = { presence in
@@ -353,16 +363,17 @@ When a user has [joined a chat channel](#join-chat) its ID can be used to send m
 Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.
 
 ```js fct_label="Javascript"
-var channelId = "..."; // A channel ID obtained previously from channel.id
-var data = {"some":"data"};
+var channelId = ""; // A channel ID obtained previously from channel.id
+var data = { "some": "data" };
 
-var message_ack = await socket.send({ channel_message_send: {
-  channel_id: channelId,
-  content: data
-} })
+const messageAck = await socket.send({ channel_message_send: {
+    channel_id: channelId,
+    content: data
+} });
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INTopicId chatTopicId = topic.Topic; // A chat topic ID.
 
 var json = "{\"some\":\"data\"}";
@@ -375,6 +386,7 @@ client.Send(message, (INTopicMessageAck ack) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let chatTopicID = ... // A chat topic ID
 let json = "{\"some\":\"data\"}".data(using: .utf8)!
 
@@ -393,7 +405,7 @@ client.send(message: message).then { ack in
 A user can leave a chat channel to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.
 
 ```js fct_label="Javascript"
-var channelId = "..."; // A channel ID obtained previously from channel.id
+var channelId = ""; // A channel ID obtained previously from channel.id
 
 await socket.send({ channel_leave: {
   channel_id: channelId
@@ -401,6 +413,7 @@ await socket.send({ channel_leave: {
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 INTopicId chatTopicId = topic.Topic; // A chat topic ID.
 
 var message = NTopicLeaveMessage.Default(chatTopicId);
@@ -412,6 +425,7 @@ client.Send(message, (bool done) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let chatTopicID = ... // A chat topic ID
 
 var message = TopicLeaveMessage()
@@ -433,20 +447,18 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
     A user does not have to join a chat channel to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  --url http://127.0.0.1:7350/v2/channel?channel_id=<channelId> \
-  --header 'authorization: Bearer <session token>' \
-  --header 'content-type: application/json'
+curl http://127.0.0.1:7350/v2/channel?channel_id=<channelId> \
+  -H 'authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
-var channelId = "..."; // A channel ID obtained previously from channel.id
+const channelId = ""; // A channel ID obtained previously from channel.id
 
-var result = await client.listChannelMessages(session, channelId, 10)
-result.messages.forEach(function(message) {
+const result = await client.listChannelMessages(session, channelId, 10);
+result.messages.forEach((message) => {
   console.log("Message has id %o and content %o", message.message_id, message.data);
 });
-console.log("Get the next page of messages with the cursor: %o", result.next_cursor);
+console.info("Get the next page of messages with the cursor:", result.next_cursor);
 ```
 
 ```fct_label="REST"
@@ -458,6 +470,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string roomName = "Room-Name";
 // Fetch 10 messages on the chat room with oldest first.
 var message = new NTopicMessagesListMessage.Builder()
@@ -477,6 +490,7 @@ client.Send(message, (INResultSet<INTopicMessage> list) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let roomName = "Room-Name";
 
 // Fetch 10 messages on the chat room with oldest first.
@@ -497,28 +511,26 @@ A cursor can be used to page after a batch of messages for the next set of resul
 We recommend you only list the most recent 100 messages in your UI. A good user experience could be to fetch the next 100 older messages when the user scrolls to the bottom of your UI panel.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  --url http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor> \
-  --header 'authorization: Bearer <session token>' \
-  --header 'content-type: application/json'
+curl "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>" \
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
-var channelId = "..."; // A channel ID obtained previously from channel.id
+var channelId = ""; // A channel ID obtained previously from channel.id
 var forward = true; // List from oldest message to newest.
 
-var result = await client.listChannelMessages(session, channelId, 10, forward)
-result.messages.forEach(function(message) {
+var result = await client.listChannelMessages(session, channelId, 10, forward);
+result.messages.forEach((message) => {
   console.log("Message has id %o and content %o", message.message_id, message.data);
 });
 
-if result.next_cursor {
+if (result.next_cursor) {
   // Get the next 10 messages.
-  var result = await client.listChannelMessages(session, channelId, 10, forward, result.next_cursor)
-  result.messages.forEach(function(message) {
-    console.log("Message has id %o and content %o", message.message_id, message.data);
+  var result = await client.listChannelMessages(session, channelId, 10, forward, result.next_cursor);
+  result.messages.forEach((message) => {
+    console.info("Message has id %o and content %o", message.message_id, message.data);
   });
-}
+};
 ```
 
 ```fct_label="REST"
@@ -530,6 +542,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 var errorHandler = delegate(INError err) {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
 };
@@ -556,6 +569,7 @@ client.Send(messageBuilder.Build(), (INResultSet<INTopicMessage> list) => {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let roomName = "Room-Name";
 
 var message = TopicMessagesListMessage(room: roomName)
