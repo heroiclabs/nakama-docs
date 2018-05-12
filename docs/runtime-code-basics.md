@@ -185,6 +185,23 @@ curl -X POST "http://127.0.0.1:7350/v2/rpc/http_handler_path?key=defaultkey" \
 !!! Warning "HTTP key"
     You should change the default HTTP key before you deploy your code in production.
 
+## Run once
+
+The runtime environment allows you to run code that must only be executed only once. This is useful if you have custom SQL queries that you need to perform (like creating a new table) or to register with third party services.
+
+```lua
+nk.run_once(function(context)
+  -- this is to create a system ID that cannot be used via a client.
+  local system_id = context.env["SYSTEM_ID"]
+
+  nk.sql_exec([[
+INSERT INTO users (id, username)
+VALUES ($1, $2)
+ON CONFLICT (id) DO NOTHING
+  ]], { system_id, "system_id" })
+end)
+```
+
 ## Errors and logs
 
 You can handle errors like you would normally in Lua code. If you want to trap the error which occurs in the execution of a function you'll need to execute it via `pcall` as a "protected call".
