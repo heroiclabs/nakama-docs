@@ -9,24 +9,17 @@ A user can own [records](storage-access-controls.md), share public information w
 When a user has a session you can retrieve their account. The profile contains a variety of information which includes various "linked" social providers.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  http://127.0.0.1:7350/v2/account \
-  -H 'Accept: application/json' \
-  -H 'authorization: Bearer <session token>' \
-  -H 'Content-Type: application/json' \
+curl http://127.0.0.1:7350/v2/account \
+  -H 'authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
-var session = "..."; // You can get this when you authenticate
+const session = ""; // obtained from authentication.
+const account = await client.getAccount(session);
 
-try {
-  var account = await client.getAccount(session);
-  console.log("User id '%o' and username '%o'.", account.user.id, account.user.username);
-  console.log("User's wallet: %o", account.wallet);
-  console.log("User's custom ID: %o", account.custom_id);
-} catch(e) {
-  console.log("An error occured: %o", error);
-}
+console.info("User id '%o' and username '%o'.", account.user.id, account.user.username);
+console.info("User's wallet:", account.wallet);
+console.info("User's custom id:", account.custom_id);
 ```
 
 ```fct_label="REST"
@@ -38,6 +31,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 var message = NSelfFetchMessage.Default();
 client.Send(message, (INSelf self) => {
   Debug.LogFormat("User has id '{0}' and handle '{1}'.", self.Id, self.Handle);
@@ -47,7 +41,8 @@ client.Send(message, (INSelf self) => {
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 CollatedMessage<Self> message = SelfFetchMessage.Builder.build();
 Deferred<Self> deferred = client.send(message);
 deferred.addCallback(new Callback<Self, Self>() {
@@ -67,6 +62,7 @@ deferred.addCallback(new Callback<Self, Self>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let message = SelfFetchMessage()
 client.send(message: message).then { selfuser in
   NSLog("User id '%@' and handle '%@'", selfuser.id, selfuser.handle)
@@ -146,24 +142,16 @@ Nakama can report back user online indicators in two ways:
 You can fetch one or more users by their IDs or handles. This is useful for displaying public profiles with other users.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1' \
-  -H 'Accept: application/json' \
-  -H 'authorization: Bearer <session token>' \
-  -H 'Content-Type: application/json' \
+curl "http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1" \
+  -H 'authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
-var session = "..."; // You can get this when you authenticate
-
-try {
-  var users = await client.getUsers(session, [user_id1], [username1], [facebookid1]);
-  users.foreach(function(user){
-    console.log("User id '%o' and username '%o'.", user.id, user.username);
-  });
-} catch(e) {
-  console.log("An error occured: %o", error);
-}
+var session = ""; // obtained with authentication.
+const users = await client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"]);
+users.foreach(user => {
+  console.info("User id '%o' and username '%o'.", user.id, user.username);
+});
 ```
 
 ```fct_label="REST"
@@ -175,6 +163,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string id = user.Id; // an INUser ID.
 
 var message = NUsersFetchMessage.Default(id);
@@ -188,7 +177,8 @@ client.Send(message, (INResultSet<INUser> list) => {
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 byte[] id = user.getId(); // a User object Id.
 
 CollatedMessage<ResultSet<User>> message = UsersFetchMessage.Builder.newBuilder()
@@ -214,6 +204,7 @@ deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 let userID // a User ID
 
 var message = UsersFetchMessage()
@@ -250,12 +241,9 @@ end
 When a user is registered most of their profile is setup with default values. A user can update their own profile to change fields but cannot change any other user's profile.
 
 ```sh fct_label="cURL"
-curl -X PUT \
-  http://127.0.0.1:7350/v2/account \
-  -H 'Accept: application/json' \
+curl http://127.0.0.1:7350/v2/account \
   -H 'authorization: Bearer <session token>' \
-  -H 'Content-Type: application/json' \
-  -d '{
+  --data '{
     "display_name": "My new name",
     "avatar_url": "http://graph.facebook.com/avatar_url",
     "location": "San Francisco"
@@ -263,19 +251,13 @@ curl -X PUT \
 ```
 
 ```js fct_label="Javascript"
-var session = "..."; // You can get this when you authenticate
-
-try {
-  await client.updateAccount(session, {
-    display_name: "My new name",
-    avatar_url: "http://graph.facebook.com/avatar_url",
-    location: "San Franciso"
-  });
-
-  console.log("Successfully updated yourself.");
-} catch(e) {
-  console.log("An error occured: %o", error);
-}
+const session = ""; // obtained with authentication.
+await client.updateAccount(session, {
+  display_name: "My new name",
+  avatar_url: "http://graph.facebook.com/avatar_url",
+  location: "San Franciso"
+});
+console.log("Successfully updated yourself.");
 ```
 
 ```fct_label="REST"
@@ -293,6 +275,7 @@ Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 var message = new NSelfUpdateMessage.Builder()
     .AvatarUrl("http://graph.facebook.com/avatar_url")
     .Fullname("My New Name")
@@ -305,7 +288,8 @@ client.Send(message, (bool done) => {
 });
 ```
 
-```java fct_label="Android/Java"
+```java fct_label="Java"
+// Requires Nakama 1.x
 CollatedMessage<Boolean> message = SelfUpdateMessage.Builder.newBuilder()
     .avatarUrl("http://graph.facebook.com/avatar_url")
     .fullname("My New Name")
@@ -328,6 +312,7 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
 var message = SelfUpdateMessage()
 message.avatarUrl = "http://graph.facebook.com/avatar_url"
 message.fullname = "My New Name"
