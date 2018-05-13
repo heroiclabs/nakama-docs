@@ -11,20 +11,32 @@ nakama --config my-special-config.yml
 
 If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to [setup folder binding](install-docker-quickstart.md#data).
 
+## Nakama port usage
+
+Nakama is a very flexible system. You can exchange data with the server over gRPC, HTTP, Websockets and rUDP. Due to this flexibilty, Nakama requires 4 ports to be available to bind to:
+
+- HTTP API server on port 7350. *Port can be changed in the config.*
+- HTTP API server powering the embedded developer console on port 7351. *Port can be changed in the config.*
+- gRPC API server on port 7349. *Port is chosen based on the API server port.*
+- gRPC API server for the embedded console on port 7348. *Port is chosen based on the API server port.*
+
+We'll be reducing the port requirement in the future releases.
+
 ## Common properties
 
 There are a few configuration properties that need to be changed in most environments. The full list of configurations is at the [bottom of the page](#server-configuration).
 
-| Parameter                | Description
-| ---------                | -----------
-| `name`                    | Nakama node name (must be unique) - It will default to `nakama-xxxx` where `xxxx` is 4 random characters.
-| `data_dir`                | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
-| `runtime.path`            | Path of modules to scan and load. Defaults to `data_dir/modules`.
-| `database.address`        | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
+| Parameter | Description
+| --------- | -----------
+| `name` | Nakama node name (must be unique) - It will default to `nakama`.
+| `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
+| `runtime.path` | Path of modules to scan and load. Defaults to `data_dir/modules`.
+| `database.address` | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
+| `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
+| `runtime.http_key` | Key is used to protect the server's runtime HTTP invocations. Default value is `defaultkey`.
+| `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
 | `session.token_expiry_sec` | Session token expiry in seconds. Default value is 60.
-| `socket.server_key`       | Server key to use to establish a connection to the server. Default value is `defaultkey`.
-| `session.encryption_key`  | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
-| `runtime.http_key`        | Key is used to protect the server's runtime HTTP invocations. Default value is `defaultkey`.
+
 
 !!! warning "Production settings"
     You must change the values of **`socket.server_key`**, **`session.encryption_key`** and **`runtime.http_key`** before you deploy Nakama to a live production environment.
@@ -46,30 +58,46 @@ If fields are not specific, default values will be used. For more information on
 !!! tip "Override configuration"
     Every configuration option can set from a config file, as a command line flag or both where the command-line argument takes precedence and will override the configuration values.
 
-| Parameter   | Flag       | Description
-| ---------   | ----       | -----------
-| `name`      | `name`     | Nakama node name (must be unique) - It will default to `nakama-xxxx` where `xxxx` is 4 random characters.  This name is also used in the log files.
-| `data_dir`  | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `name` | `name` | Nakama node name (must be unique) - It will default to `nakama`. This name is also used in the log files.
+| `data_dir` | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
 
-### Log
+### Logger
 
-Nakama produces logs in JSON format so various systems can interact with the logs. By default they are written to log files inside `data_dir/logs` folder.
+Nakama produces logs in JSON format so various systems can interact with the logs. By default they are written to the standard out (console).
 
-| Parameter  | Flag          | Description
-| ---------  | ----          | -----------
-| `stdout`   | `log.stdout`  | Redirect logs to console standard output. The log file will no longer be used. Default is `false`.
-| `verbose`  | `log.verbose` | Turn on verbose logging. You'll see a lot more logs including debug-level information. This is useful for debugging purposes. Default is `false`.
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `level` | `logger.level` | Minimum log level to produce. Values are `debug`, `info`, `warn` and `error`. Default is `info`.
+| `stdout` | `logger.stdout` | Redirect logs to console standard output. The log file will no longer be used. Default is `true`.
+| `file` | `log.verbose` | Log output to a file (as well as `stdout` if set). Make sure that the directory and the file is writable.
+
+The standard startup log messages will always be printed to the console irrespective of the value of `logger.stdout` field.
+
+### Metrics
+
+Nakama produces metrics information. This information can be exported to Stackdriver or Prometheus.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 10 seconds.
+| `namespace` | `metrics.namespace` | Namespace for Prometheus or prefix for Stackdriver metrics. It will always prepend node name. Default value is empty.
+| `stackdriver_projectid` | `metrics.stackdriver_projectid` | This is the identifier of the Stackdriver project the server is uploading the stats data to. Setting this enables metrics to be exported to Stackdriver.
+| `prometheus_port` | `metrics.prometheus_port` | Port to expose Prometheus. Default value is '0' which disables Prometheus exports.
+
+Ensure that metrics exports are protected as they contain sensitive server information.
 
 ### Database
 
 Nakama requires a CockroachDB server instance to be available. Nakama creates and manages its own database called `nakama` within the CockroachDB database.
 
-| Parameter              | Flag                             | Description
-| ---------              | ----                             | -----------
-| `address`              | `database.address`               | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
-| `conn_max_lifetime_ms` | `database.conn_max_lifetime_ms`  | Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.. Default value is 60000.
-| `max_open_conns`       | `database.max_open_conns`        | Maximum number of allowed open connections to the database. Default value is 0 (no limit).
-| `max_idle_conns`       | `database.max_idle_conns`        | Maximum number of allowed open but unused connections to the database. Default value is 0 (no limit).
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `address` | `database.address` | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
+| `conn_max_lifetime_ms` | `database.conn_max_lifetime_ms` | Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.. Default value is 0 (indefinite).
+| `max_open_conns` | `database.max_open_conns` | Maximum number of allowed open connections to the database. Default value is 0 (no limit).
+| `max_idle_conns` | `database.max_idle_conns` | Maximum number of allowed open but unused connections to the database. Default value is 100.
 
 !!! tip "Database addresses"
     You can pass in multiple database addresses to Nakama via command like:
@@ -82,46 +110,100 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 
 Options related to Lua-based runtime engine.
 
-| Parameter   | Flag               | Description
-| ---------   | ----               | -----------
-| `env`       | _N/A_              | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
-| `path`      | `runtime.path`     | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
-| `http_key`  | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
+| `path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
+| `http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
 
 !!! warning "Important"
     You must change `http_key` before going live with your app!
+
+!!! tip "Runtime env value"
+    The runtime environment is a key-value pair. They are separated by the `=` character like this:
+
+    ```
+    nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
+    ```
 
 ### Socket
 
 Options related to connection socket and transport protocol between the server and clients.
 
-| Parameter                 | Flag                            | Description
-| ---------                 | ----                            | -----------
-| `server_key`              | `socket.server_key`             | Server key to use to establish a connection to the server. Default value is `defaultkey`.
-| `port`                    | `socket.port`                   | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
-| `public_address`          | `socker.public_address`         | IP address to advertise to clients. This is used for rUDP connections. Default is `127.0.0.1`.
-| `max_message_size_bytes`  | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Default value is 1024.
-| `write_wait_ms`           | `socket.write_wait_ms`          | Time in milliseconds to wait for an ack from the client when writing data. Default value is 5000.
-| `pong_wait_ms`            | `socket.pong_wait_ms`           | Time in milliseconds to wait for a pong message from the client after sending a ping. Default value is 10000.
-| `ping_period_ms`          | `socket.ping_period_ms`         | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Default value is 8000.
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `server_key` | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
+| `port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
+| `max_message_size_bytes` | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Used for real-time, gRPC and HTTP connections. Default value is 4096.
+| `read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
+| `write_timeout_ms` | `socket.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response. Used for HTTP connections. Default value is 10000.
+| `idle_timeout_ms` | `socket.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled. Used for HTTP connections. Default value is 60000.
+| `write_wait_ms` | `socket.write_wait_ms` | Time in milliseconds to wait for an ack from the client when writing data. Used for real-time connections. Default value is 5000.
+| `pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 10000.
+| `ping_period_ms` | `socket.ping_period_ms` | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Used for real-time connections. Default value is 8000.
+| `outgoing_queue_size` | `socket.outgoing_queue_size` | The maximum number of messages waiting to be sent to the client. If this is exceeded the client is considered too slow and will disconnect. Used when processing real-time connections. Default value is 16.
+| `ssl_certificate` | `socket.ssl_certificate` | Path to certificate file if you want the server to use SSL directly. Must also supply ssl_private_key. NOT recommended for production use.
+| `ssl_private_key` | `socket.ssl_private_key` | Path to private key file if you want the server to use SSL directly. Must also supply ssl_certificate. NOT recommended for production use.
 
 !!! warning "Important"
     You must change `server_key` before going live with your app!
 
+<!--
 !!! info "Public Address"
     Public Address is the direct addressable IP address of your server. This value is cached in session tokens with clients to enable fast reconnects. If the IP address changes clients will need to re-authenticate with the server.
+-->
 
 ### Session
 
 You can change configuration options related to each user session, such as the encryption key used to create the token.
 
-| Parameter          | Flag                       | Description
-| ---------          | ----                       | -----------
-| `encryption_key`   | `session.encryption_key`   | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `encryption_key` | `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
 | `token_expiry_sec` | `session.token_expiry_sec` | Token expiry in milliseconds. Default value is 60.
 
 !!! warning "Important"
     You must change `encryption_key` before going live with your app!
+
+### Social
+
+Nakama can connect to various social networks to fetch user information. It can also act as a notification center for delivering and persisting notifications.
+
+#### Steam
+Configure Steam network settings. Facebook, Google and GameCenter don't require any server settings.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `publisher_key` | `steam.publisher_key` | Steam Publisher Key.
+| `app_id` | `steam.app_id` | Steam App ID.
+
+### Console
+
+This section defined the configuration related for the embedded developer console.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `port` | `console.port` | The port for accepting connections for the embedded console, listening on all interfaces. Default value is 7351.
+| `username` | `console.username` | Username for the embedded console. Default is "admin".
+| `password` | `console.password` | Password for the embedded console. Default is "password".
+
+### Cluster
+
+This section configures how the nodes should connect to each to other form a cluster.
+
+!!! tip "Nakama Enterprise Only"
+    The following configuration options are available only in the Nakama Enterprise version of the Nakama server
+
+    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Managed Cloud](https://heroiclabs.com/managed-cloud) service.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `join` | `cluster.join` | List of hostname and port of other Nakama nodes to connect to.
+| `gossip_bindaddr` | `cluster.gossip_bindaddr` | Interface address to bind Nakama to for discovery. By default listening on all interfaces.
+| `gossip_bindport` | `cluster.gossip_bindport` | Port number to bind Nakama to for discovery. Default value is 7352.
+| `rpc_port` | `cluster.rpc_port` | Port number to use to send data between Nakama nodes. Default value is 7353.
+
+<!--
 
 ### Purchase
 
@@ -147,105 +229,67 @@ Google In-App Purchase configuration
 | `service_key_file` | `google.service_key_file`  | Absolute file path to the service key JSON file.
 | `timeout_ms`       | `google..timeout_ms`       | Connection timeout to connect to Google services. Default value is 1500.
 
-### Social
+-->
 
-Nakama can connect to various social networks to fetch user information. It can also act as a notification center for delivering and persisting notifications.
-
-#### Notification
-
-| Parameter   | Flag                     | Description
-| ---------   | ----                     | -----------
-| `expiry_ms` | `notification.expiry_ms` | Set notification expiry in milliseconds. Default value is 86400000 (1 day).
-
-#### Steam
-Configure Steam network settings. Facebook, Google and GameCenter don't require any server settings.
-
-| Parameter       | Flag                  | Description
-| ---------       | ----                  | -----------
-| `publisher_key` | `steam.publisher_key` | Steam Publisher Key.
-| `app_id`        | `steam.app_id`        | Steam App ID.
-
-### Dashboard
-
-This section defined the configuration related for the embedded Dashboard.
-
-| Parameter | Flag             | Description
-| --------- | ----             | -----------
-| `port`    | `dashboard.port` | The port for accepting connections to the dashboard, listening on all interfaces. Default value is 7351.
-
-### Cluster
-
-This section configures how the nodes should connect to each to other form a cluster.
-
-!!! tip "Nakama Enterprise Only"
-    The following configuration options are available only in the Nakama Enterprise version of the Nakama server
-
-    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Managed Cloud](https://heroiclabs.com/managed-cloud) service.
-
-| Parameter            | Flag                      | Description
-| ---------            | ----                      | -----------
-| `join`               | `cluster.join`            | List of hostname and port of other Nakama nodes to connect to.
-| `gossip_bindaddr`    | `cluster.gossip_bindaddr` | Interface address to bind Nakama to for discovery. By default listening on all interfaces.
-| `gossip_bindport`    | `cluster.gossip_bindport` | Port number to bind Nakama to for discovery. Default value is 7352.
-| `rpc_port`           | `cluster.rpc_port`        | Port number to use to send data between Nakama nodes. Default value is 7353.
 
 ## Example File
 
 You can use the entire file or just a subset of the configuration.
 
 ```yaml
-
 name: nakama-node-1
 data_dir: "./data/"
 
-log:
+logger:
   stdout: false
-  verbose: false
+  level: "warn"
+  file: "/tmp/path/to/logfile.log"
+
+metrics:
+  reporting_freq_sec: 10
+  namespace: ""
+  stackdriver_projectid: ""
+  prometheus_port: 0
 
 database:
   address:
     - "root@localhost:26257"
-  conn_max_lifetime_ms: 60000
+  conn_max_lifetime_ms: 0
   max_open_conns: 0
-  max_idle_conns: 0
+  max_idle_conns: 100
 
 runtime:
   env:
-    - example_apikey: "example_apivalue"
+    - "example_apikey=example_apivalue"
+    - "encryptionkey=afefa==e332*u13=971mldq"
   path: "/tmp/modules/folders"
   http_key: "defaultkey"
 
 socket:
   server_key: "defaultkey"
   port: 7350
-  max_message_size_bytes: 1024 # bytes
+  max_message_size_bytes: 4096 # bytes
+  read_timeout_ms: 10000
+  write_timeout_ms: 10000
+  idle_timeout_ms: 60000
   write_wait_ms: 5000
   pong_wait_ms: 10000
   ping_period_ms: 8000 # Must be less than pong_wait_ms
+  outgoing_queue_size: 16
 
 session:
   encryption_key: "defaultencryptionkey"
   token_expiry_ms: 60000
 
-purchase:
-  apple:
-    password: ""
-    production: false
-    expiry_ms: 1500
-  google:
-    package: ""
-    service_key_file: ""
-    expiry_ms: 1500
-
 social:
-  notification:
-    expiry_ms: 86400000
   steam:
     publisher_key: ""
     app_id: 0
 
-dashboard:
+console:
   port: 7351
+  username: "admin"
+  password: "password"
 
 cluster:
   join:

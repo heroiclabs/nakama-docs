@@ -2,33 +2,95 @@
 
 Every app or game has data which is specific to the project.
 
-This information must be stored for users, updated, retrieved, and displayed within various parts of a UI. For this purpose the server incorporates a storage engine with a design optimized for record ownership, access permissions, and batch operations.
+This information must be stored for users, updated, retrieved, and displayed within various parts of a UI. For this purpose the server incorporates a storage engine with a design optimized for [object ownership](storage-access-controls.md), access permissions, and batch operations.
 
-Data is stored in collections with one or more records which contain a unique key with JSON content. A collection is created without any configuration required and are grouped into buckets. This creates a simple nested namespace which represents the location of a record.
+Data is stored in collections with one or more objects which contain a unique key with JSON content. A collection is created without any configuration required and are grouped into buckets. This creates a simple nested namespace which represents the location of a object.
 
 ```
-Bucket
-+---------------------------------------------------------------------------+
-|  Collection                                                               |
-|  +---------------------------------------------------------------------+  |
-|  |  Record                                                             |  |
-|  |  +----------+------------+-------------+-----+-------------------+  |  |
-|  |  | ?UserId? | Identifier | Permissions | ... |       Value       |  |  |
-|  |  +---------------------------------------------------------------+  |  |
-|  +---------------------------------------------------------------------+  |
-+---------------------------------------------------------------------------+
+Collection
++---------------------------------------------------------------------+
+|  Object                                                             |
+|  +----------+------------+-------------+-----+-------------------+  |
+|  | ?UserId? | Identifier | Permissions | ... |       Value       |  |
+|  +---------------------------------------------------------------+  |
++---------------------------------------------------------------------+
 ```
 
 This design gives great flexibility for developers to group sets of information which belong together within a game or app.
 
-## Write records
+## Write objects
 
-A user can write one or more records which will be stored in the database server. These records will be written in a single transaction which guarantees the writes succeed together.
+A user can write one or more objects which will be stored in the database server. These objects will be written in a single transaction which guarantees the writes succeed together.
 
 !!! Tip
-    In most cases you won't need to group data under multiple buckets so it can be easiest to just name it after your project. For example "Super Mario Run" could use a bucket name "smr" or similar.
+    In most cases you won't need to group data under multiple collections so it can be easiest to just name it after your project. For example "Super Mario Run" could use a collection "smr" or similar.
+
+```sh fct_label="cURL"
+curl -X PUT \
+  http://127.0.0.1:7350/v2/storage \
+  -H 'Authorization: <session token>' \
+  -d '{"objects":
+    [
+      {
+        "collection": "saves",
+        "key": "savegame",
+        "value": "{\"progress\": \"50\"}"
+      },
+      {
+        "collection": "stats",
+        "key": "skill",
+        "value": "{\"progress\": \"24\"}"
+      }
+    ]
+  }'
+```
+
+```js fct_label="Javascript"
+var save_game = {"progress": 50};
+var my_stats = {"skill": 24};
+
+const object_ids = await client.writeStorageObjects(session,[
+  {
+    "collection": saves,
+    "key": savegame,
+    "value": save_game
+  },
+  {
+    "collection": stats,
+    "key": skills,
+    "value": my_stats
+  }
+]);
+
+console.info("Successfully stored objects:", object_ids);
+```
+
+```fct_label="REST"
+PUT /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{"objects":
+  [
+    {
+      "collection": "saves",
+      "key": "key",
+      "value": "{\"hello\": \"world\"}"
+    },
+    {
+      "collection": "stats",
+      "key": "skill",
+      "value": "{\"progress\": \"24\"}"
+    }
+  ]
+}
+```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 string saveGame = "{\"progress\": 50}";
 string myStats = "{\"skill\": 24}";
 
@@ -49,6 +111,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
+// Requires Nakama 1.x
+
 String saveGame = "{\"progress\": 50}";
 String myStats = "{\"skill\": 24}";
 
@@ -77,6 +141,8 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 let saveGame = "{\"progress\": 50}".data(using: .utf8)!
 let myStats = "{\"skill\": 24}".data(using: .utf8)!
 
@@ -93,33 +159,69 @@ client.send(message: message).then { list in
 }
 ```
 
-```js fct_label="Javascript"
-var saveGame = {"progress": 50};
-var myStats = {"skill": 24};
-var bucket = "myapp"
-
-var message = new nakamajs.StorageWriteRequest();
-message.write(bucket, "saves", "savegame", saveGame);
-message.write(bucket, "saves", "mystats", myStats);
-client.send(message).then(function(result){
-  result.keys.forEach(function(storageKey) {
-    console.log("Stored record has version %o", storageKey.version);
-  })
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-})
-```
-
 !!! Hint
     In Swift, make your objects conform to the `Codable` interface to allow for easy interoperability with Nakama's storage operations. For more info, please follow this [guide](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types#overview).
 
 ### Conditional writes
 
-When records are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is often known as a conditional write.
+When objects are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is often known as a conditional write.
 
-A conditional write ensures a client can only update the record if they've seen the previous version of the record already. The goal is to prevent a change to the record if another client has changed the value between when the first client's read and it's next write.
+A conditional write ensures a client can only update the object if they've seen the previous version of the object already. The goal is to prevent a change to the object if another client has changed the value between when the first client's read and it's next write.
+
+```sh fct_label="cURL"
+curl -X PUT \
+  http://127.0.0.1:7350/v2/storage \
+  -H 'Authorization: <session token>' \
+  -d '{"objects":
+    [
+      {
+        "collection": "saves",
+        "key": "savegame",
+        "value": "{\"progress\": \"50\"}",
+        "version": "some-previous-version"
+      }
+    ]
+  }'
+```
+
+```js fct_label="Javascript"
+var save_game = {"progress": 50};
+var my_stats = {"skill": 24};
+
+const object_ids = await client.writeStorageObjects(session,[
+  {
+    "collection": saves,
+    "key": savegame,
+    "value": save_game,
+    "version": "some-previous-version"
+  }
+]);
+
+console.info("Successfully stored objects:", object_ids);
+```
+
+```fct_label="REST"
+PUT /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{"objects":
+  [
+    {
+      "collection": "saves",
+      "key": "key",
+      "value": "{\"hello\": \"world\"}",
+      "version": "some-previous-version"
+    }
+  ]
+}
+```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 string saveGame = "{\"progress\": 54}";
 string version = record.Version; // an INStorageKey object.
 
@@ -134,6 +236,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
+// Requires Nakama 1.x
+
 String saveGame = "{\"progress\": 54}";
 String version = record.getVersion(); // a RecordId object's version.
 
@@ -158,6 +262,8 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 let saveGame = "{\"progress\": 54}".data(using: .utf8)!
 var version = record.version // a StorageRecordId object's version.
 
@@ -170,22 +276,62 @@ client.send(message: message).then { list in
 }
 ```
 
-```js fct_label="Javascript"
-var saveGame = {"progress": 50};
-var version = record.version // a storage object's version.
+We support another kind of conditional write which is used to write an object only if none already exists for that object's key name.
 
-var message = new nakamajs.StorageWriteRequest();
-message.write("myapp", "saves", "savegame", saveGame, version);
-client.send(message).then(function(result){
-  version = result.keys[0].version; // Cache updated version for next write.
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-})
+```sh fct_label="cURL"
+curl -X PUT \
+  http://127.0.0.1:7350/v2/storage \
+  -H 'Authorization: <session token>' \
+  -d '{"objects":
+    [
+      {
+        "collection": "saves",
+        "key": "savegame",
+        "value": "{\"progress\": \"50\"}",
+        "version": "*"
+      }
+    ]
+  }'
 ```
 
-We support another kind of conditional write which is used to write a record only if none already exists for that record's key name.
+```js fct_label="Javascript"
+var save_game = {"progress": 50};
+var my_stats = {"skill": 24};
+
+const object_ids = await client.writeStorageObjects(session,[
+  {
+    "collection": saves,
+    "key": savegame,
+    "value": save_game,
+    "version": "*"
+  }
+]);
+
+console.info("Successfully stored objects:", object_ids);
+```
+
+```fct_label="REST"
+PUT /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{"objects":
+  [
+    {
+      "collection": "saves",
+      "key": "key",
+      "value": "{\"hello\": \"world\"}",
+      "version": "*"
+    }
+  ]
+}
+```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 string saveGame = "{\"progress\": 1}";
 string version = "*"; // represents "no version".
 
@@ -200,6 +346,8 @@ client.Send(message, (INResultSet<INStorageKey> list) => {
 ```
 
 ```java fct_label="Android/Java"
+// Requires Nakama 1.x
+
 String saveGame = "{\"progress\": 1}";
 String version = "*"; // represents "no version".
 
@@ -224,6 +372,8 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 let saveGame = "{\"progress\": 1}".data(using: .utf8)!
 var version = "*" // represents "no version".
 
@@ -236,26 +386,60 @@ client.send(message: message).then { list in
 }
 ```
 
-```js fct_label="Javascript"
-var saveGame = {"progress": 1};
-var version = "*" // a storage object's version.
+## Read objects
 
-var message = new nakamajs.StorageWriteRequest();
-message.write("myapp", "saves", "savegame", saveGame, version);
-client.send(message).then(function(result){
-  version = result.keys[0].version; // Cache updated version for next write.
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-})
+Just like with [writing objects](#write-objects) you can read one or more objects from the database server.
+
+Each object has an owner and permissions. An object can only be read if the permissions allow it. An object which has no owner can be fetched with `null` and is useful for global objects which all users should be able to read.
+
+```sh fct_label="cURL"
+curl -X POST \
+  http://127.0.0.1:7350/v2/storage \
+  -H 'Authorization: <session token>' \
+  -d '{"object_ids":
+    [
+      {
+        "collection": "saves",
+        "key": "savegame",
+        "user_id": "some-user-id"
+      }
+    ]
+  }'
 ```
 
-## Fetch records
+```js fct_label="Javascript"
+const objects = await client.readStorageObjects(session, {
+  "object_ids": [{
+    "collection": "saves",
+    "key": "savegame",
+    "user_id": session.user_id
+  }]
+});
 
-Just like with [writing records](#write-records) you can fetch one or more records from the database server.
+console.info("Successfully read objects:", objects);
+```
 
-Each record has an owner and permissions. A record can only be fetched if the permissions allow it. A record which has no owner can be fetched with `null` and is useful for global records which all users should be able to read.
+```fct_label="REST"
+POST /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{"object_ids":
+  [
+    {
+      "collection": "saves",
+      "key": "savegame",
+      "user_id": "some-user-id"
+    }
+  ]
+}
+```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 string userId = session.Id; // an INSession object.
 
 var message = new NStorageFetchMessage.Builder()
@@ -274,6 +458,8 @@ client.Send(message, (INResultSet<INStorageData> list) => {
 ```
 
 ```java fct_label="Android/Java"
+// Requires Nakama 1.x
+
 byte[] userId = session.getId(); // a Session object's Id.
 
 CollatedMessage<ResultSet<StorageRecord>> message = StorageFetchMessage.Builder.newBuilder()
@@ -302,6 +488,8 @@ deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRec
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 let userID = session.userID // a Session object's Id.
 
 var message = StorageFetchMessage()
@@ -318,27 +506,31 @@ client.send(message: message).then { list in
 }
 ```
 
-```js fct_label="Javascript"
-var userId = session.id // a Session object's Id.
+## List objects
 
-var message = new nakamajs.StorageFetchRequest();
-message.fetch("myapp", "saves", "savegame", userId);
-message.fetch("myapp", "configuration", "config", null);
-client.send(message).then(function(records){
-  records.data.forEach(function(record) {
-    console.log("Record value '%o'", record.value);
-    console.log("Record permissions read '%o' write '%o'",record.permissionRead, record.permissionWrite);
-  })
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-})
+You can list objects in a collection and page through results. The objects returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
+
+```sh fct_label="cURL"
+curl -X GET \
+  'http://127.0.0.1:7350/v2/storage/saves?user_id=some-user-id&limit=10' \
+  -H 'Authorization: <session token>'
 ```
 
-## List records
+```js fct_label="Javascript"
+const objects = await client.listStorageObjects(session, "saves", session.user_id);
+console.info("Successfully list objects:", objects);
+```
 
-You can list records in a collection and page through results. The records returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
+```fct_label="REST"
+GET /v2/storage/{{collection}}?user_id={{user_id}}&limit={{limit}};cursor={{cursor}}
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 string userId = session.Id; // an INSession object.
 
 var message = new NStorageListMessage.Builder()
@@ -358,6 +550,8 @@ client.Send(message, (INResultSet<INStorageData> list) => {
 ```
 
 ```java fct_label="Android/Java"
+// Requires Nakama 1.x
+
 byte[] userId = session.getId(); // a Session object's Id.
 
 CollatedMessage<ResultSet<StorageRecord>> message = StorageListMessage.Builder.newBuilder(userId)
@@ -386,6 +580,8 @@ deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRec
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 let userId = session.userID // a Session object's Id.
 
 var message = StorageListMessage(bucket: "myapp")
@@ -402,24 +598,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```js fct_label="Javascript"
-var userId = session.id // a Session object's Id.
-
-var message = new nakamajs.StorageListRequest();
-message.userId = userId
-message.bucket = "myapp"
-message.collection = "saves"
-
-client.send(message).then(function(records){
-  records.data.forEach(function(record) {
-    console.log("Record value '%o'", record.value);
-    console.log("Record permissions read '%o' write '%o'",record.permissionRead, record.permissionWrite);
-  })
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-})
-```
-
+<!--
 ## Update records
 
 Every record's value is required to be a JSON object. To update the value you can fetch the object modify it and write it back; but a more efficient option is to update the value on the server based on a set of "operations".
@@ -539,15 +718,57 @@ client.send(message).then(function(results){
   console.log("An error occured: %o", error);
 })
 ```
+-->
 
-## Remove records
+## Remove objects
 
-A user can remove a record if it has the correct permissions and they own it.
+A user can remove an object if it has the correct permissions and they own it.
 
-!!! Note "Soft delete"
-    A record is not permanently deleted from the server when removed. It remains until overwritten but cannot be read by the client. This is useful in case you need to restore a user's records later.
+```sh fct_label="cURL"
+curl -X PUT \
+  http://127.0.0.1:7350/v2/storage/delete \
+  -H 'Authorization: <session token>' \
+  -d '{"object_ids":
+    [
+      {
+        "collection": "saves",
+        "key": "savegame"
+      }
+    ]
+  }'
+```
+
+```js fct_label="Javascript"
+await client.deleteStorageObjects(session, {
+  "object_ids": [{
+    "collection": "saves",
+    "key": "savegame"
+  }]
+});
+
+console.info("Successfully deleted objects.");
+```
+
+```fct_label="REST"
+PUT /v2/storage/delete
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{"object_ids":
+  [
+    {
+      "collection": "saves",
+      "key": "savegame"
+    }
+  ]
+}
+```
 
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 var message = new NStorageRemoveMessage.Builder()
     .Remove("myapp", "saves", "savegame")
     .Build();
@@ -559,6 +780,8 @@ client.Send(message, (bool done) => {
 ```
 
 ```java fct_label="Android/Java"
+// Requires Nakama 1.x
+
 CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
     .record("myapp", "saves", "savegame")
     .build();
@@ -579,6 +802,8 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 var message = StorageRemoveMessage()
 message.remove(bucket: "myapp", collection: "saves", key: "savegame")
 client.send(message: message).then {
@@ -588,19 +813,56 @@ client.send(message: message).then {
 }
 ```
 
-```js fct_label="Javascript"
-var message = new nakamajs.StorageRemoveRequest();
-message.remove("myapp", "saves", "savegame");
-client.send(message).then(function(){
-  console.log("Removed user's record(s).");
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-})
-```
-
 You can also conditionally remove an object if the object version matches the version sent by the client.
 
+```sh fct_label="cURL"
+curl -X PUT \
+  http://127.0.0.1:7350/v2/storage/delete \
+  -H 'Authorization: <session token>' \
+  -d '{"object_ids":
+    [
+      {
+        "collection": "saves",
+        "key": "savegame",
+        "version": "some-object-version"
+      }
+    ]
+  }'
+```
+
+```js fct_label="Javascript"
+await client.deleteStorageObjects(session, {
+  "object_ids": [{
+    "collection": "saves",
+    "key": "savegame",
+    "version": "some-object-version"
+  }]
+});
+
+console.info("Successfully deleted objects.");
+```
+
+```fct_label="REST"
+PUT /v2/storage/delete
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{"object_ids":
+  [
+    {
+      "collection": "saves",
+      "key": "savegame",
+      "version": "some-object-version"
+    }
+  ]
+}
+```
+
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
+
 string version = record.Version; // an INStorageKey object.
 
 var message = new NStorageRemoveMessage.Builder()
@@ -614,6 +876,8 @@ client.Send(message, (bool done) => {
 ```
 
 ```java fct_label="Android/Java"
+// Requires Nakama 1.x
+
 byte[] version = record.getVersion(); // a RecordId object's version.
 
 CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
@@ -636,6 +900,8 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 ```
 
 ```swift fct_label="Swift"
+// Requires Nakama 1.x
+
 let version = record.version // a StorageRecordId object's version.
 
 var message = StorageRemoveMessage()
@@ -645,16 +911,4 @@ client.send(message: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
-```
-
-```js fct_label="Javascript"
-var version = record.version // a record's version.
-
-var message = new nakamajs.StorageRemoveRequest();
-message.remove("myapp", "saves", "savegame", version);
-client.send(message).then(function(){
-  console.log("Removed user's record(s).");
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-})
 ```

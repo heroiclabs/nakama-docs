@@ -42,13 +42,10 @@ Once Nakama is running via Docker, use the following connection detail to config
 **SSL**: `False`
 **Server Key**: `defaultkey`
 
-In the Unity client, you can create an `NClient` like this:
-```csharp fct_label="Unity"
-INClient client = new NClient.Builder("defaultkey")
-    .Host("127.0.0.1")
-    .Port(7350)
-    .SSL(false)
-    .Build();
+In the Javascript client, you can create a `client` like this:
+```js fct_label="Javascript"
+var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
+client.ssl = false;
 ```
 
 ## Running Nakama
@@ -92,13 +89,13 @@ services:
       - "26257:26257"
       - "8080:8080"
   nakama:
-    image: heroiclabs/nakama:1.4.1
+    image: heroiclabs/nakama:2.0.0
     entrypoint:
       - "/bin/bash"
       - "-ecx"
       - >
           /nakama/nakama migrate up --database.address root@cockroachdb:26257 &&
-          /nakama/nakama --name nakama1 --database.address root@cockroachdb:26257 --log.verbose --log.stdout
+          /nakama/nakama --name nakama1 --database.address root@cockroachdb:26257
     restart: always
     links:
       - "cockroachdb:db"

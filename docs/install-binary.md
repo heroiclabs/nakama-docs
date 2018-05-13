@@ -27,6 +27,7 @@ You'll first need to install CockroachDB. Follow [this guide](https://www.cockro
 
 You’ll need to be running MacOS 10.9 (Mavericks) or greater to run Nakama.
 
+<!--
 ### Homebrew
 
 Homebrew is a community-developed package manager for MacOS. If you’ve used `apt` or `yum` on Linux systems then you’ll find Homebrew to be familiar.
@@ -39,6 +40,7 @@ brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/
 ```
 
 Now you have Nakama running and you’re ready to start developing.
+-->
 
 ### Without Homebrew
 
@@ -66,8 +68,8 @@ You may come across a permissions error. If you’re happy to perform the action
 ```shell fct_label="Shell"
 # migrate schema
 nakama migrate up
-# start the server and output logs to the terminal
-nakama --log.stdout
+# start the server
+nakama
 ```
 
 ## Install Nakama on Windows
@@ -81,8 +83,8 @@ Nakama is also available as a [Windows binary](https://github.com/heroiclabs/nak
 ```shell fct_label="Powershell"
 # migrate schema
 nakama.exe migrate up
-# start the server and output logs to the terminal
-nakama.exe --log.stdout
+# start the server
+nakama.exe
 ```
 
 ## Install Nakama on Linux
@@ -111,8 +113,8 @@ cp -i nakama /usr/local/bin
 ```shell fct_label="Shell"
 # migrate schema
 nakama migrate up
-# start the server and output logs to the terminal
-nakama --log.stdout
+# start the server
+nakama
 ```
 
 You may come across a permissions error. If you’re happy to perform the action with root permissions then prefix the command with `sudo`.

@@ -128,3 +128,4 @@ pages:
 #  - 'Lua runtime': 'internal-nakama-lua-runtime.md'
 #- 'Protocol reference': '#'
 #- 'Release notes': '#'
+- 'Previous versions': 'previous-versions.md'

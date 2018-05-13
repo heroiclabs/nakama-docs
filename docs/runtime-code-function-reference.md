@@ -13,6 +13,306 @@ local nk = require("nakama")
 !!! Note
     All code examples assume the "nakama" module has been imported.
 
+### account
+
+__account_get_id (user_id)__
+
+Get all account information for a given user ID.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | User ID to fetch information for. Must be valid UUID. |
+
+_Returns_
+
+All account information including wallet, device IDs and more.
+
+_Example_
+
+```lua
+local account = nk.account_get_id("8f4d52c7-bf28-4fcf-8af2-1d4fcf685592")
+print(nk.json_encode(account.wallet))
+```
+
+---
+
+__account_update_id (user_id, username, display_name, timezone, location, lang, avatar, metadata)__
+
+Update one or more users.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | User ID to be updated. Must be valid UUID. |
+| metadata | table | Metadata to update. Use `nil` if it is not being updated. |
+| username | string | Username to be set. Must be unique. Use empty string if not being updated. |
+| display_name | string | Display name to be updated. Use `nil` if it is not being updated. |
+| timezone | string | Timezone to be updated. Use `nil` if it is not being updated. |
+| location | string | Location to be updated. Use `nil` if it is not being updated. |
+| language | string | Lang tag to be updated. Use `nil` if it is not being updated. |
+| avatar_url | string | User's avatar URL. Use `nil` if it is not being updated. |
+
+_Example_
+
+```lua
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
+local metadata = {}
+local status, err = pcall(nk.account_update_id, user_id, metadata)
+if (not status) then
+  print(("Account update error: %q"):format(err))
+end
+```
+
+### aes128
+
+__aes128_decrypt (input, key)__
+
+AES decrypt input with the key. Key must be 16 bytes long.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The string which will be aes128 encrypted. |
+| key | string | 16 bytes decryption key. |
+
+_Returns_
+
+The decrypted input.
+
+_Example_
+
+```lua
+nk.aes128_decrypt("48656C6C6F20776F726C64", "goldenbridge_key")
+```
+
+---
+
+__aes128_encrypt (input, key)__
+
+AES encrypt input with the key. Key must be 16 bytes long.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The string which will be aes128 encrypted. |
+| key | string | 16 bytes encryption key. |
+
+_Returns_
+
+The encrypted input.
+
+_Example_
+
+```lua
+nk.aes128_encrypt("48656C6C6F20776F726C64", "goldenbridge_key")
+```
+
+### authenticate
+
+__authenticate_custom (id, username, create)__
+
+Authenticate user and create a session token.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | Custom ID to use to authenticate the user. Must be between 6-128 characters. |
+| username | string | Optional username. If left empty, one is generated. |
+| create | bool | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+The session token created for this user.
+
+_Example_
+
+```lua
+local token = nk.authenticate_custom("48656C6C6F20776F726C64", "username", true)
+print(token)
+```
+
+---
+
+__authenticate_device (id, username, create)__
+
+Authenticate user and create a session token.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | Device ID to use to authenticate the user. Must be between 1 - 128 characters. |
+| username | string | Optional username. If left empty, one is generated. |
+| create | bool | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+The session token created for this user.
+
+_Example_
+
+```lua
+local token = nk.authenticate_device("48656C6C6F20776F726C64", "username", true)
+print(token)
+```
+
+---
+
+__authenticate_email (email, password, username, create)__
+
+Authenticate user and create a session token.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| email | string | Email address to use to authenticate the user. Must be between 10-255 characters. |
+| password | string | Password to set - must be longer than 8 characters. |
+| username | string | Optional username. If left empty, one is generated. |
+| create | bool | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+The session token created for this user.
+
+_Example_
+
+```lua
+local token = nk.authenticate_email("email@example.com", "48656C6C6F20776F726C64", "username", true)
+print(token)
+```
+
+---
+
+__authenticate_facebook (token, import, username, create)__
+
+Authenticate user and create a session token.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | Facebook OAuth access token. |
+| import | bool | Whether to import facebook friends after authenticated automatically. This is true by default. |
+| username | string | Optional username. If left empty, one is generated. |
+| create | bool | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+The session token created for this user.
+
+_Example_
+
+```lua
+local token = nk.authenticate_facebook("some-oauth-access-token", true, "username", true)
+print(token)
+```
+
+---
+
+__authenticate_gamecenter (player_id, bundle_id, timestamp, salt, signature, public_key_url, username, create)__
+
+Authenticate user and create a session token.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| player_id | string | |
+| bundle_id | string | |
+| timestamp | number | |
+| salt | string | |
+| signature | string | |
+| public_key_url | string | |
+| username | string | Optional username. If left empty, one is generated. |
+| create | bool | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+The session token created for this user.
+
+---
+
+__authenticate_google (token, username, create)__
+
+Authenticate user and create a session token.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | Google OAuth access token. |
+| username | string | Optional username. If left empty, one is generated. |
+| create | bool | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+The session token created for this user.
+
+_Example_
+
+```lua
+local token = nk.authenticate_google("some-oauth-access-token", "username", true)
+print(token)
+```
+
+---
+
+__authenticate_steam (token, username, create)__
+
+Authenticate user and create a session token.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | Steam token. |
+| username | string | Optional username. If left empty, one is generated. |
+| create | bool | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+The session token created for this user.
+
+_Example_
+
+```lua
+local token = nk.authenticate_steam("steam-token", "username", true)
+print(token)
+```
+
+---
+
+__authenticate_token_generate (user_id, username)__
+
+Generate a Nakama session token from a username. This is not the same as an authentication mechanism because a user does not get created and input is not checked against the database.
+
+This is useful if you have an external source of truth where users are registered.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | User ID you'd like to use to generated the token. |
+| username | string | Username information to embed in the token. This is mandatory. |
+
+_Returns_
+
+The session token created for this user.
+
+_Example_
+
+```lua
+local token = nk.authenticate_token_generate("some-unique-user", "username")
+print(token)
+```
+
 ### base16
 
 __base16_decode (input)__
@@ -105,6 +405,99 @@ local encoded = nk.base64_encode("Hello world")
 print(encoded) -- outputs "SGVsbG8gd29ybGQ="
 ```
 
+---
+
+__base64url_decode (input)__
+
+Base 64 URL decode the input.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The string which will be base64 URL decoded. |
+
+_Returns_
+
+The base 64 URL decoded input.
+
+_Example_
+
+```lua
+local decoded = nk.base64url_decode("SGVsbG8gd29ybGQ=")
+print(decoded) -- outputs "Hello world"
+```
+
+---
+
+__base64url_encode (input)__
+
+Base 64 URL encode the input.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The string which will be base64 URL encoded. |
+
+_Returns_
+
+The base 64 URL encoded input.
+
+_Example_
+
+```lua
+local encoded = nk.base64url_encode("Hello world")
+print(encoded) -- outputs "SGVsbG8gd29ybGQ="
+```
+
+### bcrypt
+
+__bcrypt_hash (input)__
+
+Generate one-way encrypted string using bcrypt.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The string which will be bcrypted. |
+
+_Returns_
+
+The encrypted input.
+
+_Example_
+
+```lua
+local decoded = nk.bcrypt_hash("SGVsbG8gd29ybGQ=")
+print(decoded)
+```
+
+---
+
+__bcrypt_compare (hash, plaintext)__
+
+Compare hashed input against a plaintext input.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| hash | string | The string that is already bcrypted. |
+| plaintext | string | The string that is to be compared. |
+
+_Returns_
+
+True if they are the same, false otherwise.
+
+_Example_
+
+```lua
+local is_same = nk.bcrypt_compare("SGVsbG8gd29ybGQ", "helloworld")
+print(is_same) -- outputs "false"
+```
+
 ### cron
 
 __cron_next (expression, timestamp)__
@@ -134,15 +527,25 @@ local next = nk.cron_next(expr, ts)
 
 ### groups
 
-__groups_create (new_groups)__
+__group_create (user_id, name, creator_id, lang, description, avatar_url, open, metadata, max_count)__
 
-Setup one or more groups with various configuration settings. The groups will be created if they don't exist or fail if the group names are taken.
+Setup a group with various configuration settings. The group will be created if they don't exist or fail if the group name is taken.
+
+A user ID must be given as they'll be made group superadmin.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| new_groups | table | The Lua table array of new groups to create. |
+| user_id | string | The user ID to be associcated as the group superadmin. Mandatory field. |
+| name | string | Group name, must be set and unique. |
+| creator_id | string | The user ID to be associcated as creator. If not set, system user will be set. |
+| lang | string | Group language. Will default to 'en'. |
+| description | string | Group description, can be left empty. |
+| avatar_url | string | URL to the group avatar, can be left empty. |
+| open | bool | Whether the group is for anyone to join, or members will need to send invitations to join. Defaults to false. |
+| metadata | table | Custom information to store for this group. |
+| max_count | number | Maximum number of members to have in the group. Defaults to 100. |
 
 _Example_
 
@@ -150,28 +553,39 @@ _Example_
 local metadata = { -- Add whatever custom fields you want.
   my_custom_field = "some value"
 }
-local group = {
-  Name = "Some unique group name",
-  Description = "My awesome group.",
-  Lang = "en",
-  Private = true,
-  CreatorId = "4c2ae592-b2a7-445e-98ec-697694478b1c",
-  AvatarUrl = "url://somelink",
-  Metadata = metadata
-}
-local new_groups = { group }
-nk.groups_create(new_groups)
+
+local user_id = "dcb891ea-a311-4681-9213-6741351c9994"
+local creator_id = "dcb891ea-a311-4681-9213-6741351c9994"
+local name = "Some unique group name"
+local description = "My awesome group."
+local lang = "en"
+local open = true
+local creator_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+local avatar_url = "url://somelink"
+local maxMemberCount = 100
+
+nk.group_create(user_id, name, creator_id, lang, description, avatar_url, open, metadata, maxMemberCount)
 ```
 
-__groups_update (update_groups)__
+---
 
-Update one or more groups with various configuration settings. The groups which are updated can change some or all of their fields.
+__group_update (group_id, name, creator_id, lang, description, avatar_url, open, metadata, max_count)__
+
+Update a group with various configuration settings. The group which is updated can change some or all of its fields.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| update_groups | table | A Lua table of groups to be updated. |
+| group_id | string | The group ID to update. |
+| name | string | Group name, can be empty if not changed. |
+| creator_id | string | The user ID to be associcated as creator. Can be empty if not changed. |
+| lang | string | Group language. Empty if not updated. |
+| description | string | Group description, can be left empty if not updated. |
+| avatar_url | string | URL to the group avatar, can be left empty if not updated. |
+| open | bool | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
+| metadata | table | Custom information to store for this group. Use `nil` if field is not being updated. |
+| max_count | number | Maximum number of members to have in the group. Use `0` if field is not being updated. |
 
 _Example_
 
@@ -179,16 +593,34 @@ _Example_
 local metadata = {
   some_field = "some value"
 }
-local group = {
-  GroupId = "f00fa79a-750f-11e7-8626-0fb79f45ff97",
-  Description = "An updated description.",
-  Metadata = metadata
-}
-local update_groups = { group }
-nk.groups_update(update_groups)
+group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
+description = "An updated description."
+
+nk.group_update(group_id, "", "", "", description, "", nil, metadata, 0)
 ```
 
-__groups_user_list (user_id)__
+---
+
+__group_delete (group_id)__
+
+Delete a group.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| group_id | string | The group ID to delete. |
+
+_Example_
+
+```lua
+group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
+nk.group_delete(group_id)
+```
+
+---
+
+__user_groups_list (user_id)__
 
 List all groups which a user belongs to and whether they've been accepted into the group or if it's an invite.
 
@@ -206,27 +638,29 @@ _Example_
 
 ```lua
 local user_id = "64ef6cb0-7512-11e7-9e52-d7789d80b70b"
-local groups = nk.groups_user_list(user_id)
+local groups = nk.user_groups_list(user_id)
 for _, g in ipairs(groups)
 do
-  local msg = ("Group name %q with id %q"):format(g.Name, g.Id)
+  local msg = ("Group name %q with id %q"):format(g.name, g.id)
   print(msg)
 end
 ```
 
+---
+
 __group_users_list (group_id)__
 
-List all members and admins which belong to a group.
+List all members, admins and superadmins which belong to a group. This also list incoming join requests too.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| group_id | string | The Id of the group who's members and admins you want to list. |
+| group_id | string | The Id of the group who's members, admins and superadmins you want to list. |
 
 _Returns_
 
-The members and admins for the group.
+The user information for members, admins and superadmins for the group. Also users who sent a join request as well.
 
 _Example_
 
@@ -235,9 +669,33 @@ local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
 local members = nk.group_users_list(group_id)
 for _, m in ipairs(members)
 do
-  local msg = ("Member handle %q has status %q"):format(m.Handle, m.Type)
+  local msg = ("Member username %q has status %q"):format(m.username, m.state)
   print(msg)
 end
+```
+
+### hmac
+
+__hmac_sha256_hash (input, key)__
+
+Create a 256 hash from input and key.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | Plaintext input to hash. |
+| key | number | Hashing key. |
+
+_Returns_
+
+Hashed input using the key.
+
+_Example_
+
+```lua
+local hash = nk.hmac_sha256_hash("encryptthis", "somekey")
+print(hash)
 ```
 
 ### http
@@ -326,7 +784,7 @@ local json = nk.json_encode(input)
 print(json) -- outputs '{"some": "json"}'
 ```
 
-### leaderboard
+### leaderboards
 
 __leaderboard_create (id, sort, reset, metadata, authoritative)__
 
@@ -525,7 +983,39 @@ nk.logger_warn(message)
 
 ### notifications
 
-__notifications_send_id (new_notifications)__
+__notification_send (new_notifications)__
+
+Send one in-app notification to a user. Have a look at the section on [in-app notifications](social-in-app-notifications.md).
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | Notification recipient. Must be a valid UUID. |
+| subject | string | Notification subject. Must be set. |
+| content | table | Notification content. Must be set but can be an empty table. |
+| code | number | Notification code to use. Must be equal or greater than 0. |
+| sender_id | string | The sender of this notification. If left empty, it will be assumed that it is a system notification. |
+| persistent | bool | Whether to record this in the database for later listing. Defaults to false. |
+
+_Example_
+
+```lua
+local subject = "You've unlocked level 100!"
+local content = nk.json_encode({
+  reward_coins = 1000
+})
+local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c" -- who to send
+local sender_id = "dcb891ea-a311-4681-9213-6741351c9994" -- who the message if from
+local code = 101
+local persistent = true
+
+nk.notification_send(user_id, subject, content, code, sender_id, persistent)
+```
+
+---
+
+__notifications_send (new_notifications)__
 
 Send one or more in-app notifications to a user. Have a look at the section on [in-app notifications](social-in-app-notifications.md).
 
@@ -543,21 +1033,41 @@ local content = nk.json_encode({
   reward_coins = 1000
 })
 local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c" -- who to send
+local sender_id = "dcb891ea-a311-4681-9213-6741351c9994" -- who the message if from
 local code = 101
 
 local new_notifications = {
-  { Subject = subject, Content = content, UserId = user_id, Code = code, Persistent = true}
+  { subject = subject, content = content, sender_id = sender_id, user_id = user_id, code = code, persistent = true}
 }
-nk.notifications_send_id(new_notifications)
+nk.notifications_send(new_notifications)
 ```
-
-
 
 ### register hooks
 
-__register_after (func, msgname)__
+__register_matchmaker_matched (func)__
 
-Register a function with the server which will be executed after every message with the specified message name.
+Registers a function that will be called when matchmaking finds opponents.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| func | function | A function reference which will be executed on each matchmake completion. |
+
+_Example_
+
+```lua
+local function my_func(context)
+  -- run some code
+end
+nk.register_matchmaker_matched(my_func)
+```
+
+---
+
+__register_req_after (func, msgname)__
+
+Register a function with the server which will be executed after every non-realtime message with the specified message name.
 
 This can be used to apply custom logic to standard features in the server. Similar to the `register_before` function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
@@ -568,22 +1078,24 @@ _Parameters_
 | func | function | A function reference which will be executed on each `msgname` message. |
 | msgname | string | The specific message name to execute the `func` function after. |
 
+For message names, have a look at [this section](runtime-code-basics.md#message-names).
+
 _Example_
 
 ```lua
 local function my_func(context, payload)
   -- run some code
 end
-nk.register_after(my_func, "tfriendsadd")
+nk.register_req_after(my_func, "FriendsAdd")
 ```
 
 ---
 
-__register_before (func, msgname)__
+__register_req_before (func, msgname)__
 
-Register a function with the server which will be executed before every message with the specified message name.
+Register a function with the server which will be executed before every non-realtime message with the specified message name.
 
-For example `register_before(somefunc, "tfriendsadd")` will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on [runtime code basics](runtime-code-basics.md).
+For example `register_req_before(somefunc, "FriendsAdd")` will execute the function before the Friend Add message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
 _Parameters_
 
@@ -592,8 +1104,10 @@ _Parameters_
 | func | function | A function reference which will be executed on each `msgname` message. |
 | msgname | string | The specific message name to execute the `func` function before. |
 
+For message names, have a look at [this section](runtime-code-basics.md#message-names).
+
 !!! Note
-    The `func` should pass the `payload` back as a return argument so the pipeline can continue to execute the standard logic.
+    The `func` should pass the `payload` back as a return argument so the pipeline can continue to execute the standard logic. If you return `nil`, the server will stop processing that message. Any other return argument will result in an error.
 
 _Example_
 
@@ -602,48 +1116,63 @@ local function my_func(context, payload)
   -- run some code
   return payload -- important!
 end
-nk.register_before(my_func, "tfriendsadd")
+nk.register_req_before(my_func, "FriendsAdd")
 ```
 
 ---
 
-__register_http (func, path)__
+__register_rt_after (func, msgname)__
 
-Registers a HTTP endpoint within the server.
+Register a function with the server which will be executed after every realtime message with the specified message name.
 
-!!! Warning
-    This should not be used to implement custom client functions instead have a look at `register_rpc`.
-
-This can be useful to define web callbacks to handle various Ad networks. It can also be used to enable server to server communication to ease the integration of Nakama server into various server stacks. Have a look at the section on [runtime code basics](runtime-code-basics.md).
+This can be used to apply custom logic to standard features in the server. Similar to the `register_before` function but it will not block the execution pipeline. The logic will be executed in parallel to any response message sent back to a client. Have a look at the section on [runtime code basics](runtime-code-basics.md).
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| func | function | A function reference which will be executed on each HTTP call. |
-| path | string | The path that should be registered as a HTTP endpoint. |
+| func | function | A function reference which will be executed on each `msgname` message. |
+| msgname | string | The specific message name to execute the `func` function after. |
 
-!!! Note
-    The `func` can pass `nil` or `table` back as a return argument which will determine the HTTP response code returned.
+For message names, have a look at [this section](runtime-code-basics.md#message-names).
 
 _Example_
 
 ```lua
 local function my_func(context, payload)
-  -- let's return the "context" as JSON back in the HTTP response body
-  return context
+  -- run some code
 end
-nk.register_http(my_func, "/my_endpoint")
--- "my_func" will be registered at 'POST /runtime/my_endpoint'
+nk.register_rt_after(my_func, "ChannelJoin")
 ```
 
-You can send a request to the HTTP endpoint with JSON and responses will be returned in JSON.
+---
 
-```shell
-curl -X POST http://127.0.0.1:7350/runtime/my_endpoint?key=defaultkey \
-     -d '{"some": "data"}' \
-     -H 'Content-Type: application/json' \
-     -H 'Accept: application/json'
+__register_rt_before (func, msgname)__
+
+Register a function with the server which will be executed before every realtime message with the specified message name.
+
+For example `register_rt_before(somefunc, "ChannelJoin")` will execute the function before the Channel Join message is executed by the server's message pipeline. This can be used to apply custom conditions to standard features in the server. Have a look at the section on [runtime code basics](runtime-code-basics.md).
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| func | function | A function reference which will be executed on each `msgname` message. |
+| msgname | string | The specific message name to execute the `func` function before. |
+
+For message names, have a look at [this section](runtime-code-basics.md#message-names).
+
+!!! Note
+    The `func` should pass the `payload` back as a return argument so the pipeline can continue to execute the standard logic. If you return `nil`, the server will stop processing that message. Any other return argument will result in an error.
+
+_Example_
+
+```lua
+local function my_func(context, payload)
+  -- run some code
+  return payload -- important!
+end
+nk.register_rt_before(my_func, "ChannelJoin")
 ```
 
 ---
@@ -653,6 +1182,8 @@ __register_rpc (func, id)__
 Registers a function for use with client RPC to the server.
 
 The ID can be any string identifier and is sent by the client. The ID is used to map the client RPC message to the specific function to execute. Have a look at the section on [runtime code basics](runtime-code-basics.md).
+
+This function can also be used to register a HTTP endpoint within the server. Have a look at the [Server to server](runtime-code-basics.md#server-to-server) docs for more info.
 
 _Parameters_
 
@@ -673,9 +1204,34 @@ end
 nk.register_rpc(my_func, "my_func_id")
 ```
 
+### run once
+
+The runtime environment allows you to run code that must only be executed only once. This is useful if you have custom SQL queries that you need to perform (like creating a new table) or to register with third party services.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| func | function | A function reference which will be executed only once. |
+
+_Example_
+
+```lua
+nk.run_once(function(context)
+  -- this is to create a system ID that cannot be used via a client.
+  local system_id = context.env["SYSTEM_ID"]
+
+  nk.sql_exec([[
+INSERT INTO users (id, username)
+VALUES ($1, $2)
+ON CONFLICT (id) DO NOTHING
+  ]], { system_id, "system_id" })
+end)
+```
+
 ### storage
 
-__storage_fetch (record_keys)__
+__storage_read (object_ids)__
 
 Fetch one or more records by their bucket/collection/keyname and optional user.
 
@@ -683,32 +1239,32 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| record_keys | table | A table array of record identifiers to be fetched. |
+| object_ids | table | A table array of object identifiers to be fetched. |
 
 _Returns_
 
-A table array of the records result set.
+A table array of object result set.
 
 _Example_
 
 ```lua
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
-local record_keys = {
-  {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id},
-  {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id},
-  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id}
+local object_ids = {
+  {collection = "save", key = "save1", user_id = user_id},
+  {collection = "save", key = "save2", user_id = user_id},
+  {collection = "save", key = "save3", user_id = user_id}
 }
-local records = nk.storage_fetch(record_keys)
-for _, r in ipairs(records)
+local objects = nk.storage_read(object_ids)
+for _, r in ipairs(objects)
 do
-  local message = ("read: %q, write: %q, value: %q"):format(r.PermissionRead, r.PermissionWrite, r.Value)
+  local message = ("read: %q, write: %q, value: %q"):format(r.permission_read, r.permission_write, r.value)
   print(message)
 end
 ```
 
 ---
 
-__storage_list (user_id, bucket, collection, limit, cursor)__
+__storage_list (user_id, collection, limit, cursor)__
 
 You can list records in a collection and page through results. The records returned can be filtered to those owned by the user or "" for public records which aren't owned by a user.
 
@@ -717,7 +1273,6 @@ _Parameters_
 | Param | Type | Description |
 | ----- | ---- | ----------- |
 | user_id | string | User ID or "" (empty string) for public records. |
-| bucket | string | Bucket to list data from. |
 | collection | string | Collection to list data from. |
 | limit | number | Limit number of records retrieved. Min 10, Max 100. |
 | cursor | string | Pagination cursor from previous result. If none available set to nil or "" (empty string). |
@@ -730,41 +1285,42 @@ _Example_
 
 ```lua
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
-local records = nk.storage_list(user_id, "bucket", "collection", 10, "")
+local records = nk.storage_list(user_id "collection", 10, "")
 for _, r in ipairs(records)
 do
-  local message = ("read: %q, write: %q, value: %q"):format(r.PermissionRead, r.PermissionWrite, r.Value)
+  local message = ("read: %q, write: %q, value: %q"):format(r.permission_read, r.permission_write, r.value)
   print(message)
 end
 ```
 
 ---
 
-__storage_remove (record_keys)__
+__storage_delete (object_ids)__
 
-Remove one or more records by their bucket/collection/keyname and optional user.
+Remove one or more objects by their collection/keyname and optional user.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| record_keys | table | A table array of record identifiers to be removed. |
+| object_ids | table | A table array of object identifiers to be removed. |
 
 _Example_
 
 ```lua
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
 local friend_user_id = "8d98ee3f-8c9f-42c5-b6c9-c8f79ad1b820" -- friend ID.
-local record_keys = {
-  {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id},
-  {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id},
-  {Bucket = "mygame", Collection = "public", Record = "progress", UserId = friend_user_id}
+local object_ids = {
+  {collection = "save", key = "save1", user_id = user_id},
+  {collection = "save", key = "save2", user_id = user_id},
+  {collection = "public", key = "progress", user_id = friend_user_id}
 }
-nk.storage_remove(record_keys)
+nk.storage_delete(object_ids)
 ```
 
 ---
 
+<!--
 __storage_update (record_keys)__
 
 Update one or more records by their bucket/collection/keyname and optional user. Have a look at the section on [storage collections](storage-collections.md).
@@ -794,200 +1350,31 @@ nk.storage_update(record_keys)
 ```
 
 ---
+-->
 
-__storage_write (new_records)__
+__storage_write (new_objects)__
 
-Write one or more records by their bucket/collection/keyname and optional user.
+Write one or more objects by their collection/keyname and optional user.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| new_records | table | A table array of new records to write. |
+| new_objects | table | A table array of new objects to write. |
 
 _Example_
 
 ```lua
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
-local new_records = {
-  {Bucket = "mygame", Collection = "save", Record = "save1", UserId = user_id, Value = {}},
-  {Bucket = "mygame", Collection = "save", Record = "save2", UserId = user_id, Value = {}},
-  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id, Value = {}, PermissionRead = 2, PermissionWrite = 1},
-  {Bucket = "mygame", Collection = "save", Record = "save3", UserId = user_id, Value = {}, Version="*", PermissionRead = 1, PermissionWrite = 1}
+local new_objects = {
+  {collection = "save", key = "save1", user_id = user_id, value = {}},
+  {collection = "save", key = "save2", user_id = user_id, value = {}},
+  {collection = "save", key = "save3", user_id = user_id, value = {}, permission_read = 2, permission_write = 1},
+  {collection = "save", key = "save3", user_id = user_id, value = {}, version="*", permission_read = 1, permission_write = 1}
 }
-nk.storage_write(new_records)
+nk.storage_write(new_objects)
 ```
 
-### users
-
-__users_ban (user_ids)__
-
-Ban one or more users from the server.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| user_ids | table | A table array of user IDs to be banned. |
-
-_Example_
-
-```lua
-local user_ids = {"4c2ae592-b2a7-445e-98ec-697694478b1c"}
-local status, result = pcall(nk.users_ban, user_ids)
-if (not status) then
-  print(result)
-end
-```
-
----
-
-__users_fetch_handle (user_handles)__
-
-Fetch a set of users by handle.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| user_handles | table | A table array of user handles to fetch. |
-
-_Returns_
-
-A table array of the user result set.
-
-_Example_
-
-```lua
-local user_handles = {"b7865e7e", "c048ba7a"}
-local users = nk.users_fetch_handle(user_handles)
-for _, u in ipairs(users)
-do
-  local message = ("id: %q, fullname: %q"):format(u.Id, u.Fullname)
-  print(message)
-end
-```
-
----
-
-__users_fetch_id (user_ids)__
-
-Fetch one or more users by ID.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| user_ids | table | A table array of user IDs to fetch. |
-
-_Returns_
-
-A table array of the user result set.
-
-_Example_
-
-```lua
-local user_ids = {
-  "3ea5608a-43c3-11e7-90f9-7b9397165f34",
-  "447524be-43c3-11e7-af09-3f7172f05936"
-}
-local users = nk.users_fetch_id(user_ids)
-for _, u in ipairs(users)
-do
-  local message = ("handle: %q, fullname: %q"):format(u.Handle, u.Fullname)
-  print(message)
-end
-```
-
----
-
-__users_update (user_updates)__
-
-Update one or more users.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| user_updates | table | The table array of users to update. |
-
-_Example_
-
-```lua
-local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
-local user_updates = {
-  { UserId = user_id, Metadata = {} }
-}
-local status, err = pcall(nk.users_update, user_updates)
-if (not status) then
-  print(("User update error: %q"):format(err))
-end
-```
-
-### uuid
-
-__uuid_v4 ()__
-
-Generate a version 4 UUID in the standard 36-character string representation.
-
-_Returns_
-
-The generated version 4 UUID identifier.
-
-_Example_
-
-```lua
-local uuid = nk.uuid_v4()
-print(uuid)
-```
-
----
-
-__uuid_bytes_to_string (uuid_bytes)__
-
-Convert the 16-byte raw representation of a UUID into the equivalent 36-character standard UUID string representation. Will raise an error if the input is not valid and cannot be converted.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| uuid_bytes | string | The UUID bytes to convert. |
-
-_Returns_
-
-A string containing the equivalent 36-character standard representation of the UUID.
-
-_Example_
-
-```lua
-local uuid_bytes = "\78\196\241\38\63\157\17\231\132\239\183\193\130\179\101\33" -- some uuid bytes.
-local uuid_string = nk.uuid_bytes_to_string(uuid_bytes)
-print(uuid_string)
-```
-
----
-
-__uuid_string_to_bytes (uuid_string)__
-
-Convert the 36-character string representation of a UUID into the equivalent 16-byte raw UUID representation. Will raise an error if the input is not valid and cannot be converted.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| uuid_string | string | The UUID string to convert. |
-
-_Returns_
-
-A string containing the equivalent 16-byte representation of the UUID.
-
-_Example_
-
-```lua
-local uuid_string = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some uuid string.
-local uuid_bytes = nk.uuid_string_to_bytes(uuid_string)
-print(uuid_bytes)
-```
 
 ### sql
 
@@ -1055,4 +1442,150 @@ nk.logger_info("Selected " .. #rows .. " rows.")
 for i, row in ipairs(rows) do
   nk.logger_info("User handle " .. row.handle .. " created at " .. row.created_at)
 end
+```
+
+
+### users
+<!--
+__users_ban (user_ids)__
+
+Ban one or more users from the server.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_ids | table | A table array of user IDs to be banned. |
+
+_Example_
+
+```lua
+local user_ids = {"4c2ae592-b2a7-445e-98ec-697694478b1c"}
+local status, result = pcall(nk.users_ban, user_ids)
+if (not status) then
+  print(result)
+end
+```
+
+---
+-->
+
+__users_get_id (user_ids)__
+
+Fetch one or more users by ID.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_ids | table | A table array of user IDs to fetch. |
+
+_Returns_
+
+A table array of the user result set.
+
+_Example_
+
+```lua
+local user_ids = {
+  "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+  "447524be-43c3-11e7-af09-3f7172f05936"
+}
+local users = nk.users_get_id(user_ids)
+for _, u in ipairs(users)
+do
+  local message = ("username: %q, displayname: %q"):format(u.username, u.display_name)
+  print(message)
+end
+```
+
+__users_get_usernames (usernames)__
+
+Fetch a set of users by handle.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| usernames | table | A table array of usernames to fetch. |
+
+_Returns_
+
+A table array of the user result set.
+
+_Example_
+
+```lua
+local usernames = {"b7865e7e", "c048ba7a"}
+local users = nk.users_get_usernames(usernames)
+for _, u in ipairs(users)
+do
+  local message = ("id: %q, displayname: %q"):format(u.id, u.display_name)
+  print(message)
+end
+```
+
+### uuid
+
+__uuid_v4 ()__
+
+Generate a version 4 UUID in the standard 36-character string representation.
+
+_Returns_
+
+The generated version 4 UUID identifier.
+
+_Example_
+
+```lua
+local uuid = nk.uuid_v4()
+print(uuid)
+```
+
+---
+
+__uuid_bytes_to_string (uuid_bytes)__
+
+Convert the 16-byte raw representation of a UUID into the equivalent 36-character standard UUID string representation. Will raise an error if the input is not valid and cannot be converted.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| uuid_bytes | string | The UUID bytes to convert. |
+
+_Returns_
+
+A string containing the equivalent 36-character standard representation of the UUID.
+
+_Example_
+
+```lua
+local uuid_bytes = "\78\196\241\38\63\157\17\231\132\239\183\193\130\179\101\33" -- some uuid bytes.
+local uuid_string = nk.uuid_bytes_to_string(uuid_bytes)
+print(uuid_string)
+```
+
+---
+
+__uuid_string_to_bytes (uuid_string)__
+
+Convert the 36-character string representation of a UUID into the equivalent 16-byte raw UUID representation. Will raise an error if the input is not valid and cannot be converted.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| uuid_string | string | The UUID string to convert. |
+
+_Returns_
+
+A string containing the equivalent 16-byte representation of the UUID.
+
+_Example_
+
+```lua
+local uuid_string = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some uuid string.
+local uuid_bytes = nk.uuid_string_to_bytes(uuid_string)
+print(uuid_bytes)
 ```
