@@ -36,6 +36,36 @@ local account = nk.account_get_id("8f4d52c7-bf28-4fcf-8af2-1d4fcf685592")
 print(nk.json_encode(account.wallet))
 ```
 
+---
+
+__account_update_id (user_id, username, display_name, timezone, location, lang, avatar, metadata)__
+
+Update one or more users.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | User ID to be updated. Must be valid UUID. |
+| metadata | table | Metadata to update. Use `nil` if it is not being updated. |
+| username | string | Username to be set. Must be unique. Use empty string if not being updated. |
+| display_name | string | Display name to be updated. Use `nil` if it is not being updated. |
+| timezone | string | Timezone to be updated. Use `nil` if it is not being updated. |
+| location | string | Location to be updated. Use `nil` if it is not being updated. |
+| language | string | Lang tag to be updated. Use `nil` if it is not being updated. |
+| avatar_url | string | User's avatar URL. Use `nil` if it is not being updated. |
+
+_Example_
+
+```lua
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
+local metadata = {}
+local status, err = pcall(nk.account_update_id, user_id, metadata)
+if (not status) then
+  print(("Account update error: %q"):format(err))
+end
+```
+
 ### aes128
 
 __aes128_decrypt (input, key)__
@@ -1494,34 +1524,6 @@ do
   print(message)
 end
 ```
-
-<!--
-
----
-
-__users_update (user_updates)__
-
-Update one or more users.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| user_updates | table | The table array of users to update. |
-
-_Example_
-
-```lua
-local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
-local user_updates = {
-  { UserId = user_id, Metadata = {} }
-}
-local status, err = pcall(nk.users_update, user_updates)
-if (not status) then
-  print(("User update error: %q"):format(err))
-end
-```
--->
 
 ### uuid
 
