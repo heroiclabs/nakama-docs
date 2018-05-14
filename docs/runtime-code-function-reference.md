@@ -455,7 +455,7 @@ print(encoded) -- outputs "SGVsbG8gd29ybGQ="
 
 __bcrypt_hash (input)__
 
-Generate one-way encrypted string using bcrypt.
+Generate one-way hashed string using bcrypt.
 
 _Parameters_
 
@@ -465,13 +465,13 @@ _Parameters_
 
 _Returns_
 
-The encrypted input.
+The hashed input.
 
 _Example_
 
 ```lua
-local decoded = nk.bcrypt_hash("SGVsbG8gd29ybGQ=")
-print(decoded)
+local hashed = nk.bcrypt_hash("Hello World")
+print(hashed)
 ```
 
 ---
