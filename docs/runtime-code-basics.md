@@ -176,7 +176,7 @@ nk.register_rpc(http_handler, "http_handler_path")
 This function can be called with any HTTP client. For example with cURL you could execute the function with the server.
 
 ```shell
-curl -X POST "http://127.0.0.1:7350/v2/rpc/http_handler_path?key=defaultkey" \
+curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaultkey" \
      -d '{"some": "data"}' \
      -H 'Content-Type: application/json' \
      -H 'Accept: application/json'
@@ -354,7 +354,6 @@ client.Send(message, (INRuntimeRpc rpc) => {
 
 ```java fct_label="Android/Java"
 // Requires Nakama 1.x
-
 String payload = "{\"PokemonName\": \"dragonite\"}";
 
 CollatedMessage<RpcResult> message = RpcMessage.Builder.newBuilder("get_pokemon")
@@ -379,7 +378,6 @@ deferred.addCallback(new Callback<RpcResult, RpcResult>() {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-
 let payload = "{\"PokemonName\": \"dragonite\"}".data(using: .utf8)!
 
 let message = RPCMessage(id: "client_rpc_echo")
