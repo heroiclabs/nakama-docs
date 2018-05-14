@@ -13,7 +13,7 @@ These code examples show how to retrieve an object owned by the system (marked w
 ```sh fct_label="cURL"
 curl -X POST \
   http://127.0.0.1:7350/v2/storage \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"object_ids":
     [
       {
@@ -33,23 +33,6 @@ const objects = await client.readStorageObjects(session, {
 });
 
 console.info("Successfully fetched objects:", objects);
-```
-
-```fct_label="REST"
-POST /v2/storage
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"object_ids":
-  [
-    {
-      "collection": "configuration",
-      "key": "config"
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -115,6 +98,23 @@ client.send(message: message).then { list in
 }
 ```
 
+```fct_label="REST"
+POST /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"object_ids":
+  [
+    {
+      "collection": "configuration",
+      "key": "config"
+    }
+  ]
+}
+```
+
 You can also use the code runtime to fetch an object. The code runtime is exempt from the standard rules around access permissions because it is run by the server as authoritative code.
 
 ```lua
@@ -155,7 +155,7 @@ When modifying objects from the client, the default permission of a object is se
 
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"objects":
     [
       {
@@ -186,26 +186,6 @@ const object_ids = await client.writeStorageObjects(session,[
 ]);
 
 console.info("Successfully stored objects:", object_ids);
-```
-
-```fct_label="REST"
-PUT /v2/storage
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"objects":
-  [
-    {
-      "collection": "battle",
-      "key": "army",
-      "value": "{\"soldiers\": 50}",
-      "permission_read": 2,
-      "permission_write": 1
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -265,6 +245,26 @@ client.send(message: message).then { list in
   }
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```fct_label="REST"
+PUT /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"objects":
+  [
+    {
+      "collection": "battle",
+      "key": "army",
+      "value": "{\"soldiers\": 50}",
+      "permission_read": 2,
+      "permission_write": 1
+    }
+  ]
 }
 ```
 

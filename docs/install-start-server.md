@@ -39,7 +39,7 @@ You can now start the [server](install-binary.md).
 
 ```sh
 # start the server and output logs to the terminal
-nakama --log.stdout
+nakama
 ```
 
 The logs output from the server will tell you:
@@ -86,16 +86,10 @@ The `data` directory of Nakama is where Nakama stores various working files. Thi
 
 Nakama writes all logs to a file in the data directory. The log file name is the name of the server instance.
 
-By default Nakama logs messages with level "INFO", "WARN" and "ERROR". However for development purposes it can be useful to turn up the log level:
+By default Nakama logs messages with level "INFO", "WARN" and "ERROR". However you can change this:
 
 ```sh
-nakama --log.verbose
-```
-
-Logs can be redirected to standard output in the shell console if you prefer. They will not be written to a file with this flag set.
-
-```sh
-nakama --log.stdout
+nakama --logger.level "debug"
 ```
 
 ### Lua modules
@@ -118,13 +112,13 @@ The clustered version of Nakama server builds in gossip, node awareness, state r
 An enterprise server will join a cluster if one is already known to the instance it joins or create a new cluster.
 
 ```sh
-nakama --log.stdout --name "nakama1"
+nakama --name "nakama1"
 ```
 
 You can start a second node and join the cluster.
 
 ```sh
-nakama --log.stdout --name "nakama2" --cluster.join "localhost:7352"
+nakama --name "nakama2" --cluster.join "localhost:7352"
 ```
 
 If you'd like to run both instances on the same machine you must also give each server unique ports to listen on.

@@ -32,7 +32,7 @@ local function remote_configuration(_context, _payload)
   return { rc = parameters }
 end
 
-nk.register_http(remote_configuration, "rc")
+nk.register_rpc(remote_configuration, "rc")
 ```
 
 ### Dynamic parameters
@@ -51,29 +51,27 @@ local parameters = {
 }
 
 local record = {
-  Bucket = "app",
-  Collection = "configuration",
-  Record = "rc",
-  UserId = nil,
-  Value = parameters,
-  PermissionRead = 1,
-  PermissionWrite = 0,
-  Version = "*"       -- only write record if it does not already exist.
+  collection = "configuration",
+  record = "rc",
+  user_id = nil,
+  value = parameters,
+  permission_read = 1,
+  permission_write = 0,
+  version = "*"       -- only write record if it does not already exist.
 }
 pcall(nk.storage_write, { record }) -- write record, ignore errors.
 
 local function remote_configuration(_context, _payload)
   local rc = {
-    Bucket = record.Bucket,
-    Collection = record.Collection,
-    Record = record.Record,
-    UserId = nil
+    collection = record.Collection,
+    record = record.Record,
+    user_id = nil
   }
-  local records = nk.storage_fetch({ rc })
-  return records[1].Value
+  local records = nk.storage_read({ rc })
+  return records[1].value
 end
 
-nk.register_http(remote_configuration, "rc")
+nk.register_rpc(remote_configuration, "rc")
 ```
 
 ## Fetch In-app parameters
@@ -86,7 +84,7 @@ With either approach used to store in-app parameters you can fetch the configura
 ```csharp fct_label="Unity"
 var host = "127.0.0.1";
 var port = 7350;
-var path = "rc";
+var path = "/v2/rpc/rc";
 var auth = "defaultkey";
 
 var format = "http://{0}:{1}/runtime/{2}?key={3}";
@@ -109,7 +107,7 @@ if (!string.IsNullOrEmpty(www.error)) {
 ```
 
 ```shell fct_label="cURL"
-curl -X POST http://127.0.0.1:7350/runtime/rc?key=defaultkey \
+curl -X POST http://127.0.0.1:7350/v2/rpc/rc?http_key=defaultkey \
      -d "{}" \
      -H 'Content-Type: application/json' \
      -H 'Accept: application/json'

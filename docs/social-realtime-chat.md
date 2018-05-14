@@ -461,14 +461,6 @@ result.messages.forEach((message) => {
 console.info("Get the next page of messages with the cursor:", result.next_cursor);
 ```
 
-```fct_label="REST"
-GET /v2/channel?channel_id=<channelId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
-
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
 string roomName = "Room-Name";
@@ -506,6 +498,14 @@ client.send(message: message).then { messages in
 }
 ```
 
+```fct_label="REST"
+GET /v2/channel?channel_id=<channelId>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+```
+
 A cursor can be used to page after a batch of messages for the next set of results.
 
 We recommend you only list the most recent 100 messages in your UI. A good user experience could be to fetch the next 100 older messages when the user scrolls to the bottom of your UI panel.
@@ -531,14 +531,6 @@ if (result.next_cursor) {
     console.info("Message has id %o and content %o", message.message_id, message.data);
   });
 };
-```
-
-```fct_label="REST"
-GET /v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
 ```
 
 ```csharp fct_label="Unity"
@@ -588,4 +580,12 @@ client.send(message: message).then { messages in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```fct_label="REST"
+GET /v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```

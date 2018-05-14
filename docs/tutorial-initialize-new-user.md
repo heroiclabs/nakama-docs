@@ -53,21 +53,22 @@ local function initialize_user(context, _payload)
     artifacts = 0
   }
   local record = {
-    Bucket = "mygame",
-    Collection = "wallets",
-    Record = "mywallet",
-    UserId = context.UserId,
-    Value = value,
-    Version = "*"   -- only write record if one doesn't already exist.
+    collection = "wallets",
+    record = "mywallet",
+    user_id = context.user_id,
+    value = value,
+    version = "*"   -- only write record if one doesn't already exist.
   }
   pcall(nk.storage_write, { record }) -- write record, ignore errors.
 end
 
 -- change to whatever message name matches your authentication type.
-nk.register_after(initialize_user, "authenticaterequest_device")
+nk.register_req_after(initialize_user, "authenticaterequest_device")
 ```
 
 This approach avoids the tradeoff with client disconnects but requires a database write to happen after every login or register message. This could be acceptable depending on how frequently you write data to the storage engine and can be minimized if you [cache a user's session](authentication.md#sessions) for quick reconnects.
+
+<!--
 
 ## Initialize record when used
 
@@ -126,3 +127,5 @@ nk.storage_update({ record })
 ```
 
 This is our recommended approach. It has no tradeoffs compared with the other approaches except that you must remember to add `"init"` logic wherever the record would be updated.
+
+-->

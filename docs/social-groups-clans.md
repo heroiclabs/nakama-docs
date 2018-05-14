@@ -21,7 +21,7 @@ Filtering is achieved using a wildcard query that uses the `%` as a way to look 
 
 ```sh fct_label="cURL"
 curl 'http://127.0.0.1:7350/v2/group?limit=20&name=heroes%25' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
@@ -83,7 +83,7 @@ The message response for a list of groups contains a cursor. The cursor can be u
 
 ```sh fct_label="cURL"
 curl 'http://127.0.0.1:7350/v2/group?limit=20&name=%25heroes%25&cursor=somecursor' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
@@ -171,7 +171,7 @@ A user who's part of a group can join [group chat](social-realtime-chat.md#group
 
 ```sh fct_label="cURL"
 curl -X POST 'http://127.0.0.1:7350/v2/group/<group id>/join' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
@@ -214,6 +214,7 @@ POST /v2/group/<group id>/join
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 The user will receive an [in-app notification](social-in-app-notifications.md) when they've been added to the group. In a private group an admin or superadmin will receive a notification when a user has requested to join.
@@ -224,7 +225,7 @@ Each user can list groups they've joined as a member or an admin or a superadmin
 
 ```sh fct_label="cURL"
 curl 'http://127.0.0.1:7350/v2/user/<user id>/group' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
@@ -354,7 +355,7 @@ A group can be created with a name and other optional fields. These optional fie
 
 ```sh fct_label="cURL"
 curl 'http://127.0.0.1:7350/v2/group' \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{
     "name": "pizza-lovers",
     "description": "pizza lovers, pineapple haters",
@@ -465,7 +466,7 @@ When a group has been created it's admins can update optional fields.
 
 ```sh fct_label="cURL"
 curl -X PUT "http://127.0.0.1:7350/v2/group/<group id>" \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{
     "description": "I was only kidding. Basil sauce ftw!",
   }'
@@ -534,7 +535,7 @@ A user can leave a group and will no longer be able to join [group chat](social-
 
 ```sh fct_label="cURL"
 curl -X POST 'http://127.0.0.1:7350/v2/group/<group id>/leave' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
