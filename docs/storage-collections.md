@@ -28,7 +28,7 @@ A user can write one or more objects which will be stored in the database server
 ```sh fct_label="cURL"
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"objects":
     [
       {
@@ -63,29 +63,6 @@ const object_ids = await client.writeStorageObjects(session,[
 ]);
 
 console.info("Successfully stored objects:", object_ids);
-```
-
-```fct_label="REST"
-PUT /v2/storage
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"objects":
-  [
-    {
-      "collection": "saves",
-      "key": "key",
-      "value": "{\"hello\": \"world\"}"
-    },
-    {
-      "collection": "stats",
-      "key": "skill",
-      "value": "{\"progress\": \"24\"}"
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -159,6 +136,29 @@ client.send(message: message).then { list in
 }
 ```
 
+```fct_label="REST"
+PUT /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"objects":
+  [
+    {
+      "collection": "saves",
+      "key": "key",
+      "value": "{\"hello\": \"world\"}"
+    },
+    {
+      "collection": "stats",
+      "key": "skill",
+      "value": "{\"progress\": \"24\"}"
+    }
+  ]
+}
+```
+
 !!! Hint
     In Swift, make your objects conform to the `Codable` interface to allow for easy interoperability with Nakama's storage operations. For more info, please follow this [guide](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types#overview).
 
@@ -171,7 +171,7 @@ A conditional write ensures a client can only update the object if they've seen 
 ```sh fct_label="cURL"
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"objects":
     [
       {
@@ -198,25 +198,6 @@ const object_ids = await client.writeStorageObjects(session,[
 ]);
 
 console.info("Successfully stored objects:", object_ids);
-```
-
-```fct_label="REST"
-PUT /v2/storage
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"objects":
-  [
-    {
-      "collection": "saves",
-      "key": "key",
-      "value": "{\"hello\": \"world\"}",
-      "version": "some-previous-version"
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -276,12 +257,31 @@ client.send(message: message).then { list in
 }
 ```
 
+```fct_label="REST"
+PUT /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"objects":
+  [
+    {
+      "collection": "saves",
+      "key": "key",
+      "value": "{\"hello\": \"world\"}",
+      "version": "some-previous-version"
+    }
+  ]
+}
+```
+
 We support another kind of conditional write which is used to write an object only if none already exists for that object's key name.
 
 ```sh fct_label="cURL"
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"objects":
     [
       {
@@ -308,25 +308,6 @@ const object_ids = await client.writeStorageObjects(session,[
 ]);
 
 console.info("Successfully stored objects:", object_ids);
-```
-
-```fct_label="REST"
-PUT /v2/storage
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"objects":
-  [
-    {
-      "collection": "saves",
-      "key": "key",
-      "value": "{\"hello\": \"world\"}",
-      "version": "*"
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -386,6 +367,25 @@ client.send(message: message).then { list in
 }
 ```
 
+```fct_label="REST"
+PUT /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"objects":
+  [
+    {
+      "collection": "saves",
+      "key": "key",
+      "value": "{\"hello\": \"world\"}",
+      "version": "*"
+    }
+  ]
+}
+```
+
 ## Read objects
 
 Just like with [writing objects](#write-objects) you can read one or more objects from the database server.
@@ -395,7 +395,7 @@ Each object has an owner and permissions. An object can only be read if the perm
 ```sh fct_label="cURL"
 curl -X POST \
   http://127.0.0.1:7350/v2/storage \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"object_ids":
     [
       {
@@ -417,24 +417,6 @@ const objects = await client.readStorageObjects(session, {
 });
 
 console.info("Successfully read objects:", objects);
-```
-
-```fct_label="REST"
-POST /v2/storage
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"object_ids":
-  [
-    {
-      "collection": "saves",
-      "key": "savegame",
-      "user_id": "some-user-id"
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -506,6 +488,24 @@ client.send(message: message).then { list in
 }
 ```
 
+```fct_label="REST"
+POST /v2/storage
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"object_ids":
+  [
+    {
+      "collection": "saves",
+      "key": "savegame",
+      "user_id": "some-user-id"
+    }
+  ]
+}
+```
+
 ## List objects
 
 You can list objects in a collection and page through results. The objects returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
@@ -513,19 +513,12 @@ You can list objects in a collection and page through results. The objects retur
 ```sh fct_label="cURL"
 curl -X GET \
   'http://127.0.0.1:7350/v2/storage/saves?user_id=some-user-id&limit=10' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="Javascript"
 const objects = await client.listStorageObjects(session, "saves", session.user_id);
 console.info("Successfully list objects:", objects);
-```
-
-```fct_label="REST"
-GET /v2/storage/{{collection}}?user_id={{user_id}}&limit={{limit}};cursor={{cursor}}
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
 ```
 
 ```csharp fct_label="Unity"
@@ -596,6 +589,14 @@ client.send(message: message).then { list in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```fct_label="REST"
+GET /v2/storage/{{collection}}?user_id={{user_id}}&limit={{limit}};cursor={{cursor}}
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 <!--
@@ -727,7 +728,7 @@ A user can remove an object if it has the correct permissions and they own it.
 ```sh fct_label="cURL"
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage/delete \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"object_ids":
     [
       {
@@ -747,23 +748,6 @@ await client.deleteStorageObjects(session, {
 });
 
 console.info("Successfully deleted objects.");
-```
-
-```fct_label="REST"
-PUT /v2/storage/delete
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"object_ids":
-  [
-    {
-      "collection": "saves",
-      "key": "savegame"
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -813,12 +797,29 @@ client.send(message: message).then {
 }
 ```
 
+```fct_label="REST"
+PUT /v2/storage/delete
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"object_ids":
+  [
+    {
+      "collection": "saves",
+      "key": "savegame"
+    }
+  ]
+}
+```
+
 You can also conditionally remove an object if the object version matches the version sent by the client.
 
 ```sh fct_label="cURL"
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage/delete \
-  -H 'Authorization: <session token>' \
+  -H 'Authorization: Bearer <session token>' \
   -d '{"object_ids":
     [
       {
@@ -840,24 +841,6 @@ await client.deleteStorageObjects(session, {
 });
 
 console.info("Successfully deleted objects.");
-```
-
-```fct_label="REST"
-PUT /v2/storage/delete
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{"object_ids":
-  [
-    {
-      "collection": "saves",
-      "key": "savegame",
-      "version": "some-object-version"
-    }
-  ]
-}
 ```
 
 ```csharp fct_label="Unity"
@@ -912,3 +895,22 @@ client.send(message: message).then {
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
+
+```fct_label="REST"
+PUT /v2/storage/delete
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{"object_ids":
+  [
+    {
+      "collection": "saves",
+      "key": "savegame",
+      "version": "some-object-version"
+    }
+  ]
+}
+```
+

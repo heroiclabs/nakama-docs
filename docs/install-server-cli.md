@@ -20,6 +20,7 @@ The Nakama binary contains the schema and a way to upgrade an existing database 
 | `database.address` | Database node to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
 | `--limit`          | Number of migrations to use when running either up, down, or redo.
 
+<!--
 ## `doctor`
 
 Nakama ships with a built-in diagnostic tool which is particularly useful when you need support or otherwise are looking to diagnose an issue.
@@ -30,13 +31,13 @@ Running `nakama doctor` generates a report that details the server's configurati
 | -----     | -----------
 | `host`    | The host running the Nakama instance you want to diagnose. Default value is `127.0.0.1`.
 | `limit`   | Dashboard port used by nakama. Default value is 7351.
-
+-->
 ## Config override
 
 Nakama comes with a default configuration which can be overriden by using a [YML Configuration](install-configuration.md) file or by passing command line flags like below:
 
 ```shell
-nakama --config path/to/config.yml --purchase.apple.password "shared-secret" --database.address root@localhost:26257 --database.address root@machine-2:26257 
+nakama --config path/to/config.yml --database.address root@localhost:26257 --database.address root@machine-2:26257
 ```
 
 !!! tip "Configuration Priority"

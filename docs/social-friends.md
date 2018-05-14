@@ -21,7 +21,7 @@ When a friend request is sent or the user is added an in-app notification will b
 ```sh fct_label="cURL"
 curl -X POST \
   'http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```csharp fct_label=".NET"
@@ -56,7 +56,7 @@ POST /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+Authorization: Bearer <session token>
 ```
 
 When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](social-realtime-chat.md) section for more info.
@@ -70,7 +70,7 @@ curl -X GET \
   http://127.0.0.1:7350/v2/friend \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
@@ -117,7 +117,7 @@ GET /v2/friend
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+Authorization: Bearer <session token>
 ```
 
 ## Remove friends
@@ -130,7 +130,7 @@ A user can remove a friend, reject a received invite, cancel a friend request se
 ```sh fct_label="cURL"
 curl -X DELETE \
   'http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```csharp fct_label=".NET"
@@ -167,7 +167,7 @@ DELETE /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+Authorization: Bearer <session token>
 ```
 
 ## Block a friend
@@ -179,7 +179,7 @@ A user who has been blocked will not know which users have blocked them. That us
 ```sh fct_label="cURL"
 curl -X POST \
   'http://127.0.0.1:7350/v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1' \
-  -H 'Authorization: <session token>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```csharp fct_label=".NET"
@@ -216,7 +216,7 @@ POST /v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+Authorization: Bearer <session token>
 ```
 
 <!--

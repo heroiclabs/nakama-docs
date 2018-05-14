@@ -13,7 +13,7 @@ We can easily write a Lua module which provides the One Signal HTTP API as a set
 Download and add the "onesignal.lua" file to the location you use for your Lua modules. You can put the files into whatever folder you like and specify the location when you run the server.
 
 ```
-nakama --log.stdout --runtime.path "/some/path/dir/"
+nakama --runtime.path "/some/path/dir/"
 ```
 
 When you server is started you'll see the One Signal module loaded and recorded in the startup logs. In development it can be helpful to run the server with "--log.stdout" for log output in the console.
@@ -77,10 +77,8 @@ local function register_push(context, payload)
   local success, result = pcall(onesignal:add_device, dt, id, "en", {})
   if (success) then
     -- store the push "player id" from One Signal in the current user metadata
-    local user_updates = {
-      { UserId = context.UserId, Metadata = { os_player_id = result.id } }
-    }
-    pcall(nk.users_update, user_updates) -- ignore errors
+    local metadata = { os_player_id = result.id }
+    pcall(nk.account_update_id, context.user_id, metadata) -- ignore errors
   end
 end
 
@@ -150,11 +148,11 @@ local user_ids = {
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936"
 }
-local users = nk.users_fetch_id(user_ids)
+local users = nk.users_get_id(user_ids)
 for _, u in ipairs(users)
 do
   -- get the onesignal id for each user
-  table.insert(player_ids, u.Metadata.os_player_id)
+  table.insert(player_ids, u.metadata.os_player_id)
 end
 
 local contents = {
