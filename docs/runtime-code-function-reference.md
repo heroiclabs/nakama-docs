@@ -983,7 +983,7 @@ nk.logger_warn(message)
 
 ### notifications
 
-__notification_send (new_notifications)__
+__notification_send (user_id, subject, content, code, sender_id, persistent)__
 
 Send one in-app notification to a user. Have a look at the section on [in-app notifications](social-in-app-notifications.md).
 
