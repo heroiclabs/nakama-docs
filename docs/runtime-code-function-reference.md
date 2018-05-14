@@ -76,7 +76,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| input | string | The string which will be aes128 encrypted. |
+| input | string | The string which has been aes128 encrypted. |
 | key | string | 16 bytes decryption key. |
 
 _Returns_
