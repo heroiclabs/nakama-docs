@@ -198,7 +198,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| id | string | Facebook OAuth access token. |
+| token | string | Facebook OAuth access token. |
 | import | bool | Whether to import facebook friends after authenticated automatically. This is true by default. |
 | username | string | Optional username. If left empty, one is generated. |
 | create | bool | Create user if one didn't exist previously. By default this is set to true. |
@@ -247,7 +247,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| id | string | Google OAuth access token. |
+| token | string | Google OAuth access token. |
 | username | string | Optional username. If left empty, one is generated. |
 | create | bool | Create user if one didn't exist previously. By default this is set to true. |
 
@@ -272,7 +272,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| id | string | Steam token. |
+| token | string | Steam token. |
 | username | string | Optional username. If left empty, one is generated. |
 | create | bool | Create user if one didn't exist previously. By default this is set to true. |
 
