@@ -38,7 +38,7 @@ print(nk.json_encode(account.wallet))
 
 ---
 
-__account_update_id (user_id, username, display_name, timezone, location, lang, avatar, metadata)__
+__account_update_id (user_id, metadata, username, display_name, timezone, location, language, avatar_url)__
 
 Update one or more users.
 
