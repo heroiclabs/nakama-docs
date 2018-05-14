@@ -91,7 +91,7 @@ services:
   nakama:
     image: heroiclabs/nakama:2.0.0
     entrypoint:
-      - "/bin/bash"
+      - "/bin/sh"
       - "-ecx"
       - >
           /nakama/nakama migrate up --database.address root@cockroachdb:26257 &&
