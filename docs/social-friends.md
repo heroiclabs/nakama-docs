@@ -20,21 +20,18 @@ When a friend request is sent or the user is added an in-app notification will b
 
 ```sh fct_label="cURL"
 curl -X POST \
-  'http://127.0.0.1:7350/v2/friend?ids=user-id1,user-id2&usernames=username1' \
+  'http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1' \
   -H 'Authorization: <session token>'
 ```
 
-```fct_label="REST"
-POST /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+```csharp fct_label=".NET"
+var ids = new[] {"user-id1", "user-id2"};
+var usernames = new[] {"username1"};
+await client.AddFriendsAsync(session, ids, usernames);
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-
 string userId = ...; // some user ID
 var message = NFriendAddMessage.Default(userId);
 client.Send(message, (bool done) => {
@@ -46,7 +43,6 @@ client.Send(message, (bool done) => {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-
 let userID = ... // some user ID
 var message = FriendAddMessage()
 message.userIds.append(userID)
@@ -55,11 +51,20 @@ client.send(message: message).catch { err in
 }
 ```
 
+```fct_label="REST"
+POST /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+```
+
 When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](social-realtime-chat.md) section for more info.
 
 ## List friends
 
 You can list all of a user's friends, blocked users, friend requests received (invited), and invites they've sent. These statuses are returned together as part of the friend list which makes it easy to display in a UI.
+
 ```sh fct_label="cURL"
 curl -X GET \
   http://127.0.0.1:7350/v2/friend \
@@ -68,22 +73,21 @@ curl -X GET \
   -H 'Authorization: <session token>'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const friends = await client.listFriends(session);
 console.info("Successfully retrieved friend list:", friends);
 ```
 
-```fct_label="REST"
-GET /v2/friend
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+```csharp fct_label=".NET"
+var result = await client.ListFriendsAsync(session);
+foreach (var f in result.Friends)
+{
+  System.Console.WriteLine("Friend '{0}' state '{1}'", f.User.Username, f.State);
+}
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-
 var message = NFriendsListMessage.Default();
 client.Send(message, (INResultSet<INFriend> list) => {
   foreach (var f in list.Results) {
@@ -97,7 +101,6 @@ client.Send(message, (INResultSet<INFriend> list) => {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-
 var message = FriendListMessage()
 client.send(message: message).then { friends in
   for friend in friends {
@@ -109,6 +112,14 @@ client.send(message: message).then { friends in
 }
 ```
 
+```fct_label="REST"
+GET /v2/friend
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+```
+
 ## Remove friends
 
 A user can remove a friend, reject a received invite, cancel a friend request sent, or unblock a user. Similar to how Friend Add works we reuse Friend Remove to cancel or undo whatever friend state is current with another user.
@@ -118,21 +129,18 @@ A user can remove a friend, reject a received invite, cancel a friend request se
 
 ```sh fct_label="cURL"
 curl -X DELETE \
-  'http://127.0.0.1:7350/v2/friend?ids=user-id1,user-id2&usernames=username1' \
+  'http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1' \
   -H 'Authorization: <session token>'
 ```
 
-```fct_label="REST"
-DELETE /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+```csharp fct_label=".NET"
+var ids = new[] {"user-id1", "user-id2"};
+var usernames = new[] {"username1"};
+await client.RemoveFriendsAsync(session, ids, usernames);
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-
 string userId = ...; // some user ID
 var message = NFriendRemoveMessage.Default(userId);
 client.Send(message, (bool done) => {
@@ -144,7 +152,6 @@ client.Send(message, (bool done) => {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-
 let userID = ... // some user ID
 var message = FriendRemoveMessage()
 message.userIds.append(userID)
@@ -155,28 +162,34 @@ client.send(message: message).then { _ in
 }
 ```
 
-## Block a friend
-
-You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#remove-friends) message.
-
-A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
-```sh fct_label="cURL"
-curl -X POST \
-  'http://127.0.0.1:7350/v2/friend/block?ids=user-id1,user-id2&usernames=username1' \
-  -H 'Authorization: <session token>'
-```
-
 ```fct_label="REST"
-POST /v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1
+DELETE /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
 Authorization: Basic base64(ServerKey:)
 ```
 
+## Block a friend
+
+You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#remove-friends) message.
+
+A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
+
+```sh fct_label="cURL"
+curl -X POST \
+  'http://127.0.0.1:7350/v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1' \
+  -H 'Authorization: <session token>'
+```
+
+```csharp fct_label=".NET"
+var ids = new[] {"user-id1", "user-id2"};
+var usernames = new[] {"username1"};
+await client.BlockFriendsAsync(session, ids, usernames);
+```
+
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-
 string userId = ...; // some user ID
 var message = NFriendBlockMessage.Default(userId);
 client.Send(message, (bool done) => {
@@ -188,7 +201,6 @@ client.Send(message, (bool done) => {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-
 let userID = ... // some user ID
 var message = FriendBlockMessage()
 message.userIds.append(userID)
@@ -197,6 +209,14 @@ client.send(message: message).then { _ in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```fct_label="REST"
+POST /v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
 ```
 
 <!--

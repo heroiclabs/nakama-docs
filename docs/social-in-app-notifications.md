@@ -37,7 +37,7 @@ nk.notification_send(user_id, subject, content, code, sender_id, persistent)
 
 A callback can be registered for notifications received when a client is connected. The handler will be called whenever a notification is received as long as the client socket remains connected. When multiple messages are returned (batched for performance) the handler will be called once for each notification.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 socket.onnotification = (notification) => {
   console.log("Received code %o and subject %o", notification.code, notification.subject);
   console.log("Received id %o and content %o", notification.id, notification.content);
@@ -65,24 +65,24 @@ client.onNotification = { notification in
 You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. It depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/notification \
+curl http://127.0.0.1:7350/v2/notification?limit=10 \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const result = await client.listNotifications(session, 10);
 result.notifications.forEach(notification => {
   console.info("Notification code %o and subject %o.", notification.code, notification.subject);
 });
-console.info("To fetch more results use the cursor:", result.cacheable_cursor);
+console.info("Fetch more results with cursor:", result.cacheable_cursor);
 ```
 
-```fct_label="REST"
-GET /v2/notification
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```csharp fct_label=".NET"
+var result = await client.ListNotificationsAsync(session, 10);
+foreach (var n in result.Notifications)
+{
+  System.Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
+}
 ```
 
 ```csharp fct_label="Unity"
@@ -109,6 +109,14 @@ client.send(message: message).then { notifications in
 }
 ```
 
+```fct_label="REST"
+GET /v2/notification?limit=10
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+```
+
 A list of notifications can be retrieved in batches of up to 100 at a time. To retrieve all messages you should accumulate them with the cacheable cursor. You can keep this cursor on the client and use it when the user reconnects to catch up on any notifications they may have missed while offline.
 
 !!! Hint
@@ -119,7 +127,7 @@ curl http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cursor> \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var allNotifications = [];
 
 var accumulateNotifications = (cursor) => {
@@ -128,17 +136,21 @@ var accumulateNotifications = (cursor) => {
     return;
   }
   allNotifications.concat(result.notifications.notifications);
-  accumulateNotifications(result.cacheable_cursor); // recursive async call
+  accumulateNotifications(result.cacheable_cursor);
 }
 accumulateNotifications("");
 ```
 
-```fct_label="REST"
-GET /v2/notification?limit=10&cursor=<cursor>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```csharp fct_label=".NET"
+var result = await client.ListNotificationsAsync(session, 10);
+if (result.CacheableCursor != null)
+{
+  result = await client.ListNotificationsAsync(session, 10, result.CacheableCursor);
+  foreach (var n in result.Notifications)
+  {
+    System.Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
+  }
+}
 ```
 
 ```csharp fct_label="Unity"
@@ -198,6 +210,14 @@ client.send(message: message).then { notifications in
 }
 ```
 
+```fct_label="REST"
+GET /v2/notification?limit=10&cursor=<cursor>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+```
+
 It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the cacheable cursor returned with each list message. Sending the cursor through a new list operation will retrieve only notifications newer than those seen.
 
 The cacheable cursor marks the position of the most recent notification retrieved. We recommend you store the cacheable cursor in device storage and use it when the client makes its next request for recent notifications.
@@ -207,23 +227,26 @@ curl http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cacheableCursor> \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
-const cacheableCursor = ""; // stored from last list retrieval.
-const results = await client.listNotifications(session, 10, cacheableCursor);
+```js fct_label="JavaScript"
+const cacheableCursor = "<cached cursor>";
+const result = await client.listNotifications(session, 10, cacheableCursor);
+result.notifications.forEach(notification => {
+  console.info("Notification code %o and subject %o.", notification.code, notification.subject);
+});
 ```
 
-```fct_label="REST"
-GET /v2/notification?limit=10&cursor=<cacheableCursor>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```csharp fct_label=".NET"
+const string cacheableCursor = "<cached cursor>";
+var result = await client.ListNotificationsAsync(session, 10, cacheableCursor);
+foreach (var n in result.Notifications)
+{
+  System.Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
+}
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-INCursor resumeCursor = ...; // stored from last list retrieval.
-
+INCursor resumeCursor = "<cached cursor>";
 var message = new NNotificationsListMessage.Builder(100)
     .Cursor(resumeCursor)
     .Build();
@@ -237,8 +260,7 @@ client.Send(message, (INResultSet<INNotification> list) => {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-var resumableCursor = ...; // stored from last list retrieval.
-
+var resumableCursor = "<cached cursor>";
 var message = NotificationListMessage(limit: 100)
 message.cursor = resumableCursor
 client.send(message: message).then { notifications in
@@ -248,27 +270,32 @@ client.send(message: message).then { notifications in
 }
 ```
 
+```fct_label="REST"
+GET /v2/notification?limit=10&cursor=<cacheableCursor>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+```
+
 ## Delete notifications
 
 You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted, all record of it is removed from the system and it cannot be restored.
 
 ```sh fct_label="cURL"
 curl -X DELETE \
-  --url "http://127.0.0.1:7350/v2/notification?ids=<notificationId>&ids=<notificationId>" \
+  --url "http://127.0.0.1:7350/v2/notification?ids=<notification id>&ids=<notification id>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
-const notificationIds = ["notificationid"];
+```js fct_label="JavaScript"
+const notificationIds = ["<notification id>"];
 await client.deleteNotifications(session, notificationIds);
 ```
 
-```fct_label="REST"
-DELETE /v2/notification?ids=<notificationId>&ids=<notificationId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```csharp fct_label=".NET"
+var notificationIds = new[] {"<notification id>"};
+await client.DeleteNotificationsAsync(session, notificationIds);
 ```
 
 ```csharp fct_label="Unity"
@@ -292,6 +319,14 @@ client.send(message: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```fct_label="REST"
+DELETE /v2/notification?ids=<notification id>&ids=<notification id>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 ## Notification codes

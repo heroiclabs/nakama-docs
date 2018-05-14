@@ -13,21 +13,18 @@ curl http://127.0.0.1:7350/v2/account \
   -H 'authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
-const session = ""; // obtained from authentication.
+```js fct_label="JavaScript"
 const account = await client.getAccount(session);
-
-console.info("User id '%o' and username '%o'.", account.user.id, account.user.username);
+const user = account.user;
+console.info("User id '%o' and username '%o'.", user.id, user.username);
 console.info("User's wallet:", account.wallet);
-console.info("User's custom id:", account.custom_id);
 ```
 
-```fct_label="REST"
-GET /v2/account
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```csharp fct_label=".NET"
+var account = await client.GetAccountAsync(session);
+var user = account.User;
+System.Console.WriteLine("User id '{0}' username '{1}'", user.Id, user.Username);
+System.Console.WriteLine("User wallet {0}", account.Wallet);
 ```
 
 ```csharp fct_label="Unity"
@@ -70,6 +67,14 @@ client.send(message: message).then { selfuser in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```fct_label="REST"
+GET /v2/account
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 Some information like wallet, device IDs and custom ID are private but part of the profile is visible to other users.
@@ -146,26 +151,27 @@ curl "http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&
   -H 'authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
-var session = ""; // obtained with authentication.
+```js fct_label="JavaScript"
 const users = await client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"]);
 users.foreach(user => {
   console.info("User id '%o' and username '%o'.", user.id, user.username);
 });
 ```
 
-```fct_label="REST"
-GET /v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```csharp fct_label=".NET"
+var ids = new[] {"userid1", "userid2"};
+var usernames = new[] {"username1", "username2"};
+var facebookIds = new[] {"facebookid1"};
+var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
+foreach (var u in result.Users)
+{
+  System.Console.WriteLine("User id '{0}' username '{1}'", u.Id, u.Username);
+}
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
 string id = user.Id; // an INUser ID.
-
 var message = NUsersFetchMessage.Default(id);
 client.Send(message, (INResultSet<INUser> list) => {
   Debug.LogFormat("Fetched '{0}' users.", list.Results.Count);
@@ -180,7 +186,6 @@ client.Send(message, (INResultSet<INUser> list) => {
 ```java fct_label="Java"
 // Requires Nakama 1.x
 byte[] id = user.getId(); // a User object Id.
-
 CollatedMessage<ResultSet<User>> message = UsersFetchMessage.Builder.newBuilder()
   .id(id)
   .build();
@@ -206,10 +211,8 @@ deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let userID // a User ID
-
 var message = UsersFetchMessage()
 message.userIDs.append(userID)
-
 client.send(message: message).then { users in
   for user in users {
     NSLog("User id '%@' and handle '%@'", user.id, user.handle)
@@ -217,6 +220,14 @@ client.send(message: message).then { users in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```fct_label="REST"
+GET /v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 You can also fetch one or more users in server-side code.
@@ -250,28 +261,19 @@ curl http://127.0.0.1:7350/v2/account \
   }'
 ```
 
-```js fct_label="Javascript"
-const session = ""; // obtained with authentication.
+```js fct_label="JavaScript"
 await client.updateAccount(session, {
   display_name: "My new name",
   avatar_url: "http://graph.facebook.com/avatar_url",
-  location: "San Franciso"
+  location: "San Francisco"
 });
-console.log("Successfully updated yourself.");
 ```
 
-```fct_label="REST"
-PUT /v2/account HTTP/1.1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-
-{
-  "display_name": "My new name",
-  "avatar_url": "http://graph.facebook.com/avatar_url",
-  "location": "San Francisco"
-}
+```csharp fct_label=".NET"
+const string displayName = "My new name";
+const string avatarUrl = "http://graph.facebook.com/avatar_url";
+const string location = "San Francisco";
+await = client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
 ```
 
 ```csharp fct_label="Unity"
@@ -321,6 +323,20 @@ client.send(message: message).then {
   NSLog("Successfully updated yourself.")
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```fct_label="REST"
+PUT /v2/account HTTP/1.1
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{
+  "display_name": "My new name",
+  "avatar_url": "http://graph.facebook.com/avatar_url",
+  "location": "San Francisco"
 }
 ```
 

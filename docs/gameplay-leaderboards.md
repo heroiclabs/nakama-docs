@@ -37,14 +37,6 @@ The score in each record can be updated as the owner progresses. Scores can be u
 
 Each record can optionally include additional data about the score or the owner when submitted. The extra fields must be JSON encoded and submitted as the metadata. A good use case for metadata is info about race conditions in a driving game, such as weather, which can give extra UI hints when users list scores.
 
-```js fct_label="Javascript"
-var leaderboardId = "level1";
-var score = 100;
-var record = await client.writeLeaderboardRecord(session, leaderboardId, score);
-
-console.log("New record username %o and score %o", record.username, record.score);
-```
-
 ```sh fct_label="cURL"
 curl -X POST \
   'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>' \
@@ -52,18 +44,18 @@ curl -X POST \
   -d '{"record": {"score": 100}}'
 ```
 
-```fct_label="REST"
-POST /v2/leaderboard/<leaderboardId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```js fct_label="Javascript"
+var leaderboardId = "level1";
+var score = 100;
+var record = await client.writeLeaderboardRecord(session, leaderboardId, score);
+console.log("New record username %o and score %o", record.username, record.score);
+```
 
-{
-  "record": {
-    "score": 100
-  }
-}
+```csharp fct_label=".NET"
+const string leaderboard = "level1";
+const long score = 100L;
+var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
 ```csharp fct_label="Unity"
@@ -108,6 +100,20 @@ client.send(message: message).then { records in
 }
 ```
 
+```fct_label="REST"
+POST /v2/leaderboard/<leaderboardId>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{
+  "record": {
+    "score": 100
+  }
+}
+```
+
 ## Create a leaderboard
 
 A leaderboard can be created via server-side code at startup or within a [registered function](runtime-code-function-reference.md#register-hooks). The ID given to the leaderboard is used to submit scores to it.
@@ -134,14 +140,6 @@ Submitting to a leaderboard with the "best" operator ensures the record tracks t
 
 With the "incr" operator the new value is added to any existing score for that record. If there is no previous value for the record, this behaves like "set".
 
-```js fct_label="Javascript"
-var leaderboardId = "level1";
-var score = 100;
-var record = await client.writeLeaderboardRecord(session, leaderboardId, score);
-
-console.log("New record username %o and score %o", record.username, record.score);
-```
-
 ```sh fct_label="cURL"
 curl -X POST \
   'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>' \
@@ -149,18 +147,18 @@ curl -X POST \
   -d '{"record": {"score": 100}}'
 ```
 
-```fct_label="REST"
-POST /v2/leaderboard/<leaderboardId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```js fct_label="JavaScript"
+var leaderboardId = "level1";
+var score = 100;
+var record = await client.writeLeaderboardRecord(session, leaderboardId, score);
+console.log("New record username %o and score %o", record.username, record.score);
+```
 
-{
-  "record": {
-    "score": 100
-  }
-}
+```csharp fct_label=".NET"
+const string leaderboard = "level1";
+const long score = 100L;
+var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
 ```csharp fct_label="Unity"
@@ -199,6 +197,20 @@ client.send(message: message).then { records in
 }
 ```
 
+```fct_label="REST"
+POST /v2/leaderboard/<leaderboardId>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{
+  "record": {
+    "score": 100
+  }
+}
+```
+
 ## List records
 
 A user can list records from a leaderboard. This makes it easy to compare scores to other users and see their positions.
@@ -207,27 +219,27 @@ A user can list records from a leaderboard. This makes it easy to compare scores
 
 The standard way to list records is ordered by score based on the sort order in the leaderboard.
 
-```js fct_label="Javascript"
-var leaderboardId = "level1";
-
-var result = await client.listLeaderboardRecords(session, leaderboardId);
-result.records.forEach(function(record) {
-  console.log("Record username %o and score %o", record.username, record.score);
-});
-```
-
 ```sh fct_label="cURL"
 curl -X GET \
   'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>' \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```fct_label="REST"
-GET /v2/leaderboard/<leaderboardId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```js fct_label="JavaScript"
+var leaderboardId = "level1";
+var result = await client.listLeaderboardRecords(session, leaderboardId);
+result.records.forEach(function(record) {
+  console.log("Record username %o and score %o", record.username, record.score);
+});
+```
+
+```csharp fct_label=".NET"
+const string leaderboard = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+foreach (var r in result.Records)
+{
+  System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
 ```
 
 ```csharp fct_label="Unity"
@@ -257,24 +269,15 @@ client.send(message: message).then { records in
 }
 ```
 
-You can fetch the next set of results with a cursor.
-
-```js fct_label="Javascript"
-var leaderboardId = "level1";
-
-var result = await client.listLeaderboardRecords(session, leaderboardId);
-result.records.forEach(function(record) {
-  console.log("Record username %o and score %o", record.username, record.score);
-});
-
-// If there were more results, get another page.
-if (result.next_cursor) {
-  var result = await client.listLeaderboardRecords(session, leaderboardId, null, null, result.next_cursor);
-  result.records.forEach(function(record) {
-    console.log("Record username %o and score %o", record.username, record.score);
-  });
-}
+```fct_label="REST"
+GET /v2/leaderboard/<leaderboardId>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
+
+You can fetch the next set of results with a cursor.
 
 ```sh fct_label="cURL"
 curl -X GET \
@@ -282,12 +285,40 @@ curl -X GET \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```fct_label="REST"
-GET /v2/leaderboard/<leaderboardId>?cursor=<next_cursor>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```js fct_label="JavaScript"
+var leaderboardId = "level1";
+
+var result = await client.listLeaderboardRecords(session, leaderboardId);
+result.records.forEach(function(record) {
+  console.log("Record username %o and score %o", record.username, record.score);
+});
+
+// If there are more results get next page.
+if (result.next_cursor) {
+  result = await client.listLeaderboardRecords(session, leaderboardId, null, null, result.next_cursor);
+  result.records.forEach(function(record) {
+    console.log("Record username %o and score %o", record.username, record.score);
+  });
+}
+```
+
+```csharp fct_label=".NET"
+const string leaderboard = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+foreach (var r in result.Records)
+{
+  System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
+// If there are more results get next page.
+if (result.NextCursor != null)
+{
+  var c = result.NextCursor;
+  result = await client.ListLeaderboardRecordsAsync(session, leaderboard, null, 100, c);
+  foreach (var r in result.Records)
+  {
+    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+  }
+}
 ```
 
 ```csharp fct_label="Unity"
@@ -335,19 +366,17 @@ client.send(message: message).then { records in
 }
 ```
 
+```fct_label="REST"
+GET /v2/leaderboard/<leaderboardId>?cursor=<next_cursor>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+```
+
 ### List by friends
 
 You can use a bunch of owner IDs to filter the records to only ones owned by those users. This can be used to retrieve only scores belonging to the user's friends.
-
-```js fct_label="Javascript"
-var leaderboardId = "level1";
-var ownerIds = ["some", "friends", "user ids"];
-
-var result = await client.listLeaderboardRecords(session, leaderboardId, ownerIds);
-result.records.forEach(function(record) {
-  console.log("Record username %o and score %o", record.username, record.score);
-});
-```
 
 ```sh fct_label="cURL"
 curl -X GET \
@@ -355,12 +384,23 @@ curl -X GET \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```fct_label="REST"
-GET /v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+```js fct_label="JavaScript"
+var leaderboardId = "level1";
+var ownerIds = ["some", "friends", "user ids"];
+var result = await client.listLeaderboardRecords(session, leaderboardId, ownerIds);
+result.records.forEach(function(record) {
+  console.log("Record username %o and score %o", record.username, record.score);
+});
+```
+
+```csharp fct_label=".NET"
+const string leaderboard = "level1";
+var ownerIds = new[] {"some", "friends", "user ids"};
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
+foreach (var r in result.OwnerRecords)
+{
+  System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
 ```
 
 ```csharp fct_label="Unity"
@@ -396,4 +436,12 @@ client.send(message: message).then { records in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```fct_label="REST"
+GET /v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```

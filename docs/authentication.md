@@ -5,12 +5,13 @@ The server has builtin authentication so clients can only send requests and conn
 !!! Warning "Important"
     The default server key is `defaultkey` but it is very important to set a [unique value](install-configuration.md#socket). This value should be embedded within client code.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
 client.ssl = false;
+```
 
-// or same as above.
-var client = new nakamajs.Client("defaultkey");
+```csharp fct_label=".NET"
+var client = new Client("defaultkey", "127.0.0.1", 7350, false);
 ```
 
 ```csharp fct_label="Unity"
@@ -71,8 +72,8 @@ curl http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=m
   --data '{"id":"uniqueidentifier"}'
 ```
 
-```js fct_label="Javascript"
-// The following example is only applicable to React Native apps:
+```js fct_label="JavaScript"
+// This import is only required with React Native
 var deviceInfo = require('react-native-device-info');
 
 var deviceId = null;
@@ -94,16 +95,11 @@ const session = await client.authenticateDevice({ id: deviceId, create: true, us
 console.info("Successfully authenticated:", session);
 ```
 
-```fct_label="REST"
-POST /v2/account/authenticate/device?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{
-  "id": "uniqueidentifier"
-}
+```csharp fct_label=".NET"
+// Should use a platform API to obtain a device identifier.
+var deviceid = System.Guid.NewGuid();
+var session = await client.AuthenticateDeviceAsync($"{deviceid}");
+System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
@@ -197,6 +193,18 @@ client.login(with: message).then { session in
 }
 ```
 
+```fct_label="REST"
+POST /v2/account/authenticate/device?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "id": "uniqueidentifier"
+}
+```
+
 In games it is often a better option to use [Google](#google) or [Game Center](#game-center) to unobtrusively register the user.
 
 ### Email
@@ -213,24 +221,18 @@ curl http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=my
   --data '{"email":"email@example.com", "password": "3bc8f72e95a9"}'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const email = "email@example.com"
 const password = "3bc8f72e95a9"
 const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
 console.info("Successfully authenticated:", session);
 ```
 
-```fct_label="REST"
-POST /v2/account/authenticate/email?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{
-  "email": "email@example.com",
-  "password": "password"
-}
+```csharp fct_label=".NET"
+const string email = "email@example.com";
+const string password = "3bc8f72e95a9";
+var session = await client.AuthenticateEmailAsync(email, password);
+System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
@@ -284,6 +286,19 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
+```fct_label="REST"
+POST /v2/account/authenticate/email?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "email": "email@example.com",
+  "password": "3bc8f72e95a9"
+}
+```
+
 ### Social providers
 
 The server supports a lot of different social services with register and login. With each provider the user account will be fetched from the social service and used to setup the user. In some cases a user's [friends](social-friends.md) will also be fetched and added to their friends list.
@@ -304,22 +319,16 @@ curl http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username
   --data '{"token":"valid-oauth-token"}'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const oauthToken = "...";
 const session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true });
 console.log("Successfully authenticated:", session);
 ```
 
-```fct_label="REST"
-POST /v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{
-  "token": "...",
-}
+```csharp fct_label=".NET"
+const string oauthToken = "...";
+var session = await client.AuthenticateFacebookAsync(oauthToken);
+System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
@@ -357,12 +366,23 @@ if (!FB.IsInitialized) {
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let oauthToken = "..."
-
 let message = AuthenticateMessage(facebook: oauthToken)
 client.register(with: message).then { session in
   NSLog("Session: %@", session.token)
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "token": "...",
 }
 ```
 
@@ -407,28 +427,21 @@ curl http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=m
   --data '{"token":"valid-oauth-token"}'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const oauthToken = "...";
 const session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" });
 console.info("Successfully authenticated: %o", session);
 ```
 
-```fct_label="REST"
-POST /v2/account/authenticate/google?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{
-  "token": "...",
-}
+```csharp fct_label=".NET"
+const string oauthToken = "...";
+var session = await client.AuthenticateGoogleAsync(oauthToken);
+System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
 string oauthToken = "...";
-
 var message = NAuthenticateMessage.Google(oauthToken);
 client.Register(message, (INSession session) => {
   Debug.LogFormat("Session: '{0}'.", session.Token);
@@ -441,7 +454,6 @@ client.Register(message, (INSession session) => {
 ```java fct_label="Java"
 // Requires Nakama 1.x
 String oauthToken = "...";
-
 AuthenticateMessage message = AuthenticateMessage.Builder.google(oauthToken);
 Deferred<Session> deferred = client.register(message);
 deferred.addCallback(new Callback<Session, Session>() {
@@ -463,12 +475,23 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let oauthToken = "..."
-
 let message = AuthenticateMessage(google: oauthToken)
 client.register(with: message).then { session in
   NSLog("Session: %@", session.token)
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/google?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "token": "...",
 }
 ```
 
@@ -484,20 +507,16 @@ curl http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&userna
   --data '{"player_id":"...", "bundle_id":"...", "timestamp_seconds":0, "salt":"...", "public_key_url":"..."}'
 ```
 
-```fct_label="REST"
-POST /v2/account/authenticate/gamecenter?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{
-  "player_id": "...",
-  "bundle_id": "...",
-  "timestamp_seconds": 0,
-  "salt": "...",
-  "public_key_url": "..."
-}
+```csharp fct_label=".NET"
+var bundleId = "...";
+var playerId = "...";
+var publicKeyUrl = "...";
+var salt = "...";
+var signature = "...";
+var timestamp = "...";
+var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
+    publicKeyUrl, salt, signature, timestamp);
+System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
@@ -547,6 +566,22 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
+```fct_label="REST"
+POST /v2/account/authenticate/gamecenter?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "player_id": "...",
+  "bundle_id": "...",
+  "timestamp_seconds": 0,
+  "salt": "...",
+  "public_key_url": "..."
+}
+```
+
 #### Steam
 
 Steam requires you to configure the server before you can register a user.
@@ -562,22 +597,15 @@ curl http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=my
   --data '{"token":"valid-steam-token"}'
 ```
 
-```fct_label="REST"
-POST /v2/account/authenticate/steam?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{
-  "token": "...",
-}
+```csharp fct_label=".NET"
+const string token = "...";
+var session = await client.AuthenticateSteamAsync(token);
+System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
 string sessionToken = "...";
-
 var message = NAuthenticateMessage.Steam(sessionToken);
 client.Register(message, (INSession session) => {
   Debug.LogFormat("Session: '{0}'.", session.Token);
@@ -590,7 +618,6 @@ client.Register(message, (INSession session) => {
 ```java fct_label="Java"
 // Requires Nakama 1.x
 String sessionToken = "...";
-
 AuthenticateMessage message = AuthenticateMessage.Builder.steam(sessionToken);
 Deferred<Session> deferred = client.register(message);
 deferred.addCallback(new Callback<Session, Session>() {
@@ -612,7 +639,6 @@ deferred.addCallback(new Callback<Session, Session>() {
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let sessionToken = "..."
-
 let message = AuthenticateMessage(steam: sessionToken)
 client.register(with: message).then { session in
   NSLog("Session: %@", session.token)
@@ -620,6 +646,18 @@ client.register(with: message).then { session in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
+```
+
+```fct_label="REST"
+POST /v2/account/authenticate/steam?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "token": "...",
+}
 ```
 
 ### Custom
@@ -636,29 +674,21 @@ curl http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=m
   --data '{"id":"some-custom-id"}'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const customId = "some-custom-id";
 const session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" });
 console.info("Successfully authenticated:", session);
 ```
 
-```fct_label="REST"
-POST /v2/account/authenticate/custom?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
-
-{
-  "id": "...",
-}
+```csharp fct_label=".NET"
+const string customid = "some-custom-id";
+var session = await client.AuthenticateCustomAsync(customid);
+System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-
-// Some id from another service.
-string customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
+string customId = "some-custom-id";
 
 var message = NAuthenticateMessage.Custom(customId);
 client.Register(message, (INSession session) => {
@@ -671,9 +701,7 @@ client.Register(message, (INSession session) => {
 
 ```java fct_label="Java"
 // Requires Nakama 1.x
-
-// Some id from another service.
-String customId = "a1fca336-7191-11e7-bdab-df34f6f90285";
+String customId = "some-custom-id";
 
 AuthenticateMessage message = AuthenticateMessage.Builder.google(customId);
 Deferred<Session> deferred = client.register(message);
@@ -695,9 +723,7 @@ deferred.addCallback(new Callback<Session, Session>() {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-
-// Some id from another service.
-let customID = "a1fca336-7191-11e7-bdab-df34f6f90285"
+let customID = "some-custom-id"
 
 let message = AuthenticateMessage(custom: customID)
 client.register(with: message).then { session in
@@ -708,6 +734,18 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
+```fct_label="REST"
+POST /v2/account/authenticate/custom?create=true&username=mycustomusername
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic base64(ServerKey:)
+
+{
+  "id": "some-custom-id",
+}
+```
+
 ## Sessions
 
 The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.
@@ -715,12 +753,18 @@ The register and login messages return a session on success. The session contain
 !!! Tip
     You can change how long a session token is valid before it expires in the [configuration](install-configuration.md) in the server. By default a session is only valid for 60 seconds.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-
 const session = await client.authenticateDevice({ id: id })
-console.info("Session id:", session.user_id, "handle:", session.handle);
-console.info("Session expired:", session.isexpired(Date.now() / 1000));
+console.info("id:", session.user_id, "username:", session.username);
+console.info("Session expired?", session.isexpired(Date.now() / 1000));
+```
+
+```csharp fct_label=".NET"
+const string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+var session = await client.AuthenticateDeviceAsync(id);
+System.Console.WriteLine("id '{0}' username '{1}'", session.UserId, session.Username);
+System.Console.WriteLine("Session expired? {0}", session.IsExpired);
 ```
 
 ```csharp fct_label="Unity"
@@ -778,9 +822,8 @@ With a session you can connect with the server and exchange realtime messages. M
 
 You can only send messages to the server once you've connected a client.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var socket = client.createSocket();
-var session = ""; // obtained by authentication.
 session = await socket.connect(session);
 console.info("Successfully connected.");
 ```
@@ -820,12 +863,19 @@ Sessions can expire and become invalid. If this happens, you'll need to reauthen
 
 You can check the expiry of a session using the following code:
 
-```js fct_label="Javascript"
-const session = ""; // obtained by authentication.
+```js fct_label="JavaScript"
 const nowUnixEpoch = Math.floor(Date.now() / 1000);
 if (session.isexpired(nowUnixEpoch)) {
-  console.log("Session has expired. You'll need to re-authenticate with the server.");
+  console.log("Session has expired. Must reauthenticate!");
 };
+```
+
+```csharp fct_label=".NET"
+var nowUnixEpoch = DateTime.UtcNow;
+if (session.HasExpired(nowUnixEpoch))
+{
+  System.Console.WriteLine("Session has expired. Must reauthenticate!");
+}
 ```
 
 You can also prolong the session expiry time by changing the `token_expiry_sec` in the [Session configuration](#install-configuration.md#session) page.
@@ -842,28 +892,21 @@ curl http://127.0.0.1:7350/v2/account/link/custom \
   --data '{"id":"some-custom-id"}'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const customId = "some-custom-id";
 const success = await client.linkCustom(session, { id: customId });
 console.log("Successfully linked custom ID to current user.");
 ```
 
-```fct_label="REST"
-POST /v2/account/link/custom
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer SessionToken
-
-{
-  "id":"some-custom-id"
-}
+```csharp fct_label=".NET"
+const string customid = "some-custom-id";
+await client.LinkCustomAsync(session, customid);
+System.Console.WriteLine("Id '{0}' linked for user '{1}'", customid, session.UserId);
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
-
+string id = "some-custom-id";
 var message = NSelfLinkMessage.Device(id);
 client.Send(message, (bool done) => {
   Debug.Log("Successfully linked device ID to current user.");
@@ -874,8 +917,7 @@ client.Send(message, (bool done) => {
 
 ```java fct_label="Java"
 // Requires Nakama 1.x
-String id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
-
+String id = "some-custom-id";
 CollatedMessage<Session> message = SelfLinkMessage.Builder.device(id);
 Deferred<Boolean> deferred = client.send(message);
 deferred.addCallback(new Callback<Boolean, Boolean>() {
@@ -895,13 +937,24 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-let id = "062b0916-7196-11e7-8371-9fcee9f0b20c"
-
+let id = "some-custom-id"
 var message = SelfLinkMessage(device: id);
 client.send(with: message).then {
   NSLog("Successfully linked device ID to current user.")
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```fct_label="REST"
+POST /v2/account/link/custom
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{
+  "id":"some-custom-id"
 }
 ```
 
@@ -913,28 +966,21 @@ curl http://127.0.0.1:7350/v2/account/unlink/custom \
   --data '{"id":"some-custom-id"}'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const customId = "some-custom-id";
 const success = await client.unlinkCustom(session, { id: customId });
 console.info("Successfully unlinked custom ID from the current user.");
 ```
 
-```fct_label="REST"
-POST /v2/account/unlink/custom
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer SessionToken
-
-{
-  "id":"some-custom-id"
-}
+```csharp fct_label=".NET"
+const string customid = "some-custom-id";
+await client.UnlinkCustomAsync(session, customid);
+System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customid, session.UserId);
 ```
 
 ```csharp fct_label="Unity"
 // Requires Nakama 1.x
-string id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
-
+string id = "some-custom-id";
 var message = NSelfUnlinkMessage.Device(id);
 client.Send(message, (bool done) => {
   Debug.Log("Successfully unlinked device ID from current user.");
@@ -945,8 +991,7 @@ client.Send(message, (bool done) => {
 
 ```java fct_label="Java"
 // Requires Nakama 1.x
-String id = "062b0916-7196-11e7-8371-9fcee9f0b20c";
-
+String id = "some-custom-id";
 CollatedMessage<Session> message = SelfUnlinkMessage.Builder.device(id);
 Deferred<Boolean> deferred = client.send(message);
 deferred.addCallback(new Callback<Boolean, Boolean>() {
@@ -966,13 +1011,24 @@ deferred.addCallback(new Callback<Boolean, Boolean>() {
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-let id = "062b0916-7196-11e7-8371-9fcee9f0b20c"
-
+let id = "some-custom-id"
 var message = SelfUnlinkMessage(device: id);
 client.send(with: message).then {
   NSLog("Successfully unlinked device ID from current user.")
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```fct_label="REST"
+POST /v2/account/unlink/custom
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{
+  "id":"some-custom-id"
 }
 ```
 
