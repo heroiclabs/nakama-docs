@@ -494,8 +494,8 @@ True if they are the same, false otherwise.
 _Example_
 
 ```lua
-local is_same = nk.bcrypt_compare("SGVsbG8gd29ybGQ", "helloworld")
-print(is_same) -- outputs "false"
+local is_same = nk.bcrypt_compare("$2a$04$bl3tac7Gwbjy04Q8H2QWLuUOEkpoNiAeTxazxi4fVQQRMGbMaUHQ2", "123456")
+print(is_same) -- outputs true
 ```
 
 ### cron
