@@ -38,7 +38,7 @@ print(nk.json_encode(account.wallet))
 
 ---
 
-__account_update_id (user_id, username, display_name, timezone, location, lang, avatar, metadata)__
+__account_update_id (user_id, metadata, username, display_name, timezone, location, language, avatar_url)__
 
 Update one or more users.
 
@@ -76,7 +76,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| input | string | The string which will be aes128 encrypted. |
+| input | string | The string which has been aes128 encrypted. |
 | key | string | 16 bytes decryption key. |
 
 _Returns_
@@ -198,7 +198,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| id | string | Facebook OAuth access token. |
+| token | string | Facebook OAuth access token. |
 | import | bool | Whether to import facebook friends after authenticated automatically. This is true by default. |
 | username | string | Optional username. If left empty, one is generated. |
 | create | bool | Create user if one didn't exist previously. By default this is set to true. |
@@ -247,7 +247,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| id | string | Google OAuth access token. |
+| token | string | Google OAuth access token. |
 | username | string | Optional username. If left empty, one is generated. |
 | create | bool | Create user if one didn't exist previously. By default this is set to true. |
 
@@ -272,7 +272,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| id | string | Steam token. |
+| token | string | Steam token. |
 | username | string | Optional username. If left empty, one is generated. |
 | create | bool | Create user if one didn't exist previously. By default this is set to true. |
 
@@ -455,7 +455,7 @@ print(encoded) -- outputs "SGVsbG8gd29ybGQ="
 
 __bcrypt_hash (input)__
 
-Generate one-way encrypted string using bcrypt.
+Generate one-way hashed string using bcrypt.
 
 _Parameters_
 
@@ -465,13 +465,13 @@ _Parameters_
 
 _Returns_
 
-The encrypted input.
+The hashed input.
 
 _Example_
 
 ```lua
-local decoded = nk.bcrypt_hash("SGVsbG8gd29ybGQ=")
-print(decoded)
+local hashed = nk.bcrypt_hash("Hello World")
+print(hashed)
 ```
 
 ---
@@ -494,8 +494,8 @@ True if they are the same, false otherwise.
 _Example_
 
 ```lua
-local is_same = nk.bcrypt_compare("SGVsbG8gd29ybGQ", "helloworld")
-print(is_same) -- outputs "false"
+local is_same = nk.bcrypt_compare("$2a$04$bl3tac7Gwbjy04Q8H2QWLuUOEkpoNiAeTxazxi4fVQQRMGbMaUHQ2", "123456")
+print(is_same) -- outputs true
 ```
 
 ### cron
@@ -983,7 +983,7 @@ nk.logger_warn(message)
 
 ### notifications
 
-__notification_send (new_notifications)__
+__notification_send (user_id, subject, content, code, sender_id, persistent)__
 
 Send one in-app notification to a user. Have a look at the section on [in-app notifications](social-in-app-notifications.md).
 
@@ -1446,29 +1446,6 @@ end
 
 
 ### users
-<!--
-__users_ban (user_ids)__
-
-Ban one or more users from the server.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| user_ids | table | A table array of user IDs to be banned. |
-
-_Example_
-
-```lua
-local user_ids = {"4c2ae592-b2a7-445e-98ec-697694478b1c"}
-local status, result = pcall(nk.users_ban, user_ids)
-if (not status) then
-  print(result)
-end
-```
-
----
--->
 
 __users_get_id (user_ids)__
 
