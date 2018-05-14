@@ -1446,29 +1446,6 @@ end
 
 
 ### users
-<!--
-__users_ban (user_ids)__
-
-Ban one or more users from the server.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| user_ids | table | A table array of user IDs to be banned. |
-
-_Example_
-
-```lua
-local user_ids = {"4c2ae592-b2a7-445e-98ec-697694478b1c"}
-local status, result = pcall(nk.users_ban, user_ids)
-if (not status) then
-  print(result)
-end
-```
-
----
--->
 
 __users_get_id (user_ids)__
 
