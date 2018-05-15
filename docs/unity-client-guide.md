@@ -1,5 +1,8 @@
 # Unity client guide
 
+!!! info "Nakama 2.x release"
+    With the Nakama 2.x release we've split out the Unity client into a lower level client for .NET and a new wrapper which will require Unity 2017 or greater. The new Unity client is not released yet but will be announced on our [blog](https://blog.heroiclabs.com/) and [Twitter](https://twitter.com/heroicdev). In the meantime you can use the .NET client directly and is available [here](https://github.com/heroiclabs/nakama-dotnet).
+
 The official Unity client handles all communication in realtime with the server. It implements all features in the server and is compatible with Unity 5.4+. To work with our Unity client you'll need to install and setup [Unity engine](https://unity3d.com/get-unity/download).
 
 ## Download
