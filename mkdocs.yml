@@ -103,6 +103,8 @@ pages:
 #  - 'Lua cheatsheet': 'runtime-lua-cheatsheet.md'
   - 'Function Reference': 'runtime-code-function-reference.md'
 #- 'Nakama enterprise': 'nakama-enterprise.md'
+- 'Advanced':
+  - 'Streams': 'advanced-streams.md'
 - 'Benchmarks': 'benchmarks.md'
 - 'Deployment':
 #  - 'Production settings': 'deployment-production-settings.md'
