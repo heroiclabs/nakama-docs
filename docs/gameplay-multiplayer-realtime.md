@@ -10,23 +10,19 @@ Any data sent through a match is immediately routed to all other match opponents
 
 A match can be created by a user. The server will assign a unique ID which can be shared with other users for them to [join the match](#join-a-match). All users within a match are equal and it is up to the clients to decide on a host.
 
+```js fct_label="Javascript"
+var match = await socket.send({ match_create: {} });
+console.log("Created match with ID %o", match.id);
+```
+
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 var message = NMatchCreateMessage.Default();
 client.Send(message, (INMatch match) => {
   string id = match.Id;
   Debug.Log("Successfully created match.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-```
-
-```js fct_label="Javascript"
-var message = new nakamajs.MatchCreateRequest();
-client.send(message).then(function() {
-  var id = match.id;
-  console.log("Successfully created match.");
-}).catch(function(error){
-  console.log("An error occured: %o", error);
 });
 ```
 
@@ -39,7 +35,22 @@ A user can join a specific match by ID. Matches can be joined at any point until
 !!! Hint
     To find a match instead of specify one by ID use the [matchmaker](gameplay-matchmaker.md).
 
+```js fct_label="Javascript"
+var id = "match ID to join";
+
+var match = await socket.send({ match_join: { match_id: id } });
+var connectedOpponents = match.presences.filter((presence) => {
+  // Remove your own user from list.
+  return presence.user_id != match.self.user_id;
+});
+
+connectedOpponents.forEach((opponent) => {
+  console.log("User id %o, username %o.", opponent.user_id, opponent.username);
+});
+```
+
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string id = match.Id; // an INMatch Id.
 
 var message = NMatchJoinMessage.Default(id);
@@ -62,34 +73,34 @@ client.Send(message, (INResultSet<INMatch> matches) => {
 });
 ```
 
-```js fct_label="Javascript"
-var id = match.Id; // an INMatch Id.
-
-var message = new nakamajs.MatchesJoinRequest();
-message.matchIds.push(id);
-client.send(message).then(function(matches) {
-  console.log("Successfully joined match.");
-
-  var connectedOpponents = matches[0].presences.filter(function(presence) {
-    // Remove your own user from list.
-    return presence.userId != matches[0].self.userId;
-  });
-
-  connectedOpponents.forEach(function(opponent) {
-    console.log("User id %o handle %o.", opponent.userId, opponent.handle);
-  });
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-});
-```
-
 The list of match opponents returned in the success callback might not include all users. It contains users who are connected to the match so far.
 
 ## List opponents
 
 When a user joins a match they receive an initial list of connected opponents. As other users join or leave the server will push events to clients which can be used to update the list of connected opponents.
 
+```js fct_label="Javascript"
+var connectedOpponents = [];
+
+client.onmatchpresence = (presences) => {
+  // Remove all users who left.
+  connectedOpponents = connectedOpponents.filter(function(co) {
+    var stillConnectedOpponent = true;
+    presences.leaves.forEach((leftOpponent) => {
+      if (leftOpponent.user_id == co.user_id) {
+        stillConnectedOpponent = false;
+      }
+    });
+    return stillConnectedOpponent;
+  });
+
+  // Add all users who joined.
+  connectedOpponents = connectedOpponents.concat(presences.joins);
+};
+```
+
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 IList<INUserPresence> connectedOpponents = new List<INUserPresence>();
 
 client.OnMatchPresence = (INMatchPresence presences) => {
@@ -103,26 +114,6 @@ client.OnMatchPresence = (INMatchPresence presences) => {
 };
 ```
 
-```js fct_label="Javascript"
-var connectedOpponents = [];
-
-client.onmatchpresence = function(presences) {
-  // Remove all users who left.
-  connectedOpponents = connectedOpponents.filter(function(co) {
-    var stillConnectedOpponent = true;
-    presences.leaves.forEach(function(leftOpponent) {
-      if (leftOpponent.userId == co.userId) {
-        stillConnectedOpponent = false;
-      }
-    });
-    return stillConnectedOpponent;
-  });
-
-  // Add all users who joined.
-  connectedOpponents = connectedOpponents.concat(presences.joins);
-};
-```
-
 No server updates are sent if there are no changes to the presence list.
 
 ## Send data messages
@@ -133,7 +124,15 @@ An Op code is a numeric identifier for the type of message sent. These can be us
 
 The binary content in each data message should be as __small as possible__. It is common to use JSON or preferable to use a compact binary format like <a href="https://developers.google.com/protocol-buffers/" target="\_blank">Protocol Buffers</a> or <a href="https://google.github.io/flatbuffers/" target="\_blank">FlatBuffers</a>.
 
+```js fct_label="Javascript"
+var id = "match ID to send to";
+var opCode = 1;
+var data = {"move": {"dir": "left", "steps": 4}};
+socket.send({ match_data_send: {match_id: id, op_code: opCode, data: payload} });
+```
+
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string id = match.Id; // an INMatch Id.
 
 long opCode = 001L;
@@ -147,24 +146,6 @@ client.Send(message, (bool done) => {
 });
 ```
 
-```js fct_label="Javascript"
-var id = match.Id; // an INMatch Id.
-
-var opCode = 1;
-var data = {"move": {"dir": "left", "steps": 4}};
-
-var message = new nakamajs.MatchDataSendRequest();
-message.matchId = id;
-message.opCode = opCode;
-message.data = data;
-
-client.send(message).then(function() {
-  console.log("Successfully sent data message.");
-}).catch(function(error){
-  console.log("An error occured: %o", error);
-});
-```
-
 ## Receive data messages
 
 A client can add a callback for incoming match data messages. This should be done before they create (or join) and leave a match.
@@ -172,7 +153,21 @@ A client can add a callback for incoming match data messages. This should be don
 !!! Note "Message sequences"
     The server delivers data in the order it processes data messages from clients.
 
+```js fct_label="Javascript"
+client.onmatchdata = (data) => {
+  var content = data.data;
+  switch (data.op_code) {
+    case 101:
+      console.log("A custom opcode.");
+      break;
+    default:
+      console.log("User %o sent %o", data.presence.user_id, content);
+  }
+};
+```
+
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 client.OnMatchData = (INMatchData m) => {
   var content = Encoding.UTF8.GetString(m.Data);
   switch (m.OpCode) {
@@ -185,24 +180,17 @@ client.OnMatchData = (INMatchData m) => {
 };
 ```
 
-```js fct_label="Javascript"
-client.onmatchdata = function(data) {
-  var content = data.data;
-  switch (data.opCode) {
-    case 101:
-      console.log("A custom opcode.");
-      break;
-    default:
-      console.log("User handle %o sent %o", data.presence.handle, content);
-  }
-};
-```
-
 ## Leave a match
 
 Users can leave a match at any point. A match ends when all users have left.
 
+```js fct_label="Javascript"
+var id = "match ID to leave";
+socket.send({ match_leave: {match_id: id}});
+```
+
 ```csharp fct_label="Unity"
+// Requires Nakama 1.x
 string id = match.Id; // an INMatch Id.
 
 var message = NMatchLeaveMessage.Default(id);
@@ -210,18 +198,6 @@ client.Send(message, (bool complete) => {
   Debug.Log("Successfully left match.");
 }, (INError err) => {
   Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-```
-
-```js fct_label="Javascript"
-var id = match.Id; // an INMatch Id.
-
-var message = new nakamajs.MatchesLeaveRequest();
-message.matchIds.push(id);
-client.send(message).then(function() {
-  console.log("Successfully left match.");
-}).catch(function(error){
-  console.log("An error occured: %o", error);
 });
 ```
 

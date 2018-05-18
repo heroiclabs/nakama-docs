@@ -202,8 +202,8 @@ Some events only need to be implemented for the features you want to use.
 | onmatchpresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
 | onmatchmakermatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
 | onstatuspresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
-| onstreampresence | Receives [stream](social-stream.md) join and leave event. |
-| onstreamdata | Receives [stream](social-stream.md) data sent by the server. |
+| onstreampresence | Receives [stream](advanced-streams.md) join and leave event. |
+| onstreamdata | Receives [stream](advanced-streams.md) data sent by the server. |
 
 ## Logs and errors
 

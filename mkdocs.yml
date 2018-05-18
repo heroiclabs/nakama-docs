@@ -86,6 +86,7 @@ pages:
   - 'Friends': 'social-friends.md'
   - 'Groups and Clans': 'social-groups-clans.md'
   - 'In-app Notifications': 'social-in-app-notifications.md'
+  - 'Status': 'social-status.md'
   - 'Realtime Chat': 'social-realtime-chat.md'
 - 'Gameplay':
   - 'Leaderboards': 'gameplay-leaderboards.md'
