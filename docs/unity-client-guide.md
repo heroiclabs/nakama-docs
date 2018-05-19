@@ -64,15 +64,13 @@ Use the following code to store the session:
 const string email = "hello@example.com";
 const string password = "somesupersecretpassword";
 var session = await client.AuthenticateEmailAsync(email, password);
-PlayerPrefs.SetString("nk.session", session.Token);
+PlayerPrefs.SetString("nk.session", session.AuthToken);
 Debug.LogFormat("Authenticated successfully. User id {0}:", session.user_id);
 ```
 
 In the code above we use `AuthenticateEmailAsync` but for other authentication options have a look at the [code examples](authentication.md#register-or-login).
 
 A __full example__ class with all code above is [here](#full-example).
-
-## Send messages
 
 ## Send messages
 
@@ -86,7 +84,7 @@ The server also provides a [storage engine](storage-collections.md) to keep save
 var object = new WriteStorageObject = {
   "collection" = "collection",
   "key" ="key1",
-  "value": "{\"jsonKey\": \"jsonValue\"}"
+  "value" = "{\"jsonKey\": \"jsonValue\"}"
 };
 const storageWriteAck = await client.WriteStorageObjectsAsync(session, objects);
 Debug.LogFormat("Storage write was successful: {0}", storageWriteAck);
@@ -96,18 +94,18 @@ Have a look at other sections of documentation for more code examples.
 
 ## Realtime data exchange
 
-You can connect to the server over a realtime WebSocket connection to send and receive [chat messages](social-realtime-chat.md), get [notifications][social-in-app-notifications.md], and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
+You can connect to the server over a realtime WebSocket connection to send and receive [chat messages](social-realtime-chat.md), get [notifications](social-in-app-notifications.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
 
 You first need to create a realtime socket to the server:
 
 ```csharp
-
+// Updated example TBD
 ```
 
 Then proceed to join a chat channel and send a message:
 
 ```csharp
-
+// Updated example TBD
 ```
 
 You can find more information about the various chat features available [here](social-in-app-notifications.md).
@@ -117,7 +115,7 @@ You can find more information about the various chat features available [here](s
 A client socket has event listeners which are called on various events received from the server.
 
 ```csharp
-
+// Updated example TBD
 ```
 
 Some events only need to be implemented for the features you want to use.
@@ -166,7 +164,7 @@ client.Connect(_session, (bool done) => {
   executionQueue.Enqueue(() => {
     Debug.Log("Session connected.");
     // Store session for quick reconnects.
-    PlayerPrefs.SetString("nk.session", session.Token); // a UnityEngine API
+    PlayerPrefs.SetString("nk.session", session.AuthToken); // a UnityEngine API
   });
 });
 ```
@@ -255,7 +253,7 @@ public class NakamaSessionManager : MonoBehaviour {
     }
 
     var session = new Session(sessionString);
-    if (session.IsExpired()) {
+    if (session.IsExpired) {
       return null; // We can't restore an expired session.
     }
 
@@ -274,7 +272,7 @@ public class NakamaSessionManager : MonoBehaviour {
 
     // Use whichever one of the authentication options you want.
     _session = await client.AuthenticateDeviceAsync($"{id}");
-    Debug.LogFormat("Session: '{0}'.", session.Token);
+    Debug.LogFormat("Session: '{0}'.", session.AuthToken);
   }
 
   private void Update() {

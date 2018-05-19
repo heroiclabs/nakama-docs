@@ -65,26 +65,12 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string saveGame = "{\"progress\": 50}";
-string myStats = "{\"skill\": 24}";
-
-var bucket = "myapp";
-
-// Write multiple different records across collections.
-var message = new NStorageWriteMessage.Builder()
-    .Write(bucket, "saves", "savegame", saveGame)
-    .Write(bucket, "stats", "mystats", myStats)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Stored record has version '{0}'", record.Version);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -200,20 +186,12 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string saveGame = "{\"progress\": 54}";
-string version = record.Version; // an INStorageKey object.
-
-var message = new NStorageWriteMessage.Builder()
-    .Write("myapp", "saves", "savegame", saveGame, version)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  version = list.Results[0].Version; // cache updated version for next write.
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -310,20 +288,12 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string saveGame = "{\"progress\": 1}";
-string version = "*"; // represents "no version".
-
-var message = new NStorageWriteMessage.Builder()
-    .Write("myapp", "saves", "savegame", saveGame, version)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  version = list.Results[0].Version; // cache updated version for next write.
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -419,24 +389,12 @@ const objects = await client.readStorageObjects(session, {
 console.info("Successfully read objects:", objects);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string userId = session.Id; // an INSession object.
-
-var message = new NStorageFetchMessage.Builder()
-    .Fetch("myapp", "saves", "savegame", userId)
-    .Fetch("myapp", "configuration", "config", null)
-    .Build();
-client.Send(message, (INResultSet<INStorageData> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Record value '{0}'", record.Value);
-    Debug.LogFormat("Record permissions read '{0}' write '{1}'",
-        record.PermissionRead, record.PermissionWrite);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -521,25 +479,12 @@ const objects = await client.listStorageObjects(session, "saves", session.user_i
 console.info("Successfully list objects:", objects);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string userId = session.Id; // an INSession object.
-
-var message = new NStorageListMessage.Builder()
-    .Bucket("myapp")
-    .Collection("saves")
-    .UserId(userId)
-    .Build();
-client.Send(message, (INResultSet<INStorageData> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Record value '{0}'", record.Value);
-    Debug.LogFormat("Record permissions read '{0}' write '{1}'",
-        record.PermissionRead, record.PermissionWrite);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -750,17 +695,12 @@ await client.deleteStorageObjects(session, {
 console.info("Successfully deleted objects.");
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
+```csharp fct_label=".Net"
+// Updated example TBD
+```
 
-var message = new NStorageRemoveMessage.Builder()
-    .Remove("myapp", "saves", "savegame")
-    .Build();
-client.Send(message, (bool done) => {
-  Debug.Log("Removed user's record(s).");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+```csharp fct_label="Unity"
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -843,19 +783,12 @@ await client.deleteStorageObjects(session, {
 console.info("Successfully deleted objects.");
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string version = record.Version; // an INStorageKey object.
-
-var message = new NStorageRemoveMessage.Builder()
-    .Remove("myapp", "saves", "savegame", version)
-    .Build();
-client.Send(message, (bool done) => {
-  Debug.Log("Removed user's record(s).");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"

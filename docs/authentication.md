@@ -103,7 +103,7 @@ if (string.IsNullOrEmpty(id)) {
 }
 
 var session = await client.AuthenticateDeviceAsync($"{deviceid}");
-Debug.LogFormat("Session: '{0}'.", session.Token);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -219,7 +219,7 @@ System.Console.WriteLine("Session {0}", session);
 const string email = "email@example.com";
 const string password = "3bc8f72e95a9";
 var session = await client.AuthenticateEmailAsync(email, password);
-Debug.LogFormat("Session: '{0}'.", session.Token);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -310,7 +310,7 @@ FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
   if (FB.IsLoggedIn) {
     var accesstoken = Facebook.Unity.AccessToken.CurrentAccessToken;
     var session = await client.LinkFacebookAsync(session, accesstoken);
-    Debug.LogFormat("Session: '{0}'.", session.Token);
+    Debug.LogFormat("Session: '{0}'.", session.AuthToken);
   }
 });
 ```
@@ -345,7 +345,7 @@ FB.Login("email", (ILoginResult result) => {
   if (FB.IsLoggedIn) {
     var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
     var session = await client.LinkFacebookAsync(session, accesstoken);
-    Debug.LogFormat("Session: '{0}'.", session.Token);
+    Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 });
 ```
 
@@ -376,7 +376,7 @@ System.Console.WriteLine("Session {0}", session);
 ```csharp fct_label="Unity"
 const string oauthToken = "...";
 var session = await client.AuthenticateGoogleAsync(oauthToken);
-Debug.LogFormat("Session: '{0}'.", session.Token);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -463,7 +463,7 @@ var signature = "...";
 var timestamp = "...";
 var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
     publicKeyUrl, salt, signature, timestamp);
-Debug.LogFormat("Session: '{0}'.", session.Token);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```swift fct_label="Swift"
@@ -526,7 +526,7 @@ System.Console.WriteLine("Session {0}", session);
 ```csharp fct_label="Unity"
 const string token = "...";
 var session = await client.AuthenticateSteamAsync(token);
-Debug.LogFormat("Session: '{0}'.", session.Token);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -603,7 +603,7 @@ System.Console.WriteLine("Session {0}", session);
 ```csharp fct_label="Unity"
 const string customid = "some-custom-id";
 var session = await client.AuthenticateCustomAsync(customid);
-Debug.LogFormat("Session: '{0}'.", session.Token);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -675,7 +675,7 @@ System.Console.WriteLine("Session expired? {0}", session.IsExpired);
 ```
 
 ```csharp fct_label="Unity"
-const string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+const string id = SystemInfo.deviceUniqueIdentifier;
 var session = await client.AuthenticateDeviceAsync(id);
 Debug.LogFormat("id '{0}' username '{1}'", session.UserId, session.Username);
 Debug.LogFormat("Session expired? {0}", session.IsExpired);
@@ -730,11 +730,7 @@ console.info("Successfully connected.");
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INSession session = someSession; // obtained from Register or Login.
-client.Connect(session, (bool done) => {
-  Debug.Log("Successfully connected.");
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Java"

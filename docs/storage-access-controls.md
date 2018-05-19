@@ -35,22 +35,12 @@ const objects = await client.readStorageObjects(session, {
 console.info("Successfully fetched objects:", objects);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string userId = session.Id; // an INSession object.
-
-var message = new NStorageFetchMessage.Builder()
-    // "null" below means system owned record
-    .Fetch("myapp", "configuration", "config", null)
-    .Build();
-client.Send(message, (INResultSet<INStorageData> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Record value '{0}'", record.Data);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -188,21 +178,12 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string armySetup = "{\"soldiers\": 50}";
-
-var message = new NStorageWriteMessage.Builder()
-    .Write("myapp", "battle", "army", armySetup, StoragePermissionRead.PublicRead, StoragePermissionWrite.OwnerWrite)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Stored record has version '{0}'", record.Version);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"

@@ -45,11 +45,7 @@ socket.onnotification = (notification) => {
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-client.OnNotification = (INNotification n) => {
-  Debug.LogFormat("Received code '{0}' and subject '{1}'.", n.Code, n.Subject);
-  Debug.LogFormat("Received id '{0}' and content '{1}'.", n.Id, n.Content);
-};
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -86,15 +82,11 @@ foreach (var n in result.Notifications)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var message = NNotificationsListMessage.Default(100);
-client.Send(message, (INResultSet<INNotification> list) => {
-  foreach (var n in list.Results) {
-    Debug.LogFormat("Notice code '{0}' and subject '{1}'.", n.Code, n.Subject);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var result = await client.ListNotificationsAsync(session, 10);
+foreach (var n in result.Notifications)
+{
+  Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -154,32 +146,15 @@ if (result.CacheableCursor != null)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-IList<INNotification> allNotifications = new List<INNotification>();
-
-Action accumulateNotifications = delegate(INCursor resumeCursor) {
-  var message = new NNotificationsListMessage.Builder(100)
-      .Cursor(resumeCursor)
-      .Build();
-  client.Send(message, (INResultSet<INNotification> list) => {
-    if (list.Results.Length < 1) {
-      return;
-    } else {
-      allNotifications.AddRange(list.Results);
-      accumulateNotifications(list.Cursor); // recursive async call.
-    }
-  }, (INError err) => {
-    Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-  });
-};
-
-var message = NNotificationsListMessage.Default(100);
-client.Send(message, (INResultSet<INNotification> list) => {
-  allNotifications.AddRange(list.Results);
-  accumulateNotifications(list.Cursor);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var result = await client.ListNotificationsAsync(session, 10);
+if (result.CacheableCursor != null)
+{
+  result = await client.ListNotificationsAsync(session, 10, result.CacheableCursor);
+  foreach (var n in result.Notifications)
+  {
+    Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+  }
+}
 ```
 
 ```swift fct_label="Swift"
@@ -245,17 +220,12 @@ foreach (var n in result.Notifications)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INCursor resumeCursor = "<cached cursor>";
-var message = new NNotificationsListMessage.Builder(100)
-    .Cursor(resumeCursor)
-    .Build();
-client.Send(message, (INResultSet<INNotification> list) => {
-  // use notification list.
-  resumeCursor = list.Cursor; // cache resume cursor.
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string cacheableCursor = "<cached cursor>";
+var result = await client.ListNotificationsAsync(session, 10, cacheableCursor);
+foreach (var n in result.Notifications)
+{
+  Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -299,15 +269,8 @@ await client.DeleteNotificationsAsync(session, notificationIds);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-IList<INNotification> list = new List<INNotification>();
-list.Add(...); // Add notification from your internal list
-var message = NNotificationsRemoveMessage.Default(list);
-client.Send(message, (bool done) => {
-  Debug.Log("Notifications were removed.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var notificationIds = new[] {"<notification id>"};
+await client.DeleteNotificationsAsync(session, notificationIds);
 ```
 
 ```swift fct_label="Swift"

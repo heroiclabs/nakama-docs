@@ -38,12 +38,7 @@ socket.onchannelmessage = (message) => {
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-client.OnTopicMessage = (INTopicMessage message) => {
-  // TopicType will be one of DirectMessage, Room, or Group.
-  Debug.LogFormat("Received a '{0}' message.", message.Topic.TopicType);
-  Debug.LogFormat("Message has id '{0}' and content '{1}'.", message.Topic.Id, message.Topic.Data);
-};
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -66,11 +61,7 @@ if (message.code != 0) {
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-TopicMessageType messageType = message.Type; // enum
-if (messageType != TopicMessageType.Chat) {
-  Debug.LogFormat("Received message with event type '{0}'.", messageType);
-}
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -119,19 +110,7 @@ console.info("You can now send messages to channel id:", channel.id);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INTopicId roomId = null;
-
-string roomName = "Room-Name";
-var message = new NTopicJoinMessage.Builder()
-    .TopicRoom(roomName)
-    .Build();
-client.Send(message, (INResultSet<INTopic> topics) => {
-  roomId = topics.Results[0].Topic;
-  Debug.Log("Successfully joined the room.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -172,19 +151,7 @@ console.info("You can now send messages to channel id:", channel.id);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INTopicId groupTopicId = null;
-
-string groupId = group.Id; // an INGroup ID.
-var message = new NTopicJoinMessage.Builder()
-    .TopicGroup(groupId)
-    .Build();
-client.Send(message, (INResultSet<INTopic> topics) => {
-  groupTopicId = topics.Results[0].Topic;
-  Debug.Log("Successfully joined the group chat.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -225,19 +192,7 @@ console.info("You can now send messages to channel id:", channel.id);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INTopicId directTopicId = null;
-
-string userId = user.Id; // an INUser ID.
-var message = new NTopicJoinMessage.Builder()
-    .TopicDirectMessage(userId)
-    .Build();
-client.Send(message, (INResultSet<INTopic> topics) => {
-  directTopicId = topics.Results[0].Topic;
-  Debug.Log("Successfully joined the direct chat.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -300,30 +255,7 @@ onlineUsers = onlineUsers.filter((user) => {
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-IList<INUserPresence> onlineUsers = new List<INUserPresence>();
-
-client.OnTopicPresence = (INTopicPresence presences) => {
-  // Remove all users who left.
-  foreach (var user in presences.Leave) {
-    onlineUsers.Remove(user);
-  }
-  // Add all users who joined.
-  onlineUsers.AddRange(presences.Join);
-};
-
-string roomName = "Room-Name";
-var message = new NTopicJoinMessage.Builder()
-    .TopicRoom(roomName)
-    .Build();
-client.Send(message, (INResultSet<INTopic> topics) => {
-  // Setup initial online user list.
-  onlineUsers.AddRange(topics.Results[0].Presences);
-  // Remove your own user from list.
-  onlineUsers.Remove(topics.Results[0].Self);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -373,16 +305,7 @@ const messageAck = await socket.send({ channel_message_send: {
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INTopicId chatTopicId = topic.Topic; // A chat topic ID.
-
-var json = "{\"some\":\"data\"}";
-var message = NTopicMessageSendMessage.Default(chatTopicId, json);
-client.Send(message, (INTopicMessageAck ack) => {
-  Debug.LogFormat("New message sent has id '{0}'.", ack.MessageId);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -413,15 +336,7 @@ await socket.send({ channel_leave: {
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INTopicId chatTopicId = topic.Topic; // A chat topic ID.
-
-var message = NTopicLeaveMessage.Default(chatTopicId);
-client.Send(message, (bool done) => {
-  Debug.Log("Successfully left chat.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```swift fct_label="Swift"
@@ -461,24 +376,22 @@ result.messages.forEach((message) => {
 console.info("Get the next page of messages with the cursor:", result.next_cursor);
 ```
 
+```csharp fct_label=".Net"
+var channelId = "roomname";
+var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+foreach (var m in result.Messages)
+{
+  System.Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+}
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string roomName = "Room-Name";
-// Fetch 10 messages on the chat room with oldest first.
-var message = new NTopicMessagesListMessage.Builder()
-    .TopicRoom(roomName)
-    .Forward(false)
-    .Limit(10)
-    .Build();
-client.Send(message, (INResultSet<INTopicMessage> list) => {
-  foreach (var msg in list.Results) {
-    var id = msg.Topic.Id;
-    var data = msg.Topic.Data;
-    Debug.LogFormat("Message has id '{0}' and content '{1}'.", id, data);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var channelId = "roomname";
+var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+foreach (var m in result.Messages)
+{
+  Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -533,31 +446,38 @@ if (result.next_cursor) {
 };
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var errorHandler = delegate(INError err) {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+```csharp fct_label=".Net"
+var channelId = "roomname";
+var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+foreach (var m in result.Messages)
+{
+  System.Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+}
+
+if (result.NextCursor != null) {
+  // Get the next 10 messages.
+  var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
+  result.messages.forEach((message) => {
+    System.Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+  });
 };
+```
 
-string roomName = "Room-Name";
-var messageBuilder = new NTopicMessagesListMessage.Builder()
-    .TopicRoom(roomName)
-    .Limit(100);
-client.Send(messageBuilder.Build(), (INResultSet<INTopicMessage> list) => {
-  // Lets get the next page of results.
-  INCursor cursor = list.Cursor;
-  if (cursor != null && list.Results.Count > 0) {
-    var message = messageBuilder.Cursor(cursor).Build();
+```csharp fct_label="Unity"
+var channelId = "roomname";
+var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+foreach (var m in result.Messages)
+{
+  Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+}
 
-    client.Send(message, (INResultSet<INTopicMessage> nextList) => {
-      foreach (var msg in nextList.Results) {
-        var id = msg.Topic.Id;
-        var data = msg.Topic.Data;
-        Debug.LogFormat("Message has id '{0}' and content '{1}'.", id, data);
-      }
-    }, errorHandler);
-  }
-}, errorHandler);
+if (result.NextCursor != null) {
+  // Get the next 10 messages.
+  var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
+  result.messages.forEach((message) => {
+    Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+  });
+};
 ```
 
 ```swift fct_label="Swift"
