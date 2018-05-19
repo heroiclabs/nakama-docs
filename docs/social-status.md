@@ -14,6 +14,14 @@ By default users have no status when they first connect, and will not appear onl
 socket.send({ status_update: { status: "Hello everyone!" } });
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
+```csharp fct_label="Unity"
+// Updated example TBD
+```
+
 The status can be set and updated as often as needed with this operation.
 
 !!! Tip
@@ -25,6 +33,14 @@ If the user needs to appear offline or "invisible" they can do so by erasing the
 
 ```js fct_label="Javascript"
 socket.send({ status_update: {} });
+```
+
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
+```csharp fct_label="Unity"
+// Updated example TBD
 ```
 
 ## Receive status updates
@@ -42,6 +58,14 @@ socket.onstatuspresence = (statuspresence) => {
 };
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
+```csharp fct_label="Unity"
+// Updated example TBD
+```
+
 If a user is disconnecs or appears offline they will leave their previous status, but there will be no corresponding new status.
 
 ## Follow users
@@ -57,6 +81,14 @@ status.presences.forEach((presence) => {
 });
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
+```csharp fct_label="Unity"
+// Updated example TBD
+```
+
 !!! Note
     Following a user only affects the current session. When the user disconnects they automatically unfollow anyone they may have followed while connected.
 
@@ -66,4 +98,12 @@ Unfollowing a set of users immediately stops the user from receiving any further
 
 ```js fct_label="Javascript"
 socket.send({ status_unfollow: { user_ids: ["user ID to unfollow"] } });
+```
+
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
+```csharp fct_label="Unity"
+// Updated example TBD
 ```

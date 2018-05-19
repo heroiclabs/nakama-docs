@@ -55,6 +55,14 @@ socket.onstreamdata = (streamdata) => {
 };
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
+```csharp fct_label="Unity"
+// Updated example TBD
+```
+
 ## Receiving stream presence events
 
 When a new presence joins a stream or an existing presence leaves the server will broadcast presence events to all users currently in the stream.
@@ -69,6 +77,14 @@ socket.onstreampresence = (streampresence) => {
     console.log("User left: %o", leave.user_id);
   });
 };
+```
+
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
+```csharp fct_label="Unity"
+// Updated example TBD
 ```
 
 !!! Tip

@@ -37,6 +37,10 @@ socket.onchannelmessage = (message) => {
 };
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
 // Updated example TBD
 ```
@@ -58,6 +62,10 @@ You can identify event messages from chat messages by the message "Type".
 if (message.code != 0) {
   console.info("Received message with code:", message.code);
 };
+```
+
+```csharp fct_label=".Net"
+// Updated example TBD
 ```
 
 ```csharp fct_label="Unity"
@@ -109,6 +117,10 @@ const channel = await socket.send({ channel_join: {
 console.info("You can now send messages to channel id:", channel.id);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
 // Updated example TBD
 ```
@@ -150,6 +162,10 @@ const channel = await socket.send({ channel_join: {
 console.info("You can now send messages to channel id:", channel.id);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
 // Updated example TBD
 ```
@@ -189,6 +205,10 @@ const channel = await socket.send({ channel_join: {
     hidden: false
 } });
 console.info("You can now send messages to channel id:", channel.id);
+```
+
+```csharp fct_label=".Net"
+// Updated example TBD
 ```
 
 ```csharp fct_label="Unity"
@@ -254,6 +274,10 @@ onlineUsers = onlineUsers.filter((user) => {
 });
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
 // Updated example TBD
 ```
@@ -304,6 +328,10 @@ const messageAck = await socket.send({ channel_message_send: {
 } });
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
 // Updated example TBD
 ```
@@ -333,6 +361,10 @@ var channelId = ""; // A channel ID obtained previously from channel.id
 await socket.send({ channel_leave: {
   channel_id: channelId
 } });
+```
+
+```csharp fct_label=".Net"
+// Updated example TBD
 ```
 
 ```csharp fct_label="Unity"
