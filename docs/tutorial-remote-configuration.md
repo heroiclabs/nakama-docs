@@ -82,21 +82,18 @@ With either approach used to store in-app parameters you can fetch the configura
     Remember to change the host, port, and auth values for how you've setup your server.
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
 var host = "127.0.0.1";
 var port = 7350;
 var path = "rc";
 var auth = "defaultkey";
 
-var format = "http://{0}:{1}/runtime/{2}?key={3}";
+var format = "http://{0}:{1}/v2/rpc/{2}?http_key={3}";
 var url = string.Format(format, Host, Port, Path, Auth);
 var headers = new Dictionary<string, string>();
 headers.Add("Content-Type", "application/json");
 headers.Add("Accept", "application/json");
-var content = Encoding.UTF8.GetBytes("{}");
 
-WWW www = new WWW(url, content, headers);
+WWW www = new WWW(url, null, headers);
 yield return www;
 if (!string.IsNullOrEmpty(www.error)) {
     Debug.LogErrorFormat("Error occurred: {0}", www.error);
@@ -109,10 +106,7 @@ if (!string.IsNullOrEmpty(www.error)) {
 ```
 
 ```shell fct_label="cURL"
-// Requires Nakama 1.x
-
-curl -X POST http://127.0.0.1:7350/runtime/rc?key=defaultkey \
-     -d "{}" \
+curl http://127.0.0.1:7350/v2/rpc/runtime/rc?http_key=defaultkey \
      -H 'Content-Type: application/json' \
      -H 'Accept: application/json'
 # output

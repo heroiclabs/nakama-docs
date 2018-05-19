@@ -32,25 +32,25 @@ const objects = await client.readStorageObjects(session, {
   }]
 });
 
-console.info("Successfully fetched objects:", objects);
+console.info("Successfully read objects:", objects);
+```
+
+```csharp fct_label=".Net"
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "configuration",
+  Key = "config"
+});
+
+System.Console.WriteLine("Successfully read objects {0}", result.Objects);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string userId = session.Id; // an INSession object.
-
-var message = new NStorageFetchMessage.Builder()
-    // "null" below means system owned record
-    .Fetch("myapp", "configuration", "config", null)
-    .Build();
-client.Send(message, (INResultSet<INStorageData> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Record value '{0}'", record.Data);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "configuration",
+  Key = "config"
 });
+
+Debug.LogFormat("Successfully read objects {0}", result.Objects);
 ```
 
 ```java fct_label="Android/Java"
@@ -177,8 +177,8 @@ var army_setup = {"soldiers": 50};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": army_setup,
     "permission_read": 2,
     "permission_write": 1
@@ -188,21 +188,38 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
+```csharp fct_label=".Net"
+var army_setup = "{\"soldiers\": 50}";
+// "2" refers to Public Read permission
+// "1" refers to Owner Write permission
 
-string armySetup = "{\"soldiers\": 50}";
-
-var message = new NStorageWriteMessage.Builder()
-    .Write("myapp", "battle", "army", armySetup, StoragePermissionRead.PublicRead, StoragePermissionWrite.OwnerWrite)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Stored record has version '{0}'", record.Version);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = army_setup,
+  PermissionRead = 2,
+  PermissionWrite = 1
 });
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
+```
+
+```csharp fct_label="Unity"
+var army_setup = "{\"soldiers\": 50}";
+// "2" refers to Public Read permission
+// "1" refers to Owner Write permission
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = army_setup,
+  PermissionRead = 2,
+  PermissionWrite = 1
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"

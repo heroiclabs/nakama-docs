@@ -15,14 +15,7 @@ var client = new Client("defaultkey", "127.0.0.1", 7350, false);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INClient client = new NClient.Builder("defaultkey")
-    .Host("127.0.0.1")
-    .Port(7350)
-    .SSL(false)
-    .Build();
-// or same as above.
-INClient client = NClient.Default("defaultkey");
+var client = new Client("defaultkey", "127.0.0.1", 7350, false);
 ```
 
 ```java fct_label="Java"
@@ -103,27 +96,14 @@ System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var sessionHandler = delegate(INSession session) {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-};
-
 var id = PlayerPrefs.GetString("nk.id");
 if (string.IsNullOrEmpty(id)) {
   id = SystemInfo.deviceUniqueIdentifier;
   PlayerPrefs.SetString("nk.id", id); // cache device id.
 }
 
-var message = NAuthenticateMessage.Device(id);
-client.Login(message, sessionHandler, (INError err) => {
-  if (err.Code == ErrorCode.UserNotFound) {
-    client.Register(message, sessionHandler, (INError err) => {
-      Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-    });
-  } else {
-    Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-  }
-});
+var session = await client.AuthenticateDeviceAsync($"{deviceid}");
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -236,17 +216,10 @@ System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string email = "email@example.com"
-string password = "3bc8f72e95a9"
-
-var message = NAuthenticateMessage.Email(email, password);
-client.Register(message, (INSession session) => {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-// Use client.Login(...) after register.
+const string email = "email@example.com";
+const string password = "3bc8f72e95a9";
+var session = await client.AuthenticateEmailAsync(email, password);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -332,35 +305,14 @@ System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-Action<INSession> sessionHandler = delegate(INSession session) {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-  client.Connect(session);
-};
-
-var initCallback = delegate() {
-  if (FB.IsInitialized) {
-    FB.ActivateApp();
-    // use a Facebook access token to create a user account.
-    var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
-
-    var message = NAuthenticateMessage.Facebook(oauthToken);
-    client.Login(message, sessionHandler, (INError err) => {
-      if (err.Code == ErrorCode.UserNotFound) {
-        client.Register(message, sessionHandler, (INError err) => {
-          Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-        });
-      } else {
-        Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-      }
-    });
+var perms = new List<string>(){"public_profile", "email"};
+FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
+  if (FB.IsLoggedIn) {
+    var accesstoken = Facebook.Unity.AccessToken.CurrentAccessToken;
+    var session = await client.LinkFacebookAsync(session, accesstoken);
+    Debug.LogFormat("Session: '{0}'.", session.AuthToken);
   }
-};
-
-// you must call FB.Init as early as possible at startup.
-if (!FB.IsInitialized) {
-  FB.Init(initCallback);
-}
+});
 ```
 
 ```swift fct_label="Swift"
@@ -389,29 +341,11 @@ Authorization: Basic base64(ServerKey:)
 You can add a button to your UI to login with Facebook.
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-Action<INSession> sessionHandler = delegate(INSession session) {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-  client.Connect(session);
-};
-
 FB.Login("email", (ILoginResult result) => {
   if (FB.IsLoggedIn) {
     var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
-
-    var message = NAuthenticateMessage.Facebook(oauthToken);
-    client.Login(message, sessionHandler, (INError err) => {
-      if (err.Code == ErrorCode.UserNotFound) {
-        client.Register(message, sessionHandler, (INError err) => {
-          Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-        });
-      } else {
-        Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-      }
-    });
-  } else {
-    Debug.LogErrorFormat("Facebook login failed got '{0}'.", result.Error);
-  }
+    var session = await client.LinkFacebookAsync(session, accesstoken);
+    Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 });
 ```
 
@@ -440,15 +374,9 @@ System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string oauthToken = "...";
-var message = NAuthenticateMessage.Google(oauthToken);
-client.Register(message, (INSession session) => {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-// Use client.Login(...) after register.
+const string oauthToken = "...";
+var session = await client.AuthenticateGoogleAsync(oauthToken);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -520,8 +448,6 @@ System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
 // You'll need to use native code (Obj-C) with Unity.
 // The "UnityEngine.SocialPlatforms.GameCenter" doesn't give enough information
 // to enable authentication.
@@ -529,21 +455,15 @@ System.Console.WriteLine("Session {0}", session);
 // We recommend you use a library which handles native Game Center auth like
 // https://github.com/desertkun/GameCenterAuth
 
-string playerId = "...";
-string bundleId = "...";
-string base64salt = "...";
-string base64signature = "...";
-string publicKeyUrl = "...";
-long timestamp = 0L;
-
-var message = NAuthenticateMessage.GameCenter(
-    playerId, bundleId, timestamp, base64salt, base64signature, publicKeyUrl);
-client.Register(message, (INSession session) => {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-// Use client.Login(...) after register.
+var bundleId = "...";
+var playerId = "...";
+var publicKeyUrl = "...";
+var salt = "...";
+var signature = "...";
+var timestamp = "...";
+var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
+    publicKeyUrl, salt, signature, timestamp);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```swift fct_label="Swift"
@@ -604,15 +524,9 @@ System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string sessionToken = "...";
-var message = NAuthenticateMessage.Steam(sessionToken);
-client.Register(message, (INSession session) => {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-// Use client.Login(...) after register.
+const string token = "...";
+var session = await client.AuthenticateSteamAsync(token);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -687,16 +601,9 @@ System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string customId = "some-custom-id";
-
-var message = NAuthenticateMessage.Custom(customId);
-client.Register(message, (INSession session) => {
-  Debug.LogFormat("Session: '{0}'.", session.Token);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-// Use client.Login(...) after register.
+const string customid = "some-custom-id";
+var session = await client.AuthenticateCustomAsync(customid);
+Debug.LogFormat("Session: '{0}'.", session.AuthToken);
 ```
 
 ```java fct_label="Java"
@@ -768,16 +675,10 @@ System.Console.WriteLine("Session expired? {0}", session.IsExpired);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-var message = NAuthenticateMessage.Device(id);
-client.Login(message, (INSession session) => {
-  var userId = session.Id;
-  Debug.LogFormat("Session id '{0}' handle '{1}'.", userId, session.Handle);
-  Debug.LogFormat("Session expired: {0}", session.HasExpired(DateTime.UtcNow));
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string id = SystemInfo.deviceUniqueIdentifier;
+var session = await client.AuthenticateDeviceAsync(id);
+Debug.LogFormat("id '{0}' username '{1}'", session.UserId, session.Username);
+Debug.LogFormat("Session expired? {0}", session.IsExpired);
 ```
 
 ```java fct_label="Java"
@@ -829,11 +730,7 @@ console.info("Successfully connected.");
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-INSession session = someSession; // obtained from Register or Login.
-client.Connect(session, (bool done) => {
-  Debug.Log("Successfully connected.");
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Java"
@@ -878,6 +775,14 @@ if (session.HasExpired(nowUnixEpoch))
 }
 ```
 
+```csharp fct_label="Unity"
+var nowUnixEpoch = DateTime.UtcNow;
+if (session.HasExpired(nowUnixEpoch))
+{
+  Debug.Log("Session has expired. Must reauthenticate!");
+}
+```
+
 You can also prolong the session expiry time by changing the `token_expiry_sec` in the [Session configuration](#install-configuration.md#session) page.
 
 ## Link or unlink
@@ -905,14 +810,9 @@ System.Console.WriteLine("Id '{0}' linked for user '{1}'", customid, session.Use
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = "some-custom-id";
-var message = NSelfLinkMessage.Device(id);
-client.Send(message, (bool done) => {
-  Debug.Log("Successfully linked device ID to current user.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string customid = "some-custom-id";
+await client.LinkCustomAsync(session, customid);
+Debug.LogFormat("Id '{0}' linked for user '{1}'", customid, session.UserId);
 ```
 
 ```java fct_label="Java"
@@ -979,14 +879,9 @@ System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customid, session.U
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = "some-custom-id";
-var message = NSelfUnlinkMessage.Device(id);
-client.Send(message, (bool done) => {
-  Debug.Log("Successfully unlinked device ID from current user.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string customid = "some-custom-id";
+await client.UnlinkCustomAsync(session, customid);
+Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customid, session.UserId);
 ```
 
 ```java fct_label="Java"

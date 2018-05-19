@@ -15,15 +15,12 @@ var match = await socket.send({ match_create: {} });
 console.log("Created match with ID %o", match.id);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var message = NMatchCreateMessage.Default();
-client.Send(message, (INMatch match) => {
-  string id = match.Id;
-  Debug.Log("Successfully created match.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 A user can [leave a match](#leave-a-match) at any point which will notify all other users.
@@ -49,28 +46,12 @@ connectedOpponents.forEach((opponent) => {
 });
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = match.Id; // an INMatch Id.
-
-var message = NMatchJoinMessage.Default(id);
-client.Send(message, (INResultSet<INMatch> matches) => {
-  Debug.Log("Successfully joined match.");
-
-  IList<INUserPresence> connectedOpponents = new List<INUserPresence>();
-  // Add list of connected opponents.
-  connectedOpponents.AddRange(matches.Results[0].Presence);
-  // Remove your own user from list.
-  connectedOpponents.Remove(matches.Results[0].Self);
-
-  foreach (var presence in connectedOpponents) {
-    var userId = presence.UserId;
-    var handle = presence.Handle;
-    Debug.LogFormat("User id '{0}' handle '{1}'.", userId, handle);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 The list of match opponents returned in the success callback might not include all users. It contains users who are connected to the match so far.
@@ -99,19 +80,12 @@ client.onmatchpresence = (presences) => {
 };
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-IList<INUserPresence> connectedOpponents = new List<INUserPresence>();
-
-client.OnMatchPresence = (INMatchPresence presences) => {
-  // Remove all users who left.
-  foreach (var user in presences.Leave) {
-    connectedOpponents.Remove(user);
-  }
-
-  // Add all users who joined.
-  connectedOpponents.AddRange(presences.Join);
-};
+// Updated example TBD
 ```
 
 No server updates are sent if there are no changes to the presence list.
@@ -131,19 +105,12 @@ var data = {"move": {"dir": "left", "steps": 4}};
 socket.send({ match_data_send: {match_id: id, op_code: opCode, data: payload} });
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = match.Id; // an INMatch Id.
-
-long opCode = 001L;
-byte[] data = Encoding.UTF8.GetBytes("{\"move\": {\"dir\": \"left\", \"steps\": 4}}");
-
-var message = NMatchDataSendMessage.Default(id, opCode, data);
-client.Send(message, (bool done) => {
-  Debug.Log("Successfully sent data message.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ## Receive data messages
@@ -166,18 +133,12 @@ client.onmatchdata = (data) => {
 };
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-client.OnMatchData = (INMatchData m) => {
-  var content = Encoding.UTF8.GetString(m.Data);
-  switch (m.OpCode) {
-  case 101L:
-    Debug.Log("A custom opcode.");
-    break;
-  default:
-    Debug.LogFormat("User handle '{0}' sent '{1}'", m.Presence.Handle, content);
-  };
-};
+// Updated example TBD
 ```
 
 ## Leave a match
@@ -189,16 +150,12 @@ var id = "match ID to leave";
 socket.send({ match_leave: {match_id: id}});
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = match.Id; // an INMatch Id.
+```csharp fct_label=".Net"
+// Updated example TBD
+```
 
-var message = NMatchLeaveMessage.Default(id);
-client.Send(message, (bool complete) => {
-  Debug.Log("Successfully left match.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+```csharp fct_label="Unity"
+// Updated example TBD
 ```
 
 !!! Note

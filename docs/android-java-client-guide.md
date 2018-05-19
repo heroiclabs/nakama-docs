@@ -2,6 +2,9 @@
 
 The official Java client handles all communication in realtime with the server and is specifically optimized for Android projects. It implements all features in the server and is compatible with Java 1.7+ and Android 2.3+. To work with the Java client you'll need a build tool like <a href="https://gradle.org/" target="\_blank">Gradle</a> and an editor/IDE like <a href="https://www.jetbrains.com/idea/" target="\_blank">IntelliJ</a> or <a href="https://eclipse.org/ide/" target="\_blank">Eclipse</a>.
 
+!!! info "Compatibility with Nakama 2"
+    This client guide is only available for Nakama 1 and has not yet been updated to support Nakama 2. Leave a comment on [this GitHub issue](https://github.com/heroiclabs/nakama-java/issues/9) if you are interested in using this client with Nakama 2.
+
 ## Download
 
 The client can be downloaded from <a href="https://github.com/heroiclabs/nakama-java/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-java-$version.jar" or "nakama-java-$version-all.jar" which includes a shadowed copy of all dependencies. If you use a build tool like Gradle you can skip the download and fetch it from the [central repository](#install-and-setup).

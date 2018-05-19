@@ -24,6 +24,12 @@ curl -X POST \
   -H 'Authorization: Bearer <session token>'
 ```
 
+```js fct_label="JavaScript"
+var ids = ["user-id1", "user-id2"];
+var usernames = ["username1"];
+await client.addFriends(session, ids, usernames);
+```
+
 ```csharp fct_label=".NET"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
@@ -31,14 +37,9 @@ await client.AddFriendsAsync(session, ids, usernames);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string userId = ...; // some user ID
-var message = NFriendAddMessage.Default(userId);
-client.Send(message, (bool done) => {
-  Debug.Log("Friend added or request sent.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var ids = new[] {"user-id1", "user-id2"};
+var usernames = new[] {"username1"};
+await client.AddFriendsAsync(session, ids, usernames);
 ```
 
 ```swift fct_label="Swift"
@@ -87,16 +88,11 @@ foreach (var f in result.Friends)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var message = NFriendsListMessage.Default();
-client.Send(message, (INResultSet<INFriend> list) => {
-  foreach (var f in list.Results) {
-    // f.State is one of: Friend, Invite, Invited, Blocked.
-    Debug.LogFormat("User {0} has state {1}.", f.Id, f.State);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var result = await client.ListFriendsAsync(session);
+foreach (var f in result.Friends)
+{
+  Debug.LogFormat("Friend '{0}' state '{1}'", f.User.Username, f.State);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -133,6 +129,12 @@ curl -X DELETE \
   -H 'Authorization: Bearer <session token>'
 ```
 
+```js fct_label="JavaScript"
+var ids = ["user-id1", "user-id2"];
+var usernames = ["username1"];
+await client.deleteFriends(session, ids, usernames);
+```
+
 ```csharp fct_label=".NET"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
@@ -140,14 +142,9 @@ await client.RemoveFriendsAsync(session, ids, usernames);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string userId = ...; // some user ID
-var message = NFriendRemoveMessage.Default(userId);
-client.Send(message, (bool done) => {
-  Debug.Log("User {0} has been removed.", userId);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var ids = new[] {"user-id1", "user-id2"};
+var usernames = new[] {"username1"};
+await client.RemoveFriendsAsync(session, ids, usernames);
 ```
 
 ```swift fct_label="Swift"
@@ -182,6 +179,12 @@ curl -X POST \
   -H 'Authorization: Bearer <session token>'
 ```
 
+```js fct_label="JavaScript"
+var ids = ["user-id1", "user-id2"];
+var usernames = ["username1"];
+await client.blockFriends(session, ids, usernames);
+```
+
 ```csharp fct_label=".NET"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
@@ -189,14 +192,9 @@ await client.BlockFriendsAsync(session, ids, usernames);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string userId = ...; // some user ID
-var message = NFriendBlockMessage.Default(userId);
-client.Send(message, (bool done) => {
-  Debug.Log("User {0} has been blocked.", userId);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var ids = new[] {"user-id1", "user-id2"};
+var usernames = new[] {"username1"};
+await client.BlockFriendsAsync(session, ids, usernames);
 ```
 
 ```swift fct_label="Swift"
