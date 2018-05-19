@@ -51,13 +51,13 @@ var my_stats = {"skill": 24};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": save_game
   },
   {
-    "collection": stats,
-    "key": skills,
+    "collection": "stats",
+    "key": "skills",
     "value": my_stats
   }
 ]);
@@ -66,11 +66,41 @@ console.info("Successfully stored objects:", object_ids);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var saveGame = "{\"progress\": 50}";
+var myStats = "{\"skill\": 24}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame
+},
+{
+  Collection = "stats",
+  Key = "skills",
+  Value = myStats
+});
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var saveGame = "{\"progress\": 50}";
+var myStats = "{\"skill\": 24}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame
+},
+{
+  Collection = "stats",
+  Key = "skills",
+  Value = myStats
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"
@@ -172,12 +202,11 @@ curl -X PUT \
 
 ```js fct_label="Javascript"
 var save_game = {"progress": 50};
-var my_stats = {"skill": 24};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": save_game,
     "version": "some-previous-version"
   }
@@ -187,11 +216,31 @@ console.info("Successfully stored objects:", object_ids);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var saveGame = "{\"progress\": 50}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "some-previous-version"
+});
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var saveGame = "{\"progress\": 50}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "some-previous-version"
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"
@@ -274,12 +323,11 @@ curl -X PUT \
 
 ```js fct_label="Javascript"
 var save_game = {"progress": 50};
-var my_stats = {"skill": 24};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": save_game,
     "version": "*"
   }
@@ -289,11 +337,31 @@ console.info("Successfully stored objects:", object_ids);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var saveGame = "{\"progress\": 50}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "*"
+});
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var saveGame = "{\"progress\": 50}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "*"
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"
@@ -390,11 +458,23 @@ console.info("Successfully read objects:", objects);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
+});
+
+System.Console.WriteLine("Successfully read objects {0}", result.Objects);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
+});
+
+Debug.LogFormat("Successfully read objects {0}", result.Objects);
 ```
 
 ```java fct_label="Android/Java"
@@ -696,11 +776,23 @@ console.info("Successfully deleted objects.");
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
+});
+
+System.Console.WriteLine("Successfully deleted objects.");
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
+});
+
+Debug.Log("Successfully deleted objects.");
 ```
 
 ```java fct_label="Android/Java"
@@ -784,11 +876,25 @@ console.info("Successfully deleted objects.");
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId,
+  Version = "some-object-version"
+});
+
+System.Console.WriteLine("Successfully deleted objects.");
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId,
+  Version = "some-object-version"
+});
+
+Debug.Log("Successfully deleted objects.");
 ```
 
 ```java fct_label="Android/Java"

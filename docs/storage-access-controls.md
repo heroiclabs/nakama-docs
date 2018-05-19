@@ -32,15 +32,25 @@ const objects = await client.readStorageObjects(session, {
   }]
 });
 
-console.info("Successfully fetched objects:", objects);
+console.info("Successfully read objects:", objects);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "configuration",
+  Key = "config"
+});
+
+System.Console.WriteLine("Successfully read objects {0}", result.Objects);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "configuration",
+  Key = "config"
+});
+
+Debug.LogFormat("Successfully read objects {0}", result.Objects);
 ```
 
 ```java fct_label="Android/Java"
@@ -167,8 +177,8 @@ var army_setup = {"soldiers": 50};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": army_setup,
     "permission_read": 2,
     "permission_write": 1
@@ -179,11 +189,37 @@ console.info("Successfully stored objects:", object_ids);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var army_setup = "{\"soldiers\": 50}";
+// "2" refers to Public Read permission
+// "1" refers to Owner Write permission
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = army_setup,
+  PermissionRead = 2,
+  PermissionWrite = 1
+});
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var army_setup = "{\"soldiers\": 50}";
+// "2" refers to Public Read permission
+// "1" refers to Owner Write permission
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = army_setup,
+  PermissionRead = 2,
+  PermissionWrite = 1
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"
