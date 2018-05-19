@@ -1,14 +1,14 @@
 # Unity client guide
 
-!!! info "Nakama 2.x release"
-    With the Nakama 2.x release we've split out the Unity client into a lower level client for .NET and a new wrapper which will require Unity 2017 or greater. The new Unity client is not released yet but will be announced on our [blog](https://blog.heroiclabs.com/) and [Twitter](https://twitter.com/heroicdev). In the meantime you can use the .NET client directly and is available [here](https://github.com/heroiclabs/nakama-dotnet).
-
 The official Unity client handles all communication in realtime with the server. It implements all features in the server and is compatible with Unity 2017 or newer. To work with our Unity client you'll need to install and setup [Unity engine](https://unity3d.com/get-unity/download).
 
 With the Nakama 2.x release we've split out the Unity client into a lower level client for .NET and a new wrapper client which will require Unity 2017 or greater.
 
-1. Nakama dotNet client library: A lower level dotNet library that you can use directly inside your Unity Project. This will give you complete control over sending and receiving responses from the server, updating your scene and more. You can look at the source code on the [GitHub repo](https://github.com/heroiclabs/nakama).
-2. Nakama Unity client library: A wrapper around the dotNet client library that integrates more tightly into the Unity Engine, and will take of client reconnection, messag queuing and interacting with Unity lifecycle events. This is currently going through final API design and will be made available soon to the public.
+1. Nakama .NET client library: A lower level .NET library that you can use directly inside your Unity Project. This will give you complete control over sending and receiving responses from the server, updating your scene and more. You can look at the source code on the [GitHub repo](https://github.com/heroiclabs/nakama).
+2. Nakama Unity client library: A wrapper around the .NET client library that integrates more tightly into the Unity Engine, and will take of client reconnection, messag queuing and interacting with Unity lifecycle events. This is currently going through final API design and will be made available soon to the public.
+
+!!! info "Nakama 2.x release"
+    With the Nakama 2.x release we've split out the Unity client into a lower level client for .NET and a new wrapper which will require Unity 2017 or greater. The new Unity client is not released yet but will be announced on our [blog](https://blog.heroiclabs.com/) and [Twitter](https://twitter.com/heroicdev). In the meantime you can use the .NET client directly and is available [here](https://github.com/heroiclabs/nakama-dotnet).
 
 ## Download
 
