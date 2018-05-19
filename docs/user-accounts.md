@@ -28,14 +28,10 @@ System.Console.WriteLine("User wallet {0}", account.Wallet);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var message = NSelfFetchMessage.Default();
-client.Send(message, (INSelf self) => {
-  Debug.LogFormat("User has id '{0}' and handle '{1}'.", self.Id, self.Handle);
-  Debug.LogFormat("User has JSON metadata '{0}'.", self.Metadata);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var account = await client.GetAccountAsync(session);
+var user = account.User;
+Debug.LogFormat("User id '{0}' username '{1}'", user.Id, user.Username);
+Debug.LogFormat("User wallet {0}", account.Wallet);
 ```
 
 ```java fct_label="Java"
@@ -170,17 +166,14 @@ foreach (var u in result.Users)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = user.Id; // an INUser ID.
-var message = NUsersFetchMessage.Default(id);
-client.Send(message, (INResultSet<INUser> list) => {
-  Debug.LogFormat("Fetched '{0}' users.", list.Results.Count);
-  foreach (var user in list.Results) {
-    Debug.LogFormat("User has id '{0}' and handle '{1}'.", user.Id, user.Handle);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var ids = new[] {"userid1", "userid2"};
+var usernames = new[] {"username1", "username2"};
+var facebookIds = new[] {"facebookid1"};
+var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
+foreach (var u in result.Users)
+{
+  Debug.LogFormat("User id '{0}' username '{1}'", u.Id, u.Username);
+}
 ```
 
 ```java fct_label="Java"
@@ -277,17 +270,10 @@ await = client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, l
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var message = new NSelfUpdateMessage.Builder()
-    .AvatarUrl("http://graph.facebook.com/avatar_url")
-    .Fullname("My New Name")
-    .Location("San Francisco")
-    .Build();
-client.Send(message, (bool done) => {
-  Debug.Log("Successfully updated yourself.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string displayName = "My new name";
+const string avatarUrl = "http://graph.facebook.com/avatar_url";
+const string location = "San Francisco";
+await = client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
 ```
 
 ```java fct_label="Java"

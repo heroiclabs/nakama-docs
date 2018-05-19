@@ -2,6 +2,9 @@
 
 The official Swift client handles all communication in realtime with the server and is specifically optimized for iOS projects. It implements all features in the server and is compatible with Swift 3.1+. To work with the Swift client you'll need the <a href="https://swift.org/download/" target="\_blank">Swift distribution</a> and an editor/IDE like Atom or <a href="https://itunes.apple.com/app/xcode/id497799835" target="\_blank">XCode 8.3+</a>.
 
+!!! info "Compatibility with Nakama 2"
+    This client guide is only available for Nakama 1 and has not yet been updated to support Nakama 2. Leave a comment on [this GitHub issue](https://github.com/heroiclabs/nakama-swift/issues/6) if you are interested in using this client with Nakama 2.
+
 ## Download
 
 Releases for the client are managed on <a href="https://github.com/heroiclabs/nakama-swift" target="\_blank">GitHub</a>. You can use the Swift package manager to add the code as a dependency for your project.

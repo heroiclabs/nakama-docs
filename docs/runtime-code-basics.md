@@ -167,7 +167,7 @@ local nk = require("nakama")
 local function http_handler(context, payload)
   local message = nk.json_encode(payload)
   nk.logger_info(("Message: %q"):format(message))
-  return {["context"] = context}
+  return nk.json_encode({["context"] = context})
 end
 
 nk.register_rpc(http_handler, "http_handler_path")
@@ -315,41 +315,24 @@ curl http://127.0.0.1:7350/v2/rpc/get_pokemon \
 ```
 
 ```js fct_label="Javascript"
-const session = ""; // obtained from authentication.
-
 const payload = { "PokemonName": "dragonite"};
+const rpcid = "get_pokemon";
 const pokemonInfo = await client.rpc(session, rpcid, payload);
-
-console.log("Retrieved pokemon info: %o", pokemon);
+console.log("Retrieved pokemon info: %o", pokemonInfo);
 ```
 
-```fct_label="REST"
-POST /v2/rpc/get_pokemon
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-
-{
-  "PokemonName": "dragonite"
-}
+```csharp fct_label=".Net"
+var payload = "{\"PokemonName\": \"dragonite\"}";
+var rpcid = "get_pokemon";
+var pokemonInfo = await client.RpcAsync(session, rpcid, score);
+System.Console.WriteLine("Retrieved pokemon info: {0}", pokemonInfo);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string payload = "{\"PokemonName\": \"dragonite\"}";
-
-var message = new NRuntimeRpcMessage
-    .Builder("get_pokemon")
-    .Payload(payload)
-    .Build();
-client.Send(message, (INRuntimeRpc rpc) => {
-  var result = rpc.Payload;
-  Debug.LogFormat("JSON response {0}", result);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+var payload = "{\"PokemonName\": \"dragonite\"}";
+var rpcid = "get_pokemon";
+var pokemonInfo = await client.RpcAsync(session, rpcid, score);
+Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
 ```
 
 ```java fct_label="Android/Java"
@@ -386,6 +369,18 @@ client.send(message: message).then { result in
   NSLog("JSON response %@", result.payload)
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+}
+```
+
+```fct_label="REST"
+POST /v2/rpc/get_pokemon
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+
+{
+  "PokemonName": "dragonite"
 }
 ```
 

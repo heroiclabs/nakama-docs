@@ -51,13 +51,13 @@ var my_stats = {"skill": 24};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": save_game
   },
   {
-    "collection": stats,
-    "key": skills,
+    "collection": "stats",
+    "key": "skills",
     "value": my_stats
   }
 ]);
@@ -65,26 +65,42 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
+```csharp fct_label=".Net"
+var saveGame = "{\"progress\": 50}";
+var myStats = "{\"skill\": 24}";
 
-string saveGame = "{\"progress\": 50}";
-string myStats = "{\"skill\": 24}";
-
-var bucket = "myapp";
-
-// Write multiple different records across collections.
-var message = new NStorageWriteMessage.Builder()
-    .Write(bucket, "saves", "savegame", saveGame)
-    .Write(bucket, "stats", "mystats", myStats)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Stored record has version '{0}'", record.Version);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame
+},
+{
+  Collection = "stats",
+  Key = "skills",
+  Value = myStats
 });
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
+```
+
+```csharp fct_label="Unity"
+var saveGame = "{\"progress\": 50}";
+var myStats = "{\"skill\": 24}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame
+},
+{
+  Collection = "stats",
+  Key = "skills",
+  Value = myStats
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"
@@ -186,12 +202,11 @@ curl -X PUT \
 
 ```js fct_label="Javascript"
 var save_game = {"progress": 50};
-var my_stats = {"skill": 24};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": save_game,
     "version": "some-previous-version"
   }
@@ -200,20 +215,32 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
+```csharp fct_label=".Net"
+var saveGame = "{\"progress\": 50}";
 
-string saveGame = "{\"progress\": 54}";
-string version = record.Version; // an INStorageKey object.
-
-var message = new NStorageWriteMessage.Builder()
-    .Write("myapp", "saves", "savegame", saveGame, version)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  version = list.Results[0].Version; // cache updated version for next write.
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "some-previous-version"
 });
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
+```
+
+```csharp fct_label="Unity"
+var saveGame = "{\"progress\": 50}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "some-previous-version"
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"
@@ -296,12 +323,11 @@ curl -X PUT \
 
 ```js fct_label="Javascript"
 var save_game = {"progress": 50};
-var my_stats = {"skill": 24};
 
 const object_ids = await client.writeStorageObjects(session,[
   {
-    "collection": saves,
-    "key": savegame,
+    "collection": "saves",
+    "key": "savegame",
     "value": save_game,
     "version": "*"
   }
@@ -310,20 +336,32 @@ const object_ids = await client.writeStorageObjects(session,[
 console.info("Successfully stored objects:", object_ids);
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
+```csharp fct_label=".Net"
+var saveGame = "{\"progress\": 50}";
 
-string saveGame = "{\"progress\": 1}";
-string version = "*"; // represents "no version".
-
-var message = new NStorageWriteMessage.Builder()
-    .Write("myapp", "saves", "savegame", saveGame, version)
-    .Build();
-client.Send(message, (INResultSet<INStorageKey> list) => {
-  version = list.Results[0].Version; // cache updated version for next write.
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "*"
 });
+
+System.Console.WriteLine("Successfully stored objects {0}", object_ids);
+```
+
+```csharp fct_label="Unity"
+var saveGame = "{\"progress\": 50}";
+
+var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
+{
+  Collection = "saves",
+  Key = "savegame",
+  Value = saveGame,
+  Version = "*"
+});
+
+Debug.LogFormat("Successfully stored objects {0}", object_ids);
 ```
 
 ```java fct_label="Android/Java"
@@ -419,24 +457,24 @@ const objects = await client.readStorageObjects(session, {
 console.info("Successfully read objects:", objects);
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string userId = session.Id; // an INSession object.
-
-var message = new NStorageFetchMessage.Builder()
-    .Fetch("myapp", "saves", "savegame", userId)
-    .Fetch("myapp", "configuration", "config", null)
-    .Build();
-client.Send(message, (INResultSet<INStorageData> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Record value '{0}'", record.Value);
-    Debug.LogFormat("Record permissions read '{0}' write '{1}'",
-        record.PermissionRead, record.PermissionWrite);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+```csharp fct_label=".Net"
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
 });
+
+System.Console.WriteLine("Successfully read objects {0}", result.Objects);
+```
+
+```csharp fct_label="Unity"
+var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
+});
+
+Debug.LogFormat("Successfully read objects {0}", result.Objects);
 ```
 
 ```java fct_label="Android/Java"
@@ -521,25 +559,12 @@ const objects = await client.listStorageObjects(session, "saves", session.user_i
 console.info("Successfully list objects:", objects);
 ```
 
+```csharp fct_label=".Net"
+// Updated example TBD
+```
+
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string userId = session.Id; // an INSession object.
-
-var message = new NStorageListMessage.Builder()
-    .Bucket("myapp")
-    .Collection("saves")
-    .UserId(userId)
-    .Build();
-client.Send(message, (INResultSet<INStorageData> list) => {
-  foreach (var record in list.Results) {
-    Debug.LogFormat("Record value '{0}'", record.Value);
-    Debug.LogFormat("Record permissions read '{0}' write '{1}'",
-        record.PermissionRead, record.PermissionWrite);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Updated example TBD
 ```
 
 ```java fct_label="Android/Java"
@@ -750,17 +775,24 @@ await client.deleteStorageObjects(session, {
 console.info("Successfully deleted objects.");
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-var message = new NStorageRemoveMessage.Builder()
-    .Remove("myapp", "saves", "savegame")
-    .Build();
-client.Send(message, (bool done) => {
-  Debug.Log("Removed user's record(s).");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+```csharp fct_label=".Net"
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
 });
+
+System.Console.WriteLine("Successfully deleted objects.");
+```
+
+```csharp fct_label="Unity"
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId
+});
+
+Debug.Log("Successfully deleted objects.");
 ```
 
 ```java fct_label="Android/Java"
@@ -843,19 +875,26 @@ await client.deleteStorageObjects(session, {
 console.info("Successfully deleted objects.");
 ```
 
-```csharp fct_label="Unity"
-// Requires Nakama 1.x
-
-string version = record.Version; // an INStorageKey object.
-
-var message = new NStorageRemoveMessage.Builder()
-    .Remove("myapp", "saves", "savegame", version)
-    .Build();
-client.Send(message, (bool done) => {
-  Debug.Log("Removed user's record(s).");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+```csharp fct_label=".Net"
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId,
+  Version = "some-object-version"
 });
+
+System.Console.WriteLine("Successfully deleted objects.");
+```
+
+```csharp fct_label="Unity"
+var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
+  Collection = "saves",
+  Key = "savegame",
+  UserId = session.UserId,
+  Version = "some-object-version"
+});
+
+Debug.Log("Successfully deleted objects.");
 ```
 
 ```java fct_label="Android/Java"

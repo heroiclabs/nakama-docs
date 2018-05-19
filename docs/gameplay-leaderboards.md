@@ -59,24 +59,10 @@ System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = leaderboard.Id; // an INLeaderboard Id.
-var score = 1200;
-
-// add custom fields with each record.
-var metadata = "{\"race_conditions\": [\"sunny\", \"clear\"]}";
-
-var message = new NLeaderboardRecordWriteMessage.Builder(id)
-    .Set(score)
-    .Metadata(metadata)
-    .Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> results) => {
-  foreach (var r in list.Results) {
-    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string leaderboard = "level1";
+const long score = 100L;
+var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
 ```swift fct_label="Swift"
@@ -162,20 +148,10 @@ System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = leaderboard.Id; // an INLeaderboard Id.
-var score = 1200;
-
-var message = new NLeaderboardRecordWriteMessage.Builder(id)
-    .Best(score)
-    .Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> list) => {
-  foreach (var r in list.Results) {
-    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string leaderboard = "level1";
+const long score = 100L;
+var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
 ```swift fct_label="Swift"
@@ -243,17 +219,12 @@ foreach (var r in result.Records)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string id = leaderboard.Id; // an INLeaderboard Id.
-
-var message = new NLeaderboardRecordsListMessage.Builder(id).Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> list) => {
-  foreach (var r in list.Results) {
-    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string leaderboard = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+foreach (var r in result.Records)
+{
+  Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -322,27 +293,22 @@ if (result.NextCursor != null)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var errorHandler = delegate(INError err) {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-};
-
-string id = leaderboard.Id; // an INLeaderboard Id.
-
-var messageBuilder = new NLeaderboardRecordsListMessage.Builder(id);
-client.Send(message.Build(), (INResultSet<INLeaderboardRecord> list) => {
-  // Lets get the next page of results.
-  INCursor cursor = list.Cursor;
-  if (cursor != null && list.Results.Count > 0) {
-    var message = messageBuilder.Cursor(cursor).Build();
-
-    client.Send(message, (INResultSet<INLeaderboardRecord> nextList) => {
-      foreach (var r in nextList.Results) {
-        Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
-      }
-    }, errorHandler);
+const string leaderboard = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+foreach (var r in result.Records)
+{
+  Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
+// If there are more results get next page.
+if (result.NextCursor != null)
+{
+  var c = result.NextCursor;
+  result = await client.ListLeaderboardRecordsAsync(session, leaderboard, null, 100, c);
+  foreach (var r in result.Records)
+  {
+    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
   }
-}, errorHandler);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -404,21 +370,13 @@ foreach (var r in result.OwnerRecords)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-IList<string> ownerIds = new List<string>();
-ownerIds.Add(user.Id); // an INUser Id.
-string id = leaderboard.Id; // an INLeaderboard Id.
-
-var message = new NLeaderboardRecordsListMessage.Builder(id)
-    .FilterByOwnerIds(ownerIds)
-    .Build();
-client.Send(message, (INResultSet<INLeaderboardRecord> list) => {
-  foreach (var r in list.Results) {
-    Debug.LogFormat("Record handle '{0}' score '{1}'.", r.Handle, r.Score);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string leaderboard = "level1";
+var ownerIds = new[] {"some", "friends", "user ids"};
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
+foreach (var r in result.OwnerRecords)
+{
+  Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
 ```
 
 ```swift fct_label="Swift"

@@ -4,32 +4,28 @@ The official JavaScript client handles all communication in realtime with the se
 
 ## Download
 
-The client is available on <a href="https://www.npmjs.com/package/nakama-js" target="\_blank">NPM</a>, Bower and on the <a href="https://github.com/heroiclabs/nakama-js/releases/latest" target="\_blank">GitHub releases page</a>. You can download `nakama-js.umd.js` which contains the Nakama-js module and UMD module loader.
+The client is available on <a href="https://www.npmjs.com/package/@heroiclabs/nakama-js" target="\_blank">NPM</a>, Bower and on the GitHub <a href="https://github.com/heroiclabs/nakama-js/releases/latest" target="\_blank">releases page</a>. You can download `nakama-js.umd.js` which contains the Nakama-js module and UMD module loader.
 
-If you are using NPM to manage your dependencies, simply add the following to your "package.json":
+If you are using NPM simply add the dependency to your "package.json":
 
-```json
-//...
-"dependencies": {
-  "@heroiclabs/nakama-js": "^0.1.0"
-}
-//...
+```shell
+yarn add "@heroiclabs/nakama-js"
 ```
 
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-js/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
 !!! Bug "Help and contribute"
-    The JavaScript client is <a href="https://github.com/heroiclabs/nakama-js" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
+    The JavaScript client is <a href="https://github.com/heroiclabs/nakama-js" target="\_blank">open source</a> on GitHub. Please report issues and contribute code to help us improve it.
 
 ## Install and setup
 
-When you've [downloaded](#download) the "Nakama-js.umd.js" file you should import it into your project to use it.
+When you've [downloaded](#download) the "nakama-js.umd.js" file you should import it into your project to use it.
 
 ```html
 <script src="path/to/dist/nakama-js.umd.js"></script>
 ```
 
-The client object is used to execute all logic against the server. In your main JavaScript function, you'll need to instatiate a Client object:
+The client object is used to execute all logic against the server. In your main JavaScript function you'll need to create a client object:
 
 ```js
 var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
@@ -40,7 +36,6 @@ client.ssl = false;
     By default the client uses connection settings "127.0.0.1" and 7350 to connect to a local Nakama server.
 
 ```js
-// Quickly setup a client for a local server.
 var client = new nakamajs.Client("defaultkey");
 ```
 
@@ -53,20 +48,22 @@ To authenticate you should follow our recommended pattern in your client code:
 &nbsp;&nbsp; 1\. Build an instance of the client.
 
 ```js
-// Quickly setup a client for a local server.
 const client = new nakamajs.Client("defaultkey");
 ```
 
-&nbsp;&nbsp; 2\. Authenticate a user. By default, Nakama will try and create a user if it doesn't exist.
+&nbsp;&nbsp; 2\. Authenticate a user. By default Nakama will try and create a user if it doesn't exist.
 
 If you are in an environment that supports `localStorage` then use the following code to store the session:
 
 ```js
 const email = "hello@example.com";
 const password = "somesupersecretpassword";
-const session = await client.authenticateEmail({ email: email, password: password });
+const session = await client.authenticateEmail({
+  email: email,
+  password: password
+});
 // Store session for quick reconnects.
-localStorage.nkAutheToken = session.token;
+localStorage.nakamaAuthToken = session.token;
 console.info("Authenticated successfully. User id:", session.user_id);
 ```
 
@@ -93,18 +90,15 @@ This could be to [add friends](social-friends.md), join [groups](social-groups-c
 The server also provides a [storage engine](storage-collections.md) to keep save games and other records owned by users. We'll use storage to introduce how messages are sent.
 
 ```js
-const objects = [
-  {
-    "collection": "collection",
-    "key": "key1",
-    "value": {"jsonKey": "jsonValue"}
-  },
-  {
-    "collection": "collection",
-    "key": "key2",
-    "value": {"jsonKey": "jsonValue"}
-  }
-];
+const objects = [{
+  "collection": "collection",
+  "key": "key1",
+  "value": {"jsonKey": "jsonValue"}
+}, {
+  "collection": "collection",
+  "key": "key2",
+  "value": {"jsonKey": "jsonValue"}
+}];
 const storageWriteAck = await client.writeStorageObjects(session, objects);
 console.info("Storage write was successful:", storageWriteAck);
 ```
@@ -113,14 +107,15 @@ Have a look at other sections of documentation for more code examples.
 
 ## Realtime data exchange
 
-You can connect to the server over a realtime WebSocket connection to send and receive [chat messages](social-realtime-chat.md), get [notifications][social-in-app-notifications.md], and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
+You can connect to the server over a realtime WebSocket connection to send and receive [chat messages](social-realtime-chat.md), get [notifications](social-in-app-notifications.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
 
 You first need to create a realtime socket to the server:
 
 ```js
 const useSSL = false;
 const verboseLogging = false;
-const createStatus = false; // Used to tell the server to send status presence updates to other clients
+// Send presence events to subscribed users.
+const createStatus = false;
 const socket = client.createSocket(useSSL, verboseLogging);
 var session = ""; // obtained by authentication.
 session = await socket.connect(session, createStatus);
@@ -140,7 +135,6 @@ var channel = await socket.send({ channel_join: {
   persistence: false,
   hidden: false
 } });
-
 console.info("Successfully joined channel:", channel);
 
 const messageAck = await socket.send({ channel_message_send: {
@@ -161,31 +155,31 @@ socket.ondisconnect = (event) => {
   console.info("Disconnected from the server. Event:", event);
 };
 socket.onnotification = (notification) => {
-  console.info("Recieved a live notification:", notification);
+  console.info("Received notification:", notification);
 };
 socket.onchannelpresence = (presence) => {
-  console.info("Recieved a presence update:", presence);
+  console.info("Received presence update:", presence);
 };
 socket.onchannelmessage = (message) => {
-  console.info("Recieved a new chat message:", message);
+  console.info("Received new chat message:", message);
 };
 socket.onmatchdata = (matchdata) => {
-  console.info("Recieved a match data: %o", matchdata);
+  console.info("Received match data: %o", matchdata);
 };
 socket.onmatchpresence = (matchpresence) => {
-  console.info("Recieved a match presence update:", matchpresence);
+  console.info("Received match presence update:", matchpresence);
 };
-socket.onmatchmakermatched(matchmakerMatched) {
-  console.info("Recieved a matchmaker update:", matchmakerMatched);
+socket.onmatchmakermatched = (matchmakerMatched) => {
+  console.info("Received matchmaker update:", matchmakerMatched);
 };
-socket.onstatuspresence(statusPresence) {
-  console.info("Recieved a status presence update:", statusPresence);
+socket.onstatuspresence = (statusPresence) => {
+  console.info("Received status presence update:", statusPresence);
 };
-socket.onstreampresence(streamPresence) {
-  console.info("Recieved a stream presence update:", streamPresence);
+socket.onstreampresence = (streamPresence) => {
+  console.info("Received stream presence update:", streamPresence);
 };
 socket.onstreamdata = (streamdata) => {
-  console.info("Recieved a stream data:", streamdata);
+  console.info("Received stream data:", streamdata);
 };
 ```
 
@@ -246,7 +240,7 @@ async function getSessionFromStorage() {
     return Promise.resolve(localStorage.getItem("nakamaToken"));
   } else {
     try {
-      // We are assuming that you are using React Native...
+      // Example assumes you use React Native.
       return AsyncStorage.getItem('@MyApp:nakamaToken');
     } catch(e) {
       console.log("Could not fetch data, error: %o", error);

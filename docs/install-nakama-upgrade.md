@@ -70,3 +70,48 @@ nakama migrate up
 ```shell
 sudo systemctl start nakama
 ```
+
+## Upgrade from Nakama 1
+
+Nakama 2 is not backwards compatible with Nakama 1 due to database schema changes and wire protocol changes. This means you'll need to manually upgrade the database before you can run Nakama 2.
+
+!!! warning "Beware. Backup your data now!"
+    The following commands assumes that you have already backed up your data and understand that you'll need to migrate your data back into the database manually yourself after the upgrade procedure is completed.
+
+### Docker-compose
+
+If you've used Nakama 1 with Docker Compose then you'll need to delete the database volume and start afresh.
+
+This will remove the Docker storage volumes which contain the database files and you can start the servers with Docker and a new database.
+
+```sh
+docker-compose -f ./docker-compose.yml down -v
+```
+
+Follow this [guide to continue](install-docker-quickstart.md#using-docker-compose).
+
+### Docker
+
+If you've used Nakama 1 using a Docker container then you'll need to delete the database volume and start again:
+
+```sh
+docker volume ls
+```
+
+Find the relevant volume and delete the database volume. This will delete all database files - tables and records.
+
+```
+docker volume rm <volumename>
+```
+
+Follow this [guide to continue](install-start-server.md).
+
+### Binaries
+
+You'll need to connect to the database directly and issue the following command:
+
+```sh
+cockroach sql --insecure -e "DROP DATABASE nakama CASCADE;"
+```
+
+Follow this [guide to continue](install-start-server.md).

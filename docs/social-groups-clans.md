@@ -40,18 +40,13 @@ foreach (var g in result.Groups)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var message = new NGroupsListMessage.Builder()
-    .OrderByAsc(true)
-    .FilterByLang("en")
-    .Build();
-client.Send(message, (INResultSet<INGroup> list) => {
-  foreach (var group in list.Results) {
-    Debug.LogFormat("Group: name '{0}' id '{1}'.", group.Name, group.Id);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+// Filter for group names which start with "heroes"
+const string nameFilter = "heroes%";
+var result = await client.ListGroupsAsync(session, nameFilter, 20);
+foreach (var g in result.Groups)
+{
+  Debug.LogFormat("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -107,29 +102,18 @@ if (result.Cursor != null)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var errorHandler = delegate(INError err) {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-};
-
-var messageBuilder = new NGroupsListMessage.Builder()
-    .OrderByAsc(true)
-    .FilterByLang("en");
-    .PageLimit(100);
-
-client.Send(messageBuilder.Build(), (INResultSet<INGroup> list) => {
-  // Lets get the next page of results.
-  INCursor cursor = list.Cursor;
-  if (cursor != null && list.Results.Count > 0) {
-    var message = messageBuilder.Cursor(cursor).Build();
-
-    client.Send(message, (INResultSet<INGroup> nextList) => {
-      foreach (var group in nextList.Results) {
-        Debug.LogFormat("Group: name '{0}' id '{1}'.", group.Name, group.Id);
-      }
-    }, errorHandler);
+// Filter for group names which start with "heroes"
+const string nameFilter = "heroes%";
+var result = await client.ListGroupsAsync(session, nameFilter, 20);
+// If there are more results get next page.
+if (result.Cursor != null)
+{
+  result = await client.ListGroupsAsync(session, nameFilter, 20, result.Cursor);
+  foreach (var g in result.Groups)
+  {
+    Debug.LogFormat("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
   }
-}, errorHandler);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -187,14 +171,9 @@ System.Console.WriteLine("Sent group join request '{0}'", groupid);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-var message = NGroupJoinMessage.Default(groupId);
-client.Send(message, (bool done) => {
-  Debug.Log("Requested to join group.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string groupid = "<group id>";
+await client.JoinGroupAsync(session, groupid);
+Debug.LogFormat("Sent group join request '{0}'", groupid);
 ```
 
 ```swift fct_label="Swift"
@@ -249,18 +228,13 @@ foreach (var ug in result.UserGroups)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var message = NGroupsSelfListMessage.Default();
-client.Send(message, (INResultSet<INGroupSelf> list) => {
-  foreach (var group in list.Results) {
-    Debug.LogFormat("Group: name '{0}' id '{1}'.", group.Name, group.Id);
-    // group.State is one of: Admin, Member, or Join.
-    GroupState state = group.State;
-    Debug.LogFormat("Group's state is '{0}'.", state);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string userid = "<user id>";
+var result = await client.ListUserGroupsAsync(session userid);
+foreach (var ug in result.UserGroups)
+{
+  var g = ug.Group;
+  Debug.LogFormat("Group '{0}' role '{1}'", g.Id, ug.State);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -311,19 +285,13 @@ foreach (var ug in result.UserGroups)
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-var message = NGroupUsersListMessage.Default(groupId);
-client.Send(message, (INResultSet<INGroupUser> list) => {
-  foreach (var member in list.Results) {
-    Debug.LogFormat("Member id '{0}' with name '{1}'.", member.Id, member.Fullname);
-    // member.State is one of: Admin, Member, or Join.
-    UserState state = member.State;
-    Debug.LogFormat("Has handle '{0}' with state '{1}'.", member.Handle, state);
-  }
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string groupid = "<group id>";
+var result = await client.ListGroupUsersAsync(session userid);
+foreach (var ug in result.UserGroups)
+{
+  var g = ug.Group;
+  Debug.LogFormat("group '{0}' role '{1}'", g.Id, ug.State);
+}
 ```
 
 ```swift fct_label="Swift"
@@ -384,21 +352,10 @@ System.Console.WriteLine("New group '{0}'", group.Id);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-var metadata = "{'my_custom_field': 'some value'}";
-var message = new NGroupCreateMessage.Builder("pizza-lovers")
-    .Description("pizza lovers, pineapple haters")
-    .Lang("en_US")
-    .Private(true)
-    .AvatarUrl("url://somelink")
-    .Metadata(metadata)
-    .Build();
-
-client.Send(message, (INGroup group) => {
-  Debug.LogFormat("New group: name '{0}' id '{1}'.", group.Name, group.Id);
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string name = "pizza-lovers";
+const string desc = "pizza lovers, pineapple haters";
+var group = await client.CreateGroupAsync(session, name, desc);
+Debug.LogFormat("New group '{0}'", group.Id);
 ```
 
 ```swift fct_label="Swift"
@@ -487,16 +444,10 @@ System.Console.WriteLine("Updated group '{0}'", group.Id);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-var message = new NGroupUpdateMessage.Builder(groupId)
-    .Description("I was only kidding. Basil sauce ftw!")
-    .Build();
-client.Send(message, (bool done) => {
-  Debug.Log("Successfully updated group.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string groupid = "<group id>";
+const string desc = "I was only kidding. Basil sauce ftw!";
+var group = await client.UpdateGroupAsync(session, groupid, null, desc);
+Console.LogFormat("Updated group '{0}'", group.Id);
 ```
 
 ```swift fct_label="Swift"
@@ -549,19 +500,8 @@ await client.LeaveGroupAsync(session, groupid);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-var message = NGroupLeaveMessage.Default(groupId);
-client.Send(message, (bool done) => {
-  Debug.Log ("Left the group.");
-}, (INError err) => {
-  if (err.Code == ErrorCode.GroupLastAdmin) {
-    // Must promote another admin before user can leave group.
-    Debug.Log("Unable to leave as last admin.");
-  } else {
-    Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-  }
-});
+const string groupid = "<group id>";
+await client.LeaveGroupAsync(session, groupid);
 ```
 
 ```swift fct_label="Swift"
@@ -622,15 +562,9 @@ await client.AddGroupUsersAsync(session, groupid, userIds);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-string userId = "<user id>";
-var message = NGroupAddUserMessage.Default(groupId, userId);
-client.Send(message, (bool done) => {
-  Debug.Log("Added user to group.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string groupid = "<group id>";
+var userIds = new[] {"<user id>"};
+await client.AddGroupUsersAsync(session, groupid, userIds);
 ```
 
 ```swift fct_label="Swift"
@@ -690,15 +624,9 @@ await client.PromoteGroupUsersAsync(session, groupid, userIds);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-string userId = "<user id>";
-var message = NGroupPromoteUserMessage.Default(groupId, userId);
-client.Send(message, (bool done) => {
-  Debug.Log("Promoted user as an admin.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string groupid = "<group id>";
+var userIds = new[] {"<user id>"};
+await client.PromoteGroupUsersAsync(session, groupid, userIds);
 ```
 
 ```swift fct_label="Swift"
@@ -756,15 +684,9 @@ await client.KickGroupUsersAsync(session, groupid, userIds);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-string userId = "<user id>";
-var message = NGroupKickUserMessage.Default(groupId, userId);
-client.Send(message, (bool done) => {
-  Debug.Log ("Kicked user from group.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string groupid = "<group id>";
+var userIds = new[] {"<user id>"};
+await client.KickGroupUsersAsync(session, groupid, userIds);
 ```
 
 ```swift fct_label="Swift"
@@ -818,14 +740,8 @@ await client.DeleteGroupAsync(session, groupid);
 ```
 
 ```csharp fct_label="Unity"
-// Requires Nakama 1.x
-string groupId = "<group id>";
-var message = NGroupRemoveMessage.Default(groupId);
-client.Send(message, (bool done) => {
-  Debug.Log("The group has been removed.");
-}, (INError err) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
+const string groupid = "<group id>";
+await client.DeleteGroupAsync(session, groupid);
 ```
 
 ```swift fct_label="Swift"

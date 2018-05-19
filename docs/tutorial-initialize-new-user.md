@@ -12,25 +12,18 @@ The simplest approach is to write records in the success callback for the regist
 This code demonstrates how to do it with a condensed example. In real application code you'll break up the [authentication](authentication.md) and connect logic from the storage writes based on how you manage connect and reconnect.
 
 ```csharp fct_label="Unity"
-var errorHandler = delegate(INError err) {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+var deviceid = SystemInfo.deviceUniqueIdentifier;
+var session = await client.AuthenticateDeviceAsync($"{deviceid}");
+
+var json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
+var object = new WriteStorageObject = {
+  "collection" = "wallets",
+  "key" = "mywallet",
+  "value = json
 };
 
-var id = SystemInfo.deviceUniqueIdentifier;
-// Use one of the user register messages.
-var authMessage = NAuthenticateMessage.Device(id);
-client.Register(authMessage, (INSession session) => {
-  client.Connect(session, (bool done) => {
-    var json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
-
-    var message = new NStorageWriteMessage.Builder()
-        .Write("mygame", "wallets", "mywallet", json)
-        .Build();
-    client.Send(message, (INResultSet<INStorageKey> list) => {
-      Debug.Log("Successfully setup new user's records.");
-    }, errorHandler);
-  });
-}, errorHandler);
+const storageWriteAck = await client.WriteStorageObjectsAsync(session, objects);
+Debug.Log("Successfully setup new user's records.");
 ```
 
 This code has tradeoffs which should be noted. A disconnect can happen before the records are written to storage. This may leave the setup of the user incomplete and the application in a bad state.
