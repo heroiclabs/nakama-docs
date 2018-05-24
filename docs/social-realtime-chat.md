@@ -30,14 +30,14 @@ Users can opt to hide their channel presence when connecting, so they will not g
 
 A user joins a chat channel to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 socket.onchannelmessage = (message) => {
   console.info("Received a message on channel:", message.channel_id);
   console.log("Message content: %@.", message.data);
 };
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -58,13 +58,13 @@ In group chat a user will receive other messages from the server. These messages
 
 You can identify event messages from chat messages by the message "Type".
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 if (message.code != 0) {
   console.info("Received message with code:", message.code);
 };
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -105,19 +105,18 @@ To send messages to other users a user must join the chat channel they want to c
 
 A room is created dynamically for users to chat. A room has a name and will be setup on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a [storage record](storage-collections.md).
 
-```js fct_label="Javascript"
-const roomname = "Room-Name";
-
-const channel = await socket.send({ channel_join: {
+```js fct_label="JavaScript"
+const roomname = "MarvelMovieFans";
+const response = await socket.send({ channel_join: {
     type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
     target: roomname,
     persistence: true,
     hidden: false
 } });
-console.info("You can now send messages to channel id:", channel.id);
+console.info("You can now send messages to channel id:", response.channel.id);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -151,18 +150,18 @@ A group chat can only be joined by a user who is a member of the [group](social-
 
 A group ID is needed when a user joins group chat and can be [listed by the user](social-groups-clans.md#list-groups).
 
-```js fct_label="Javascript"
-const groupId = group.id;
-const channel = await socket.send({ channel_join: {
+```js fct_label="JavaScript"
+const groupId = "<group id>";
+const response = await socket.send({ channel_join: {
     type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
     target: groupId,
     persistence: true,
     hidden: false
 } });
-console.info("You can now send messages to channel id:", channel.id);
+console.info("You can now send messages to channel id:", response.channel.id);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -196,18 +195,18 @@ A user can direct message another user by ID. Each user will not receive message
 
 A user will receive an [in-app notification](social-in-app-notifications.md) when a request to chat has been received.
 
-```js fct_label="Javascript"
-const userId = user.id;
-const channel = await socket.send({ channel_join: {
+```js fct_label="JavaScript"
+const userId = "<user id>";
+const response = await socket.send({ channel_join: {
     type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
     target: userId,
     persistence: true,
     hidden: false
 } });
-console.info("You can now send messages to channel id:", channel.id);
+console.info("You can now send messages to channel id:", response.channel.id);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -246,9 +245,8 @@ The user who [joins a chat channel](#join-chat) receives an initial presence lis
 !!! Summary
     A list of all online users is received when a user joins a chat channel you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var onlineUsers = [];
-
 socket.onchannelpresence = (presences) => {
   // Remove all users who left.
   onlineUsers = onlineUsers.filter((user) => {
@@ -258,8 +256,8 @@ socket.onchannelpresence = (presences) => {
   onlineUsers.concat(presences.join);
 };
 
-const roomname = "Room-Name";
-const channel = await socket.send({ channel_join: {
+const roomname = "PizzaFans";
+const response = await socket.send({ channel_join: {
     type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
     target: roomname,
     persistence: true,
@@ -267,14 +265,14 @@ const channel = await socket.send({ channel_join: {
 } });
 
 // Setup initial online user list.
-onlineUsers.concat(channel.presences);
+onlineUsers.concat(response.channel.presences);
 // Remove your own user from list.
 onlineUsers = onlineUsers.filter((user) => {
   return user != channel.self;
 });
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -318,17 +316,16 @@ When a user has [joined a chat channel](#join-chat) its ID can be used to send m
 
 Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.
 
-```js fct_label="Javascript"
-var channelId = ""; // A channel ID obtained previously from channel.id
+```js fct_label="JavaScript"
+var channelId = "<channel id>";
 var data = { "some": "data" };
-
 const messageAck = await socket.send({ channel_message_send: {
     channel_id: channelId,
     content: data
 } });
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -355,15 +352,14 @@ client.send(message: message).then { ack in
 
 A user can leave a chat channel to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.
 
-```js fct_label="Javascript"
-var channelId = ""; // A channel ID obtained previously from channel.id
-
+```js fct_label="JavaScript"
+var channelId = "<channel id>";
 await socket.send({ channel_leave: {
   channel_id: channelId
 } });
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 // Updated example TBD
 ```
 
@@ -398,9 +394,8 @@ curl http://127.0.0.1:7350/v2/channel?channel_id=<channelId> \
   -H 'authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
-const channelId = ""; // A channel ID obtained previously from channel.id
-
+```js fct_label="JavaScript"
+const channelId = "<channel id>";
 const result = await client.listChannelMessages(session, channelId, 10);
 result.messages.forEach((message) => {
   console.log("Message has id %o and content %o", message.message_id, message.data);
@@ -408,7 +403,7 @@ result.messages.forEach((message) => {
 console.info("Get the next page of messages with the cursor:", result.next_cursor);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 var channelId = "roomname";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
@@ -460,10 +455,9 @@ curl "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="Javascript"
-var channelId = ""; // A channel ID obtained previously from channel.id
-var forward = true; // List from oldest message to newest.
-
+```js fct_label="JavaScript"
+var channelId = "<channel id>";
+var forward = true;
 var result = await client.listChannelMessages(session, channelId, 10, forward);
 result.messages.forEach((message) => {
   console.log("Message has id %o and content %o", message.message_id, message.data);
@@ -478,7 +472,7 @@ if (result.next_cursor) {
 };
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 var channelId = "roomname";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
@@ -486,7 +480,7 @@ foreach (var m in result.Messages)
   System.Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
 }
 
-if (result.NextCursor != null) {
+if (!string.IsNullOrEmpty(result.NextCursor)) {
   // Get the next 10 messages.
   var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
   result.messages.forEach((message) => {
@@ -503,7 +497,7 @@ foreach (var m in result.Messages)
   Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
 }
 
-if (result.NextCursor != null) {
+if (!string.IsNullOrEmpty(result.NextCursor)) {
   // Get the next 10 messages.
   var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
   result.messages.forEach((message) => {
