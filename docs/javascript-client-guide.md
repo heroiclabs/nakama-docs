@@ -135,10 +135,10 @@ var response = await socket.send({ channel_join: {
   persistence: false,
   hidden: false
 } });
-console.info("Successfully joined channel:", response);
+console.info("Successfully joined channel:", response.channel.id);
 
 const messageAck = await socket.send({ channel_message_send: {
-  channel_id: response.id,
+  channel_id: response.channel.id,
   content: {"message": "Pineapple doesn't belong on a pizza!"}
 } });
 console.info("Successfully sent chat message:", messageAck);
