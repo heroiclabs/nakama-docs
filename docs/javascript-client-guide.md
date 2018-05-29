@@ -129,16 +129,16 @@ socket.onchannelmessage = (channelMessage) => {
 };
 
 const channelId = "pineapple-pizza-lovers-room";
-var channel = await socket.send({ channel_join: {
+var response = await socket.send({ channel_join: {
   type: 1, // 1 = room, 2 = Direct Message, 3 = Group
   target: channelId,
   persistence: false,
   hidden: false
 } });
-console.info("Successfully joined channel:", channel);
+console.info("Successfully joined channel:", response);
 
 const messageAck = await socket.send({ channel_message_send: {
-  channel_id: channel.id,
+  channel_id: response.id,
   content: {"message": "Pineapple doesn't belong on a pizza!"}
 } });
 console.info("Successfully sent chat message:", messageAck);
