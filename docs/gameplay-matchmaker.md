@@ -162,7 +162,7 @@ To join a match after the event handler has notified the user their criteria is 
 
 ```js fct_label="JavaScript"
 const message = { match_join: {
-  match_id: "<matchmakertoken>"
+  token: "<matchmakertoken>"
 }};
 socket.send(message);
 ```
