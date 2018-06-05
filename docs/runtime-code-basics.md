@@ -165,7 +165,7 @@ Sometimes it's useful to create HTTP REST handlers which can be used by web serv
 local nk = require("nakama")
 
 local function http_handler(context, payload)
-  local message = nk.json_encode(payload)
+  local message = nk.json_decode(payload)
   nk.logger_info(("Message: %q"):format(message))
   return nk.json_encode({["context"] = context})
 end
