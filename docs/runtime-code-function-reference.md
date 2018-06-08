@@ -128,13 +128,12 @@ _Parameters_
 
 _Returns_
 
-The session token created for this user.
+The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
 _Example_
 
 ```lua
-local token = nk.authenticate_custom("48656C6C6F20776F726C64", "username", true)
-print(token)
+local user_id, username, created = nk.authenticate_custom("48656C6C6F20776F726C64", "username", true)
 ```
 
 ---
@@ -153,13 +152,12 @@ _Parameters_
 
 _Returns_
 
-The session token created for this user.
+The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
 _Example_
 
 ```lua
-local token = nk.authenticate_device("48656C6C6F20776F726C64", "username", true)
-print(token)
+local user_id, username, created = nk.authenticate_device("48656C6C6F20776F726C64", "username", true)
 ```
 
 ---
@@ -179,13 +177,12 @@ _Parameters_
 
 _Returns_
 
-The session token created for this user.
+The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
 _Example_
 
 ```lua
-local token = nk.authenticate_email("email@example.com", "48656C6C6F20776F726C64", "username", true)
-print(token)
+local user_id, username, created = nk.authenticate_email("email@example.com", "48656C6C6F20776F726C64", "username", true)
 ```
 
 ---
@@ -205,13 +202,12 @@ _Parameters_
 
 _Returns_
 
-The session token created for this user.
+The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
 _Example_
 
 ```lua
-local token = nk.authenticate_facebook("some-oauth-access-token", true, "username", true)
-print(token)
+local user_id, username, created = nk.authenticate_facebook("some-oauth-access-token", true, "username", true)
 ```
 
 ---
@@ -235,7 +231,7 @@ _Parameters_
 
 _Returns_
 
-The session token created for this user.
+The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
 ---
 
@@ -253,13 +249,12 @@ _Parameters_
 
 _Returns_
 
-The session token created for this user.
+The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
 _Example_
 
 ```lua
-local token = nk.authenticate_google("some-oauth-access-token", "username", true)
-print(token)
+local user_id, username, created = nk.authenticate_google("some-oauth-access-token", "username", true)
 ```
 
 ---
@@ -278,13 +273,12 @@ _Parameters_
 
 _Returns_
 
-The session token created for this user.
+The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
 _Example_
 
 ```lua
-local token = nk.authenticate_steam("steam-token", "username", true)
-print(token)
+local user_id, username, created = nk.authenticate_steam("steam-token", "username", true)
 ```
 
 ---
@@ -301,15 +295,16 @@ _Parameters_
 | ----- | ---- | ----------- |
 | user_id | string | User ID you'd like to use to generated the token. |
 | username | string | Username information to embed in the token. This is mandatory. |
+| expires_at | number | Number of seconds the token should be valid for. Optional, defaults to [server configured expiry time](install-configuration.md#session).
 
 _Returns_
 
-The session token created for this user.
+The session token created for the given user details.
 
 _Example_
 
 ```lua
-local token = nk.authenticate_token_generate("some-unique-user", "username")
+local token = nk.authenticate_token_generate("user_id", "username")
 print(token)
 ```
 
