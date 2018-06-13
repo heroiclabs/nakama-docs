@@ -306,7 +306,7 @@ end
 nk.register_rpc(get_pokemon, "get_pokemon")
 ```
 
-We can make now make an RPC call for a pokemon from a client.
+We can now make an RPC call for a pokemon from a client.
 
 ```sh fct_label="cURL"
 curl http://127.0.0.1:7350/v2/rpc/get_pokemon \
