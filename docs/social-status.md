@@ -15,11 +15,11 @@ socket.send({ status_update: { status: "Hello everyone!" } });
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+await socket.UpdateStatusAsync("Hello everyone!");
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+await socket.UpdateStatusAsync("Hello everyone!");
 ```
 
 The status can be set and updated as often as needed with this operation.
@@ -36,11 +36,11 @@ socket.send({ status_update: {} });
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+await socket.UpdateStatusAsync(null);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+await socket.UpdateStatusAsync(null);
 ```
 
 ## Receive status updates
@@ -59,11 +59,35 @@ socket.onstatuspresence = (statuspresence) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+socket.OnStatusPresence += (_, presence) =>
+{
+  console.log("Received presence event for stream: %o", presence.Stream.Subject)
+  foreach (var join in presence.Joins)
+  {
+    Console.WriteLine("User id '{0}' has status '{1}'.", join.UserId, join.Status);
+  }
+
+  foreach (var leave in presence.Leaves)
+  {
+    Console.WriteLine("User id '{0}' no longer has status '{1}'.", leave.UserId, leave.Status);
+  }
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnStatusPresence += (_, presence) =>
+{
+  console.log("Received presence event for stream: %o", presence.Stream.Subject)
+  foreach (var join in presence.Joins)
+  {
+    Debug.LogFormat("User id '{0}' has status '{1}'.", join.UserId, join.Status);
+  }
+
+  foreach (var leave in presence.Leaves)
+  {
+    Debug.LogFormat("User id '{0}' no longer has status '{1}'.", leave.UserId, leave.Status);
+  }
+};
 ```
 
 If a user is disconnecs or appears offline they will leave their previous status, but there will be no corresponding new status.
@@ -82,11 +106,13 @@ status.presences.forEach((presence) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var userId = "some-user-id";
+await socket.FollowUsersAsync(new[] {userId});
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var userId = "some-user-id";
+await socket.FollowUsersAsync(new[] {userId});
 ```
 
 !!! Note
@@ -101,9 +127,11 @@ socket.send({ status_unfollow: { user_ids: ["user ID to unfollow"] } });
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var userId = "some-user-id";
+await socket.UnfollowUsersAsync(new[] {userId});
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var userId = "some-user-id";
+await socket.UnfollowUsersAsync(new[] {userId});
 ```

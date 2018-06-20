@@ -16,11 +16,13 @@ console.log("Created match with ID:", match.id);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var match = await socket.CreateMatchAsync();
+Console.WriteLine("Created match with ID '{0}'.", match.Id);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var match = await socket.CreateMatchAsync();
+Debug.LogFormat("Created match with ID '{0}'.", match.Id);
 ```
 
 A user can [leave a match](#leave-a-match) at any point which will notify all other users.
@@ -45,11 +47,21 @@ connectedOpponents.forEach((opponent) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var matchId = "some-match-id";
+var match = await socket.JoinMatchAsync(matchId);
+foreach (var presence in match.presences)
+{
+  Console.WriteLine("User id '{0}' name '{1}'.", presence.UserId, join.Username);
+}
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var matchId = "some-match-id";
+var match = await socket.JoinMatchAsync(matchId);
+foreach (var presence in match.presences)
+{
+  Debug.LogFormat("User id '{0}' name '{1}'.", presence.UserId, join.Username);
+}
 ```
 
 The list of match opponents returned in the success callback might not include all users. It contains users who are connected to the match so far.
@@ -78,11 +90,57 @@ client.onmatchpresence = (presences) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var currentOpponents = new List<IUserPresence>();
+socket.OnMatchPresence += (_, presence) =>
+{
+  var connectedOpponents = new List<IUserPresence>(presence.Joins);
+  foreach (var current in currentOpponents)
+  {
+
+    // Remove all users who left.
+    var leftMatch = false;
+    foreach (var leave in presence.Leaves)
+    {
+      if (current.UserId.Equals(leave.UserId)) {
+        leftMatch = true
+        break;
+      }
+    }
+
+    if (!leftMatch) {
+      connectedOpponents.Add(current)
+    }
+  }
+  // Set connected opponents as current ones.
+  currentOpponents = connectedOpponents;
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var currentOpponents = new List<IUserPresence>();
+socket.OnMatchPresence += (_, presence) =>
+{
+  var connectedOpponents = new List<IUserPresence>(presence.Joins);
+  foreach (var current in currentOpponents)
+  {
+
+    // Remove all users who left.
+    var leftMatch = false;
+    foreach (var leave in presence.Leaves)
+    {
+      if (current.UserId.Equals(leave.UserId)) {
+        leftMatch = true
+        break;
+      }
+    }
+
+    if (!leftMatch) {
+      connectedOpponents.Add(current)
+    }
+  }
+  // Set connected opponents as current ones.
+  currentOpponents = connectedOpponents;
+};
 ```
 
 No server updates are sent if there are no changes to the presence list.
@@ -103,11 +161,17 @@ socket.send({ match_data_send: { match_id: id, op_code: opCode, data: payload } 
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var id = "<matchid>";
+var opCode = 1;
+var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
+socket.SendMatchState(id, opCode, newState);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var id = "<matchid>";
+var opCode = 1;
+var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
+socket.SendMatchState(id, opCode, newState);
 ```
 
 ## Receive data messages
@@ -118,7 +182,7 @@ A client can add a callback for incoming match data messages. This should be don
     The server delivers data in the order it processes data messages from clients.
 
 ```js fct_label="Javascript"
-client.onmatchdata = (result) => {
+socket.onmatchdata = (result) => {
   var content = result.data;
   switch (result.op_code) {
     case 101:
@@ -131,11 +195,29 @@ client.onmatchdata = (result) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+socket.OnMatchState = (_, state) => {
+  var content = Encoding.UTF8.GetString(state.State);
+  switch (state.OpCode) {
+    case 101:
+      Console.WriteLine("A custom opcode.");
+      break;
+    default:
+      Console.WriteLine("User {0} sent {1}", state.UserPresence.Username, content);
+  }
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnMatchState = (_, state) => {
+  var content = Encoding.UTF8.GetString(state.State);
+  switch (state.OpCode) {
+    case 101:
+      Debug.Log("A custom opcode.");
+      break;
+    default:
+      Debug.LogFormat("User {0} sent {1}", state.UserPresence.Username, content);
+  }
+};
 ```
 
 ## Leave a match
@@ -148,11 +230,13 @@ socket.send({ match_leave: {match_id: id}});
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var matchId = "some-match-id";
+socket.LeaveMatchAsync(matchId);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var matchId = "some-match-id";
+socket.LeaveMatchAsync(matchId);
 ```
 
 !!! Note

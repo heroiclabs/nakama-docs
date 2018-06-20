@@ -42,31 +42,33 @@ var ticket = await socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
-var stringProperties = new Dictionary<string, string>(){
+var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
-var numericProperties = new Dictionary<string, int>(){
+var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
 
-var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+var matchmakerTicket = await socket.AddMatchmakerAsync(
+    query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ```csharp fct_label="Unity"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
-var stringProperties = new Dictionary<string, string>(){
+var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
-var numericProperties = new Dictionary<string, int>(){
+var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
 
-var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+var matchmakerTicket = await socket.AddMatchmakerAsync(
+    query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ### Query
@@ -107,31 +109,33 @@ var ticket = await socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10"
+var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
 var minCount = 2;
 var maxCount = 4;
-var stringProperties = new Dictionary<string, string>(){
+var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
-var numericProperties = new Dictionary<string, int>(){
+var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
 
-var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+var matchmakerTicket = await socket.AddMatchmakerAsync(
+    query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ```csharp fct_label="Unity"
-var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10"
+var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
 var minCount = 2;
 var maxCount = 4;
-var stringProperties = new Dictionary<string, string>(){
+var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
-var numericProperties = new Dictionary<string, int>(){
+var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
 
-var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+var matchmakerTicket = await socket.AddMatchmakerAsync(
+    query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 Or use the wildcard query `"*"` to ignore opponents properties and match with anyone:
@@ -152,31 +156,33 @@ var ticket = await socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
-var stringProperties = new Dictionary<string, string>(){
+var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
-var numericProperties = new Dictionary<string, int>(){
+var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
 
-var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+var matchmakerTicket = await socket.AddMatchmakerAsync(
+    query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ```csharp fct_label="Unity"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
-var stringProperties = new Dictionary<string, string>(){
+var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
-var numericProperties = new Dictionary<string, int>(){
+var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
 
-var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+var matchmakerTicket = await socket.AddMatchmakerAsync(
+    query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ### Minimum and maximum count
@@ -197,7 +203,7 @@ var ticket = await socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
 
@@ -205,7 +211,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 ```
 
 ```csharp fct_label="Unity"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
 
@@ -224,7 +230,7 @@ var ticket = await socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-var query = "*"
+var query = "*";
 var minCount = 4;
 var maxCount = 4;
 
@@ -232,7 +238,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 ```
 
 ```csharp fct_label="Unity"
-var query = "*"
+var query = "*";
 var minCount = 4;
 var maxCount = 4;
 
@@ -253,7 +259,7 @@ var ticket = await socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
 
@@ -261,7 +267,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 ```
 
 ```csharp fct_label="Unity"
-var query = "*"
+var query = "*";
 var minCount = 2;
 var maxCount = 4;
 
@@ -275,7 +281,7 @@ This ticket is used when the server notifies the client on matching success. It 
 If a user decides they no longer wish to matchmake without disconnecting they can gracefully cancel the matchmaker process by removing themselves from the pool.
 
 ```js fct_label="JavaScript"
-// `ticket` is returned by matchmaker add operations.
+// "ticket" is returned by the matchmaker.
 const message = {
   matchmaker_remove: {
     ticket: ticket
@@ -285,12 +291,12 @@ socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-// `matchmakerTicket` is returned by matchmaker add operations.
+// "matchmakerTicket" is returned by the matchmaker.
 socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```
 
 ```csharp fct_label="Unity"
-// `matchmakerTicket` is returned by matchmaker add operations.
+// "matchmakerTicket" is returned by the matchmaker.
 socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```
 
@@ -304,26 +310,29 @@ Clients should register an event handler that triggers when the server sends the
 
 ```js fct_label="JavaScript"
 socket.onmatchmakematched = (matched) => {
-  console.info("Matchmaking complete for ticket: ", matched.ticket);
-  console.info("Full list of opponents: ", matched.users);
+  console.info("Received MatchmakerMatched message: ", matched);
+  console.info("Matched opponents: ", matched.users);
 };
 ```
 
 ```csharp fct_label=".NET"
 socket.OnMatchmakerMatched += (_, matched) =>
 {
-  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
-  Debug.LogFormat("Full list of opponents: {0}", matched.Users);
+  Console.WriteLine("Received MatchmakerMatched message: {0}", matched);
+  var opponents = string.Join(",", matched.Users); // printable list.
+  Console.WriteLine("Matched opponents: {0}", opponents);
 };
 ```
 
 ```csharp fct_label="Unity"
 socket.OnMatchmakerMatched += (_, matched) =>
 {
-  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
-  Debug.LogFormat("Full list of opponents: {0}", matched.Users);
+  Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
+  var opponents = string.Join(",", matched.Users); // printable list.
+  Debug.LogFormat("Matched opponents: {0}", opponents);
 };
 ```
+
 
 ## Join a match
 
@@ -337,8 +346,7 @@ The match token is also used to prevent unwanted users from attempting to join a
 
 ```js fct_label="JavaScript"
 socket.onmatchmakematched = (matched) => {
-  console.info("Matchmaking complete for ticket: ", matched.ticket);
-
+  console.info("Received MatchmakerMatched message: ", matched);
   const message = {
     match_join: {
       token: matched.token
@@ -351,8 +359,7 @@ socket.onmatchmakematched = (matched) => {
 ```csharp fct_label=".NET"
 socket.OnMatchmakerMatched += (_, matched) =>
 {
-  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
-  
+  Console.WriteLine("Received MatchmakerMatched message: {0}", matched);
   await socket.JoinMatchAsync(matched);
 };
 ```
@@ -360,8 +367,7 @@ socket.OnMatchmakerMatched += (_, matched) =>
 ```csharp fct_label="Unity"
 socket.OnMatchmakerMatched += (_, matched) =>
 {
-  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
-  
+  Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
   await socket.JoinMatchAsync(matched);
 };
 ```

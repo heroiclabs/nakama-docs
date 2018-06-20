@@ -45,11 +45,19 @@ socket.onnotification = (notification) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+socket.OnNotification += (_, notification) =>
+{
+  Console.WriteLine("Received code '{0}' and subject '{1}'", notification.Code, notification.Subject);
+  Console.WriteLine("Received id '{0}' and content '{1}'", notification.Id, Encoding.UTF8.GetString(notification.Content));
+}
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnNotification += (_, notification) =>
+{
+  Debug.LogFormat("Received code '{0}' and subject '{1}'", notification.Code, notification.Subject);
+  Debug.LogFormat("Received id '{0}' and content '{1}'", notification.Id, Encoding.UTF8.GetString(notification.Content));
+}
 ```
 
 ```swift fct_label="Swift"

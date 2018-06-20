@@ -50,17 +50,25 @@ Clients must register an event handler to receive stream data when it's received
 
 ```js fct_label="Javascript"
 socket.onstreamdata = (streamdata) => {
-  console.log("Received data from stream: %o", streamdata.id)
+  console.log("Received data from stream: %o", streamdata.stream.subject)
   console.log("Data content: %@.", streamdata.data);
 };
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+socket.OnStreamState += (_, stream) =>
+{
+  Console.WriteLine("Received data from stream: {0}", stream.Stream.Subject)
+  Console.WriteLine("Data content: {0}", stream.State);
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnStreamState += (_, stream) =>
+{
+  Debug.LogFormat("Received data from stream: {0}", stream.Stream.Subject)
+  Debug.LogFormat("Data content: {0}", stream.State);
+};
 ```
 
 ## Receiving stream presence events
@@ -80,11 +88,35 @@ socket.onstreampresence = (streampresence) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+socket.OnStreamPresence += (_, presence) =>
+{
+  console.log("Received presence event for stream: %o", presence.Stream.Subject)
+  foreach (var join in presence.Joins)
+  {
+    Console.WriteLine("User id '{0}' name '{1}' and status '{2}'.", join.UserId, join.Username, join.Status);
+  }
+
+  foreach (var leave in presence.Leaves)
+  {
+    Console.WriteLine("User id '{0}' name '{1}' and status '{2}'.", leave.UserId, leave.Username, leave.Status);
+  }
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnStreamPresence += (_, presence) =>
+{
+  console.log("Received presence event for stream: %o", presence.Stream.Subject)
+  foreach (var join in presence.Joins)
+  {
+    Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", join.UserId, join.Username, join.Status);
+  }
+
+  foreach (var leave in presence.Leaves)
+  {
+    Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", leave.UserId, leave.Username, leave.Status);
+  }
+};
 ```
 
 !!! Tip
