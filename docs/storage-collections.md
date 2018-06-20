@@ -560,11 +560,13 @@ console.info("Successfully list objects:", objects);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var objects = await client.ListUsersStorageObjectsAsync(session, "saves", session.user_id);
+Console.WriteLine("Successfully list objects, '{0}'", objects);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var objects = await client.ListUsersStorageObjectsAsync(session, "saves", session.user_id);
+Debug.LogFormat("Successfully list objects, '{0}'", objects);
 ```
 
 ```java fct_label="Android/Java"
