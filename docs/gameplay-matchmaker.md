@@ -47,11 +47,25 @@ socket.send(message);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var query = "*"
+var minCount = 2;
+var maxCount = 2;
+var stringProperties = new Dictionary<string, string>(){
+    {"a1", "bar"}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var query = "*"
+var minCount = 2;
+var maxCount = 2;
+var stringProperties = new Dictionary<string, string>(){
+    {"a1", "bar"}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties);
 ```
 
 The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted. This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.
@@ -69,11 +83,17 @@ socket.onmatchmakematched = (matchmakermatched) => {
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+socket.OnMatchmakerMatched += (_, matched) =>
+{
+  Console.WriteLine("Received MatchmakerMatched message: {0}", matched);
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnMatchmakerMatched += (_, matched) =>
+{
+  Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
+};
 ```
 
 ## Rule-based matchmaking
@@ -144,11 +164,13 @@ socket.send(message);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var matchmakerTicket = "some-ticket";
+socket.RemoveMatchmakerAsync(matchmakerTicket));
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var matchmakerTicket = "some-ticket";
+socket.RemoveMatchmakerAsync(matchmakerTicket));
 ```
 
 The user is now removed from the matchmaker pool.
@@ -168,11 +190,13 @@ socket.send(message);
 ```
 
 ```csharp fct_label=".Net"
-// Updated example TBD
+var matchmakerToken = "some-token";
+var match = await socket.JoinMatchAsync();
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var matchmakerToken = "some-token";
+var match = await socket.JoinMatchAsync();
 ```
 
 The token makes it easy to join a match. The token enables the server to know that these users wanted to join a match and is able to create a match dynamically for them.

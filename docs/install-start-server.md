@@ -46,7 +46,7 @@ The logs output from the server will tell you:
 
 * What version of the server is started.
 * What IP address and port number the server can be reached on by clients.
-* What the address looks like to reach the developer console available with the server. The default address is [https://localhost:7352](https://localhost:7352).
+<!--* What the address looks like to reach the developer console available with the server. The default address is [https://localhost:7351](https://localhost:7351).-->
 
 !!! info "Startup messages"
     A few of the first log messages output by the server might start with "WARNING". These indicate the server is started with API keys which are default values and must be changed before you deploy in production.

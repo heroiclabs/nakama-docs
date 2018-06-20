@@ -4,11 +4,11 @@ The official Unity client handles all communication in realtime with the server.
 
 With the Nakama 2.x release we've split out the Unity client into a lower level client for .NET and a new wrapper client which will require Unity 2017 or greater.
 
-1. Nakama .NET client library: A lower level .NET library that you can use directly inside your Unity Project. This will give you complete control over sending and receiving responses from the server, updating your scene and more. You can look at the source code on the [GitHub repo](https://github.com/heroiclabs/nakama).
-2. Nakama Unity client library: A wrapper around the .NET client library that integrates more tightly into the Unity Engine, and will take of client reconnection, messag queuing and interacting with Unity lifecycle events. This is currently going through final API design and will be made available soon to the public.
+1. Nakama .NET client library: A lower level .NET library that you can use directly inside your Unity Project. This will give you complete control over sending and receiving responses from the server, updating your scene and more. You can look at the source code on the [GitHub repo](https://github.com/heroiclabs/nakama-dotnet).
+2. Nakama Unity client library: A wrapper around the .NET client library that integrates more tightly into the Unity Engine, and will take of client reconnection, message queuing and interacting with Unity lifecycle events. You can download it from [this repo](https://github.com/heroiclabs/nakama-unity).
 
 !!! info "Nakama 2.x release"
-    With the Nakama 2.x release we've split out the Unity client into a lower level client for .NET and a new wrapper which will require Unity 2017 or greater. The new Unity client is not released yet but will be announced on our [blog](https://blog.heroiclabs.com/) and [Twitter](https://twitter.com/heroicdev). In the meantime you can use the .NET client directly and is available [here](https://github.com/heroiclabs/nakama-dotnet).
+    Make sure that you download the Unity Client v2.0.0 or greater as it is compatible with Nakama 2.
 
 ## Download
 
@@ -99,13 +99,19 @@ You can connect to the server over a realtime WebSocket connection to send and r
 You first need to create a realtime socket to the server:
 
 ```csharp
-// Updated example TBD
+var socket = client.CreateWebSocket();
+await socket.ConnectAsync(session);
 ```
 
 Then proceed to join a chat channel and send a message:
 
 ```csharp
-// Updated example TBD
+socket.OnChannelMessage += (sender, chatMessage) => Debug.Log("Received message.");
+
+var channel = await socket.JoinChatAsync("myroom", ChannelType.Room);
+
+var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
+var sendAck = await socket.WriteChatMessageAsync(channel, content);
 ```
 
 You can find more information about the various chat features available [here](social-in-app-notifications.md).
@@ -115,93 +121,36 @@ You can find more information about the various chat features available [here](s
 A client socket has event listeners which are called on various events received from the server.
 
 ```csharp
-// Updated example TBD
+socket.OnStatusPresence += (_, presence) =>
+{
+  foreach (var join in presence.Joins)
+  {
+    Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", join.UserId, join.Username, join.Status);
+  }
+
+  foreach (var leave in presence.Leaves)
+  {
+    Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", leave.UserId, leave.Username, leave.Status);
+  }
+};
 ```
 
 Some events only need to be implemented for the features you want to use.
 
 | Callbacks | Description |
 | --------- | ----------- |
-| ondisconnect | Handles an event for when the client is disconnected from the server. |
-| onerror | Receives events about server errors. |
-| onnotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
-| onchannelmessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| onchannelpresence | It handles join and leave events within [chat](social-realtime-chat.md). |
-| onmatchdata | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
-| onmatchpresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
-| onmatchmakermatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
-| onstatuspresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
-| onstreampresence | Receives [stream](social-stream.md) join and leave event. |
-| onstreamdata | Receives [stream](social-stream.md) data sent by the server. |
-
-<!--
-## Main thread dispatch
-
-The client runs all callbacks on a socket thread separate to the Unity main thread.
-
-Unity engine does not let code which executes on another thread call one of it's APIs because of how it manages code execution within the game loop. This can causes errors which look something like "<SomeMethod\> can only be called from the main thread".
-
-We recommend a simple pattern which can be used to run any code which calls `UnityEngine` APIs.
-
-&nbsp;&nbsp; 1\. Add a queue to your script which manages a client.
-
-```csharp
-Queue<Action> executionQueue = new Queue<Action>(1024);
-```
-
-&nbsp;&nbsp; 2\. Add code in your `Update` method so the queued actions are run.
-
-```csharp
-for (int i = 0, l = executionQueue.Count; i < l; i++) {
-  executionQueue.Dequeue()();
-}
-```
-
-&nbsp;&nbsp; 3\. Enqueue any code which uses a `UnityEngine` API.
-
-```csharp
-client.Connect(_session, (bool done) => {
-  executionQueue.Enqueue(() => {
-    Debug.Log("Session connected.");
-    // Store session for quick reconnects.
-    PlayerPrefs.SetString("nk.session", session.AuthToken); // a UnityEngine API
-  });
-});
-```
-You can see a more advanced version of this pattern in the [full example](#full-example).
-
-
-!!! Tip
-    This code pattern is not specific to our client. It's useful for any code which executes on a separate thread with Unity engine.
-
-### Managed client
-
-If you don't care about explicit control over which callbacks are dispatched on the Unity main thread you can wrap your code in a helper class which will handle it for you. The `"NManagedClient"` acts as a proxy for all callbacks.
-
-You must call `.ExecuteActions()` in `Update` with the managed client or no callbacks will ever be run.
-
-```csharp hl_lines="14"
-using Nakama;
-using System.Collections;
-using UnityEngine;
-
-public class NakamaSessionManager : MonoBehaviour {
-  private INClient _client;
-
-  public NakamaSessionManager() {
-    var client = NClient.Default("defaultkey");
-    _client = new NManagedClient(client);
-  }
-
-  private void Update() {
-    (_client as NManagedClient).ExecuteActions(); // important!
-  }
-}
-```
-
-This makes code simpler to reason about but is slightly less performant than if you control exactly which callbacks use UnityEngine APIs and "move them" onto the main thread with an action queue.
-
--->
+| OnConnect | Receive an event when the socket connects. |
+| OnDisconnect | Handles an event for when the client is disconnected from the server. |
+| OnError | Receives events about server errors. |
+| OnNotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
+| OnChannelMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
+| OnChannelPresence | It handles join and leave events within [chat](social-realtime-chat.md). |
+| OnMatchState | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
+| OnMatchPresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
+| OnMatchmakerMatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
+| OnStatusPresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
+| OnStreamPresence | Receives [stream](social-stream.md) join and leave event. |
+| OnStreamState | Receives [stream](social-stream.md) data sent by the server. |
 
 ## Logs and errors
 
@@ -231,11 +180,8 @@ public class NakamaSessionManager : MonoBehaviour {
   private IClient _client;
   private ISession _session;
 
-  private Queue<IEnumerator> _executionQueue;
-
   public NakamaSessionManager() {
     _client = new Client("defaultkey");
-    _executionQueue = new Queue<IEnumerator>(1024);
   }
 
   private async void Awake() {
@@ -275,30 +221,9 @@ public class NakamaSessionManager : MonoBehaviour {
     Debug.LogFormat("Session: '{0}'.", session.AuthToken);
   }
 
-  private void Update() {
-    lock (_executionQueue) {
-      for (int i = 0, len = _executionQueue.Count; i < len; i++) {
-        StartCoroutine(_executionQueue.Dequeue());
-      }
-    }
-  }
+  private void Update() {}
 
   private void OnApplicationQuit() {}
-
-  private void Enqueue(Action action) {
-    lock (_executionQueue) {
-      _executionQueue.Enqueue(ActionWrapper(action));
-      if (_executionQueue.Count > 1024) {
-        Debug.LogWarning("Queued actions not consumed fast enough.");
-        _client.Disconnect();
-      }
-    }
-  }
-
-  private IEnumerator ActionWrapper(Action action) {
-    action();
-    yield return null;
-  }
 }
 ```
 

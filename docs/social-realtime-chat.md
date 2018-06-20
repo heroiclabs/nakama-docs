@@ -32,17 +32,23 @@ A user joins a chat channel to start receiving messages in realtime. Each new me
 
 ```js fct_label="JavaScript"
 socket.onchannelmessage = (message) => {
-  console.info("Received a message on channel:", message.channel_id);
-  console.log("Message content: %@.", message.data);
+  console.log("Received a message on channel: %o", message.channel_id);
+  console.log("Message content: %o.", message.content);
 };
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+socket.OnChannelMessage = (_, message) => {
+  Console.WriteLine("Received a message on channel '{0}'", message.channelId);
+  Console.WriteLine("Message content: '{1}'.", message.content);
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnChannelMessage = (_, message) => {
+  Debug.LogFormat("Received a message on channel '{0}'", message.channelId);
+  Debug.LogFormat("Message content: '{1}'.", message.content);
+};
 ```
 
 ```swift fct_label="Swift"
@@ -60,16 +66,20 @@ You can identify event messages from chat messages by the message "Type".
 
 ```js fct_label="JavaScript"
 if (message.code != 0) {
-  console.info("Received message with code:", message.code);
+  console.log("Received message with code:", message.code);
 };
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+if (message.code != 0) {
+  Console.WriteLine("Received message with code '{0}'", message.code);
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+if (message.code != 0) {
+  Debug.LogFormat("Received message with code '{0}'", message.code);
+};
 ```
 
 ```swift fct_label="Swift"
@@ -113,15 +123,23 @@ const response = await socket.send({ channel_join: {
     persistence: true,
     hidden: false
 } });
-console.info("You can now send messages to channel id:", response.channel.id);
+console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+const roomname = "MarvelMovieFans";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
+Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+const roomname = "MarvelMovieFans";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
+Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```swift fct_label="Swift"
@@ -158,15 +176,23 @@ const response = await socket.send({ channel_join: {
     persistence: true,
     hidden: false
 } });
-console.info("You can now send messages to channel id:", response.channel.id);
+console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+const groupId = "some-group-id";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
+Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+const groupId = "some-group-id";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
+Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```swift fct_label="Swift"
@@ -203,15 +229,23 @@ const response = await socket.send({ channel_join: {
     persistence: true,
     hidden: false
 } });
-console.info("You can now send messages to channel id:", response.channel.id);
+console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+const userId = "some-user-id";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
+Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+const userId = "some-user-id";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
+Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```swift fct_label="Swift"
@@ -273,11 +307,83 @@ onlineUsers = onlineUsers.filter((user) => {
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+var currentUsers = new List<IUserPresence>();
+socket.OnChannelPresence += (_, presence) =>
+{
+  var onlineUsers = new List<IUserPresence>(presence.Joins);
+  foreach (var current in currentUsers)
+  {
+    // Remove all users who left.
+    var leftChat = false;
+    foreach (var leave in presence.Leaves)
+    {
+      if (current.UserId.Equals(leave.UserId)) {
+        leftChat = true
+        break;
+      }
+    }
+
+    if (!leftMatch) {
+      onlineUsers.Add(current)
+    }
+  }
+  // Set connected opponents as current ones.
+  currentUsers = onlineUsers;
+};
+
+const roomname = "PizzaFans";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
+
+// Setup initial online user list.
+// Remove your own user from list.
+foreach (var presence in channel.Presences)
+{
+  if (!channel.Self.UserId.Equals(presence.UserId)) {
+    currentUsers.Add(presence);
+  }
+}
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var currentUsers = new List<IUserPresence>();
+socket.OnChannelPresence += (_, presence) =>
+{
+  var onlineUsers = new List<IUserPresence>(presence.Joins);
+  foreach (var current in currentUsers)
+  {
+    // Remove all users who left.
+    var leftChat = false;
+    foreach (var leave in presence.Leaves)
+    {
+      if (current.UserId.Equals(leave.UserId)) {
+        leftChat = true
+        break;
+      }
+    }
+
+    if (!leftMatch) {
+      onlineUsers.Add(current)
+    }
+  }
+  // Set connected opponents as current ones.
+  currentUsers = onlineUsers;
+};
+
+const roomname = "PizzaFans";
+const persistence = true;
+const hidden = false;
+var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
+
+// Setup initial online user list.
+// Remove your own user from list.
+foreach (var presence in channel.Presences)
+{
+  if (!channel.Self.UserId.Equals(presence.UserId)) {
+    currentUsers.Add(presence);
+  }
+}
 ```
 
 ```swift fct_label="Swift"
@@ -326,11 +432,15 @@ const messageAck = await socket.send({ channel_message_send: {
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+var channel = someChannel;
+var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
+var sendAck = await socket.WriteChatMessageAsync(channel, content);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var channel = someChannel;
+var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
+var sendAck = await socket.WriteChatMessageAsync(channel, content);
 ```
 
 ```swift fct_label="Swift"
@@ -360,11 +470,13 @@ await socket.send({ channel_leave: {
 ```
 
 ```csharp fct_label=".NET"
-// Updated example TBD
+var channel = someChannel;
+var sendAck = await socket.LeaveChatAsync(channel);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var channel = someChannel;
+var sendAck = await socket.LeaveChatAsync(channel);
 ```
 
 ```swift fct_label="Swift"
@@ -400,7 +512,7 @@ const result = await client.listChannelMessages(session, channelId, 10);
 result.messages.forEach((message) => {
   console.log("Message has id %o and content %o", message.message_id, message.data);
 });
-console.info("Get the next page of messages with the cursor:", result.next_cursor);
+console.log("Get the next page of messages with the cursor:", result.next_cursor);
 ```
 
 ```csharp fct_label=".NET"
@@ -467,7 +579,7 @@ if (result.next_cursor) {
   // Get the next 10 messages.
   var result = await client.listChannelMessages(session, channelId, 10, forward, result.next_cursor);
   result.messages.forEach((message) => {
-    console.info("Message has id %o and content %o", message.message_id, message.data);
+    console.log("Message has id %o and content %o", message.message_id, message.data);
   });
 };
 ```
