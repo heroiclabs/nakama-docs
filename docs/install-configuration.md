@@ -160,7 +160,7 @@ You can change configuration options related to each user session, such as the e
 | Parameter | Flag | Description
 | --------- | ---- | -----------
 | `encryption_key` | `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
-| `token_expiry_sec` | `session.token_expiry_sec` | Token expiry in milliseconds. Default value is 60.
+| `token_expiry_sec` | `session.token_expiry_sec` | Token expiry in seconds. Default value is 60.
 
 !!! warning "Important"
     You must change `encryption_key` before going live with your app!
@@ -279,7 +279,7 @@ socket:
 
 session:
   encryption_key: "defaultencryptionkey"
-  token_expiry_ms: 60000
+  token_expiry_sec: 60
 
 social:
   steam:

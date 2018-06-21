@@ -781,60 +781,70 @@ print(json) -- outputs '{"some": "json"}'
 
 ### leaderboards
 
-__leaderboard_create (id, sort, reset, metadata, authoritative)__
+__leaderboard_create (id, authoritative, sort, operator, reset, metadata)__
 
-Setup a new dynamic leaderboard with the specified ID and various configuration settings. The leaderboard will be created if it doesn't already exist.
+Setup a new dynamic leaderboard with the specified ID and various configuration settings. The leaderboard will be created if it doesn't already exist, otherwise its configuration will *not* be updated.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
 | id | string | The unique identifier for the new leaderboard. This is used by clients to submit scores. |
-| sort | string | The sort order for records in the leaderboard; possible values are "asc" or "desc". |
-| reset | string | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. |
-| metadata | table | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
-| authoritative | bool | Mark the leaderboard as authoritative which ensures updates can only be made via the Lua runtime. No client can submit a score directly. |
+| authoritative | bool | Mark the leaderboard as authoritative which ensures updates can only be made via the Lua runtime. No client can submit a score directly. Optional. Default false. |
+| sort | string | The sort order for records in the leaderboard; possible values are "asc" or "desc". Optional. Default "desc". |
+| operator | string | The operator that determines how scores behave when submitted; possible values are "best", "set", or "incr". Optional. Default "best". |
+| reset | string | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. Optional. |
+| metadata | table | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. Optional. |
 
 _Example_
 
 ```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local authoritative = false
+local sort = "desc"
+local operator = "best"
+local reset = "0 0 * * 1"
 local metadata = {
   weather_conditions = "rain"
 }
-local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
-nk.leaderboard_create(id, "desc", "0 0 * * 1", metadata, false)
+nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
 ```
 
 ---
 
-__leaderboard_submit_set (id, value, owner, handle, lang, location, timezone, metadata)__
+__leaderboard_delete (id)__
 
-The set operator will submit the value and replace any current value for the owner.
+Delete a leaderboard and all scores that belong to it.
 
-__leaderboard_submit_best (id, value, owner, handle, lang, location, timezone, metadata)__
+_Parameters_
 
-The best operator will check the new score is better than the current score and keep whichever value is best based on the sort order of the leaderboard. If no score exists this operator works like "set".
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the leaderboard to delete. Mandatory field. |
 
-__leaderboard_submit_incr (id, value, owner, handle, lang, location, timezone, metadata)__
+_Example_
 
-The increment operator will add the score value to the current score. If no score exists the new score will be added to 0.
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+nk.__leaderboard_delete(id)
+```
 
-__leaderboard_submit_decr (id, value, owner, handle, lang, location, timezone, metadata)__
+---
 
-The decrement operator will subtract the score value from the current score. If no score exists the new score will be subtracted from 0.
+__leaderboard_record_write (id, owner, username, score, subscore, metadata)__
+
+Use the preconfigured operator for the given leaderboard to submit a score for a particular user.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
 | id | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
-| value | number | The value to update the leaderboard with. Mandatory field. |
-| owner | string | The owner of this submission. Mandatory field. |
-| handle | string | The owner handle of this submission. Optional. |
-| lang | string | The language you want to associate with this submission. Optional. |
-| location | string | The location you want to associate with this submission. Optional. |
-| timezone | string | The timezone you want to associate with this submission. Optional. |
-| metadata | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. |
+| owner | string | The owner of this score submission. Mandatory field. |
+| username | string | The owner username of this score submission, if it's a user. Optional. |
+| score | number | The score to submit. Optional. Default 0. |
+| subscore | number | A secondary subscore parameter for the submission. Optional. Default 0. |
+| metadata | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. Optional. |
 
 _Example_
 
@@ -843,24 +853,48 @@ local metadata = {
   weather_conditions = "rain"
 }
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
-local owner_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
-local handle = "02ebb2c8"
-nk.leaderboard_submit_set(id, 10, owner_id, handle, "", "", "", metadata)
+local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+local username = "02ebb2c8"
+local score = 10
+local subscore = 0
+nk.leaderboard_record_write(id, owner, username, score, subscore, metadata)
 ```
 
 ---
 
-__leaderboard_records_list_user (id, owner, limit)__
+__leaderboard_record_delete (id, owner)__
 
-List records on the specified leaderboard, automatically paginating down to where the given user is on this leaderboard. If the user has no record on the given leaderboard will return no records.
+Remove an owner's record from a leaderboard, if one exists.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the leaderboard to delete from. Mandatory field. |
+| owner | string | The owner of the score to delete. Mandatory field. |
+
+_Example_
+
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+nk.__leaderboard_record_delete(id, owner)
+```
+
+---
+
+__leaderboard_records_list (id, owners, limit, cursor)__
+
+List records on the specified leaderboard, optionally filtering to only a subset of records by their owners. Records will be listed in the preconfigured leaderboard sort order.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
 | id | string | The unique identifier of the leaderboard to list from. Mandatory field. |
-| owner | string | The record owner to find in the leaderboard. Mandatory field. |
-| limit | number | The maximum number of records to return, from 10 to 100. Mandatory field. |
+| owners | table | Table array of owners to filter to. Optional. |
+| limit | number | The maximum number of records to return, from 10 to 100. Optional. |
+| cursor | string | A cursor used to fetch the next page when applicable. Optional. |
 
 _Returns_
 
@@ -870,41 +904,9 @@ _Example_
 
 ```lua
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
-local owner_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+local owners = {}
 local limit = 10
-local records, cursor = nk.leaderboard_records_list_user(id, owner_id, limit)
-```
-
----
-
-__leaderboard_records_list_users (id, owners, limit)__
-
-List records on the specified leaderboard, filtering to only the records owned by the given list of users. If one or more of the given users have no record on the given leaderboard they will be omitted from the results.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| id | string | The unique identifier of the leaderboard to list from. Mandatory field. |
-| owners | table | A set of owner IDs to retrieve records for. Mandatory field. |
-| limit | number | The maximum number of records to return, from 10 to 100. Mandatory field. |
-| cursor | string | A previous cursor value if paginating to the next page of results. Optional. |
-
-_Returns_
-
-A page of leaderboard records and optionally a cursor that can be used to retrieve the next page, if any.
-
-_Example_
-
-```lua
-local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
-local owners = {
-  "4c2ae592-b2a7-445e-98ec-697694478b1c",
-  "f15526e8-6cf8-49a8-b4c8-0b1e4c32a1d7"
-}
-local limit = 10
-local previous_cursor = nil
-local records, cursor = nk.leaderboard_records_list_users(id, owner_ids, limit, previous_cursor)
+local records, cursor = nk.__leaderboard_records_list(id, owners, limit)
 ```
 
 ### logger
@@ -1424,10 +1426,10 @@ A Lua table containing the result rows in the format:
 _Example_
 
 ```lua
--- Example fetching a list of handles for the 100 most recetly signed up users.
-local query = [[SELECT handle, updated_at
+-- Example fetching a list of usernames for the 100 most recetly signed up users.
+local query = [[SELECT username, create_time
                 FROM users
-                ORDER BY created_at DESC
+                ORDER BY create_time DESC
                 LIMIT 100]]
 local parameters = {}
 local rows = nk.sql_query(query, parameters)
@@ -1435,7 +1437,7 @@ local rows = nk.sql_query(query, parameters)
 -- Example of processing the rows.
 nk.logger_info("Selected " .. #rows .. " rows.")
 for i, row in ipairs(rows) do
-  nk.logger_info("User handle " .. row.handle .. " created at " .. row.created_at)
+  nk.logger_info("Username " .. row.username .. " created at " .. row.create_time)
 end
 ```
 
@@ -1471,9 +1473,9 @@ do
 end
 ```
 
-__users_get_usernames (usernames)__
+__users_get_username (usernames)__
 
-Fetch a set of users by handle.
+Fetch a set of users by their usernames.
 
 _Parameters_
 
@@ -1489,7 +1491,7 @@ _Example_
 
 ```lua
 local usernames = {"b7865e7e", "c048ba7a"}
-local users = nk.users_get_usernames(usernames)
+local users = nk.users_get_username(usernames)
 for _, u in ipairs(users)
 do
   local message = ("id: %q, displayname: %q"):format(u.id, u.display_name)

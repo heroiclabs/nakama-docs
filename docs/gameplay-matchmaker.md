@@ -1,182 +1,351 @@
 # Matchmaker
 
-In realtime and turn-based games it's important to be able to find active opponents to play against. A matchmaker system is designed to provide this kind of behavior.
+Nakama's matchmaker allows users to find opponents and teammates for matches, groups, and other activities. The matchmaker maintains a pool of users that are currently looking for opponents and places them together whenever a good match is possible.
 
-In the server we've taken the design further and decoupled how you're matched from the realtime multiplayer engine. This makes it easy to use the matchmaker system to find opponents even if the gameplay isn't realtime. It could be a casual social game where you want to find random new users to become friends with or an asynchronous PvP game where gameplay happens in a simulated battle.
+In the server we've decoupled how users are matched from the [realtime multiplayer engine](gameplay-multiplayer-realtime.md). This makes it easy to use the matchmaker system to find users even if the gameplay isn't realtime. It could be a casual social game where you want to find random new users to become friends with and chat together, or an asynchronous PvP game where gameplay happens in a simulated battle.
 
-The matchmaker receives and tracks matchmaking requests, then groups users together based on the criteria they've expressed in their properties and filters.
+The matchmaker receives and tracks matchmaking requests, then groups users together based on the criteria they've expressed in their properties and query.
 
-## Properties and filters
-
-The matchmaking system has the concept of **Properties** and **Filters**, which clients send to the server to decide how their teammates or opponents are selected.
-
-**Properties** are key-value pairs that describe the user's state in the game. Rank information, connecting region information, or selected match types are good examples of data that should be stored in Properties. When matchmaking completes these properties are visible to the matched users, so if needed you can store extra information without affecting the matchmaking process itself if it's useful to clients.
-
-These properties define information about the user. Good examples of properties are "skill rating = 150" or "player level = 20".
-
-**Filters** are criteria definitions the server will check against the properties of other users in the matchmaking pool. These determine if the user would accept being matched with others.
-
-Filters define information about how the user wants their matched users to be selected. Good examples of filters are "skill rating 100 to 200" or "player level 15 to 25" indicating the user is looking for others that have properties in the given ranges.
-
-The matchmaker can filter users using 4 different filtering criteria:
-
-- User Count: The exact number of total users required to form a match. This is a required parameter that determines when the matchmaking algorithm has found enough users to satisfy the matchmaking request.
-- Term Filter: String terms that must match. You can set this filter to match any of the supplied terms, or all the terms.
-- Numeric Range Filter: An integer filter with lowerbound and upperbound requirements. If the property value is not within the specified range, the user is filtered out.
-- Boolean check filters: A simple boolean check.
-
-A matchmaking request can have complex criteria by using a combination of these filters. Once the matchmaker is successful, the properties and filters of each matched user will be redistributed to every matched user.
+To ensure relevant results the matchmaker only searches through users that are both online and currently matchmaking themselves.
 
 !!! Tip
-    The [Rule-based matchmaking](#rule-based-matchmaking) section has details on how each filter type works and how to compose filters to achieve complex matchmaking rules.
+    Users must connect and remain online until the matchmaking process completes. If they disconnect they will be removed from the matchmaker until they try again.
 
-## Request opponents
+## Add a user to the matchmaker
 
-The server maintains a pool of users who've requested to be matched together with a specific number of opponents and each user's properties and filters if specified. Each user can add themselves to the matchmaker pool and register an event handler to be notified when enough users meet their criteria to be matched.
+To begin matchmaking users add themselves to the matchmaking pool. They remain in the pool until the matchmaker finds them matching opponents, the user cancels the process, or the user disconnects.
 
-You can send a message to add the user to the matchmaker pool.
+Each matchmaker entry is composed of optional **Properties**, a **Query**, and a **Minimum and maximum count**.
+
+!!! Tip
+    Users can submit themselves to the matchmaking pool multiple times, for example to search through multiple game modes with different rules.
+
+### Properties
+
+Properties are key-value pairs that describe the user. Rank information, connecting region information, or selected match types are good examples of data that should be stored in properties. These properties are submitted by the user when they begin the matchmaking process, and may be different each time the user matchmakes.
+
+When matchmaking completes these properties are visible to all matched users. You can store extra information without affecting the matchmaking process itself if it's useful to clients - just submit properties that aren't queried for as part of the matchmaking process.
 
 ```js fct_label="JavaScript"
 const message = { matchmaker_add: {
   min_count: 2,
-  max_count: 2,
-  query: "properties.a1:foo",
-  string_properties: {"a1": "bar"}
+  max_count: 4,
+  query: "*",
+  string_properties: {
+    region: "europe"
+  },
+  numeric_properties: {
+    rank: 8
+  }
 }};
-socket.send(message);
+var ticket = await socket.send(message);
 ```
 
-```csharp fct_label=".Net"
-// Updated example TBD
+```csharp fct_label=".NET"
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+var stringProperties = new Dictionary<string, string>(){
+  {"region", "europe"}
+};
+var numericProperties = new Dictionary<string, int>(){
+  {"rank", 8}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+var stringProperties = new Dictionary<string, string>(){
+  {"region", "europe"}
+};
+var numericProperties = new Dictionary<string, int>(){
+  {"rank", 8}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
-The message returns a ticket which can be used to cancel the matchmake attempt. A user can remove themselves from the pool if wanted. This is useful for some games where a user can cancel their action to matchmake at some later point and remove themselves being matched with other users.
+### Query
 
-Have a look at [this section](#rule-based-matchmaking) for more advanced matchmaking examples.
+The query defines how the user wants to find their opponents. Queries inspect the properties set by matchmaker users to find users eligible to be matched, or can ignore them to find any available users using the wildcard `"*"` query. A typical matchmaker query may look for opponents between given ranks, or in a particular region.
 
-### Receive matchmake results
-
-You can register an event handler which is called when the server has found opponents for the user.
+You can find opponents based on a mix of property filters with exact matches or ranges of values:
 
 ```js fct_label="JavaScript"
-socket.onmatchmakematched = (matchmakermatched) => {
-  console.info("Received matchmakermatched message:", matchmakermatched);
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "properties.region:europe properties.rank:>=5 properties.rank:<=10",
+  string_properties: {
+    region: "europe"
+  },
+  numeric_properties: {
+    rank: 8
+  }
+}};
+var ticket = await socket.send(message);
+```
+
+```csharp fct_label=".NET"
+var query = "properties.region:europe properties.rank:>=5 properties.rank:<=10"
+var minCount = 2;
+var maxCount = 4;
+var stringProperties = new Dictionary<string, string>(){
+  {"region", "europe"}
+};
+var numericProperties = new Dictionary<string, int>(){
+  {"rank", 8}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+```
+
+```csharp fct_label="Unity"
+var query = "properties.region:europe properties.rank:>=5 properties.rank:<=10"
+var minCount = 2;
+var maxCount = 4;
+var stringProperties = new Dictionary<string, string>(){
+  {"region", "europe"}
+};
+var numericProperties = new Dictionary<string, int>(){
+  {"rank", 8}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+```
+
+Or use the wildcard query `"*"` to ignore opponents properties and match with anyone:
+
+```js fct_label="JavaScript"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "*",
+  string_properties: {
+    region: "europe"
+  },
+  numeric_properties: {
+    rank: 8
+  }
+}};
+var ticket = await socket.send(message);
+```
+
+```csharp fct_label=".NET"
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+var stringProperties = new Dictionary<string, string>(){
+  {"region", "europe"}
+};
+var numericProperties = new Dictionary<string, int>(){
+  {"rank", 8}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+```
+
+```csharp fct_label="Unity"
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+var stringProperties = new Dictionary<string, string>(){
+  {"region", "europe"}
+};
+var numericProperties = new Dictionary<string, int>(){
+  {"rank", 8}
+};
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount, stringProperties, numericProperties);
+```
+
+### Minimum and maximum count
+
+Users wishing to matchmake must specify a minimum and maximum number of opponents the matchmaker must find to succeed. If there aren't enough users that match the query to satisfy the minimum count, the user remains in the pool.
+
+The minimum and maximum count include the user searching for opponents, so to find 3 other opponents the user submits a count of 4.
+
+If the counts define a range, the matchmaker will try to return the max opponents possible but will never return less than the minimum count:
+
+```js fct_label="JavaScript"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "*"
+}};
+var ticket = await socket.send(message);
+```
+
+```csharp fct_label=".NET"
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+```
+
+```csharp fct_label="Unity"
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+```
+
+To search for an exact number of opponents submit the same minimum and maximum count:
+
+```js fct_label="JavaScript"
+const message = { matchmaker_add: {
+  min_count: 4,
+  max_count: 4,
+  query: "*"
+}};
+var ticket = await socket.send(message);
+```
+
+```csharp fct_label=".NET"
+var query = "*"
+var minCount = 4;
+var maxCount = 4;
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+```
+
+```csharp fct_label="Unity"
+var query = "*"
+var minCount = 4;
+var maxCount = 4;
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+```
+
+## Matchmaker tickets
+
+Each time a user is added to the matchmaker pool they receive a ticket, a unique identifier for their entry into the pool.
+
+```js fct_label="JavaScript"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "*"
+}};
+var ticket = await socket.send(message);
+```
+
+```csharp fct_label=".NET"
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+```
+
+```csharp fct_label="Unity"
+var query = "*"
+var minCount = 2;
+var maxCount = 4;
+
+var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+```
+
+This ticket is used to notify the client when matching completes to distinguish between multiple matchmaker operations. User may also cancel the matchmaking process using the ticket.
+
+## Remove a user from the matchmaker
+
+If a user decides they no longer wish to matchmake without disconnecting they can gracefully cancel the matchmaker process by removing themselves from the pool.
+
+```js fct_label="JavaScript"
+// `ticket` is returned by matchmaker add operations.
+const message = {
+  matchmaker_remove: {
+    ticket: ticket
+  }
+}
+socket.send(message);
+```
+
+```csharp fct_label=".NET"
+// `matchmakerTicket` is returned by matchmaker add operations.
+socket.RemoveMatchmakerAsync(matchmakerTicket);
+```
+
+```csharp fct_label="Unity"
+// `matchmakerTicket` is returned by matchmaker add operations.
+socket.RemoveMatchmakerAsync(matchmakerTicket);
+```
+
+If the user has multiple entries in the matchmaker only the one identified by the ticket will be removed.
+
+## Receive matchmaker results
+
+Matchmaking is not always an instant process. Depending on the currently connected users the matchmaker may take time to complete and will return the resulting list of opponents asynchronously.
+
+Clients should register an event handler that triggers when the server sends them a matchmaker result.
+
+```js fct_label="JavaScript"
+socket.onmatchmakematched = (matched) => {
+  console.info("Matchmaking complete for ticket: ", matched.ticket);
+  console.info("Full list of opponents: ", matched.users);
 };
 ```
 
-```csharp fct_label=".Net"
-// Updated example TBD
+```csharp fct_label=".NET"
+socket.OnMatchmakerMatched += (_, matched) =>
+{
+  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
+  Debug.LogFormat("Full list of opponents: {0}", matched.Users);
+};
 ```
 
 ```csharp fct_label="Unity"
-// Updated example TBD
+socket.OnMatchmakerMatched += (_, matched) =>
+{
+  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
+  Debug.LogFormat("Full list of opponents: {0}", matched.Users);
+};
 ```
-
-## Rule-based matchmaking
-
-In the example above, only the required user count was set. This is the most loose matchmaking request that will select users randomly. Below we'll look at more complex matchmaking requests and how they are represented in Nakama.
-
-We'll use a popular car racing game as an example to demonstrate how matchmaking can be set up. In this game a player can play as a cop or a racer, and has two different ranks based on whichever character they play. The player can have a custom car with specific boosters which other players will need to know about.
-
-### Using term filters
-
-Term filters use one or more string terms as matching criteria. This is useful to match users who are all interested in certain game types, only want to play certain maps, or battle opponents with specific characteristics.
-
-```js fct_label="JavaScript"
-// Updated example TBD
-```
-
-```csharp fct_label=".Net"
-// Updated example TBD
-```
-
-```csharp fct_label="Unity"
-// Updated example TBD
-```
-
-### Using range filters
-
-Range filters operate on an inclusive lowerbound and an inclusive upperbound integer. The property should be within the two numbers for the matchmaking candidate to be considered.
-
-```js fct_label="JavaScript"
-// Updated example TBD
-```
-
-```csharp fct_label=".Net"
-// Updated example TBD
-```
-
-```csharp fct_label="Unity"
-// Updated example TBD
-```
-
-### Multi-filter matchmaking
-
-You can of course mix and match various filters to enhance the matchmaking search.
-
-```js fct_label="JavaScript"
-// Updated example TBD
-```
-
-```csharp fct_label=".Net"
-// Updated example TBD
-```
-
-```csharp fct_label="Unity"
-// Updated example TBD
-```
-
-## Cancel a request
-
-After a user has sent a message to add themselves to the matchmaker pool you'll receive a ticket which can be used to cancel the action at some later point.
-
-Users may cancel matchmake actions at any point after they've added themselves to the pool but before they've been matched. Once matching completes for the ticket it can no longer be used to cancel.
-
-```js fct_label="JavaScript"
-const message = { matchmaker_remove: {
-  ticket: "<matchmakerticket>"
-}};
-socket.send(message);
-```
-
-```csharp fct_label=".Net"
-// Updated example TBD
-```
-
-```csharp fct_label="Unity"
-// Updated example TBD
-```
-
-The user is now removed from the matchmaker pool.
-
-!!! Note "Removed on disconnect"
-    A user will automatically be removed from the matchmaker pool by the server when they disconnect.
 
 ## Join a match
 
-To join a match after the event handler has notified the user their criteria is met and they've been given opponents you can use the match token.
+It's common to use the matchmaker result event as a way to join a [realtime match](gameplay-multiplayer-realtime.md) with the matched opponents.
 
-```js fct_label="JavaScript"
-const message = { match_join: {
-  token: "<matchmakertoken>"
-}};
-socket.send(message);
-```
-
-```csharp fct_label=".Net"
-// Updated example TBD
-```
-
-```csharp fct_label="Unity"
-// Updated example TBD
-```
-
-The token makes it easy to join a match. The token enables the server to know that these users wanted to join a match and is able to create a match dynamically for them.
+Each matchmaker result event carries a token that can be used to join a match together with the matched opponents. The token enables the server to know that these users wanted to play together and will create a match dynamically for them.
 
 Tokens are short-lived and must be used to join a match as soon as possible. When a token expires it can no longer be used or refreshed.
 
-The match token is also used to prevent unwanted users from attempting to join a match they were not matched into. The rest of the multiplayer match code in the same as in the [realtime multiplayer section](gameplay-multiplayer-realtime.md).
+The match token is also used to prevent unwanted users from attempting to join a match they were not matched into. The rest of the multiplayer match code is the same as in the [realtime multiplayer section](gameplay-multiplayer-realtime.md).
+
+```js fct_label="JavaScript"
+socket.onmatchmakematched = (matched) => {
+  console.info("Matchmaking complete for ticket: ", matched.ticket);
+
+  const message = {
+    match_join: {
+      token: matched.token
+    }
+  };
+  socket.send(message);
+};
+```
+
+```csharp fct_label=".NET"
+socket.OnMatchmakerMatched += (_, matched) =>
+{
+  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
+  
+  await socket.JoinMatchAsync(matched);
+};
+```
+
+```csharp fct_label="Unity"
+socket.OnMatchmakerMatched += (_, matched) =>
+{
+  Debug.LogFormat("Matchmaking complete for ticket: {0}", matched.Ticket);
+  
+  await socket.JoinMatchAsync(matched);
+};
+```

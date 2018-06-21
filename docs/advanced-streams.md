@@ -35,7 +35,7 @@ When the server sends a message to a stream it will be delivered to all clients 
 
 Presences may be marked with an optional persistence flag. The server may observe this flag when handling messages delivered to a stream to decide wether the message data should be stored in the database.
 
-The [realtime chat feature](social-realtime-chat.md) uses this flag to decide if messages should be persisted and made available later through to clients requesting message history.
+The [realtime chat feature](social-realtime-chat.md) uses this flag to decide if messages should be persisted and made available later to clients requesting message history.
 
 ### Hidden stream members
 
