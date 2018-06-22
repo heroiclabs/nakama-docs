@@ -8,7 +8,7 @@ To start developing with Nakama, you’ll first need to install it on your devel
 ## Requirement
 There are a few things you’ll need to know or have to hand before you install Nakama:
 
-- Operating system: Windows 10 64-bit or above, MacOS 10.9 or above, or a modern Linux.
+- Operating system: Windows 7 64-bit or above, MacOS 10.9 or above, or a modern Linux.
 - Architecture: X86_64 (64bit) processor architecture
 - Dependent software: Nakama relies on [CockroachDB](https://cockroachlabs.com).
 

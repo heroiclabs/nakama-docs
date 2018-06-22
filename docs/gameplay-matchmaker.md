@@ -71,15 +71,31 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 
 ### Query
 
-The query defines how the user wants to find their opponents. Queries inspect the properties set by matchmaker users to find users eligible to be matched, or can ignore them to find any available users using the wildcard `"*"` query. A typical matchmaker query may look for opponents between given ranks, or in a particular region.
+The query defines how the user wants to find their opponents. Queries inspect the properties set by matchmaker users to find users eligible to be matched, or can ignore them to find any available users using the wildcard `*` query. A typical matchmaker query may look for opponents between given ranks, or in a particular region.
 
-You can find opponents based on a mix of property filters with exact matches or ranges of values:
+Nakama uses the [Bleve](http://www.blevesearch.com/) search and indexing engine internally to find opponents in the matchmaker pool. All of the standard [Bleve query string syntax](http://www.blevesearch.com/docs/Query-String-Query/) is accepted, see the [full documentation](http://www.blevesearch.com/docs/Query-String-Query/) for the complete query options available.
+
+!!! Tip
+    Each user's matchmaker properties are available in queries under the `properties` prefix.
+
+Queries are composed of one or more query terms, usually defined as `field:value`. By default the field **should have** the value, but this is not strictly required - this results in good matches if possible but will still accept any opponents that are available otherwise. To strictly match values define terms as `+field:value`, meaning the field **must have** the value for the opponent to match.
+
+Multiple terms in a query are separated by spaces `field1:value1 field2:value2` - `field1` **should have** `value1` **and** `field2` **should have** `value2`, but this is not strictly required. You can also mark each one as required `+field1:value1 +field2:value2` - `field1` **must have** `value1` **and** `field2` **must have** `value2` for the opponent to match.
+
+You can use the same syntax to match any value type like strings (`field:foo` - no need for quotes) and numbers (`field:5`, or `field:>=5` for ranges).
+
+See the [Bleve query string syntax](http://www.blevesearch.com/docs/Query-String-Query/) for the complete set of syntax and options available.
+
+!!! Tip
+    The simplest practical query is `*` - the matchmaker will allow any opponents to match together.
+
+You can find opponents based on a mix of property filters with exact matches or ranges of values. This example searches for opponents that **must** be in `europe` and **must** have a `rank` between 5 and 10, inclusive:
 
 ```js fct_label="JavaScript"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
-  query: "properties.region:europe properties.rank:>=5 properties.rank:<=10",
+  query: "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10",
   string_properties: {
     region: "europe"
   },
@@ -91,7 +107,7 @@ var ticket = await socket.send(message);
 ```
 
 ```csharp fct_label=".NET"
-var query = "properties.region:europe properties.rank:>=5 properties.rank:<=10"
+var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10"
 var minCount = 2;
 var maxCount = 4;
 var stringProperties = new Dictionary<string, string>(){
@@ -105,7 +121,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 ```
 
 ```csharp fct_label="Unity"
-var query = "properties.region:europe properties.rank:>=5 properties.rank:<=10"
+var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10"
 var minCount = 2;
 var maxCount = 4;
 var stringProperties = new Dictionary<string, string>(){
@@ -167,7 +183,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 
 Users wishing to matchmake must specify a minimum and maximum number of opponents the matchmaker must find to succeed. If there aren't enough users that match the query to satisfy the minimum count, the user remains in the pool.
 
-The minimum and maximum count include the user searching for opponents, so to find 3 other opponents the user submits a count of 4.
+The minimum and maximum count includes the user searching for opponents, so to find 3 other opponents the user submits a count of 4. Minimum count must be 2 or higher and the maximum count must be equal to or greater than the minimum count (`max_count >= min_count >= 2`).
 
 If the counts define a range, the matchmaker will try to return the max opponents possible but will never return less than the minimum count:
 
@@ -252,7 +268,7 @@ var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
-This ticket is used to notify the client when matching completes to distinguish between multiple matchmaker operations. User may also cancel the matchmaking process using the ticket.
+This ticket is used when the server notifies the client on matching success. It distinguishes between multiple possible matchmaker operations for the same user. The user may also cancel the matchmaking process using the ticket at any time, but only before the ticket has been fulfilled.
 
 ## Remove a user from the matchmaker
 
