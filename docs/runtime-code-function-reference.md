@@ -1438,7 +1438,7 @@ for i, row in ipairs(rows) do
   nk.logger_info("User handle " .. row.handle .. " created at " .. row.created_at)
 end
 ```
-
+!!! Note: here in row.handle, handle is the name of the column you are trying to display. And so on with "created_at"
 
 ### users
 
