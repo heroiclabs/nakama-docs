@@ -86,7 +86,7 @@ The decrypted input.
 _Example_
 
 ```lua
-nk.aes128_decrypt("48656C6C6F20776F726C64", "goldenbridge_key")
+local plaintext = nk.aes128_decrypt("48656C6C6F20776F726C64", "goldenbridge_key")
 ```
 
 ---
@@ -109,7 +109,7 @@ The encrypted input.
 _Example_
 
 ```lua
-nk.aes128_encrypt("48656C6C6F20776F726C64", "goldenbridge_key")
+local cyphertext = nk.aes128_encrypt("48656C6C6F20776F726C64", "goldenbridge_key")
 ```
 
 ### authenticate
@@ -978,6 +978,66 @@ local message = ("%q - %q"):format("hello", "world")
 nk.logger_warn(message)
 ```
 
+### match
+
+__match_create (module, params)__
+
+Create a new authoritative realtime multiplayer match running on the given runtime module name. The given `params` are passed to the match's init hook.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| module | string | The name of an available runtime module that will be responsible for the match. |
+| params | any | Any Lua value to pass to the match's init hook. Optional. |
+
+_Returns_
+
+(string) - The match ID of the newly created match. Clients can immediately use this ID to join the match.
+
+_Example_
+
+```lua
+-- Assumes you've registered a runtime module with a path of "my/match/module.lua".
+local module = "my.match.module"
+local params = { some = "data" }
+local match_id = nk.match_create(module, params)
+```
+
+---
+
+__match_list (limit, authoritative, label, min_size, max_size)__
+
+List currently running realtime multiplayer matches and optionally filter them by authoritative mode, label, and current participant count.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| limit | number | The maximum number of matches to list. Optional. Default 1. |
+| authoritative | boolean | Boolean `true` if listing should only return authoritative matches, `false` to only return relayed matches, `nil` to return both. Optional. Default `nil`. |
+| label | string | A label to filter authoritative matches by. Optional. Default `nil` meaning any label matches. |
+| min_size | number | Inclusive lower limit of current match participants. Optional. |
+| max_size | number | Inclusive upper limit of current match participants. Optional. |
+
+_Example_
+
+```lua
+-- List at most 10 matches, not authoritative, and that
+-- have between 2 and 4 players currently participating.
+local limit = 10
+local authoritative = false
+local label = nil
+local min_size = 2
+local max_size = 4
+local matches = nk.match_list(limit, authoritative, label, min_size, max_size)
+for _, m in ipairs(matches)
+do
+  local message = ("found match with id: %q"):format(m.match_id)
+  print(message)
+end
+```
+
 ### notifications
 
 __notification_send (user_id, subject, content, code, sender_id, persistent)__
@@ -1202,6 +1262,8 @@ nk.register_rpc(my_func, "my_func_id")
 ```
 
 ### run once
+
+__run_once (func)__
 
 The runtime environment allows you to run code that must only be executed only once. This is useful if you have custom SQL queries that you need to perform (like creating a new table) or to register with third party services.
 
@@ -1440,7 +1502,25 @@ for i, row in ipairs(rows) do
   nk.logger_info("Username " .. row.username .. " created at " .. row.create_time)
 end
 ```
-!!! Note: here in row.handle, handle is the name of the column you are trying to display. And so on with "created_at"
+
+!!! Note
+    The fields available in each `row` depend on the columns selected in the query such as `row.username` and `row.create_time` above.
+
+### time
+
+__time ()__
+
+Get the current UTC time in milliseconds using the system wall clock.
+
+_Returns_
+
+A number representing the current UTC time in milliseconds.
+
+_Example_
+
+```lua
+local utc_msec = nk.time()
+```
 
 ### users
 
@@ -1473,6 +1553,8 @@ do
 end
 ```
 
+---
+
 __users_get_username (usernames)__
 
 Fetch a set of users by their usernames.
@@ -1497,6 +1579,50 @@ do
   local message = ("id: %q, displayname: %q"):format(u.id, u.display_name)
   print(message)
 end
+```
+
+---
+
+__users_ban_id (user_ids)__
+
+Ban one or more users by ID. These users will no longer be allowed to authenticate with the server until unbanned.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_ids | table | A table array of user IDs to ban. |
+
+_Example_
+
+```lua
+local user_ids = {
+  "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+  "447524be-43c3-11e7-af09-3f7172f05936"
+}
+nk.users_ban_id(user_ids)
+```
+
+---
+
+__users_unban_id (user_ids)__
+
+Unban one or more users by ID. These users will again be allowed to authenticate with the server.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_ids | table | A table array of user IDs to unban. |
+
+_Example_
+
+```lua
+local user_ids = {
+  "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+  "447524be-43c3-11e7-af09-3f7172f05936"
+}
+nk.users_unban_id(user_ids)
 ```
 
 ### uuid
@@ -1554,7 +1680,7 @@ _Parameters_
 
 _Returns_
 
-A string containing the equivalent 16-byte representation of the UUID.
+A string containing the equivalent 16-byte representation of the UUID. This function will also insert a new wallet ledger item into the user's wallet history that trackes this update.
 
 _Example_
 
@@ -1562,4 +1688,139 @@ _Example_
 local uuid_string = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some uuid string.
 local uuid_bytes = nk.uuid_string_to_bytes(uuid_string)
 print(uuid_bytes)
+```
+
+### wallet
+
+__wallet_update (user_id, changeset, metadata)__
+
+Update a user's wallet with the given changeset.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | The ID of the user to update the wallet for. |
+| changeset | table | The set of wallet operations to apply. |
+| metadata | table | Additional metadata to tag the wallet update with. Optional. |
+
+_Example_
+
+```lua
+local user_id = "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
+local changeset = {
+  coins = 10, -- Add 10 coins to the user's wallet.
+  gems = -5   -- Remove 5 gems from the user's wallet.
+}
+local metadata = {}
+nk.wallet_update(user_id, changeset, metadata)
+```
+
+---
+
+__wallets_update (updates)__
+
+Update one or more user wallets with individual changesets. This function will also insert a new wallet ledger item into each user's wallet history that trackes their update.
+
+All updates will be performed atomically.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| updates | table | The set of user wallet update operations to apply. |
+
+_Example_
+
+```lua
+local updates = {
+  {
+    user_id = "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592",
+    changeset = {
+      coins = 10, -- Add 10 coins to the user's wallet.
+      gems = -5   -- Remove 5 gems from the user's wallet.
+    },
+    metadata = {}
+  }
+}
+nk.wallets_update(updates)
+```
+
+---
+
+__wallet_ledger_list (user_id)__
+
+List all wallet updates for a particular user, from oldest to newest.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| user_id | string | The ID of the user to update the wallet for. |
+
+_Returns_
+
+A Lua table containing update operations with the following format:
+
+```lua
+{
+  {
+    id = "...",
+    user_id = "...",
+    create_time = 123,
+    update_time = 123,
+    changeset = {},
+    metadata = {}
+  }
+}
+```
+
+_Example_
+
+```lua
+local user_id = "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
+local updates = nk.wallet_ledger_list(user_id)
+for _, u in ipairs(updates)
+do
+  local message = ("found wallet update with id: %q"):format(u.id)
+  print(message)
+end
+```
+
+---
+
+__wallet_ledger_update (id, metadata)__
+
+Update the metadata for a particular wallet update in a users wallet ledger history. Useful when adding a note to a transaction for example.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The ID of the wallet ledger item to update. |
+| metadata | table | The new metadata to set on the wallet ledger item. |
+
+_Returns_
+
+The updated wallet ledger item as a Lua table with the following format:
+
+```lua
+{
+  id = "...",
+  user_id = "...",
+  create_time = 123,
+  update_time = 456,
+  changeset = {},
+  metadata = {}
+}
+```
+
+_Example_
+
+```lua
+local id = "2745ba53-4b43-4f83-ab8f-93e9b677f33a"
+local metadata = {
+  updated = "metadata"
+}
+local u = nk.wallet_ledger_update(id, metadata
 ```
