@@ -68,7 +68,7 @@ Debug.LogFormat("Session has expired: {0}", session.IsExpired);
 Debug.LogFormat("Session expires at: {0}", session.ExpireTime); // in seconds.
 ```
 
-It is recommended to store the auth token from the session and check at startup if it has expired. If the token has expired you must reauthenticate. The expiry time of the token can be changed as a [setting]() in the server.
+It is recommended to store the auth token from the session and check at startup if it has expired. If the token has expired you must reauthenticate. The expiry time of the token can be changed as a [setting](install-configuration.md#common-properties) in the server.
 
 ```csharp
 var prefKeyName = "nakama.session";
@@ -169,8 +169,8 @@ Event handlers only need to be implemented for the features you want to use.
 | OnMatchPresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
 | OnMatchmakerMatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
 | OnStatusPresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
-| OnStreamPresence | Receives [stream](social-stream.md) join and leave event. |
-| OnStreamState | Receives [stream](social-stream.md) data sent by the server. |
+| OnStreamPresence | Receives [stream](advanced-streams.md) join and leave event. |
+| OnStreamState | Receives [stream](advanced-streams.md) data sent by the server. |
 
 ## Logs and errors
 

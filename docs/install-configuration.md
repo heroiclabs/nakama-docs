@@ -11,7 +11,7 @@ nakama --config my-special-config.yml
 
 If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to [setup folder binding](install-docker-quickstart.md#data).
 
-## Nakama port usage
+## Server ports
 
 Nakama is a very flexible system. You can exchange data with the server over gRPC, HTTP, Websockets and rUDP. Due to this flexibilty, Nakama requires 4 ports to be available to bind to:
 
