@@ -10,12 +10,12 @@ Any data sent through a match is immediately routed to all other match opponents
 
 A match can be created by a user. The server will assign a unique ID which can be shared with other users for them to [join the match](#join-a-match). All users within a match are equal and it is up to the clients to decide on a host.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var match = await socket.send({ match_create: {} });
 console.log("Created match with ID:", match.id);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 var match = await socket.CreateMatchAsync();
 Console.WriteLine("Created match with ID '{0}'.", match.Id);
 ```
@@ -34,7 +34,7 @@ A user can join a specific match by ID. Matches can be joined at any point until
 !!! Hint
     To find a match instead of specify one by ID use the [matchmaker](gameplay-matchmaker.md).
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var id = "<matchid>";
 var match = await socket.send({ match_join: { match_id: id } });
 var connectedOpponents = match.presences.filter((presence) => {
@@ -46,8 +46,8 @@ connectedOpponents.forEach((opponent) => {
 });
 ```
 
-```csharp fct_label=".Net"
-var matchId = "some-match-id";
+```csharp fct_label=".NET"
+var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
 foreach (var presence in match.presences)
 {
@@ -56,7 +56,7 @@ foreach (var presence in match.presences)
 ```
 
 ```csharp fct_label="Unity"
-var matchId = "some-match-id";
+var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
 foreach (var presence in match.presences)
 {
@@ -70,7 +70,7 @@ The list of match opponents returned in the success callback might not include a
 
 When a user joins a match they receive an initial list of connected opponents. As other users join or leave the server will push events to clients which can be used to update the list of connected opponents.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var connectedOpponents = [];
 client.onmatchpresence = (presences) => {
   // Remove all users who left.
@@ -89,57 +89,27 @@ client.onmatchpresence = (presences) => {
 };
 ```
 
-```csharp fct_label=".Net"
-var currentOpponents = new List<IUserPresence>();
+```csharp fct_label=".NET"
+var connectedOpponents = new List<IUserPresence>(0);
 socket.OnMatchPresence += (_, presence) =>
 {
-  var connectedOpponents = new List<IUserPresence>(presence.Joins);
-  foreach (var current in currentOpponents)
+  connectedOpponents.AddRange(presenceChange.Joins);
+  foreach (var leave in presenceChange.Leaves)
   {
-
-    // Remove all users who left.
-    var leftMatch = false;
-    foreach (var leave in presence.Leaves)
-    {
-      if (current.UserId.Equals(leave.UserId)) {
-        leftMatch = true
-        break;
-      }
-    }
-
-    if (!leftMatch) {
-      connectedOpponents.Add(current)
-    }
-  }
-  // Set connected opponents as current ones.
-  currentOpponents = connectedOpponents;
+    connectedOpponents.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
+  };
 };
 ```
 
 ```csharp fct_label="Unity"
-var currentOpponents = new List<IUserPresence>();
+var connectedOpponents = new List<IUserPresence>(0);
 socket.OnMatchPresence += (_, presence) =>
 {
-  var connectedOpponents = new List<IUserPresence>(presence.Joins);
-  foreach (var current in currentOpponents)
+  connectedOpponents.AddRange(presenceChange.Joins);
+  foreach (var leave in presenceChange.Leaves)
   {
-
-    // Remove all users who left.
-    var leftMatch = false;
-    foreach (var leave in presence.Leaves)
-    {
-      if (current.UserId.Equals(leave.UserId)) {
-        leftMatch = true
-        break;
-      }
-    }
-
-    if (!leftMatch) {
-      connectedOpponents.Add(current)
-    }
-  }
-  // Set connected opponents as current ones.
-  currentOpponents = connectedOpponents;
+    connectedOpponents.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
+  };
 };
 ```
 
@@ -153,14 +123,15 @@ An Op code is a numeric identifier for the type of message sent. These can be us
 
 The binary content in each data message should be as __small as possible__. It is common to use JSON or preferable to use a compact binary format like <a href="https://developers.google.com/protocol-buffers/" target="\_blank">Protocol Buffers</a> or <a href="https://google.github.io/flatbuffers/" target="\_blank">FlatBuffers</a>.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var id = "<matchid>";
 var opCode = 1;
 var data = { "move": {"dir": "left", "steps": 4} };
 socket.send({ match_data_send: { match_id: id, op_code: opCode, data: payload } });
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
+// using Nakama.TinyJson;
 var id = "<matchid>";
 var opCode = 1;
 var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
@@ -168,6 +139,7 @@ socket.SendMatchState(id, opCode, newState);
 ```
 
 ```csharp fct_label="Unity"
+// using Nakama.TinyJson;
 var id = "<matchid>";
 var opCode = 1;
 var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
@@ -181,7 +153,7 @@ A client can add a callback for incoming match data messages. This should be don
 !!! Note "Message sequences"
     The server delivers data in the order it processes data messages from clients.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 socket.onmatchdata = (result) => {
   var content = result.data;
   switch (result.op_code) {
@@ -194,9 +166,9 @@ socket.onmatchdata = (result) => {
 };
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 socket.OnMatchState = (_, state) => {
-  var content = Encoding.UTF8.GetString(state.State);
+  var content = System.Text.Encoding.UTF8.GetString(state.State);
   switch (state.OpCode) {
     case 101:
       Console.WriteLine("A custom opcode.");
@@ -209,7 +181,7 @@ socket.OnMatchState = (_, state) => {
 
 ```csharp fct_label="Unity"
 socket.OnMatchState = (_, state) => {
-  var content = Encoding.UTF8.GetString(state.State);
+  var content = System.Text.Encoding.UTF8.GetString(state.State);
   switch (state.OpCode) {
     case 101:
       Debug.Log("A custom opcode.");
@@ -224,20 +196,20 @@ socket.OnMatchState = (_, state) => {
 
 Users can leave a match at any point. A match ends when all users have left.
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 var id = "<matchid>";
 socket.send({ match_leave: {match_id: id}});
 ```
 
-```csharp fct_label=".Net"
-var matchId = "some-match-id";
-socket.LeaveMatchAsync(matchId);
+```csharp fct_label=".NET"
+var matchId = "<matchid>";
+await socket.LeaveMatchAsync(matchId);
 ```
 
 ```csharp fct_label="Unity"
-var matchId = "some-match-id";
-socket.LeaveMatchAsync(matchId);
+var matchId = "<matchid>";
+await socket.LeaveMatchAsync(matchId);
 ```
 
 !!! Note
-    When all opponents leave a match it's ID becomes invalid and cannot be re-used to join again.
+    When all opponents have left a match it's ID becomes invalid and cannot be re-used to join again.

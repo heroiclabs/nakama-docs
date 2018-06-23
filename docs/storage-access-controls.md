@@ -14,8 +14,8 @@ These code examples show how to retrieve an object owned by the system (marked w
 curl -X POST \
   http://127.0.0.1:7350/v2/storage \
   -H 'Authorization: Bearer <session token>' \
-  -d '{"object_ids":
-    [
+  -d '{
+    "object_ids": [
       {
         "collection": "configuration",
         "key": "config",
@@ -24,24 +24,22 @@ curl -X POST \
   }'
 ```
 
-```js fct_label="Javascript"
+```js fct_label="JavaScript"
 const objects = await client.readStorageObjects(session, {
   "object_ids": [{
     "collection": "configurations",
     "key": "config"
   }]
 });
-
-console.info("Successfully read objects:", objects);
+console.info("Read objects: %o", objects);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "configuration",
   Key = "config"
 });
-
-System.Console.WriteLine("Successfully read objects {0}", result.Objects);
+Console.WriteLine("Read objects {0}", result.Objects);
 ```
 
 ```csharp fct_label="Unity"
@@ -49,8 +47,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "configuration",
   Key = "config"
 });
-
-Debug.LogFormat("Successfully read objects {0}", result.Objects);
+Debug.LogFormat("Read objects {0}", result.Objects);
 ```
 
 ```java fct_label="Android/Java"
@@ -119,11 +116,10 @@ You can also use the code runtime to fetch an object. The code runtime is exempt
 
 ```lua
 local object_ids = {
-  {collection = "configuration", key = "config", user_id = nil},
+  { collection = "configuration", key = "config", user_id = nil },
 }
 local objects = nk.storage_read(object_ids)
-for _, r in ipairs(objects)
-do
+for _, r in ipairs(objects) do
   local message = ("value: %q"):format(r.Value)
   print(message)
 end
@@ -152,12 +148,11 @@ When modifying objects from the client, the default permission of a object is se
 ```sh fct_label="cURL"
 # "2" refers to Public Read permission
 # "1" refers to Owner Write permission
-
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage \
   -H 'Authorization: Bearer <session token>' \
-  -d '{"objects":
-    [
+  -d '{
+    "objects": [
       {
         "collection": "battle",
         "key": "army",
@@ -169,13 +164,11 @@ curl -X PUT \
   }'
 ```
 
-```js fct_label="Javascript"
-
-var army_setup = {"soldiers": 50};
+```js fct_label="JavaScript"
+var army_setup = { "soldiers": 50 };
 // "2" refers to Public Read permission
 // "1" refers to Owner Write permission
-
-const object_ids = await client.writeStorageObjects(session,[
+const object_ids = await client.writeStorageObjects(session, [
   {
     "collection": "saves",
     "key": "savegame",
@@ -184,32 +177,28 @@ const object_ids = await client.writeStorageObjects(session,[
     "permission_write": 1
   }
 ]);
-
-console.info("Successfully stored objects:", object_ids);
+console.info("Stored objects: %o", object_ids);
 ```
 
-```csharp fct_label=".Net"
-var army_setup = "{\"soldiers\": 50}";
+```csharp fct_label=".NET"
+var armySetup = "{ \"soldiers\": 50 }";
 // "2" refers to Public Read permission
 // "1" refers to Owner Write permission
-
 var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
 {
   Collection = "saves",
   Key = "savegame",
-  Value = army_setup,
+  Value = armySetup,
   PermissionRead = 2,
   PermissionWrite = 1
 });
-
-System.Console.WriteLine("Successfully stored objects {0}", object_ids);
+Console.WriteLine("Stored objects {0}", result.Objects);
 ```
 
 ```csharp fct_label="Unity"
-var army_setup = "{\"soldiers\": 50}";
+var armySetup = "{ \"soldiers\": 50 }";
 // "2" refers to Public Read permission
 // "1" refers to Owner Write permission
-
 var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
 {
   Collection = "saves",
@@ -218,8 +207,7 @@ var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObje
   PermissionRead = 2,
   PermissionWrite = 1
 });
-
-Debug.LogFormat("Successfully stored objects {0}", object_ids);
+Debug.LogFormat("Stored objects {0}", result.Objects);
 ```
 
 ```java fct_label="Android/Java"
@@ -272,12 +260,12 @@ Accept: application/json
 Content-Type: application/json
 Authorization: Bearer <session token>
 
-{"objects":
-  [
+{
+  "objects": [
     {
       "collection": "battle",
       "key": "army",
-      "value": "{\"soldiers\": 50}",
+      "value": "{ \"soldiers\": 50 }",
       "permission_read": 2,
       "permission_write": 1
     }
@@ -290,7 +278,7 @@ You can store an object with custom permissions from the code runtime.
 ```lua
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
 local new_records = {
-  {collection = "battle", key = "army", user_id = user_id, value = {}, permission_read = 2, permission_write = 1}
+  { collection = "battle", key = "army", user_id = user_id, value = {}, permission_read = 2, permission_write = 1 }
 }
 nk.storage_write(new_records)
 ```

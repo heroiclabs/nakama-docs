@@ -33,21 +33,23 @@ A user joins a chat channel to start receiving messages in realtime. Each new me
 ```js fct_label="JavaScript"
 socket.onchannelmessage = (message) => {
   console.log("Received a message on channel: %o", message.channel_id);
-  console.log("Message content: %o.", message.content);
+  console.log("Message content: %o", message.content);
 };
 ```
 
 ```csharp fct_label=".NET"
-socket.OnChannelMessage = (_, message) => {
+socket.OnChannelMessage = (_, message) =>
+{
   Console.WriteLine("Received a message on channel '{0}'", message.channelId);
-  Console.WriteLine("Message content: '{1}'.", message.content);
+  Console.WriteLine("Message content: '{1}'", message.content);
 };
 ```
 
 ```csharp fct_label="Unity"
-socket.OnChannelMessage = (_, message) => {
+socket.OnChannelMessage = (_, message) =>
+{
   Debug.LogFormat("Received a message on channel '{0}'", message.channelId);
-  Debug.LogFormat("Message content: '{1}'.", message.content);
+  Debug.LogFormat("Message content: '{1}'", message.content);
 };
 ```
 
@@ -56,7 +58,7 @@ socket.OnChannelMessage = (_, message) => {
 client.onTopicMessage = { message in
   // Topic will be one of DirectMessage, Room, or Group.
   NSLog("Received a %@ message", message.topic.description)
-  NSLog("Message content: %@.", message.data)
+  NSLog("Message content: %@", message.data)
 }
 ```
 
@@ -71,14 +73,16 @@ if (message.code != 0) {
 ```
 
 ```csharp fct_label=".NET"
-if (message.code != 0) {
-  Console.WriteLine("Received message with code '{0}'", message.code);
+if (message.code != 0)
+{
+  Console.WriteLine("Received message with code '{0}'", message.Code);
 };
 ```
 
 ```csharp fct_label="Unity"
-if (message.code != 0) {
-  Debug.LogFormat("Received message with code '{0}'", message.code);
+if (message.code != 0)
+{
+  Debug.LogFormat("Received message with code '{0}'", message.Code);
 };
 ```
 
@@ -93,7 +97,7 @@ switch messageType {
 }
 ```
 
-| Type | Purpose | Source | Description |
+| Code | Purpose | Source | Description |
 | ---- | ------- | ------ | ----------- |
 | 0 | chat message | user | All messages sent by users. |
 | 1 | chat update | user | A user updating a message they previously sent. |
@@ -180,7 +184,7 @@ console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-const groupId = "some-group-id";
+const groupId = "<group id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
@@ -188,7 +192,7 @@ Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-const groupId = "some-group-id";
+const groupId = "<group id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
@@ -210,7 +214,7 @@ client.send(message: message).then { topics in
 }
 ```
 
-The `groupTopicId` variable contains an ID used to [send messages](#send-messages).
+The `"<group id>"` variable must be an ID used to [send messages](#send-messages).
 
 ### direct
 
@@ -233,7 +237,7 @@ console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-const userId = "some-user-id";
+const userId = "<user id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
@@ -241,7 +245,7 @@ Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-const userId = "some-user-id";
+const userId = "<user id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
@@ -263,18 +267,18 @@ client.send(message: message).then { topics in
 }
 ```
 
-The `directTopicId` variable contains an ID used to [send messages](#send-messages).
+The `"<user id>"` variable must be an ID used to [send messages](#send-messages).
 
 !!! Note
     A user can [block other users](social-friends.md#block-a-friend) to stop unwanted direct messages.
 
 ## List online users
 
-Each user who joins a chat becomes a "presence" in the chat channel - unless they've joined as a "hidden" channel participant. These presences keep information about which users are online.
+Each user who joins a chat becomes a "presence" in the chat channel (unless they've joined as a "hidden" channel user). These presences keep information about which users are online.
 
 A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat channel.
 
-The user who [joins a chat channel](#join-chat) receives an initial presence list of all other connected users in the chat channel. A callback can be used to receive presence changes from the server about users who joined and left. This makes it easy to maintain a list of online users and update it when changes occur.
+The user who [joins a chat channel](#join-chat) receives an initial presence list of all other connected users in the chat channel. A callback can be used to receive presence changes from the server about users who joins and leaves. This makes it easy to maintain a list of online users and update it when changes occur.
 
 !!! Summary
     A list of all online users is received when a user joins a chat channel you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
@@ -307,83 +311,39 @@ onlineUsers = onlineUsers.filter((user) => {
 ```
 
 ```csharp fct_label=".NET"
-var currentUsers = new List<IUserPresence>();
-socket.OnChannelPresence += (_, presence) =>
+var connectedUsers = new List<IUserPresence>();
+socket.OnChannelPresence += (_, presenceChange) =>
 {
-  var onlineUsers = new List<IUserPresence>(presence.Joins);
-  foreach (var current in currentUsers)
+  connectedUsers.AddRange(presenceChange.Joins);
+  foreach (var leave in presenceChange.Leaves)
   {
-    // Remove all users who left.
-    var leftChat = false;
-    foreach (var leave in presence.Leaves)
-    {
-      if (current.UserId.Equals(leave.UserId)) {
-        leftChat = true
-        break;
-      }
-    }
-
-    if (!leftMatch) {
-      onlineUsers.Add(current)
-    }
-  }
-  // Set connected opponents as current ones.
-  currentUsers = onlineUsers;
+    connectedUsers.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
+  };
 };
 
 const roomname = "PizzaFans";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-
-// Setup initial online user list.
-// Remove your own user from list.
-foreach (var presence in channel.Presences)
-{
-  if (!channel.Self.UserId.Equals(presence.UserId)) {
-    currentUsers.Add(presence);
-  }
-}
+connectedUsers.AddRange(channel.Presences);
 ```
 
 ```csharp fct_label="Unity"
 var currentUsers = new List<IUserPresence>();
 socket.OnChannelPresence += (_, presence) =>
 {
-  var onlineUsers = new List<IUserPresence>(presence.Joins);
-  foreach (var current in currentUsers)
+  connectedUsers.AddRange(presenceChange.Joins);
+  foreach (var leave in presenceChange.Leaves)
   {
-    // Remove all users who left.
-    var leftChat = false;
-    foreach (var leave in presence.Leaves)
-    {
-      if (current.UserId.Equals(leave.UserId)) {
-        leftChat = true
-        break;
-      }
-    }
-
-    if (!leftMatch) {
-      onlineUsers.Add(current)
-    }
-  }
-  // Set connected opponents as current ones.
-  currentUsers = onlineUsers;
+    connectedUsers.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
+  };
 };
 
 const roomname = "PizzaFans";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-
-// Setup initial online user list.
-// Remove your own user from list.
-foreach (var presence in channel.Presences)
-{
-  if (!channel.Self.UserId.Equals(presence.UserId)) {
-    currentUsers.Add(presence);
-  }
-}
+connectedUsers.AddRange(channel.Presences);
 ```
 
 ```swift fct_label="Swift"
@@ -432,15 +392,15 @@ const messageAck = await socket.send({ channel_message_send: {
 ```
 
 ```csharp fct_label=".NET"
-var channel = someChannel;
+var channelId = "<channel id>";
 var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
-var sendAck = await socket.WriteChatMessageAsync(channel, content);
+var sendAck = await socket.WriteChatMessageAsync(channelId, content);
 ```
 
 ```csharp fct_label="Unity"
-var channel = someChannel;
+var channelId = "<channel id>";
 var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
-var sendAck = await socket.WriteChatMessageAsync(channel, content);
+var sendAck = await socket.WriteChatMessageAsync(channelId, content);
 ```
 
 ```swift fct_label="Swift"
@@ -470,13 +430,13 @@ await socket.send({ channel_leave: {
 ```
 
 ```csharp fct_label=".NET"
-var channel = someChannel;
-var sendAck = await socket.LeaveChatAsync(channel);
+var channelId = "<channel id>";
+await socket.LeaveChatAsync(channelId);
 ```
 
 ```csharp fct_label="Unity"
-var channel = someChannel;
-var sendAck = await socket.LeaveChatAsync(channel);
+var channelId = "<channel id>";
+await socket.LeaveChatAsync(channelId);
 ```
 
 ```swift fct_label="Swift"
@@ -494,7 +454,7 @@ client.send(message: message).then {
 
 ## Message history
 
-Every chat conversation stores a history of messages - unless the user sending the message has disabled persistence. The history also contains [event messages](#receive-messages) sent by the server to group chat channels. Each user can retrieve old messages for channels when they next connect online.
+Every chat conversation stores a history of messages (unless persistence is set false). The history also contains [event messages](#receive-messages) sent by the server to group chat channels. Each user can retrieve old messages for channels when they next connect online.
 
 Messages can be listed in order of most recent to oldest and also in reverse (oldest to newest). Messages are returned in batches of up to 100 each with a cursor for when there are more messages.
 
@@ -516,16 +476,16 @@ console.log("Get the next page of messages with the cursor:", result.next_cursor
 ```
 
 ```csharp fct_label=".NET"
-var channelId = "roomname";
+var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
 {
-  System.Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+  Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
 }
 ```
 
 ```csharp fct_label="Unity"
-var channelId = "roomname";
+var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
 {
@@ -585,18 +545,18 @@ if (result.next_cursor) {
 ```
 
 ```csharp fct_label=".NET"
-var channelId = "roomname";
+var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
 {
-  System.Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+  Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
 }
 
 if (!string.IsNullOrEmpty(result.NextCursor)) {
   // Get the next 10 messages.
   var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
   result.messages.forEach((message) => {
-    System.Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+    Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
   });
 };
 ```
@@ -641,7 +601,7 @@ client.send(message: message).then { messages in
 ```
 
 ```fct_label="REST"
-GET /v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>
+GET /v2/channel?channel_id=<channel id>&forward=true&limit=10&cursor=<cursor>
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
