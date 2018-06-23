@@ -67,7 +67,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Collection = "saves",
   Key = "savegame",
   Value = saveGame
-},
+}, new WriteStorageObject
 {
   Collection = "stats",
   Key = "skills",
@@ -84,7 +84,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Collection = "saves",
   Key = "savegame",
   Value = saveGame
-},
+}, new WriteStorageObject
 {
   Collection = "stats",
   Key = "skills",
