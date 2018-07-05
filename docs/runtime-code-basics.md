@@ -299,7 +299,7 @@ local function get_pokemon(_, payload)
       weight = result.weight,
       image = result.sprites.front_default
     }
-    return pokemon
+    return nk.json_encode(pokemon)
   end
 end
 
