@@ -77,7 +77,7 @@ Create a file called `docker-compose.yml` and edit it in your favourite text edi
 version: '3'
 services:
   cockroachdb:
-    image: cockroachdb/cockroach:v2.0.2
+    image: cockroachdb/cockroach:v2.0.3
     command: start --insecure --store=attrs=ssd,path=/var/lib/cockroach/
     restart: always
     volumes:
@@ -89,7 +89,7 @@ services:
       - "26257:26257"
       - "8080:8080"
   nakama:
-    image: heroiclabs/nakama:2.0.1
+    image: heroiclabs/nakama:2.0.2
     entrypoint:
       - "/bin/sh"
       - "-ecx"
