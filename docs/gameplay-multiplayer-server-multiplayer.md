@@ -155,7 +155,7 @@ Lua modules that govern Authoritative Multiplayer matches must implement all of 
 
 __match_init(context, params) -> state, tickrate, label__
 
-This is invoked when a match is created as a result of `match_create()` and sets up the initial state of a match. This will be called once at match start. The context will contain properties which are passed to other Lua-registered functions.
+This is invoked when a match is created as a result of `match_create()` and sets up the initial state of a match. This will be called once at match start.
 
 _Parameters_
 
@@ -168,9 +168,9 @@ _Returns_
 
 You must return three values:
 
-(table) - Intitial match state - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.
-(number) - Tick rate - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.
-(string) - Match label - A string label that can be used to filter matches in listing operations. Must be between 0 and 256 characters long. This is used in [match listing](#match-listing) to filter matches.
+(table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.    
+(number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.     
+(string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 256 characters long. This is used in [match listing](#match-listing) to filter matches.     
 
 _Example_
 
@@ -209,7 +209,7 @@ _Returns_
 
 You must return two values:
 
-(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
+(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.      
 (boolean) - True if the join attempt should be allowed, false otherwise.
 
 _Example_
