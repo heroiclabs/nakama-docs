@@ -8,10 +8,12 @@ A group also has a maximum member count. This is set to 100 by default if the gr
 
 A group user has four states:
 
-- __Superadmin__: there must at least be 1 superadmin in any group. The superadmin can only delete the group and promote admin members.
-- __Admin__: there can be one of more admins. Admins can update groups as well as accept, kick, promote or add members.
-- __Member__: Regular group member. They cannot accept join request from new users.
-- __Join request__: A new join request from a new user. This does not count towards the maximum group member count.
+| Code | Purpose | |
+| ---- | ------- | - |
+|    0 | Superadmin | There must at least be 1 superadmin in any group. The superadmin can only delete the group and promote admin members. |
+|    1 | Admin | There can be one of more admins. Admins can update groups as well as accept, kick, promote or add members. |
+|    2 | Member | Regular group member. They cannot accept join request from new users. |
+|    3 | Join request | A new join request from a new user. This does not count towards the maximum group member count. |
 
 ## List and filter groups
 
