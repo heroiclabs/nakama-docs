@@ -54,11 +54,23 @@ You can run Nakama and Cockroach without using Docker-Compose. This will mean yo
 
 ```shell fct_label="Shell"
 # Let's pull and start CockroachDB
-docker run --name=db cockroachdb/cockroach start --insecure
+docker run --name=db -p 26257 -p 8080 cockroachdb/cockroach start --insecure
 # Let's pull and migrate the database
 docker run --link=db heroiclabs/nakama migrate up --database.address root@db:26257
 # start Nakama server
 docker run --link=db -p 7350:7350 -p 7351:7351 heroiclabs/nakama --database.address root@db:26257
+```
+
+Connect to the database SQL shell using the following command:
+
+```shell fct_label="Shell"
+docker exec -it "db" /cockroach/cockroach sql --insecure -d nakama
+```
+
+You can also change Nakama config options simply by editing the last line. For instance:
+
+```
+docker run --link=db -p 7350:7350 -p 7351:7351 heroiclabs/nakama --database.address root@db:26257 --config /path/to/config.yml --socket.server_key "mynewkey"
 ```
 
 ## Using Docker-Compose
@@ -77,6 +89,7 @@ Create a file called `docker-compose.yml` and edit it in your favourite text edi
 version: '3'
 services:
   cockroachdb:
+    container_name: cockroachdb
     image: cockroachdb/cockroach:v2.0.3
     command: start --insecure --store=attrs=ssd,path=/var/lib/cockroach/
     restart: always
@@ -89,6 +102,7 @@ services:
       - "26257:26257"
       - "8080:8080"
   nakama:
+    container_name: nakama
     image: heroiclabs/nakama:2.0.2
     entrypoint:
       - "/bin/sh"
@@ -159,8 +173,59 @@ For development purposes, we suggest that you bind a folder in the local machine
 
 You can put your Lua scripts in the `data/modules` directory and restart Nakama using `docker-compose --restart`.
 
+### Configuration
+
+You have two options to override Nakama's config when running via Docker-compose:
+
+- Add individual command line flags:
+
+``` yaml hl_lines="8" fct_label="docker-compose.yml"
+...
+  nakama:
+    entrypoint:
+      - "/bin/sh"
+      - "-ecx"
+      - >
+          /nakama/nakama migrate up --database.address root@cockroachdb:26257 &&
+          /nakama/nakama --name nakama1 --database.address root@cockroachdb:26257 --socket.server_key "mynewkey"
+...
+```
+
+- Add configuration file
+
+Place your configuration file in the `data` volume we set up above and reference it to Nakama:
+
+``` yaml hl_lines="8" fct_label="docker-compose.yml"
+...
+  nakama:
+    entrypoint:
+      - "/bin/sh"
+      - "-ecx"
+      - >
+          /nakama/nakama migrate up --database.address root@cockroachdb:26257 &&
+          /nakama/nakama --config /nakama/data/config.yml
+...
+```
+
 ### Logs
 Logs generated within the containers are printed to the console as part of the docker-compose output, and you can access them with `docker-compose logs` from within the same the directory as the `docker-compose.yml` file.
+
+### Opening SQL Shell
+You can open a SQL shell to the database to inspect and manipulate data directly if you'd like.
+
+If you are running Nakama via Docker-Compose, try the following commands:
+
+```shell fct_label="Shell"
+docker ps
+```
+
+Grab the name of the running container that matches the description above, and then run this command:
+
+```shell fct_label="Shell"
+docker exec -it "cockroachdb" /cockroach/cockroach sql --insecure -d nakama
+```
+
+Where `cockroachdb` is the name of the container taken from the first command.
 
 ### Stopping containers
 If you need to temporarily pause the Docker containers, without losing the state of those containers, you have two options:

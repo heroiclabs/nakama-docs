@@ -138,13 +138,13 @@ await client.deleteFriends(session, ids, usernames);
 ```csharp fct_label=".NET"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
-await client.RemoveFriendsAsync(session, ids, usernames);
+await client.DeleteFriendsAsync(session, ids, usernames);
 ```
 
 ```csharp fct_label="Unity"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
-await client.RemoveFriendsAsync(session, ids, usernames);
+await client.DeleteFriendsAsync(session, ids, usernames);
 ```
 
 ```swift fct_label="Swift"
@@ -239,3 +239,12 @@ end
 ```
 
 -->
+
+## Friend state
+
+| Code | Purpose |
+| ---- | ------- |
+|    0 | Users are friends with each other. |
+|    1 | User A has sent an invitation and pending acceptance from user B. |
+|    2 | User A has received an invitation but has not accepted yet. |
+|    3 | User A has banned user B. |

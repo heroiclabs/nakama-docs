@@ -115,6 +115,10 @@ Options related to Lua-based runtime engine.
 | `env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
 | `path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
 | `http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
+| `min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
+| `max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
+| `call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
+| `registry_size` | `runtime.registry_size` | Size of each runtime instance's registry. Default 512.
 
 !!! warning "Important"
     You must change `http_key` before going live with your app!
@@ -126,6 +130,15 @@ Options related to Lua-based runtime engine.
     nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
     ```
 
+### Match
+
+You can change configuration options related to the authoritative multiplayer runtime.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
+| `call_queue_size` | `match.call_queue_size` | Size of the authoritative match buffer that sequences calls to match handler callbacks to ensure no overlaps. Default 128.
+
 ### Socket
 
 Options related to connection socket and transport protocol between the server and clients.
@@ -134,6 +147,8 @@ Options related to connection socket and transport protocol between the server a
 | --------- | ---- | -----------
 | `server_key` | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
 | `port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
+| `address` | `socket.address` | The IP address of the interface to listen for client traffic on. Default listen on all available addresses/interfaces.
+| `protocol` | `socket.protocol` | The network protocol to listen for traffic on. Possible values are `tcp` for both IPv4 and IPv6, `tcp4` for IPv4 only, or `tcp6` for IPv6 only. Default `tcp`."
 | `max_message_size_bytes` | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Used for real-time, gRPC and HTTP connections. Default value is 4096.
 | `read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
 | `write_timeout_ms` | `socket.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response. Used for HTTP connections. Default value is 10000.
