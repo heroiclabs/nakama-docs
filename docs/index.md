@@ -1,4 +1,8 @@
+[nakama_logo]: /images/nakama-logo.png "Nakama Logo"
+
 # Nakama server
+
+![Nakama Logo][nakama_logo]
 
 Nakama is a scalable server for social and realtime games and apps.
 

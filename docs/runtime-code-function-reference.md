@@ -1114,11 +1114,45 @@ _Parameters_
 _Example_
 
 ```lua
-local function my_func(context)
+local function my_func(context, matched_users)
   -- run some code
-end
+
+  for _, m in ipairs(matched_users)
+  do
+    print(m.presence["user_id"])
+    print(m.presence["session_id"])
+    print(m.presence["username"])
+    print(m.presence["node"])
+
+    for _, p in ipairs(m.properties)
+    do
+      print(p)
+    end
+  end
 nk.register_matchmaker_matched(my_func)
 ```
+
+For example a two persons's authoritative match can be created like this:
+
+```lua
+local function matchmaker_matched(context, matchmaker_users)
+  if #matchmaker_users ~= 2 then
+    return nil
+  end
+
+  if matchmaker_users[1].properties["mode"] ~= "authoritative" then
+    return nil
+  end
+  if matchmaker_users[2].properties["mode"] ~= "authoritative" then
+    return nil
+  end
+
+  return nk.match_create("match", {debug = true, expected_users = matchmaker_users})
+end
+nk.register_matchmaker_matched(matchmaker_matched)
+```
+
+Expected to return an authoritative match ID for a match ready to receive these users, or `nil` if the match should proceed through the peer-to-peer relayed mode.
 
 ---
 
