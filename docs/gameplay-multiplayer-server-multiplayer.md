@@ -1,50 +1,52 @@
-# Server-authoritative Multiplayer
+# Authoritative Multiplayer
 
-Nakama supports [client-authoritative](gameplay-multiplayer-realtime.md) (also known as relayed peer-to-peer) multiplayer as well as server-authoritative multiplayer.
+Nakama supports relayed multiplayer (also known as [client-authoritative](gameplay-multiplayer-realtime.md)) multiplayer as well as server-authoritative multiplayer.
 
-In [client-authoritative multiplayer](gameplay-multiplayer-realtime.md) messages are relayed by the server without inspection. This relies on a client to act as the host to reconcile state changes between peers as well as perform arbitration on ambiguous or malicious messages sent from bad clients. This mode is useful for many game designs but not suitable for gameplay which depends on central state managed by the game server.
+In relayed multiplayer messages destined for other clients are sent onwards by the server without inspection. This approach relies on one client in each match to act as the host to reconcile state changes between peers and perform arbitration on ambiguous or malicious messages sent from bad clients.
 
-To support multiplayer game designs which require data messages to change central state maintained on the server, server needs to validate messages and broadcast changes to the connected peers. The server-authoritative multiplayer introduces a way to run custom match logic with a fixed tick rate on the server. This enables you to build:
+Relayed multiplayer is very useful for many types of gameplay but may not suitable for gameplay which depends on central state managed by the game server.
 
-1. **Asynchronous real-time authoritiative multiplayer**: This is similar to Epic's Fortnite Royale where there are many players in a match fighting to stay alive. Messages are sent to the server, server calculates changes to the environment and players and data is broadcasted to relevant peers. This typically requires a fairly high tick-rate.
-2. **Active turn-based multiplayer**: This is similar to Supercell's Crash Royale _(or Stormbound if you know your mobile games)_ where two players are connected and are playing a short turn-based match. Players are expected to respond to turns immediately. The server receives input, validates them and broadcast to players. The expected tick-rate is quite low as rate of message receive is low.
-3. **Passive turn-based multiplayer**: A great example is Words With Friends, where the gameplay can span several hours to weeks. The server receives input, validates them, stores them in the database and broadcast changes to any connected peers before shutting down the server loop until next gameplay.
+Technically all multiplayer games can be developed as relayed if player counts are small per match but to choose between which approach to use you must decide how important it is for authoritative control to be handled on the server. With Nakama you have the freedom and flexibility to decide without limitations.
 
-To support this new functionality the Authoritative Multiplayer feature introduces several new concepts.
+To support multiplayer game designs which require data messages to change state maintained on the server the authoritative multiplayer engine introduces a way to run custom match logic with a fixed tick rate. Messages can be validated and state changes broadcast to connected peers. This enables you to build:
 
-## Authoritative multiplayer concepts
+1. **Asynchronous real-time authoritiative multiplayer**: Fast paced realtime multiplayer. Messages are sent to the server, server calculates changes to the environment and players and data is broadcasted to relevant peers. This typically requires a high tick-rate for the gameplay to feel responsive.
+2. **Active turn-based multiplayer**: Like with Stormbound or Clash Royale mobile games where two or more players are connected and are playing a quick turn-based match. Players are expected to respond to turns immediately. The server receives input, validates them and broadcast to players. The expected tick-rate is quite low as rate of message sent and received is low.
+3. **Passive turn-based multiplayer**: A great example is Words With Friends on mobile where the gameplay can span several hours to weeks. The server receives input, validates them, stores them in the database and broadcast changes to any connected peers before shutting down the server loop until next gameplay sequence.
 
-### Tick rate
+To support this functionality the Authoritative Multiplayer feature introduces several concepts.
 
-Alongside validating incoming input, authoritative control must also account for clients that misbehave by failing to send data when expected. Depending on game rules the server must be able to react to this scenario, perhaps by updating state or disconnecting the client.
-
-To achieve this the server will periodically call the match loop function even when there is no input waiting to be processed. The Lua code then has the opportunity to advance the game state as needed. In turn-based games this may take the form of the current player passing their turn, for example.
-
-This periodic call is known as Tick Rate and represents a desired fixed frequency at which the match should update. Tick Rate is configurable and typical frequencies range from once per second for turn-based games, to several times per second for fast-paced gameplay.
-
-All incoming client data messages are queued until the next tick, when they are handed off to the match loop to be processed. Tick Rate is expressed as a number representing calls per second. For example a rate of “10” represents 10 calls to the match loop per second.
-
-### Match state
-
-The match state is a region of memory Nakama exposes to Authoritative Multiplayer matches to use for the duration of the match. The Lua module governing each match may use this state to store any data it requires, and is given the opportunity to update it during each tick in the Lua functions.
-
-State can be thought of as the result of continuous transformations applied to an initial state based on the loop of user input, after proper validation.
-
-### Host node
-
-This host node is responsible for maintaining the in-memory Match State, and allocating resources to execute the Tick Rate. Incoming user input that is waiting for the next tick to be processed is also buffered in the host node to ensure it is immediately available on next match loop.
-
-A single node is responsible for this to ensure the highest level of consistency accessing and updating the state, and to avoid potential delays reconciling distributed state.
-
-Match presences will still be replicated so all nodes in a cluster will continue to have immediate access to both a list of matches and details about match participants.
+## Concepts
 
 ### Match handler
 
-The match handler is a Lua module which contains 5 functions **required** to execute logic for a match at a fixed tick rate on the server. The server can run many thousands of matches per node. The match handler has an API to broadcast messages out to the connected players.
+A match handler represents all server-side functions grouped together to handle game inputs and operate on them. 5 functions are required to process logic for a match at a fixed rate on the server. The server can run many thousands of matches per machine depending on the player counts and hardware. The match handler has an API to broadcast messages out to connected players.
+
+### Tick rate
+
+The server will periodically call the match loop function even when there is no input waiting to be processed. The logic is able to advance the game state as needed. It can also validate incoming input and kick players who've been inactive for some time.
+
+This periodic call is known as Tick Rate and represents a desired fixed frequency at which the match should update. Tick Rate is configurable and typical frequencies range from once per second for turn-based games to dozens of times per second for fast-paced gameplay.
+
+All incoming client data messages are queued until each tick when they are handed off to the match loop to be processed. Tick Rate is expressed as a number representing desired executions per second. For example a rate of "10" represents 10 ticks to the match loop per second (on average once every 100ms).
+
+### Match state
+
+The match state is a region of memory Nakama exposes to Authoritative Multiplayer matches to use for the duration of the match. The match handler governing each match may use this state to store any data it requires and is given the opportunity to update it during each tick.
+
+State can be thought of as the result of continuous transformations applied to an initial state based on the loop of user input after validation.
+
+### Host node
+
+This host node is responsible for maintaining the in-memory match state and allocating CPU resource to execute the loop at the tick rate. Incoming user input messages that are waiting for the next tick to be processed are buffered in the host node to ensure it is immediately available on next match loop.
+
+A single node is responsible for this to ensure the highest level of consistency accessing and updating the state and to avoid potential delays reconciling distributed state.
+
+Match presences will still be replicated so all nodes in a cluster to have immediate access to both a list of matches and details about match participants.
 
 The minimum structure of a match handler looks like:
 
-```lua
+```lua fct_label="Lua"
 local M = {}
 
 function M.match_init(context, setupstate)
@@ -74,32 +76,38 @@ end
 return M
 ```
 
-The match handler above does not do any work but demonstrates the various hooks into the authoritative realtime engine.
+This match handler above does not do any work but demonstrates the various hooks into the authoritative realtime engine. If `nil` is returned the match is stopped.
 
-## Create an authoritative match
+## Create Authoritatve Matches
 
 Authoritative matches can be created on the server in one of two ways.
 
-### Explicitly create new match
+### Manually
 
-You can use an RPC function which submits some user IDs to the server and will create a match which generates a match ID and then you could broadcast out to those users about the match ID with an in-app notification or push message (or both). This approach is great when you want to manually create a match and compete with specific users.
+You can use an RPC function which submits some user IDs to the server and will create a match.
 
-```lua
+A match ID will be created which could be sent out to the players with an in-app notification or push message (or both). This approach is great when you want to manually create a match and compete with specific users.
+
+```lua fct_label="Lua"
 local nk = require("nakama")
 local function create_match(context, payload)
   local modulename = "pingpong"
-  local setupstate = { data = payload }
+  local setupstate = { initialstate = payload }
   local matchid = nk.match_create(modulename, setupstate)
+
+  -- Send notification of some kind
   return matchid
 end
-nk.register_rpc(create_match, "create_match")
+nk.register_rpc(create_match, "create_match_rpc")
 ```
 
 ### Matchmaker
 
-Use the matchmaker to find opponents and use the matchmaker matched callback on the server to create an authoritative match and return the match ID. This uses the standard matchmaker API on the client. The clients will receive the matchmaker callback as normal with a match ID.
+Use the [matchmaker](gameplay-matchmaker.md) to find opponents and use the matchmaker matched callback on the server to create an authoritative match and return a match ID. This uses the standard matchmaker API on the client.
 
-```lua
+The clients will receive the matchmaker callback as normal with a match ID.
+
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local function makematch(context, matched_users)
@@ -120,42 +128,65 @@ end
 nk.register_matchmaker_matched(makematch)
 ```
 
-Expected to return an authoritative match ID for a match ready to receive these users, or `nil` if the match should proceed through the peer-to-peer relayed mode.
+The matchmaker matched hook must return a match ID or `nil` if the match should proceed as relayed multiplayer.
 
-The string passed into the `match_create` function is the Lua module name - which in Lua translates to the dot-separated path to the file. It must have the same file name as used with `match_create` so it can be fetched by the server. In this example it'd be called `pingpong.lua`.
+The string passed into the match create function is a Lua module name. In this example it'd be a file named `pingpong.lua`.
 
-## Join an authoritative match
+## Join a Match
 
-Opponents are not in the match until they join even after matched by the matchmaker. This enables players to opt out of matches they decide not to play.
+Players are not in the match until they join even after matched by the matchmaker. This enables players to opt out of matches they decide not to play.
 
-This can be done by clients in the same way as a relayed match. A full example of how to do this is covered [here](gameplay-multiplayer-realtime.md#join-a-match).
+This can be done by clients in the same way as with relayed multiplayer. A full example of how to do this is covered [here](gameplay-multiplayer-realtime.md#join-a-match).
 
-## Match listing
+## Match Listings
 
-You can list matches that are currently active on the server. Moreover, you can also filter matches based on exact-match queries on the label field.
+You can list matches that are currently active on the server. You can also filter matches based on exact-match queries on the label field.
 
-For instance if a match was created with a label field of `skill=100-150`, you can filter down to relevant matches like this:
+For instance if a match was created with a label field of "skill=100-150" you can filter down to relevant matches.
 
-```lua
---TBD
+```lua fct_label="Lua"
+local nk = require("nakama")
+
+local limit = 10
+local isauthoritative = true
+local label = "skill=100-150"
+local min_size = 0
+local max_size = 4
+local matches = nk.match_list(limit, isauthoritative, label, min_size, max_size)
+for _, match in ipairs(matches) do
+  print(("Match id %s"):format(match.match_id))
+end
 ```
 
-This is useful to present a lobby-like experience, or search for matches before creating a new match (similar to a Poker table):
+This is useful to present a lobby-like experience or search for matches before creating a new match.
 
-```lua
---TBD
+```lua fct_label="Lua"
+local nk = require("nakama")
+local function findorcreatematch(limit, label, min_size, max_size)
+  local matches = nk.match_list(limit, true, label, min_size, max_size)
+  if (#matches > 0) then
+    table.sort(matches, function(a, b)
+      return a.size > b.size;
+    end)
+    return matches[1].match_id
+  end
+  local modulename = "supermatch"
+  local initialstate = {}
+  local match_id = nk.match_create(modulename, initialstate)
+  return match_id
+end
 ```
 
-## Match handler API
+## Match Handler API
 
-Lua modules that govern Authoritative Multiplayer matches must implement all of the function callbacks below.
+The match handler that govern Authoritative Multiplayer matches must implement all of the function callbacks below.
 
-!!! Warning "Errors"
-    Errors thrown in any of the callbacks result in a force disconnect of all clients to that match.
+!!! Note "Handler Errors"
+    Errors generated in any of the callbacks result in a force disconnect of all clients to that match.
 
 __match_init(context, params) -> state, tickrate, label__
 
-This is invoked when a match is created as a result of `match_create()` and sets up the initial state of a match. This will be called once at match start.
+This is invoked when a match is created as a result of the match create function and sets up the initial state of a match. This will be called once at match start.
 
 _Parameters_
 
@@ -174,14 +205,9 @@ You must return three values:
 
 _Example_
 
-```lua
+```lua fct_label="Lua"
 function match_init(context, params)
-  local state = {
-    debug = (params and params.debug) or false
-  }
-  if state.debug then
-    print("match init context:\n" .. du.print_r(context) .. "match init params:\n" .. du.print_r(params))
-  end
+  local state = {}
   local tick_rate = 1
   local label = "skill=100-150"
 
@@ -193,7 +219,7 @@ end
 
 __match_join_attempt(context, dispatcher, tick, state, presence) -> state, accepted__
 
-Called when a user attempts to join the match using the client's match join operation. Match join attempt can be used to prevent more players from joining after a match has started or disallow the user for any other game specific reason.
+Executed when a user attempts to join the match using the client's match join operation. Match join attempt can be used to prevent more players from joining after a match has started or disallow the user for any other game specific reason.
 
 _Parameters_
 
@@ -214,20 +240,15 @@ You must return two values:
 
 _Example_
 
-```lua
+```lua fct_label="Lua"
 local function match_join_attempt(context, dispatcher, tick, state, presence)
-
   -- Presence format:
   -- {
-  --   user_id: "user unique ID",
-  --   session_id: "session ID of the user's current connection",
-  --   username: "user's unique username",
-  --   node: "name of the Nakama node the user is connected to"
+  --   user_id = "user unique ID",
+  --   session_id = "session ID of the user's current connection",
+  --   username = "user's unique username",
+  --   node = "name of the Nakama node the user is connected to"
   -- }
-
-  if state.debug then
-    print("match join attempt:\n" .. du.print_r(presence))
-  end
   return state, true
 end
 ```
@@ -236,7 +257,7 @@ end
 
 __match_join(context, dispatcher, tick, state, presences) -> state__
 
-Called when one or more users have successfully completed the match join process after their `match_join_attempt()` returns
+Executed when one or more users have successfully completed the match join process after their `match_join_attempt()` returns
 `true`. When their presences are sent to this function the users are ready to receive match data messages and can be
 targets for the dispatcher's `broadcast_message()` function.
 
@@ -258,23 +279,18 @@ You must return:
 
 _Example_
 
-```lua
+```lua fct_label="Lua"
 local function match_join(context, dispatcher, tick, state, presences)
-
   -- Presences format:
   -- {
   --   {
-  --     user_id: "user unique ID",
-  --     session_id: "session ID of the user's current connection",
-  --     username: "user's unique username",
-  --     node: "name of the Nakama node the user is connected to"
+  --     user_id = "user unique ID",
+  --     session_id = "session ID of the user's current connection",
+  --     username = "user's unique username",
+  --     node = "name of the Nakama node the user is connected to"
   --   },
   --  ...
   -- }
-
-  if state.debug then
-    print("match join:\n" .. du.print_r(presences))
-  end
   return state
 end
 ```
@@ -283,7 +299,7 @@ end
 
 __match_leave(context, dispatcher, tick, state, presences) -> state__
 
-Called when one or more users have left the match for any reason, including connection loss.
+Executed when one or more users have left the match for any reason including connection loss.
 
 _Parameters_
 
@@ -299,15 +315,12 @@ _Returns_
 
 You must return:
 
-(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
+(table) - An (optionally) updated state. May be any non-nil Lua term or nil to end the match.
 
 _Example_
 
-```lua
+```lua fct_label="Lua"
 local function match_leave(context, dispatcher, tick, state, presences)
-  if state.debug then
-    print("match leave:\n" .. du.print_r(presences))
-  end
   return state
 end
 ```
@@ -316,7 +329,7 @@ end
 
 __match_loop(context, dispatcher, tick, state, messages) -> state__
 
-Called on an interval based on the tick rate returned by `match_init`. Each tick the match loop is fired which can process messages received from clients and apply changes to the match state before the next tick. It can also dispatch messages to one or more connected opponents.
+Executed on an interval based on the tick rate returned by `match_init`. Each tick the match loop is run which can process messages received from clients and apply changes to the match state before the next tick. It can also dispatch messages to one or more connected opponents.
 
 To send messages back to the opponents in the match you can keep track of them in the game state and use the dispatcher object to send messages to subsets of the users or all of them.
 
@@ -326,7 +339,7 @@ _Parameters_
 | ----- | ---- | ----------- |
 | context | table | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
-| tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
+| tick | number | Tick is the current match tick number starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
 | messages | table | Messages is a list of data messages received from users between the previous and current tick. |
 
@@ -338,37 +351,29 @@ You must return:
 
 _Example_
 
-```lua
+```lua fct_label="Lua"
 local function match_loop(context, dispatcher, tick, state, messages)
-
   -- Messages format:
   -- {
   --   {
   --     sender = {
-  --       user_id: "user unique ID",
-  --       session_id: "session ID of the user's current connection",
-  --       username: "user's unique username",
-  --       node: "name of the Nakama node the user is connected to"
+  --       user_id = "user unique ID",
+  --       session_id = "session ID of the user's current connection",
+  --       username = "user's unique username",
+  --       node = "name of the Nakama node the user is connected to"
   --     },
   --     op_code = 1, -- numeric op code set by the sender.
   --     data = "any string data set by the sender" -- may be nil.
   --   },
   --   ...
   -- }
-
-  if state.debug then
-    print("match " .. context.match_id .. " tick " .. tick)
-    print("match " .. context.match_id .. " messages:\n" .. du.print_r(messages))
-  end
-  if tick < 10 then
-    return state
-  end
+  return state
 end
 ```
 
 ## Match runtime API
 
-The `dispatcher` object passed into the handler functions expose the following functions:
+The dispatcher type passed into the handler functions expose the following functions:
 
 __broadcast_message(op_code, data, presences, sender)__
 
@@ -389,7 +394,7 @@ _Parameters_
 
 _Example_
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 function match_loop(context, dispatcher, tick, state, messages)
   local opcode = 1234
@@ -416,6 +421,19 @@ _Parameters_
 | ----- | ---- | ----------- |
 | presences | table | List of presences to remove from the match. |
 
+_Example_
+
+```lua fct_label="Lua"
+local nk = require("nakama")
+function match_loop(context, dispatcher, tick, state, messages)
+  -- Assume we store presences in state
+  for i, presence in ipairs(state.presences) do
+    dispatcher.match_kick(presence)
+  end
+  return state
+end
+```
+
 ---
 
 __match_label_update(label)__
@@ -428,11 +446,21 @@ _Parameters_
 | ----- | ---- | ----------- |
 | label | strig | New label to set for the match. |
 
-## Full example
-
-Below you can find an example ping-pong match handler:
+_Example_
 
 ```lua
+local nk = require("nakama")
+function match_loop(context, dispatcher, tick, state, messages)
+  dispatcher.match_label_update("updatedlabel")
+  return state
+end
+```
+
+## Full example
+
+This is an example of a Ping-Pong match handler. Messages received by the server are broadcast back to the peer who sent them.
+
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local M = {}
@@ -467,14 +495,16 @@ end
 
 function M.match_loop(context, dispatcher, tick, state, messages)
   for _, presence in pairs(state.presences) do
-    print(("Presence connected %s named %s"):format(presence.user_id, presence.username))
+    print(("Presence %s named %s"):format(presence.user_id, presence.username))
   end
   for _, message in ipairs(messages) do
     print(("Received %s from %s"):format(message.sender.username, message.data))
     local decoded = nk.json_decode(message.data)
     for k, v in pairs(decoded) do
-      print(("Message contained %s value %s"):format(k, v))
+      print(("Message key %s contains value %s"):format(k, v))
     end
+    -- PONG message back to sender
+    dispatcher.broadcast_message(1, message, message.sender.session_id, nil)
   end
   return state
 end

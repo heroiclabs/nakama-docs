@@ -92,7 +92,7 @@ pages:
   - 'Leaderboards': 'gameplay-leaderboards.md'
   - 'Matchmaker': 'gameplay-matchmaker.md'
   - 'Realtime Multiplayer': 'gameplay-multiplayer-realtime.md'
-  - "Server-authoritative Multiplayer": "gameplay-multiplayer-server-multiplayer.md"
+  - "Authoritative Multiplayer": "gameplay-multiplayer-server-multiplayer.md"
 #  - 'Turn-based Multiplayer': 'gameplay-multiplayer-turnbased.md'
 #  - 'In-app Purchase Validation': 'in-app-purchase-validation.md'
 - 'Runtime Code':
