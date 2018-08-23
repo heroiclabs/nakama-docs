@@ -46,8 +46,8 @@ curl -X POST \
 
 ```js fct_label="Javascript"
 var leaderboardId = "level1";
-var score = 100;
-var record = await client.writeLeaderboardRecord(session, leaderboardId, score);
+var submission = {score: 100};
+var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
 console.log("New record username %o and score %o", record.username, record.score);
 ```
 
@@ -135,8 +135,8 @@ curl -X POST \
 
 ```js fct_label="JavaScript"
 var leaderboardId = "level1";
-var score = 100;
-var record = await client.writeLeaderboardRecord(session, leaderboardId, score);
+var submission = {score: 100};
+var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
 console.log("New record username %o and score %o", record.username, record.score);
 ```
 
