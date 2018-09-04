@@ -19,12 +19,7 @@ var client = new Client("defaultkey", "127.0.0.1", 7350, false);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-Client client = DefaultClient.builder("defaultkey")
-    .host("127.0.0.1")
-    .port(7350)
-    .ssl(false)
-    .build();
+Client client = new DefaultClient("defaultkey", "127.0.0.1", 7349, false)
 // or same as above.
 Client client = DefaultClient.defaults("defaultkey");
 ```
@@ -106,42 +101,9 @@ Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
 String id = UUID.randomUUID().toString();
-AuthenticateMessage message = AuthenticateMessage.Builder.device(id);
-Deferred<Session> deferred = client.login(message);
-deferred.addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
-  @Override
-  public Deferred<Session> call(Session session) throws Exception {
-    return client.connect(session);
-  }
-}).addErrback(new Callback<Deferred<Session>, Error>() {
-  @Override
-  public Deferred<Session> call(Error err) throws Exception {
-    if (err.getCode() == Error.ErrorCode.USER_NOT_FOUND) {
-      System.out.println("User not found, we'll register the user.");
-      return client.register(message);
-    }
-    throw err;
-  }
-}).addCallbackDeferring(new Callback<Deferred<Session>, Session>() {
-  @Override
-  public Deferred<Session> call(Session session) throws Exception {
-    return client.connect(session);
-  }
-}).addCallback(new Callback<Session, Session>() {
-  @Override
-  public Session call(Session session) throws Exception {
-    System.out.format("Session connected: '%s'", session.getToken());
-    return session;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+Session session = client.authenticateDevice(id).get();
+System.out.format("Session: %s ", session.getAuthToken());
 ```
 
 ```swift fct_label="Swift"
@@ -222,26 +184,10 @@ Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-String email = "email@example.com"
-String password = "3bc8f72e95a9"
-
-AuthenticateMessage message = AuthenticateMessage.Builder.email(email, password);
-Deferred<Session> deferred = client.register(message);
-deferred.addCallback(new Callback<Session, Session>() {
-  @Override
-  public Session call(Session session) throws Exception {
-    System.out.format("Session: '%s'", session.getToken());
-    return session;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
-// Use client.login(...) after register.
+String email = "email@example.com";
+String password = "3bc8f72e95a9";
+Session session = client.authenticateEmail(email, password).get();
+System.out.format("Session: %s ", session.getAuthToken());
 ```
 
 ```swift fct_label="Swift"
@@ -316,6 +262,12 @@ FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
 });
 ```
 
+```java fct_label="Java"
+String oauthToken = "...";
+Session session = client.authenticateFacebook(oauthToken).get();
+System.out.format("Session %s", session.getAuthToken());
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let oauthToken = "..."
@@ -381,24 +333,9 @@ Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
 String oauthToken = "...";
-AuthenticateMessage message = AuthenticateMessage.Builder.google(oauthToken);
-Deferred<Session> deferred = client.register(message);
-deferred.addCallback(new Callback<Session, Session>() {
-  @Override
-  public Session call(Session session) throws Exception {
-    System.out.format("Session: '%s'", session.getToken());
-    return session;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
-// Use client.login(...) after register.
+Session session = client.authenticateGoogle(oauthToken).get();
+System.out.format("Session %s", session.getAuthToken());
 ```
 
 ```swift fct_label="Swift"
@@ -531,24 +468,9 @@ Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-String sessionToken = "...";
-AuthenticateMessage message = AuthenticateMessage.Builder.steam(sessionToken);
-Deferred<Session> deferred = client.register(message);
-deferred.addCallback(new Callback<Session, Session>() {
-  @Override
-  public Session call(Session session) throws Exception {
-    System.out.format("Session: '%s'", session.getToken());
-    return session;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
-// Use client.login(...) after register.
+String token = "...";
+Session session = client.authenticateSteam(token).get();
+System.out.format("Session %s", session.getAuthToken());
 ```
 
 ```swift fct_label="Swift"
@@ -608,25 +530,9 @@ Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
 String customId = "some-custom-id";
-
-AuthenticateMessage message = AuthenticateMessage.Builder.google(customId);
-Deferred<Session> deferred = client.register(message);
-deferred.addCallback(new Callback<Session, Session>() {
-  @Override
-  public Session call(Session session) throws Exception {
-    System.out.format("Session: '%s'", session.getToken());
-    return session;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
-// Use client.login(...) after register.
+Session session = client.authenticateCustom(customId).get();
+System.out.format("Session %s", session.getAuthToken());
 ```
 
 ```swift fct_label="Swift"
@@ -683,26 +589,9 @@ Debug.LogFormat("Session expired? {0}", session.IsExpired);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-String id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-CollatedMessage<Session> message = AuthenticateMessage.Builder.device(id);
-Deferred<Session> deferred = client.login(message);
-deferred.addCallback(new Callback<Session, Session>() {
-  @Override
-  public Session call(Session session) throws Exception {
-    String userId = new String(session.getId());
-    System.out.format("Session id '%s' handle '%s'", userId, session.getHandle());
-    long now = System.currentTimeMillis();
-    System.out.format("Session expired: '%s'", session.IsExpired(now));
-    return session;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+var deviceid = SystemInfo.deviceUniqueIdentifier;
+Session session = client.authenticateDevice(deviceid).get();
+System.out.format("Session %s", session.getAuthToken());
 ```
 
 ```swift fct_label="Swift"
@@ -743,16 +632,8 @@ Debug.Log("Successfully connected.");
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-Session session = someSession; // obtained from register or login.
-Deferred<Session> deferred = client.connect(session);
-deferred.addCallback(new Callback<Session, Session>() {
-  @Override
-  public Session call(Session session) throws Exception {
-    System.out.println("Successfully connected.");
-    return session;
-  }
-});
+SocketClient socket = client.createSocket();
+socket.connect(session, new AbstractClientListener() {}).get();
 ```
 
 ```swift fct_label="Swift"
@@ -792,6 +673,12 @@ if (session.HasExpired(nowUnixEpoch))
 }
 ```
 
+```java fct_label="Java"
+if (session.isExpired(new Date())) {
+  System.out.println("Session has expired. Must reauthenticate!");
+}
+```
+
 You can also prolong the session expiry time by changing the `token_expiry_sec` in the [Session configuration](#install-configuration.md#session) page.
 
 ## Link or unlink
@@ -825,23 +712,9 @@ Debug.LogFormat("Id '{0}' linked for user '{1}'", customid, session.UserId);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-String id = "some-custom-id";
-CollatedMessage<Session> message = SelfLinkMessage.Builder.device(id);
-Deferred<Boolean> deferred = client.send(message);
-deferred.addCallback(new Callback<Boolean, Boolean>() {
-  @Override
-  public Boolean call(Boolean done) throws Exception {
-    System.out.println("Successfully linked device ID to current user.");
-    return done;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+const string customid = "some-custom-id";
+client.linkCustom(session, customid).get();
+System.out.format("Id %s linked for user %s", customid, session.getUserId());
 ```
 
 ```swift fct_label="Swift"
@@ -894,23 +767,9 @@ Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customid, session.UserId);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-String id = "some-custom-id";
-CollatedMessage<Session> message = SelfUnlinkMessage.Builder.device(id);
-Deferred<Boolean> deferred = client.send(message);
-deferred.addCallback(new Callback<Boolean, Boolean>() {
-  @Override
-  public Boolean call(Boolean done) throws Exception {
-    System.out.println("Successfully unlinked device ID from current user.");
-    return done;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+const string customid = "some-custom-id";
+client.unlinkCustom(session, customid).get();
+System.out.format("Id %s unlinked for user %s", customid, session.getUserId());
 ```
 
 ```swift fct_label="Swift"

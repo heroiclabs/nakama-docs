@@ -35,23 +35,10 @@ Debug.LogFormat("User wallet {0}", account.Wallet);
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-CollatedMessage<Self> message = SelfFetchMessage.Builder.build();
-Deferred<Self> deferred = client.send(message);
-deferred.addCallback(new Callback<Self, Self>() {
-  @Override
-  public Self call(Self self) throws Exception {
-    String metadata = new String(self.getMetadata());
-    System.out.format("User has JSON metadata '%s'.", metadata);
-    return self;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+Account account = client.getAccount(session);
+User user = account.getUser();
+System.out.format("User id %s username %s", user.getId(), user.getUsername());
+System.out.format("User wallet %s", account.getWallet());
 ```
 
 ```swift fct_label="Swift"
@@ -177,28 +164,14 @@ foreach (var u in result.Users)
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-byte[] id = user.getId(); // a User object Id.
-CollatedMessage<ResultSet<User>> message = UsersFetchMessage.Builder.newBuilder()
-  .id(id)
-  .build();
-Deferred<ResultSet<User>> deferred = client.send(message);
-deferred.addCallback(new Callback<ResultSet<User>, ResultSet<User>>() {
-  @Override
-  public ResultSet<User> call(ResultSet<User> list) throws Exception {
-    for (User user : list) {
-      String userId = new String(user.getId());
-      System.out.format("User(id=%s, handle=%s)", userId, user.getHandle());
-    }
-    return self;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+List<String> ids = Arrays.asList("userid1", "userid2");
+List<String> usernames = Arrays.asList("username1", "username1");
+String[] facebookIds = new String[] {"facebookid1"};
+Users users = client.getUsers(session, ids, usernames, facebookIds).get();
+
+for (User user : users.getUsersList()) {
+  System.out.format("User id %s username %s", user.getId(), user.getUsername());
+}
 ```
 
 ```swift fct_label="Swift"
@@ -277,26 +250,10 @@ await = client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, l
 ```
 
 ```java fct_label="Java"
-// Requires Nakama 1.x
-CollatedMessage<Boolean> message = SelfUpdateMessage.Builder.newBuilder()
-    .avatarUrl("http://graph.facebook.com/avatar_url")
-    .fullname("My New Name")
-    .location("San Francisco")
-    .build();
-Deferred<Boolean> deferred = client.send(message);
-deferred.addCallback(new Callback<Boolean, Boolean>() {
-  @Override
-  public Boolean call(Boolean done) throws Exception {
-    System.out.println("Successfully updated yourself.");
-    return done;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+String displayName = "My new name";
+String avatarUrl = "http://graph.facebook.com/avatar_url";
+String location = "San Francisco";
+client.updateAccount(session, null, displayName, avatarUrl, null, location);
 ```
 
 ```swift fct_label="Swift"

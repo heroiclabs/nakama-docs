@@ -127,7 +127,7 @@ const string RoomName = "Heroes";
 socket.OnChannelMessage += (sender, message) =>
 {
   Debug.LogFormat("Received a message on channel '{0}'", message.channelId);
-  Debug.LogFormat("Message content: '{1}'", message.content);
+  Debug.LogFormat("Message content: '{0}'", message.content);
 };
 var channel = await socket.JoinChatAsync(RoomName, ChannelType.Room);
 // using Nakama.TinyJson;

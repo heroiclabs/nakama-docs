@@ -71,6 +71,21 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
+```java fct_label="Java"
+String query = "*";
+int minCount = 2;
+int maxCount = 4;
+Map<String, String> stringProperties = new HashMap<String, String>() {{
+  put("region", "europe");
+}};
+Map<String, Double> numericProperties = new HashMap<String, Double>() {{
+  put("rank", 8.0);
+}};
+
+MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
+    query, minCount, maxCount, stringProperties, numericProperties).get();
+```
+
 ### Query
 
 The query defines how the user wants to find their opponents. Queries inspect the properties set by matchmaker users to find users eligible to be matched, or can ignore them to find any available users using the wildcard `*` query. A typical matchmaker query may look for opponents between given ranks, or in a particular region.
@@ -138,6 +153,21 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
+```java fct_label="Java"
+String query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+int minCount = 2;
+int maxCount = 4;
+Map<String, String> stringProperties = new HashMap<String, String>() {{
+  put("region", "europe");
+}};
+Map<String, Double> numericProperties = new HashMap<String, Double>() {{
+  put("rank", 8.0);
+}};
+
+MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
+    query, minCount, maxCount, stringProperties, numericProperties).get();
+```
+
 Or use the wildcard query `"*"` to ignore opponents properties and match with anyone:
 
 ```js fct_label="JavaScript"
@@ -185,6 +215,21 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
+```java fct_label="Java"
+String query = "*";
+int minCount = 2;
+int maxCount = 4;
+Map<String, String> stringProperties = new HashMap<String, String>() {{
+  put("region", "europe");
+}};
+Map<String, Double> numericProperties = new HashMap<String, Double>() {{
+  put("rank", 8.0);
+}};
+
+MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
+    query, minCount, maxCount, stringProperties, numericProperties).get();
+```
+
 ### Minimum and maximum count
 
 Users wishing to matchmake must specify a minimum and maximum number of opponents the matchmaker must find to succeed. If there aren't enough users that match the query to satisfy the minimum count, the user remains in the pool.
@@ -218,6 +263,14 @@ var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
+```java fct_label="Java"
+String query = "*";
+int minCount = 2;
+int maxCount = 4;
+
+MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
+```
+
 To search for an exact number of opponents submit the same minimum and maximum count:
 
 ```js fct_label="JavaScript"
@@ -243,6 +296,14 @@ var minCount = 4;
 var maxCount = 4;
 
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+```
+
+```java fct_label="Java"
+String query = "*";
+int minCount = 4;
+int maxCount = 4;
+
+MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
 ```
 
 ## Matchmaker tickets
@@ -274,6 +335,14 @@ var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
+```java fct_label="Java"
+String query = "*";
+int minCount = 2;
+int maxCount = 4;
+
+MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
+```
+
 This ticket is used when the server notifies the client on matching success. It distinguishes between multiple possible matchmaker operations for the same user. The user may also cancel the matchmaking process using the ticket at any time, but only before the ticket has been fulfilled.
 
 ## Remove a user from the matchmaker
@@ -298,6 +367,11 @@ socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```csharp fct_label="Unity"
 // "matchmakerTicket" is returned by the matchmaker.
 socket.RemoveMatchmakerAsync(matchmakerTicket);
+```
+
+```java fct_label="Java"
+// "matchmakerTicket" is returned by the matchmaker.
+socket.removeMatchmaker(matchmakerTicket.getTicket()).get();
 ```
 
 If the user has multiple entries in the matchmaker only the one identified by the ticket will be removed.
@@ -333,6 +407,15 @@ socket.OnMatchmakerMatched += (_, matched) =>
 };
 ```
 
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onMatchmakeMatched(final MatchmakerMatched matched) {
+    System.out.format("Received MatchmakerMatched message: %s", matched.toString());
+    System.out.format("Matched opponents: %s", opponents.toString());
+  }
+};
+```
 
 ## Join a match
 
@@ -369,5 +452,14 @@ socket.OnMatchmakerMatched += (_, matched) =>
 {
   Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
   await socket.JoinMatchAsync(matched);
+};
+```
+
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onMatchmakeMatched(final MatchmakerMatched matched) {
+    socket.joinMatchToken(matched.getToken()).get();
+  }
 };
 ```

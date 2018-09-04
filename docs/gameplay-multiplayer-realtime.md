@@ -25,6 +25,11 @@ var match = await socket.CreateMatchAsync();
 Debug.LogFormat("Created match with ID '{0}'.", match.Id);
 ```
 
+```java fct_label="Java"
+Match match = socket.createMatch().get();
+System.out.format("Created match with ID %s.", match.getId());
+```
+
 A user can [leave a match](#leave-a-match) at any point which will notify all other users.
 
 ## Join a match
@@ -51,7 +56,7 @@ var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
 foreach (var presence in match.presences)
 {
-  Console.WriteLine("User id '{0}' name '{1}'.", presence.UserId, join.Username);
+  Console.WriteLine("User id '{0}' name '{1}'.", presence.UserId, presence.Username);
 }
 ```
 
@@ -60,7 +65,15 @@ var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
 foreach (var presence in match.presences)
 {
-  Debug.LogFormat("User id '{0}' name '{1}'.", presence.UserId, join.Username);
+  Debug.LogFormat("User id '{0}' name '{1}'.", presence.UserId, presence.Username);
+}
+```
+
+```java fct_label="Java"
+String matchId = "<matchid>";
+Match match = socket.joinMatch(matchId).get();
+for (UserPresence presence : match.getPresences()) {
+  System.out.format("User id %s name %s.", presence.getUserId(), presence.getUsername());
 }
 ```
 
@@ -113,6 +126,20 @@ socket.OnMatchPresence += (_, presence) =>
 };
 ```
 
+```java fct_label="Java"
+List<UserPresence> connectedOpponents = new ArrayList<UserPresence>();
+public void onMatchPresence(final MatchPresenceEvent matchPresence) {
+  connectedOpponents.addAll(matchPresence.getJoins());
+  for (UserPresence leave : matchPresence.getLeaves()) {
+    for (int i = 0; i < connectedOpponents.size(); i++) {
+      if (connectedOpponents.get(i).getUserId().equals(leave.getUserId())) {
+        connectedOpponents.remove(i);
+      }
+    }
+  };
+});
+```
+
 No server updates are sent if there are no changes to the presence list.
 
 ## Send data messages
@@ -144,6 +171,13 @@ var id = "<matchid>";
 var opCode = 1;
 var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 socket.SendMatchState(id, opCode, newState);
+```
+
+```java fct_label="Java"
+String id = "<matchid>";
+int opCode = 1;
+String data = "{\"message\":\"Hello world\"}";
+socket.sendMatchData(id, opCode, data);
 ```
 
 ## Receive data messages
@@ -192,6 +226,15 @@ socket.OnMatchState = (_, state) => {
 };
 ```
 
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onMatchData(final MatchData matchData) {
+      System.out.format("Received match data %s with opcode %d", matchData.getData(), matchData.getOpCode());
+  }
+};
+```
+
 ## Leave a match
 
 Users can leave a match at any point. A match ends when all users have left.
@@ -209,6 +252,11 @@ await socket.LeaveMatchAsync(matchId);
 ```csharp fct_label="Unity"
 var matchId = "<matchid>";
 await socket.LeaveMatchAsync(matchId);
+```
+
+```java fct_label="Java"
+String matchId = "<matchid>";
+socket.leaveMatch(matchId).get();
 ```
 
 !!! Note

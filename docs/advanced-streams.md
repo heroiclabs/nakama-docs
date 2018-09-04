@@ -69,6 +69,16 @@ socket.OnStreamState += (_, stream) =>
 };
 ```
 
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onStreamData(final StreamData data) {
+    System.out.println("Received data from stream: " + data.getStream().getSubject());
+    System.out.println("Data content: " + data.getData());
+  }
+};
+```
+
 ## Receiving stream presence events
 
 When a new presence joins a stream or an existing presence leaves the server will broadcast presence events to all users currently on the stream.
@@ -113,6 +123,23 @@ socket.OnStreamPresence += (_, presence) =>
   foreach (var leave in presence.Leaves)
   {
     Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", leave.UserId, leave.Username, leave.Status);
+  }
+};
+```
+
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onStreamPresence(final StreamPresenceEvent presence) {
+    System.out.println("Received presence event for stream: " + presence.getStream().getSubject());
+
+    for (UserPresence userPresence : presence.getJoins()) {
+      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+    }
+
+    for (UserPresence userPresence : presence.getLeaves()) {
+      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+    }
   }
 };
 ```

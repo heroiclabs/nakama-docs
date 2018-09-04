@@ -324,39 +324,22 @@ console.log("Retrieved pokemon info: %o", pokemonInfo);
 ```csharp fct_label=".Net"
 var payload = "{\"PokemonName\": \"dragonite\"}";
 var rpcid = "get_pokemon";
-var pokemonInfo = await client.RpcAsync(session, rpcid, score);
+var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
 System.Console.WriteLine("Retrieved pokemon info: {0}", pokemonInfo);
 ```
 
 ```csharp fct_label="Unity"
 var payload = "{\"PokemonName\": \"dragonite\"}";
 var rpcid = "get_pokemon";
-var pokemonInfo = await client.RpcAsync(session, rpcid, score);
+var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
 Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
 ```
 
 ```java fct_label="Android/Java"
-// Requires Nakama 1.x
 String payload = "{\"PokemonName\": \"dragonite\"}";
-
-CollatedMessage<RpcResult> message = RpcMessage.Builder.newBuilder("get_pokemon")
-    .payload(payload)
-    .build();
-Deferred<RpcResult> deferred = client.send(message);
-deferred.addCallback(new Callback<RpcResult, RpcResult>() {
-  @Override
-  public RpcResult call(RpcResult rpc) throws Exception {
-    String result = new String(rpc.getPayload());
-    System.out.format("JSON response %s", result);
-    return rpc;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+String rpcid = "get_pokemon";
+Rpc pokemonInfo = client.rpc(session, rpcid, payload);
+System.out.format("Retrieved pokemon info: %s", pokemonInfo.getPayload());
 ```
 
 ```swift fct_label="Swift"

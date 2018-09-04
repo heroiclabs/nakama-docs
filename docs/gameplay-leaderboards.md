@@ -65,6 +65,13 @@ var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
 Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
+```java fct_label="Java"
+final String leaderboard = "level1";
+long score = 100L;
+LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
+System.out.format("New record for %s score %s", r.getUsername(), r.getScore());
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id //a Leaderboard ID.
@@ -154,6 +161,13 @@ var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
 Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
+```java fct_label="Java"
+final String leaderboard = "level1";
+long score = 100L;
+LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
+System.out.format("New record for %s score %d", r.getUsername(), r.getScore());
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id //a Leaderboard ID.
@@ -224,6 +238,14 @@ var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
 foreach (var r in result.Records)
 {
   Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
+```
+
+```java fct_label="Java"
+final String leaderboard = "level1";
+LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
+for (LeaderboardRecord record : records.getRecordsList()) {
+  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
 }
 ```
 
@@ -311,6 +333,23 @@ if (result.NextCursor != null)
 }
 ```
 
+```java fct_label="Java"
+final String leaderboard = "level1";
+LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
+for (LeaderboardRecord record : records.getRecordsList()) {
+  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
+}
+
+// If there are more results get next page.
+if (records.getCursor() != null) {
+  var c = result.NextCursor;
+  records = client.listLeaderboardRecords(session, leaderboard, null, 100, records.getNextCursor());
+  for (LeaderboardRecord record : records.getRecordsList()) {
+    System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
+  }
+}
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id //a Leaderboard ID.
@@ -376,6 +415,15 @@ var result = await client.ListLeaderboardRecordsAsync(session, leaderboard, owne
 foreach (var r in result.OwnerRecords)
 {
   Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+}
+```
+
+```java fct_label="Java"
+String leaderboard = "level1";
+String[] ownerIds = new String[] {"some", "friends", "user ids"};
+LeaderboardRecordList records = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
+for (LeaderboardRecord record : records.getRecordsList()) {
+  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
 }
 ```
 
