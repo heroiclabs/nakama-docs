@@ -22,6 +22,10 @@ await socket.UpdateStatusAsync("Hello everyone!");
 await socket.UpdateStatusAsync("Hello everyone!");
 ```
 
+```java fct_label="Java"
+socket.updateStatus("Hello everyone!").get();
+```
+
 The status can be set and updated as often as needed with this operation.
 
 !!! Tip
@@ -41,6 +45,10 @@ await socket.UpdateStatusAsync(null);
 
 ```csharp fct_label="Unity"
 await socket.UpdateStatusAsync(null);
+```
+
+```java fct_label="Java"
+socket.updateStatus(null).get();
 ```
 
 ## Receive status updates
@@ -90,6 +98,21 @@ socket.OnStatusPresence += (_, presence) =>
 };
 ```
 
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onStatusPresence(final StatusPresenceEvent presence) {
+    for (UserPresence userPresence : presence.getJoins()) {
+      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+    }
+
+    for (UserPresence userPresence : presence.getLeaves()) {
+      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+    }
+  }
+};
+```
+
 If a user is disconnecs or appears offline they will leave their previous status but there will be no corresponding new status.
 
 ## Follow users
@@ -113,6 +136,10 @@ await socket.FollowUsersAsync(new[] { "<user id>" });
 await socket.FollowUsersAsync(new[] { "<user id>" });
 ```
 
+```java fct_label="Java"
+socket.followUsers("<user id>").get();
+```
+
 !!! Note
     Following a user is only active with the current session. When the user disconnects they automatically unfollow anyone they may have followed while connected.
 
@@ -130,4 +157,8 @@ await socket.UnfollowUsersAsync(new[] { "<user id>" });
 
 ```csharp fct_label="Unity"
 await socket.UnfollowUsersAsync(new[] { "<user id>" });
+```
+
+```java fct_label="Java"
+socket.unfollowUsers("<user id>").get();
 ```

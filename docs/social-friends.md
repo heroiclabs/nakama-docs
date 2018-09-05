@@ -42,6 +42,12 @@ var usernames = new[] {"username1"};
 await client.AddFriendsAsync(session, ids, usernames);
 ```
 
+```java fct_label="Java"
+List<String> ids = Arrays.asList("user-id1", "user-id2");
+String[] usernames = new String[] {"username1"};
+client.addFriends(session, ids, usernames).get();
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let userID = ... // some user ID
@@ -92,6 +98,13 @@ var result = await client.ListFriendsAsync(session);
 foreach (var f in result.Friends)
 {
   Debug.LogFormat("Friend '{0}' state '{1}'", f.User.Username, f.State);
+}
+```
+
+```java fct_label="Java"
+Friends friends = client.listFriends(session).get();
+for (Friend friend : friends.getFriendsList()) {
+  System.out.format("Friend %s state %d", friend.getUser().getUsername(), friend.getState());
 }
 ```
 
@@ -147,6 +160,12 @@ var usernames = new[] {"username1"};
 await client.DeleteFriendsAsync(session, ids, usernames);
 ```
 
+```java fct_label="Java"
+List<String> ids = Arrays.asList("user-id1", "user-id2");
+String[] usernames = new String[] {"username1"};
+client.deleteFriends(session, ids, usernames).get();
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let userID = ... // some user ID
@@ -195,6 +214,12 @@ await client.BlockFriendsAsync(session, ids, usernames);
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.BlockFriendsAsync(session, ids, usernames);
+```
+
+```java fct_label="Java"
+List<String> ids = Arrays.asList("user-id1", "user-id2");
+String[] usernames = new String[] {"username1"};
+client.blockFriends(session, ids, usernames).get();
 ```
 
 ```swift fct_label="Swift"

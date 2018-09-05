@@ -60,6 +60,18 @@ socket.OnNotification += (_, notification) =>
 }
 ```
 
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onNotifications(final NotificationList notifications) {
+    System.out.println("Received notifications");
+    for (Notification notification : notifications.getNotificationsList()) {
+      System.out.format("Notification content: %s", notification.getContent());
+    }
+  }
+};
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 client.onNotification = { notification in
@@ -98,6 +110,13 @@ var result = await client.ListNotificationsAsync(session, 10);
 foreach (var n in result.Notifications)
 {
   Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+}
+```
+
+```java fct_label="Java"
+NotificationList notifications = client.listNotifications(session, 10).get();
+for (Notification notification : notifications.getNotificationsList()) {
+  System.out.format("Notification content: %s", notification.getContent());
 }
 ```
 
@@ -165,6 +184,16 @@ if (result.CacheableCursor != null)
   foreach (var n in result.Notifications)
   {
     Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+  }
+}
+```
+
+```java fct_label="Java"
+NotificationList notifications = client.listNotifications(session, 10).get();
+if (notifications.getCacheableCursor() != null) {
+  notifications = client.listNotifications(session, 10, notifications.getCacheableCursor()).get();
+  for (Notification notification : notifications.getNotificationsList()) {
+    System.out.format("Notification content: %s", notification.getContent());
   }
 }
 ```
@@ -240,6 +269,14 @@ foreach (var n in result.Notifications)
 }
 ```
 
+```java fct_label="Java"
+String cacheableCursor = "<cacheableCursor>";
+NotificationList notifications = client.listNotifications(session, 10, cacheableCursor).get();
+for (Notification notification : notifications.getNotificationsList()) {
+  System.out.format("Notification content: %s", notification.getContent());
+}
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 var resumableCursor = "<cacheableCursor>";
@@ -283,6 +320,11 @@ await client.DeleteNotificationsAsync(session, notificationIds);
 ```csharp fct_label="Unity"
 var notificationIds = new[] {"<notificationId>"};
 await client.DeleteNotificationsAsync(session, notificationIds);
+```
+
+```java fct_label="Java"
+String[] notificationIds = new String[] {"<notificationId>"};
+client.deleteNotifications(session, notificationIds).get();
 ```
 
 ```swift fct_label="Swift"

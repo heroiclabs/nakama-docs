@@ -51,6 +51,15 @@ foreach (var g in result.Groups)
 }
 ```
 
+```java fct_label="Java"
+// Filter for group names which start with "heroes"
+String nameFilter = "heroes%";
+GroupList groups = client.listGroups(session, nameFilter, 20).get();
+for (Group group : groups.getGroupsList()) {
+  System.out.format("Group name %s count %s", group.getName(), group.getEdgeCount());
+}
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 var message = GroupsListMessage()
@@ -118,6 +127,18 @@ if (result.Cursor != null)
 }
 ```
 
+```java fct_label="Java"
+// Filter for group names which start with "heroes"
+String nameFilter = "heroes%";
+GroupList groups = client.listGroups(session, nameFilter, 20).get();
+if (groups.getCursor() != null) {
+  groups = client.listGroups(session, nameFilter, 20, groups.getCursor()).get();
+  for (Group group : groups.getGroupsList()) {
+    System.out.format("Group name %s count %s", group.getName(), group.getEdgeCount());
+  }
+}
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 var message = GroupsListMessage()
@@ -176,6 +197,12 @@ System.Console.WriteLine("Sent group join request '{0}'", groupid);
 const string groupid = "<group id>";
 await client.JoinGroupAsync(session, groupid);
 Debug.LogFormat("Sent group join request '{0}'", groupid);
+```
+
+```java fct_label="Java"
+String groupid = "<group id>";
+client.joinGroup(session, groupid).get();
+System.out.format("Sent group join request %s", groupid);
 ```
 
 ```swift fct_label="Swift"
@@ -239,6 +266,14 @@ foreach (var ug in result.UserGroups)
 }
 ```
 
+```java fct_label="Java"
+String userid = "<user id>";
+UserGroupList userGroups = client.listUserGroups(session, userid).get();
+for (UserGroupList.UserGroup userGroup : userGroups.getUserGroupsList()) {
+  System.out.format("Group name %s role %d", userGroup.getGroup().getName(), userGroup.getState());
+}
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 var message = GroupsSelfListMessage()
@@ -293,6 +328,14 @@ foreach (var ug in result.UserGroups)
 {
   var g = ug.Group;
   Debug.LogFormat("group '{0}' role '{1}'", g.Id, ug.State);
+}
+```
+
+```java fct_label="Java"
+String groupid = "<group id>";
+GroupUserList groupUsers = client.listGroupUsers(session, groupid).get();
+for (GroupUserList.GroupUser groupUser : groupUsers.getGroupUsersList()) {
+  System.out.format("Username %s role %d", groupUser.getUser().getUsername(), groupUser.getState());
 }
 ```
 
@@ -358,6 +401,13 @@ const string name = "pizza-lovers";
 const string desc = "pizza lovers, pineapple haters";
 var group = await client.CreateGroupAsync(session, name, desc);
 Debug.LogFormat("New group '{0}'", group.Id);
+```
+
+```java fct_label="Java"
+String name = "pizza-lovers";
+String desc = "pizza lovers, pineapple haters";
+Group group = client.createGroup(session, name, desc).get();
+System.out.format("New group %s", group.getId());
 ```
 
 ```swift fct_label="Swift"
@@ -452,6 +502,13 @@ var group = await client.UpdateGroupAsync(session, groupid, null, desc);
 Console.LogFormat("Updated group '{0}'", group.Id);
 ```
 
+```java fct_label="Java"
+String groupid = "<group id>";
+String desc = "I was only kidding. Basil sauce ftw!";
+client.updateGroup(session, groupid, null, desc).get();
+System.out.format("Updated group %s", groupid);
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
@@ -504,6 +561,11 @@ await client.LeaveGroupAsync(session, groupid);
 ```csharp fct_label="Unity"
 const string groupid = "<group id>";
 await client.LeaveGroupAsync(session, groupid);
+```
+
+```java fct_label="Java"
+String groupid = "<group id>";
+client.leaveGroup(session, groupid).get();
 ```
 
 ```swift fct_label="Swift"
@@ -569,6 +631,12 @@ var userIds = new[] {"<user id>"};
 await client.AddGroupUsersAsync(session, groupid, userIds);
 ```
 
+```java fct_label="Java"
+String groupid = "<group id>";
+String[] userIds = new String[] {"<user id>"};
+client.addGroupUsers(session, groupid, userIds).get();
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
@@ -631,6 +699,12 @@ var userIds = new[] {"<user id>"};
 await client.PromoteGroupUsersAsync(session, groupid, userIds);
 ```
 
+```java fct_label="Java"
+String groupid = "<group id>";
+String[] userIds = new String[] {"<user id>"};
+client.promoteGroupUsers(session, groupid, userIds).get();
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
@@ -691,6 +765,12 @@ var userIds = new[] {"<user id>"};
 await client.KickGroupUsersAsync(session, groupid, userIds);
 ```
 
+```java fct_label="Java"
+String groupid = "<group id>";
+String[] userIds = new String[] {"<user id>"};
+client.kickGroupUsers(session, groupid, userIds).get();
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
@@ -744,6 +824,11 @@ await client.DeleteGroupAsync(session, groupid);
 ```csharp fct_label="Unity"
 const string groupid = "<group id>";
 await client.DeleteGroupAsync(session, groupid);
+```
+
+```java fct_label="Java"
+String groupid = "<group id>";
+client.deleteGroup(session, groupid).get();
 ```
 
 ```swift fct_label="Swift"

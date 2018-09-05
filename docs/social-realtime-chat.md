@@ -53,6 +53,16 @@ socket.OnChannelMessage = (_, message) =>
 };
 ```
 
+```java fct_label="Java"
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onChannelMessage(final ChannelMessage message) {
+    System.out.format("Received a message on channel %s", message.getChannelId());
+    System.out.format("Message content: %s", message.getContent());
+  }
+};
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 client.onTopicMessage = { message in
@@ -83,6 +93,12 @@ if (message.code != 0)
 if (message.code != 0)
 {
   Debug.LogFormat("Received message with code '{0}'", message.Code);
+};
+```
+
+```java fct_label="Java"
+if (message.getCode() != 0) {
+  System.out.println("Received message with code %s", message.getCode());
 };
 ```
 
@@ -146,6 +162,14 @@ var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence
 Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
+```java fct_label="Java"
+String roomname = "MarvelMovieFans";
+boolean persistence = true;
+boolean hidden = false;
+Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidden).get();
+System.out.format("You can now send messages to channel id %s", channel.getId());
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 var roomId : TopicId?
@@ -199,6 +223,14 @@ var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence
 Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
+```java fct_label="Java"
+String groupId = "<group id>";
+boolean persistence = true;
+boolean hidden = false;
+Channel channel = socket.joinChat(groupId, ChannelType.GROUP, persistence, hidden).get();
+System.out.format("You can now send messages to channel id %s", channel.getId());
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 var groupTopicId : TopicId?
@@ -250,6 +282,14 @@ const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
 Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
+```
+
+```java fct_label="Java"
+String userId = "<user id>";
+boolean persistence = true;
+boolean hidden = false;
+Channel channel = socket.joinChat(userId, ChannelType.DIRECT_MESSAGE, persistence, hidden).get();
+System.out.format("You can now send messages to channel id %s", channel.getId());
 ```
 
 ```swift fct_label="Swift"
@@ -346,6 +386,29 @@ var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence
 connectedUsers.AddRange(channel.Presences);
 ```
 
+```java fct_label="Java"
+final List<UserPresence> connectedUsers = new ArrayList<UserPresence>();
+ClientListener listener = new AbstractClientListener() {
+  @Override
+  public void onChannelPresence(final ChannelPresenceEvent presence) {
+    connectedUsers.addAll(presence.getJoins());
+    for (UserPresence presence : presence.getLeaves()) {
+      for (int i = 0; i < connectedUsers.size(); i++) {
+        if (connectedUsers.get(i).getUserId().equals(presence.getUserId())) {
+          connectedUsers.remove(i);
+        }
+      }
+    }
+  }
+};
+
+String roomname = "PizzaFans";
+boolean persistence = true;
+boolean hidden = false;
+Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidden);
+connectedUsers.addAll(channel.getPresences());
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 var onlineUsers : [UserPresence] = []
@@ -403,6 +466,12 @@ var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 var sendAck = await socket.WriteChatMessageAsync(channelId, content);
 ```
 
+```java fct_label="Java"
+String channelId = "<channel id>";
+final String content = "{\"message\":\"Hello world\"}";
+ChannelMessageAck sendAck = socket.writeChatMessage(channelId, content).get();
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let chatTopicID = ... // A chat topic ID
@@ -437,6 +506,11 @@ await socket.LeaveChatAsync(channelId);
 ```csharp fct_label="Unity"
 var channelId = "<channel id>";
 await socket.LeaveChatAsync(channelId);
+```
+
+```java fct_label="Java"
+String channelId = "<channel id>";
+socket.leaveChat(channelId).get();
 ```
 
 ```swift fct_label="Swift"
@@ -490,6 +564,14 @@ var result = await client.ListChannelMessagesAsync(session, channelId, 10, true)
 foreach (var m in result.Messages)
 {
   Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+}
+```
+
+```java fct_label="Java"
+String channelId = "<channel id>";
+ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
+for (ChannelMessage message : messages.getMessagesList()) {
+  System.out.format("Message content: %s", message.getContent());
 }
 ```
 
@@ -576,6 +658,18 @@ if (!string.IsNullOrEmpty(result.NextCursor)) {
     Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
   });
 };
+```
+
+
+```java fct_label="Java"
+String channelId = "<channel id>";
+ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
+if (messages.getNextCursor() != null) {
+  messages = client.listChannelMessages(session, channelId, 10, messages.getNextCursor()).get();
+  for (ChannelMessage message : messages.getMessagesList()) {
+    System.out.format("Message content: %s", message.getContent());
+  }
+}
 ```
 
 ```swift fct_label="Swift"

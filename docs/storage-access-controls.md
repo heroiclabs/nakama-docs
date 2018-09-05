@@ -50,32 +50,11 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Debug.LogFormat("Read objects {0}", result.Objects);
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-byte[] userId = session.getId(); // a Session object's Id.
-
-CollatedMessage<ResultSet<StorageRecord>> message = StorageFetchMessage.Builder.newBuilder()
-    // "null" below means system owned record
-    .record("myapp", "configuration", "config", null)
-    .build();
-Deferred<ResultSet<StorageRecord>> deferred = client.send(message);
-deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRecord>>() {
-  @Override
-  public ResultSet<StorageRecord> call(ResultSet<StorageRecord> list) throws Exception {
-    for (StorageRecord record : list) {
-      String value = new String(record.getValue());
-      System.out.format("Record value '%s'", value);
-    }
-    return list;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+StorageObjectId objectId = new StorageObjectId("configuration");
+objectId.setKey("config");
+StorageObjects objects = client.readStorageObjects(session, objectId).get();
+System.out.format("Read objects %s", objects.getObjectsList().toString());
 ```
 
 ```swift fct_label="Swift"
@@ -210,31 +189,11 @@ var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObje
 Debug.LogFormat("Stored objects {0}", result.Objects);
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-String armySetup = "{\"soldiers\": 50}";
-
-CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
-    .record("myapp", "battle", "army", armySetup, StorageRecord.PermissionRead.PUBLIC_READ, StorageRecord.PermissionWrite.OWNER_WRITE)
-    .build();
-Deferred<ResultSet<RecordId>> deferred = client.send(message);
-deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
-  @Override
-  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
-    for (RecordId recordId : list) {
-      String version = new String(recordId.getVersion());
-      System.out.format("Stored record has version '%s'", version);
-    }
-    return list;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+String armySetup = "{ \"soldiers\": 50 }";
+StorageObjectWrite object = new StorageObjectWrite("saves", "savegame", armySetup, PermissionRead.PUBLIC_READ, PermissionWrite.OWNER_WRITE);
+StorageObjectAcks acks = client.writeStorageObjects(session, object).get();
+System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
 ```swift fct_label="Swift"

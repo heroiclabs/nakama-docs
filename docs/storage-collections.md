@@ -93,34 +93,13 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Debug.LogFormat("Successfully stored objects {0}", objectIds);
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-String saveGame = "{\"progress\": 50}";
-String myStats = "{\"skill\": 24}";
-
-String bucket = "myapp";
-CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
-    .record(bucket, "saves", "savegame", saveGame)
-    .record(bucket, "stats", "mystats", myStats)
-    .build();
-Deferred<ResultSet<RecordId>> deferred = client.send(message);
-deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
-  @Override
-  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
-    for (RecordId recordId : list) {
-      String version = new String(recordId.getVersion());
-      System.out.format("Stored record has version '%s'", version);
-    }
-    return list;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+String saveGame = "{ \"progress\": 50 }";
+String myStats = "{ \"skill\": 24 }";
+StorageObjectWrite saveGameObject = new StorageObjectWrite("saves", "savegame", saveGame, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
+StorageObjectWrite statsObject = new StorageObjectWrite("stats", "skills", myStats, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
+StorageObjectAcks acks = client.writeStorageObjects(session, saveGameObject, statsObject).get();
+System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
 ```swift fct_label="Swift"
@@ -224,30 +203,12 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Debug.LogFormat("Stored objects {0}", objectIds);
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-String saveGame = "{\"progress\": 54}";
-String version = record.getVersion(); // a RecordId object's version.
-
-CollatedMessage<ResultSet<RecordId>> message = StorageWriteMessage.Builder.newBuilder()
-    .record("myapp", "saves", "savegame", saveGame, version)
-    .build();
-Deferred<ResultSet<RecordId>> deferred = client.send(message);
-deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
-  @Override
-  public ResultSet<RecordId> call(ResultSet<RecordId> list) throws Exception {
-    // Cache updated version for next write.
-    version = list.getResults().get(0).getVersion();
-    return list;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+String saveGame = "{ \"progress\": 50 }";
+StorageObjectWrite object = new StorageObjectWrite("saves", "savegame", saveGame, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
+object.setVersion("<version>");
+StorageObjectAcks acks = client.writeStorageObjects(session, object).get();
+System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
 ```swift fct_label="Swift"
@@ -337,6 +298,14 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Version = "*"
 });
 Debug.LogFormat("Stored objects {0}", objectIds);
+```
+
+```java fct_label="Java"
+String saveGame = "{ \"progress\": 50 }";
+StorageObjectWrite object = new StorageObjectWrite("saves", "savegame", saveGame, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
+object.setVersion("*");
+StorageObjectAcks acks = client.writeStorageObjects(session, object).get();
+System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
 ```java fct_label="Android/Java"
@@ -449,34 +418,12 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Debug.LogFormat("Read objects {0}", result.Objects);
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-byte[] userId = session.getId(); // a Session object's Id.
-
-CollatedMessage<ResultSet<StorageRecord>> message = StorageFetchMessage.Builder.newBuilder()
-    .record("myapp", "saves", "savegame", userId)
-    .record("myapp", "configuration", "config", null)
-    .build();
-Deferred<ResultSet<StorageRecord>> deferred = client.send(message);
-deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRecord>>() {
-  @Override
-  public ResultSet<StorageRecord> call(ResultSet<StorageRecord> list) throws Exception {
-    for (StorageRecord record : list) {
-      String value = new String(record.getValue());
-      System.out.format("Record value '%s'", value);
-      System.out.format("Record permissions read '%s' write '%s'",
-          record.getPermissionRead(), record.getPermissionWrite());
-    }
-    return list;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+StorageObjectId objectId = new StorageObjectId("saves");
+objectId.setKey("savegame");
+objectId.setUserId(session.getUserId());
+StorageObjects objects = client.readStorageObjects(session, objectId).get();
+System.out.format("Read objects %s", objects.getObjectsList().toString());
 ```
 
 ```swift fct_label="Swift"
@@ -541,34 +488,9 @@ var result = await client.ListUsersStorageObjectsAsync(session, "saves", session
 Debug.LogFormat("List objects '{0}'", result);
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-byte[] userId = session.getId(); // a Session object's Id.
-
-CollatedMessage<ResultSet<StorageRecord>> message = StorageListMessage.Builder.newBuilder(userId)
-    .bucket("myapp")
-    .collection("saves")
-    .build();
-Deferred<ResultSet<StorageRecord>> deferred = client.send(message);
-deferred.addCallback(new Callback<ResultSet<StorageRecord>, ResultSet<StorageRecord>>() {
-  @Override
-  public ResultSet<StorageRecord> call(ResultSet<StorageRecord> list) throws Exception {
-    for (StorageRecord record : list) {
-      String value = new String(record.getValue());
-      System.out.format("Record value '%s'", value);
-      System.out.format("Record permissions read '%s' write '%s'",
-          record.getPermissionRead(), record.getPermissionWrite());
-    }
-    return list;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+StorageObjectList objects = client.listUsersStorageObjects(session, "saves", session.getUserId()).get();
+System.out.format("List objects %s", objects);
 ```
 
 ```swift fct_label="Swift"
@@ -629,8 +551,7 @@ console.info("Deleted objects.");
 ```csharp fct_label=".NET"
 var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
-  Key = "savegame",
-  UserId = session.UserId
+  Key = "savegame"
 });
 Console.WriteLine("Deleted objects.");
 ```
@@ -638,32 +559,16 @@ Console.WriteLine("Deleted objects.");
 ```csharp fct_label="Unity"
 var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
-  Key = "savegame",
-  UserId = session.UserId
+  Key = "savegame"
 });
 Debug.Log("Deleted objects.");
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
-    .record("myapp", "saves", "savegame")
-    .build();
-Deferred<Boolean> deferred = client.send(message);
-deferred.addCallback(new Callback<Boolean, Boolean>() {
-  @Override
-  public Boolean call(Boolean done) throws Exception {
-    System.out.println("Removed user's record(s).");
-    return done;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+StorageObjectId objectId = new StorageObjectId("saves");
+objectId.setKey("savegame");
+client.deleteStorageObjects(session, objectId).get();
+System.out.format("Deleted objects.");
 ```
 
 ```swift fct_label="Swift"
@@ -743,28 +648,12 @@ var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId
 Debug.Log("Deleted objects.");
 ```
 
-```java fct_label="Android/Java"
-// Requires Nakama 1.x
-
-byte[] version = record.getVersion(); // a RecordId object's version.
-
-CollatedMessage<Boolean> message = StorageRemoveMessage.Builder.newBuilder()
-    .record("myapp", "saves", "savegame", version)
-    .build();
-Deferred<Boolean> deferred = client.send(message);
-deferred.addCallback(new Callback<Boolean, Boolean>() {
-  @Override
-  public Boolean call(Boolean done) throws Exception {
-    System.out.println("Removed user's record(s).");
-    return done;
-  }
-}).addErrback(new Callback<Error, Error>() {
-  @Override
-  public Error call(Error err) throws Exception {
-    System.err.format("Error('%s', '%s')", err.getCode(), err.getMessage());
-    return err;
-  }
-});
+```java fct_label="Java"
+StorageObjectId objectId = new StorageObjectId("saves");
+objectId.setKey("savegame");
+objectId.setVersion("<version>");
+client.deleteStorageObjects(session, objectId).get();
+System.out.format("Deleted objects.");
 ```
 
 ```swift fct_label="Swift"
