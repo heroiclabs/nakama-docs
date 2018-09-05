@@ -1,69 +1,52 @@
-.code-nav-container {
-  background: #fff;
-  border: 1px solid #ebebeb;
-  margin: 16px 0;
-  overflow-x: scroll;
-  overflow-y: hidden;
+.md-fenced-code-tabs * {
+    box-sizing: border-box;
 }
 
-.code-nav-container > .nav-tabs {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  border-bottom: 1px solid #ebebeb;
-  height: 48px;
-  white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden;
+.md-fenced-code-tabs {
+    box-sizing: border-box;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
+    max-width: 100%;
+    border-radius: .2rem;
 }
 
-.code-nav-container > .nav-tabs > li {
-  position: relative;
-  display: inline-block;
-  border-bottom: 2px solid transparent;
-  border-top: 2px solid transparent;
-  height: 47px;
-  max-width: 200px;
-  margin: 0;
-  overflow: hidden;
-  padding: 0 24px;
-  text-align: center;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
+.md-fenced-code-tabs {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
-.code-nav-container > .nav-tabs > li.active {
-  border-bottom-color: #039be5;
+.md-fenced-code-tabs input {
+    position: absolute;
+    opacity: 0;
 }
 
-.code-nav-container > .nav-tabs > li > a {
-  color: #757575;
-  font: 500 14px/43px sans-serif;
+.md-fenced-code-tabs label {
+    width: auto;
+    cursor: pointer;
+    font-size: 1.28rem;
+    padding: 1.2rem 1.6rem;
 }
 
-.code-nav-container > .nav-tabs > li > a:hover,
-.code-nav-container > .nav-tabs > li > a:focus,
-.code-nav-container > .nav-tabs > li.active > a,
-.code-nav-container > .nav-tabs > li.active > a:hover,
-.code-nav-container > .nav-tabs > li.active > a:focus {
-  text-decoration: none;
-  color: #039be5;
+.md-fenced-code-tabs input:checked + label {
+    color: #03a9f4;
+    border-bottom: 2px solid #03a9f4;
 }
 
-.code-nav-container > .tab-content > .tab-pane {
-  display: none;
+.md-fenced-code-tabs .code-tabpanel {
+    display: none;
+    width: 100%;
+    order: 99;
 }
 
-.code-nav-container > .tab-content > .active {
-  display: block;
+.md-fenced-code-tabs input:checked + label + .code-tabpanel {
+    display: block;
 }
 
-.code-nav-container > .tab-content > .tab-pane:before {
-    content: none !important;
-}
-
-.code-nav-container > .tab-content > .tab-pane > .codehilite {
-    margin-top: 0;
-    margin-bottom: 0;
+.md-fenced-code-tabs pre,
+.md-fenced-code-tabs .codehilite {
+    width: 100%;
+    margin: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
