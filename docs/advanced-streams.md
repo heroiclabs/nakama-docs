@@ -191,7 +191,7 @@ The server can send data to a stream through a function call. The message will b
 ```lua
 local stream_id = { mode = 123, label = "my custom stream" }
 local payload = nk.json_encode({ some = "data" })
-nk.stream_data_send(stream_id, payload)
+nk.stream_send(stream_id, payload)
 ```
 
 If the stream is empty the operation will be a no-op.
