@@ -282,7 +282,7 @@ restoreSessionOrAuthenticate().then(function(session) {
   }]);
 }).then(function(writeAck) {
   console.log("Storage write was successful - ack: %o", writeAck);
-}).catch(function(error) {
-  console.log("An error occured: %o", e)
+}).catch(function(e) {
+  console.log("An error occured: %o", e);
 });
 ```
