@@ -137,7 +137,7 @@ With the "incr" operator the new value is added to any existing score for that r
 curl -X POST \
   'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>' \
   -H 'Authorization: Bearer <session token>'
-  -d '{"record": {"score": 100}}'
+  -d '{"score": 100}'
 ```
 
 ```js fct_label="JavaScript"
@@ -195,9 +195,7 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 
 {
-  "record": {
-    "score": 100
-  }
+  "score": 100
 }
 ```
 
