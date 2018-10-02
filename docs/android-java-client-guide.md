@@ -140,7 +140,7 @@ The client can create one or more sockets with the server. Each socket can have 
 ```java
 SocketClient socket = client.createWebSocket();
 
-SocketListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onDisconnect(final Throwable t) {
     System.out.println("Socket disconnected.");
@@ -156,7 +156,7 @@ You can connect to the server over a realtime socket connection to send and rece
 To join a chat channel and receive messages:
 
 ```java
-SocketListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onChannelMessage(final ChannelMessage message) {
     System.out.format("Received a message on channel %s", message.getChannelId());
@@ -180,7 +180,7 @@ There are more examples for chat channels [here](social-realtime-chat.md).
 A socket object has event handlers which are called on various messages received from the server.
 
 ```java
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onStatusPresence(final StatusPresenceEvent presence) {
     for (UserPresence userPresence : presence.getJoins()) {

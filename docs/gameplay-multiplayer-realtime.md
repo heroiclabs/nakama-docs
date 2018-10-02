@@ -227,7 +227,7 @@ socket.OnMatchState = (_, state) => {
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onMatchData(final MatchData matchData) {
       System.out.format("Received match data %s with opcode %d", matchData.getData(), matchData.getOpCode());

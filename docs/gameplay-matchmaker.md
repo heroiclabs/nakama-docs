@@ -408,7 +408,7 @@ socket.OnMatchmakerMatched += (_, matched) =>
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onMatchmakeMatched(final MatchmakerMatched matched) {
     System.out.format("Received MatchmakerMatched message: %s", matched.toString());
@@ -456,7 +456,7 @@ socket.OnMatchmakerMatched += (_, matched) =>
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onMatchmakeMatched(final MatchmakerMatched matched) {
     socket.joinMatchToken(matched.getToken()).get();

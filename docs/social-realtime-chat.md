@@ -54,7 +54,7 @@ socket.OnChannelMessage = (_, message) =>
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onChannelMessage(final ChannelMessage message) {
     System.out.format("Received a message on channel %s", message.getChannelId());
@@ -388,7 +388,7 @@ connectedUsers.AddRange(channel.Presences);
 
 ```java fct_label="Java"
 final List<UserPresence> connectedUsers = new ArrayList<UserPresence>();
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onChannelPresence(final ChannelPresenceEvent presence) {
     connectedUsers.addAll(presence.getJoins());

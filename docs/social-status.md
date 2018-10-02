@@ -99,7 +99,7 @@ socket.OnStatusPresence += (_, presence) =>
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onStatusPresence(final StatusPresenceEvent presence) {
     for (UserPresence userPresence : presence.getJoins()) {

@@ -70,7 +70,7 @@ socket.OnStreamState += (_, stream) =>
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onStreamData(final StreamData data) {
     System.out.println("Received data from stream: " + data.getStream().getSubject());
@@ -128,7 +128,7 @@ socket.OnStreamPresence += (_, presence) =>
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onStreamPresence(final StreamPresenceEvent presence) {
     System.out.println("Received presence event for stream: " + presence.getStream().getSubject());

@@ -633,7 +633,7 @@ Debug.Log("Successfully connected.");
 
 ```java fct_label="Java"
 SocketClient socket = client.createSocket();
-socket.connect(session, new AbstractClientListener() {}).get();
+socket.connect(session, new AbstractSocketListener() {}).get();
 ```
 
 ```swift fct_label="Swift"

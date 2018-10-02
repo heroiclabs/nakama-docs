@@ -61,7 +61,7 @@ socket.OnNotification += (_, notification) =>
 ```
 
 ```java fct_label="Java"
-ClientListener listener = new AbstractClientListener() {
+SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onNotifications(final NotificationList notifications) {
     System.out.println("Received notifications");
