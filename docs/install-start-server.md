@@ -9,7 +9,7 @@ With the server downloaded or accessible you can start it. You must first start 
 You can start the database server with this command:
 
 ```sh
-cockroach start --background --insecure path="./cdb-store1/"
+cockroach start --background --insecure --store=path="./cdb-store1/"
 ```
 
 This will start CockroachDB in the background, on port `26257` and sets the data directory for the database to the folder "cdb-store1" within the current working directory of the shell environment. For more examples have a look at the [database documentation](https://www.cockroachlabs.com/docs/stable/start-a-local-cluster.html).
