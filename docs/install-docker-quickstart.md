@@ -90,7 +90,7 @@ version: '3'
 services:
   cockroachdb:
     container_name: cockroachdb
-    image: cockroachdb/cockroach:v2.0.3
+    image: cockroachdb/cockroach:v2.0.6
     command: start --insecure --store=attrs=ssd,path=/var/lib/cockroach/
     restart: always
     volumes:
@@ -103,7 +103,7 @@ services:
       - "8080:8080"
   nakama:
     container_name: nakama
-    image: heroiclabs/nakama:2.0.2
+    image: heroiclabs/nakama:2.1.0
     entrypoint:
       - "/bin/sh"
       - "-ecx"
