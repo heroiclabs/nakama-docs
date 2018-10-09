@@ -542,7 +542,7 @@ function M.match_loop(context, dispatcher, tick, state, messages)
       print(("Message key %s contains value %s"):format(k, v))
     end
     -- PONG message back to sender
-    dispatcher.broadcast_message(1, message, message.sender)
+    dispatcher.broadcast_message(1, message.data, message.sender)
   end
   return state
 end
