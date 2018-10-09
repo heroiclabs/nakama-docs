@@ -73,6 +73,10 @@ function M.match_loop(context, dispatcher, tick, state, messages)
   return state
 end
 
+function M.match_terminate(context, dispatcher, tick, state, grace_seconds)
+  return state
+end
+
 return M
 ```
 
@@ -182,7 +186,7 @@ end
 The match handler that govern Authoritative Multiplayer matches must implement all of the function callbacks below.
 
 !!! Note "Handler Errors"
-    Errors generated in any of the callbacks result in a force disconnect of all clients to that match.
+    Errors generated in any of the callbacks result in the match ending immetiately and a force disconnect of all clients currently connected to that match.
 
 __match_init(context, params) -> state, tickrate, label__
 
@@ -371,6 +375,40 @@ local function match_loop(context, dispatcher, tick, state, messages)
 end
 ```
 
+---
+
+__match_terminate(context, dispatcher, tick, state, grace_seconds) -> state__
+
+Called when the server begins a graceful shutdown process. Will not be called if graceful shutdown is disabled.
+
+The match should attempt to complete any processing before the given number of seconds elapses, and optionally send a message to clients to inform them the server is shutting down.
+
+When the grace period expires the match will be forcefully closed if it is still running, clients will be disconnected, and the server will shut down.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| context | table | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+| dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
+| tick | number | Tick is the current match tick number starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
+| state | table | The current in-memory match state, may be any Lua term except nil. |
+| grace_seconds | number | The number of seconds before the server will shut down. All match handler work must be completed before that time elapses, and the match will end regardless. |
+
+_Returns_
+
+You must return:
+
+(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
+
+_Example_
+
+```lua fct_label="Lua"
+local function match_terminate(context, dispatcher, tick, state, grace_seconds)
+  return state
+end
+```
+
 ## Match runtime API
 
 The dispatcher type passed into the handler functions expose the following functions:
@@ -504,9 +542,15 @@ function M.match_loop(context, dispatcher, tick, state, messages)
       print(("Message key %s contains value %s"):format(k, v))
     end
     -- PONG message back to sender
-    dispatcher.broadcast_message(1, message, message.sender.session_id, nil)
+    dispatcher.broadcast_message(1, message, message.sender)
   end
   return state
+end
+
+function M.match_terminate(context, dispatcher, tick, state, grace_seconds)
+  local message = "Server shutting down in " .. grace_seconds .. " seconds"
+  dispatcher.broadcast_message(2, message)
+  return nil
 end
 
 return M
