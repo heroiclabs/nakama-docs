@@ -826,7 +826,7 @@ _Example_
 
 ```lua
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
-nk.__leaderboard_delete(id)
+nk.leaderboard_delete(id)
 ```
 
 ---
@@ -878,7 +878,7 @@ _Example_
 ```lua
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
-nk.__leaderboard_record_delete(id, owner)
+nk.leaderboard_record_delete(id, owner)
 ```
 
 ---
@@ -906,7 +906,7 @@ _Example_
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owners = {}
 local limit = 10
-local records, owner_records, next_cursor, prev_cursor = nk.__leaderboard_records_list(id, owners, limit)
+local records, owner_records, next_cursor, prev_cursor = nk.leaderboard_records_list(id, owners, limit)
 ```
 
 ### logger
