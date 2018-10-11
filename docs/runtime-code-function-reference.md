@@ -898,7 +898,7 @@ _Parameters_
 
 _Returns_
 
-A page of leaderboard records and optionally a cursor that can be used to retrieve the next page, if any.
+A page of leaderboard records, a list of owner leaderboard records (empty if the `owners` input parameter is not set), an optional next page cursor that can be used to retrieve the next page of records (if any), and an optional previous page cursor that can be used to retrieve the previous page of records (if any).
 
 _Example_
 
@@ -906,7 +906,7 @@ _Example_
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owners = {}
 local limit = 10
-local records, cursor = nk.__leaderboard_records_list(id, owners, limit)
+local records, owner_records, next_cursor, prev_cursor = nk.__leaderboard_records_list(id, owners, limit)
 ```
 
 ### logger
