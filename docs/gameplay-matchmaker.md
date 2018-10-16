@@ -383,7 +383,7 @@ Matchmaking is not always an instant process. Depending on the currently connect
 Clients should register an event handler that triggers when the server sends them a matchmaker result.
 
 ```js fct_label="JavaScript"
-socket.onmatchmakematched = (matched) => {
+socket.onmatchmakermatched = (matched) => {
   console.info("Received MatchmakerMatched message: ", matched);
   console.info("Matched opponents: ", matched.users);
 };
@@ -410,7 +410,7 @@ socket.OnMatchmakerMatched += (_, matched) =>
 ```java fct_label="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
-  public void onMatchmakeMatched(final MatchmakerMatched matched) {
+  public void onMatchmakerMatched(final MatchmakerMatched matched) {
     System.out.format("Received MatchmakerMatched message: %s", matched.toString());
     System.out.format("Matched opponents: %s", opponents.toString());
   }
@@ -428,7 +428,7 @@ Tokens are short-lived and must be used to join a match as soon as possible. Whe
 The match token is also used to prevent unwanted users from attempting to join a match they were not matched into. The rest of the multiplayer match code is the same as in the [realtime multiplayer section](gameplay-multiplayer-realtime.md).
 
 ```js fct_label="JavaScript"
-socket.onmatchmakematched = (matched) => {
+socket.onmatchmakermatched = (matched) => {
   console.info("Received MatchmakerMatched message: ", matched);
   const message = {
     match_join: {
@@ -458,7 +458,7 @@ socket.OnMatchmakerMatched += (_, matched) =>
 ```java fct_label="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
-  public void onMatchmakeMatched(final MatchmakerMatched matched) {
+  public void onMatchmakerMatched(final MatchmakerMatched matched) {
     socket.joinMatchToken(matched.getToken()).get();
   }
 };
