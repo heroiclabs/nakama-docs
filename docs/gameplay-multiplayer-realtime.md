@@ -154,7 +154,7 @@ The binary content in each data message should be as __small as possible__. It i
 var id = "<matchid>";
 var opCode = 1;
 var data = { "move": {"dir": "left", "steps": 4} };
-socket.send({ match_data_send: { match_id: id, op_code: opCode, data: payload } });
+socket.send({ match_data_send: { match_id: id, op_code: opCode, data: data } });
 ```
 
 ```csharp fct_label=".NET"
