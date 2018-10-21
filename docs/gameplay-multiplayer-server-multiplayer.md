@@ -56,7 +56,7 @@ function M.match_init(context, setupstate)
   return gamestate, tickrate, label
 end
 
-function M.match_join_attempt(context, dispatcher, tick, state, presence)
+function M.match_join_attempt(context, dispatcher, tick, state, presence, metadata)
   local acceptuser = true
   return state, acceptuser
 end
@@ -221,7 +221,7 @@ end
 
 ---
 
-__match_join_attempt(context, dispatcher, tick, state, presence) -> state, accepted__
+__match_join_attempt(context, dispatcher, tick, state, presence, metadata) -> state, accepted, reject_reason__
 
 Executed when a user attempts to join the match using the client's match join operation. Match join attempt can be used to prevent more players from joining after a match has started or disallow the user for any other game specific reason.
 
@@ -234,18 +234,20 @@ _Parameters_
 | tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
 | presence | table | Presence is the user attempting to join the match. |
+| metadata | table | Optional metadata arbitrary string key-value pairs received from the client as part of the join request. |
 
 _Returns_
 
-You must return two values:
+You must return two values, with an optional third:
 
 (table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.      
 (boolean) - True if the join attempt should be allowed, false otherwise.
+(string) - If the join attempt should be rejected, an optional string rejection reason can be returned to the client.
 
 _Example_
 
 ```lua fct_label="Lua"
-local function match_join_attempt(context, dispatcher, tick, state, presence)
+local function match_join_attempt(context, dispatcher, tick, state, presence, metadata)
   -- Presence format:
   -- {
   --   user_id = "user unique ID",
@@ -512,7 +514,7 @@ function M.match_init(context, setupstate)
   return gamestate, tickrate, label
 end
 
-function M.match_join_attempt(context, dispatcher, tick, state, presence)
+function M.match_join_attempt(context, dispatcher, tick, state, presence, metadata)
   local acceptuser = true
   return state, acceptuser
 end

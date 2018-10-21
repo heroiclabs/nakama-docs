@@ -177,7 +177,7 @@ This function can be called with any HTTP client. For example with cURL you coul
 
 ```shell
 curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaultkey" \
-     -d '{"some": "data"}' \
+     -d '"{\"some\": \"data\"}"' \
      -H 'Content-Type: application/json' \
      -H 'Accept: application/json'
 ```
