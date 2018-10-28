@@ -181,6 +181,74 @@ local function findorcreatematch(limit, label, min_size, max_size)
 end
 ```
 
+### Search query
+
+In the examples above, we looked at listing matches based on comparing labels exactly as they appear. Another, more powerful way of listing matches is to run search queries on the label.
+
+In this example, we are looking for matches with `mode` that must match `freeforall`, and preferably `level` higher than `10`.
+
+```lua fct_label="Lua"
+local nk = require("nakama")
+
+local limit = 10
+local isauthoritative = true
+local label = ""
+local min_size = 0
+local max_size = 4
+local query = "+label.mode:freeforall label.level:>10"
+local matches = nk.match_list(limit, isauthoritative, label, min_size, max_size, query)
+for _, match in ipairs(matches) do
+  print(("Match id %s"):format(match.match_id))
+end
+```
+```go fct_label="Go"
+limit := 10
+authoritative := true
+label := ""
+minSize := 0
+maxSize := 4
+query := "+label.mode:freeforall label.level:>10"
+matches, err := nk.MatchList(context.Background(), limit, authoritative, label, minSize, maxSize, query)
+if err != nil {
+  logger.Printf("failed to list matches: %v", err)
+  return
+}
+logger.Printf("match listings results: %#v", matches)
+```
+
+You can utilize the full power of the [Bleve](http://blevesearch.com/docs/Query-String-Query/) search engine inside Nakama's [matchmaker](gameplay-matchmaker.md) as well as match listing like above.
+
+You can also use this to create an authoritative match if your listing query returns no result:
+
+```lua fct_label="Lua"
+local query = "+label.mode:freeforall label.level:>10"
+local matches = nk.match_list(10, true, "", 2, 4, query)
+if #matches > 0 then
+  print(matches[0].match_id)
+else
+  local match = nk.match_create("matchname", {})
+  print(match.match_id)
+end
+```
+```go fct_label="Go"
+query := "+label.mode:freeforall label.level:>10"
+matches, err := nk.MatchList(context.Background(), 1, true, "", 2, 4, query)
+if err != nil {
+  logger.Printf("failed to list matches: %v", err)
+  return ""
+}
+if len(matches) > 0 {
+  return matches[0].GetMatchId()
+} else {
+  match, err := nk.MatchCreate(context.Background(), "matchname", map[string]interface{}{})
+  if err != nil {
+    logger.Printf("failed to create new match: %v", err)
+    return ""
+  }
+  return match.GetMatchId()
+}
+```
+
 ## Match Handler API
 
 The match handler that govern Authoritative Multiplayer matches must implement all of the function callbacks below.
@@ -203,9 +271,9 @@ _Returns_
 
 You must return three values:
 
-(table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.    
-(number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.     
-(string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 256 characters long. This is used in [match listing](#match-listing) to filter matches.     
+(table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.
+(number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.
+(string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 256 characters long. This is used in [match listing](#match-listing) to filter matches.
 
 _Example_
 
@@ -240,7 +308,7 @@ _Returns_
 
 You must return two values, with an optional third:
 
-(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.      
+(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
 (boolean) - True if the join attempt should be allowed, false otherwise.
 (string) - If the join attempt should be rejected, an optional string rejection reason can be returned to the client.
 

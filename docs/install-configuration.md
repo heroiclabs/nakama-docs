@@ -139,6 +139,17 @@ You can change configuration options related to the authoritative multiplayer ru
 | `input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
 | `call_queue_size` | `match.call_queue_size` | Size of the authoritative match buffer that sequences calls to match handler callbacks to ensure no overlaps. Default 128.
 
+### Leaderboard
+
+You can change configuration options related to the leaderboard and tournament system.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `blacklist_rank_cache` | `leaderboard.blacklist_rank_cache` | Disable rank cache for leaderboards with matching leaderboard names.
+
+!!! tip "Disable rank cache"
+    To disable rank cache entirely, use `*`, otherwise leave blank to enable rank cache.
+
 ### Socket
 
 Options related to connection socket and transport protocol between the server and clients.

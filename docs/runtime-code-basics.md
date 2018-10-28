@@ -54,7 +54,7 @@ All registered functions receive a "context" table as the first argument and "pa
 | Field | Purpose |
 | ----- | ------- |
 | `context.env` | A table of key/value pairs which are defined in the YAML [configuration](install-configuration.md) of the server. This is useful to store API keys and other secrets which may be different between servers run in production and in development. |
-| `context.execution_mode` | The mode associated with the execution context. It's one of these values: "run_once", "rpc", "before", "after", "match", or "matchmaker". |
+| `context.execution_mode` | The mode associated with the execution context. It's one of these values: "run_once", "rpc", "before", "after", "match", "matchmaker", "leaderboard_reset", "tournament_reset", "tournament_end". |
 | `context.session_id` | The user session associated with the execution context. |
 | `context.user_id` | The user ID associated with the execution context. |
 | `context.username` | The username associated with the execution context. |
@@ -81,6 +81,17 @@ nk.register_req_before()
 If you'd like to run server code when the matchmaker has matched players together, register your function using the following:
 ```lua
 nk.register_matchmaker_matched()
+```
+
+If you'd like to run server code when the leaderboard/tournament resets register your function using the following:
+```lua
+nk.register_leaderboard_reset()
+nk.register_tournament_reset()
+```
+
+Similary, you can run server code when the tournament ends:
+```lua
+nk.register_tournament_end()
 ```
 
 Have a look at [this section](#message-names) to see the server message names.
