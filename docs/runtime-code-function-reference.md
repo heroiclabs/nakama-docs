@@ -1556,6 +1556,211 @@ _Example_
 local utc_msec = nk.time()
 ```
 
+### tournaments
+
+__tournament_create (id, sort, operator, duration, reset, metadata, title, description, category, start_time, end_time, max_size, max_num_score, join_required)__
+
+Setup a new dynamic tournament with the specified ID and various configuration settings. The underlying leaderboard will be created if it doesn't already exist, otherwise its configuration will *not* be updated.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the new tournament. This is used by clients to submit scores. |
+| sort | string | The sort order for records in the tournament; possible values are "asc" or "desc". Optional. Default "desc". |
+| operator | string | The operator that determines how scores behave when submitted; possible values are "best", "set", or "incr". Optional. Default "best". |
+| duration | number | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever sooner. Clients can query the tournament for results between end of duration and next reset period. Required.
+| reset | string | The cron format used to define the reset schedule for the tournament. This controls when the underlying leaderboard resets and the tournament is considered active again. Optional. |
+| metadata | table | The metadata you want associated to the tournament. Some good examples are weather conditions for a racing game. Optional. |
+| title | string | The title of the tournament. Optional.
+| description | string | The description of the tournament. Optional.
+| category | number | A category associated with the tournament. This can be used to filter different types of tournaments. Between 0 and 127. Optional.
+| start_time | number | The start time of the tournament. Leave empty for immediately, or a future time.
+| end_time | number | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than start_time if set. Optional. Default value is __never__.
+| max_size | number | Maximum size of participants in a tournament. Optional.
+| max_num_score | number | Maximum submission attempts for a tournament record.
+| join_required | boolean | Whether the tournament needs to be joint before a record write is allowed.
+
+_Example_
+
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local authoritative = false
+local sort = "desc"
+local operator = "best"
+local reset = "0 0 * * 1"
+local metadata = {
+  weather_conditions = "rain"
+}
+nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
+```
+
+---
+
+__tournament_delete (id)__
+
+Delete a tournament and all records that belong to it.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the tournament to delete. Mandatory field. |
+
+_Example_
+
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+nk.tournament_delete(id)
+```
+
+---
+
+__tournament_add_attempt (id, owner, count)__
+
+Add additional score attempts to the owner's tournament record. This overrides the max number of score attempts allowed in the tournament for this specific owner.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the tournament to update. Mandatory field. |
+| owner | string | The owner of the record to increment the count for. Mandatory field. |
+| count | number | The number of attempt counts to increment. Can be negative to decrease count. Mandatory field. |
+
+_Example_
+
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owner = "leaderboard-record-owner"
+local count = -10
+nk.tournament_add_attempt(id, owner, count)
+```
+
+---
+
+__tournament_join (id, user_id, username)__
+
+A tournament may need to be joined before the owner can submit scores. This operation is idempotent and will always succeed for the owner even if they have already joined the tournament.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the tournament to update. Mandatory field. |
+| user_id | string | The owner of the record. Mandatory field. |
+| username | string | The username of the record owner. Mandatory field. |
+
+_Example_
+
+```lua
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owner = "leaderboard-record-owner"
+local username = "myusername"
+nk.tournament_join(id, owner, username)
+```
+
+---
+
+__tournament_list (category_start, category_end, start_time, end_time, limit, cursor)__
+
+Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| category_start | number | Filter tournament with categories greater or equal than this value. |
+| category_end | number | Filter tournament with categories equal or less than this value. |
+| start_time | number | Filter tournament with that start after this time. |
+| end_time | number | Filter tournament with that end before this time. |
+| limit | number | Return only the required number of tournament denoted by this limit value. |
+| cursor | string | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
+
+_Returns_
+
+A table of tournament objects.
+
+_Example_
+
+```lua
+local category_start = 1
+local category_end = 2
+local start_time = 1538147711
+local end_time = 0 -- all tournaments from the start time
+local limit = 100 -- number to list per page
+local tournaments = nk.tournament_list(category_start, category_end, start_time, end_time, limit)
+for i, row in ipairs(tournaments) do
+  nk.logger_info("ID " .. tournament.id .. " - can enter? " .. row.can_enter)
+end
+```
+
+---
+
+__tournament_record_write (id, owner, username, score, subscore, metadata)__
+
+Submit a score and optional subscore to a tournament leaderboard. If the tournament has been configured with join required this will fail unless the owner has already joined the tournament.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
+| owner | string | The owner of this score submission. Mandatory field. |
+| username | string | The owner username of this score submission, if it's a user. Optional. |
+| score | number | The score to submit. Optional. Default 0. |
+| subscore | number | A secondary subscore parameter for the submission. Optional. Default 0. |
+| metadata | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. Optional. |
+
+_Returns_
+
+A table of tournament record objects.
+
+_Example_
+
+```lua
+local metadata = {
+  weather_conditions = "rain"
+}
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+local username = "02ebb2c8"
+local score = 10
+local subscore = 0
+nk.tournament_record_write(id, owner, username, score, subscore, metadata)
+```
+
+---
+
+__tournament_records_haystack (id, owner, limit)__
+
+Fetch the list of tournament records around the owner.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| id | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
+| owner | string | The owner of this score submission. Mandatory field. |
+| limit | number | Number of records to return. Default 1, optional field. |
+
+_Returns_
+
+A table of tournament record objects.
+
+_Example_
+
+```lua
+local metadata = {
+  weather_conditions = "rain"
+}
+local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+nk.tournament_records_haystack (id, owner, 10)
+```
+
+---
+
 ### users
 
 __users_get_id (user_ids)__
@@ -1726,7 +1931,7 @@ print(uuid_bytes)
 
 ### wallet
 
-__wallet_update (user_id, changeset, metadata)__
+__wallet_update (user_id, changeset, metadata, update_ledger)__
 
 Update a user's wallet with the given changeset.
 
@@ -1737,6 +1942,7 @@ _Parameters_
 | user_id | string | The ID of the user to update the wallet for. |
 | changeset | table | The set of wallet operations to apply. |
 | metadata | table | Additional metadata to tag the wallet update with. Optional. |
+| update_ledger | boolean | Whether to record this update in the ledger. Default true. Optional. |
 
 _Example_
 
@@ -1747,12 +1953,12 @@ local changeset = {
   gems = -5   -- Remove 5 gems from the user's wallet.
 }
 local metadata = {}
-nk.wallet_update(user_id, changeset, metadata)
+nk.wallet_update(user_id, changeset, metadata, true)
 ```
 
 ---
 
-__wallets_update (updates)__
+__wallets_update (updates, update_ledger)__
 
 Update one or more user wallets with individual changesets. This function will also insert a new wallet ledger item into each user's wallet history that trackes their update.
 
@@ -1763,6 +1969,7 @@ _Parameters_
 | Param | Type | Description |
 | ----- | ---- | ----------- |
 | updates | table | The set of user wallet update operations to apply. |
+| update_ledger | boolean | Whether to record this update in the ledger. Default true. Optional. |
 
 _Example_
 
@@ -1777,7 +1984,7 @@ local updates = {
     metadata = {}
   }
 }
-nk.wallets_update(updates)
+nk.wallets_update(updates, true)
 ```
 
 ---

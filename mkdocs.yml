@@ -90,6 +90,7 @@ pages:
   - 'Realtime Chat': 'social-realtime-chat.md'
 - 'Gameplay':
   - 'Leaderboards': 'gameplay-leaderboards.md'
+  - 'Tournaments': 'gameplay-tournaments.md'
   - 'Matchmaker': 'gameplay-matchmaker.md'
   - 'Realtime Multiplayer': 'gameplay-multiplayer-realtime.md'
   - "Authoritative Multiplayer": "gameplay-multiplayer-server-multiplayer.md"
