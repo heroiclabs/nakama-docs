@@ -82,7 +82,7 @@ return M
 
 This match handler above does not do any work but demonstrates the various hooks into the authoritative realtime engine. If `nil` is returned the match is stopped.
 
-## Create Authoritatve Matches
+## Create Authoritative Matches
 
 Authoritative matches can be created on the server in one of two ways.
 
