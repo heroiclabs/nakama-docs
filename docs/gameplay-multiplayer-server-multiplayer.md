@@ -82,7 +82,7 @@ return M
 
 This match handler above does not do any work but demonstrates the various hooks into the authoritative realtime engine. If `nil` is returned the match is stopped.
 
-## Create Authoritative Matches
+## Create authoritative matches
 
 Authoritative matches can be created on the server in one of two ways.
 
@@ -136,13 +136,13 @@ The matchmaker matched hook must return a match ID or `nil` if the match should 
 
 The string passed into the match create function is a Lua module name. In this example it'd be a file named `pingpong.lua`.
 
-## Join a Match
+## Join a match
 
 Players are not in the match until they join even after matched by the matchmaker. This enables players to opt out of matches they decide not to play.
 
 This can be done by clients in the same way as with relayed multiplayer. A full example of how to do this is covered [here](gameplay-multiplayer-realtime.md#join-a-match).
 
-## Match Listings
+## Match listings
 
 You can list matches that are currently active on the server. You can also filter matches based on exact-match queries on the label field.
 
@@ -249,7 +249,7 @@ if len(matches) > 0 {
 }
 ```
 
-## Match Handler API
+## Match handler API
 
 The match handler that govern Authoritative Multiplayer matches must implement all of the function callbacks below.
 
@@ -449,7 +449,7 @@ end
 
 __match_terminate(context, dispatcher, tick, state, grace_seconds) -> state__
 
-Called when the server begins a graceful shutdown process. Will not be called if graceful shutdown is disabled.
+Called when the server begins a [graceful shutdown](install-configuration.md#server-configuration) process. Will not be called if graceful shutdown is disabled.
 
 The match should attempt to complete any processing before the given number of seconds elapses, and optionally send a message to clients to inform them the server is shutting down.
 

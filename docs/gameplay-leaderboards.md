@@ -449,3 +449,57 @@ Accept: application/json
 Content-Type: application/json
 Authorization: Bearer <session token>
 ```
+
+## List Leaderboard Records Around Owner
+
+Fetch the list of leaderboard records around the owner.
+
+## List Tournament Records Around Owner
+
+Fetch the list of tournament records around the owner.
+
+```sh fct_label="cURL"
+curl -X GET \
+  'http://127.0.0.1:7350/v2/tournament/<leaderboard_id>/owner/<owner_id>?limit=<limit>'
+  -H 'Authorization: Bearer <session token>'
+```
+
+```js fct_label="JavaScript"
+var id = "someid";
+var ownerId = "some user ID";
+var limit = 100;
+var result = await client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit);
+```
+
+```csharp fct_label=".NET"
+var id = "someid";
+var ownerId = session.UserId;
+var limit = 100;
+var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, id, ownerId, limit);
+```
+
+```csharp fct_label="Unity"
+var id = "someid";
+var ownerId = session.UserId;
+var limit = 100;
+var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, id, ownerId, limit);
+```
+
+```java fct_label="Java"
+String id = "someid";
+String ownerId = session.getUserId();
+int limit = 100;
+TournamentRecordList records = client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit).get();
+```
+
+```swift fct_label="Swift"
+// Will be made available soon.
+```
+
+```fct_label="REST"
+GET /v2/tournament/v2/tournament/<leaderboard_id>/owner/<owner_id>?limit=<limit>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+```

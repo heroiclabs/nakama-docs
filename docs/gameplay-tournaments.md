@@ -19,16 +19,31 @@ A tournament can also be played by opponents who are not users. For example a gu
 Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
 
 ```sh fct_label="cURL"
+curl -X GET \
+  'http://127.0.0.1:7350/v2/tournament?category_start=<category_start>
+  &category_end=<category_end>
+  &start_time=<start_time>
+  &end_time=<end_time>
+  &limit=<limit>
+  &cursor=<cursor>' \
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
+var categoryStart = 1;
+var categoryEnd = 2;
+var startTime = 1538147711;
+var endTime = -1; // all tournaments from the start time
+var limit = 100; // number to list per page
+var cursor = null;
+var result = await client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
 ```
 
 ```csharp fct_label=".NET"
 var categoryStart = 1;
 var categoryEnd = 2;
 var startTime = 1538147711;
-var endTime = 0L; // all tournaments from the start time
+var endTime = -1L; // all tournaments from the start time
 var limit = 100; // number to list per page
 var cursor = null;
 var result = await client.ListTournamentsAsync(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
@@ -38,16 +53,38 @@ var result = await client.ListTournamentsAsync(session, categoryStart, categoryE
 var categoryStart = 1;
 var categoryEnd = 2;
 var startTime = 1538147711;
-var endTime = 0L; // all tournaments from the start time
+var endTime = -1L; // all tournaments from the start time
 var limit = 100; // number to list per page
 var cursor = null;
 var result = await client.ListTournamentsAsync(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
 ```
 
 ```java fct_label="Java"
+int categoryStart = 1;
+int categoryEnd = 2;
+int startTime = 1538147711;
+int endTime = -1; // all tournaments from the start time
+int limit = 100; // number to list per page
+String cursor = null;
+TournamentList tournaments = client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor).get();
+```
+
+```swift fct_label="Swift"
+// Will be made available soon.
 ```
 
 ```fct_label="REST"
+GET /v2/tournament
+  ?category_start=<category_start>
+  &category_end=<category_end>
+  &start_time=<start_time>
+  &end_time=<end_time>
+  &limit=<limit>
+  &cursor=<cursor>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 ## Join Tournament
@@ -55,9 +92,14 @@ var result = await client.ListTournamentsAsync(session, categoryStart, categoryE
 A tournament may need to be joined before the owner can submit scores. This operation is idempotent and will always succeed for the owner even if they have already joined the tournament.
 
 ```sh fct_label="cURL"
+curl -X POST \
+  'http://127.0.0.1:7350/v2/tournament/<tournament_id>/join'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
+var id = "someid";
+var success = await client.joinTournament(session, id);
 ```
 
 ```csharp fct_label=".NET"
@@ -71,9 +113,20 @@ var success = await client.JoinTournamentAsync(session, id);
 ```
 
 ```java fct_label="Java"
+String id = "someid";
+boolean success = client.joinTournament(session, id).get();
+```
+
+```swift fct_label="Swift"
+// Will be made available soon.
 ```
 
 ```fct_label="REST"
+POST /v2/tournament/<tournament_id>/join
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 ## List Tournament Records
@@ -81,9 +134,20 @@ var success = await client.JoinTournamentAsync(session, id);
 Fetch a mixed list of tournament records as well as a batch of records which belong to specific owners. This can be useful to build up a leaderboard view which shows the top 100 players as well as the scores between the current user and their friends.
 
 ```sh fct_label="cURL"
+curl -X GET \
+  'http://127.0.0.1:7350/v2/tournament/<tournament_id>?owner_ids=<owner_ids>
+  &limit=<limit>
+  &cursor=<cursor>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
+var id = "someid";
+var ownerIds = ["some", "friends", "user ids"];
+var result = await client.listTournamentRecords(session, id, owenrIds);
+result.records.forEach(function(record) {
+  console.log("Record username %o and score %o", record.username, record.score);
+});
 ```
 
 ```csharp fct_label=".NET"
@@ -101,9 +165,20 @@ var result = await client.ListTournamentRecordsAsync(session, id, new []{ sessio
 ```
 
 ```java fct_label="Java"
+String id = "someid";
+LeaderboardRecordList records = client.listLeaderboardRecords(session, id, session.getUserId()).get();
+```
+
+```swift fct_label="Swift"
+// Will be made available soon.
 ```
 
 ```fct_label="REST"
+GET /v2/tournament/<tournament_id>?owner_ids=<owner_ids>&limit=<limit>&cursor=<cursor>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 ## List Tournament Records Around Owner
@@ -111,9 +186,16 @@ var result = await client.ListTournamentRecordsAsync(session, id, new []{ sessio
 Fetch the list of tournament records around the owner.
 
 ```sh fct_label="cURL"
+curl -X GET \
+  'http://127.0.0.1:7350/v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
+var id = "someid";
+var ownerId = "some user ID";
+var limit = 100;
+var result = await client.listTournamentRecordsAroundOwner(session, id, ownerId, limit);
 ```
 
 ```csharp fct_label=".NET"
@@ -131,9 +213,22 @@ var result = await client.ListTournamentRecordsAroundOwnerAsync(session, id, own
 ```
 
 ```java fct_label="Java"
+String id = "someid";
+String ownerId = session.getUserId();
+int limit = 100;
+TournamentRecordList records = client.listTournamentRecordsAroundOwner(session, id, ownerId, limit).get();
+```
+
+```swift fct_label="Swift"
+// Will be made available soon.
 ```
 
 ```fct_label="REST"
+GET /v2/tournament/v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 ## Write Tournament Record
@@ -141,9 +236,20 @@ var result = await client.ListTournamentRecordsAroundOwnerAsync(session, id, own
 Submit a score and optional subscore to a tournament leaderboard. If the tournament has been configured with join required this will fail unless the owner has already joined the tournament.
 
 ```sh fct_label="cURL"
+curl -X GET \
+  'http://127.0.0.1:7350/v2/tournament/<tournament_id>'
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js fct_label="JavaScript"
+var id = "someid";
+var score = 100;
+var subscore = 10;
+var metadata = {
+  "weather_conditions": "sunny",
+  "track_name": "Silverstone"
+}
+var newrecord = client.writeTournamentRecord(session, id, score, subscore, metadata);
 ```
 
 ```csharp fct_label=".NET"
@@ -173,9 +279,23 @@ var newrecord = client.WriteTournamentRecordAsync(session, id, score, subscore, 
 ```
 
 ```java fct_label="Java"
+string id = "someid";
+int score = 10;
+int subscore = 20;
+final String metadata = "{\"tarmac\": \"wet\"}";
+LeaderboardRecord record = client.writeTournamentRecord(session, id, score, subscore, metadata).get();
+```
+
+```swift fct_label="Swift"
+// Will be made available soon.
 ```
 
 ```fct_label="REST"
+GET /v2/tournament/v2/tournament/<tournament_id>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
 ```
 
 ## Authoritative Functions
@@ -279,6 +399,10 @@ When a tournament's active period ends a function registered on the server will 
 To register a reward distribution function in Go use the `initializer`.
 
 ```lua fct_label="Lua"
+local function distribute_rewards(_context, tournament, session_end, expiry)
+  // ...
+end
+nk.register_tournament_end(distribute_rewards)
 ```
 
 ```go fct_label="Go"
@@ -304,6 +428,28 @@ func distributeRewards(ctx context.Context, logger *log.Logger, db *sql.DB, nk r
 A simple reward distribution function which sends a persistent notification to the top ten players to let them know they've won and adds coins to their virtual wallets would look like:
 
 ```lua fct_label="Lua"
+local function distribute_rewards(_context, tournament, session_end, expiry)
+  local notifications = {}
+  local wallet_updates = {}
+  local records, owner_records, nc, pc = nk.leaderboard_records_list(tournament.id, nil, 10)
+  for i = 0, #records do
+    notifications[i] = {
+      code = 1,
+      content = { coins = 100 },
+      persistent = true,
+      subject = "Winner",
+      user_id = records[i].owner_id
+    }
+    wallet_updates[i] = {
+      user_id = records[i].owner_id,
+      changeset = { coins = 100 },
+      metadata = {}
+    }
+  end
+
+  nk.wallets_update(wallet_updates, true)
+  nk.notifications_send(notifications)
+end
 ```
 
 ```go fct_label="Go"
@@ -316,7 +462,7 @@ func distributeRewards(ctx context.Context, logger *log.Logger, _, nk runtime.Na
     wallets = append(wallets, &runtime.WalletUpdate{record.OwnerId, changeset, content})
     notifications = append(notifications, &runtime.NotificationSend{record.OwnerId, "Winner", content, 1, "", true})
   }
-  err = nk.WalletsUpdate(wallets)
+  err = nk.WalletsUpdate(wallets, true)
   if err := nil {
     logger.Printf("failed to update winner wallets: %v", err)
     return err

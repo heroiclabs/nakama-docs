@@ -62,6 +62,7 @@ If fields are not specific, default values will be used. For more information on
 | --------- | ---- | -----------
 | `name` | `name` | Nakama node name (must be unique) - It will default to `nakama`. This name is also used in the log files.
 | `data_dir` | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
+| `shutdown_grace_sec` | `shutdown_grace_sec` | Maximum number of seconds to wait for the server to complete work before shutting down. If 0 the server will shut down immediately when it receives a termination signal. Default value is `0`.
 
 ### Logger
 
