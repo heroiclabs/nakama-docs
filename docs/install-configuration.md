@@ -82,7 +82,7 @@ Nakama produces metrics information. This information can be exported to Stackdr
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| `reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 10 seconds.
+| `reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 60 seconds.
 | `namespace` | `metrics.namespace` | Namespace for Prometheus or prefix for Stackdriver metrics. It will always prepend node name. Default value is empty.
 | `stackdriver_projectid` | `metrics.stackdriver_projectid` | This is the identifier of the Stackdriver project the server is uploading the stats data to. Setting this enables metrics to be exported to Stackdriver.
 | `prometheus_port` | `metrics.prometheus_port` | Port to expose Prometheus. Default value is '0' which disables Prometheus exports.
@@ -273,7 +273,7 @@ logger:
   file: "/tmp/path/to/logfile.log"
 
 metrics:
-  reporting_freq_sec: 10
+  reporting_freq_sec: 60
   namespace: ""
   stackdriver_projectid: ""
   prometheus_port: 0
