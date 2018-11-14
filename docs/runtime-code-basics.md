@@ -55,10 +55,13 @@ All registered functions receive a "context" table as the first argument and "pa
 | ----- | ------- |
 | `context.env` | A table of key/value pairs which are defined in the YAML [configuration](install-configuration.md) of the server. This is useful to store API keys and other secrets which may be different between servers run in production and in development. |
 | `context.execution_mode` | The mode associated with the execution context. It's one of these values: "run_once", "rpc", "before", "after", "match", "matchmaker", "leaderboard_reset", "tournament_reset", "tournament_end". |
+| `context.query_params` | Query params that was passed through from HTTP request. |
 | `context.session_id` | The user session associated with the execution context. |
 | `context.user_id` | The user ID associated with the execution context. |
 | `context.username` | The username associated with the execution context. |
 | `context.user_session_exp` | The user session expiry in seconds associated with the execution context. |
+| `context.client_ip` | The IP address of the client making the request. |
+| `context.client_port` | The port number of the client making the request.  |
 | `context.match_id` | The match ID that is currently being executed. Only applicable to server authoritative multiplayer. |
 | `context.match_node` | The node ID that the match is being executed on. Only applicable to server authoritative multiplayer. |
 | `context.match_label` | Labels associated with the match. Only applicable to server authoritative multiplayer. |
