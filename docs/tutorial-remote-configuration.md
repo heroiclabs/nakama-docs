@@ -29,7 +29,7 @@ local parameters = {
 }
 
 local function remote_configuration(_context, _payload)
-  return { rc = parameters }
+  return nk.json_encode({ rc = parameters })
 end
 
 nk.register_rpc(remote_configuration, "rc")
@@ -106,7 +106,7 @@ if (!string.IsNullOrEmpty(www.error)) {
 ```
 
 ```shell fct_label="cURL"
-curl http://127.0.0.1:7350/v2/rpc/runtime/rc?http_key=defaultkey \
+curl http://127.0.0.1:7350/v2/rpc/rc?http_key=defaultkey \
      -H 'Content-Type: application/json' \
      -H 'Accept: application/json'
 # output
