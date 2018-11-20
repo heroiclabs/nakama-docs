@@ -61,7 +61,7 @@ All registered functions receive a "context" table as the first argument and "pa
 | `context.username` | The username associated with the execution context. |
 | `context.user_session_exp` | The user session expiry in seconds associated with the execution context. |
 | `context.client_ip` | The IP address of the client making the request. |
-| `context.client_port` | The port number of the client making the request.  |
+| `context.client_port` | The port number of the client making the request. |
 | `context.match_id` | The match ID that is currently being executed. Only applicable to server authoritative multiplayer. |
 | `context.match_node` | The node ID that the match is being executed on. Only applicable to server authoritative multiplayer. |
 | `context.match_label` | Labels associated with the match. Only applicable to server authoritative multiplayer. |
