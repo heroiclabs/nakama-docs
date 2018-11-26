@@ -239,14 +239,14 @@ await client.updateAccount(session, {
 const string displayName = "My new name";
 const string avatarUrl = "http://graph.facebook.com/avatar_url";
 const string location = "San Francisco";
-await = client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
+await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
 ```
 
 ```csharp fct_label="Unity"
 const string displayName = "My new name";
 const string avatarUrl = "http://graph.facebook.com/avatar_url";
 const string location = "San Francisco";
-await = client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
+await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
 ```
 
 ```java fct_label="Java"
