@@ -1592,7 +1592,7 @@ local reset = "0 0 * * 1"
 local metadata = {
   weather_conditions = "rain"
 }
-nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
+nk.tournament_create(id, authoritative, sort, operator, reset, metadata)
 ```
 
 ---
