@@ -41,8 +41,6 @@ There are a few configuration properties that need to be changed in most environ
 !!! warning "Production settings"
     You must change the values of **`socket.server_key`**, **`session.encryption_key`** and **`runtime.http_key`** before you deploy Nakama to a live production environment.
 
-    Follow the [production settings deployment guide](deployment-production-settings.md) for more information.
-
 ## Server Configuration
 
 Nakama has various configuration options to make it as flexible as possible for various use cases and deployment environments.
