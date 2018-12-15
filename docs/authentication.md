@@ -804,5 +804,5 @@ You can link or unlink many different account options.
 | Email | An email and password set by the user. |
 | Facebook | A Facebook social account. You can optionally import Facebook Friends upon linking. |
 | Game Center | An account from Apple's Game Center service. |
-| Google | A Google Play social account. |
+| Google | A Google account. |
 | Steam | An account from the Steam network. |
