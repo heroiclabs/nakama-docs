@@ -162,7 +162,7 @@ For development purposes, we suggest that you bind a folder in the local machine
 - On Mac and Linux systems, the path highlighted above will create a folder called `nakama` in the same directory as where you are running `docker-compose` from.
 - On Windows, you'll need to update the path above so that Docker can bind the folder properly. A valid value can look like this:
 
-    `//c/Users/<username>/projects/docker:/nakama/data`.
+    `/c/Users/<username>/projects/docker:/nakama/data`.
 
 !!! warning "Drive Binding on Windows"
     Docker will complain about an unshared Drive if the path above is not changed or is not available. The error looks like this:
@@ -171,7 +171,7 @@ For development purposes, we suggest that you bind a folder in the local machine
 
     Make sure to change the line highlighted above to the correct path and restart Nakama.
 
-You can put your Lua scripts in the `data/modules` directory and restart Nakama using `docker-compose --restart`.
+You can put your Lua scripts in the `/modules` directory and restart Nakama using `docker-compose --restart`.
 
 ### Configuration
 
