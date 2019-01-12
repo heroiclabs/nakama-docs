@@ -62,30 +62,32 @@ If fields are not specific, default values will be used. For more information on
 | `data_dir` | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
 | `shutdown_grace_sec` | `shutdown_grace_sec` | Maximum number of seconds to wait for the server to complete work before shutting down. If 0 the server will shut down immediately when it receives a termination signal. Default value is `0`.
 
-### Logger
+### Cluster
 
-Nakama produces logs in JSON format so various systems can interact with the logs. By default they are written to the standard out (console).
+This section configures how the nodes should connect to each to other form a cluster.
 
-| Parameter | Flag | Description
-| --------- | ---- | -----------
-| `level` | `logger.level` | Minimum log level to produce. Values are `debug`, `info`, `warn` and `error`. Default is `info`.
-| `stdout` | `logger.stdout` | Redirect logs to console standard output. The log file will no longer be used. Default is `true`.
-| `file` | `log.verbose` | Log output to a file (as well as `stdout` if set). Make sure that the directory and the file is writable.
+!!! tip "Nakama Enterprise Only"
+    The following configuration options are available only in the Nakama Enterprise version of the Nakama server
 
-The standard startup log messages will always be printed to the console irrespective of the value of `logger.stdout` field.
-
-### Metrics
-
-Nakama produces metrics information. This information can be exported to Stackdriver or Prometheus.
+    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Managed Cloud](https://heroiclabs.com/managed-cloud) service.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| `reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 60 seconds.
-| `namespace` | `metrics.namespace` | Namespace for Prometheus or prefix for Stackdriver metrics. It will always prepend node name. Default value is empty.
-| `stackdriver_projectid` | `metrics.stackdriver_projectid` | This is the identifier of the Stackdriver project the server is uploading the stats data to. Setting this enables metrics to be exported to Stackdriver.
-| `prometheus_port` | `metrics.prometheus_port` | Port to expose Prometheus. Default value is '0' which disables Prometheus exports.
+| `gossip_bindaddr` | `cluster.gossip_bindaddr` | Interface address to bind Nakama to for discovery. By default listening on all interfaces.
+| `gossip_bindport` | `cluster.gossip_bindport` | Port number to bind Nakama to for discovery. Default value is 7352.
+| `join` | `cluster.join` | List of hostname and port of other Nakama nodes to connect to.
+| `max_message_size_bytes` | `cluster.max_message_size_bytes` | Maximum amount of data in bytes allowed to be sent between Nakama nodes per message. Default value is 4194304.
+| `rpc_port` | `cluster.rpc_port` | Port number to use to send data between Nakama nodes. Default value is 7353.
 
-Ensure that metrics exports are protected as they contain sensitive server information.
+### Console
+
+This section defined the configuration related for the embedded developer console.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `password` | `console.password` | Password for the embedded console. Default is "password".
+| `port` | `console.port` | The port for accepting connections for the embedded console, listening on all interfaces. Default value is 7351.
+| `username` | `console.username` | Username for the embedded console. Default is "admin".
 
 ### Database
 
@@ -95,8 +97,8 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 | --------- | ---- | -----------
 | `address` | `database.address` | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
 | `conn_max_lifetime_ms` | `database.conn_max_lifetime_ms` | Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.. Default value is 0 (indefinite).
-| `max_open_conns` | `database.max_open_conns` | Maximum number of allowed open connections to the database. Default value is 0 (no limit).
 | `max_idle_conns` | `database.max_idle_conns` | Maximum number of allowed open but unused connections to the database. Default value is 100.
+| `max_open_conns` | `database.max_open_conns` | Maximum number of allowed open connections to the database. Default value is 0 (no limit).
 
 !!! tip "Database addresses"
     You can pass in multiple database addresses to Nakama via command like:
@@ -104,39 +106,6 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
     ```
     nakama --database.address "root@db1:26257" --database.address "root@db2:26257"
     ```
-
-### Runtime
-
-Options related to Lua-based runtime engine.
-
-| Parameter | Flag | Description
-| --------- | ---- | -----------
-| `env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
-| `path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
-| `http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
-| `min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
-| `max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
-| `call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
-| `registry_size` | `runtime.registry_size` | Size of each runtime instance's registry. Default 512.
-
-!!! warning "Important"
-    You must change `http_key` before going live with your app!
-
-!!! tip "Runtime env value"
-    The runtime environment is a key-value pair. They are separated by the `=` character like this:
-
-    ```
-    nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
-    ```
-
-### Match
-
-You can change configuration options related to the authoritative multiplayer runtime.
-
-| Parameter | Flag | Description
-| --------- | ---- | -----------
-| `input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
-| `call_queue_size` | `match.call_queue_size` | Size of the authoritative match buffer that sequences calls to match handler callbacks to ensure no overlaps. Default 128.
 
 ### Leaderboard
 
@@ -149,34 +118,72 @@ You can change configuration options related to the leaderboard and tournament s
 !!! tip "Disable rank cache"
     To disable rank cache entirely, use `*`, otherwise leave blank to enable rank cache.
 
-### Socket
+### Logger
 
-Options related to connection socket and transport protocol between the server and clients.
+Nakama produces logs in JSON format so various systems can interact with the logs. By default they are written to the standard out (console).
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| `server_key` | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
-| `port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
-| `address` | `socket.address` | The IP address of the interface to listen for client traffic on. Default listen on all available addresses/interfaces.
-| `protocol` | `socket.protocol` | The network protocol to listen for traffic on. Possible values are `tcp` for both IPv4 and IPv6, `tcp4` for IPv4 only, or `tcp6` for IPv6 only. Default `tcp`."
-| `max_message_size_bytes` | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Used for real-time, gRPC and HTTP connections. Default value is 4096.
-| `read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
-| `write_timeout_ms` | `socket.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response. Used for HTTP connections. Default value is 10000.
-| `idle_timeout_ms` | `socket.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled. Used for HTTP connections. Default value is 60000.
-| `write_wait_ms` | `socket.write_wait_ms` | Time in milliseconds to wait for an ack from the client when writing data. Used for real-time connections. Default value is 5000.
-| `pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 10000.
-| `ping_period_ms` | `socket.ping_period_ms` | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Used for real-time connections. Default value is 8000.
-| `outgoing_queue_size` | `socket.outgoing_queue_size` | The maximum number of messages waiting to be sent to the client. If this is exceeded the client is considered too slow and will disconnect. Used when processing real-time connections. Default value is 16.
-| `ssl_certificate` | `socket.ssl_certificate` | Path to certificate file if you want the server to use SSL directly. Must also supply ssl_private_key. NOT recommended for production use.
-| `ssl_private_key` | `socket.ssl_private_key` | Path to private key file if you want the server to use SSL directly. Must also supply ssl_certificate. NOT recommended for production use.
+| `compress` | `logger.compress` | This determines if the rotated log files should be compressed using gzip.
+| `file` | `logger.file` | Log output to a file (as well as `stdout` if set). Make sure that the directory and the file is writable.
+| `level` | `logger.level` | Minimum log level to produce. Values are `debug`, `info`, `warn` and `error`. Default is `info`.
+| `local_time` | `logger.local_time` | This determines if the time used for formatting the timestamps in backup files is the computer's local time. The default is to use UTC time.
+| `max_age` | `logger.max_age` | The maximum number of days to retain old log files based on the timestamp encoded in their filename. The default is not to remove old log files based on age.
+| `max_backups` | `logger.max_backups` | The maximum number of old log files to retain. The default is to retain all old log files (though `max_age` may still cause them to get deleted.)
+| `max_size` | `logger.max_size` | The maximum size in megabytes of the log file before it gets rotated. It defaults to 100 megabytes. Default is 100.
+| `rotation` | `logger.rotation` | Rotate log files. Default is false.
+| `stdout` | `logger.stdout` | Redirect logs to console standard output. The log file will no longer be used. Default is `true`.
+
+The standard startup log messages will always be printed to the console irrespective of the value of `logger.stdout` field.
+
+### Match
+
+You can change configuration options related to the authoritative multiplayer runtime.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `call_queue_size` | `match.call_queue_size` | Size of the authoritative match buffer that sequences calls to match handler callbacks to ensure no overlaps. Default 128.
+| `deferred_queue_size` | `match.deferred_queue_size` | Size of the authoritative match buffer that holds deferred message broadcasts until the end of each loop execution. Default 128.
+| `input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
+| `join_attempt_queue_size` | `match.join_attempt_queue_size` | Size of the authoritative match buffer that limits the number of in-progress join attempts. Default 128.
+| `join_marker_deadline_ms` | `match.join_marker_deadline_ms` | Deadline in milliseconds that client authoritative match joins will wait for match handlers to acknowledge joins. Default 5000.
+
+### Metrics
+
+Nakama produces metrics information. This information can be exported to Stackdriver or Prometheus.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `namespace` | `metrics.namespace` | Namespace for Prometheus or prefix for Stackdriver metrics. It will always prepend node name. Default value is empty.
+| `prometheus_port` | `metrics.prometheus_port` | Port to expose Prometheus. Default value is '0' which disables Prometheus exports.
+| `reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 60 seconds.
+| `stackdriver_projectid` | `metrics.stackdriver_projectid` | This is the identifier of the Stackdriver project the server is uploading the stats data to. Setting this enables metrics to be exported to Stackdriver.
+
+Ensure that metrics exports are protected as they contain sensitive server information.
+
+### Runtime
+
+Options related to Lua-based runtime engine.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
+| `env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
+| `http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
+| `max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
+| `min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
+| `path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
+| `registry_size` | `runtime.registry_size` | Size of each runtime instance's registry. Default 512.
 
 !!! warning "Important"
-    You must change `server_key` before going live with your app!
+    You must change `http_key` before going live with your app!
 
-<!--
-!!! info "Public Address"
-    Public Address is the direct addressable IP address of your server. This value is cached in session tokens with clients to enable fast reconnects. If the IP address changes clients will need to re-authenticate with the server.
--->
+!!! tip "Runtime env value"
+    The runtime environment is a key-value pair. They are separated by the `=` character like this:
+
+    ```
+    nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
+    ```
 
 ### Session
 
@@ -199,22 +206,47 @@ Configure Steam network settings. Facebook, Google and GameCenter don't require 
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| `publisher_key` | `steam.publisher_key` | Steam Publisher Key.
 | `app_id` | `steam.app_id` | Steam App ID.
+| `publisher_key` | `steam.publisher_key` | Steam Publisher Key.
 
-### Console
+### Socket
 
-This section defined the configuration related for the embedded developer console.
+Options related to connection socket and transport protocol between the server and clients.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| `port` | `console.port` | The port for accepting connections for the embedded console, listening on all interfaces. Default value is 7351.
-| `username` | `console.username` | Username for the embedded console. Default is "admin".
-| `password` | `console.password` | Password for the embedded console. Default is "password".
+| `address` | `socket.address` | The IP address of the interface to listen for client traffic on. Default listen on all available addresses/interfaces.
+| `idle_timeout_ms` | `socket.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled. Used for HTTP connections. Default value is 60000.
+| `max_message_size_bytes` | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Used for real-time, gRPC and HTTP connections. Default value is 4096.
+| `outgoing_queue_size` | `socket.outgoing_queue_size` | The maximum number of messages waiting to be sent to the client. If this is exceeded the client is considered too slow and will disconnect. Used when processing real-time connections. Default value is 16.
+| `ping_backoff_threshold` | `socket.ping_backoff_threshold` | Minimum number of messages received from the client during a single ping period that will delay the sending of a ping until the next ping period, to avoid sending unnecessary pings on regularly active connections. Default value is 20.
+| `ping_period_ms` | `socket.ping_period_ms` | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Used for real-time
+connections. Default value is 8000.
+| `pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 10000.
+| `port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
+| `protocol` | `socket.protocol` | The network protocol to listen for traffic on. Possible values are `tcp` for both IPv4 and IPv6, `tcp4` for IPv4 only, or `tcp6` for IPv6 only. Default `tcp`."
+| `read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
+| `server_key` | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
+| `ssl_certificate` | `socket.ssl_certificate` | Path to certificate file if you want the server to use SSL directly. Must also supply ssl_private_key. NOT recommended for production use.
+| `ssl_private_key` | `socket.ssl_private_key` | Path to private key file if you want the server to use SSL directly. Must also supply ssl_certificate. NOT recommended for production use.
+| `write_timeout_ms` | `socket.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response. Used for HTTP connections. Default value is 10000.
+| `write_wait_ms` | `socket.write_wait_ms` | Time in milliseconds to wait for an ack from the client when writing data. Used for real-time connections. Default value is 5000.
 
-### Cluster
+!!! warning "Important"
+    You must change `server_key` before going live with your app!
 
-This section configures how the nodes should connect to each to other form a cluster.
+<!--
+!!! info "Public Address"
+    Public Address is the direct addressable IP address of your server. This value is cached in session tokens with clients to enable fast reconnects. If the IP address changes clients will need to re-authenticate with the server.
+-->
+
+### Tracker
+
+You can change configuration options related to session tracking.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `event_queue_size` | `tracker.event_queue_size` | Size of the tracker presence event buffer. Increase if the server is expected to generate a large number of presence events in a short time. Default value is 1024.
 
 !!! tip "Nakama Enterprise Only"
     The following configuration options are available only in the Nakama Enterprise version of the Nakama server
@@ -223,10 +255,11 @@ This section configures how the nodes should connect to each to other form a clu
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| `join` | `cluster.join` | List of hostname and port of other Nakama nodes to connect to.
-| `gossip_bindaddr` | `cluster.gossip_bindaddr` | Interface address to bind Nakama to for discovery. By default listening on all interfaces.
-| `gossip_bindport` | `cluster.gossip_bindport` | Port number to bind Nakama to for discovery. Default value is 7352.
-| `rpc_port` | `cluster.rpc_port` | Port number to use to send data between Nakama nodes. Default value is 7353.
+| `broadcast_period_ms` | `tracker.broadcast_period_ms` | Time in milliseconds between tracker presence replication broadcasts to each cluster node. Default value is 1500.
+| `clock_sample_periods` | `tracker.clock_sample_periods` | Number of broadcasts before a presence transfer will be requested from a cluster node if one is not received as expected. Default value is 2.
+| `max_delta_sizes` | `tracker.max_delta_sizes` | Number of deltas and maximum presence count per delta for presence snapshots used to broadcast minimal subsets of presence data to cluster nodes. Default values are 100, 1000 and 10000.
+| `max_silent_periods` | `tracker.max_silent_periods` | Maximum number of missed broadcasts before a cluster node's presences are considered down. Default value is 10.
+| `permdown_period_ms` | `tracker.permdown_period_ms` | Time in milliseconds since last broadcast before a cluster node's presences are considered permanently down and will be removed. Default value is 1200000.
 
 <!--
 
