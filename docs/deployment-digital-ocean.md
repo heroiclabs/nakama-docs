@@ -12,7 +12,6 @@ Your droplet should have the following configuration:
 
 - Linux distribution: **Ubuntu 16.04 x64**
 - RAM: **4GB RAM** / 60GB SSD Disk
-- Storage: Optionally add block storage (you’ll need this to keep your data intact between restarts)
 - Region: To minimise latency, choose a region close to you.
 - Add a new SSH Key: **This is important**. Follow [Digital Ocean’s guide](https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets) if you need help setting up a public key.
 
