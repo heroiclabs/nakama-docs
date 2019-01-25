@@ -311,7 +311,7 @@ Create a tournament with all it's configuration options.
 ```lua fct_label="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local authoritative = false
-local sort = "desc" -- one of: "desc", "asc"
+local sort = "desc"     -- one of: "desc", "asc"
 local operator = "best" -- one of: "best", "set", "incr"
 local reset = "0 12 * * *" -- noon UTC each day
 local metadata = {
@@ -320,11 +320,11 @@ local metadata = {
 title = "Daily Dash"
 description = "Dash past your opponents for high scores and big rewards!"
 category = 1
-start_time = 0 -- start now
-end_time = 0 -- never end, repeat the tournament each day forever
-duration = 3600 -- in seconds
-max_size = 10000 -- first 10,000 players who join
-max_num_score = 3 -- each player can have 3 attempts to score
+start_time = 0       -- start now
+end_time = 0         -- never end, repeat the tournament each day forever
+duration = 3600      -- in seconds
+max_size = 10000     -- first 10,000 players who join
+max_num_score = 3    -- each player can have 3 attempts to score
 join_required = true -- must join to compete
 nk.tournament_create(sortOrder, operator, reset, metadata, title, description, category,
   start_time, endTime, duration, max_size, max_num_score, join_required)
@@ -333,23 +333,23 @@ nk.tournament_create(sortOrder, operator, reset, metadata, title, description, c
 ```go fct_label="Go"
 // import "github.com/gofrs/uuid"
 id := uuid.Must(uuid.NewV4())
-sortOrder := "desc" // one of: "desc", "asc"
-operator := "best"  // one of: "best", "set", "incr"
+sortOrder := "desc"  // one of: "desc", "asc"
+operator := "best"   // one of: "best", "set", "incr"
 resetSchedule := "0 12 * * *" // noon UTC each day
 metadata := map[string]interface{}{}
 title := "Daily Dash"
 description := "Dash past your opponents for high scores and big rewards!"
 category := 1
-startTime := nil // start now
-endTime := nil // never end, repeat the tournament each day forever
-duration := 3600 // in seconds
-maxSize := 10000 // first 10,000 players who join
-maxNumScore := 3 // each player can have 3 attempts to score
+startTime := nil     // start now
+endTime := nil       // never end, repeat the tournament each day forever
+duration := 3600     // in seconds
+maxSize := 10000     // first 10,000 players who join
+maxNumScore := 3     // each player can have 3 attempts to score
 joinRequired := true // must join to compete
 err := nk.TournamentCreate(id.String(), sortOrder, operator, resetSchedule, metadata, title, description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired)
 if err != nil {
   logger.Printf("unable to create tournament: %q", err.Error())
-  return "", errors.New("failed to create tournament"), 3
+  return "", runtime.NewError("failed to create tournament", 3)
 }
 ```
 
@@ -366,7 +366,7 @@ nk.tournament_delete(id)
 err := nk.TournamentDelete(id)
 if err != nil {
   logger.Printf("unable to delete tournament: %q", err.Error())
-  return "", errors.New("failed to delete tournament"), 3
+  return "", runtime.NewError("failed to delete tournament", 3)
 }
 ```
 
@@ -388,7 +388,7 @@ attempts := 10
 err := nk.TournamentAddAttempt(id, userID, attempts)
 if err != nil {
   logger.Printf("unable to update user %v record attempts: %q", userID, err.Error())
-  return "", errors.New("failed to add tournament attempts"), 3
+  return "", runtime.NewError("failed to add tournament attempts", 3)
 }
 ```
 
@@ -399,6 +399,7 @@ When a tournament's active period ends a function registered on the server will 
 To register a reward distribution function in Go use the `initializer`.
 
 ```lua fct_label="Lua"
+local nk = require("nakama")
 local function distribute_rewards(_context, tournament, session_end, expiry)
   // ...
 end
@@ -415,11 +416,13 @@ import (
   "github.com/heroiclabs/nakama/runtime"
 )
 
-func InitModule(ctx context.Context, logger *log.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) {
-  initializer.RegisterTournamentEnd(distributeRewards)
+func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+  if err := initializer.RegisterTournamentEnd(distributeRewards); err != nil {
+    return err
+  }
 }
 
-func distributeRewards(ctx context.Context, logger *log.Logger, db *sql.DB, nk runtime.NakamaModule, tournament *api.Tournament, end int64, reset int64) {
+func distributeRewards(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, tournament *api.Tournament, end int64, reset int64) error {
   // ...
   return nil
 }
@@ -428,10 +431,11 @@ func distributeRewards(ctx context.Context, logger *log.Logger, db *sql.DB, nk r
 A simple reward distribution function which sends a persistent notification to the top ten players to let them know they've won and adds coins to their virtual wallets would look like:
 
 ```lua fct_label="Lua"
+local nk = require("nakama")
 local function distribute_rewards(_context, tournament, session_end, expiry)
   local notifications = {}
   local wallet_updates = {}
-  local records, owner_records, nc, pc = nk.leaderboard_records_list(tournament.id, nil, 10)
+  local records, owner_records, nc, pc = nk.leaderboard_records_list(tournament.id, nil, 10, nil, expiry)
   for i = 0, #records do
     notifications[i] = {
       code = 1,
@@ -453,23 +457,24 @@ end
 ```
 
 ```go fct_label="Go"
-func distributeRewards(ctx context.Context, logger *log.Logger, _, nk runtime.NakamaModule, tournament *api.Tournament, end int64, reset int64) {
+func distributeRewards(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, tournament *api.Tournament, end int64, reset int64) error {
+  wallets := make([]*runtime.WalletUpdate, 0, 10)
   notifications := make([]*runtime.NotificationSend, 0, 10)
-  var content = map[string]interface{}{}
+  content := map[string]interface{}{}
   changeset := map[string]interface{}{"coins": 100}
   records, _, _, _, err := nk.LeaderboardRecordsList(tournament.Id, []string{}, 10, nil, reset)
   for _, record := range records {
     wallets = append(wallets, &runtime.WalletUpdate{record.OwnerId, changeset, content})
     notifications = append(notifications, &runtime.NotificationSend{record.OwnerId, "Winner", content, 1, "", true})
   }
-  err = nk.WalletsUpdate(wallets, true)
+  err = nk.WalletsUpdate(wallets, false)
   if err := nil {
-    logger.Printf("failed to update winner wallets: %v", err)
+    logger.Error("failed to update winner wallets: %v", err)
     return err
   }
   err = nk.NotificationsSend(notifications)
   if err := nil {
-    logger.Printf("failed to send winner notifications: %v", err)
+    logger.Error("failed to send winner notifications: %v", err)
     return err
   }
   return nil
