@@ -106,8 +106,8 @@ client.onmatchpresence = (presences) => {
 var connectedOpponents = new List<IUserPresence>(0);
 socket.OnMatchPresence += (_, presence) =>
 {
-  connectedOpponents.AddRange(presenceChange.Joins);
-  foreach (var leave in presenceChange.Leaves)
+  connectedOpponents.AddRange(presence.Joins);
+  foreach (var leave in presence.Leaves)
   {
     connectedOpponents.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
   };
@@ -118,8 +118,8 @@ socket.OnMatchPresence += (_, presence) =>
 var connectedOpponents = new List<IUserPresence>(0);
 socket.OnMatchPresence += (_, presence) =>
 {
-  connectedOpponents.AddRange(presenceChange.Joins);
-  foreach (var leave in presenceChange.Leaves)
+  connectedOpponents.AddRange(presence.Joins);
+  foreach (var leave in presence.Leaves)
   {
     connectedOpponents.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
   };
