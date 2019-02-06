@@ -49,7 +49,7 @@ We import the `"nakama"` module which is embedded within the server and contains
 
 The code in a module will be evaluated immediately and can be used to register functions which can operate on messages from clients as well as execute logic on demand.
 
-All registered functions receive a "context" table as the first argument and "payload" as the second. The "context" contains fields which depend on when the code is executed.
+All registered functions receive a "context" table as the first argument. The "context" contains fields which depend on when the code is executed.
 
 | Field | Purpose |
 | ----- | ------- |
@@ -103,6 +103,8 @@ Have a look at [this section](#message-names) to see the server message names.
 
 Any function may be registered to intercept a message received from a client and operate on it (or reject it) based on custom logic. This is useful to enforce specific rules on top of the standard features in the server.
 
+The second argument will be the "incoming payload" containing data received that will be processed by the server.
+
 ```lua hl_lines="9"
 local nk = require("nakama")
 
@@ -129,12 +131,14 @@ The code above fetches the current user's profile and checks the metadata which 
 
 Similar to [Before hook](#before-hook) you can attach a function to operate on a message. The registered function will be called after the message has been processed in the pipeline. The custom code will be executed asynchronously after the response message has been sent to a client.
 
+The second argument is the "outgoing payload" containing the server's response to the request. The third argument contains the "incoming payload" containing the data originally passed to the server for this request.
+
 ```lua
 local nk = require("nakama")
 
-local function add_reward(context, payload)
+local function add_reward(context, outgoing_payload, incoming_payload)
   local value = {
-    user_ids = {payload.user_id}
+    user_ids = {outgoing_payload.user_id}
   }
   local record = {
     collection = "rewards",

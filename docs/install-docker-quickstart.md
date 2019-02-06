@@ -23,7 +23,7 @@ Installing Nakama using Docker is ideal for a few reasons, including:
 
 ## What is Docker?
 
-If you’re new to Docker, then here’s what you need to know: Docker is an open soure containerization tool that lets you create multiple distinct Linux environments, each separate from the other.
+If you’re new to Docker, then here’s what you need to know: Docker is an open source containerization tool that lets you create multiple distinct Linux environments, each separate from the other.
 
 In a Docker container you run a suite of tools to do a particular job; in this case we’ll have one container running Nakama and another running CockroachDB. You can think of Docker containers as lightweight virtual machines.
 
