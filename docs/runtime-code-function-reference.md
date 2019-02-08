@@ -564,6 +564,25 @@ nk.group_create(user_id, name, creator_id, lang, description, avatar_url, open, 
 
 ---
 
+__group_delete (group_id)__
+
+Delete a group.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| group_id | string | The group ID to delete. |
+
+_Example_
+
+```lua
+group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
+nk.group_delete(group_id)
+```
+
+---
+
 __group_update (group_id, name, creator_id, lang, description, avatar_url, open, metadata, max_count)__
 
 Update a group with various configuration settings. The group which is updated can change some or all of its fields.
@@ -596,21 +615,57 @@ nk.group_update(group_id, "", "", "", description, "", nil, metadata, 0)
 
 ---
 
-__group_delete (group_id)__
+__group_users_list (group_id)__
 
-Delete a group.
+List all members, admins and superadmins which belong to a group. This also list incoming join requests too.
 
 _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| group_id | string | The group ID to delete. |
+| group_id | string | The Id of the group who's members, admins and superadmins you want to list. |
+
+_Returns_
+
+The user information for members, admins and superadmins for the group. Also users who sent a join request as well.
 
 _Example_
 
 ```lua
-group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
-nk.group_delete(group_id)
+local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+local members = nk.group_users_list(group_id)
+for _, m in ipairs(members)
+do
+  local msg = ("Member username %q has status %q"):format(m.username, m.state)
+  print(msg)
+end
+```
+
+---
+
+__groups_get_id (group_ids)__
+
+Fetch one or more groups by their ID.
+
+_Parameters_
+
+| Param | Type | Description
+| group_ids | table | A table of strings of the ID for the groups to get. |
+
+_Returns_
+
+A table (array) of groups with their fields.
+
+_Example_
+
+```lua
+local group_ids = {"0BF154F1-F7D1-4AAA-A060-5FFED3CDB982", "997C0D18-0B25-4AEC-8331-9255BD36665D"}
+local groups = nk.groups_get_id(group_ids)
+for _, g in ipairs(groups)
+do
+  local msg = ("Group name %q with id %q"):format(g.name, g.id)
+  print(msg)
+end
 ```
 
 ---
@@ -637,34 +692,6 @@ local groups = nk.user_groups_list(user_id)
 for _, g in ipairs(groups)
 do
   local msg = ("Group name %q with id %q"):format(g.name, g.id)
-  print(msg)
-end
-```
-
----
-
-__group_users_list (group_id)__
-
-List all members, admins and superadmins which belong to a group. This also list incoming join requests too.
-
-_Parameters_
-
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| group_id | string | The Id of the group who's members, admins and superadmins you want to list. |
-
-_Returns_
-
-The user information for members, admins and superadmins for the group. Also users who sent a join request as well.
-
-_Example_
-
-```lua
-local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
-local members = nk.group_users_list(group_id)
-for _, m in ipairs(members)
-do
-  local msg = ("Member username %q has status %q"):format(m.username, m.state)
   print(msg)
 end
 ```
