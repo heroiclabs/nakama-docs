@@ -1,10 +1,10 @@
-# C++ client guide
+# Cocos2d-x C++ client guide
 
 The official C++ client handles all communication in realtime with the server. It implements all features in the server and is written with C++11.
 
 ## Download
 
-The client can be downloaded from <a href="https://github.com/heroiclabs/nakama-cpp/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-cpp-$version.zip".
+The client SDK can be downloaded from <a href="https://github.com/heroiclabs/nakama-cpp/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-cocos2d-x-sdk_$version.zip".
 
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-cpp/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
@@ -16,6 +16,12 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 When you've downloaded the Nakama C++ archive and extracted it to `NAKAMA_CPP_SDK` folder, you should include it in your project.
 
 We don't recommend to copy Nakama C++ SDK to your project because it's quite big in size (~1 Gb).
+
+### Copy NakamaCocos2d folder
+
+Copy `NakamaCocos2d` folder from `NAKAMA_CPP_SDK` to your `Classes` folder.
+
+Add all files from `NakamaCocos2d` folder to your project.
 
 ### Setup for Mac and iOS projects
 
@@ -65,36 +71,6 @@ In `Project Settings` add following:
     - `NAKAMA_CPP_SDK/libs/win32/vc141` - for VS 2017
 3. Add all `.lib` files located in libs folder in `Linker > Input > Additional Dependencies`
 
-### Custom setup
-
-- add define:
-  - `NLOGS_ENABLED` - define it if you want to use Nakama logger. See [Logging](#Logging) section
-- add include directory: `$(NAKAMA_CPP_SDK)/include`
-- add link directory: `$(NAKAMA_CPP_SDK)/libs/{platform}/{ABI}`
-- add link libraries:
-  - `nakama-cpp`
-  - `grpc++`
-  - `libprotobuf`
-  - `gpr`
-  - `grpc`
-  - `cares`
-  - `crypto`
-  - `ssl`
-  - `address_sorting`
-
-For Windows:
-
-- Add extension `.lib` to libs names e.g. `nakama-cpp.lib`
-- To debug you must add `d` suffix to libs names e.g. `nakama-cppd.lib`
-
-For Mac, iOS, Android and Linux:
-
-- Add prefix `lib` and extension `.a` to libs names e.g. `libnakama-cpp.a`
-
-For Mac and iOS:
-
-- Add `libresolv.9.tbd` system library
-
 ## Usage
 
 Include nakama header.
@@ -132,9 +108,15 @@ NClientPtr client = createDefaultClient(DefaultClientParameters());
 The `tick` method pumps requests queue and executes callbacks in your thread. You must call it periodically (recommended every 50ms) in your thread.
 
 ```cpp
-client->tick();
-if (rtClient)
-    rtClient->tick();
+auto tickCallback = [this](float dt)
+{
+    client->tick();
+    if (rtClient)
+        rtClient->tick();
+};
+
+auto scheduler = Director::getInstance()->getScheduler();
+scheduler->schedule(tickCallback, this, 0.05f /*sec*/, CC_REPEAT_FOREVER, 0, false, "nakama-tick");
 ```
 
 Without this the default client and realtime client will not work, and you will not receive responses from the server.
@@ -182,11 +164,12 @@ In the code above we use `authenticateDevice()` but for other authentication opt
 When authenticated the server responds with an auth token (JWT) which contains useful properties and gets deserialized into a `NSession` object.
 
 ```cpp
-std::cout << session->getAuthToken() << std::endl; // raw JWT token
-std::cout << session->getUserId() << std::endl;
-std::cout << session->getUsername() << std::endl;
-std::cout << "Session has expired: " << session->isExpired() << std::endl;
-std::cout << "Session expires at: " << session->getExpireTime() << std::endl;
+CCLOG("%s", session->getAuthToken().c_str()); // raw JWT token
+CCLOG("%s", session->getUserId().c_str());
+CCLOG("%s", session->getUsername().c_str());
+CCLOG("Session has expired: %s", session->isExpired() ? "yes" : "no");
+CCLOG("Session expires at: %llu", session->getExpireTime());
+CCLOG("Session created at: %llu", session->getCreateTime());
 ```
 
 It is recommended to store the auth token from the session and check at startup if it has expired. If the token has expired you must reauthenticate. The expiry time of the token can be changed as a [setting](install-configuration.md#common-properties) in the server.
@@ -204,9 +187,9 @@ All requests are sent with a session object which authorizes the client.
 ```cpp
 auto successCallback = [](const NAccount& account)
 {
-    std::cout << "user id : " << account.user.id << std::endl;
-    std::cout << "username: " << account.user.username << std::endl;
-    std::cout << "wallet  : " << account.wallet << std::endl;
+    CCLOG("user id : %s", account.user.id.c_str());
+    CCLOG("username: %s", account.user.username.c_str());
+    CCLOG("wallet  : %s", account.wallet.c_str());
 };
 
 client->getAccount(session, successCallback, errorCallback);
@@ -222,14 +205,16 @@ The client can create one or more realtime clients. Each realtime client can hav
     The socket is exposed on a different port on the server to the client. You'll need to specify a different port here to ensure that connection is established successfully.
 
 ```cpp
+#include "NakamaCocos2d/NWebSocket.h"
+
 int port = 7350; // different port to the main API port
 bool createStatus = true; // if the server should show the user as online to others.
 // define realtime client in your class as NRtClientPtr rtClient;
-rtClient = client->createRtClient(port);
+rtClient = client->createRtClient(port, NRtTransportPtr(new NWebSocket()));
 // define listener in your class as NRtDefaultClientListener listener;
 listener.setConnectCallback([]()
 {
-    std::cout << "Socket connected" << std::endl;
+    CCLOG("Socket connected");
 });
 rtClient->setListener(&listener);
 rtClient->connect(session, createStatus);
@@ -244,15 +229,15 @@ To join a chat channel and receive messages:
 ```cpp
 listener.setChannelMessageCallback([](const NChannelMessage& message)
 {
-    std::cout << "Received a message on channel " << message.channel_id << std::endl;
-    std::cout << "Message content: " << message.content << std::endl;
+    CCLOG("Received a message on channel %s", message.channel_id.c_str());
+    CCLOG("Message content: %s", message.content.c_str());
 });
 
 std::string roomName = "Heroes";
 
 auto successJoinCallback = [this](NChannelPtr channel)
 {
-    std::cout << "joined chat: " << channel->id << std::endl;
+    CCLOG("joined chat: %s", channel->id.c_str());
 
     // content must be JSON
     std::string content = "{\"message\":\"Hello world\"}";
@@ -280,12 +265,12 @@ listener.setStatusPresenceCallback([](const NStatusPresenceEvent& event)
 {
     for (auto& presence : event.joins)
     {
-        std::cout << "Joined User ID: " << presence.user_id << " Username: " << presence.username << " Status: " << presence.status << std::endl;
+        CCLOG("Joined User ID: %s Username: %s Status: %s", presence.user_id.c_str(), presence.username.c_str(), presence.status.c_str());
     }
 
     for (auto& presence : event.leaves)
     {
-        std::cout << "Left User ID: " << presence.user_id << " Username: " << presence.username << " Status: " << presence.status << std::endl;
+        CCLOG("Left User ID: %s Username: %s Status: %s", presence.user_id.c_str(), presence.username.c_str(), presence.status.c_str());
     }
 });
 ```
@@ -307,63 +292,21 @@ Event handlers only need to be implemented for the features you want to use.
 
 ### Logging
 
-#### Initializing Logger
-
 Client logging is off by default.
 
 To enable logs output to console with debug logging level:
 
 ```cpp
-NLogger::initWithConsoleSink(NLogLevel::Debug);
+#include "NakamaCocos2d/NCocosLogSink.h"
+
+NLogger::init(std::make_shared<NCocosLogSink>(), NLogLevel::Debug);
 ```
-
-To enable logs output to custom sink with debug logging level:
-
-```cpp
-NLogger::init(sink, NLogLevel::Debug);
-```
-
-#### Using Logger
-
-To log string with debug logging level:
-
-```
-NLOG_DEBUG("debug log");
-```
-
-formatted log:
-
-```
-NLOG(NLogLevel::Info, "This is string: %s", "yup I'm string");
-NLOG(NLogLevel::Info, "This is int: %d", 5);
-```
-
-Changing logging level boundary:
-
-```
-NLogger::setLevel(NLogLevel::Debug);
-```
-
-`NLogger` behaviour depending on logging level boundary:
-
-- `Debug` writes all logs.
-
-- `Info` writes logs with `Info`, `Warn`, `Error` and `Fatal` logging level.
-
-- `Warn` writes logs with `Warn`, `Error` and `Fatal` logging level.
-
-- `Error` writes logs with `Error` and `Fatal` logging level.
-
-- `Fatal` writes only logs with `Fatal` logging level.
-
-!!! Note
-    To use logging macroses you have to define `NLOGS_ENABLED`.
 
 ## Errors
 
 The [server](install-configuration.md#log) and the client can generate logs which are helpful to debug code.
 
-To enable client logs see [Initializing Logger](#Initializing-Logger) section.
+To enable client logs see [Logging](#Logging) section.
 
 In every request in the client you can set error callback. It will be called when request fails. The callback has `NError` structure which contains details of the error:
 
@@ -371,12 +314,12 @@ In every request in the client you can set error callback. It will be called whe
 auto errorCallback = [](const NError& error)
 {
     // convert error to readable string
-    std::cout << toString(error) << std::endl;
+    CCLOGERROR("%s", toString(error).c_str());
 
     // check error code
     if (error.code == ErrorCode::ConnectionError)
     {
-        std::cout << "The server is currently unavailable. Check internet connection." << std::endl;
+        CCLOG("The server is currently unavailable. Check internet connection.");
     }
 };
 
@@ -385,59 +328,9 @@ client->getAccount(session, successCallback, errorCallback);
 
 The client writes all errors to logger so you don't need to do this.
 
-## Full C++ example
+## Full Cocos2d-x C++ example
 
-An example class used to manage a session with the C++ client.
-
-```cpp
-class NakamaSessionManager
-{
-public:
-    NakamaSessionManager()
-    {
-        DefaultClientParameters parameters;
-
-        _client = createDefaultClient(parameters);
-    }
-
-    void start(const string& deviceId)
-    {
-        // to do: read session token from your storage
-        string sessionToken;
-
-        if (!sessionToken.empty())
-        {
-            // Lets check if we can restore a cached session.
-            auto session = restoreSession(sessionToken);
-
-            if (!session->isExpired())
-            {
-                // Session was valid and is restored now.
-                _session = session;
-                return;
-            }
-        }
-
-        auto successCallback = [this](NSessionPtr session)
-        {
-            _session = session;
-
-            // to do: save session token in your storage
-            std::cout << "session token: " << session->getAuthToken() << std::endl;
-        };
-
-        auto errorCallback = [](const NError& error)
-        {
-        };
-
-        _client->authenticateDevice(deviceId, opt::nullopt, opt::nullopt, successCallback, errorCallback);
-    }
-
-protected:
-    NClientPtr _client;
-    NSessionPtr _session;
-};
-```
+You can find the Cocos2d-x C++ example [here](https://github.com/heroiclabs/nakama-cocos2d-x)
 
 ## Client reference
 
