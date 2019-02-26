@@ -76,6 +76,7 @@ pages:
 - 'Java/Android client guide': 'android-java-client-guide.md'
 - 'Swift/iOS client guide': 'swift-ios-client-guide.md'
 - 'C++ client guide': 'cpp-client-guide.md'
+- 'Cocos2d-x client guide (C++)': 'cocos2d-x-client-guide.md'
 #- 'Unreal engine': 'nakama-unreal-engine.md'
 - 'Authentication': 'authentication.md'
 - 'User accounts': 'user-accounts.md'
