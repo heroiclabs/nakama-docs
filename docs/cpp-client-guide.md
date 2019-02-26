@@ -13,7 +13,9 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 
 ## Setup
 
-When you've downloaded the zip archive and extracted it to `NAKAMA_CPP_SDK` folder, you should include it in your project.
+When you've downloaded the Nakama C++ archive and extracted it to `NAKAMA_CPP_SDK` folder, you should include it in your project.
+
+We don't recommend to copy Nakama C++ SDK to your project because it's quite big in size (~1 Gb).
 
 ### Setup for Mac and iOS projects
 
@@ -21,7 +23,7 @@ When you've downloaded the zip archive and extracted it to `NAKAMA_CPP_SDK` fold
 2. Add libs folder in `Build Settings > Library Search Paths`:
     - `NAKAMA_CPP_SDK/libs/ios` - for iOS
     - `NAKAMA_CPP_SDK/libs/mac` - for Mac
-3. Add all `.a` files located in libs folder and `libresolv.9.tbd` in `General > Linked Frameworks and Librarys`
+3. Add all `.a` files located in libs folder and `libresolv.9.tbd` in `General > Linked Frameworks and Libraries`
 
 ### Setup for Android projects
 
@@ -278,12 +280,12 @@ listener.setStatusPresenceCallback([](const NStatusPresenceEvent& event)
 {
     for (auto& presence : event.joins)
     {
-        std::cout << "User ID: " << presence.user_id << " Username: " << presence.username << " Status: " << presence.status << std::endl;
+        std::cout << "Joined User ID: " << presence.user_id << " Username: " << presence.username << " Status: " << presence.status << std::endl;
     }
 
     for (auto& presence : event.leaves)
     {
-        std::cout << "User ID: " << presence.user_id << " Username: " << presence.username << " Status: " << presence.status << std::endl;
+        std::cout << "Left User ID: " << presence.user_id << " Username: " << presence.username << " Status: " << presence.status << std::endl;
     }
 });
 ```
@@ -395,10 +397,6 @@ public:
     {
         DefaultClientParameters parameters;
 
-        parameters.host = SERVER_HOST;
-        parameters.port = SERVER_GRPC_PORT;
-        parameters.serverKey = SERVER_KEY;
-
         _client = createDefaultClient(parameters);
     }
 
@@ -420,8 +418,10 @@ public:
             }
         }
 
-        auto successCallback = [](NSessionPtr session)
+        auto successCallback = [this](NSessionPtr session)
         {
+            _session = session;
+
             // to do: save session token in your storage
             std::cout << "session token: " << session->getAuthToken() << std::endl;
         };
