@@ -75,6 +75,7 @@ pages:
 - 'JavaScript client guide': 'javascript-client-guide.md'
 - 'Java/Android client guide': 'android-java-client-guide.md'
 - 'Swift/iOS client guide': 'swift-ios-client-guide.md'
+- 'C++ client guide': 'cpp-client-guide.md'
 #- 'Unreal engine': 'nakama-unreal-engine.md'
 - 'Authentication': 'authentication.md'
 - 'User accounts': 'user-accounts.md'
