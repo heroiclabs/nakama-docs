@@ -4,9 +4,9 @@ The official C++ client handles all communication in realtime with the server. I
 
 ## Download
 
-The client SDK can be downloaded from <a href="https://github.com/heroiclabs/nakama-cpp/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-cocos2d-x-sdk_$version.zip".
+The client SDK can be downloaded from <a href="https://github.com/heroiclabs/nakama-cocos2d-x/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-cocos2d-x-sdk_$version.zip".
 
-For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-cpp/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
+For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-cocos2d-x/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
 !!! Bug "Help and contribute"
     The C++ client is <a href="https://github.com/heroiclabs/nakama-cpp" target="\_blank">open source on GitHub</a>. Please report issues and contribute code to help us improve it.
