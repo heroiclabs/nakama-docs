@@ -18,6 +18,27 @@ var client = new Client("defaultkey", "127.0.0.1", 7350, false);
 var client = new Client("defaultkey", "127.0.0.1", 7350, false);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+DefaultClientParameters parameters;
+parameters.serverKey = "defaultkey";
+parameters.host = "127.0.0.1";
+parameters.port = 7349;
+NClientPtr client = createDefaultClient(parameters);
+```
+
+```js fct_label="Cocos2d-x JS"
+var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
+client.ssl = false;
+```
+
+```cpp fct_label="C++"
+DefaultClientParameters parameters;
+parameters.serverKey = "defaultkey";
+parameters.host = "127.0.0.1";
+parameters.port = 7349;
+NClientPtr client = createDefaultClient(parameters);
+```
+
 ```java fct_label="Java"
 Client client = new DefaultClient("defaultkey", "127.0.0.1", 7349, false)
 // or same as above.
@@ -100,6 +121,57 @@ var session = await client.AuthenticateDeviceAsync(deviceid);
 Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto loginFailedCallback = [](const NError& error)
+{
+};
+
+auto loginSucceededCallback = [](NSessionPtr session)
+{
+  CCLOG("Successfully authenticated");
+};
+
+std::string deviceId = "unique device id";
+
+client->authenticateDevice(
+        deviceId,
+        opt::nullopt,
+        opt::nullopt,
+        loginSucceededCallback,
+        loginFailedCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var deviceId = "unique device id";
+client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" })
+  .then(function(session) {
+        cc.log("Authenticated successfully. User id:", session.user_id);
+    },
+    function(error) {
+        cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto loginFailedCallback = [](const NError& error)
+{
+};
+
+auto loginSucceededCallback = [](NSessionPtr session)
+{
+  cout << "Successfully authenticated" << endl;
+};
+
+std::string deviceId = "unique device id";
+
+client->authenticateDevice(
+        deviceId,
+        opt::nullopt,
+        opt::nullopt,
+        loginSucceededCallback,
+        loginFailedCallback);
+```
+
 ```java fct_label="Java"
 String id = UUID.randomUUID().toString();
 Session session = client.authenticateDevice(id).get();
@@ -163,8 +235,8 @@ curl http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=my
 ```
 
 ```js fct_label="JavaScript"
-const email = "email@example.com"
-const password = "3bc8f72e95a9"
+const email = "email@example.com";
+const password = "3bc8f72e95a9";
 const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
 console.info("Successfully authenticated:", session);
 ```
@@ -181,6 +253,52 @@ const string email = "email@example.com";
 const string password = "3bc8f72e95a9";
 var session = await client.AuthenticateEmailAsync(email, password);
 Debug.LogFormat("Session: '{0}'", session.AuthToken);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NSessionPtr session)
+{
+  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string email = "email@example.com";
+string password = "3bc8f72e95a9";
+string username = "mycustomusername";
+bool create = true;
+client->authenticateEmail(email, password, username, create, successCallback, errorCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const email = "email@example.com";
+const password = "3bc8f72e95a9";
+client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
+  .then(function(session) {
+      cc.log("Authenticated successfully. User ID:", session.user_id);
+    },
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NSessionPtr session)
+{
+    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string email = "email@example.com";
+string password = "3bc8f72e95a9";
+string username = "mycustomusername";
+bool create = true;
+client->authenticateEmail(email, password, username, create, successCallback, errorCallback);
 ```
 
 ```java fct_label="Java"
@@ -262,6 +380,61 @@ FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
 });
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto loginFailedCallback = [](const NError& error)
+{
+};
+
+auto loginSucceededCallback = [](NSessionPtr session)
+{
+  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+};
+
+std::string oauthToken = "...";
+bool importFriends = true;
+
+client->authenticateFacebook(
+        oauthToken,
+        "mycustomusername",
+        true,
+        importFriends,
+        loginSucceededCallback,
+        loginFailedCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const oauthToken = "...";
+client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
+  .then(function(session) {
+      cc.log("Authenticated successfully. User ID:", session.user_id);
+    },
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto loginFailedCallback = [](const NError& error)
+{
+};
+
+auto loginSucceededCallback = [](NSessionPtr session)
+{
+  cout << "Authenticated successfully. User ID: " << session->getUserId() << endl;
+};
+
+std::string oauthToken = "...";
+bool importFriends = true;
+
+client->authenticateFacebook(
+        oauthToken,
+        "mycustomusername",
+        true,
+        importFriends,
+        loginSucceededCallback,
+        loginFailedCallback);
+```
+
 ```java fct_label="Java"
 String oauthToken = "...";
 Session session = client.authenticateFacebook(oauthToken).get();
@@ -330,6 +503,45 @@ System.Console.WriteLine("Session {0}", session);
 const string oauthToken = "...";
 var session = await client.AuthenticateGoogleAsync(oauthToken);
 Debug.LogFormat("Session: '{0}'", session.AuthToken);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NSessionPtr session)
+{
+  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string oauthToken = "...";
+client->authenticateGoogle(oauthToken, "mycustomusername", true, successCallback, errorCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const oauthToken = "...";
+client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" })
+  .then(function(session) {
+      cc.log("Authenticated successfully. User ID:", session.user_id);
+    },
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NSessionPtr session)
+{
+    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string oauthToken = "...";
+client->authenticateGoogle(oauthToken, "mycustomusername", true, successCallback, errorCallback);
 ```
 
 ```java fct_label="Java"
@@ -404,6 +616,91 @@ var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
 Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NSessionPtr session)
+{
+  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+std::string playerId = "...";
+std::string	bundleId = "...";
+NTimestamp timestampSeconds = "...";
+std::string salt = "...";
+std::string signature = "...";
+std::string publicKeyUrl = "...";
+
+client->authenticateGameCenter(
+  playerId,
+  bundleId,
+  timestampSeconds,
+  salt,
+  signature,
+  publicKeyUrl,
+  "mycustomusername",
+  true,
+  successCallback,
+  errorCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const player_id = "...";
+const bundle_id = "...";
+const timestamp_seconds = "...";
+const salt = "...";
+const signature = "...";
+const public_key_url = "...";
+client.authenticateGameCenter({
+  player_id: player_id,
+  bundle_id: bundle_id,
+  password: password,
+  timestamp_seconds: timestamp_seconds,
+  salt: salt,
+  signature: signature,
+  public_key_url: public_key_url,
+  username: "mycustomusername",
+  create: true
+}).then(function(session) {
+      cc.log("Authenticated successfully. User ID:", session.user_id);
+    },
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NSessionPtr session)
+{
+    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+std::string playerId = "...";
+std::string	bundleId = "...";
+NTimestamp timestampSeconds = "...";
+std::string salt = "...";
+std::string signature = "...";
+std::string publicKeyUrl = "...";
+
+client->authenticateGameCenter(
+  playerId,
+  bundleId,
+  timestampSeconds,
+  salt,
+  signature,
+  publicKeyUrl,
+  "mycustomusername",
+  true,
+  successCallback,
+  errorCallback);
+```
+
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
 let playerID : String = "..."
@@ -465,6 +762,49 @@ System.Console.WriteLine("Session {0}", session);
 const string token = "...";
 var session = await client.AuthenticateSteamAsync(token);
 Debug.LogFormat("Session: '{0}'", session.AuthToken);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NSessionPtr session)
+{
+  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string token = "...";
+string username = "mycustomusername";
+bool create = true;
+client->authenticateSteam(token, username, create, successCallback, errorCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const token = "...";
+client.authenticateSteam({ token: token, create: true, username: "mycustomusername" })
+  .then(function(session) {
+      cc.log("Authenticated successfully. User ID:", session.user_id);
+    },
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NSessionPtr session)
+{
+    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string token = "...";
+string username = "mycustomusername";
+bool create = true;
+client->authenticateSteam(token, username, create, successCallback, errorCallback);
 ```
 
 ```java fct_label="Java"
@@ -529,6 +869,49 @@ var session = await client.AuthenticateCustomAsync(customid);
 Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NSessionPtr session)
+{
+  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string id = "some-custom-id";
+string username = "mycustomusername";
+bool create = true;
+client->authenticateCustom(id, username, create, successCallback, errorCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const customId = "some-custom-id";
+client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" })
+  .then(function(session) {
+      cc.log("Authenticated successfully. User ID:", session.user_id);
+    },
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NSessionPtr session)
+{
+    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+};
+
+auto errorCallback = [](const NError& error)
+{
+};
+
+string id = "some-custom-id";
+string username = "mycustomusername";
+bool create = true;
+client->authenticateCustom(id, username, create, successCallback, errorCallback);
+```
+
 ```java fct_label="Java"
 String customId = "some-custom-id";
 Session session = client.authenticateCustom(customId).get();
@@ -588,6 +971,59 @@ Debug.LogFormat("id '{0}' username '{1}'", session.UserId, session.Username);
 Debug.LogFormat("Session expired? {0}", session.IsExpired);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto loginFailedCallback = [](const NError& error)
+{
+};
+
+auto loginSucceededCallback = [](NSessionPtr session)
+{
+  CCLOG("id %s username %s", session->getUserId().c_str(), session->getUsername().c_str());
+  CCLOG("Session expired? %s", session->isExpired() ? "yes" : "no");
+};
+
+std::string deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+
+client->authenticateDevice(
+        deviceId,
+        opt::nullopt,
+        opt::nullopt,
+        loginSucceededCallback,
+        loginFailedCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+client.authenticateDevice({ id: deviceId })
+  .then(function(session) {
+        cc.log("Authenticated successfully. User id:", session.user_id);
+    },
+    function(error) {
+        cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto loginFailedCallback = [](const NError& error)
+{
+};
+
+auto loginSucceededCallback = [](NSessionPtr session)
+{
+  cout << "id " << session->getUserId() << " username " << session->getUsername() << endl;
+  cout << "Session expired? " << (session->isExpired() ? "yes" : "no") << endl;
+};
+
+std::string deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+
+client->authenticateDevice(
+        deviceId,
+        opt::nullopt,
+        opt::nullopt,
+        loginSucceededCallback,
+        loginFailedCallback);
+```
+
 ```java fct_label="Java"
 var deviceid = SystemInfo.deviceUniqueIdentifier;
 Session session = client.authenticateDevice(deviceid).get();
@@ -631,6 +1067,49 @@ session = await socket.ConnectAsync(session);
 Debug.Log("Successfully connected.");
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+#include "NakamaCocos2d/NWebSocket.h"
+
+int port = 7350; // different port to the main API port
+bool createStatus = true; // if the server should show the user as online to others.
+// define realtime client in your class as NRtClientPtr rtClient;
+rtClient = client->createRtClient(port, NRtTransportPtr(new NWebSocket()));
+// define listener in your class as NRtDefaultClientListener listener;
+listener.setConnectCallback([]()
+{
+  CCLOG("Socket connected");
+});
+rtClient->setListener(&listener);
+rtClient->connect(session, createStatus);
+```
+
+```js fct_label="Cocos2d-x JS"
+const socket = client.createSocket();
+socket.connect(session)
+  .then(
+      function() {
+        cc.log("connected");
+      },
+      function(error) {
+        cc.error("connect failed:", JSON.stringify(error));
+      }
+    );
+```
+
+```cpp fct_label="C++"
+int port = 7350; // different port to the main API port
+bool createStatus = true; // if the server should show the user as online to others.
+// define realtime client in your class as NRtClientPtr rtClient;
+rtClient = client->createRtClient(port);
+// define listener in your class as NRtDefaultClientListener listener;
+listener.setConnectCallback([]()
+{
+  cout << "Socket connected" << endl;
+});
+rtClient->setListener(&listener);
+rtClient->connect(session, createStatus);
+```
+
 ```java fct_label="Java"
 SocketClient socket = client.createSocket();
 socket.connect(session, new AbstractSocketListener() {}).get();
@@ -654,7 +1133,7 @@ You can check the expiry of a session using the following code:
 const nowUnixEpoch = Math.floor(Date.now() / 1000);
 if (session.isexpired(nowUnixEpoch)) {
   console.log("Session has expired. Must reauthenticate!");
-};
+}
 ```
 
 ```csharp fct_label=".NET"
@@ -670,6 +1149,27 @@ var nowUnixEpoch = DateTime.UtcNow;
 if (session.HasExpired(nowUnixEpoch))
 {
   Debug.Log("Session has expired. Must reauthenticate!");
+}
+```
+
+```cpp fct_label="Cocos2d-x C++"
+if (session->isExpired())
+{
+  CCLOG("Session has expired. Must reauthenticate!");
+}
+```
+
+```js fct_label="Cocos2d-x JS"
+const nowUnixEpoch = Math.floor(Date.now() / 1000);
+if (session.isexpired(nowUnixEpoch)) {
+  cc.log("Session has expired. Must reauthenticate!");
+}
+```
+
+```cpp fct_label="C++"
+if (session->isExpired())
+{
+  cout << "Session has expired. Must reauthenticate!";
 }
 ```
 
@@ -709,6 +1209,47 @@ System.Console.WriteLine("Id '{0}' linked for user '{1}'", customid, session.Use
 const string customid = "some-custom-id";
 await client.LinkCustomAsync(session, customid);
 Debug.LogFormat("Id '{0}' linked for user '{1}'", customid, session.UserId);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto linkFailedCallback = [](const NError& error)
+{
+};
+
+auto linkSucceededCallback = []()
+{
+  CCLOG("Linked successfully");
+};
+
+std::string customid = "some-custom-id";
+
+client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const customId = "some-custom-id";
+client.linkCustom(session, { id: customId })
+  .then(function() {
+      cc.log("Linked successfully");
+    },
+    function(error) {
+      cc.error("link failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto linkFailedCallback = [](const NError& error)
+{
+};
+
+auto linkSucceededCallback = []()
+{
+  cout << "Linked successfully" << endl;
+};
+
+std::string customid = "some-custom-id";
+
+client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
 ```
 
 ```java fct_label="Java"
@@ -764,6 +1305,48 @@ System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customid, session.U
 const string customid = "some-custom-id";
 await client.UnlinkCustomAsync(session, customid);
 Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customid, session.UserId);
+```
+
+
+```cpp fct_label="Cocos2d-x C++"
+auto unlinkFailedCallback = [](const NError& error)
+{
+};
+
+auto unlinkSucceededCallback = []()
+{
+  CCLOG("Successfully unlinked custom ID from the current user.");
+};
+
+std::string customid = "some-custom-id";
+
+client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const customId = "some-custom-id";
+client.unlinkCustom(session, { id: customId })
+  .then(function() {
+      cc.log("Successfully unlinked custom ID from the current user.");
+    },
+    function(error) {
+      cc.error("unlink failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto unlinkFailedCallback = [](const NError& error)
+{
+};
+
+auto unlinkSucceededCallback = []()
+{
+  cout << "Successfully unlinked custom ID from the current user." << endl;
+};
+
+std::string customid = "some-custom-id";
+
+client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
 ```
 
 ```java fct_label="Java"

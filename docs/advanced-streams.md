@@ -69,6 +69,33 @@ socket.OnStreamState += (_, stream) =>
 };
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+// add listener to header of your class: NRtDefaultClientListener listener;
+rtClient->setListener(&listener);
+listener.onStreamData([](const NStreamData& data)
+{
+    CCLOG("Received data from stream: %s", data.stream.subject.c_str());
+    CCLOG("Data content: %s", data.data.c_str());
+});
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.onstreamdata = function (streamdata) {
+  cc.log("Received data from stream:", streamdata.stream.subject);
+  cc.log("Data content:", streamdata.data);
+};
+```
+
+```cpp fct_label="C++"
+// add listener to header of your class: NRtDefaultClientListener listener;
+rtClient->setListener(&listener);
+listener.onStreamData([](const NStreamData& data)
+{
+    cout << "Received data from stream: " << data.stream.subject << endl;
+    cout << "Data content: " << data.data << endl;
+});
+```
+
 ```java fct_label="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
@@ -85,7 +112,7 @@ When a new presence joins a stream or an existing presence leaves the server wil
 
 ```js fct_label="JavaScript"
 socket.onstreampresence = (streampresence) => {
-  console.log("Received presence event for stream: %o", streampresence.id)
+  console.log("Received presence event for stream: %o", streampresence.id);
   streampresence.joins.forEach((join) => {
     console.log("New user joined: %o", join.user_id);
   });
@@ -125,6 +152,52 @@ socket.OnStreamPresence += (_, presence) =>
     Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", leave.UserId, leave.Username, leave.Status);
   }
 };
+```
+
+```cpp fct_label="Cocos2d-x C++"
+// add listener to header of your class: NRtDefaultClientListener listener;
+rtClient->setListener(&listener);
+listener.onStreamPresence([](const NStreamPresenceEvent& presence)
+{
+    CCLOG("Received presence event for stream: %s", presence.stream.subject.c_str());
+    for (const NUserPresence& userPresence : presence.joins)
+    {
+      CCLOG("New user joined: %s", userPresence.user_id.c_str());
+    }
+    for (const NUserPresence& userPresence : presence.leaves)
+    {
+      CCLOG("User left: %s", userPresence.user_id.c_str());
+    }
+});
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.onstreampresence = function(streampresence) {
+  cc.log("Received presence event for stream:", streampresence.id);
+  streampresence.joins.forEach(function(join) {
+    cc.log("New user joined:", join.user_id);
+  });
+  streampresence.leaves.forEach(function(leave) {
+    cc.log("User left:", leave.user_id);
+  });
+};
+```
+
+```cpp fct_label="C++"
+// add listener to header of your class: NRtDefaultClientListener listener;
+rtClient->setListener(&listener);
+listener.onStreamPresence([](const NStreamPresenceEvent& presence)
+{
+    cout << "Received presence event for stream: " << presence.stream.subject << endl;
+    for (const NUserPresence& userPresence : presence.joins)
+    {
+      cout << "New user joined: " << userPresence.user_id << endl;
+    }
+    for (const NUserPresence& userPresence : presence.leaves)
+    {
+      cout << "User left: " << userPresence.user_id << endl;
+    }
+});
 ```
 
 ```java fct_label="Java"

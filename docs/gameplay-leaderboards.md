@@ -65,6 +65,24 @@ var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
 Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+```
+
+```js fct_label="Cocos2d-x JS"
+var leaderboardId = "level1";
+var submission = {score: 100};
+client.writeLeaderboardRecord(session, leaderboardId, submission)
+  .then(function(record) {
+      cc.log("New record with score", record.score);
+    },
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+```
+
 ```java fct_label="Java"
 final String leaderboard = "level1";
 long score = 100L;
