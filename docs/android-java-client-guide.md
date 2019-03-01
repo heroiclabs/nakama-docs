@@ -256,7 +256,7 @@ public class NakamaSessionManager {
     String sessionString = pref.getString("nk.session", null);
     if (sessionString != null && !sessionString.isEmpty()) {
       Session restoredSession = DefaultSession.restore(sessionString);
-      if (!session.isExpired(new Date())) {
+      if (!restoredSession.isExpired(new Date())) {
         // Session was valid and is restored now.
         this.session = restoredSession;
         return;
