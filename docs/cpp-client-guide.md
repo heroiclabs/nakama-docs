@@ -68,7 +68,7 @@ In `Project Settings` add following:
 ### Custom setup
 
 - add define:
-  - `NLOGS_ENABLED` - define it if you want to use Nakama logger. See [Logging](#Logging) section
+  - `NLOGS_ENABLED` - define it if you want to use Nakama logger. See [Logging](#logging) section
 - add include directory: `$(NAKAMA_CPP_SDK)/include`
 - add link directory: `$(NAKAMA_CPP_SDK)/libs/{platform}/{ABI}`
 - add link libraries:
@@ -191,7 +191,7 @@ std::cout << "Session expires at: " << session->getExpireTime() << std::endl;
 
 It is recommended to store the auth token from the session and check at startup if it has expired. If the token has expired you must reauthenticate. The expiry time of the token can be changed as a [setting](install-configuration.md#common-properties) in the server.
 
-A __full example__ class with all code above is [here](#full-C++-example).
+A __full example__ class with all code above is [here](#full-c-example).
 
 ## Send requests
 
@@ -235,7 +235,7 @@ rtClient->setListener(&listener);
 rtClient->connect(session, createStatus);
 ```
 
-Don't forget to call `tick` method. See [Tick](#Tick) section for details.
+Don't forget to call `tick` method. See [Tick](#tick) section for details.
 
 You can use realtime client to send and receive [chat messages](social-realtime-chat.md), get [notifications](social-in-app-notifications.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
 
@@ -363,7 +363,7 @@ NLogger::setLevel(NLogLevel::Debug);
 
 The [server](install-configuration.md#log) and the client can generate logs which are helpful to debug code.
 
-To enable client logs see [Initializing Logger](#Initializing-Logger) section.
+To enable client logs see [Initializing Logger](#initializing-logger) section.
 
 In every request in the client you can set error callback. It will be called when request fails. The callback has `NError` structure which contains details of the error:
 
