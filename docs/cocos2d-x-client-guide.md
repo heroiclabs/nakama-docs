@@ -33,7 +33,7 @@ Add all files from `NakamaCocos2d` folder to your project.
 
 ### Setup for Android projects
 
-If you use `CMake` then see [Setup for CMake projects](#Setup-for-CMake-projects) section.
+If you use `CMake` then see [Setup for CMake projects](#setup-for-cmake-projects) section.
 
 If you use `ndk-build` then add following to your `Android.mk` file:
 
@@ -174,7 +174,7 @@ CCLOG("Session created at: %llu", session->getCreateTime());
 
 It is recommended to store the auth token from the session and check at startup if it has expired. If the token has expired you must reauthenticate. The expiry time of the token can be changed as a [setting](install-configuration.md#common-properties) in the server.
 
-A __full example__ class with all code above is [here](#full-C++-example).
+A __full example__ class with all code above is [here](#full-cocos2d-x-c-example).
 
 ## Send requests
 
@@ -220,7 +220,7 @@ rtClient->setListener(&listener);
 rtClient->connect(session, createStatus);
 ```
 
-Don't forget to call `tick` method. See [Tick](#Tick) section for details.
+Don't forget to call `tick` method. See [Tick](#tick) section for details.
 
 You can use realtime client to send and receive [chat messages](social-realtime-chat.md), get [notifications](social-in-app-notifications.md), and [matchmake](gameplay-matchmaker.md) into a [multiplayer match](gameplay-multiplayer-realtime.md). You can also execute remote code on the server via [RPC](runtime-code-basics.md).
 
@@ -306,7 +306,7 @@ NLogger::init(std::make_shared<NCocosLogSink>(), NLogLevel::Debug);
 
 The [server](install-configuration.md#log) and the client can generate logs which are helpful to debug code.
 
-To enable client logs see [Logging](#Logging) section.
+To enable client logs see [Logging](#logging) section.
 
 In every request in the client you can set error callback. It will be called when request fails. The callback has `NError` structure which contains details of the error:
 
