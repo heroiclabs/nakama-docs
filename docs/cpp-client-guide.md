@@ -27,7 +27,7 @@ We don't recommend to copy Nakama C++ SDK to your project because it's quite big
 
 ### Setup for Android projects
 
-If you use `CMake` then see [Setup for CMake projects](#Setup-for-CMake-projects) section.
+If you use `CMake` then see [Setup for CMake projects](#setup-for-cmake-projects) section.
 
 If you use `ndk-build` then add following to your `Android.mk` file:
 
@@ -71,25 +71,7 @@ In `Project Settings` add following:
   - `NLOGS_ENABLED` - define it if you want to use Nakama logger. See [Logging](#logging) section
 - add include directory: `$(NAKAMA_CPP_SDK)/include`
 - add link directory: `$(NAKAMA_CPP_SDK)/libs/{platform}/{ABI}`
-- add link libraries:
-  - `nakama-cpp`
-  - `grpc++`
-  - `libprotobuf`
-  - `gpr`
-  - `grpc`
-  - `cares`
-  - `crypto`
-  - `ssl`
-  - `address_sorting`
-
-For Windows:
-
-- Add extension `.lib` to libs names e.g. `nakama-cpp.lib`
-- To debug you must add `d` suffix to libs names e.g. `nakama-cppd.lib`
-
-For Mac, iOS, Android and Linux:
-
-- Add prefix `lib` and extension `.a` to libs names e.g. `libnakama-cpp.a`
+- add all libraries for linking from link directory
 
 For Mac and iOS:
 
