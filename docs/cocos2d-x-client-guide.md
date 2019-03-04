@@ -13,22 +13,22 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 
 ## Setup
 
-When you've downloaded the Nakama C++ archive and extracted it to `NAKAMA_CPP_SDK` folder, you should include it in your project.
+When you've downloaded the Nakama C++ archive and extracted it to `NAKAMA_COCOS2D_SDK` folder, you should include it in your project.
 
 We don't recommend to copy Nakama C++ SDK to your project because it's quite big in size (~1 Gb).
 
 ### Copy NakamaCocos2d folder
 
-Copy `NakamaCocos2d` folder from `NAKAMA_CPP_SDK` to your `Classes` folder.
+Copy `NakamaCocos2d` folder from `NAKAMA_COCOS2D_SDK` to your `Classes` folder.
 
 Add all files from `NakamaCocos2d` folder to your project.
 
 ### Setup for Mac and iOS projects
 
-1. Add `NAKAMA_CPP_SDK/include` in `Build Settings > Header Search Paths`
+1. Add `NAKAMA_COCOS2D_SDK/include` in `Build Settings > Header Search Paths`
 2. Add libs folder in `Build Settings > Library Search Paths`:
-    - `NAKAMA_CPP_SDK/libs/ios` - for iOS
-    - `NAKAMA_CPP_SDK/libs/mac` - for Mac
+    - `NAKAMA_COCOS2D_SDK/libs/ios` - for iOS
+    - `NAKAMA_COCOS2D_SDK/libs/mac` - for Mac
 3. Add all `.a` files located in libs folder and `libresolv.9.tbd` in `General > Linked Frameworks and Libraries`
 
 ### Setup for Android projects
@@ -42,7 +42,7 @@ If you use `ndk-build` then add following to your `Android.mk` file:
 LOCAL_STATIC_LIBRARIES += nakama-cpp
 
 # add this at bottom of Android.mk file
-$(call import-add-path, NAKAMA_CPP_SDK)
+$(call import-add-path, NAKAMA_COCOS2D_SDK)
 $(call import-module, nakama-cpp-android)
 ```
 
@@ -57,7 +57,7 @@ Android uses a permissions system which determines which platform services the a
 Add following to your `CMakeLists.txt` file:
 
 ```cmake
-add_subdirectory(NAKAMA_CPP_SDK ${CMAKE_CURRENT_BINARY_DIR}/nakama-cpp)
+add_subdirectory(NAKAMA_COCOS2D_SDK ${CMAKE_CURRENT_BINARY_DIR}/nakama-cpp)
 target_link_libraries(${APP_NAME} ext_nakama-cpp)
 ```
 
@@ -65,10 +65,10 @@ target_link_libraries(${APP_NAME} ext_nakama-cpp)
 
 In `Project Settings` add following:
 
-1. Add `NAKAMA_CPP_SDK/include` in `C/C++ > General > Additional Include Directories`
+1. Add `NAKAMA_COCOS2D_SDK/include` in `C/C++ > General > Additional Include Directories`
 2. Add libs folder in `Linker > General > Additional Library Directories`:
-    - `NAKAMA_CPP_SDK/libs/win32/vc140` - for VS 2015
-    - `NAKAMA_CPP_SDK/libs/win32/vc141` - for VS 2017
+    - `NAKAMA_COCOS2D_SDK/libs/win32/vc140` - for VS 2015
+    - `NAKAMA_COCOS2D_SDK/libs/win32/vc141` - for VS 2017
 3. Add all `.lib` files located in libs folder in `Linker > Input > Additional Dependencies`
 
 ## Usage
@@ -330,7 +330,7 @@ The client writes all errors to logger so you don't need to do this.
 
 ## Full Cocos2d-x C++ example
 
-You can find the Cocos2d-x C++ example [here](https://github.com/heroiclabs/nakama-cocos2d-x)
+You can find the Cocos2d-x C++ example [here](https://github.com/heroiclabs/nakama-cocos2d-x/tree/master/example)
 
 ## Client reference
 
