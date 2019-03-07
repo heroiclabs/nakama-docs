@@ -71,6 +71,75 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+NStringMap stringProperties;
+NStringDoubleMap numericProperties;
+
+stringProperties.emplace("region", "europe");
+numericProperties.emplace("rank", 8.0);
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    stringProperties,
+    numericProperties,
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "*",
+  string_properties: {
+    region: "europe"
+  },
+  numeric_properties: {
+    rank: 8
+  }
+}};
+socket.send(message)
+  .then(function(ticket) {
+      cc.log("matchmaker ticket:", JSON.stringify(ticket));
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+NStringMap stringProperties;
+NStringDoubleMap numericProperties;
+
+stringProperties.emplace("region", "europe");
+numericProperties.emplace("rank", 8.0);
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    stringProperties,
+    numericProperties,
+    successCallback);
+```
+
 ```java fct_label="Java"
 String query = "*";
 int minCount = 2;
@@ -149,6 +218,75 @@ var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+NStringMap stringProperties;
+NStringDoubleMap numericProperties;
+
+stringProperties.emplace("region", "europe");
+numericProperties.emplace("rank", 8.0);
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    stringProperties,
+    numericProperties,
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10",
+  string_properties: {
+    region: "europe"
+  },
+  numeric_properties: {
+    rank: 8
+  }
+}};
+socket.send(message)
+  .then(function(ticket) {
+      cc.log("matchmaker ticket:", JSON.stringify(ticket));
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+NStringMap stringProperties;
+NStringDoubleMap numericProperties;
+
+stringProperties.emplace("region", "europe");
+numericProperties.emplace("rank", 8.0);
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    stringProperties,
+    numericProperties,
+    successCallback);
+```
+
 var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
@@ -213,6 +351,75 @@ var numericProperties = new Dictionary<string, int>() {
 
 var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+NStringMap stringProperties;
+NStringDoubleMap numericProperties;
+
+stringProperties.emplace("region", "europe");
+numericProperties.emplace("rank", 8.0);
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    stringProperties,
+    numericProperties,
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "*",
+  string_properties: {
+    region: "europe"
+  },
+  numeric_properties: {
+    rank: 8
+  }
+}};
+socket.send(message)
+  .then(function(ticket) {
+      cc.log("matchmaker ticket:", JSON.stringify(ticket));
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+NStringMap stringProperties;
+NStringDoubleMap numericProperties;
+
+stringProperties.emplace("region", "europe");
+numericProperties.emplace("rank", 8.0);
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    stringProperties,
+    numericProperties,
+    successCallback);
 ```
 
 ```java fct_label="Java"
@@ -298,6 +505,59 @@ var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    {},
+    {},
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "*"
+}};
+socket.send(message)
+  .then(function(ticket) {
+      cc.log("matchmaker ticket:", JSON.stringify(ticket));
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    {},
+    {},
+    successCallback);
+```
+
 ```java fct_label="Java"
 String query = "*";
 int minCount = 4;
@@ -335,6 +595,59 @@ var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    {},
+    {},
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const message = { matchmaker_add: {
+  min_count: 2,
+  max_count: 4,
+  query: "*"
+}};
+socket.send(message)
+  .then(function(ticket) {
+      cc.log("matchmaker ticket:", JSON.stringify(ticket));
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NMatchmakerTicket& ticket)
+{
+  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+};
+
+int32_t minCount = 2;
+int32_t maxCount = 4;
+string query = "*";
+
+rtClient->addMatchmaker(
+    minCount,
+    maxCount,
+    query,
+    {},
+    {},
+    successCallback);
+```
+
 ```java fct_label="Java"
 String query = "*";
 int minCount = 2;
@@ -367,6 +680,32 @@ socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```csharp fct_label="Unity"
 // "matchmakerTicket" is returned by the matchmaker.
 socket.RemoveMatchmakerAsync(matchmakerTicket);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+// "ticket" is returned by the matchmaker.
+rtClient->removeMatchmaker(ticket, []()
+  {
+    CCLOG("removed from Matchmaker");
+  });
+```
+
+```js fct_label="Cocos2d-x JS"
+// "ticket" is returned by the matchmaker.
+const message = {
+  matchmaker_remove: {
+    ticket: ticket
+  }
+}
+socket.send(message);
+```
+
+```cpp fct_label="C++"
+// "ticket" is returned by the matchmaker.
+rtClient->removeMatchmaker(ticket, []()
+  {
+    std::cout << "removed from Matchmaker" << std::endl;
+  });
 ```
 
 ```java fct_label="Java"
@@ -405,6 +744,27 @@ socket.OnMatchmakerMatched += (_, matched) =>
   var opponents = string.Join(",", matched.Users); // printable list.
   Debug.LogFormat("Matched opponents: {0}", opponents);
 };
+```
+
+```cpp fct_label="Cocos2d-x C++"
+rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
+  {
+    CCLOG("Matched! matchId: %s", matched->matchId.c_str());
+  });
+```
+
+```js fct_label="Cocos2d-x JS"
+this.socket.onmatchmakermatched = (matched) => {
+  cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
+  cc.log("Matched opponents:", matched.users.toString());
+};
+```
+
+```cpp fct_label="C++"
+rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
+  {
+    std::cout << "Matched! matchId: " << matched->matchId << std::endl;
+  });
 ```
 
 ```java fct_label="Java"
@@ -453,6 +813,43 @@ socket.OnMatchmakerMatched += (_, matched) =>
   Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
   await socket.JoinMatchAsync(matched);
 };
+```
+
+```cpp fct_label="Cocos2d-x C++"
+rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
+  {
+    CCLOG("Matched! matchId: %s", matched->matchId.c_str());
+
+    rtClient->joinMatch(matched->matchId, [](const NMatch& match)
+      {
+        CCLOG("Joined Match!");
+      });
+  });
+```
+
+```js fct_label="Cocos2d-x JS"
+this.socket.onmatchmakermatched = (matched) => {
+  cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
+  cc.log("Matched opponents:", matched.users.toString());
+  const message = {
+    match_join: {
+      token: matched.token
+    }
+  };
+  socket.send(message);
+};
+```
+
+```cpp fct_label="C++"
+rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
+  {
+    std::cout << "Matched! matchId: " << matched->matchId << std::endl;
+
+    rtClient->joinMatch(matched->matchId, [](const NMatch& match)
+      {
+        std::cout << "Joined Match!" << std::endl;
+      });
+  });
 ```
 
 ```java fct_label="Java"
