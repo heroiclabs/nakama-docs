@@ -229,11 +229,11 @@ dependencies {
 }
 ```
 
-Every error in the Java client implements the `"Error"` class. It contains details on the source and content of an error:
+Every error caused from within the `"SocketClient"` implements the `"Error"` class. It contains details on the source and content of an error:
 
 ```java
 try {
-  client.getAccount(session).get();
+  Match match = socket.createMatch().get();
 } catch (ExecutionException e) {
   Error error = (Error) e.getCause();
   System.out.println("Error code: " +  error.getCode());
