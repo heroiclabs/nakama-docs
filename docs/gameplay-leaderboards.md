@@ -66,6 +66,21 @@ Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NLeaderboardRecord& record)
+{
+  CCLOG("New record with score %ld", record.score);
+};
+
+string leaderboardId = "level1";
+int64_t score = 100;
+
+client->writeLeaderboardRecord(session,
+  leaderboardId,
+  score,
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
 ```
 
 ```js fct_label="Cocos2d-x JS"
@@ -76,11 +91,26 @@ client.writeLeaderboardRecord(session, leaderboardId, submission)
       cc.log("New record with score", record.score);
     },
     function(error) {
-      cc.error("authenticate failed:", JSON.stringify(error));
+      cc.error("write leaderboard record failed:", JSON.stringify(error));
     });
 ```
 
 ```cpp fct_label="C++"
+auto successCallback = [](const NLeaderboardRecord& record)
+{
+  std::cout << "New record with score " << record.score << std::endl;
+};
+
+string leaderboardId = "level1";
+int64_t score = 100;
+
+client->writeLeaderboardRecord(session,
+  leaderboardId,
+  score,
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
 ```
 
 ```java fct_label="Java"
@@ -179,6 +209,54 @@ var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
 Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NLeaderboardRecord& record)
+{
+  CCLOG("New record with score %ld", record.score);
+};
+
+string leaderboardId = "level1";
+int64_t score = 100;
+
+client->writeLeaderboardRecord(session,
+  leaderboardId,
+  score,
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+var leaderboardId = "level1";
+var submission = {score: 100};
+client.writeLeaderboardRecord(session, leaderboardId, submission)
+  .then(function(record) {
+      cc.log("New record with score", record.score);
+    },
+    function(error) {
+      cc.error("write leaderboard record failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NLeaderboardRecord& record)
+{
+  std::cout << "New record with score " << record.score << std::endl;
+};
+
+string leaderboardId = "level1";
+int64_t score = 100;
+
+client->writeLeaderboardRecord(session,
+  leaderboardId,
+  score,
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
+```
+
 ```java fct_label="Java"
 final String leaderboard = "level1";
 long score = 100L;
@@ -255,6 +333,59 @@ foreach (var r in result.Records)
 {
   Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
 }
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+{
+  for (auto& record : recordsList->records)
+  {
+    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+  }
+};
+
+string leaderboardId = "level1";
+
+client->listLeaderboardRecords(session,
+  leaderboardId,
+  {},
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+var leaderboardId = "level1";
+client.listLeaderboardRecords(session, leaderboardId)
+  .then(function(result) {
+      result.records.forEach(function(record) {
+        cc.log("Record username", record.username, "and score", record.score);
+      });
+    },
+    function(error) {
+      cc.error("list leaderboard records failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+{
+  for (auto& record : recordsList->records)
+  {
+    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+  }
+};
+
+string leaderboardId = "level1";
+
+client->listLeaderboardRecords(session,
+  leaderboardId,
+  {},
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
 ```
 
 ```java fct_label="Java"
@@ -349,6 +480,112 @@ if (result.NextCursor != null)
 }
 ```
 
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+{
+  for (auto& record : recordsList->records)
+  {
+    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+  }
+
+  if (!recordsList->nextCursor.empty())
+  {
+    auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
+    {
+      for (auto& record : recordsList->records)
+      {
+        CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+      }
+    };
+
+    string leaderboardId = "level1";
+
+    client->listLeaderboardRecords(session,
+        leaderboardId,
+        {},
+        opt::nullopt,
+        recordsList->nextCursor,
+        successCallback
+    );
+  }
+};
+
+string leaderboardId = "level1";
+
+client->listLeaderboardRecords(session,
+  leaderboardId,
+  {},
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+var leaderboardId = "level1";
+client.listLeaderboardRecords(session, leaderboardId)
+  .then(function(result) {
+      result.records.forEach(function(record) {
+        cc.log("Record username", record.username, "and score", record.score);
+      });
+
+      // If there are more results get next page.
+      if (result.next_cursor) {
+        client.listLeaderboardRecords(session, leaderboardId, null, null, result.next_cursor)
+          .then(function(result) {
+              result.records.forEach(function(record) {
+                cc.log("Record username", record.username, "and score", record.score);
+              }
+          });
+      }
+    },
+    function(error) {
+      cc.error("list leaderboard records failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
+{
+  for (auto& record : recordsList->records)
+  {
+    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+  }
+
+  if (!recordsList->nextCursor.empty())
+  {
+    auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
+    {
+      for (auto& record : recordsList->records)
+      {
+        std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+      }
+    };
+
+    string leaderboardId = "level1";
+
+    client->listLeaderboardRecords(session,
+        leaderboardId,
+        {},
+        opt::nullopt,
+        recordsList->nextCursor,
+        successCallback
+    );
+  }
+};
+
+string leaderboardId = "level1";
+
+client->listLeaderboardRecords(session,
+  leaderboardId,
+  {},
+  opt::nullopt,
+  opt::nullopt,
+  successCallback
+);
+```
+
 ```java fct_label="Java"
 final String leaderboard = "level1";
 LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
@@ -434,6 +671,64 @@ foreach (var r in result.OwnerRecords)
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+{
+  for (auto& record : recordsList->records)
+  {
+    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+  }
+};
+
+vector<string> ownerIds = { "some", "friends", "user ids" };
+
+string leaderboardId = "level1";
+
+client->listLeaderboardRecords(session,
+    leaderboardId,
+    ownerIds,
+    opt::nullopt,
+    opt::nullopt,
+    successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+var leaderboardId = "level1";
+var ownerIds = ["some", "friends", "user ids"];
+client.listLeaderboardRecords(session, leaderboardId, ownerIds)
+  .then(function(result) {
+      result.records.forEach(function(record) {
+        cc.log("Record username", record.username, "and score", record.score);
+      });
+    },
+    function(error) {
+      cc.error("list leaderboard records failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+{
+  for (auto& record : recordsList->records)
+  {
+    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+  }
+};
+
+vector<string> ownerIds = { "some", "friends", "user ids" };
+
+string leaderboardId = "level1";
+
+client->listLeaderboardRecords(session,
+    leaderboardId,
+    ownerIds,
+    opt::nullopt,
+    opt::nullopt,
+    successCallback
+);
+```
+
 ```java fct_label="Java"
 String leaderboard = "level1";
 String[] ownerIds = new String[] {"some", "friends", "user ids"};
@@ -501,6 +796,38 @@ var id = "someid";
 var ownerId = session.UserId;
 var limit = 100;
 var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, id, ownerId, limit);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+string leaderboardId = "level1";
+string ownerId = "some user ID";
+int32_t limit = 100;
+client->listLeaderboardRecordsAroundOwner(session,
+      leaderboardId,
+      ownerId,
+      limit,
+      successCallback
+  );
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "someid";
+var ownerId = "some user ID";
+var limit = 100;
+client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit)
+  .then(...);
+```
+
+```cpp fct_label="C++"
+string leaderboardId = "level1";
+string ownerId = "some user ID";
+int32_t limit = 100;
+client->listLeaderboardRecordsAroundOwner(session,
+      leaderboardId,
+      ownerId,
+      limit,
+      successCallback
+  );
 ```
 
 ```java fct_label="Java"
