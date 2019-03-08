@@ -59,6 +59,77 @@ var cursor = null;
 var result = await client.ListTournamentsAsync(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NTournamentListPtr list)
+{
+  CCLOG("Tournament count %u", list->tournaments.size());
+
+  for (auto& tournament : list->tournaments)
+  {
+    CCLOG("Tournament ID %s, title %s", tournament.id.c_str(), tournament.title.c_str());
+  }
+};
+
+uint32_t categoryStart = 1;
+uint32_t categoryEnd = 2;
+uint32_t startTime = 1538147711;
+uint32_t endTime = -1; // all tournaments from the start time
+int32_t limit = 100; // number to list per page
+
+client->listTournaments(session,
+    categoryStart,
+    categoryEnd,
+    startTime,
+    endTime,
+    limit,
+    opt::nullopt,
+    successCallback
+    );
+```
+
+```js fct_label="Cocos2d-x JS"
+var categoryStart = 1;
+var categoryEnd = 2;
+var startTime = 1538147711;
+var endTime = -1; // all tournaments from the start time
+var limit = 100; // number to list per page
+var cursor = null;
+client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor)
+  .then(function(result) {
+    },
+    function(error) {
+      cc.error("list tournaments failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NTournamentListPtr list)
+{
+  std::cout << "Tournament count " << list->tournaments.size() << std::endl;
+
+  for (auto& tournament : list->tournaments)
+  {
+    std::cout << "Tournament ID " << tournament.id << ", title " << tournament.title << std::endl);
+  }
+};
+
+uint32_t categoryStart = 1;
+uint32_t categoryEnd = 2;
+uint32_t startTime = 1538147711;
+uint32_t endTime = -1; // all tournaments from the start time
+int32_t limit = 100; // number to list per page
+
+client->listTournaments(session,
+    categoryStart,
+    categoryEnd,
+    startTime,
+    endTime,
+    limit,
+    opt::nullopt,
+    successCallback
+    );
+```
+
 ```java fct_label="Java"
 int categoryStart = 1;
 int categoryEnd = 2;
@@ -110,6 +181,37 @@ var success = await client.JoinTournamentAsync(session, id);
 ```csharp fct_label="Unity"
 var id = "someid";
 var success = await client.JoinTournamentAsync(session, id);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("Successfully joined tournament");
+};
+
+string id = "someid";
+client->joinTournament(session, id, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "someid";
+client.joinTournament(session, id)
+  .then(function() {
+      cc.log("Successfully joined tournament");
+    },
+    function(error) {
+      cc.error("Join tournament failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "Successfully joined tournament" << std::cout;
+};
+
+string id = "someid";
+client->joinTournament(session, id, successCallback);
 ```
 
 ```java fct_label="Java"
@@ -164,6 +266,46 @@ var cursor = null;
 var result = await client.ListTournamentRecordsAsync(session, id, new []{ session.UserId }, limit, cursor);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NTournamentRecordListPtr list)
+{
+  for (auto& record : list->records)
+  {
+    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+  }
+};
+
+string id = "someid";
+client->listTournamentRecords(session, id, opt::nullopt, opt::nullopt, {}, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "someid";
+var ownerIds = ["some", "friends", "user ids"];
+client.listTournamentRecords(session, id, owenrIds)
+  .then(function(result) {
+      result.records.forEach(function(record) {
+        cc.log("Record username", record.username, "and score", record.score);
+      });
+    },
+    function(error) {
+      cc.error("list tournament records failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NTournamentRecordListPtr list)
+{
+  for (auto& record : list->records)
+  {
+    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+  }
+};
+
+string id = "someid";
+client->listTournamentRecords(session, id, opt::nullopt, opt::nullopt, {}, successCallback);
+```
+
 ```java fct_label="Java"
 String id = "someid";
 LeaderboardRecordList records = client.listLeaderboardRecords(session, id, session.getUserId()).get();
@@ -210,6 +352,50 @@ var id = "someid";
 var ownerId = session.UserId;
 var limit = 100;
 var result = await client.ListTournamentRecordsAroundOwnerAsync(session, id, ownerId, limit);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NTournamentRecordListPtr list)
+{
+  for (auto& record : list->records)
+  {
+    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+  }
+};
+
+string id = "someid";
+string ownerId = session->getUserId();
+int32_t limit = 100;
+client->listTournamentRecordsAroundOwner(session, id, ownerId, limit, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "someid";
+var ownerIds = ["some", "friends", "user ids"];
+client.listTournamentRecords(session, id, owenrIds)
+  .then(function(result) {
+      result.records.forEach(function(record) {
+        cc.log("Record username", record.username, "and score", record.score);
+      });
+    },
+    function(error) {
+      cc.error("list tournament records failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NTournamentRecordListPtr list)
+{
+  for (auto& record : list->records)
+  {
+    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+  }
+};
+
+string id = "someid";
+string ownerId = session->getUserId();
+int32_t limit = 100;
+client->listTournamentRecordsAroundOwner(session, id, ownerId, limit, successCallback);
 ```
 
 ```java fct_label="Java"
@@ -276,6 +462,49 @@ var metadata = new Dictionary<string, string>()
   { "track_name", "Silverstone" }
 }.ToJson();
 var newrecord = client.WriteTournamentRecordAsync(session, id, score, subscore, metadata);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [this](const NLeaderboardRecord& record)
+{
+  CCLOG("written tournament record");
+};
+
+string id = "someid";
+int64_t score = 100;
+int64_t subscore = 10;
+string metadata = "{\"weather_conditions\": \"sunny\", \"track_name\" : \"Silverstone\" }";
+client->writeTournamentRecord(session, id, score, subscore, metadata, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "someid";
+var score = 100;
+var subscore = 10;
+var metadata = {
+  "weather_conditions": "sunny",
+  "track_name": "Silverstone"
+}
+client.writeTournamentRecord(session, id, score, subscore, metadata)
+  .then(function(newrecord) {
+      cc.log("written tournament record:", JSON.stringify(newrecord));
+    },
+    function(error) {
+      cc.error("write tournament record failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [this](const NLeaderboardRecord& record)
+{
+  std::cout << "written tournament record" << std::endl;
+};
+
+string id = "someid";
+int64_t score = 100;
+int64_t subscore = 10;
+string metadata = "{\"weather_conditions\": \"sunny\", \"track_name\" : \"Silverstone\" }";
+client->writeTournamentRecord(session, id, score, subscore, metadata, successCallback);
 ```
 
 ```java fct_label="Java"
