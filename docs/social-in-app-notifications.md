@@ -60,6 +60,33 @@ socket.OnNotification += (_, notification) =>
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+rtListener->setNotificationsCallback([](const NNotificationList& notifications)
+{
+  for (auto& notification : notifications.notifications)
+  {
+    CCLOG("Notification content %s", notification.content.c_str());
+  }
+});
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.onnotification = (notification) => {
+  cc.log("Received notification", JSON.stringify(notification));
+  cc.log("Notification content", JSON.stringify(notification.content));
+}
+```
+
+```cpp fct_label="C++"
+rtListener->setNotificationsCallback([](const NNotificationList& notifications)
+{
+  for (auto& notification : notifications.notifications)
+  {
+    std::cout << "Notification content " << notification.content << std::cout;
+  }
+});
+```
+
 ```java fct_label="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
@@ -111,6 +138,43 @@ foreach (var n in result.Notifications)
 {
   Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
 }
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NNotificationListPtr list)
+{
+  for (auto& notification : list->notifications)
+  {
+    CCLOG("Notification content %s", notification.content.c_str());
+  }
+};
+
+client->listNotifications(session, 10, opt::nullopt, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.listNotifications(session, 10)
+  .then(function(result) {
+      result.notifications.forEach(notification => {
+        cc.log("Notification", JSON.stringify(notification));
+      });
+      cc.log("Fetch more results with cursor:", result.cacheable_cursor);
+    },
+    function(error) {
+      cc.error("list notifications failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NNotificationListPtr list)
+{
+  for (auto& notification : list->notifications)
+  {
+    std::cout << "Notification content " << notification.content << std::endl;
+  }
+};
+
+client->listNotifications(session, 10, opt::nullopt, successCallback);
 ```
 
 ```java fct_label="Java"
@@ -186,6 +250,67 @@ if (result.CacheableCursor != null)
     Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
   }
 }
+```
+
+```cpp fct_label="Cocos2d-x C++"
+// add to your class: std::vector<NNotification> allNotifications;
+
+void YourClass::accumulateNotifications(const string& cursor)
+{
+  auto successCallback = [this](NNotificationListPtr list)
+  {
+    allNotifications.insert(allNotifications.end(), list->notifications.begin(), list->notifications.end());
+
+    if (!list->cacheableCursor.empty())
+    {
+      accumulateNotifications(list->cacheableCursor);
+    }
+  };
+
+  client->listNotifications(session, 100, cursor, successCallback);
+}
+
+accumulateNotifications("");
+```
+
+```js fct_label="Cocos2d-x JS"
+var allNotifications = [];
+
+var accumulateNotifications = (cursor) => {
+  client.listNotifications(session, 100, cursor)
+    .then(function(result) {
+      if (result.notifications.length == 0) {
+        return;
+      }
+      allNotifications.concat(result.notifications.notifications);
+      accumulateNotifications(result.cacheable_cursor);
+    },
+    function(error) {
+      cc.error("list notifications failed:", JSON.stringify(error));
+    });
+}
+accumulateNotifications("");
+```
+
+```cpp fct_label="C++"
+// add to your class: std::vector<NNotification> allNotifications;
+
+void YourClass::accumulateNotifications(const string& cursor)
+{
+  auto successCallback = [this](NNotificationListPtr list)
+  {
+    allNotifications.insert(allNotifications.end(), list->notifications.begin(), list->notifications.end());
+
+    if (!list->cacheableCursor.empty())
+    {
+      accumulateNotifications(list->cacheableCursor);
+    }
+  };
+
+  client->listNotifications(session, 100, cursor, successCallback);
+}
+
+accumulateNotifications("");
 ```
 
 ```java fct_label="Java"
@@ -269,6 +394,45 @@ foreach (var n in result.Notifications)
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NNotificationListPtr list)
+{
+  for (auto& notification : list->notifications)
+  {
+    CCLOG("Notification content %s", notification.content.c_str());
+  }
+};
+
+string cacheableCursor = "<cacheableCursor>";
+client->listNotifications(session, 10, cacheableCursor, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const cacheableCursor = "<cacheableCursor>";
+client.listNotifications(session, 10, cacheableCursor)
+  .then(function(result) {
+      result.notifications.forEach(notification => {
+        cc.log("Notification", JSON.stringify(notification));
+      });
+    },
+    function(error) {
+      cc.error("list notifications failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NNotificationListPtr list)
+{
+  for (auto& notification : list->notifications)
+  {
+    std::cout << "Notification content " << notification.content << std::endl;
+  }
+};
+
+string cacheableCursor = "<cacheableCursor>";
+client->listNotifications(session, 10, cacheableCursor, successCallback);
+```
+
 ```java fct_label="Java"
 String cacheableCursor = "<cacheableCursor>";
 NotificationList notifications = client.listNotifications(session, 10, cacheableCursor).get();
@@ -320,6 +484,19 @@ await client.DeleteNotificationsAsync(session, notificationIds);
 ```csharp fct_label="Unity"
 var notificationIds = new[] {"<notificationId>"};
 await client.DeleteNotificationsAsync(session, notificationIds);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+client->deleteNotifications(session, { "<notificationId>" });
+```
+
+```js fct_label="Cocos2d-x JS"
+const notificationIds = ["<notificationId>"];
+client.deleteNotifications(session, notificationIds);
+```
+
+```cpp fct_label="C++"
+client->deleteNotifications(session, { "<notificationId>" });
 ```
 
 ```java fct_label="Java"
