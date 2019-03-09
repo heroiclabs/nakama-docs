@@ -27,7 +27,7 @@ curl 'http://127.0.0.1:7350/v2/group?limit=20&name=heroes%25' \
 ```
 
 ```js fct_label="JavaScript"
-const groups = await client.listGroups(session, "heroes%", 20) // fetch first 20 groups
+const groups = await client.listGroups(session, "heroes%", 20); // fetch first 20 groups
 console.info("List of groups:", groups);
 ```
 
@@ -49,6 +49,48 @@ foreach (var g in result.Groups)
 {
   Debug.LogFormat("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
 }
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [this](NGroupListPtr list)
+{
+  for (auto& group : list->groups)
+  {
+    CCLOG("Group name '%s' count %d", group.name.c_str(), group.edgeCount);
+  }
+};
+
+client->listGroups(session,
+    "heroes%", // Filter for group names which start with "heroes"
+    20,        // fetch first 20 groups
+    "",
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.listGroups(session, "heroes%", 20) // fetch first 20 groups
+  .then(function(groups) {
+      cc.log("List of groups:", JSON.stringify(groups));
+    },
+    function(error) {
+      cc.error("list groups failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [this](NGroupListPtr list)
+{
+  for (auto& group : list->groups)
+  {
+    std::cout << "Group name '" << group.name << "' count " << group.edgeCount << std::endl;
+  }
+};
+
+client->listGroups(session,
+    "heroes%", // Filter for group names which start with "heroes"
+    20,        // fetch first 20 groups
+    "",
+    successCallback);
 ```
 
 ```java fct_label="Java"
@@ -127,6 +169,66 @@ if (result.Cursor != null)
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+void YourClass::processGroupList(NGroupListPtr list)
+{
+  for (auto& group : list->groups)
+  {
+    CCLOG("Group name '%s' count %d", group.name.c_str(), group.edgeCount);
+  }
+
+  if (!list->cursor.empty())
+  {
+    // request next page
+    requestHeroes(list->cursor);
+  }
+}
+
+void YourClass::requestHeroes(const string& cursor)
+{
+  client->listGroups(session,
+      "heroes%", // Filter for group names which start with "heroes"
+      20,        // fetch first 20 groups
+      cursor,
+      std::bind(&YourClass::processGroupList, this, std::placeholders::_1));
+}
+```
+
+```js fct_label="Cocos2d-x JS"
+client.listGroups(session, "heroes%", 20) // fetch first 20 groups
+  .then(function(groups) {
+      cc.log("List of groups:", JSON.stringify(groups));
+    },
+    function(error) {
+      cc.error("list groups failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+void YourClass::processGroupList(NGroupListPtr list)
+{
+  for (auto& group : list->groups)
+  {
+    std::cout << "Group name '" << group.name << "' count " << group.edgeCount << std::endl;
+  }
+
+  if (!list->cursor.empty())
+  {
+    // request next page
+    requestHeroes(list->cursor);
+  }
+}
+
+void YourClass::requestHeroes(const string& cursor)
+{
+  client->listGroups(session,
+      "heroes%", // Filter for group names which start with "heroes"
+      20,        // fetch first 20 groups
+      cursor,
+      std::bind(&YourClass::processGroupList, this, std::placeholders::_1));
+}
+```
+
 ```java fct_label="Java"
 // Filter for group names which start with "heroes"
 String nameFilter = "heroes%";
@@ -199,6 +301,37 @@ await client.JoinGroupAsync(session, groupid);
 Debug.LogFormat("Sent group join request '{0}'", groupid);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("Sent group join request");
+};
+
+string group_id = "<group id>";
+client->joinGroup(session, group_id, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+client.joinGroup(session, group_id)
+  .then(function(ticket) {
+      cc.log("Sent group join request", group_id);
+    },
+    function(error) {
+      cc.error("join group failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "Sent group join request" << std::endl;
+};
+
+string group_id = "<group id>";
+client->joinGroup(session, group_id, successCallback);
+```
+
 ```java fct_label="Java"
 String groupid = "<group id>";
 client.joinGroup(session, groupid).get();
@@ -237,13 +370,13 @@ curl 'http://127.0.0.1:7350/v2/user/<user id>/group' \
 ```
 
 ```js fct_label="JavaScript"
-const userId = "<user id>"
-const groups = await client.listUserGroups(session, userid)
+const userId = "<user id>";
+const groups = await client.listUserGroups(session, userid);
 groups.user_groups.forEach(function(userGroup){
   console.log("Group: name '%o' id '%o'.", userGroup.group.name, userGroup.group.id);
   // group.State is one of: SuperAdmin, Admin, Member, or Join.
   console.log("Group's state is %o.", userGroup.state);
-})
+});
 ```
 
 ```csharp fct_label=".NET"
@@ -264,6 +397,47 @@ foreach (var ug in result.UserGroups)
   var g = ug.Group;
   Debug.LogFormat("Group '{0}' role '{1}'", g.Id, ug.State);
 }
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NUserGroupListPtr list)
+{
+  for (auto& userGroup : list->userGroups)
+  {
+    CCLOG("Group name %s", userGroup.group.name.c_str());
+  }
+};
+
+string userId = "<user id>";
+client->listUserGroups(session, userId, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const userId = "<user id>";
+client.listUserGroups(session, userid)
+  .then(function(groups) {
+      groups.user_groups.forEach(function(userGroup){
+        cc.log("Group name", userGroup.group.name);
+        // group.State is one of: SuperAdmin, Admin, Member, or Join.
+        cc.log("Group's state is", userGroup.state);
+      })
+    },
+    function(error) {
+      cc.error("list user groups failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NUserGroupListPtr list)
+{
+  for (auto& userGroup : list->userGroups)
+  {
+    std::cout << "Group name " << userGroup.group.name << std::endl;
+  }
+};
+
+string userId = "<user id>";
+client->listUserGroups(session, userId, successCallback);
 ```
 
 ```java fct_label="Java"
@@ -331,6 +505,37 @@ foreach (var ug in result.UserGroups)
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NGroupUserListPtr list)
+{
+  CCLOG("Users in group: %u", list->groupUsers.size());
+};
+
+string group_id = "<group id>";
+client->listGroupUsers(session, group_id, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+client.listGroupUsers(session, group_id)
+  .then(function(users) {
+      cc.log("Users in group:", JSON.stringify(users));
+    },
+    function(error) {
+      cc.error("list group users failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NGroupUserListPtr list)
+{
+  std::cout << "Users in group: " << list->groupUsers << std::endl;
+};
+
+string group_id = "<group id>";
+client->listGroupUsers(session, group_id, successCallback);
+```
+
 ```java fct_label="Java"
 String groupid = "<group id>";
 GroupUserList groupUsers = client.listGroupUsers(session, groupid).get();
@@ -382,10 +587,10 @@ const group_name = "pizza-lovers";
 const description = "pizza lovers, pineapple haters";
 const group = await client.createGroup(session, {
   name: group_name,
-  description: desc,
+  description: description,
   lang_tag: "en_US",
   open: true
-})
+});
 console.info("New group:", group);
 ```
 
@@ -401,6 +606,56 @@ const string name = "pizza-lovers";
 const string desc = "pizza lovers, pineapple haters";
 var group = await client.CreateGroupAsync(session, name, desc);
 Debug.LogFormat("New group '{0}'", group.Id);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NGroup& group)
+{
+  CCLOG("New group ID: %s", group.id.c_str());
+};
+
+string group_name = "pizza-lovers";
+string description = "pizza lovers, pineapple haters";
+client->createGroup(session,
+    group_name,
+    description,
+    "",  // avatar URL
+    "en_US",
+    true, // open
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_name = "pizza-lovers";
+const description = "pizza lovers, pineapple haters";
+client.createGroup(session, {
+  name: group_name,
+  description: description,
+  lang_tag: "en_US",
+  open: true
+}).then(function(group) {
+    cc.log("New group:", JSON.stringify(group));
+  },
+  function(error) {
+    cc.error("create group failed:", JSON.stringify(error));
+  });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NGroup& group)
+{
+  std::cout << "New group ID: " << group.id << std::endl;
+};
+
+string group_name = "pizza-lovers";
+string description = "pizza lovers, pineapple haters";
+client->createGroup(session,
+    group_name,
+    description,
+    "",  // avatar URL
+    "en_US",
+    true, // open
+    successCallback);
 ```
 
 ```java fct_label="Java"
@@ -484,7 +739,7 @@ curl -X PUT "http://127.0.0.1:7350/v2/group/<group id>" \
 ```js fct_label="JavaScript"
 const group_id = "<group id>";
 const description = "I was only kidding. Basil sauce ftw!";
-const group = await client.createGroup(session, group_id, { description: desc });
+const group = await client.updateGroup(session, group_id, { description: description });
 console.info("Updated group:", group);
 ```
 
@@ -500,6 +755,54 @@ const string groupid = "<group id>";
 const string desc = "I was only kidding. Basil sauce ftw!";
 var group = await client.UpdateGroupAsync(session, groupid, null, desc);
 Console.LogFormat("Updated group '{0}'", group.Id);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("Updated group");
+};
+
+string group_id = "<group id>";
+string description = "I was only kidding. Basil sauce ftw!";
+client->updateGroup(session,
+    group_id,
+    opt::nullopt,
+    description,
+    opt::nullopt,
+    opt::nullopt,
+    opt::nullopt,
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+const description = "I was only kidding. Basil sauce ftw!";
+client.updateGroup(session, group_id, { description: description })
+  .then(function(group) {
+      cc.log("Updated group:", JSON.stringify(group));
+    },
+    function(error) {
+      cc.error("update group failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "Updated group" << std::endl;
+};
+
+string group_id = "<group id>";
+string description = "I was only kidding. Basil sauce ftw!";
+client->updateGroup(session,
+    group_id,
+    opt::nullopt,
+    description,
+    opt::nullopt,
+    opt::nullopt,
+    opt::nullopt,
+    successCallback);
 ```
 
 ```java fct_label="Java"
@@ -561,6 +864,21 @@ await client.LeaveGroupAsync(session, groupid);
 ```csharp fct_label="Unity"
 const string groupid = "<group id>";
 await client.LeaveGroupAsync(session, groupid);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+string group_id = "<group id>";
+client->leaveGroup(session, group_id);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+client.leaveGroup(session, group_id);
+```
+
+```cpp fct_label="C++"
+string group_id = "<group id>";
+client->leaveGroup(session, group_id);
 ```
 
 ```java fct_label="Java"
@@ -631,6 +949,34 @@ var userIds = new[] {"<user id>"};
 await client.AddGroupUsersAsync(session, groupid, userIds);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("added user to group");
+};
+
+string group_id = "<group id>";
+string user_id = "<user id>";
+client->addGroupUsers(session, group_id, { user_id }, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+const user_id = "<user id>";
+client.addGroupUsers(session, group_id, [user_id]);
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "added user to group" << std::endl;
+};
+
+string group_id = "<group id>";
+string user_id = "<user id>";
+client->addGroupUsers(session, group_id, { user_id }, successCallback);
+```
+
 ```java fct_label="Java"
 String groupid = "<group id>";
 String[] userIds = new String[] {"<user id>"};
@@ -699,6 +1045,34 @@ var userIds = new[] {"<user id>"};
 await client.PromoteGroupUsersAsync(session, groupid, userIds);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("user has been promoted");
+};
+
+string group_id = "<group id>";
+string user_id = "<user id>";
+client->promoteGroupUsers(session, group_id, { user_id }, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+const user_id = "<user id>";
+client.promoteGroupUsers(session, group_id, [user_id]);
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "user has been promoted" << std::endl;
+};
+
+string group_id = "<group id>";
+string user_id = "<user id>";
+client->promoteGroupUsers(session, group_id, { user_id }, successCallback);
+```
+
 ```java fct_label="Java"
 String groupid = "<group id>";
 String[] userIds = new String[] {"<user id>"};
@@ -765,6 +1139,34 @@ var userIds = new[] {"<user id>"};
 await client.KickGroupUsersAsync(session, groupid, userIds);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("user has been kicked");
+};
+
+string group_id = "<group id>";
+string user_id = "<user id>";
+client->kickGroupUsers(session, group_id, { user_id }, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+const user_id = "<user id>";
+client.kickGroupUsers(session, group_id, [user_id]);
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "user has been kicked" << std::endl;
+};
+
+string group_id = "<group id>";
+string user_id = "<user id>";
+client->kickGroupUsers(session, group_id, { user_id }, successCallback);
+```
+
 ```java fct_label="Java"
 String groupid = "<group id>";
 String[] userIds = new String[] {"<user id>"};
@@ -824,6 +1226,31 @@ await client.DeleteGroupAsync(session, groupid);
 ```csharp fct_label="Unity"
 const string groupid = "<group id>";
 await client.DeleteGroupAsync(session, groupid);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("group deleted");
+};
+
+string group_id = "<group id>";
+client->deleteGroup(session, group_id, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const group_id = "<group id>";
+client.deleteGroup(session, group_id);
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "group deleted" << std::endl;
+};
+
+string group_id = "<group id>";
+client->deleteGroup(session, group_id, successCallback);
 ```
 
 ```java fct_label="Java"
