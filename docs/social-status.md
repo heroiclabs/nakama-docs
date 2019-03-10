@@ -22,6 +22,18 @@ await socket.UpdateStatusAsync("Hello everyone!");
 await socket.UpdateStatusAsync("Hello everyone!");
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+rtClient->updateStatus("Hello everyone!");
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.send({ status_update: { status: "Hello everyone!" } });
+```
+
+```cpp fct_label="C++"
+rtClient->updateStatus("Hello everyone!");
+```
+
 ```java fct_label="Java"
 socket.updateStatus("Hello everyone!").get();
 ```
@@ -45,6 +57,18 @@ await socket.UpdateStatusAsync(null);
 
 ```csharp fct_label="Unity"
 await socket.UpdateStatusAsync(null);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+rtClient->updateStatus("");
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.send({ status_update: {} });
+```
+
+```cpp fct_label="C++"
+rtClient->updateStatus("");
 ```
 
 ```java fct_label="Java"
@@ -98,6 +122,47 @@ socket.OnStatusPresence += (_, presence) =>
 };
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
+{
+  for (auto& presence : event.leaves)
+  {
+    CCLOG("User %s no longer has status %s", presence.username.c_str(), presence.status.c_str());
+  }
+
+  for (auto& presence : event.joins)
+  {
+    CCLOG("User %s now has status %s", presence.username.c_str(), presence.status.c_str());
+  }
+});
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.onstatuspresence = (statuspresence) => {
+  statuspresence.leaves.forEach((leave) => {
+    cc.log("User", leave.user_id, "no longer has status", leave.status);
+  });
+  statuspresence.joins.forEach((join) => {
+    cc.log("User", join.user_id, "now has status", join.status);
+  });
+};
+```
+
+```cpp fct_label="C++"
+rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
+{
+  for (auto& presence : event.leaves)
+  {
+    std::cout << "User " << presence.username << " no longer has status " << presence.status << std::endl;
+  }
+
+  for (auto& presence : event.joins)
+  {
+    std::cout << "User " << presence.username << " now has status " << presence.status << std::endl;
+  }
+});
+```
+
 ```java fct_label="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
@@ -136,6 +201,42 @@ await socket.FollowUsersAsync(new[] { "<user id>" });
 await socket.FollowUsersAsync(new[] { "<user id>" });
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NStatus& status)
+{
+  for (auto& presence : status.presences)
+  {
+    CCLOG("User %s has status %s", presence.username.c_str(), presence.status.c_str());
+  }
+};
+
+rtClient->followUsers({ "<user id>" }, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.send({ status_follow: { user_ids: ["<user id>"] } })
+  .then(function(status) {
+      status.presences.forEach((presence) => {
+        cc.log("User", presence.user_id, "has status", presence.status);
+      });
+    },
+    function(error) {
+      cc.error("follow status failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NStatus& status)
+{
+  for (auto& presence : status.presences)
+  {
+    std::cout << "User " << presence.username << " has status " << presence.status << std::endl;
+  }
+};
+
+rtClient->followUsers({ "<user id>" }, successCallback);
+```
+
 ```java fct_label="Java"
 socket.followUsers("<user id>").get();
 ```
@@ -157,6 +258,18 @@ await socket.UnfollowUsersAsync(new[] { "<user id>" });
 
 ```csharp fct_label="Unity"
 await socket.UnfollowUsersAsync(new[] { "<user id>" });
+```
+
+```cpp fct_label="Cocos2d-x C++"
+rtClient->unfollowUsers({ "<user id>" });
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.send({ status_unfollow: { user_ids: ["<user id>"] } });
+```
+
+```cpp fct_label="C++"
+rtClient->unfollowUsers({ "<user id>" });
 ```
 
 ```java fct_label="Java"
