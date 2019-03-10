@@ -34,6 +34,32 @@ Debug.LogFormat("User id '{0}' username '{1}'", user.Id, user.Username);
 Debug.LogFormat("User wallet {0}", account.Wallet);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NAccount& account)
+{
+  CCLOG("User's wallet: %s", account.wallet.c_str());
+};
+client->getAccount(session, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.getAccount(session)
+  .then(function(account) {
+      cc.log("User's wallet:", account.wallet);
+    },
+    function(error) {
+      cc.error("get account failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NAccount& account)
+{
+  CCLOG("User's wallet: %s", account.wallet.c_str());
+};
+client->getAccount(session, successCallback);
+```
+
 ```java fct_label="Java"
 Account account = client.getAccount(session);
 User user = account.getUser();
@@ -163,6 +189,46 @@ foreach (var u in result.Users)
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NUsers& users)
+{
+  for (auto& user : users.users)
+  {
+    CCLOG("User id '%s' username %s", user.id.c_str(), user.username.c_str());
+  }
+};
+client->getUsers(session,
+    { "user_id1" },
+    { "username1" },
+    { "facebookid1" },
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"])
+  .then(function(users) {
+      cc.log("Users:", JSON.stringify(users));
+    },
+    function(error) {
+      cc.error("get users failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NUsers& users)
+{
+  for (auto& user : users.users)
+  {
+    std::cout << "User id '" << user.id << "' username " << user.username << std::endl;
+  }
+};
+client->getUsers(session,
+    { "user_id1" },
+    { "username1" },
+    { "facebookid1" },
+    successCallback);
+```
+
 ```java fct_label="Java"
 List<String> ids = Arrays.asList("userid1", "userid2");
 List<String> usernames = Arrays.asList("username1", "username1");
@@ -247,6 +313,34 @@ const string displayName = "My new name";
 const string avatarUrl = "http://graph.facebook.com/avatar_url";
 const string location = "San Francisco";
 await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+client->updateAccount(session,
+    opt::nullopt,
+    "My new name", // display name
+    "http://graph.facebook.com/avatar_url", // avatar URL
+    opt::nullopt, 
+    "San Francisco" // location
+    );
+```
+
+```js fct_label="Cocos2d-x JS"
+client.updateAccount(session, {
+  display_name: "My new name",
+  avatar_url: "http://graph.facebook.com/avatar_url",
+  location: "San Francisco"
+});
+```
+
+```cpp fct_label="C++"
+client->updateAccount(session,
+    opt::nullopt,
+    "My new name", // display name
+    "http://graph.facebook.com/avatar_url", // avatar URL
+    opt::nullopt, 
+    "San Francisco" // location
+    );
 ```
 
 ```java fct_label="Java"
