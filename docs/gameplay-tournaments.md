@@ -114,7 +114,7 @@ var success = await client.JoinTournamentAsync(session, id);
 
 ```java fct_label="Java"
 String id = "someid";
-boolean success = client.joinTournament(session, id).get();
+client.joinTournament(session, id).get();
 ```
 
 ```swift fct_label="Swift"
