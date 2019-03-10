@@ -53,6 +53,29 @@ socket.OnChannelMessage = (_, message) =>
 };
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
+{
+  // msg.content is JSON string
+  CCLOG("OnChannelMessage %s", msg.content.c_str());
+});
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.onchannelmessage = (message) => {
+  cc.log("Received a message on channel:", message.channel_id);
+  cc.log("Message content:", JSON.stringify(message.content));
+};
+```
+
+```cpp fct_label="C++"
+rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
+{
+  // msg.content is JSON string
+  std::cout << "OnChannelMessage " << msg.content << std::cout;
+});
+```
+
 ```java fct_label="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
@@ -79,27 +102,47 @@ You can identify event messages from chat messages by the message "Type".
 ```js fct_label="JavaScript"
 if (message.code != 0) {
   console.log("Received message with code:", message.code);
-};
+}
 ```
 
 ```csharp fct_label=".NET"
 if (message.code != 0)
 {
   Console.WriteLine("Received message with code '{0}'", message.Code);
-};
+}
 ```
 
 ```csharp fct_label="Unity"
 if (message.code != 0)
 {
   Debug.LogFormat("Received message with code '{0}'", message.Code);
-};
+}
+```
+
+```cpp fct_label="Cocos2d-x C++"
+if (msg.code != 0)
+{
+  CCLOG("Received message with code: %d", msg.code);
+}
+```
+
+```js fct_label="Cocos2d-x JS"
+if (message.code != 0) {
+  cc.log("Received message with code:", message.code);
+}
+```
+
+```cpp fct_label="C++"
+if (msg.code != 0)
+{
+  std::cout << "Received message with code: " << msg.code << std::endl;
+}
 ```
 
 ```java fct_label="Java"
 if (message.getCode() != 0) {
   System.out.println("Received message with code %s", message.getCode());
-};
+}
 ```
 
 ```swift fct_label="Swift"
@@ -160,6 +203,53 @@ const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
 Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NChannelPtr channel)
+{
+  CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
+};
+
+string roomname = "MarvelMovieFans";
+rtClient->joinChat(
+    roomname,
+    NChannelType::ROOM,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+const roomname = "MarvelMovieFans";
+socket.send({ channel_join: {
+    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: roomname,
+    persistence: true,
+    hidden: false
+} }).then(function(response) {
+      cc.log("You can now send messages to channel id:", response.channel.id);
+    },
+    function(error) {
+      cc.error("join channel failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NChannelPtr channel)
+{
+  std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
+};
+
+string roomname = "MarvelMovieFans";
+rtClient->joinChat(
+    roomname,
+    NChannelType::ROOM,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
 ```
 
 ```java fct_label="Java"
@@ -223,6 +313,53 @@ var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence
 Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NChannelPtr channel)
+{
+  CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
+};
+
+string groupId = "<group id>";
+rtClient->joinChat(
+    groupId,
+    NChannelType::GROUP,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+const groupId = "<group id>";
+socket.send({ channel_join: {
+    type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: groupId,
+    persistence: true,
+    hidden: false
+} }).then(function(response) {
+      cc.log("You can now send messages to channel id:", response.channel.id);
+    },
+    function(error) {
+      cc.error("join channel failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NChannelPtr channel)
+{
+  std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
+};
+
+string groupId = "<group id>";
+rtClient->joinChat(
+    groupId,
+    NChannelType::GROUP,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
+```
+
 ```java fct_label="Java"
 String groupId = "<group id>";
 boolean persistence = true;
@@ -282,6 +419,53 @@ const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
 Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NChannelPtr channel)
+{
+  CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
+};
+
+string userId = "<user id>";
+rtClient->joinChat(
+    userId,
+    NChannelType::DIRECT_MESSAGE,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+const userId = "<user id>";
+socket.send({ channel_join: {
+    type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: userId,
+    persistence: true,
+    hidden: false
+} }).then(function(response) {
+      cc.log("You can now send messages to channel id:", response.channel.id);
+    },
+    function(error) {
+      cc.error("join channel failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NChannelPtr channel)
+{
+  std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
+};
+
+string userId = "<user id>";
+rtClient->joinChat(
+    userId,
+    NChannelType::DIRECT_MESSAGE,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
 ```
 
 ```java fct_label="Java"
@@ -386,6 +570,128 @@ var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence
 connectedUsers.AddRange(channel.Presences);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+// add this to your class: std::vector<NUserPresence> onlineUsers;
+
+rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
+{
+  // Remove all users who left.
+  for (auto& left : event.leaves)
+  {
+    for (auto it = onlineUsers.begin(); it != onlineUsers.end(); ++it)
+    {
+      if (it->userId == left.userId)
+      {
+        onlineUsers.erase(it);
+        break;
+      }
+    }
+  }
+
+  // Add all users who joined.
+  onlineUsers.insert(onlineUsers.end(), event.joins.begin(), event.joins.end());
+});
+
+auto successCallback = [this](NChannelPtr channel)
+{
+  onlineUsers.reserve(channel->presences.size());
+
+  // Setup initial online user list without self.
+  for (auto& joined : channel->presences)
+  {
+    if (joined.userId != channel->self.userId)
+    {
+      onlineUsers.push_back(joined);
+    }
+  }
+};
+
+string roomname = "PizzaFans";
+rtClient->joinChat(
+    roomname,
+    NChannelType::ROOM,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
+```
+
+```js fct_label="Cocos2d-x JS"
+var onlineUsers = [];
+socket.onchannelpresence = (presences) => {
+  // Remove all users who left.
+  onlineUsers = onlineUsers.filter((user) => {
+    return !presences.leave.includes(user);
+  });
+  // Add all users who joined.
+  onlineUsers.concat(presences.join);
+};
+
+const roomname = "PizzaFans";
+socket.send({ channel_join: {
+    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
+    target: roomname,
+    persistence: true,
+    hidden: false
+} }).then(function(response) {
+      // Setup initial online user list.
+      onlineUsers.concat(response.channel.presences);
+      // Remove your own user from list.
+      onlineUsers = onlineUsers.filter((user) => {
+        return user != channel.self;
+      });
+    },
+    function(error) {
+      cc.error("join chat failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+// add this to your class: std::vector<NUserPresence> onlineUsers;
+
+rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
+{
+  // Remove all users who left.
+  for (auto& left : event.leaves)
+  {
+    for (auto it = onlineUsers.begin(); it != onlineUsers.end(); ++it)
+    {
+      if (it->userId == left.userId)
+      {
+        onlineUsers.erase(it);
+        break;
+      }
+    }
+  }
+
+  // Add all users who joined.
+  onlineUsers.insert(onlineUsers.end(), event.joins.begin(), event.joins.end());
+});
+
+auto successCallback = [this](NChannelPtr channel)
+{
+  onlineUsers.reserve(channel->presences.size());
+
+  // Setup initial online user list without self.
+  for (auto& joined : channel->presences)
+  {
+    if (joined.userId != channel->self.userId)
+    {
+      onlineUsers.push_back(joined);
+    }
+  }
+};
+
+string roomname = "PizzaFans";
+rtClient->joinChat(
+    roomname,
+    NChannelType::ROOM,
+    true,  // persistence
+    false, // hidden
+    successCallback
+);
+```
+
 ```java fct_label="Java"
 final List<UserPresence> connectedUsers = new ArrayList<UserPresence>();
 SocketListener listener = new AbstractSocketListener() {
@@ -466,6 +772,42 @@ var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 var sendAck = await socket.WriteChatMessageAsync(channelId, content);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NChannelMessageAck& ack)
+{
+  CCLOG("message id: %s", ack.messageId.c_str());
+};
+
+string channelId = "<channel id>";
+string data = "{ \"some\": \"data\" }";
+rtClient->writeChatMessage(channelId, data, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var channelId = "<channel id>";
+var data = { "some": "data" };
+socket.send({ channel_message_send: {
+    channel_id: channelId,
+    content: data
+} }).then(function(messageAck) {
+      cc.log("message acknowledgement:", JSON.stringify(messageAck));
+    },
+    function(error) {
+      cc.error("send channel message failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NChannelMessageAck& ack)
+{
+  std::cout << "message id: " << ack.messageId << std::endl;
+};
+
+string channelId = "<channel id>";
+string data = "{ \"some\": \"data\" }";
+rtClient->writeChatMessage(channelId, data, successCallback);
+```
+
 ```java fct_label="Java"
 String channelId = "<channel id>";
 final String content = "{\"message\":\"Hello world\"}";
@@ -506,6 +848,23 @@ await socket.LeaveChatAsync(channelId);
 ```csharp fct_label="Unity"
 var channelId = "<channel id>";
 await socket.LeaveChatAsync(channelId);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+string channelId = "<channel id>";
+rtClient->leaveChat(channelId);
+```
+
+```js fct_label="Cocos2d-x JS"
+var channelId = "<channel id>";
+socket.send({ channel_leave: {
+  channel_id: channelId
+} });
+```
+
+```cpp fct_label="C++"
+string channelId = "<channel id>";
+rtClient->leaveChat(channelId);
 ```
 
 ```java fct_label="Java"
@@ -567,6 +926,58 @@ foreach (var m in result.Messages)
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NChannelMessageListPtr list)
+{
+  for (auto& message : list->messages)
+  {
+    CCLOG("message content: %s", message.content.c_str());
+  }
+  CCLOG("Get the next page of messages with the cursor: %s", list->nextCursor.c_str());
+};
+
+string channelId = "<channel id>";
+client->listChannelMessages(session,
+    channelId,
+    10,
+    opt::nullopt,
+    opt::nullopt,
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const channelId = "<channel id>";
+client.listChannelMessages(session, channelId, 10)
+  .then(function(result) {
+      result.messages.forEach((message) => {
+        cc.log("Message content", message.data);
+      });
+      cc.log("Get the next page of messages with the cursor:", result.next_cursor);
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NChannelMessageListPtr list)
+{
+  for (auto& message : list->messages)
+  {
+    std::cout << "message content: " << message.content << std::endl;
+  }
+  std::cout << "Get the next page of messages with the cursor: " << list->nextCursor << std::endl;
+};
+
+string channelId = "<channel id>";
+client->listChannelMessages(session,
+    channelId,
+    10,
+    opt::nullopt,
+    opt::nullopt,
+    successCallback);
+```
+
 ```java fct_label="Java"
 String channelId = "<channel id>";
 ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
@@ -623,7 +1034,7 @@ if (result.next_cursor) {
   result.messages.forEach((message) => {
     console.log("Message has id %o and content %o", message.message_id, message.data);
   });
-};
+}
 ```
 
 ```csharp fct_label=".NET"
@@ -660,6 +1071,84 @@ if (!string.IsNullOrEmpty(result.NextCursor)) {
 };
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+void YourClass::listChannelMessages(const std::string& cursor)
+{
+  auto successCallback = [this](NChannelMessageListPtr list)
+  {
+    for (auto& message : list->messages)
+    {
+      CCLOG("message content: %s", message.content.c_str());
+    }
+
+    if (!list->nextCursor.empty())
+    {
+      listChannelMessages(list->nextCursor);
+    }
+  };
+
+  string channelId = "<channel id>";
+  client->listChannelMessages(session,
+      channelId,
+      10,
+      cursor,
+      true, // forward
+      successCallback);
+}
+
+listChannelMessages("");
+```
+
+```js fct_label="Cocos2d-x JS"
+ver listChannelMessages(cursor) {
+  var channelId = "<channel id>";
+  var forward = true;
+  client.listChannelMessages(session, channelId, 10, forward, cursor)
+    .then(function(result) {
+        result.messages.forEach((message) => {
+          cc.log("Message content", message.data);
+        });
+
+        if (result.next_cursor) {
+          // Get the next 10 messages.
+          listChannelMessages(result.next_cursor);
+        }
+      },
+      function(error) {
+        cc.error("list channel messages failed:", JSON.stringify(error));
+      });
+}
+
+listChannelMessages();
+```
+
+```cpp fct_label="C++"
+void YourClass::listChannelMessages(const std::string& cursor)
+{
+  auto successCallback = [this](NChannelMessageListPtr list)
+  {
+    for (auto& message : list->messages)
+    {
+      std::cout << "message content: " << message.content << std::endl;
+    }
+
+    if (!list->nextCursor.empty())
+    {
+      listChannelMessages(list->nextCursor);
+    }
+  };
+
+  string channelId = "<channel id>";
+  client->listChannelMessages(session,
+      channelId,
+      10,
+      cursor,
+      true, // forward
+      successCallback);
+}
+
+listChannelMessages("");
+```
 
 ```java fct_label="Java"
 String channelId = "<channel id>";
