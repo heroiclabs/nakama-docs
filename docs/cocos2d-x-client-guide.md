@@ -292,7 +292,7 @@ Event handlers only need to be implemented for the features you want to use.
 | onStreamPresence | Receives [stream](advanced-streams.md) join and leave event. |
 | onStreamState | Receives [stream](advanced-streams.md) data sent by the server. |
 
-### Logging
+## Logging
 
 Client logging is off by default.
 

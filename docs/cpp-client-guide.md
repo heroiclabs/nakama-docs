@@ -289,9 +289,9 @@ Event handlers only need to be implemented for the features you want to use.
 | onStreamPresence | Receives [stream](advanced-streams.md) join and leave event. |
 | onStreamState | Receives [stream](advanced-streams.md) data sent by the server. |
 
-### Logging
+## Logging
 
-#### Initializing Logger
+### Initializing Logger
 
 Client logging is off by default.
 
@@ -307,7 +307,7 @@ To enable logs output to custom sink with debug logging level:
 NLogger::init(sink, NLogLevel::Debug);
 ```
 
-#### Using Logger
+### Using Logger
 
 To log string with debug logging level:
 
