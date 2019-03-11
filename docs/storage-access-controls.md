@@ -50,6 +50,54 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Debug.LogFormat("Read objects {0}", result.Objects);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NStorageObjects& objects)
+{
+  for (auto& object : objects)
+  {
+    CCLOG("Object key: %s, value: %s", object.key.c_str(), object.value.c_str());
+  }
+};
+
+std::vector<NReadStorageObjectId> objectIds;
+NReadStorageObjectId objectId;
+objectId.collection = "configurations";
+objectId.key = "config";
+objectIds.push_back(objectId);
+client->readStorageObjects(session, objectIds, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.readStorageObjects(session, {
+  "object_ids": [{
+    "collection": "configurations",
+    "key": "config"
+  }]
+}).then(function(objects) {
+      cc.log("Read objects:", JSON.stringify(objects));
+    },
+    function(error) {
+      cc.error("read storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NStorageObjects& objects)
+{
+  for (auto& object : objects)
+  {
+    std::cout << "Object key: " << object.key << ", value: " << object.value << std::endl;
+  }
+};
+
+std::vector<NReadStorageObjectId> objectIds;
+NReadStorageObjectId objectId;
+objectId.collection = "configurations";
+objectId.key = "config";
+objectIds.push_back(objectId);
+client->readStorageObjects(session, objectIds, successCallback);
+```
+
 ```java fct_label="Java"
 StorageObjectId objectId = new StorageObjectId("configuration");
 objectId.setKey("config");
@@ -187,6 +235,58 @@ var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObje
   PermissionWrite = 1
 });
 Debug.LogFormat("Stored objects {0}", result.Objects);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite object;
+object.collection = "saves";
+object.key = "savegame";
+object.value = "{ \"soldiers\": 50 }";
+object.permissionRead = 2;  // Public Read permission
+object.permissionWrite = 1; // Owner Write permission
+objects.push_back(object);
+client->writeStorageObjects(session, objects, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var army_setup = { "soldiers": 50 };
+// "2" refers to Public Read permission
+// "1" refers to Owner Write permission
+client.writeStorageObjects(session, [
+  {
+    "collection": "saves",
+    "key": "savegame",
+    "value": army_setup,
+    "permission_read": 2,
+    "permission_write": 1
+  }
+]).then(function(object_ids) {
+      cc.log("Stored objects:", JSON.stringify(object_ids));
+    },
+    function(error) {
+      cc.error("write storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite object;
+object.collection = "saves";
+object.key = "savegame";
+object.value = "{ \"soldiers\": 50 }";
+object.permissionRead = 2;  // Public Read permission
+object.permissionWrite = 1; // Owner Write permission
+objects.push_back(object);
+client->writeStorageObjects(session, objects, successCallback);
 ```
 
 ```java fct_label="Java"

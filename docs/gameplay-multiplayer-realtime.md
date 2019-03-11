@@ -25,6 +25,30 @@ var match = await socket.CreateMatchAsync();
 Debug.LogFormat("Created match with ID '{0}'.", match.Id);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+rtClient->createMatch([](const NMatch& match)
+  {
+    CCLOG("Created Match with ID: %s", match.matchId.c_str());
+  });
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.send({ match_create: {} })
+  .then(function(response) {
+      cc.log("created match with ID:", response.match.match_id);
+    },
+    function(error) {
+      cc.error("create match failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+rtClient->createMatch([](const NMatch& match)
+  {
+    std::cout << "Created Match with ID: " << match.matchId << std::endl;
+  });
+```
+
 ```java fct_label="Java"
 Match match = socket.createMatch().get();
 System.out.format("Created match with ID %s.", match.getId());
@@ -69,6 +93,59 @@ foreach (var presence in match.presences)
 }
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+string matchId = "<matchid>";
+rtClient->joinMatch(matchId, [](const NMatch& match)
+  {
+    CCLOG("Joined Match!");
+
+    for (auto& presence : match.presences)
+    {
+      if (presence.userId != match.self.userId)
+      {
+        CCLOG("User id %s username %s", presence.userId.c_str(), presence.username.c_str());
+      }
+    }
+  });
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "<matchid>";
+socket.send({ match_join: { match_id: id } })
+  .then(
+    function (response) {
+      cc.error("joined match:", JSON.stringify(response));
+      var match = response.match;
+      var connectedOpponents = match.presences.filter((presence) => {
+          // Remove your own user from list.
+          return presence.user_id != match.self.user_id;
+      });
+      connectedOpponents.forEach((opponent) => {
+          cc.log("User id", opponent.user_id, "username", opponent.username);
+      });
+    },
+    function (error) {
+      cc.error("join match failed:", JSON.stringify(error));
+    }
+  );
+```
+
+```cpp fct_label="C++"
+string matchId = "<matchid>";
+rtClient->joinMatch(matchId, [](const NMatch& match)
+  {
+    std::cout << "Joined Match!" << std::endl;
+
+    for (auto& presence : match.presences)
+    {
+      if (presence.userId != match.self.userId)
+      {
+        std::cout << "User id " << presence.userId << " username " << presence.username << std::endl;
+      }
+    }
+  });
+```
+
 ```java fct_label="Java"
 String matchId = "<matchid>";
 Match match = socket.joinMatch(matchId).get();
@@ -85,7 +162,7 @@ When a user joins a match they receive an initial list of connected opponents. A
 
 ```js fct_label="JavaScript"
 var connectedOpponents = [];
-client.onmatchpresence = (presences) => {
+socket.onmatchpresence = (presences) => {
   // Remove all users who left.
   connectedOpponents = connectedOpponents.filter(function(co) {
     var stillConnectedOpponent = true;
@@ -124,6 +201,55 @@ socket.OnMatchPresence += (_, presence) =>
     connectedOpponents.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
   };
 };
+```
+
+```cpp fct_label="Cocos2d-x C++"
+rtListener->setMatchPresenceCallback([](const NMatchPresenceEvent& event)
+  {
+    for (auto& presence : event.joins)
+    {
+      CCLOG("Joined user: %s", presence.username.c_str());
+    }
+
+    for (auto& presence : event.leaves)
+    {
+      CCLOG("Left user: %s", presence.username.c_str());
+    }
+  });
+```
+
+```js fct_label="Cocos2d-x JS"
+var connectedOpponents = [];
+socket.onmatchpresence = (presences) => {
+  // Remove all users who left.
+  connectedOpponents = connectedOpponents.filter(function(co) {
+    var stillConnectedOpponent = true;
+    presences.leaves.forEach((leftOpponent) => {
+      if (leftOpponent.user_id == co.user_id) {
+        stillConnectedOpponent = false;
+      }
+    });
+    return stillConnectedOpponent;
+  });
+
+  // Add all users who joined.
+  connectedOpponents = connectedOpponents.concat(presences.joins);
+};
+```
+
+```cpp fct_label="C++"
+rtListener->setMatchPresenceCallback([](const NMatchPresenceEvent& event)
+  {
+    for (auto& presence : event.joins)
+    {
+      std::cout << "Joined user: " << presence.username << std::endl;
+    }
+
+    for (auto& presence : event.leaves)
+    {
+      std::cout << "Left user: " << presence.username << std::endl;
+    }
+  });
 ```
 
 ```java fct_label="Java"
@@ -171,6 +297,27 @@ var id = "<matchid>";
 var opCode = 1;
 var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 socket.SendMatchState(id, opCode, newState);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+string id = "<matchid>";
+int64_t opCode = 1;
+NBytes data = "{ \"move\": {\"dir\": \"left\", \"steps\" : 4} }";
+rtClient->sendMatchData(id, opCode, data);
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "<matchid>";
+var opCode = 1;
+var data = { "move": {"dir": "left", "steps": 4} };
+socket.send({ match_data_send: { match_id: id, op_code: opCode, data: data } });
+```
+
+```cpp fct_label="C++"
+string id = "<matchid>";
+int64_t opCode = 1;
+NBytes data = "{ \"move\": {\"dir\": \"left\", \"steps\" : 4} }";
+rtClient->sendMatchData(id, opCode, data);
 ```
 
 ```java fct_label="Java"
@@ -226,6 +373,51 @@ socket.OnMatchState = (_, state) => {
 };
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+rtListener->setMatchDataCallback([](const NMatchData& data)
+  {
+    switch (data.opCode)
+    {
+    case 101:
+      CCLOG("A custom opcode.");
+      break;
+
+    default:
+      CCLOG("User %s sent %s", data.presence.userId.c_str(), data.data.c_str());
+      break;
+    }
+  });
+```
+
+```js fct_label="Cocos2d-x JS"
+socket.onmatchdata = (result) => {
+  var content = result.data;
+  switch (result.op_code) {
+    case 101:
+      cc.log("A custom opcode.");
+      break;
+    default:
+      cc.log("User", result.presence.user_id, "sent", content);
+  }
+};
+```
+
+```cpp fct_label="C++"
+rtListener->setMatchDataCallback([](const NMatchData& data)
+  {
+    switch (data.opCode)
+    {
+    case 101:
+      std::cout << "A custom opcode." << std::endl;
+      break;
+
+    default:
+      std::cout << "User " << data.presence.userId << " sent " << data.data << std::endl;
+      break;
+    }
+  });
+```
+
 ```java fct_label="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
@@ -252,6 +444,21 @@ await socket.LeaveMatchAsync(matchId);
 ```csharp fct_label="Unity"
 var matchId = "<matchid>";
 await socket.LeaveMatchAsync(matchId);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+string matchId = "<matchid>";
+rtClient->leaveMatch(matchId);
+```
+
+```js fct_label="Cocos2d-x JS"
+var id = "<matchid>";
+socket.send({ match_leave: {match_id: id}});
+```
+
+```cpp fct_label="C++"
+string matchId = "<matchid>";
+rtClient->leaveMatch(matchId);
 ```
 
 ```java fct_label="Java"

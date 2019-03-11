@@ -93,6 +93,67 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Debug.LogFormat("Successfully stored objects {0}", objectIds);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+  CCLOG("Successfully stored objects %u", acks.size());
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite savesObject, statsObject;
+savesObject.collection = "saves";
+savesObject.key = "savegame";
+savesObject.value = "{ \"progress\": 50 }";
+objects.push_back(savesObject);
+
+statsObject.collection = "stats";
+statsObject.key = "skills";
+statsObject.value = "{ \"skill\": 24 }";
+objects.push_back(statsObject);
+client->writeStorageObjects(session, objects, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var save_game = { "progress": 50 };
+var my_stats = { "skill": 24 };
+client.writeStorageObjects(session, [
+  {
+    "collection": "saves",
+    "key": "savegame",
+    "value": save_game
+  }, {
+    "collection": "stats",
+    "key": "skills",
+    "value": my_stats
+  }
+]).then(function(object_ids) {
+      cc.log("Successfully stored objects:", JSON.stringify(object_ids));
+    },
+    function(error) {
+      cc.error("write storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+  std::cout << "Successfully stored objects " << acks.size() << std::endl;
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite savesObject, statsObject;
+savesObject.collection = "saves";
+savesObject.key = "savegame";
+savesObject.value = "{ \"progress\": 50 }";
+objects.push_back(savesObject);
+
+statsObject.collection = "stats";
+statsObject.key = "skills";
+statsObject.value = "{ \"skill\": 24 }";
+objects.push_back(statsObject);
+client->writeStorageObjects(session, objects, successCallback);
+```
+
 ```java fct_label="Java"
 String saveGame = "{ \"progress\": 50 }";
 String myStats = "{ \"skill\": 24 }";
@@ -203,6 +264,55 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Debug.LogFormat("Stored objects {0}", objectIds);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+  CCLOG("Successfully stored objects %u", acks.size());
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite savesObject;
+savesObject.collection = "saves";
+savesObject.key = "savegame";
+savesObject.value = "{ \"progress\": 50 }";
+savesObject.version = "<version>";
+objects.push_back(savesObject);
+client->writeStorageObjects(session, objects, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var save_game = { "progress": 50 };
+client.writeStorageObjects(session, [
+  {
+    "collection": "saves",
+    "key": "savegame",
+    "value": save_game,
+    "version": "<version>"
+  }
+]).then(function(object_ids) {
+      cc.log("Stored objects:", JSON.stringify(object_ids));
+    },
+    function(error) {
+      cc.error("write storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+  std::cout << "Successfully stored objects " << acks.size() << std::endl;
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite savesObject;
+savesObject.collection = "saves";
+savesObject.key = "savegame";
+savesObject.value = "{ \"progress\": 50 }";
+savesObject.version = "<version>";
+objects.push_back(savesObject);
+client->writeStorageObjects(session, objects, successCallback);
+```
+
 ```java fct_label="Java"
 String saveGame = "{ \"progress\": 50 }";
 StorageObjectWrite object = new StorageObjectWrite("saves", "savegame", saveGame, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
@@ -298,6 +408,55 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Version = "*"
 });
 Debug.LogFormat("Stored objects {0}", objectIds);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+  CCLOG("Successfully stored objects %u", acks.size());
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite savesObject;
+savesObject.collection = "saves";
+savesObject.key = "savegame";
+savesObject.value = "{ \"progress\": 50 }";
+savesObject.version = "*";
+objects.push_back(savesObject);
+client->writeStorageObjects(session, objects, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+var save_game = { "progress": 50 };
+client.writeStorageObjects(session, [
+  {
+    "collection": "saves",
+    "key": "savegame",
+    "value": save_game,
+    "version": "*"
+  }
+]).then(function(object_ids) {
+      cc.log("Stored objects:", JSON.stringify(object_ids));
+    },
+    function(error) {
+      cc.error("write storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NStorageObjectAcks& acks)
+{
+  std::cout << "Successfully stored objects " << acks.size() << std::endl;
+};
+
+std::vector<NStorageObjectWrite> objects;
+NStorageObjectWrite savesObject;
+savesObject.collection = "saves";
+savesObject.key = "savegame";
+savesObject.value = "{ \"progress\": 50 }";
+savesObject.version = *";
+objects.push_back(savesObject);
+client->writeStorageObjects(session, objects, successCallback);
 ```
 
 ```java fct_label="Java"
@@ -418,6 +577,55 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Debug.LogFormat("Read objects {0}", result.Objects);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NStorageObjects& objects)
+{
+  for (auto& object : objects)
+  {
+    CCLOG("Object key: %s, value: %s", object.key.c_str(), object.value.c_str());
+  }
+};
+std::vector<NReadStorageObjectId> objectIds;
+NReadStorageObjectId objectId;
+objectId.collection = "saves";
+objectId.key = "savegame";
+objectId.userId = session->getUserId();
+objectIds.push_back(objectId);
+client->readStorageObjects(session, objectIds, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.readStorageObjects(session, {
+  "object_ids": [{
+    "collection": "saves",
+    "key": "savegame",
+    "user_id": session.user_id
+  }]
+}).then(function(objects) {
+      cc.log("Read objects:", JSON.stringify(objects));
+    },
+    function(error) {
+      cc.error("read storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NStorageObjects& objects)
+{
+  for (auto& object : objects)
+  {
+    std::cout << "Object key: " << object.key << ", value: " << object.value << std::endl;
+  }
+};
+std::vector<NReadStorageObjectId> objectIds;
+NReadStorageObjectId objectId;
+objectId.collection = "saves";
+objectId.key = "savegame";
+objectId.userId = session->getUserId();
+objectIds.push_back(objectId);
+client->readStorageObjects(session, objectIds, successCallback);
+```
+
 ```java fct_label="Java"
 StorageObjectId objectId = new StorageObjectId("saves");
 objectId.setKey("savegame");
@@ -486,6 +694,48 @@ Console.WriteLine("List objects '{0}'", result);
 ```csharp fct_label="Unity"
 var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId);
 Debug.LogFormat("List objects '{0}'", result);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NStorageObjectListPtr list)
+{
+  for (auto& object : list->objects)
+  {
+    CCLOG("Object key: %s, value: %s", object.key.c_str(), object.value.c_str());
+  }
+};
+client->listUsersStorageObjects(session,
+    "saves",
+    session->getUserId(),
+    opt::nullopt,
+    opt::nullopt,
+    successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.listStorageObjects(session, "saves", session.user_id)
+  .then(function(objects) {
+      cc.log("List objects:", JSON.stringify(objects));
+    },
+    function(error) {
+      cc.error("list storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NStorageObjectListPtr list)
+{
+  for (auto& object : list->objects)
+  {
+    std::cout << "Object key: " << object.key << ", value: " << object.value << std::endl;
+  }
+};
+client->listUsersStorageObjects(session,
+    "saves",
+    session->getUserId(),
+    opt::nullopt,
+    opt::nullopt,
+    successCallback);
 ```
 
 ```java fct_label="Java"
@@ -562,6 +812,48 @@ var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId
   Key = "savegame"
 });
 Debug.Log("Deleted objects.");
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("Deleted objects.");
+};
+
+std::vector<NDeleteStorageObjectId> objectIds;
+NDeleteStorageObjectId objectId;
+objectId.collection = "saves";
+objectId.key = "savegame";
+objectIds.push_back(objectId);
+client->deleteStorageObjects(session, objectIds, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.deleteStorageObjects(session, {
+  "object_ids": [{
+    "collection": "saves",
+    "key": "savegame"
+  }]
+}).then(function() {
+      cc.log("Deleted objects.");
+    },
+    function(error) {
+      cc.error("delete storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "Deleted objects." << std::endl;
+};
+
+std::vector<NDeleteStorageObjectId> objectIds;
+NDeleteStorageObjectId objectId;
+objectId.collection = "saves";
+objectId.key = "savegame";
+objectIds.push_back(objectId);
+client->deleteStorageObjects(session, objectIds, successCallback);
 ```
 
 ```java fct_label="Java"
@@ -646,6 +938,51 @@ var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId
   Version = "<version>"
 });
 Debug.Log("Deleted objects.");
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = []()
+{
+  CCLOG("Deleted objects.");
+};
+
+std::vector<NDeleteStorageObjectId> objectIds;
+NDeleteStorageObjectId objectId;
+objectId.collection = "saves";
+objectId.key = "savegame";
+objectId.version = "<version>";
+objectIds.push_back(objectId);
+client->deleteStorageObjects(session, objectIds, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.deleteStorageObjects(session, {
+  "object_ids": [{
+    "collection": "saves",
+    "key": "savegame",
+    "version": "<version>"
+  }]
+}).then(function() {
+      cc.log("Deleted objects.");
+    },
+    function(error) {
+      cc.error("delete storage objects failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = []()
+{
+  std::cout << "Deleted objects." << std::endl;
+};
+
+std::vector<NDeleteStorageObjectId> objectIds;
+NDeleteStorageObjectId objectId;
+objectId.collection = "saves";
+objectId.key = "savegame";
+objectId.version = "<version>";
+objectIds.push_back(objectId);
+client->deleteStorageObjects(session, objectIds, successCallback);
 ```
 
 ```java fct_label="Java"

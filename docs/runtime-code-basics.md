@@ -353,6 +353,40 @@ var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
 Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](const NRpc& rpc)
+{
+  CCLOG("Retrieved pokemon info: %s", rpc.payload.c_str());
+};
+
+string payload = "{ \"PokemonName\": \"dragonite\" }";
+string rpcid = "get_pokemon";
+client->rpc(session, rpcid, payload, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+const payload = { "PokemonName": "dragonite"};
+const rpcid = "get_pokemon";
+client.rpc(session, rpcid, payload)
+  .then(function(pokemonInfo) {
+      cc.log("Retrieved pokemon info:", JSON.stringify(pokemonInfo));
+    },
+    function(error) {
+      cc.error("rpc call failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](const NRpc& rpc)
+{
+  std::cout << "Retrieved pokemon info: " << rpc.payload << std::endl;
+};
+
+string payload = "{ \"PokemonName\": \"dragonite\" }";
+string rpcid = "get_pokemon";
+client->rpc(session, rpcid, payload, successCallback);
+```
+
 ```java fct_label="Android/Java"
 String payload = "{\"PokemonName\": \"dragonite\"}";
 String rpcid = "get_pokemon";

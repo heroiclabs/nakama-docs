@@ -42,6 +42,24 @@ var usernames = new[] {"username1"};
 await client.AddFriendsAsync(session, ids, usernames);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+vector<string> ids = { "user-id1", "user-id2" };
+vector<string> usernames = { "username1" };
+client->addFriends(session, ids, usernames);
+```
+
+```js fct_label="Cocos2d-x JS"
+var ids = ["user-id1", "user-id2"];
+var usernames = ["username1"];
+client.addFriends(session, ids, usernames);
+```
+
+```cpp fct_label="C++"
+vector<string> ids = { "user-id1", "user-id2" };
+vector<string> usernames = { "username1" };
+client->addFriends(session, ids, usernames);
+```
+
 ```java fct_label="Java"
 List<String> ids = Arrays.asList("user-id1", "user-id2");
 String[] usernames = new String[] {"username1"};
@@ -99,6 +117,34 @@ foreach (var f in result.Friends)
 {
   Debug.LogFormat("Friend '{0}' state '{1}'", f.User.Username, f.State);
 }
+```
+
+```cpp fct_label="Cocos2d-x C++"
+auto successCallback = [](NFriendsPtr friends)
+{
+  CCLOG("Successfully retrieved friend list: %u", friends->friends.size());
+};
+
+client->listFriends(session, successCallback);
+```
+
+```js fct_label="Cocos2d-x JS"
+client.listFriends(session)
+  .then(function(friends) {
+      cc.log("Successfully retrieved friend list:", JSON.stringify(friends));
+    },
+    function(error) {
+      cc.error("list friends failed:", JSON.stringify(error));
+    });
+```
+
+```cpp fct_label="C++"
+auto successCallback = [](NFriendsPtr friends)
+{
+  std::cout << "Successfully retrieved friend list: " << friends->friends.size() << std::endl;
+};
+
+client->listFriends(session, successCallback);
 ```
 
 ```java fct_label="Java"
@@ -160,6 +206,24 @@ var usernames = new[] {"username1"};
 await client.DeleteFriendsAsync(session, ids, usernames);
 ```
 
+```cpp fct_label="Cocos2d-x C++"
+vector<string> ids = { "user-id1", "user-id2" };
+vector<string> usernames = { "username1" };
+client->deleteFriends(session, ids, usernames);
+```
+
+```js fct_label="Cocos2d-x JS"
+var ids = ["user-id1", "user-id2"];
+var usernames = ["username1"];
+client.deleteFriends(session, ids, usernames);
+```
+
+```cpp fct_label="C++"
+vector<string> ids = { "user-id1", "user-id2" };
+vector<string> usernames = { "username1" };
+client->deleteFriends(session, ids, usernames);
+```
+
 ```java fct_label="Java"
 List<String> ids = Arrays.asList("user-id1", "user-id2");
 String[] usernames = new String[] {"username1"};
@@ -214,6 +278,24 @@ await client.BlockFriendsAsync(session, ids, usernames);
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.BlockFriendsAsync(session, ids, usernames);
+```
+
+```cpp fct_label="Cocos2d-x C++"
+vector<string> ids = { "user-id1", "user-id2" };
+vector<string> usernames = { "username1" };
+client->blockFriends(session, ids, usernames);
+```
+
+```js fct_label="Cocos2d-x JS"
+var ids = ["user-id1", "user-id2"];
+var usernames = ["username1"];
+client.blockFriends(session, ids, usernames);
+```
+
+```cpp fct_label="C++"
+vector<string> ids = { "user-id1", "user-id2" };
+vector<string> usernames = { "username1" };
+client->blockFriends(session, ids, usernames);
 ```
 
 ```java fct_label="Java"
