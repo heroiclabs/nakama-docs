@@ -763,17 +763,13 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 ```
 
-## List Leaderboard Records Around Owner
+## List leaderboard records around owner
 
 Fetch the list of leaderboard records around the owner.
 
-## List Tournament Records Around Owner
-
-Fetch the list of tournament records around the owner.
-
 ```sh fct_label="cURL"
 curl -X GET \
-  'http://127.0.0.1:7350/v2/tournament/<leaderboard_id>/owner/<owner_id>?limit=<limit>'
+  'http://127.0.0.1:7350/v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>'
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -834,7 +830,7 @@ client->listLeaderboardRecordsAroundOwner(session,
 String id = "someid";
 String ownerId = session.getUserId();
 int limit = 100;
-TournamentRecordList records = client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit).get();
+LeaderboardRecordList records = client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit).get();
 ```
 
 ```swift fct_label="Swift"
@@ -842,7 +838,7 @@ TournamentRecordList records = client.listLeaderboardRecordsAroundOwner(session,
 ```
 
 ```fct_label="REST"
-GET /v2/tournament/v2/tournament/<leaderboard_id>/owner/<owner_id>?limit=<limit>
+GET /v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json

@@ -14,7 +14,7 @@ Tournaments are created programmatically to start in the future or immediately u
 
 A tournament can also be played by opponents who are not users. For example a guild tournament can be implemented where score submissions are made by guild ID.
 
-## List Tournaments
+## List tournaments
 
 Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
 
@@ -158,7 +158,7 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 ```
 
-## Join Tournament
+## Join tournament
 
 A tournament may need to be joined before the owner can submit scores. This operation is idempotent and will always succeed for the owner even if they have already joined the tournament.
 
@@ -231,7 +231,7 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 ```
 
-## List Tournament Records
+## List tournament records
 
 Fetch a mixed list of tournament records as well as a batch of records which belong to specific owners. This can be useful to build up a leaderboard view which shows the top 100 players as well as the scores between the current user and their friends.
 
@@ -323,7 +323,7 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 ```
 
-## List Tournament Records Around Owner
+## List tournament records around owner
 
 Fetch the list of tournament records around the owner.
 
@@ -417,7 +417,7 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 ```
 
-## Write Tournament Record
+## Write tournament record
 
 Submit a score and optional subscore to a tournament leaderboard. If the tournament has been configured with join required this will fail unless the owner has already joined the tournament.
 
@@ -527,13 +527,13 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 ```
 
-## Authoritative Functions
+## Authoritative functions
 
 The runtime functions can be accessed from Lua or Go code and enable custom logic to be used to apply additional rules to various aspects of a tournament. For example it may be required that an opponent is higher than a specific level before they're allowed to join the tournament.
 
 All API design examples are written in Go. For brevity imports and some variables are assumed to exist.
 
-### Create Tournament
+### Create tournament
 
 Create a tournament with all it's configuration options.
 
@@ -582,7 +582,7 @@ if err != nil {
 }
 ```
 
-### Delete Tournament
+### Delete tournament
 
 Delete a tournament by it's ID.
 
@@ -599,7 +599,7 @@ if err != nil {
 }
 ```
 
-### Add Score Attempts
+### Add score attempts
 
 Add additional score attempts to the owner's tournament record. This overrides the max number of score attempts allowed in the tournament for this specific owner.
 
@@ -621,7 +621,7 @@ if err != nil {
 }
 ```
 
-## Reward Distribution
+## Reward distribution
 
 When a tournament's active period ends a function registered on the server will be called to pass the expired records for use to calculate and distribute rewards to owners.
 
