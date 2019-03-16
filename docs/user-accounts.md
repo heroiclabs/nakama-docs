@@ -279,7 +279,7 @@ do
 end
 ```
 
-## Update self
+## Update account
 
 When a user is registered most of their profile is setup with default values. A user can update their own profile to change fields but cannot change any other user's profile.
 
@@ -377,20 +377,22 @@ Authorization: Bearer <session token>
 }
 ```
 
-With server-side code it's possible to update one or more user's profiles.
+With server-side code it's possible to update any user's profile.
 
 ```lua
 local nk = require("nakama")
 
-local user_update = {
-  user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521", -- some user's id.
-  avatar_url = "http://graph.facebook.com/avatar_url",
-  display_name = "My new Name",
-  location = "San Francisco",
-  metadata = {}
-}
-local status, err = pcall(nk.users_update, { user_update })
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user's id.
+local metadata = {}
+local username = "my-new-username"
+local display_name = "My new Name"
+local timezone = nil
+local location = "San Francisco"
+local lang_tag = nil
+local avatar_url = "http://graph.facebook.com/avatar_url"
+
+local status, err = pcall(nk.account_update_id, metadata, username, display_name, timezone, location, lang_tag, avatar_url)
 if (not status) then
-  nk.logger_info(("User update error: %q"):format(err))
+  nk.logger_info(("Account update error: %q"):format(err))
 end
 ```
