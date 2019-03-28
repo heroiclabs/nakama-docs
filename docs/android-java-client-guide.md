@@ -4,7 +4,7 @@ The official Java client handles all communication in realtime with the server a
 
 ## Download
 
-The client can be downloaded from <a href="https://github.com/heroiclabs/nakama-java/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-java-$version.jar" or "nakama-java-$version-all.jar" which includes a shadowed copy of all dependencies. If you use a build tool like Gradle you can skip the download and fetch it from the [central repository](#install-and-setup).
+The client can be downloaded from <a href="https://github.com/heroiclabs/nakama-java/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-java-$version.jar" or "nakama-java-$version-all.jar" which includes a shadowed copy of all dependencies. <!-- If you use a build tool like Gradle you can skip the download and fetch it from the [central repository](#install-and-setup). -->
 
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-java/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
@@ -15,13 +15,14 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 
 When you've downloaded the jar package you should include it in your project or if you use Gradle add the client as a dependency to your "build.gradle".
 
-```groovy
+<!-- ```groovy
 repositories {
     maven {
         url 'https://dl.bintray.com/heroiclabs/default/'
     }
-}
+}``` -->
 
+```groovy
 dependencies {
   compile(group: 'com.heroiclabs.nakama', name: 'client', version: '+')
   compile('org.slf4j:slf4j-api:1.7.25') {
