@@ -247,8 +247,8 @@ NStorageObjectWrite object;
 object.collection = "saves";
 object.key = "savegame";
 object.value = "{ \"soldiers\": 50 }";
-object.permissionRead = 2;  // Public Read permission
-object.permissionWrite = 1; // Owner Write permission
+object.permissionRead = NStoragePermissionRead::PUBLIC_READ;   // Public Read permission
+object.permissionWrite = NStoragePermissionWrite::OWNER_WRITE; // Owner Write permission
 objects.push_back(object);
 client->writeStorageObjects(session, objects, successCallback);
 ```
@@ -283,8 +283,8 @@ NStorageObjectWrite object;
 object.collection = "saves";
 object.key = "savegame";
 object.value = "{ \"soldiers\": 50 }";
-object.permissionRead = 2;  // Public Read permission
-object.permissionWrite = 1; // Owner Write permission
+object.permissionRead = NStoragePermissionRead::PUBLIC_READ;   // Public Read permission
+object.permissionWrite = NStoragePermissionWrite::OWNER_WRITE; // Owner Write permission
 objects.push_back(object);
 client->writeStorageObjects(session, objects, successCallback);
 ```
