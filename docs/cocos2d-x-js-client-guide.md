@@ -28,15 +28,20 @@ Import into your `project.json`:
 The client object is used to execute all logic against the server:
 
 ```js
-var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
-client.ssl = false;
+var serverkey = "defaultkey";
+var host = "127.0.0.1";
+var port = 7350;
+var useSSL = false;
+var timeout = 7000; // ms
+
+var client = new nakamajs.Client(serverkey, host, port, useSSL, timeout);
 ```
 
 !!! Note
     By default the client uses connection settings "127.0.0.1" and 7350 port to connect to a local Nakama server.
 
 ```js
-var client = new nakamajs.Client("defaultkey");
+var client = new nakamajs.Client();
 ```
 
 !!! Bug
