@@ -27,8 +27,13 @@ NClientPtr client = createDefaultClient(parameters);
 ```
 
 ```js fct_label="Cocos2d-x JS"
-var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
-client.ssl = false;
+var serverkey = "defaultkey";
+var host = "127.0.0.1";
+var port = 7350;
+var useSSL = false;
+var timeout = 7000; // ms
+
+var client = new nakamajs.Client(serverkey, host, port, useSSL, timeout);
 ```
 
 ```cpp fct_label="C++"
