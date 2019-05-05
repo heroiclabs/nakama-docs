@@ -13,9 +13,9 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 
 ## Setup
 
-When you've downloaded the Nakama C++ archive and extracted it to `NAKAMA_COCOS2D_SDK` folder, you should include it in your project.
+When you've downloaded the Nakama Cocos2d archive and extracted it to `NAKAMA_COCOS2D_SDK` folder, you should include it in your project.
 
-We don't recommend to copy Nakama C++ SDK to your project because it's quite big in size (~1 Gb).
+We don't recommend to copy Nakama Cocos2d SDK to your project because it's quite big in size (~600 Mb).
 
 ### Copy NakamaCocos2d folder
 
@@ -27,9 +27,9 @@ Add all files from `NakamaCocos2d` folder to your project.
 
 1. Add `NAKAMA_COCOS2D_SDK/include` in `Build Settings > Header Search Paths`
 2. Add libs folder in `Build Settings > Library Search Paths`:
-    - `NAKAMA_COCOS2D_SDK/libs/ios` - for iOS
-    - `NAKAMA_COCOS2D_SDK/libs/mac` - for Mac
-3. Add all `.a` files located in libs folder and `libresolv.9.tbd` in `General > Linked Frameworks and Libraries`
+    - `NAKAMA_COCOS2D_SDK/shared-libs/ios` - for iOS
+    - `NAKAMA_COCOS2D_SDK/shared-libs/mac` - for Mac
+3. Add `libnakama-cpp.dylib` file located in libs folder to `General > Linked Frameworks and Libraries`
 
 ### Setup for Android projects
 
@@ -41,8 +41,10 @@ If you use `ndk-build` then add following to your `Android.mk` file:
 # add this to your module
 LOCAL_STATIC_LIBRARIES += nakama-cpp
 
-# add this at bottom of Android.mk file
+# add this after $(call import-add-path, $(LOCAL_PATH)/../../../cocos2d)
 $(call import-add-path, NAKAMA_COCOS2D_SDK)
+
+# add this after $(call import-module, cocos)
 $(call import-module, nakama-cpp-android)
 ```
 
@@ -59,19 +61,22 @@ Add following to your `CMakeLists.txt` file:
 ```cmake
 add_subdirectory(NAKAMA_COCOS2D_SDK ${CMAKE_CURRENT_BINARY_DIR}/nakama-cpp)
 target_link_libraries(${APP_NAME} ext_nakama-cpp)
+CopyNakamaSharedLib(${APP_NAME})
 ```
 
 ### Setup for Visual Studio projects
 
 In `Project Settings` add following:
 
-1. Add `NAKAMA_COCOS2D_SDK/include` in `C/C++ > General > Additional Include Directories`
-2. Add libs folder in `Linker > General > Additional Library Directories`:
-    - `NAKAMA_COCOS2D_SDK/libs/win32/v140` - for VS 2015 x86
-    - `NAKAMA_COCOS2D_SDK/libs/win32/v141` - for VS 2017 x86
-    - `NAKAMA_COCOS2D_SDK/libs/win64/v140` - for VS 2015 x64
-    - `NAKAMA_COCOS2D_SDK/libs/win64/v141` - for VS 2017 x64
-3. Add all `.lib` files located in libs folder in `Linker > Input > Additional Dependencies`
+1. Add `NAKAMA_COCOS2D_SDK/include` to `C/C++ > General > Additional Include Directories`
+2. Add folder to `Linker > General > Additional Library Directories`:
+    - `NAKAMA_COCOS2D_SDK/shared-libs/win32/v140` - for VS 2015 x86
+    - `NAKAMA_COCOS2D_SDK/shared-libs/win64/v140` - for VS 2015 x64
+    - `NAKAMA_COCOS2D_SDK/shared-libs/win32/v141` - for VS 2017 x86
+    - `NAKAMA_COCOS2D_SDK/shared-libs/win64/v141` - for VS 2017 x64
+    - `NAKAMA_COCOS2D_SDK/shared-libs/win32/v142` - for VS 2019 x86
+    - `NAKAMA_COCOS2D_SDK/shared-libs/win64/v142` - for VS 2019 x64
+3. Add `.lib` file located in above folder to `Linker > Input > Additional Dependencies`
 
 ## Usage
 
