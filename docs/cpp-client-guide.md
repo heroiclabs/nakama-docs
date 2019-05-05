@@ -48,11 +48,20 @@ Android uses a permissions system which determines which platform services the a
 
 ### Setup for CMake projects
 
-Add following to your `CMakeLists.txt` file:
+To link Nakama's static lib add following to your `CMakeLists.txt` file:
 
 ```cmake
 add_subdirectory(NAKAMA_CPP_SDK ${CMAKE_CURRENT_BINARY_DIR}/nakama-cpp)
 target_link_libraries(${APP_NAME} ext_nakama-cpp)
+```
+
+To link Nakama's shared lib add following to your `CMakeLists.txt` file:
+
+```cmake
+set(NAKAMA_SHARED_LIBRARY TRUE)
+add_subdirectory(NAKAMA_CPP_SDK ${CMAKE_CURRENT_BINARY_DIR}/nakama-cpp)
+target_link_libraries(${APP_NAME} ext_nakama-cpp)
+CopyNakamaSharedLib(${APP_NAME})
 ```
 
 ### Setup for Visual Studio projects
@@ -62,9 +71,11 @@ In `Project Settings` add following:
 1. Add `NAKAMA_CPP_SDK/include` in `C/C++ > General > Additional Include Directories`
 2. Add libs folder in `Linker > General > Additional Library Directories`:
     - `NAKAMA_COCOS2D_SDK/libs/win32/v140` - for VS 2015 x86
-    - `NAKAMA_COCOS2D_SDK/libs/win32/v141` - for VS 2017 x86
     - `NAKAMA_COCOS2D_SDK/libs/win64/v140` - for VS 2015 x64
+    - `NAKAMA_COCOS2D_SDK/libs/win32/v141` - for VS 2017 x86
     - `NAKAMA_COCOS2D_SDK/libs/win64/v141` - for VS 2017 x64
+    - `NAKAMA_COCOS2D_SDK/libs/win32/v142` - for VS 2019 x86
+    - `NAKAMA_COCOS2D_SDK/libs/win64/v142` - for VS 2019 x64
 3. Add all `.lib` files located in libs folder in `Linker > Input > Additional Dependencies`
 
 ### Custom setup
