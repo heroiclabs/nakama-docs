@@ -1633,13 +1633,23 @@ _Example_
 ```lua
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local authoritative = false
-local sort = "desc"
-local operator = "best"
-local reset = "0 0 * * 1"
+local sort = "desc"     -- one of: "desc", "asc"
+local operator = "best" -- one of: "best", "set", "incr"
+local reset = "0 12 * * *" -- noon UTC each day
 local metadata = {
   weather_conditions = "rain"
 }
-nk.tournament_create(id, authoritative, sort, operator, reset, metadata)
+title = "Daily Dash"
+description = "Dash past your opponents for high scores and big rewards!"
+category = 1
+start_time = 0       -- start now
+end_time = 0         -- never end, repeat the tournament each day forever
+duration = 3600      -- in seconds
+max_size = 10000     -- first 10,000 players who join
+max_num_score = 3    -- each player can have 3 attempts to score
+join_required = true -- must join to compete
+nk.tournament_create(id, sort, operator, duration, reset, metadata, title, description,
+    category, start_time, endTime, max_size, max_num_score, join_required)
 ```
 
 ---

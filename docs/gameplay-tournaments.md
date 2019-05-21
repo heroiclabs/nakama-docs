@@ -555,8 +555,8 @@ duration = 3600      -- in seconds
 max_size = 10000     -- first 10,000 players who join
 max_num_score = 3    -- each player can have 3 attempts to score
 join_required = true -- must join to compete
-nk.tournament_create(sortOrder, operator, reset, metadata, title, description, category,
-  start_time, endTime, duration, max_size, max_num_score, join_required)
+nk.tournament_create(id, sort, operator, duration, reset, metadata, title, description, category,
+    start_time, endTime, max_size, max_num_score, join_required)
 ```
 
 ```go fct_label="Go"
@@ -569,13 +569,14 @@ metadata := map[string]interface{}{}
 title := "Daily Dash"
 description := "Dash past your opponents for high scores and big rewards!"
 category := 1
-startTime := nil     // start now
-endTime := nil       // never end, repeat the tournament each day forever
+startTime := 0       // start now
+endTime := 0         // never end, repeat the tournament each day forever
 duration := 3600     // in seconds
 maxSize := 10000     // first 10,000 players who join
 maxNumScore := 3     // each player can have 3 attempts to score
 joinRequired := true // must join to compete
-err := nk.TournamentCreate(id.String(), sortOrder, operator, resetSchedule, metadata, title, description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired)
+err := nk.TournamentCreate(id.String(), sortOrder, operator, resetSchedule, metadata, title,
+    description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired)
 if err != nil {
   logger.Printf("unable to create tournament: %q", err.Error())
   return "", runtime.NewError("failed to create tournament", 3)
