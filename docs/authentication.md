@@ -493,19 +493,19 @@ curl http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=m
 ```
 
 ```js fct_label="JavaScript"
-const oauthToken = "...";
+const playerIdToken = "...";
 const session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" });
 console.info("Successfully authenticated: %o", session);
 ```
 
 ```csharp fct_label=".NET"
-const string oauthToken = "...";
+const string playerIdToken = "...";
 var session = await client.AuthenticateGoogleAsync(oauthToken);
 System.Console.WriteLine("Session {0}", session);
 ```
 
 ```csharp fct_label="Unity"
-const string oauthToken = "...";
+const string playerIdToken = "...";
 var session = await client.AuthenticateGoogleAsync(oauthToken);
 Debug.LogFormat("Session: '{0}'", session.AuthToken);
 ```
@@ -550,14 +550,14 @@ client->authenticateGoogle(oauthToken, "mycustomusername", true, successCallback
 ```
 
 ```java fct_label="Java"
-String oauthToken = "...";
+String playerIdToken = "...";
 Session session = client.authenticateGoogle(oauthToken).get();
 System.out.format("Session %s", session.getAuthToken());
 ```
 
 ```swift fct_label="Swift"
 // Requires Nakama 1.x
-let oauthToken = "..."
+let playerIdToken = "..."
 let message = AuthenticateMessage(google: oauthToken)
 client.register(with: message).then { session in
   NSLog("Session: %@", session.token)
