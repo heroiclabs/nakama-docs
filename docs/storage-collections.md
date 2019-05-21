@@ -682,17 +682,20 @@ curl -X GET \
 ```
 
 ```js fct_label="JavaScript"
-const objects = await client.listStorageObjects(session, "saves", session.user_id);
+const limit = 100; // default is 10.
+const objects = await client.listStorageObjects(session, "saves", session.user_id, limit);
 console.info("List objects: %o", objects);
 ```
 
 ```csharp fct_label=".NET"
-var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId);
+var limit = 100; // default is 10.
+var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId, limit);
 Console.WriteLine("List objects '{0}'", result);
 ```
 
 ```csharp fct_label="Unity"
-var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId);
+var limit = 100; // default is 10.
+var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId, limit);
 Debug.LogFormat("List objects '{0}'", result);
 ```
 
