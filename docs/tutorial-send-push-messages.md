@@ -74,7 +74,7 @@ local function register_push(context, payload)
 
   local dt = json.DeviceType
   local id = json.Identifier
-  local success, result = pcall(onesignal:add_device, dt, id, "en", {})
+  local success, result = pcall(onesignal.add_device, dt, id, "en", {})
   if (success) then
     -- store the push "player id" from One Signal in the current user metadata
     local metadata = { os_player_id = result.id }
