@@ -1065,6 +1065,26 @@ do
 end
 ```
 
+### md5
+
+__md5_hash (input)__
+
+Create an md5 hash from the input.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The input string to hash. |
+
+_Example_
+
+```lua
+local input = "somestring"
+local hashed = nk.md5_hash(input)
+print(hashed)
+```
+
 ### notifications
 
 __notification_send (user_id, subject, content, code, sender_id, persistent)__
