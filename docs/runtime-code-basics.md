@@ -273,7 +273,7 @@ local nk = require("nakama")
 
 local M = {}
 
-local API_BASE_URL = "http://pokeapi.co/api/v2"
+local API_BASE_URL = "https://pokeapi.co/api/v2"
 
 function M.lookup_pokemon(name)
   local url = ("%s/pokemon/%s"):format(API_BASE_URL, name)
