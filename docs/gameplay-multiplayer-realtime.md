@@ -11,8 +11,8 @@ Any data sent through a match is immediately routed to all other match opponents
 A match can be created by a user. The server will assign a unique ID which can be shared with other users for them to [join the match](#join-a-match). All users within a match are equal and it is up to the clients to decide on a host.
 
 ```js fct_label="JavaScript"
-var match = await socket.send({ match_create: {} });
-console.log("Created match with ID:", match.id);
+var response = await socket.send({ match_create: {} });
+console.log("Created match with ID:", response.match.match_id);
 ```
 
 ```csharp fct_label=".NET"
