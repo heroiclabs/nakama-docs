@@ -110,12 +110,12 @@ The client object is used to execute all logic against the server.
 DefaultClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
-parameters.port = 7349;
+parameters.port = 7350;
 NClientPtr client = createDefaultClient(parameters);
 ```
 
 !!! Note
-    By default the client uses connection settings "127.0.0.1" and 7349 port to connect to a local Nakama server.
+    By default the client uses connection settings "127.0.0.1" and 7350 port to connect to a local Nakama server.
 
 ```cpp
 // Quickly setup a client for a local server.
