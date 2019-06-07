@@ -40,6 +40,32 @@ $(call import-add-path, NAKAMA_CPP_SDK)
 $(call import-module, nakama-cpp-android)
 ```
 
+#### Initialize Nakama SDK
+
+For most NativeActivity projects, if you have an entry point like:
+
+```cpp
+void android_main(struct android_app* state) {
+```
+
+Add include:
+
+```cpp
+#include "nakama-cpp/platform/android/android.h"
+```
+
+Add the following code at the top of the `android_main` function:
+
+```cpp
+Nakama::init(state->activity->vm);
+```
+
+#### Shared library size
+
+Don't be afraid that nakama shared library are near 100 Mb in size. After building final apk it will be just few Mb.
+
+#### Android permissions
+
 Android uses a permissions system which determines which platform services the application will request to use and ask permission for from the user. The client uses the network to communicate with the server so you must add the "INTERNET" permission.
 
 ```xml
@@ -107,19 +133,21 @@ using namespace Nakama;
 The client object is used to execute all logic against the server.
 
 ```cpp
-DefaultClientParameters parameters;
+NClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
-parameters.port = 7350;
+parameters.port = DEFAULT_PORT;
 NClientPtr client = createDefaultClient(parameters);
 ```
+
+The `createDefaultClient` will create HTTP/1.1 client to use REST API.
 
 !!! Note
     By default the client uses connection settings "127.0.0.1" and 7350 port to connect to a local Nakama server.
 
 ```cpp
 // Quickly setup a client for a local server.
-NClientPtr client = createDefaultClient(DefaultClientParameters());
+NClientPtr client = createDefaultClient(NClientParameters());
 ```
 
 ## Tick
@@ -143,7 +171,7 @@ To authenticate you should follow our recommended pattern in your client code:
 &nbsp;&nbsp; 1\. Build an instance of the client.
 
 ```cpp
-NClientPtr client = createDefaultClient(DefaultClientParameters());
+NClientPtr client = createDefaultClient(NClientParameters());
 ```
 
 &nbsp;&nbsp; 2\. Authenticate a user. By default Nakama will try and create a user if it doesn't exist.
@@ -217,10 +245,9 @@ The client can create one or more realtime clients. Each realtime client can hav
     The socket is exposed on a different port on the server to the client. You'll need to specify a different port here to ensure that connection is established successfully.
 
 ```cpp
-int port = 7350; // different port to the main API port
 bool createStatus = true; // if the server should show the user as online to others.
 // define realtime client in your class as NRtClientPtr rtClient;
-rtClient = client->createRtClient(port);
+rtClient = client->createRtClient(DEFAULT_PORT);
 // define listener in your class as NRtDefaultClientListener listener;
 listener.setConnectCallback([]()
 {
@@ -390,7 +417,7 @@ class NakamaSessionManager
 public:
     NakamaSessionManager()
     {
-        DefaultClientParameters parameters;
+        NClientParameters parameters;
 
         _client = createDefaultClient(parameters);
     }
