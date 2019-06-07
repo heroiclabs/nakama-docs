@@ -60,9 +60,8 @@ Add the following code at the top of the `android_main` function:
 Nakama::init(state->activity->vm);
 ```
 
-#### Shared library size
-
-Don't be afraid that nakama shared library are near 100 Mb in size. After building final apk it will be just few Mb.
+!!! Note
+Be aware that the client shared library size is approximately 100MB. After final target device compilation, the size will be drastically reduced to only a few megabytes.
 
 #### Android permissions
 
