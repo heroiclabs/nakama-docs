@@ -27,8 +27,8 @@ Add all files from `NakamaCocos2d` folder to your project.
 
 1. Add `NAKAMA_COCOS2D_SDK/include` in `Build Settings > Header Search Paths`
 2. Add libs folder in `Build Settings > Library Search Paths`:
-    - `NAKAMA_COCOS2D_SDK/shared-libs/ios` - for iOS
-    - `NAKAMA_COCOS2D_SDK/shared-libs/mac` - for Mac
+    - `NAKAMA_COCOS2D_SDK/libs/ios` - for iOS
+    - `NAKAMA_COCOS2D_SDK/libs/mac` - for Mac
 3. Add `libnakama-cpp.dylib` file located in libs folder to `General > Linked Frameworks and Libraries`
 
 ### Setup for Android projects
@@ -61,7 +61,6 @@ Add following to your `CMakeLists.txt` file:
 ```cmake
 add_subdirectory(NAKAMA_COCOS2D_SDK ${CMAKE_CURRENT_BINARY_DIR}/nakama-cpp)
 target_link_libraries(${APP_NAME} ext_nakama-cpp)
-CopyNakamaSharedLib(${APP_NAME})
 ```
 
 ### Setup for Visual Studio projects
@@ -70,36 +69,38 @@ In `Project Settings` add following:
 
 1. Add `NAKAMA_COCOS2D_SDK/include` to `C/C++ > General > Additional Include Directories`
 2. Add folder to `Linker > General > Additional Library Directories`:
-    - `NAKAMA_COCOS2D_SDK/shared-libs/win32/v140` - for VS 2015 x86
-    - `NAKAMA_COCOS2D_SDK/shared-libs/win64/v140` - for VS 2015 x64
-    - `NAKAMA_COCOS2D_SDK/shared-libs/win32/v141` - for VS 2017 x86
-    - `NAKAMA_COCOS2D_SDK/shared-libs/win64/v141` - for VS 2017 x64
-    - `NAKAMA_COCOS2D_SDK/shared-libs/win32/v142` - for VS 2019 x86
-    - `NAKAMA_COCOS2D_SDK/shared-libs/win64/v142` - for VS 2019 x64
-3. Add `.lib` file located in above folder to `Linker > Input > Additional Dependencies`
+    - `NAKAMA_COCOS2D_SDK/libs/win32/v140` - for VS 2015 x86
+    - `NAKAMA_COCOS2D_SDK/libs/win64/v140` - for VS 2015 x64
+    - `NAKAMA_COCOS2D_SDK/libs/win32/v141` - for VS 2017 x86
+    - `NAKAMA_COCOS2D_SDK/libs/win64/v141` - for VS 2017 x64
+    - `NAKAMA_COCOS2D_SDK/libs/win32/v142` - for VS 2019 x86
+    - `NAKAMA_COCOS2D_SDK/libs/win64/v142` - for VS 2019 x64
+3. Add all `.lib` files located in above folder to `Linker > Input > Additional Dependencies`
 
 ## Usage
 
-Include nakama header.
+Include nakama helper header.
 
 ```cpp
-#include "nakama-cpp/Nakama.h"
+#include "NakamaCocos2d/NCocosHelper.h"
 ```
 
-Use nakama namespace.
+Initialize logger with debug logging level.
 
 ```cpp
 using namespace Nakama;
+
+NCocosHelper::init(NLogLevel::Debug);
 ```
 
 The client object is used to execute all logic against the server.
 
 ```cpp
-DefaultClientParameters parameters;
+NClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
-parameters.port = 7350;
-NClientPtr client = createDefaultClient(parameters);
+parameters.port = DEFAULT_PORT;
+NClientPtr client = NCocosHelper::createDefaultClient(parameters);
 ```
 
 !!! Note
@@ -107,7 +108,7 @@ NClientPtr client = createDefaultClient(parameters);
 
 ```cpp
 // Quickly setup a client for a local server.
-NClientPtr client = createDefaultClient(DefaultClientParameters());
+NClientPtr client = NCocosHelper::createDefaultClient(NClientParameters());
 ```
 
 ## Tick
@@ -137,7 +138,7 @@ To authenticate you should follow our recommended pattern in your client code:
 &nbsp;&nbsp; 1\. Build an instance of the client.
 
 ```cpp
-NClientPtr client = createDefaultClient(DefaultClientParameters());
+NClientPtr client = NCocosHelper::createDefaultClient(NClientParameters());
 ```
 
 &nbsp;&nbsp; 2\. Authenticate a user. By default Nakama will try and create a user if it doesn't exist.
@@ -212,12 +213,9 @@ The client can create one or more realtime clients. Each realtime client can hav
     The socket is exposed on a different port on the server to the client. You'll need to specify a different port here to ensure that connection is established successfully.
 
 ```cpp
-#include "NakamaCocos2d/NWebSocket.h"
-
-int port = 7350; // different port to the main API port
 bool createStatus = true; // if the server should show the user as online to others.
 // define realtime client in your class as NRtClientPtr rtClient;
-rtClient = client->createRtClient(port, NRtTransportPtr(new NWebSocket()));
+rtClient = NCocosHelper::createRtClient(client, DEFAULT_PORT);
 // define listener in your class as NRtDefaultClientListener listener;
 listener.setConnectCallback([]()
 {
@@ -304,9 +302,7 @@ Client logging is off by default.
 To enable logs output to console with debug logging level:
 
 ```cpp
-#include "NakamaCocos2d/NCocosLogSink.h"
-
-NLogger::init(std::make_shared<NCocosLogSink>(), NLogLevel::Debug);
+NCocosHelper::init(NLogLevel::Debug);
 ```
 
 ## Errors
