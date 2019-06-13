@@ -327,7 +327,7 @@ nk.register_rpc(get_pokemon, "get_pokemon")
 We can now make an RPC call for a pokemon from a client.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/rpc/get_pokemon \
+curl "http://127.0.0.1:7350/v2/rpc/get_pokemon" \
   -H 'authorization: Bearer <session token>'
   -d '"{\"PokemonName\": \"dragonite\"}"'
 ```
@@ -339,7 +339,7 @@ const pokemonInfo = await client.rpc(session, rpcid, payload);
 console.log("Retrieved pokemon info: %o", pokemonInfo);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 var payload = "{\"PokemonName\": \"dragonite\"}";
 var rpcid = "get_pokemon";
 var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
@@ -497,4 +497,4 @@ You should use the following message names for `register_rt_before` and `registe
 | StatusUnfollow | Stop following some set of users to no longer receive their status updates.
 | StatusUpdate | Set the user's own status.
 
-Names are case-insensitive. For more information, have a look at [`api.proto`](https://github.com/heroiclabs/nakama/blob/master/api/api.proto) and [`realtime.proto`](https://github.com/heroiclabs/nakama/blob/master/rtapi/realtime.proto).
+Names are case-insensitive. For more information, have a look at ["api.proto"](https://github.com/heroiclabs/nakama/blob/master/api/api.proto) and ["realtime.proto"](https://github.com/heroiclabs/nakama/blob/master/rtapi/realtime.proto).

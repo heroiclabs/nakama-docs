@@ -39,25 +39,25 @@ A callback can be registered for notifications received when a client is connect
 
 ```js fct_label="JavaScript"
 socket.onnotification = (notification) => {
-  console.log("Received notification %o", notification);
+  console.log("Received %o", notification);
   console.log("Notification content %s", notification.content);
 }
 ```
 
 ```csharp fct_label=".NET"
-socket.OnNotification += (_, notification) =>
+socket.ReceivedNotification += notification =>
 {
-  Console.WriteLine("Received notification {0}", notification);
-  Console.WriteLine("Notification content {0}", notification.Content);
-}
+    Console.WriteLine("Received: {0}", notification);
+    Console.WriteLine("Notification content: '{0}'", notification.Content);
+};
 ```
 
 ```csharp fct_label="Unity"
-socket.OnNotification += (_, notification) =>
+socket.ReceivedNotification += notification =>
 {
-  Debug.LogFormat("Received notification {0}", notification);
-  Debug.LogFormat("Notification content {0}", notification.Content);
-}
+    Debug.LogFormat("Received: {0}", notification);
+    Debug.LogFormat("Notification content: '{0}'", notification.Content);
+};
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -112,7 +112,7 @@ client.onNotification = { notification in
 You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. The exact logic depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/notification?limit=10 \
+curl -X GET "http://127.0.0.1:7350/v2/notification?limit=10" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -128,7 +128,7 @@ console.info("Fetch more results with cursor:", result.cacheable_cursor);
 var result = await client.ListNotificationsAsync(session, 10);
 foreach (var n in result.Notifications)
 {
-  Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
+    Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
 }
 ```
 
@@ -136,7 +136,7 @@ foreach (var n in result.Notifications)
 var result = await client.ListNotificationsAsync(session, 10);
 foreach (var n in result.Notifications)
 {
-  Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+    Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
 }
 ```
 
@@ -210,7 +210,7 @@ A list of notifications can be retrieved in batches of up to 100 at a time. To r
     You usually only want to list 100 notifications at a time otherwise you might cause user fatigue. A better option could be to have the UI fetch the next 100 notifications when the user scrolls to the bottom of your UI panel.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/notification?limit=100&cursor=<cacheableCursor> \
+curl -X GET "http://127.0.0.1:7350/v2/notification?limit=100&cursor=<cacheableCursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -230,25 +230,25 @@ accumulateNotifications("");
 
 ```csharp fct_label=".NET"
 var result = await client.ListNotificationsAsync(session, 100);
-if (result.CacheableCursor != null)
+if (!string.IsNullOrEmpty(result.CacheableCursor))
 {
-  result = await client.ListNotificationsAsync(session, 100, result.CacheableCursor);
-  foreach (var n in result.Notifications)
-  {
-    Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
-  }
+    result = await client.ListNotificationsAsync(session, 100, result.CacheableCursor);
+    foreach (var n in result.Notifications)
+    {
+        Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
+    }
 }
 ```
 
 ```csharp fct_label="Unity"
 var result = await client.ListNotificationsAsync(session, 100);
-if (result.CacheableCursor != null)
+if (!string.IsNullOrEmpty(result.CacheableCursor))
 {
-  result = await client.ListNotificationsAsync(session, 100, result.CacheableCursor);
-  foreach (var n in result.Notifications)
-  {
-    Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
-  }
+    result = await client.ListNotificationsAsync(session, 100, result.CacheableCursor);
+    foreach (var n in result.Notifications)
+    {
+        Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+    }
 }
 ```
 
@@ -364,7 +364,7 @@ It can be useful to retrieve only notifications which have been added since the 
 The cacheable cursor marks the position of the most recent notification retrieved. We recommend you store the cacheable cursor in device storage and use it when the client makes its next request for recent notifications.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cacheableCursor> \
+curl -X GET "http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cacheableCursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -381,7 +381,7 @@ const string cacheableCursor = "<cacheableCursor>";
 var result = await client.ListNotificationsAsync(session, 10, cacheableCursor);
 foreach (var n in result.Notifications)
 {
-  System.Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
+    System.Console.WriteLine("Subject '{0}' content '{1}'", n.Subject, n.Content);
 }
 ```
 
@@ -390,7 +390,7 @@ const string cacheableCursor = "<cacheableCursor>";
 var result = await client.ListNotificationsAsync(session, 10, cacheableCursor);
 foreach (var n in result.Notifications)
 {
-  Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
+    Debug.LogFormat("Subject '{0}' content '{1}'", n.Subject, n.Content);
 }
 ```
 
@@ -466,8 +466,7 @@ Authorization: Bearer <session token>
 You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted all record of it is removed from the system and it cannot be restored.
 
 ```sh fct_label="cURL"
-curl -X DELETE \
-  --url "http://127.0.0.1:7350/v2/notification?ids=<notificationId>&ids=<notificationId>" \
+curl -X DELETE "http://127.0.0.1:7350/v2/notification?ids=<notificationId>&ids=<notificationId>" \
   -H 'Authorization: Bearer <session token>'
 ```
 

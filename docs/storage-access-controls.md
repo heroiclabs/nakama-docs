@@ -11,8 +11,7 @@ An object which is system owned must have public read access permissions before 
 These code examples show how to retrieve an object owned by the system (marked with public read).
 
 ```sh fct_label="cURL"
-curl -X POST \
-  http://127.0.0.1:7350/v2/storage \
+curl -X POST "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "object_ids": [
@@ -39,7 +38,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "configuration",
   Key = "config"
 });
-Console.WriteLine("Read objects {0}", result.Objects);
+Console.WriteLine("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
 ```csharp fct_label="Unity"
@@ -47,7 +46,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "configuration",
   Key = "config"
 });
-Debug.LogFormat("Read objects {0}", result.Objects);
+Debug.LogFormat("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -175,8 +174,7 @@ When modifying objects from the client, the default permission of a object is se
 ```sh fct_label="cURL"
 # "2" refers to Public Read permission
 # "1" refers to Owner Write permission
-curl -X PUT \
-  http://127.0.0.1:7350/v2/storage \
+curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "objects": [
@@ -219,7 +217,7 @@ var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObje
   PermissionRead = 2,
   PermissionWrite = 1
 });
-Console.WriteLine("Stored objects {0}", result.Objects);
+Console.WriteLine("Stored objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
 ```csharp fct_label="Unity"
@@ -234,7 +232,7 @@ var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObje
   PermissionRead = 2,
   PermissionWrite = 1
 });
-Debug.LogFormat("Stored objects {0}", result.Objects);
+Debug.LogFormat("Stored objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
 ```cpp fct_label="Cocos2d-x C++"

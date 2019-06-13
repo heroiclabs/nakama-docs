@@ -22,7 +22,7 @@ A user can find public groups to join by listing groups and filtering for groups
 Filtering is achieved using a wildcard query that uses the `%` as a way to look for similarities. For instance, if you are looking for groups that contain the world "persian" in them, make the filter `%persian%`. If you don't supply a filtering criteria, Nakama will simply list groups.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/group?limit=20&name=heroes%25' \
+curl "http://127.0.0.1:7350/v2/group?limit=20&name=heroes%25" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -37,7 +37,7 @@ const string nameFilter = "heroes%";
 var result = await client.ListGroupsAsync(session, nameFilter, 20);
 foreach (var g in result.Groups)
 {
-  System.Console.WriteLine("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
+    System.Console.WriteLine("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
 }
 ```
 
@@ -47,7 +47,7 @@ const string nameFilter = "heroes%";
 var result = await client.ListGroupsAsync(session, nameFilter, 20);
 foreach (var g in result.Groups)
 {
-  Debug.LogFormat("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
+    Debug.LogFormat("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
 }
 ```
 
@@ -130,7 +130,7 @@ The message response for a list of groups contains a cursor. The cursor can be u
     Cursors are used across different server features to page through batches of results quickly and efficiently. It's used with storage, friends, chat history, etc.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/group?limit=20&name=%25heroes%25&cursor=somecursor' \
+curl -X GET "http://127.0.0.1:7350/v2/group?limit=20&name=%25heroes%25&cursor=somecursor" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -146,11 +146,11 @@ var result = await client.ListGroupsAsync(session, nameFilter, 20);
 // If there are more results get next page.
 if (result.Cursor != null)
 {
-  result = await client.ListGroupsAsync(session, nameFilter, 20, result.Cursor);
-  foreach (var g in result.Groups)
-  {
-    System.Console.WriteLine("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
-  }
+    result = await client.ListGroupsAsync(session, nameFilter, 20, result.Cursor);
+    foreach (var g in result.Groups)
+    {
+        System.Console.WriteLine("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
+    }
 }
 ```
 
@@ -161,11 +161,11 @@ var result = await client.ListGroupsAsync(session, nameFilter, 20);
 // If there are more results get next page.
 if (result.Cursor != null)
 {
-  result = await client.ListGroupsAsync(session, nameFilter, 20, result.Cursor);
-  foreach (var g in result.Groups)
-  {
-    Debug.LogFormat("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
-  }
+    result = await client.ListGroupsAsync(session, nameFilter, 20, result.Cursor);
+    foreach (var g in result.Groups)
+    {
+        Debug.LogFormat("Group name '{0}' count '{1}'", g.Name, g.EdgeCount);
+    }
 }
 ```
 
@@ -279,7 +279,7 @@ A user who's part of a group can join [group chat](social-realtime-chat.md#group
     When a user joins or leaves a group event messages are added to chat history. This makes it easy for members to see what's changed in the group.
 
 ```sh fct_label="cURL"
-curl -X POST 'http://127.0.0.1:7350/v2/group/<group id>/join' \
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/join" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -290,15 +290,15 @@ console.info("Sent group join request", group_id);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
-await client.JoinGroupAsync(session, groupid);
-System.Console.WriteLine("Sent group join request '{0}'", groupid);
+const string groupId = "<group id>";
+await client.JoinGroupAsync(session, groupId);
+System.Console.WriteLine("Sent group join request '{0}'", groupId);
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
-await client.JoinGroupAsync(session, groupid);
-Debug.LogFormat("Sent group join request '{0}'", groupid);
+const string groupId = "<group id>";
+await client.JoinGroupAsync(session, groupId);
+Debug.LogFormat("Sent group join request '{0}'", groupId);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -365,7 +365,7 @@ The user will receive an [in-app notification](social-in-app-notifications.md) w
 Each user can list groups they've joined as a member or an admin or a superadmin. The list also contains groups which they've requested to join but not been accepted into yet.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/user/<user id>/group' \
+curl -X GET "http://127.0.0.1:7350/v2/user/<user id>/group" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -380,22 +380,22 @@ groups.user_groups.forEach(function(userGroup){
 ```
 
 ```csharp fct_label=".NET"
-const string userid = "<user id>";
-var result = await client.ListUserGroupsAsync(session userid);
+const string userId = "<user id>";
+var result = await client.ListUserGroupsAsync(session, userId);
 foreach (var ug in result.UserGroups)
 {
-  var g = ug.Group;
-  System.Console.WriteLine("Group '{0}' role '{1}'", g.Id, ug.State);
+    var g = ug.Group;
+    System.Console.WriteLine("Group '{0}' role '{1}'", g.Id, ug.State);
 }
 ```
 
 ```csharp fct_label="Unity"
-const string userid = "<user id>";
-var result = await client.ListUserGroupsAsync(session userid);
+const string userId = "<user id>";
+var result = await client.ListUserGroupsAsync(session, userId);
 foreach (var ug in result.UserGroups)
 {
-  var g = ug.Group;
-  Debug.LogFormat("Group '{0}' role '{1}'", g.Id, ug.State);
+    var g = ug.Group;
+    Debug.LogFormat("Group '{0}' role '{1}'", g.Id, ug.State);
 }
 ```
 
@@ -475,7 +475,7 @@ Authorization: Bearer <session token>
 A user can list all members who're part of their group. These include other users who've requested to join the private group but not been accepted into yet.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/group/<group id>/user' \
+curl -X GET "http://127.0.0.1:7350/v2/group/<group id>/user" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -486,8 +486,8 @@ console.info("Users in group:", users);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
-var result = await client.ListGroupUsersAsync(session userid);
+const string groupId = "<group id>";
+var result = await client.ListGroupUsersAsync(session, groupId);
 foreach (var ug in result.UserGroups)
 {
   var g = ug.Group;
@@ -496,12 +496,12 @@ foreach (var ug in result.UserGroups)
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
-var result = await client.ListGroupUsersAsync(session userid);
+const string groupId = "<group id>";
+var result = await client.ListGroupUsersAsync(session, groupId);
 foreach (var ug in result.UserGroups)
 {
-  var g = ug.Group;
-  Debug.LogFormat("group '{0}' role '{1}'", g.Id, ug.State);
+    var g = ug.Group;
+    Debug.LogFormat("group '{0}' role '{1}'", g.Id, ug.State);
 }
 ```
 
@@ -572,7 +572,7 @@ Authorization: Bearer <session token>
 A group can be created with a name and other optional fields. These optional fields are used when a user [lists and filter groups](#list-and-filter-groups). The user who creates the group becomes the owner and a superadmin for it.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/group' \
+curl -X POST "http://127.0.0.1:7350/v2/group" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "name": "pizza-lovers",
@@ -598,14 +598,14 @@ console.info("New group:", group);
 const string name = "pizza-lovers";
 const string desc = "pizza lovers, pineapple haters";
 var group = await client.CreateGroupAsync(session, name, desc);
-System.Console.WriteLine("New group '{0}'", group.Id);
+System.Console.WriteLine("New group: {0}", group);
 ```
 
 ```csharp fct_label="Unity"
 const string name = "pizza-lovers";
 const string desc = "pizza lovers, pineapple haters";
 var group = await client.CreateGroupAsync(session, name, desc);
-Debug.LogFormat("New group '{0}'", group.Id);
+Debug.LogFormat("New group: {0}", group);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -706,7 +706,7 @@ You can also create a group with server-side code. This can be useful when the g
 local nk = require("nakama")
 
 local metadata = { -- Add whatever custom fields you want.
-  my_custom_field = "some value"
+    my_custom_field = "some value"
 }
 local user_id = "<user id>"
 local name = "pizza-lovers"
@@ -720,7 +720,7 @@ local maxMemberCount = 100
 local success, err = pcall(nk.group_create, user_id, name, creator_id, lang,
     description, avatar_url, open, metadata, maxMemberCount)
 if (not success) then
-  nk.logger_error(("Error when creating group: %q"):format(err))
+    nk.logger_error(("Error when creating group: %q"):format(err))
 end
 ```
 
@@ -732,29 +732,29 @@ When a group has been created it's admins can update optional fields.
 curl -X PUT "http://127.0.0.1:7350/v2/group/<group id>" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
-    "description": "I was only kidding. Basil sauce ftw!",
+    "description": "Better than Marvel Heroes!",
   }'
 ```
 
 ```js fct_label="JavaScript"
 const group_id = "<group id>";
-const description = "I was only kidding. Basil sauce ftw!";
+const description = "Better than Marvel Heroes!";
 const group = await client.updateGroup(session, group_id, { description: description });
 console.info("Updated group:", group);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
-const string desc = "I was only kidding. Basil sauce ftw!";
-var group = await client.UpdateGroupAsync(session, groupid, null, desc);
-System.Console.WriteLine("Updated group '{0}'", group.Id);
+const string groupId = "<group id>";
+const string desc = "Better than Marvel Heroes!";
+var group = await client.UpdateGroupAsync(session, groupId, null, desc);
+System.Console.WriteLine("Updated group: {0}", group);
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
-const string desc = "I was only kidding. Basil sauce ftw!";
-var group = await client.UpdateGroupAsync(session, groupid, null, desc);
-Console.LogFormat("Updated group '{0}'", group.Id);
+const string groupId = "<group id>";
+const string desc = "Better than Marvel Heroes!";
+var group = await client.UpdateGroupAsync(session, groupId, null, desc);
+Debug.LogFormat("Updated group: {0}", group);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -764,7 +764,7 @@ auto successCallback = []()
 };
 
 string group_id = "<group id>";
-string description = "I was only kidding. Basil sauce ftw!";
+string description = "Better than Marvel Heroes!";
 client->updateGroup(session,
     group_id,
     opt::nullopt,
@@ -777,7 +777,7 @@ client->updateGroup(session,
 
 ```js fct_label="Cocos2d-x JS"
 const group_id = "<group id>";
-const description = "I was only kidding. Basil sauce ftw!";
+const description = "Better than Marvel Heroes!";
 client.updateGroup(session, group_id, { description: description })
   .then(function(group) {
       cc.log("Updated group:", JSON.stringify(group));
@@ -794,7 +794,7 @@ auto successCallback = []()
 };
 
 string group_id = "<group id>";
-string description = "I was only kidding. Basil sauce ftw!";
+string description = "Better than Marvel Heroes!";
 client->updateGroup(session,
     group_id,
     opt::nullopt,
@@ -807,7 +807,7 @@ client->updateGroup(session,
 
 ```java fct_label="Java"
 String groupid = "<group id>";
-String desc = "I was only kidding. Basil sauce ftw!";
+String desc = "Better than Marvel Heroes!";
 client.updateGroup(session, groupid, null, desc).get();
 System.out.format("Updated group %s", groupid);
 ```
@@ -847,7 +847,7 @@ A user can leave a group and will no longer be able to join [group chat](social-
     Any user who leaves the group will generate an event message in group chat which other members can read.
 
 ```sh fct_label="cURL"
-curl -X POST 'http://127.0.0.1:7350/v2/group/<group id>/leave' \
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/leave" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -857,13 +857,13 @@ await client.leaveGroup(session, group_id);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
-await client.LeaveGroupAsync(session, groupid);
+const string groupId = "<group id>";
+await client.LeaveGroupAsync(session, groupId);
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
-await client.LeaveGroupAsync(session, groupid);
+const string groupId = "<group id>";
+await client.LeaveGroupAsync(session, groupId);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -877,13 +877,13 @@ client.leaveGroup(session, group_id);
 ```
 
 ```cpp fct_label="C++"
-string group_id = "<group id>";
-client->leaveGroup(session, group_id);
+string groupId = "<group id>";
+client->leaveGroup(session, groupId);
 ```
 
 ```java fct_label="Java"
-String groupid = "<group id>";
-client.leaveGroup(session, groupid).get();
+String groupId = "<group id>";
+client.leaveGroup(session, groupId).get();
 ```
 
 ```swift fct_label="Swift"
@@ -924,7 +924,7 @@ Each group is managed by one or more superadmins or admins. These users are memb
 When a user joins a private group it will create a join request until an admin accepts or rejects the user. The superadmin or admin can accept the user into the group.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/group/<group id>/add' \
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/add" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "user_ids":["<user id>"]
@@ -938,15 +938,15 @@ await client.addGroupUsers(session, group_id, [user_id]);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
+const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
-await client.AddGroupUsersAsync(session, groupid, userIds);
+await client.AddGroupUsersAsync(session, groupId, userIds);
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
+const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
-await client.AddGroupUsersAsync(session, groupid, userIds);
+await client.AddGroupUsersAsync(session, groupId, userIds);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -1020,7 +1020,7 @@ To reject the user from joining the group you should [kick them](#kick-a-member)
 An admin can promote another member of the group as an admin. This grants the member the same privileges to [manage the group](#manage-groups). A group can have one or more admins.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/group/<group id>/promote' \
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/promote" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "user_ids":["<user id>"]
@@ -1034,15 +1034,15 @@ await client.promoteGroupUsers(session, group_id, [user_id]);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
+const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
-await client.PromoteGroupUsersAsync(session, groupid, userIds);
+await client.PromoteGroupUsersAsync(session, groupId, userIds);
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
+const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
-await client.PromoteGroupUsersAsync(session, groupid, userIds);
+await client.PromoteGroupUsersAsync(session, groupId, userIds);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -1114,7 +1114,7 @@ An admin or superadmin can kick a member from the group. The user is removed but
 If a user is removed from a group it does not prevent them from joining other groups.
 
 ```sh fct_label="cURL"
-curl 'http://127.0.0.1:7350/v2/group/<group id>/kick' \
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/kick" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "user_ids":["<user id>"]
@@ -1128,15 +1128,15 @@ await client.kickGroupUsers(session, group_id, [user_id]);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
+const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
-await client.KickGroupUsersAsync(session, groupid, userIds);
+await client.KickGroupUsersAsync(session, groupId, userIds);
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
+const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
-await client.KickGroupUsersAsync(session, groupid, userIds);
+await client.KickGroupUsersAsync(session, groupId, userIds);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -1199,17 +1199,15 @@ Authorization: Bearer <session token>
 }
 ```
 
-<!--
 !!! Hint
     Sometimes a bad user needs to be kicked from the group and [permanently banned](social-friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
--->
 
 ## Remove a group
 
 A group can only be removed by one of the superadmins which will disband all members. When a group is removed it's name can be re-used to [create a new group](#create-a-group).
 
 ```sh fct_label="cURL"
-curl -X DELETE 'http://127.0.0.1:7350/v2/group/<group id>' \
+curl -X DELETE "http://127.0.0.1:7350/v2/group/<group id>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -1219,13 +1217,13 @@ await client.deleteGroup(session, group_id);
 ```
 
 ```csharp fct_label=".NET"
-const string groupid = "<group id>";
-await client.DeleteGroupAsync(session, groupid);
+const string groupId = "<group id>";
+await client.DeleteGroupAsync(session, groupId);
 ```
 
 ```csharp fct_label="Unity"
-const string groupid = "<group id>";
-await client.DeleteGroupAsync(session, groupid);
+const string groupId = "<group id>";
+await client.DeleteGroupAsync(session, groupId);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"

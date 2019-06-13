@@ -106,9 +106,9 @@ if (!string.IsNullOrEmpty(www.error)) {
 ```
 
 ```shell fct_label="cURL"
-curl http://127.0.0.1:7350/v2/rpc/rc?http_key=defaultkey \
-     -H 'Content-Type: application/json' \
-     -H 'Accept: application/json'
+curl -X POST "http://127.0.0.1:7350/v2/rpc/rc?http_key=defaultkey" \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
 # output
 # {"rc":{"max_player_level":90,"min_version":12,"reachable_levels":10}}
 ```

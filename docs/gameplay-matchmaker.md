@@ -51,7 +51,6 @@ var stringProperties = new Dictionary<string, string>() {
 var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
@@ -66,7 +65,6 @@ var stringProperties = new Dictionary<string, string>() {
 var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
@@ -194,29 +192,27 @@ var ticket = await socket.send(message);
 
 ```csharp fct_label=".NET"
 var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-var minCount = 2;
-var maxCount = 4;
 var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
 var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(
-    query, minCount, maxCount, stringProperties, numericProperties);
+    query, 2, 4, stringProperties, numericProperties);
 ```
 
 ```csharp fct_label="Unity"
 var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-var minCount = 2;
-var maxCount = 4;
 var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
 };
 var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
+var matchmakerTicket = await socket.AddMatchmakerAsync(
+    query, 2, 4, stringProperties, numericProperties);
+```
 
 ```cpp fct_label="Cocos2d-x C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
@@ -287,10 +283,6 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-var matchmakerTicket = await socket.AddMatchmakerAsync(
-    query, minCount, maxCount, stringProperties, numericProperties);
-```
-
 ```java fct_label="Java"
 String query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
 int minCount = 2;
@@ -333,7 +325,6 @@ var stringProperties = new Dictionary<string, string>() {
 var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
@@ -348,7 +339,6 @@ var stringProperties = new Dictionary<string, string>() {
 var numericProperties = new Dictionary<string, int>() {
   {"rank", 8}
 };
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
@@ -458,7 +448,6 @@ var ticket = await socket.send(message);
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
@@ -466,7 +455,6 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
@@ -474,7 +462,6 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 String query = "*";
 int minCount = 2;
 int maxCount = 4;
-
 MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
 ```
 
@@ -493,7 +480,6 @@ var ticket = await socket.send(message);
 var query = "*";
 var minCount = 4;
 var maxCount = 4;
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
@@ -501,7 +487,6 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 var query = "*";
 var minCount = 4;
 var maxCount = 4;
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
@@ -583,7 +568,6 @@ var ticket = await socket.send(message);
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
@@ -591,7 +575,6 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
-
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
@@ -674,12 +657,12 @@ socket.send(message);
 
 ```csharp fct_label=".NET"
 // "matchmakerTicket" is returned by the matchmaker.
-socket.RemoveMatchmakerAsync(matchmakerTicket);
+await socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```
 
 ```csharp fct_label="Unity"
 // "matchmakerTicket" is returned by the matchmaker.
-socket.RemoveMatchmakerAsync(matchmakerTicket);
+await socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -729,20 +712,20 @@ socket.onmatchmakermatched = (matched) => {
 ```
 
 ```csharp fct_label=".NET"
-socket.OnMatchmakerMatched += (_, matched) =>
+socket.ReceivedMatchmakerMatched += matched =>
 {
-  Console.WriteLine("Received MatchmakerMatched message: {0}", matched);
-  var opponents = string.Join(",", matched.Users); // printable list.
-  Console.WriteLine("Matched opponents: {0}", opponents);
+    Console.WriteLine("Received: {0}", matched);
+    var opponents = string.Join(",\n  ", matched.Users); // printable list.
+    Console.WriteLine("Matched opponents: [{0}]", opponents);
 };
 ```
 
 ```csharp fct_label="Unity"
-socket.OnMatchmakerMatched += (_, matched) =>
+socket.ReceivedMatchmakerMatched += matched =>
 {
-  Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
-  var opponents = string.Join(",", matched.Users); // printable list.
-  Debug.LogFormat("Matched opponents: {0}", opponents);
+    Debug.LogFormat("Received: {0}", matched);
+    var opponents = string.Join(",\n  ", matched.Users); // printable list.
+    Debug.LogFormat("Matched opponents: [{0}]", opponents);
 };
 ```
 
@@ -800,18 +783,18 @@ socket.onmatchmakermatched = (matched) => {
 ```
 
 ```csharp fct_label=".NET"
-socket.OnMatchmakerMatched += (_, matched) =>
+socket.ReceivedMatchmakerMatched += async matched =>
 {
-  Console.WriteLine("Received MatchmakerMatched message: {0}", matched);
-  await socket.JoinMatchAsync(matched);
+    Console.WriteLine("Received: {0}", matched);
+    await socket.JoinMatchAsync(matched);
 };
 ```
 
 ```csharp fct_label="Unity"
-socket.OnMatchmakerMatched += (_, matched) =>
+socket.ReceivedMatchmakerMatched += async matched =>
 {
-  Debug.LogFormat("Received MatchmakerMatched message: {0}", matched);
-  await socket.JoinMatchAsync(matched);
+    Debug.LogFormat("Received: {0}", matched);
+    await socket.JoinMatchAsync(matched);
 };
 ```
 

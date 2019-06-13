@@ -19,8 +19,7 @@ A user can add one or more friends by that user's ID or username. The user added
 When a friend request is sent or the user is added an in-app notification will be sent. See the [in-app notification](social-in-app-notifications.md#receive-notifications) section for more info.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  'http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1' \
+curl -X POST "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -91,10 +90,7 @@ When both users have added eachother as friends it's easy to initiate realtime c
 You can list all of a user's friends, blocked users, friend requests received (invited), and invites they've sent. These statuses are returned together as part of the friend list which makes it easy to display in a UI.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  http://127.0.0.1:7350/v2/friend \
-  -H 'Accept: application/json' \
-  -H 'Content-Type: application/json' \
+curl -X GET "http://127.0.0.1:7350/v2/friend" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -107,7 +103,7 @@ console.info("Successfully retrieved friend list:", friends);
 var result = await client.ListFriendsAsync(session);
 foreach (var f in result.Friends)
 {
-  System.Console.WriteLine("Friend '{0}' state '{1}'", f.User.Username, f.State);
+    System.Console.WriteLine("Friend '{0}' state '{1}'", f.User.Username, f.State);
 }
 ```
 
@@ -115,7 +111,7 @@ foreach (var f in result.Friends)
 var result = await client.ListFriendsAsync(session);
 foreach (var f in result.Friends)
 {
-  Debug.LogFormat("Friend '{0}' state '{1}'", f.User.Username, f.State);
+    Debug.LogFormat("Friend '{0}' state '{1}'", f.User.Username, f.State);
 }
 ```
 
@@ -183,8 +179,7 @@ A user can remove a friend, reject a received invite, cancel a friend request se
     If a user is unblocked they are removed from the friend list entirely. To re-add them each user must add the other again.
 
 ```sh fct_label="cURL"
-curl -X DELETE \
-  'http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1' \
+curl -X DELETE "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -257,8 +252,7 @@ You can stop a user from using 1-on-1 chat or other social features with a user 
 A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  'http://127.0.0.1:7350/v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1' \
+curl -X POST "http://127.0.0.1:7350/v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -324,8 +318,6 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 ```
 
-<!--
-
 ### Ban a user
 
 A user can be banned with server-side code. This will prevent the user from being able to connect to the server and interact at all.
@@ -337,15 +329,12 @@ See the [runtime code basics](runtime-code-basics.md) on how to write server-sid
 ```lua
 local nk = require("nakama")
 
--you can use both IDs and username to ban.
-local bad_users = {"someuserid", "anotheruserid", "username"}
-local success, err = pcall(nk.users_ban, bad_users)
+local bad_users = {"someuserid", "anotheruserid"}
+local success, err = pcall(nk.users_ban_id, bad_users)
 if (not success) then
   nk.logger_error(("Ban failed: %q"):format(err))
 end
 ```
-
--->
 
 ## Friend state
 

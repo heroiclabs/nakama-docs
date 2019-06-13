@@ -19,13 +19,7 @@ A tournament can also be played by opponents who are not users. For example a gu
 Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/tournament?category_start=<category_start>
-  &category_end=<category_end>
-  &start_time=<start_time>
-  &end_time=<end_time>
-  &limit=<limit>
-  &cursor=<cursor>' \
+curl -X GET "http://127.0.0.1:7350/v2/tournament?category_start=<category_start>&category_end=<category_end>&start_time=<start_time>&end_time=<end_time>&limit=<limit>&cursor=<cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -163,8 +157,7 @@ Authorization: Bearer <session token>
 A tournament may need to be joined before the owner can submit scores. This operation is idempotent and will always succeed for the owner even if they have already joined the tournament.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  'http://127.0.0.1:7350/v2/tournament/<tournament_id>/join'
+curl -X POST "http://127.0.0.1:7350/v2/tournament/<tournament_id>/join" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -236,10 +229,7 @@ Authorization: Bearer <session token>
 Fetch a mixed list of tournament records as well as a batch of records which belong to specific owners. This can be useful to build up a leaderboard view which shows the top 100 players as well as the scores between the current user and their friends.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/tournament/<tournament_id>?owner_ids=<owner_ids>
-  &limit=<limit>
-  &cursor=<cursor>'
+curl -X GET "http://127.0.0.1:7350/v2/tournament/<tournament_id>?owner_ids=<owner_ids>&limit=<limit>&cursor=<cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -328,8 +318,7 @@ Authorization: Bearer <session token>
 Fetch the list of tournament records around the owner.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>'
+curl -X GET "http://127.0.0.1:7350/v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -422,8 +411,7 @@ Authorization: Bearer <session token>
 Submit a score and optional subscore to a tournament leaderboard. If the tournament has been configured with join required this will fail unless the owner has already joined the tournament.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/tournament/<tournament_id>'
+curl -X GET "http://127.0.0.1:7350/v2/tournament/<tournament_id>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -442,26 +430,28 @@ var newrecord = client.writeTournamentRecord(session, id, score, subscore, metad
 var id = "someid";
 var score = 100L;
 var subscore = 10L;
-// using Nakama.TinyJson
+// using Nakama.TinyJson;
 var metadata = new Dictionary<string, string>()
 {
   { "weather_conditions", "sunny" },
   { "track_name", "Silverstone" }
 }.ToJson();
-var newrecord = client.WriteTournamentRecordAsync(session, id, score, subscore, metadata);
+var newRecord = await client.WriteTournamentRecordAsync(session, id, score, subscore, metadata);
+Console.WriteLine(newRecord);
 ```
 
 ```csharp fct_label="Unity"
 var id = "someid";
 var score = 100L;
 var subscore = 10L;
-// using Nakama.TinyJson
+// using Nakama.TinyJson;
 var metadata = new Dictionary<string, string>()
 {
   { "weather_conditions", "sunny" },
   { "track_name", "Silverstone" }
 }.ToJson();
-var newrecord = client.WriteTournamentRecordAsync(session, id, score, subscore, metadata);
+var newRecord = await client.WriteTournamentRecordAsync(session, id, score, subscore, metadata);
+Debug.Log(newRecord);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"

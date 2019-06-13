@@ -185,7 +185,7 @@ end
 
 In the examples above, we looked at listing matches based on comparing labels exactly as they appear. Another, more powerful way of listing matches is to run search queries on the label.
 
-In this example, we are looking for matches with `mode` that must match `freeforall`, and preferably `level` higher than `10`.
+In this example, we are looking for matches with "mode" that must match "freeforall", and preferably "level" higher than "10".
 
 ```lua fct_label="Lua"
 local nk = require("nakama")

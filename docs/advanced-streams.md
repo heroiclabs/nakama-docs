@@ -52,20 +52,18 @@ socket.onstreamdata = (streamdata) => {
 ```
 
 ```csharp fct_label=".NET"
-var enc = System.Text.Encoding.UTF8;
-socket.OnStreamState += (_, stream) =>
+socket.ReceivedStreamState += stream =>
 {
-  Console.WriteLine("Received data from stream: {0}", stream.Stream.Subject);
-  Console.WriteLine("Data content: {0}", enc.GetString(stream.State));
+  Console.WriteLine("Received data from stream: '{0}'", stream.Stream.Subject);
+  Console.WriteLine("Data content: {0}", stream.State);
 };
 ```
 
 ```csharp fct_label="Unity"
-var enc = System.Text.Encoding.UTF8;
-socket.OnStreamState += (_, stream) =>
+socket.ReceivedStreamState += stream =>
 {
-  Debug.LogFormat("Received data from stream: {0}", stream.Stream.Subject);
-  Debug.LogFormat("Data content: {0}", enc.GetString(stream.State));
+    Debug.LogFormat("Received data from stream: '{0}'", stream.Stream.Subject);
+    Debug.LogFormat("Data content: {0}", stream.State);
 };
 ```
 
@@ -123,34 +121,32 @@ socket.onstreampresence = (streampresence) => {
 ```
 
 ```csharp fct_label=".NET"
-socket.OnStreamPresence += (_, presence) =>
+socket.ReceivedStreamPresence += presenceEvent =>
 {
-  console.log("Received presence event for stream: %o", presence.Stream.Subject)
-  foreach (var join in presence.Joins)
-  {
-    Console.WriteLine("User id '{0}' name '{1}' and status '{2}'.", join.UserId, join.Username, join.Status);
-  }
-
-  foreach (var leave in presence.Leaves)
-  {
-    Console.WriteLine("User id '{0}' name '{1}' and status '{2}'.", leave.UserId, leave.Username, leave.Status);
-  }
+    Console.WriteLine("Received data from stream: '{0}'", presenceEvent.Stream.Subject);
+    foreach (var joined in presenceEvent.Joins)
+    {
+        Console.WriteLine("Joined: {0}", joined);
+    }
+    foreach (var left in presenceEvent.Leaves)
+    {
+        Console.WriteLine("Left: {0}", left);
+    }
 };
 ```
 
 ```csharp fct_label="Unity"
-socket.OnStreamPresence += (_, presence) =>
+socket.ReceivedStreamPresence += presenceEvent =>
 {
-  console.log("Received presence event for stream: %o", presence.Stream.Subject)
-  foreach (var join in presence.Joins)
-  {
-    Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", join.UserId, join.Username, join.Status);
-  }
-
-  foreach (var leave in presence.Leaves)
-  {
-    Debug.LogFormat("User id '{0}' name '{1}' and status '{2}'.", leave.UserId, leave.Username, leave.Status);
-  }
+    Debug.LogFormat("Received data from stream: '{0}'", presenceEvent.Stream.Subject);
+    foreach (var joined in presenceEvent.Joins)
+    {
+        Debug.LogFormat("Joined: {0}", joined);
+    }
+    foreach (var left in presenceEvent.Leaves)
+    {
+        Debug.LogFormat("Left: {0}", left);
+    }
 };
 ```
 

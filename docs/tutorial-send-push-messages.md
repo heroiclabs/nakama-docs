@@ -48,7 +48,7 @@ A device identifier which must be obtained through Android/iOS/etc APIs on the h
   2 - amazon
   3 - windowsphone
   ... etc.
-]]
+]]--
 local device_type = 0
 -- "identifier" is the push identifier which must be sent from the client
 local identifier = "platformspecificdeviceidentifier"

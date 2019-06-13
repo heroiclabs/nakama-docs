@@ -23,8 +23,7 @@ This design gives great flexibility for developers to group sets of information 
 A user can write one or more objects which will be stored in the database server. These objects will be written in a single transaction which guarantees the writes succeed together.
 
 ```sh fct_label="cURL"
-curl -X PUT \
-  http://127.0.0.1:7350/v2/storage \
+curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{"objects":
     [
@@ -73,7 +72,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Key = "skills",
   Value = myStats
 });
-Console.WriteLine("Successfully stored objects {0}", objectIds);
+Console.WriteLine("Successfully stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
 ```csharp fct_label="Unity"
@@ -90,7 +89,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Key = "skills",
   Value = myStats
 });
-Debug.LogFormat("Successfully stored objects {0}", objectIds);
+Debug.LogFormat("Successfully stored objects: [{0}]", string.Join(",\n   ", objectIds));
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -212,8 +211,7 @@ When objects are successfully stored a version is returned which can be used wit
 A conditional write ensures a client can only update the object if they've seen the previous version of the object. The purpose is to prevent a change to the object if another client has changed the value between when the first client's read and it's next write.
 
 ```sh fct_label="cURL"
-curl -X PUT \
-  http://127.0.0.1:7350/v2/storage \
+curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "objects": [
@@ -249,7 +247,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Value = saveGame,
   Version = "<version>"
 });
-Console.WriteLine("Stored objects {0}", objectIds);
+Console.WriteLine("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
 ```csharp fct_label="Unity"
@@ -261,7 +259,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Value = saveGame,
   Version = "<version>"
 });
-Debug.LogFormat("Stored objects {0}", objectIds);
+Debug.LogFormat("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -358,8 +356,7 @@ Authorization: Bearer <session token>
 We support another kind of conditional write which is used to write an object only if none already exists for that object's collection and key.
 
 ```sh fct_label="cURL"
-curl -X PUT \
-  http://127.0.0.1:7350/v2/storage \
+curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "objects": [
@@ -386,7 +383,7 @@ const object_ids = await client.writeStorageObjects(session, [
 console.info("Stored objects: %o", object_ids);
 ```
 
-```csharp fct_label=".Net"
+```csharp fct_label=".NET"
 var saveGame = "{ \"progress\": 50 }";
 var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
 {
@@ -395,7 +392,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Value = saveGame,
   Version = "*"
 });
-Console.WriteLine("Stored objects {0}", objectIds);
+Console.WriteLine("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
 ```csharp fct_label="Unity"
@@ -407,7 +404,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
   Value = saveGame,
   Version = "*"
 });
-Debug.LogFormat("Stored objects {0}", objectIds);
+Debug.LogFormat("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -534,8 +531,7 @@ Just like with [writing objects](#write-objects) you can read one or more object
 Each object has an owner and permissions. An object can only be read if the permissions allow it. An object which has no owner can be fetched with `"null"` and is useful for global objects which all users should be able to read.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  http://127.0.0.1:7350/v2/storage \
+curl -X POST "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "object_ids": [
@@ -565,7 +561,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Key = "savegame",
   UserId = session.UserId
 });
-Console.WriteLine("Read objects {0}", result.Objects);
+Console.WriteLine("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
 ```csharp fct_label="Unity"
@@ -574,7 +570,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Key = "savegame",
   UserId = session.UserId
 });
-Debug.LogFormat("Read objects {0}", result.Objects);
+Debug.LogFormat("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -676,8 +672,7 @@ Authorization: Bearer <session token>
 You can list objects in a collection and page through results. The objects returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/storage/saves?user_id=some-user-id&limit=10' \
+curl -X GET "http://127.0.0.1:7350/v2/storage/saves?user_id=some-user-id&limit=10" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -688,15 +683,15 @@ console.info("List objects: %o", objects);
 ```
 
 ```csharp fct_label=".NET"
-var limit = 100; // default is 10.
+const int limit = 100; // default is 10.
 var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId, limit);
-Console.WriteLine("List objects '{0}'", result);
+Console.WriteLine("List objects: {0}", result);
 ```
 
 ```csharp fct_label="Unity"
-var limit = 100; // default is 10.
+const int limit = 100; // default is 10.
 var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId, limit);
-Debug.LogFormat("List objects '{0}'", result);
+Debug.LogFormat("List objects: {0}", result);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -778,8 +773,7 @@ Authorization: Bearer <session token>
 A user can remove an object if it has the correct permissions and they own it.
 
 ```sh fct_label="cURL"
-curl -X PUT \
-  http://127.0.0.1:7350/v2/storage/delete \
+curl -X PUT "http://127.0.0.1:7350/v2/storage/delete" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
     "object_ids": [

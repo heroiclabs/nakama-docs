@@ -1,6 +1,6 @@
 # Unity client guide
 
-This client is built on the [.NET client](https://github.com/heroiclabs/nakama-dotnet) with extensions for Unity Engine. To work with our Unity client you'll need to install and setup [Unity engine](https://unity3d.com/get-unity/download). 
+This client is built on the [.NET client](https://github.com/heroiclabs/nakama-dotnet) with extensions for Unity Engine. To work with our Unity client you'll need to install and setup [Unity engine](https://unity3d.com/get-unity/download).
 
 The client is available on the <a href="https://assetstore.unity.com/packages/tools/network/nakama-81338" target="\_blank">Unity Asset Store</a> and also on <a href="https://github.com/heroiclabs/nakama-unity/releases/latest" target="\_blank">GitHub releases</a>. You can download "Nakama.unitypackage" which contains all source code and DLL dependencies required in the client code.
 
@@ -26,7 +26,7 @@ public class YourGameObject : MonoBehaviour
 {
   void Start()
   {
-    var client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
   }
 }
 ```
@@ -42,7 +42,7 @@ To authenticate you should follow our recommended pattern in your client code:
 &nbsp;&nbsp; 1\. Build an instance of the client.
 
 ```csharp
-var client = new Client("defaultkey", "127.0.0.1", 7350, false);
+var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
 ```
 
 &nbsp;&nbsp; 2\. Authenticate a user. By default the server will create a user if it doesn't exist.
@@ -51,7 +51,7 @@ var client = new Client("defaultkey", "127.0.0.1", 7350, false);
 const string email = "hello@example.com";
 const string password = "somesupersecretpassword";
 var session = await client.AuthenticateEmailAsync(email, password);
-Debug.LogFormat("Authenticated session: {0}", session);
+Debug.Log(session);
 ```
 
 In the code above we use `AuthenticateEmailAsync` but for other authentication options have a look at the [code examples](authentication.md#authenticate). This [full example](#full-example) covers all our recommended steps.
@@ -62,8 +62,8 @@ When authenticated the server responds with an auth token (JWT) which contains u
 
 ```csharp
 Debug.Log(session.AuthToken); // raw JWT token
-Debug.LogFormat("User id '{0}'", session.UserId);
-Debug.LogFormat("User username '{0}'", session.Username);
+Debug.LogFormat("Session user id: '{0}'", session.UserId);
+Debug.LogFormat("Session user username: '{0}'", session.Username);
 Debug.LogFormat("Session has expired: {0}", session.IsExpired);
 Debug.LogFormat("Session expires at: {0}", session.ExpireTime); // in seconds.
 ```
@@ -71,17 +71,14 @@ Debug.LogFormat("Session expires at: {0}", session.ExpireTime); // in seconds.
 It is recommended to store the auth token from the session and check at startup if it has expired. If the token has expired you must reauthenticate. The expiry time of the token can be changed as a [setting](install-configuration.md#common-properties) in the server.
 
 ```csharp
-var prefKeyName = "nakama.session";
-var authtoken = PlayerPrefs.GetString(prefKeyName);
-if (string.IsNullOrEmpty(authtoken) || Session.Restore(authtoken).IsExpired)
+const string prefKeyName = "nakama.session";
+ISession session;
+var authToken = PlayerPrefs.GetString(prefKeyName);
+if (string.IsNullOrEmpty(authToken) || (session = Session.Restore(authToken)).IsExpired)
 {
-  Debug.Log("Session has expired. Must reauthenticate!");
-}
-else
-{
-  var session = Session.Restore(authtoken);
-  Debug.Log(session);
-}
+    Debug.Log("Session has expired. Must reauthenticate!");
+};
+Debug.Log(session);
 ```
 
 ## Send requests
@@ -92,9 +89,9 @@ All requests are sent with a session object which authorizes the client.
 
 ```csharp
 var account = await client.GetAccountAsync(session);
-Debug.LogFormat("User id '{0}'", account.User.Id);
-Debug.LogFormat("User username '{0}'", account.User.Username);
-Debug.LogFormat("Account virtual wallet '{0}'", account.Wallet);
+Debug.LogFormat("User id: '{0}'", account.User.Id);
+Debug.LogFormat("User username: '{0}'", account.User.Username);
+Debug.LogFormat("Account virtual wallet: '{0}'", account.Wallet);
 ```
 
 Methods which end with "Async" can use C# Tasks to asynchronously wait for the response. This can be done with the `await` keyword. For more advice on async/await features in C# have look at the <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/" target="\_blank">official documentation</a>.
@@ -106,14 +103,14 @@ The other sections of the documentation include more code examples on the client
 The client can create one or more sockets with the server. Each socket can have it's own event listeners registered for responses received from the server.
 
 ```csharp
-var socket = client.CreateWebSocket();
-socket.OnConnect += (sender, args) =>
+var socket = client.NewSocket();
+socket.Connected += () =>
 {
-  Debug.Log("Socket connected.");
+    Debug.Log("Socket connected.");
 };
-socket.OnDisconnect += (sender, args) =>
+socket.Closed += () =>
 {
-  Debug.Log("Socket disconnected.");
+    Debug.Log("Socket closed.");
 };
 await socket.ConnectAsync(session);
 ```
@@ -124,15 +121,17 @@ To join a chat channel and receive messages:
 
 ```csharp
 const string RoomName = "Heroes";
-socket.OnChannelMessage += (sender, message) =>
+socket.ReceivedChannelMessage += message =>
 {
-  Debug.LogFormat("Received a message on channel '{0}'", message.channelId);
-  Debug.LogFormat("Message content: '{0}'", message.content);
+    Debug.LogFormat("Received: {0}", message);
+    Debug.LogFormat("Message has channel id: {0}", message.ChannelId);
+    Debug.LogFormat("Message content: {0}", message.Content);
 };
 var channel = await socket.JoinChatAsync(RoomName, ChannelType.Room);
 // using Nakama.TinyJson;
 var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 var sendAck = await socket.WriteChatMessageAsync(channel, content);
+Debug.Log(sendAck);
 ```
 
 There are more examples for chat channels [here](social-realtime-chat.md).
@@ -142,16 +141,17 @@ There are more examples for chat channels [here](social-realtime-chat.md).
 A socket object has event handlers which are called on various messages received from the server.
 
 ```csharp
-socket.OnStatusPresence += (_, presence) =>
+socket.ReceivedChannelPresence += presenceEvent =>
 {
-  foreach (var join in presence.Joins)
-  {
-    Debug.LogFormat("User '{0}' joined.", join.Username);
-  }
-  foreach (var leave in presence.Leaves)
-  {
-    Debug.LogFormat("User '{0}' left.", leave.Username);
-  }
+    Debug.Log(presenceEvent);
+    foreach (var left in presence.Leaves)
+    {
+        Debug.LogFormat("User '{0}' left.", left.Username);
+    }
+    foreach (var joined in presence.Joins)
+    {
+        Debug.LogFormat("User '{0}' joined.", joined.Username);
+    }
 };
 ```
 
@@ -159,34 +159,50 @@ Event handlers only need to be implemented for the features you want to use.
 
 | Callbacks | Description |
 | --------- | ----------- |
-| OnConnect | Receive an event when the socket connects. |
-| OnDisconnect | Handles an event for when the client is disconnected from the server. |
-| OnError | Receives events about server errors. |
-| OnNotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
-| OnChannelMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| OnChannelPresence | It handles join and leave events within [chat](social-realtime-chat.md). |
-| OnMatchState | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
-| OnMatchPresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
-| OnMatchmakerMatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
-| OnStatusPresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
-| OnStreamPresence | Receives [stream](advanced-streams.md) join and leave event. |
-| OnStreamState | Receives [stream](advanced-streams.md) data sent by the server. |
+| Connected | Receive an event when the socket connects. |
+| Closed | Handles an event for when the client is disconnected from the server. |
+| ReceivedError | Receives events about server errors. |
+| ReceivedNotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
+| ReceivedChannelMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
+| ReceivedChannelPresence | It handles join and leave events within [chat](social-realtime-chat.md). |
+| ReceivedMatchState | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
+| ReceivedMatchPresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
+| ReceivedMatchmakerMatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
+| ReceivedStatusPresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
+| ReceivedStreamPresence | Receives [stream](advanced-streams.md) join and leave event. |
+| ReceivedStreamState | Receives [stream](advanced-streams.md) data sent by the server. |
 
 ## Logs and errors
 
 The [server](install-configuration.md#log) and the client can generate logs which are helpful to debug code. To log all messages sent by the client you can enable "Trace" when you build a client and attach a logger.
 
 ```csharp
-var client = new Client("defaultkey", "127.0.0.1", 7350, false)
+var client = new Client("http", "127.0.0.1", 7350, "defaultkey")
 {
 #if UNITY_EDITOR
-  Logger = new UnityLogger(),
-  Trace = true
+    Logger = new UnityLogger()
 #endif
 };
 ```
 
 The `#if` preprocessor directives is used so trace is only enabled in Unity editor builds. For more complex directives with debug vs release builds have a look at <a href="https://docs.unity3d.com/Manual/PlatformDependentCompilation.html" target="\_blank">Platform dependent compilation</a>.
+
+## WebGL Builds
+
+For WebGL builds you should switch the `IHttpAdapter` to use the `UnityWebRequestAdapter` and use the `NewSocket()` extension method to create the socket OR manually set the right `ISocketAdapter` per platform.
+
+```csharp
+var client = new Client("http", "127.0.0.1", 7350, "defaultkey", UnityWebRequestAdapter.Instance);
+var socket = client.NewSocket();
+
+// OR
+#if UNITY_WEBGL && !UNITY_EDITOR
+    ISocketAdapter adapter = new JsWebSocketAdapter();
+#else
+    ISocketAdapter adapter = new WebSocketAdapter();
+#endif
+var socket = Socket.From(client, adapter);
+```
 
 ## Full example
 
@@ -202,7 +218,7 @@ public class SessionWithPlayerPrefs : MonoBehaviour
 {
     private const string PrefKeyName = "nakama.session";
 
-    private IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private IClient _client = new Client("http", "127.0.0.1", 7350, "defaultkey");
     private ISession _session;
 
     private async void Awake()

@@ -91,34 +91,32 @@ socket.onstatuspresence = (statuspresence) => {
 ```
 
 ```csharp fct_label=".NET"
-socket.OnStatusPresence += (_, presence) =>
+socket.ReceivedStatusPresence += presenceEvent =>
 {
-  Console.WriteLine("Presence {0}", presence);
-  foreach (var join in presence.Joins)
-  {
-    Console.WriteLine("User id '{0}' status update '{1}'", join.UserId, join.Status);
-  }
-
-  foreach (var leave in presence.Leaves)
-  {
-    Console.WriteLine("User id '{0}' status gone '{1}'", leave.UserId, leave.Status);
-  }
+    Console.WriteLine(presenceEvent);
+    foreach (var joined in presenceEvent.Joins)
+    {
+        Console.WriteLine("User id '{0}' status joined '{1}'", joined.UserId, joined.Status);
+    }
+    foreach (var left in presenceEvent.Leaves)
+    {
+        Console.WriteLine("User id '{0}' status left '{1}'", left.UserId, left.Status);
+    }
 };
 ```
 
 ```csharp fct_label="Unity"
-socket.OnStatusPresence += (_, presence) =>
+socket.ReceivedStatusPresence += presenceEvent =>
 {
-  Debug.LogFormat("Presence {0}", presence);
-  foreach (var join in presence.Joins)
-  {
-    Debug.LogFormat("User id '{0}' status update '{1}'", join.UserId, join.Status);
-  }
-
-  foreach (var leave in presence.Leaves)
-  {
-    Debug.LogFormat("User id '{0}' status gone '{1}'", leave.UserId, leave.Status);
-  }
+    Debug.Log(presenceEvent);
+    foreach (var joined in presenceEvent.Joins)
+    {
+        Debug.LogFormat("User id '{0}' status joined '{1}'", joined.UserId, joined.Status);
+    }
+    foreach (var left in presenceEvent.Leaves)
+    {
+        Debug.LogFormat("User id '{0}' status left '{1}'", left.UserId, left.Status);
+    }
 };
 ```
 

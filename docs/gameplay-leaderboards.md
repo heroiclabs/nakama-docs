@@ -38,8 +38,7 @@ The score in each record can be updated as the owner progresses. Scores can be u
 Each record can optionally include additional data about the score or the owner when submitted. The extra fields must be JSON encoded and submitted as the metadata. A good use case for metadata is info about race conditions in a driving game, such as weather, which can give extra UI hints when users list scores.
 
 ```sh fct_label="cURL"
-curl -X POST \
-  'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>' \
+curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
   -H 'Authorization: Bearer <session token>'
   -d '{"record": {"score": 100}}'
 ```
@@ -52,16 +51,16 @@ console.log("New record username %o and score %o", record.username, record.score
 ```
 
 ```csharp fct_label=".NET"
-const string leaderboard = "level1";
+const string leaderboardId = "level1";
 const long score = 100L;
-var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
 System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
 ```csharp fct_label="Unity"
-const string leaderboard = "level1";
+const string leaderboardId = "level1";
 const long score = 100L;
-var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
 Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
@@ -182,8 +181,7 @@ Submitting to a leaderboard with the "best" operator ensures the record tracks t
 With the "incr" operator the new value is added to any existing score for that record. If there is no previous value for the record, this behaves like "set".
 
 ```sh fct_label="cURL"
-curl -X POST \
-  'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>' \
+curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
   -H 'Authorization: Bearer <session token>'
   -d '{"score": 100}'
 ```
@@ -304,8 +302,7 @@ A user can list records from a leaderboard. This makes it easy to compare scores
 The standard way to list records is ordered by score based on the sort order in the leaderboard.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>' \
+curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -318,20 +315,20 @@ result.records.forEach(function(record) {
 ```
 
 ```csharp fct_label=".NET"
-const string leaderboard = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+const string leaderboardId = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
 {
-  System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
 }
 ```
 
 ```csharp fct_label="Unity"
-const string leaderboard = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+const string leaderboardId = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
 {
-  Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
 }
 ```
 
@@ -420,8 +417,7 @@ Authorization: Bearer <session token>
 You can fetch the next set of results with a cursor.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?cursor=<next_cursor>' \
+curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?cursor=<next_cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -443,40 +439,40 @@ if (result.next_cursor) {
 ```
 
 ```csharp fct_label=".NET"
-const string leaderboard = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+const string leaderboardId = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
 {
-  System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
 }
 // If there are more results get next page.
 if (result.NextCursor != null)
 {
-  var c = result.NextCursor;
-  result = await client.ListLeaderboardRecordsAsync(session, leaderboard, null, 100, c);
-  foreach (var r in result.Records)
-  {
-    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
-  }
+    var c = result.NextCursor;
+    result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, null, 100, c);
+    foreach (var r in result.Records)
+    {
+        System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+    }
 }
 ```
 
 ```csharp fct_label="Unity"
-const string leaderboard = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboard);
+const string leaderboardId = "level1";
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
 {
-  Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
 }
 // If there are more results get next page.
 if (result.NextCursor != null)
 {
-  var c = result.NextCursor;
-  result = await client.ListLeaderboardRecordsAsync(session, leaderboard, null, 100, c);
-  foreach (var r in result.Records)
-  {
-    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
-  }
+    var c = result.NextCursor;
+    result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, null, 100, c);
+    foreach (var r in result.Records)
+    {
+        Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+    }
 }
 ```
 
@@ -637,8 +633,7 @@ Authorization: Bearer <session token>
 You can use a bunch of owner IDs to filter the records to only ones owned by those users. This can be used to retrieve only scores belonging to the user's friends.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends' \
+curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -652,22 +647,22 @@ result.records.forEach(function(record) {
 ```
 
 ```csharp fct_label=".NET"
-const string leaderboard = "level1";
+const string leaderboardId = "level1";
 var ownerIds = new[] {"some", "friends", "user ids"};
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
 foreach (var r in result.OwnerRecords)
 {
-  System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
 }
 ```
 
 ```csharp fct_label="Unity"
-const string leaderboard = "level1";
+const string leaderboardId = "level1";
 var ownerIds = new[] {"some", "friends", "user ids"};
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
+var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
 foreach (var r in result.OwnerRecords)
 {
-  Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
 }
 ```
 
@@ -768,8 +763,7 @@ Authorization: Bearer <session token>
 Fetch the list of leaderboard records around the owner.
 
 ```sh fct_label="cURL"
-curl -X GET \
-  'http://127.0.0.1:7350/v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>'
+curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>"
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -781,17 +775,17 @@ var result = await client.listLeaderboardRecordsAroundOwner(session, id, ownerId
 ```
 
 ```csharp fct_label=".NET"
-var id = "someid";
+var leaderboardId = "someid";
 var ownerId = session.UserId;
 var limit = 100;
-var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, id, ownerId, limit);
+var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
 ```
 
 ```csharp fct_label="Unity"
-var id = "someid";
+var leaderboardId = "someid";
 var ownerId = session.UserId;
 var limit = 100;
-var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, id, ownerId, limit);
+var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"

@@ -11,11 +11,13 @@ client.ssl = false;
 ```
 
 ```csharp fct_label=".NET"
-var client = new Client("defaultkey", "127.0.0.1", 7350, false);
+// Use "https" scheme if you've setup SSL.
+var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
 ```
 
 ```csharp fct_label="Unity"
-var client = new Client("defaultkey", "127.0.0.1", 7350, false);
+// Use "https" scheme if you've setup SSL.
+var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -81,7 +83,7 @@ You can choose a custom username when creating the account. To do this, set `use
 A device identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
+curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"id":"uniqueidentifier"}'
 ```
@@ -111,19 +113,19 @@ console.info("Successfully authenticated:", session);
 
 ```csharp fct_label=".NET"
 // Should use a platform API to obtain a device identifier.
-var deviceid = System.Guid.NewGuid();
-var session = await client.AuthenticateDeviceAsync($"{deviceid}");
-System.Console.WriteLine("Session {0}", session);
+var deviceId = System.Guid.NewGuid().ToString();
+var session = await client.AuthenticateDeviceAsync(deviceId);
+System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
 ```csharp fct_label="Unity"
-var deviceid = PlayerPrefs.GetString("nakama.deviceid");
-if (string.IsNullOrEmpty(deviceid)) {
-  deviceid = SystemInfo.deviceUniqueIdentifier;
-  PlayerPrefs.SetString("nakama.deviceid", deviceid); // cache device id.
+var deviceId = PlayerPrefs.GetString("nakama.deviceid");
+if (string.IsNullOrEmpty(deviceId)) {
+    deviceId = SystemInfo.deviceUniqueIdentifier;
+    PlayerPrefs.SetString("nakama.deviceid", deviceId); // cache device id.
 }
-var session = await client.AuthenticateDeviceAsync(deviceid);
-Debug.LogFormat("Session: '{0}'", session.AuthToken);
+var session = await client.AuthenticateDeviceAsync(deviceId);
+Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -219,7 +221,7 @@ Content-Type: application/json
 Authorization: Basic base64(ServerKey:)
 
 {
-  "id": "uniqueidentifier"
+    "id": "uniqueidentifier"
 }
 ```
 
@@ -234,7 +236,7 @@ You can choose a custom username when creating the account. To do this, set `use
 An email address must be valid as defined by RFC-5322 and passwords must be at least 8 characters.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername \
+curl "http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"email":"email@example.com", "password": "3bc8f72e95a9"}'
 ```
@@ -250,14 +252,14 @@ console.info("Successfully authenticated:", session);
 const string email = "email@example.com";
 const string password = "3bc8f72e95a9";
 var session = await client.AuthenticateEmailAsync(email, password);
-System.Console.WriteLine("Session {0}", session);
+System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
 ```csharp fct_label="Unity"
 const string email = "email@example.com";
 const string password = "3bc8f72e95a9";
 var session = await client.AuthenticateEmailAsync(email, password);
-Debug.LogFormat("Session: '{0}'", session.AuthToken);
+Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -335,8 +337,8 @@ Content-Type: application/json
 Authorization: Basic base64(ServerKey:)
 
 {
-  "email": "email@example.com",
-  "password": "3bc8f72e95a9"
+    "email": "email@example.com",
+    "password": "3bc8f72e95a9"
 }
 ```
 
@@ -355,7 +357,7 @@ You can choose a custom username when creating the account. To do this, set `use
 You can optionally import Facebook friends into Nakama's [friend graph](social-friends.md) when authenticating. To do this, set `import` to true.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true \
+curl "http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true" \
   --user 'defaultkey:' \
   --data '{"token":"valid-oauth-token"}'
 ```
@@ -369,7 +371,7 @@ console.log("Successfully authenticated:", session);
 ```csharp fct_label=".NET"
 const string oauthToken = "...";
 var session = await client.AuthenticateFacebookAsync(oauthToken);
-System.Console.WriteLine("Session {0}", session);
+System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
 ```csharp fct_label="Unity"
@@ -377,11 +379,11 @@ System.Console.WriteLine("Session {0}", session);
 // https://developers.facebook.com/docs/unity/examples#init
 var perms = new List<string>(){"public_profile", "email"};
 FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
-  if (FB.IsLoggedIn) {
-    var accesstoken = Facebook.Unity.AccessToken.CurrentAccessToken;
-    var session = await client.LinkFacebookAsync(session, accesstoken);
-    Debug.LogFormat("Session: '{0}'", session.AuthToken);
-  }
+    if (FB.IsLoggedIn) {
+        var accessToken = Facebook.Unity.AccessToken.CurrentAccessToken;
+        var session = await client.LinkFacebookAsync(session, accessToken);
+        Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+    }
 });
 ```
 
@@ -487,7 +489,7 @@ Similar to Facebook for register and login you should use one of Google's client
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername \
+curl "http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"token":"valid-oauth-token"}'
 ```
@@ -500,14 +502,14 @@ console.info("Successfully authenticated: %o", session);
 
 ```csharp fct_label=".NET"
 const string playerIdToken = "...";
-var session = await client.AuthenticateGoogleAsync(oauthToken);
-System.Console.WriteLine("Session {0}", session);
+var session = await client.AuthenticateGoogleAsync(playerIdToken);
+System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
 ```csharp fct_label="Unity"
 const string playerIdToken = "...";
-var session = await client.AuthenticateGoogleAsync(oauthToken);
-Debug.LogFormat("Session: '{0}'", session.AuthToken);
+var session = await client.AuthenticateGoogleAsync(playerIdToken);
+Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -585,7 +587,7 @@ Apple devices have builtin authentication which can be done without user interac
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername \
+curl "http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"player_id":"...", "bundle_id":"...", "timestamp_seconds":0, "salt":"...", "public_key_url":"..."}'
 ```
@@ -599,7 +601,7 @@ var signature = "...";
 var timestamp = "...";
 var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
     publicKeyUrl, salt, signature, timestamp);
-System.Console.WriteLine("Session {0}", session);
+System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
 ```csharp fct_label="Unity"
@@ -618,7 +620,7 @@ var signature = "...";
 var timestamp = "...";
 var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
     publicKeyUrl, salt, signature, timestamp);
-Debug.LogFormat("Session: '{0}'", session.AuthToken);
+Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -752,7 +754,7 @@ Steam requires you to configure the server before you can register a user.
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername \
+curl "http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername" \
   --user 'defaultkey' \
   --data '{"token":"valid-steam-token"}'
 ```
@@ -760,13 +762,13 @@ curl http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=my
 ```csharp fct_label=".NET"
 const string token = "...";
 var session = await client.AuthenticateSteamAsync(token);
-System.Console.WriteLine("Session {0}", session);
+System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
 ```csharp fct_label="Unity"
 const string token = "...";
 var session = await client.AuthenticateSteamAsync(token);
-Debug.LogFormat("Session: '{0}'", session.AuthToken);
+Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -851,7 +853,7 @@ A custom identifier must contain alphanumeric characters with dashes and be betw
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername \
+curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"id":"some-custom-id"}'
 ```
@@ -863,15 +865,15 @@ console.info("Successfully authenticated:", session);
 ```
 
 ```csharp fct_label=".NET"
-const string customid = "some-custom-id";
-var session = await client.AuthenticateCustomAsync(customid);
-System.Console.WriteLine("Session {0}", session);
+const string customId = "some-custom-id";
+var session = await client.AuthenticateCustomAsync(customId);
+System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
 ```csharp fct_label="Unity"
-const string customid = "some-custom-id";
-var session = await client.AuthenticateCustomAsync(customid);
-Debug.LogFormat("Session: '{0}'", session.AuthToken);
+const string customId = "some-custom-id";
+var session = await client.AuthenticateCustomAsync(customId);
+Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -965,14 +967,14 @@ console.info("Session expired?", session.isexpired(Date.now() / 1000));
 ```csharp fct_label=".NET"
 const string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 var session = await client.AuthenticateDeviceAsync(id);
-System.Console.WriteLine("id '{0}' username '{1}'", session.UserId, session.Username);
+System.Console.WriteLine("Id '{0}' Username '{1}'", session.UserId, session.Username);
 System.Console.WriteLine("Session expired? {0}", session.IsExpired);
 ```
 
 ```csharp fct_label="Unity"
-var deviceid = SystemInfo.deviceUniqueIdentifier;
-var session = await client.AuthenticateDeviceAsync(deviceid);
-Debug.LogFormat("id '{0}' username '{1}'", session.UserId, session.Username);
+var deviceId = SystemInfo.deviceUniqueIdentifier;
+var session = await client.AuthenticateDeviceAsync(deviceId);
+Debug.LogFormat("Id '{0}' Username '{1}'", session.UserId, session.Username);
 Debug.LogFormat("Session expired? {0}", session.IsExpired);
 ```
 
@@ -1057,19 +1059,19 @@ You can only send messages to the server once you've connected a client.
 ```js fct_label="JavaScript"
 var socket = client.createSocket();
 session = await socket.connect(session);
-console.info("Successfully connected.");
+console.info("Socket connected.");
 ```
 
 ```csharp fct_label=".NET"
-var socket = client.CreateWebSocket();
-session = await socket.ConnectAsync(session);
-System.Console.WriteLine("Successfully connected.");
+var socket = Socket.From(client);
+await socket.ConnectAsync(session);
+System.Console.WriteLine("Socket connected.");
 ```
 
 ```csharp fct_label="Unity"
-var socket = client.CreateWebSocket();
-session = await socket.ConnectAsync(session);
-Debug.Log("Successfully connected.");
+var socket = client.NewSocket();
+await socket.ConnectAsync(session);
+Debug.Log("Socket connected.");
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -1082,7 +1084,7 @@ rtClient = client->createRtClient(port, NRtTransportPtr(new NWebSocket()));
 // define listener in your class as NRtDefaultClientListener listener;
 listener.setConnectCallback([]()
 {
-  CCLOG("Socket connected");
+  CCLOG("Socket connected.");
 });
 rtClient->setListener(&listener);
 rtClient->connect(session, createStatus);
@@ -1093,7 +1095,7 @@ const socket = client.createSocket();
 socket.connect(session)
   .then(
       function() {
-        cc.log("connected");
+        cc.log("Socket connected.");
       },
       function(error) {
         cc.error("connect failed:", JSON.stringify(error));
@@ -1109,7 +1111,7 @@ rtClient = client->createRtClient(port);
 // define listener in your class as NRtDefaultClientListener listener;
 listener.setConnectCallback([]()
 {
-  cout << "Socket connected" << endl;
+  cout << "Socket connected." << endl;
 });
 rtClient->setListener(&listener);
 rtClient->connect(session, createStatus);
@@ -1124,34 +1126,34 @@ socket.connect(session, new AbstractSocketListener() {}).get();
 // Requires Nakama 1.x
 let session : Session = someSession // obtained from register or login.
 client.connect(with: session).then { _ in
-  NSLog("Successfully connected.")
+  NSLog("Socket connected.")
 });
 ```
 
 ### Expiry
 
-Sessions can expire and become invalid. If this happens, you'll need to reauthenticate with the server and get a new session.
+Sessions can expire and become invalid. If this happens you'll need to reauthenticate with the server and get a new session. You can adjust the session lifetime on the server with the cmdflag "--session.token_expiry_sec 604800". See the [Session configuration](#install-configuration.md#session) page.
 
 You can check the expiry of a session using the following code:
 
 ```js fct_label="JavaScript"
-const nowUnixEpoch = Math.floor(Date.now() / 1000);
-if (session.isexpired(nowUnixEpoch)) {
+const nowUnixTime = Math.floor(Date.now() / 1000);
+if (session.isexpired(nowUnixTime)) {
   console.log("Session has expired. Must reauthenticate!");
 }
 ```
 
 ```csharp fct_label=".NET"
-var nowUnixEpoch = DateTime.UtcNow;
-if (session.HasExpired(nowUnixEpoch))
+var nowUnixTime = DateTime.UtcNow;
+if (session.HasExpired(nowUnixTime))
 {
   System.Console.WriteLine("Session has expired. Must reauthenticate!");
 }
 ```
 
 ```csharp fct_label="Unity"
-var nowUnixEpoch = DateTime.UtcNow;
-if (session.HasExpired(nowUnixEpoch))
+var nowUnixTime = DateTime.UtcNow;
+if (session.HasExpired(nowUnixTime))
 {
   Debug.Log("Session has expired. Must reauthenticate!");
 }
@@ -1165,8 +1167,8 @@ if (session->isExpired())
 ```
 
 ```js fct_label="Cocos2d-x JS"
-const nowUnixEpoch = Math.floor(Date.now() / 1000);
-if (session.isexpired(nowUnixEpoch)) {
+const nowUnixTime = Math.floor(Date.now() / 1000);
+if (session.isexpired(nowUnixTime)) {
   cc.log("Session has expired. Must reauthenticate!");
 }
 ```
@@ -1184,8 +1186,6 @@ if (session.isExpired(new Date())) {
 }
 ```
 
-You can also prolong the session expiry time by changing the `token_expiry_sec` in the [Session configuration](#install-configuration.md#session) page.
-
 ## Link or unlink
 
 You can link one or more other login option to the current user. This makes it easy to support multiple logins with each user and easily identify a user across devices.
@@ -1193,7 +1193,7 @@ You can link one or more other login option to the current user. This makes it e
 You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/link/custom \
+curl "http://127.0.0.1:7350/v2/account/link/custom" \
   --header 'Authorization: Bearer $session' \
   --data '{"id":"some-custom-id"}'
 ```
@@ -1205,15 +1205,15 @@ console.log("Successfully linked custom ID to current user.");
 ```
 
 ```csharp fct_label=".NET"
-const string customid = "some-custom-id";
-await client.LinkCustomAsync(session, customid);
-System.Console.WriteLine("Id '{0}' linked for user '{1}'", customid, session.UserId);
+const string customId = "some-custom-id";
+await client.LinkCustomAsync(session, customId);
+System.Console.WriteLine("Id '{0}' linked for user '{1}'", customId, session.UserId);
 ```
 
 ```csharp fct_label="Unity"
 const string customid = "some-custom-id";
-await client.LinkCustomAsync(session, customid);
-Debug.LogFormat("Id '{0}' linked for user '{1}'", customid, session.UserId);
+await client.LinkCustomAsync(session, customId);
+Debug.LogFormat("Id '{0}' linked for user '{1}'", customId, session.UserId);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -1258,9 +1258,9 @@ client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
 ```
 
 ```java fct_label="Java"
-const string customid = "some-custom-id";
-client.linkCustom(session, customid).get();
-System.out.format("Id %s linked for user %s", customid, session.getUserId());
+String customId = "some-custom-id";
+client.linkCustom(session, customId).get();
+System.out.format("Id %s linked for user %s", customId, session.getUserId());
 ```
 
 ```swift fct_label="Swift"
@@ -1282,14 +1282,14 @@ Content-Type: application/json
 Authorization: Bearer <session token>
 
 {
-  "id":"some-custom-id"
+    "id":"some-custom-id"
 }
 ```
 
 You can unlink any linked login options for the current user.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account/unlink/custom \
+curl "http://127.0.0.1:7350/v2/account/unlink/custom" \
   --header 'Authorization: Bearer $session' \
   --data '{"id":"some-custom-id"}'
 ```
@@ -1301,15 +1301,15 @@ console.info("Successfully unlinked custom ID from the current user.");
 ```
 
 ```csharp fct_label=".NET"
-const string customid = "some-custom-id";
-await client.UnlinkCustomAsync(session, customid);
-System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customid, session.UserId);
+const string customId = "some-custom-id";
+await client.UnlinkCustomAsync(session, customId);
+System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
 ```
 
 ```csharp fct_label="Unity"
-const string customid = "some-custom-id";
-await client.UnlinkCustomAsync(session, customid);
-Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customid, session.UserId);
+const string customId = "some-custom-id";
+await client.UnlinkCustomAsync(session, customId);
+Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
 ```
 
 
@@ -1355,9 +1355,9 @@ client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
 ```
 
 ```java fct_label="Java"
-const string customid = "some-custom-id";
-client.unlinkCustom(session, customid).get();
-System.out.format("Id %s unlinked for user %s", customid, session.getUserId());
+String customId = "some-custom-id";
+client.unlinkCustom(session, customId).get();
+System.out.format("Id %s unlinked for user %s", customId, session.getUserId());
 ```
 
 ```swift fct_label="Swift"

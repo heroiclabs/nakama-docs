@@ -12,16 +12,15 @@ The simplest approach is to write records in the success callback for the regist
 This code demonstrates how to do it with a condensed example. In real application code you'll break up the [authentication](authentication.md) and connect logic from the storage writes based on how you manage connect and reconnect.
 
 ```csharp fct_label="Unity"
-var deviceid = SystemInfo.deviceUniqueIdentifier;
-var session = await client.AuthenticateDeviceAsync($"{deviceid}");
+var deviceId = SystemInfo.deviceUniqueIdentifier;
+var session = await client.AuthenticateDeviceAsync(deviceId);
 
 var json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 var object = new WriteStorageObject = {
   "collection" = "wallets",
   "key" = "mywallet",
-  "value = json
+  "value" = json
 };
-
 const storageWriteAck = await client.WriteStorageObjectsAsync(session, objects);
 Debug.Log("Successfully setup new user's records.");
 ```

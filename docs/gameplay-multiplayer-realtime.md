@@ -17,12 +17,12 @@ console.log("Created match with ID:", response.match.match_id);
 
 ```csharp fct_label=".NET"
 var match = await socket.CreateMatchAsync();
-Console.WriteLine("Created match with ID '{0}'.", match.Id);
+Console.WriteLine("New match with id '{0}'.", match.Id);
 ```
 
 ```csharp fct_label="Unity"
 var match = await socket.CreateMatchAsync();
-Debug.LogFormat("Created match with ID '{0}'.", match.Id);
+Debug.LogFormat("New match with id '{0}'.", match.Id);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -78,18 +78,18 @@ connectedOpponents.forEach((opponent) => {
 ```csharp fct_label=".NET"
 var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
-foreach (var presence in match.presences)
+foreach (var presence in match.Presences)
 {
-  Console.WriteLine("User id '{0}' name '{1}'.", presence.UserId, presence.Username);
+    Console.WriteLine("User id '{0}' name '{1}'.", presence.UserId, presence.Username);
 }
 ```
 
 ```csharp fct_label="Unity"
 var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
-foreach (var presence in match.presences)
+foreach (var presence in match.Presences)
 {
-  Debug.LogFormat("User id '{0}' name '{1}'.", presence.UserId, presence.Username);
+    Debug.LogFormat("User id '{0}' name '{1}'.", presence.UserId, presence.Username);
 }
 ```
 
@@ -180,26 +180,32 @@ socket.onmatchpresence = (presences) => {
 ```
 
 ```csharp fct_label=".NET"
-var connectedOpponents = new List<IUserPresence>(0);
-socket.OnMatchPresence += (_, presence) =>
+var connectedOpponents = new List<IUserPresence>(2);
+socket.ReceivedMatchPresence += presenceEvent =>
 {
-  connectedOpponents.AddRange(presence.Joins);
-  foreach (var leave in presence.Leaves)
-  {
-    connectedOpponents.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
-  };
+    foreach (var presence in presenceEvent.Leaves)
+    {
+        connectedOpponents.Remove(presence);
+    }
+    connectedOpponents.AddRange(presenceEvent.Joins);
+    // Remove yourself from connected opponents.
+    connectedOpponents.Remove(self);
+    Console.WriteLine("Connected opponents: [{0}]", string.Join(",\n  ", connectedOpponents));
 };
 ```
 
 ```csharp fct_label="Unity"
-var connectedOpponents = new List<IUserPresence>(0);
-socket.OnMatchPresence += (_, presence) =>
+var connectedOpponents = new List<IUserPresence>(2);
+socket.ReceivedMatchPresence += presenceEvent =>
 {
-  connectedOpponents.AddRange(presence.Joins);
-  foreach (var leave in presence.Leaves)
-  {
-    connectedOpponents.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
-  };
+    foreach (var presence in presenceEvent.Leaves)
+    {
+        connectedOpponents.Remove(presence);
+    }
+    connectedOpponents.AddRange(presenceEvent.Joins);
+    // Remove yourself from connected opponents.
+    connectedOpponents.Remove(self);
+    Debug.LogFormat("Connected opponents: [{0}]", string.Join(",\n  ", connectedOpponents));
 };
 ```
 
@@ -285,10 +291,10 @@ socket.send({ match_data_send: { match_id: id, op_code: opCode, data: data } });
 
 ```csharp fct_label=".NET"
 // using Nakama.TinyJson;
-var id = "<matchid>";
+var matchId = "<matchid>";
 var opCode = 1;
 var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
-socket.SendMatchState(id, opCode, newState);
+socket.SendMatchStateAsync(matchId, opCode, newState);
 ```
 
 ```csharp fct_label="Unity"
@@ -296,7 +302,7 @@ socket.SendMatchState(id, opCode, newState);
 var id = "<matchid>";
 var opCode = 1;
 var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
-socket.SendMatchState(id, opCode, newState);
+socket.SendMatchStateAsync(matchId, opCode, newState);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -348,28 +354,36 @@ socket.onmatchdata = (result) => {
 ```
 
 ```csharp fct_label=".NET"
-socket.OnMatchState = (_, state) => {
-  var content = System.Text.Encoding.UTF8.GetString(state.State);
-  switch (state.OpCode) {
-    case 101:
-      Console.WriteLine("A custom opcode.");
-      break;
-    default:
-      Console.WriteLine("User {0} sent {1}", state.UserPresence.Username, content);
-  }
+// Use whatever decoder for your message contents.
+var enc = System.Text.Encoding.UTF8;
+socket.ReceivedMatchState += newState =>
+{
+    var content = enc.GetString(newState.State);
+    switch (newState.OpCode)
+    {
+        case 101:
+            Console.WriteLine("A custom opcode.");
+            break;
+        default:
+            Console.WriteLine("User '{0}'' sent '{1}'", newState.UserPresence.Username, content);
+    }
 };
 ```
 
 ```csharp fct_label="Unity"
-socket.OnMatchState = (_, state) => {
-  var content = System.Text.Encoding.UTF8.GetString(state.State);
-  switch (state.OpCode) {
-    case 101:
-      Debug.Log("A custom opcode.");
-      break;
-    default:
-      Debug.LogFormat("User {0} sent {1}", state.UserPresence.Username, content);
-  }
+// Use whatever decoder for your message contents.
+var enc = System.Text.Encoding.UTF8;
+socket.ReceivedMatchState += newState =>
+{
+    var content = enc.GetString(newState.State);
+    switch (newState.OpCode)
+    {
+        case 101:
+            Debug.Log("A custom opcode.");
+            break;
+        default:
+            Debug.LogFormat("User '{0}'' sent '{1}'", newState.UserPresence.Username, content);
+    }
 };
 ```
 

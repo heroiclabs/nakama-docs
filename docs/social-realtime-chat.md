@@ -38,18 +38,20 @@ socket.onchannelmessage = (message) => {
 ```
 
 ```csharp fct_label=".NET"
-socket.OnChannelMessage = (_, message) =>
+socket.ReceivedChannelMessage += message =>
 {
-  Console.WriteLine("Received a message on channel '{0}'", message.channelId);
-  Console.WriteLine("Message content: '{1}'", message.content);
+    Console.WriteLine("Received: {0}", message);
+    Console.WriteLine("Message has channel id: {0}", message.ChannelId);
+    Console.WriteLine("Message content: {0}", message.Content);
 };
 ```
 
 ```csharp fct_label="Unity"
-socket.OnChannelMessage = (_, message) =>
+socket.ReceivedChannelMessage += message =>
 {
-  Debug.LogFormat("Received a message on channel '{0}'", message.channelId);
-  Debug.LogFormat("Message content: '{1}'", message.content);
+    Debug.LogFormat("Received: {0}", message);
+    Debug.LogFormat("Message has channel id: {0}", message.ChannelId);
+    Debug.LogFormat("Message content: {0}", message.Content);
 };
 ```
 
@@ -106,14 +108,14 @@ if (message.code != 0) {
 ```
 
 ```csharp fct_label=".NET"
-if (message.code != 0)
+if (message.Code != 0)
 {
   Console.WriteLine("Received message with code '{0}'", message.Code);
 }
 ```
 
 ```csharp fct_label="Unity"
-if (message.code != 0)
+if (message.Code != 0)
 {
   Debug.LogFormat("Received message with code '{0}'", message.Code);
 }
@@ -186,7 +188,7 @@ const response = await socket.send({ channel_join: {
     persistence: true,
     hidden: false
 } });
-console.log("You can now send messages to channel id:", response.channel.id);
+console.log("Now connected to channel id: '%o'", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
@@ -194,7 +196,7 @@ const roomname = "MarvelMovieFans";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
+Console.WriteLine("Now connected to channel id: '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
@@ -202,13 +204,13 @@ const roomname = "MarvelMovieFans";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
+Debug.LogFormat("Now connected to channel id: '{0}'", channel.Id);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
 auto successCallback = [](NChannelPtr channel)
 {
-  CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
+  CCLOG("Now connected to channel id: '%s'", channel->id.c_str());
 };
 
 string roomname = "MarvelMovieFans";
@@ -229,7 +231,7 @@ socket.send({ channel_join: {
     persistence: true,
     hidden: false
 } }).then(function(response) {
-      cc.log("You can now send messages to channel id:", response.channel.id);
+      cc.log("Now connected to channel id: ", response.channel.id);
     },
     function(error) {
       cc.error("join channel failed:", JSON.stringify(error));
@@ -239,7 +241,7 @@ socket.send({ channel_join: {
 ```cpp fct_label="C++"
 auto successCallback = [](NChannelPtr channel)
 {
-  std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
+  std::cout << "Now connected to channel id: " << channel->id << std::endl;
 };
 
 string roomname = "MarvelMovieFans";
@@ -257,7 +259,7 @@ String roomname = "MarvelMovieFans";
 boolean persistence = true;
 boolean hidden = false;
 Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidden).get();
-System.out.format("You can now send messages to channel id %s", channel.getId());
+System.out.format("Now connected to channel id: %s", channel.getId());
 ```
 
 ```swift fct_label="Swift"
@@ -294,7 +296,7 @@ const response = await socket.send({ channel_join: {
     persistence: true,
     hidden: false
 } });
-console.log("You can now send messages to channel id:", response.channel.id);
+console.log("You can now send messages to channel id: ", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
@@ -302,7 +304,7 @@ const groupId = "<group id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
-Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
+Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
@@ -310,7 +312,7 @@ const groupId = "<group id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
-Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
+Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -410,7 +412,7 @@ const userId = "<user id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
-Console.WriteLine("You can now send messages to channel id '{0}'", channel.Id);
+Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
@@ -418,7 +420,7 @@ const userId = "<user id>";
 const persistence = true;
 const hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
-Debug.LogFormat("You can now send messages to channel id '{0}'", channel.Id);
+Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -535,32 +537,36 @@ onlineUsers = onlineUsers.filter((user) => {
 ```
 
 ```csharp fct_label=".NET"
-var connectedUsers = new List<IUserPresence>();
-socket.OnChannelPresence += (_, presenceChange) =>
+var roomUsers = new List<IUserPresence>(10);
+socket.ReceivedChannelPresence += presenceEvent =>
 {
-  connectedUsers.AddRange(presenceChange.Joins);
-  foreach (var leave in presenceChange.Leaves)
-  {
-    connectedUsers.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
-  };
+    foreach (var presence in presenceEvent.Leaves)
+    {
+        roomUsers.Remove(presence);
+    }
+
+    roomUsers.AddRange(presenceEvent.Joins);
+    Console.WriteLine("Room users: [{0}]", string.Join(",\n  ", roomUsers));
 };
 
-const roomname = "PizzaFans";
+const roomName = "PizzaFans";
 const persistence = true;
 const hidden = false;
-var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-connectedUsers.AddRange(channel.Presences);
+var channel = await socket.JoinChatAsync(roomName, ChannelType.Room, persistence, hidden);
+roomUsers.AddRange(channel.Presences);
 ```
 
 ```csharp fct_label="Unity"
-var currentUsers = new List<IUserPresence>();
-socket.OnChannelPresence += (_, presence) =>
+var roomUsers = new List<IUserPresence>(10);
+socket.ReceivedChannelPresence += presenceEvent =>
 {
-  connectedUsers.AddRange(presenceChange.Joins);
-  foreach (var leave in presenceChange.Leaves)
-  {
-    connectedUsers.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
-  };
+    foreach (var presence in presenceEvent.Leaves)
+    {
+        roomUsers.Remove(presence);
+    }
+
+    roomUsers.AddRange(presenceEvent.Joins);
+    Debug.LogFormat("Room users: [{0}]", string.Join(",\n  ", roomUsers));
 };
 
 const roomname = "PizzaFans";
@@ -895,7 +901,7 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
     A user does not have to join a chat channel to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/channel?channel_id=<channelId> \
+curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>" \
   -H 'authorization: Bearer <session token>'
 ```
 
@@ -913,7 +919,7 @@ var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
 {
-  Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+    Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
 }
 ```
 
@@ -922,7 +928,7 @@ var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
 {
-  Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+    Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
 }
 ```
 
@@ -1016,7 +1022,7 @@ A cursor can be used to page after a batch of messages for the next set of resul
 We recommend you only list the most recent 100 messages in your UI. A good user experience could be to fetch the next 100 older messages when the user scrolls to the bottom of your UI panel.
 
 ```sh fct_label="cURL"
-curl "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>" \
+curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
@@ -1042,15 +1048,16 @@ var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
 {
-  Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+    Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
 }
 
 if (!string.IsNullOrEmpty(result.NextCursor)) {
-  // Get the next 10 messages.
-  var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
-  result.messages.forEach((message) => {
-    Console.WriteLine("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
-  });
+    // Get the next 10 messages.
+    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
+    foreach (var m in messages)
+    {
+        Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
+    }
 };
 ```
 
@@ -1059,15 +1066,16 @@ var channelId = "roomname";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
 {
-  Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
+    Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
 }
 
 if (!string.IsNullOrEmpty(result.NextCursor)) {
-  // Get the next 10 messages.
-  var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
-  result.messages.forEach((message) => {
-    Debug.LogFormat("Message has ID '{0}' and content '{1}'", m.MessageId, m.Content);
-  });
+    // Get the next 10 messages.
+    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
+    foreach (var m in messages)
+    {
+        Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
+    }
 };
 ```
 

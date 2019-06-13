@@ -9,7 +9,7 @@ A user can own [records](storage-access-controls.md), share public information w
 When a user has a session you can retrieve their account. The profile contains a variety of information which includes various "linked" social providers.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account \
+curl -X GET "http://127.0.0.1:7350/v2/account" \
   -H 'authorization: Bearer <session token>'
 ```
 
@@ -24,14 +24,14 @@ console.info("User's wallet:", account.wallet);
 var account = await client.GetAccountAsync(session);
 var user = account.User;
 System.Console.WriteLine("User id '{0}' username '{1}'", user.Id, user.Username);
-System.Console.WriteLine("User wallet {0}", account.Wallet);
+System.Console.WriteLine("User wallet: '{0}'", account.Wallet);
 ```
 
 ```csharp fct_label="Unity"
 var account = await client.GetAccountAsync(session);
 var user = account.User;
 Debug.LogFormat("User id '{0}' username '{1}'", user.Id, user.Username);
-Debug.LogFormat("User wallet {0}", account.Wallet);
+Debug.LogFormat("User wallet: '{0}'", account.Wallet);
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
@@ -138,7 +138,7 @@ local content = {
 
 local status, err = pcall(nk.wallet_update, user_id, content)
 if (not status) then
-  nk.logger_info(("User wallet update error: %q"):format(err))
+    nk.logger_info(("User wallet update error: %q"):format(err))
 end
 ```
 
@@ -156,7 +156,7 @@ Nakama can report back user online indicators in two ways:
 You can fetch one or more users by their IDs or handles. This is useful for displaying public profiles with other users.
 
 ```sh fct_label="cURL"
-curl "http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1" \
+curl -X GET "http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1" \
   -H 'authorization: Bearer <session token>'
 ```
 
@@ -174,7 +174,7 @@ var facebookIds = new[] {"facebookid1"};
 var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
 foreach (var u in result.Users)
 {
-  System.Console.WriteLine("User id '{0}' username '{1}'", u.Id, u.Username);
+    System.Console.WriteLine("User id '{0}' username '{1}'", u.Id, u.Username);
 }
 ```
 
@@ -185,7 +185,7 @@ var facebookIds = new[] {"facebookid1"};
 var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
 foreach (var u in result.Users)
 {
-  Debug.LogFormat("User id '{0}' username '{1}'", u.Id, u.Username);
+    Debug.LogFormat("User id '{0}' username '{1}'", u.Id, u.Username);
 }
 ```
 
@@ -284,7 +284,7 @@ end
 When a user is registered most of their profile is setup with default values. A user can update their own profile to change fields but cannot change any other user's profile.
 
 ```sh fct_label="cURL"
-curl http://127.0.0.1:7350/v2/account \
+curl -X POST "http://127.0.0.1:7350/v2/account" \
   -H 'authorization: Bearer <session token>' \
   --data '{
     "display_name": "My new name",
@@ -320,7 +320,7 @@ client->updateAccount(session,
     opt::nullopt,
     "My new name", // display name
     "http://graph.facebook.com/avatar_url", // avatar URL
-    opt::nullopt, 
+    opt::nullopt,
     "San Francisco" // location
     );
 ```
@@ -338,7 +338,7 @@ client->updateAccount(session,
     opt::nullopt,
     "My new name", // display name
     "http://graph.facebook.com/avatar_url", // avatar URL
-    opt::nullopt, 
+    opt::nullopt,
     "San Francisco" // location
     );
 ```
