@@ -21,11 +21,11 @@ var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
 ```
 
 ```cpp fct_label="Cocos2d-x C++"
-DefaultClientParameters parameters;
+NClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
-parameters.port = 7349;
-NClientPtr client = createDefaultClient(parameters);
+parameters.port = DEFAULT_PORT;
+NClientPtr client = NCocosHelper::createDefaultClient(parameters);
 ```
 
 ```js fct_label="Cocos2d-x JS"
@@ -39,10 +39,10 @@ var client = new nakamajs.Client(serverkey, host, port, useSSL, timeout);
 ```
 
 ```cpp fct_label="C++"
-DefaultClientParameters parameters;
+NClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
-parameters.port = 7349;
+parameters.port = DEFAULT_PORT;
 NClientPtr client = createDefaultClient(parameters);
 ```
 

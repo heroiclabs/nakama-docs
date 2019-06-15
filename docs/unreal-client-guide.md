@@ -67,10 +67,10 @@ using namespace Nakama;
 The client object is used to execute all logic against the server.
 
 ```cpp
-DefaultClientParameters parameters;
+NClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
-parameters.port = 7350;
+parameters.port = DEFAULT_PORT;
 NClientPtr client = createDefaultClient(parameters);
 ```
 
@@ -79,7 +79,7 @@ NClientPtr client = createDefaultClient(parameters);
 
 ```cpp
 // Quickly setup a client for a local server.
-NClientPtr client = createDefaultClient(DefaultClientParameters());
+NClientPtr client = createDefaultClient(NClientParameters());
 ```
 
 ## Tick
@@ -108,7 +108,7 @@ To authenticate you should follow our recommended pattern in your client code:
 &nbsp;&nbsp; 1\. Build an instance of the client.
 
 ```cpp
-NClientPtr client = createDefaultClient(DefaultClientParameters());
+NClientPtr client = createDefaultClient(NClientParameters());
 ```
 
 &nbsp;&nbsp; 2\. Authenticate a user. By default Nakama will try and create a user if it doesn't exist.
@@ -181,10 +181,9 @@ The client can create one or more realtime clients. Each realtime client can hav
     The socket is exposed on a different port on the server to the client. You'll need to specify a different port here to ensure that connection is established successfully.
 
 ```cpp
-int port = 7350; // different port to the main API port
 bool createStatus = true; // if the server should show the user as online to others.
 // define realtime client in your class as NRtClientPtr rtClient;
-rtClient = client->createRtClient(port);
+rtClient = client->createRtClient(DEFAULT_PORT);
 // define listener in your class as NRtDefaultClientListener listener;
 listener.setConnectCallback([]()
 {
