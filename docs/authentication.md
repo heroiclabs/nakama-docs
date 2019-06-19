@@ -740,6 +740,7 @@ Authorization: Basic base64(ServerKey:)
   "bundle_id": "...",
   "timestamp_seconds": 0,
   "salt": "...",
+  "signature": "...",
   "public_key_url": "..."
 }
 ```
