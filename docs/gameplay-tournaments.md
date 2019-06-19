@@ -390,8 +390,9 @@ client->listTournamentRecordsAroundOwner(session, id, ownerId, limit, successCal
 ```java fct_label="Java"
 String id = "someid";
 String ownerId = session.getUserId();
+int expiry = -1;
 int limit = 100;
-TournamentRecordList records = client.listTournamentRecordsAroundOwner(session, id, ownerId, limit).get();
+TournamentRecordList records = client.listTournamentRecordsAroundOwner(session, id, ownerId, expiry, limit).get();
 ```
 
 ```swift fct_label="Swift"
@@ -539,12 +540,12 @@ local metadata = {
 title = "Daily Dash"
 description = "Dash past your opponents for high scores and big rewards!"
 category = 1
-start_time = 0       -- start now
-end_time = 0         -- never end, repeat the tournament each day forever
-duration = 3600      -- in seconds
-max_size = 10000     -- first 10,000 players who join
-max_num_score = 3    -- each player can have 3 attempts to score
-join_required = true -- must join to compete
+start_time = nk.time() / 1000 -- starts now in seconds
+end_time = 0                  -- never end, repeat the tournament each day forever
+duration = 3600               -- in seconds
+max_size = 10000              -- first 10,000 players who join
+max_num_score = 3             -- each player can have 3 attempts to score
+join_required = true          -- must join to compete
 nk.tournament_create(id, sort, operator, duration, reset, metadata, title, description, category,
     start_time, endTime, max_size, max_num_score, join_required)
 ```
@@ -559,12 +560,12 @@ metadata := map[string]interface{}{}
 title := "Daily Dash"
 description := "Dash past your opponents for high scores and big rewards!"
 category := 1
-startTime := 0       // start now
-endTime := 0         // never end, repeat the tournament each day forever
-duration := 3600     // in seconds
-maxSize := 10000     // first 10,000 players who join
-maxNumScore := 3     // each player can have 3 attempts to score
-joinRequired := true // must join to compete
+startTime := time.Now().UTC().Unix() // start now
+endTime := 0                         // never end, repeat the tournament each day forever
+duration := 3600                     // in seconds
+maxSize := 10000                     // first 10,000 players who join
+maxNumScore := 3                     // each player can have 3 attempts to score
+joinRequired := true                 // must join to compete
 err := nk.TournamentCreate(id.String(), sortOrder, operator, resetSchedule, metadata, title,
     description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired)
 if err != nil {
