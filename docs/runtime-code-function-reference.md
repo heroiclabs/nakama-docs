@@ -109,6 +109,9 @@ if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timez
 
 ### aes128
 
+!!!	Note
+		For Go, refer [crypto/aes](https://golang.org/pkg/crypto/aes/)
+
 __aes128_decrypt (input, key)__
 
 AES decrypt input with the key. Key must be 16 bytes long.
