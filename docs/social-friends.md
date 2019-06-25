@@ -326,7 +326,7 @@ This is best used by a moderator system within your community. You could assign 
 
 See the [runtime code basics](runtime-code-basics.md) on how to write server-side code.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local bad_users = {"someuserid", "anotheruserid"}
@@ -334,6 +334,15 @@ local success, err = pcall(nk.users_ban_id, bad_users)
 if (not success) then
   nk.logger_error(("Ban failed: %q"):format(err))
 end
+```
+
+```go fct_label="Go"
+if err := nk.UsersBanId(ctx, []string{
+	"someruserid",
+	"anotheruserid",
+}); err != nil {
+	logger.Error("Ban failed: %s", err.Error())
+}
 ```
 
 ## Friend state

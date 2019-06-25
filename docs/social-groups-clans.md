@@ -702,7 +702,7 @@ Authorization: Bearer <session token>
 
 You can also create a group with server-side code. This can be useful when the group must be created together with some other record or feature.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local metadata = { -- Add whatever custom fields you want.
@@ -722,6 +722,26 @@ local success, err = pcall(nk.group_create, user_id, name, creator_id, lang,
 if (not success) then
     nk.logger_error(("Error when creating group: %q"):format(err))
 end
+```
+
+```go fct_label="Go"
+metadata := make(map[string]interface{})
+metadata["my_custom_field"] = "some value" // Add whatever custom fields you want.
+
+userID := "<user id>"
+creatorID := userID
+name := "pizza-lovers"
+description := "pizza lovers, pineapple haters"
+langTag := "en"
+open := true
+avatarURL := "url://somelink"
+maxCount := 100
+
+if group, err := nk.GroupCreate(ctx, userID, name, creatorID, langTag, description, avatarURL, open, metadata, maxCount); err != nil {
+	logger.Error("Could not create group: %s", err.Error())
+} else {
+	logger.Printf("Created group id %s, name %s with max %d members.", group.Id, group.GetName(), group.GetMaxCount())
+}
 ```
 
 ## Update a group

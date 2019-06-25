@@ -158,7 +158,7 @@ Authorization: Bearer <session token>
 
 A leaderboard can be created via server-side code at startup or within a [registered function](runtime-code-function-reference.md#register-hooks). The ID given to the leaderboard is used to submit scores to it.
 
-```lua
+```lua fct_label="lua"
 local id = "level1"
 local authoritative = false
 local sort = "desc"
@@ -168,6 +168,21 @@ local metadata = {
   weather_conditions = "rain"
 }
 nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
+```
+
+```golang fct_label="golang"
+id := "level1"
+authoritative := false
+sort := "desc"
+operator := "best"
+reset := "0 0 * * 1"
+metadata := make(map[string]interface{})
+
+metadata["weather_conditions"] = "rain"
+
+if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, metadata); err != nil {
+  // Handle error
+}
 ```
 
 ## Submit a score

@@ -140,7 +140,7 @@ Authorization: Bearer <session token>
 
 You can also use the code runtime to fetch an object. The code runtime is exempt from the standard rules around access permissions because it is run by the server as authoritative code.
 
-```lua
+```lua fct_label="Lua"
 local object_ids = {
   { collection = "configuration", key = "config", user_id = nil },
 }
@@ -149,6 +149,24 @@ for _, r in ipairs(objects) do
   local message = ("value: %q"):format(r.Value)
   print(message)
 end
+```
+
+```go fct_label="Go"
+objectIds := []*runtime.StorageRead{
+	&runtime.StorageRead{
+		Collection: "configuration",
+		Key: "config",
+	},
+}
+
+records, err := nk.StorageRead(ctx, objectIds)
+if err != nil {
+	// Handle error
+} else {
+	for _, record := range records {
+		logger.Printf("read: %d, write: %d, value: %s", record.PermissionRead, record.PermissionWrite, record.Value)
+	}
+}
 ```
 
 A user who writes a storage object from a client will be set as the owner by default while from the code runtime the owner is implied to be the system unless explicitly set.
@@ -332,10 +350,28 @@ Authorization: Bearer <session token>
 
 You can store an object with custom permissions from the code runtime.
 
-```lua
+```lua fct_label="Lua"
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
 local new_records = {
   { collection = "battle", key = "army", user_id = user_id, value = {}, permission_read = 2, permission_write = 1 }
 }
 nk.storage_write(new_records)
+```
+
+```go fct_label="Go"
+userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user ID.
+objectIds := []*runtime.StorageWrite{
+	&runtime.StorageWrite{
+		Collection:      "battle",
+		Key:             "army",
+		UserID:          userID,
+		Value:           "{}", // Value must be a valid JSON encoded
+		PermissionRead:  2,
+		PermissionWrite: 1,
+	},
+}
+
+if _, err := nk.StorageWrite(ctx, objectIds); err != nil {
+	// Handle error
+}
 ```

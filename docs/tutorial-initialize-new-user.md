@@ -35,28 +35,46 @@ Another way to write records for the new user is to run server-side code after r
 
 The ["register_after"](runtime-code-function-reference.md#register-hooks) hook can be used with one of the `"authenticaterequest_*"` message types to tell the server to run a function after that message has been processed. It's important to note that the server does not distinguish between register and login messages so we use a [conditional write](storage-collections.md#conditional-writes) to store the records.
 
-```lua
-local nk = require("nakama")
-
+```lua fct_label="Lua"
 local function initialize_user(context, _payload)
-  local value = {
-    coins = 100,
-    gems = 10,
-    artifacts = 0
+  local changeset = {
+    coins = 10, -- Add 10 coins to the user's wallet.
+    gems = 5   -- Add 5 gems from the user's wallet.
+    artifacts = 0 -- No artifacts to start with.
   }
-  local record = {
-    collection = "wallets",
-    record = "mywallet",
-    user_id = context.user_id,
-    value = value,
-    version = "*"   -- only write record if one doesn't already exist.
-  }
-  pcall(nk.storage_write, { record }) -- write record, ignore errors.
+  local metadata = {}
+  nk.wallet_update(context.user_id, changeset, metadata, true)
 end
 
 -- change to whatever message name matches your authentication type.
 nk.register_req_after(initialize_user, "authenticaterequest_device")
 ```
+
+```go fct_label="Go"
+func InitUser(ctx context.Context, logger Logger, db *sql.DB, nk NakamaModule, out *api.Session, in *api.AuthenticateDeviceRequest) error {
+  userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+  if !ok {
+    // If userid not found in context, invalid session return error
+    return "", errors.New("Invalid context")
+  }
+  changeset := map[string]interface{}{
+  	"coins": 10, // Add 10 coins to the user's wallet.
+  	"gems":  5, // Add 5 gems from the user's wallet.
+    "artifacts": 0, // No artifacts to start with.
+  }
+  metadata := map[string]interface{}{"game_result": "won"}
+  if err := nk.WalletUpdate(ctx, userID, changeset, metadata, true); err != nil {
+  	// Handle error
+  }  
+}
+
+// Register after hook in InitModule
+if err := initializer.RegisterAfterAuthenticateDevice(InitUser); err != nil {
+  logger.Error("Unable to register init user, %s", err)
+  return err
+}
+```
+
 
 This approach avoids the tradeoff with client disconnects but requires a database write to happen after every login or register message. This could be acceptable depending on how frequently you write data to the storage engine and can be minimized if you [cache a user's session](authentication.md#sessions) for quick reconnects.
 
