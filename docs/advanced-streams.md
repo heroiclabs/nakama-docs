@@ -222,7 +222,7 @@ The server can place users on any number of streams. To add a user to a stream t
 
 As an example we can register an RPC function that will place the user that calls it on a custom stream.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local function join(context, _)
   local stream_id = { mode = 123, label = "my custom stream" }
   local hidden = false
@@ -232,35 +232,32 @@ end
 nk.register_rpc(join, "join")
 ```
 
-```golang fct_label="golang"
-// RPC code
+```golang fct_label="Go"
 func JoinStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
-		// If userid not found in context, invalid session return error
+		// If user ID is not found, RPC was called without a session token.
 		return "", errors.New("Invalid context")
 	}
-
 	sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
 	if !ok {
-		// If sessionid not found in context, invalid session return error
+		// If user ID is not found, RPC was not called over a connected socket.
 		return "", errors.New("Invalid context")
 	}
 
   mode := 123
 	hidden := false
 	persistence := false
-
-	if _, err := nk.StreamUserJoin(mode, "Some subject", "Some subcontext", "My custom stream label", userId, sessionId, hidden, persistence, ""); err != nil {
+	if _, err := nk.StreamUserJoin(mode, "", "", "label", userId, sessionId, hidden, persistence, ""); err != nil {
 		return "", err
 	}
 
 	return "Success", nil
 }
 
-// Register RPC in InitModule
+// Register as RPC function, this call should be in InitModule.
 if err := initializer.RegisterRpc("join", JoinStream); err != nil {
-  logger.Error("Unable to register join, %v", err)
+  logger.Error("Unable to register: %v", err)
   return err
 }
 ```
@@ -273,7 +270,7 @@ Leaving streams is also controlled by the server. To remove a user from a stream
 
 As an example we can register an RPC function that will remove the user that calls it from the custom stream.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local function leave(context, _)
   local stream_id = { mode = 123, label = "my custom stream" }
   nk.stream_user_leave(context.user_id, context.session_id, stream_id)
@@ -281,32 +278,31 @@ end
 nk.register_rpc(leave, "leave")
 ```
 
-```golang fct_label="golang"
+```golang fct_label="Go"
 // RPC Code
 func LeaveStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-	if !ok {
-		// If userid not found in context, invalid session return error
-		return "", errors.New("Invalid context")
-	}
+  if !ok {
+    // If user ID is not found, RPC was called without a session token.
+    return "", errors.New("Invalid context")
+  }
+  sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
+  if !ok {
+    // If user ID is not found, RPC was not called over a connected socket.
+    return "", errors.New("Invalid context")
+  }
 
-	sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
-	if !ok {
-		// If sessionid not found in context, invalid session return error
-		return "", errors.New("Invalid context")
-	}
-
-	if err := nk.StreamUserLeave(123, "Some subject", "Some subcontext", "My custom stream label", userId, sessionId); err != nil {
+	if err := nk.StreamUserLeave(123, "", "", "label", userId, sessionId); err != nil {
 		return "", err
 	}
 
 	return "Success", nil
 }
 
-// Register RPC in InitModule
+// Register as RPC function, this call should be in InitModule.
 if err := initializer.RegisterRpc("leave", LeaveStream); err != nil {
-    logger.Error("Unable to register leave, %v", err)
-    return err
+  logger.Error("Unable to register: %v", err)
+  return err
 }
 ```
 
@@ -319,24 +315,18 @@ If this user+session is not a member of the stream the operation will be a no-op
 
 The server can send data to a stream through a function call. The message will be delivered to all users present on the stream.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 local payload = nk.json_encode({ some = "data" })
 nk.stream_send(stream_id, payload)
 ```
 
-```golang fct_label="golang"
+```golang fct_label="Go"
 mode := uint8(123)
-subject := "Some subject"
-subcontext := "Some subcontext"
-label := "My custom stream label"
-
-// data is some string (ideally json encoded) that is to be sent over stream
-// Last var in the function is list of presences.
-// Provide a list to send message to selected members, leave it 'nil' to send message to all
-if err := nk.StreamSend(mode, subject, subcontext, label, data, nil); err != nil {
-  //Handle error here.
-}
+label := "label"
+// Data does not have to be JSON, but it's a convenient format.
+data := "{\"some\":\"data\"}"
+nk.StreamSend(mode, "", "", label, data, nil)
 ```
 
 If the stream is empty the operation will be a no-op.
@@ -348,40 +338,32 @@ If the stream is empty the operation will be a no-op.
 
 Closing a stream removes all presences currently on it. It can be useful to explicitly close a stream and enable the server to reclaim resources more quickly.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 nk.stream_close(stream_id)
 ```
 
-```golang fct_label="golang"
+```golang fct_label="Go"
 mode := uint8(123)
-subject := "Some subject"
-subcontext := "Some subcontext"
-label := "My custom stream label"
-
-if err := nk.StreamClose(mode, subject, subcontext, label); err != nil {
-  // Handle error here
-}
+label := "label"
+nk.StreamClose(mode, "", "", label)
 ```
 
 ## Counting stream presences
 
 The server can peek at the presences on a stream to obtain a quick count without processing the full list of stream presences.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 local count = nk.stream_count(stream_id)
 ```
 
-```golang fct_label="golang"
+```golang fct_label="Go"
 mode := uint8(123)
-subject := "Some subject"
-subcontext := "Some subcontext"
-label := "My custom stream label"
-
-count, err := nk.StreamCount(mode, subject, subcontext, label)
+label := "label"
+count, err := nk.StreamCount(mode, "", "", label)
 if err != nil {
-  // Handle error here
+  // Handle error here.
 }
 ```
 
@@ -389,33 +371,30 @@ if err != nil {
 
 A list of stream presence contains every user currently online and connected to that stream, along with information about the session ID they are connected through and additional metadata.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 local presences = nk.stream_user_list(stream_id)
 
 for _, presence in ipairs(presences) do
-  print("Found user ID " .. presence.user_id)
+  nk.logger_info("Found user ID " .. presence.user_id)
 end
 ```
 
-```golang fct_label="golang"
+```golang fct_label="Go"
 mode := uint8(123)
-subject := "Some subject"
-subcontext := "Some subcontext"
-label := "My custom stream label"
+label := "label"
 includeHidden := true
 includeNotHidden := true
 
-members, err := nk.StreamUserList(mode, subject, subcontext, label, includeHidden, includeNotHidden)
+members, err := nk.StreamUserList(mode, "", "", label, includeHidden, includeNotHidden)
 if err != nil {
   // Handle error here
 }
 
 for _, m := range members {
-  fmt.Printf("Found user: %s\n", m.GetUserId())
+  logger.Info("Found user: %s\n", m.GetUserId())
 }
 ```
-
 
 ## Check a stream presence
 
@@ -423,59 +402,52 @@ If only a single user is needed the server can check if that user is present on 
 
 As an example we can register an RPC function that will check if the user that calls it is active on a custom stream.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local function check(context, _)
   local stream_id = { mode = 123, label = "my custom stream" }
   local meta = nk.stream_user_get(context.user_id, context.session_id, stream_id)
 
   -- Meta is nil if the user is not present on the stream.
   if (meta) then
-    print("User found on stream!")
+    nk.logger_info("User found on stream!")
   end
 end
 nk.register_rpc(check, "check")
 ```
 
-```golang fct_label="golang"
-// RPC code
+```golang fct_label="Go"
 func CheckStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-	if !ok {
-		// If userid not found in context, invalid session return error
-		return "", errors.New("Invalid context")
-	}
-
-	sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
-	if !ok {
-		// If sessionid not found in context, invalid session return error
-		return "", errors.New("Invalid context")
-	}
+  if !ok {
+    // If user ID is not found, RPC was called without a session token.
+    return "", errors.New("Invalid context")
+  }
+  sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
+  if !ok {
+    // If user ID is not found, RPC was not called over a connected socket.
+    return "", errors.New("Invalid context")
+  }
 
 	mode := uint8(123)
-	subject := "Some subject"
-	subcontext := "Some subcontext"
-	label := "My custom stream label"
+	label := "label"
 
-	// Last var in the function is list of presences.
-	// Provide a list to send message to selected members, leave it 'nil' to send message to all
-	if metaPresence, err := nk.StreamUserGet(mode, subject, subcontext, label, userId, sessionId); err != nil {
-		// Handle error here
+	if metaPresence, err := nk.StreamUserGet(mode, "", "", label, userId, sessionId); err != nil {
+		// Handle error.
 	} else if metaPresence != nil {
-		fmt.Println("User found on stream")
+		logger.Info("User found on stream")
 	} else {
-		fmt.Println("User not found on stream")		
+		logger.Info("User not found on stream")		
 	}
 
 	return "Success", nil
 }
 
-// Register RPC in InitModule
+// Register as RPC function, this call should be in InitModule.
 if err := initializer.RegisterRpc("check", CheckStream); err != nil {
-    logger.Error("Unable to register check, %v", err)
-    return err
+  logger.Error("Unable to register: %v", err)
+  return err
 }
 ```
-
 
 ## Built-in streams
 
@@ -499,23 +471,21 @@ Using these stream identifiers with the functions described above allows full co
 
 This code removes a user from a chat channel. If the user has more than one session connected to the channel only the specified one will be removed.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local stream_id = { mode = 2, label = "some chat channel name" }
 local user_id = "user ID to kick"
 local session_id = "session ID to kick"
 nk.stream_user_leave(user_id, session_id, stream_id)
 ```
 
-```golang fct_label="golang"
+```golang fct_label="Go"
 mode := uint8(123)
-subject := "Some subject"
-subcontext := "Some subcontext"
-label := "some chat channel name"
+label := "some chat room channel name"
 userId := "user ID to kick"
 sessionId := "session ID to kick"
 
-if err := nk.StreamUserLeave(mode, subject, subcontext, label, userId, sessionId); err != nil {
-  // Handle error
+if err := nk.StreamUserLeave(mode, "", "", label, userId, sessionId); err != nil {
+  // Handle error.
 }
 ```
 
@@ -523,7 +493,7 @@ if err := nk.StreamUserLeave(mode, subject, subcontext, label, userId, sessionId
 
 By calling this RPC function a user can "silence" their notifications. Even if they remain online they will no longer receive realtime delivery of any in-app notifications.
 
-```lua fct_label="lua"
+```lua fct_label="Lua"
 local function enable_silent_mode(context, _)
   local stream_id = { mode = 0, subject = context.user_id }
   nk.stream_user_leave(context.user_id, context.session_id, stream_id)
@@ -531,31 +501,29 @@ end
 nk.register_rpc(enable_silent_mode, "enable_silent_mode")
 ```
 
-```golang fct_label="golang"
-// RPC code
+```golang fct_label="Go"
 func EnableSilentMode(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-	if !ok {
-		// If userid not found in context, invalid session return error
-		return "", errors.New("Invalid context")
-	}
-
-	sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
-	if !ok {
-		// If sessionid not found in context, invalid session return error
-		return "", errors.New("Invalid context")
-	}
+  if !ok {
+    // If user ID is not found, RPC was called without a session token.
+    return "", errors.New("Invalid context")
+  }
+  sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
+  if !ok {
+    // If user ID is not found, RPC was not called over a connected socket.
+    return "", errors.New("Invalid context")
+  }
 
   if err := nk.StreamUserLeave(0, userId, "", "", userId, sessionId); err != nil {
-		// return "", err
+		// Handle error.
 	}
 
 	return "Success", nil
 }
 
-// Register RPC in InitModule
+// Register as RPC function, this call should be in InitModule.
 if err := initializer.RegisterRpc("enable_silent_mode", EnableSilentMode); err != nil {
-    logger.Error("Unable to register enable_silent_mode, %v", err)
-    return err
+  logger.Error("Unable to register: %v", err)
+  return err
 }
 ```

@@ -137,6 +137,8 @@ volumes:
 !!! warning "Windows users"
     If you are trying to run Nakama via Docker-Compose on Windows, you'll need to make a small change to the downloaded `docker-compose.yml` file. Follow this [instruction](#data) to bind the correct path.
 
+    If logging output does not immediately appear in stdout add `tty: true` to the `nakama` service in your `docker-compose.yml` file.
+
 2\. Next, we’ll ask Docker Compose to follow the instructions in the file we just downloaded:
 
 ```shell fct_label="Shell"
