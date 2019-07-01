@@ -17,7 +17,7 @@ A notification has a content object which will be encoded as JSON.
 
 Notifications can be marked as persistent when sent. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read it should be marked as persistent when sent.
 
-```lua
+```lua fct_label="lua"
 local nk = require("nakama")
 
 local user_id = "user id to send to"
@@ -31,6 +31,20 @@ local code = 1
 local persistent = true
 
 nk.notification_send(user_id, subject, content, code, sender_id, persistent)
+```
+
+```go fct_label="Go"
+subject := "You earned a secret item!"
+content := map[string]interface{}{
+  "item_id": "192308394345345",
+  "item_icon": "storm_bringer_sword.png"  
+}
+userID := "user id to send to"   // who to send
+senderID := "" // sender, blank for server sent
+code := 1
+persistent := true
+
+nk.NotificationSend(ctx, userID, subject, content, code, senderID, persistent)
 ```
 
 ## Receive notifications

@@ -1,12 +1,18 @@
 # Basics
 
-The server integrates the <a href="https://www.lua.org/manual/5.1/manual.html" target="\_blank">Lua programming language</a> as a fast embedded code runtime.
+The server integrates the <a href="https://www.lua.org/manual/5.1/manual.html" target="\_blank">Lua programming language</a> as a fast embedded code runtime. Alternately, you may also write the custom logic as go modules, compile them as a plugin and provide it as a parameter when the server is started. For details on how to compile your runtime code in go, please refer instructions [here](https://github.com/heroiclabs/nakama/tree/master/sample_go_module).
 
 It is useful to run custom logic which isn’t running on the device or browser. The code you deploy with the server can be used immediately by clients so you can change behavior on the fly and add new features faster.
 
 You should use server-side code when you want to set rules around various features like how many [friends](social-friends.md) a user may have or how many [groups](social-groups-clans.md) can be joined. It can be used to run authoritative logic or perform validation checks as well as integrate with other services over HTTPS.
 
 ## Load modules
+
+### Go modules
+
+For instructions on how to load runtime modules written in go, you need to follow the instructions [here](https://github.com/heroiclabs/nakama/tree/master/sample_go_module).
+
+### Lua modules
 
 You can create a Lua file wherever you like on the filesystem as long as the server knows where to scan for the folder which contains your code.
 
@@ -20,9 +26,13 @@ All files with the ".lua" extension will be loaded and evaluated as part of the 
 
 ## Simple example
 
-Lets create a module called "example.lua". In it we'll register code to be run by a client as an [RPC call](#register_rpc).
+The following example will show you how to create and register code to be run by a client as an [RPC call](#register_rpc).
 
-```lua
+In Lua example we will create a module called "example.lua". We will import the `"nakama"` module which is embedded within the server and contains lots of server-side functions which are helpful as you build your code. You can see all available functions in the [module reference](runtime-code-function-reference.md).
+
+In Go example, we will import the runtime package and use the NakamaModule which has all the same functions as referenced above.
+
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local function some_example(context, payload)
@@ -43,59 +53,109 @@ end
 nk.register_rpc(some_example, "my_unique_id")
 ```
 
-We import the `"nakama"` module which is embedded within the server and contains lots of server-side functions which are helpful as you build your code. You can see all available functions in the [module reference](runtime-code-function-reference.md).
+```go fct_label="Go"
+func SomeExample(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	meta := make(map[string]interface{})
+	// Note below, json.Unmarshal can only take a pointer as second argument
+	if err := json.Unmarshal([]byte(payload), &meta); err != nil {
+		// Handle error
+		return "", err
+	}
+
+	id := "SomeId"
+	authoritative := false
+	sort := "desc"
+	operator := "best"
+	reset := "0 0 * * 1"
+
+	if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, meta); err != nil {
+		// Handle error
+		return "", err
+	}
+
+	return "Success", nil
+}
+
+// Register the RPC in InitModule()
+if err := initializer.RegisterRpc("my_unique_rpc_id", SomeExample); err != nil {
+  logger.Error("Unable to register my_unique_rpc_id, %s", err)
+  return err
+}
+```
 
 ## Register hooks
 
 The code in a module will be evaluated immediately and can be used to register functions which can operate on messages from clients as well as execute logic on demand.
 
-All registered functions receive a "context" table as the first argument. The "context" contains fields which depend on when the code is executed.
+All registered functions receive a "context" as the first argument. This argument contains fields which depend on when / where the code is executed. If you are writing your runtime code in Go, here is a sample code of how you can extract a field from the context.
 
-| Field | Purpose |
-| ----- | ------- |
-| `context.env` | A table of key/value pairs which are defined in the YAML [configuration](install-configuration.md) of the server. This is useful to store API keys and other secrets which may be different between servers run in production and in development. |
-| `context.execution_mode` | The mode associated with the execution context. It's one of these values: "run_once", "rpc", "before", "after", "match", "matchmaker", "leaderboard_reset", "tournament_reset", "tournament_end". |
-| `context.query_params` | Query params that was passed through from HTTP request. |
-| `context.session_id` | The user session associated with the execution context. |
-| `context.user_id` | The user ID associated with the execution context. |
-| `context.username` | The username associated with the execution context. |
-| `context.user_session_exp` | The user session expiry in seconds associated with the execution context. |
-| `context.client_ip` | The IP address of the client making the request. |
-| `context.client_port` | The port number of the client making the request. |
-| `context.match_id` | The match ID that is currently being executed. Only applicable to server authoritative multiplayer. |
-| `context.match_node` | The node ID that the match is being executed on. Only applicable to server authoritative multiplayer. |
-| `context.match_label` | Labels associated with the match. Only applicable to server authoritative multiplayer. |
-| `context.match_tick_rate` | Tick rate defined for this match. Only applicable to server authoritative multiplayer. |
+```go fct_label="Go"
+userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+if !ok {
+  // userId not found in the context being queried. Handle accordingly
+}
+```
+
+If you are writing your runtime code in Lua, the "context" will be a table from which you can access the fields directly.
+
+| Go label | Lua Field | Purpose |
+| -------- | ----- | ------- |
+|`RUNTIME_CTX_ENV`| `context.env` | A table of key/value pairs which are defined in the YAML [configuration](install-configuration.md) of the server. This is useful to store API keys and other secrets which may be different between servers run in production and in development. |
+|`RUNTIME_CTX_MODE`| `context.execution_mode` | The mode associated with the execution context. It's one of these values: "run_once", "rpc", "before", "after", "match", "matchmaker", "leaderboard_reset", "tournament_reset", "tournament_end". |
+|`RUNTIME_CTX_QUERY_PARAMS`| `context.query_params` | Query params that was passed through from HTTP request. |
+|`RUNTIME_CTX_SESSION_ID`| `context.session_id` | The user session associated with the execution context. |
+|`RUNTIME_CTX_USER_ID`| `context.user_id` | The user ID associated with the execution context. |
+|`RUNTIME_CTX_USERNAME`| `context.username` | The username associated with the execution context. |
+|`RUNTIME_CTX_USER_SESSION_EXP`| `context.user_session_exp` | The user session expiry in seconds associated with the execution context. |
+|`RUNTIME_CTX_CLIENT_IP`| `context.client_ip` | The IP address of the client making the request. |
+|`RUNTIME_CTX_CLIENT_PORT`| `context.client_port` | The port number of the client making the request. |
+|`RUNTIME_CTX_MATCH_ID`| `context.match_id` | The match ID that is currently being executed. Only applicable to server authoritative multiplayer. |
+|`RUNTIME_CTX_MATCH_NODE`| `context.match_node` | The node ID that the match is being executed on. Only applicable to server authoritative multiplayer. |
+|`RUNTIME_CTX_MATCH_LABEL`| `context.match_label` | Labels associated with the match. Only applicable to server authoritative multiplayer. |
+|`RUNTIME_CTX_MATCH_TICK_RATE`| `context.match_tick_rate` | Tick rate defined for this match. Only applicable to server authoritative multiplayer. |
 
 There are multiple ways to register a function within the runtime each of which is used to handle specific behavior between client and server.
 
-If you are sending requests to the server via the realtime connection, ensure that use this variant of the function:
-```lua
+```lua fct_label="Lua"
+// If you are sending requests to the server via the realtime connection, ensure that use this variant of the function:
 nk.register_rt_before()
 nk.register_rt_after()
-```
 
-Otherwise use this:
-```lua
+// Otherwise use this:
 nk.register_req_after()
 nk.register_req_before()
-```
 
-If you'd like to run server code when the matchmaker has matched players together, register your function using the following:
-```lua
+// If you'd like to run server code when the matchmaker has matched players together, register your function using the following:
 nk.register_matchmaker_matched()
-```
 
-If you'd like to run server code when the leaderboard/tournament resets register your function using the following:
-```lua
+// If you'd like to run server code when the leaderboard/tournament resets register your function using the following:
 nk.register_leaderboard_reset()
 nk.register_tournament_reset()
-```
 
-Similary, you can run server code when the tournament ends:
-```lua
+// Similary, you can run server code when the tournament ends:
 nk.register_tournament_end()
 ```
+
+```go fct_label="Go"
+// If you are sending requests to the server via the realtime connection, ensure that use this variant of the function:
+nk.RegisterBeforeRt()
+nk.RegisterAfterRt()
+
+// Otherwise use the relevant before / after hook, e.g.
+nk.RegisterBeforeAddFriends()
+nk.RegisterAfterAddFriends()
+
+// If you'd like to run server code when the matchmaker has matched players together, register your function using the following:
+nk.RegisterMatchmakerMatched()
+
+// If you'd like to run server code when the leaderboard/tournament resets register your function using the following:
+nk.RegisterLeaderboardReset()
+nk.RegisterTournamentReset()
+
+// Similary, you can run server code when the tournament ends:
+nk.RegisterTournamentEnd()
+```
+
 
 Have a look at [this section](#message-names) to see the server message names.
 
@@ -103,9 +163,9 @@ Have a look at [this section](#message-names) to see the server message names.
 
 Any function may be registered to intercept a message received from a client and operate on it (or reject it) based on custom logic. This is useful to enforce specific rules on top of the standard features in the server.
 
-The second argument will be the "incoming payload" containing data received that will be processed by the server.
+In Go, you may access the 'in' variable containing the data that will be processed by ther server. In Lua, the second argument will be the "incoming payload" containing data received that will be processed by the server.
 
-```lua hl_lines="9"
+```lua hl_lines="9" fct_label="Lua"
 local nk = require("nakama")
 
 local function limit_friends(context, payload)
@@ -119,13 +179,49 @@ end
 nk.register_req_before(limit_friends, "AddFriends")
 ```
 
+```go fct_label="Go"
+func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
+	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	if !ok {
+		// Handle error
+		return nil, errors.New("Missing userid")
+	}
+
+	acct, err := nk.AccountGetId(ctx, userId)
+	if err != nil {
+		// Handle error
+		return nil, err
+
+	}
+
+	metadata := make(map[string]interface{})
+	if err := json.Unmarshal([]byte(acct.GetUser().GetMetadata()), &metadata); err != nil {
+		// Handle error
+		return nil, errors.New("Corrupted user metadata")
+	}
+
+	// Assume you store key "level" in user metadata
+	if metadata["level"].(int) <= 10 {
+		return nil, errors.New("Must reach level 10 before you can add friends.")
+	}
+
+	return in, nil
+}
+
+// Register hook in the InitModule function
+if err := initializer.RegisterBeforeAddFriends(services.BeforeAddFriends); err != nil {
+  logger.Error("Unable to register before matchmaker add, %v", err)
+  return err  
+}
+```
+
 The code above fetches the current user's profile and checks the metadata which is assumed to be JSON encoded with `"{level: 12}"` in it. If a user's level is too low an error is thrown to prevent the Friend Add message from being passed onwards in the server pipeline.
 
 !!! Note
-    You must remember to return the payload at the end of your function in the same structure as you received it. See `"return payload"` highlighted in the code above.
+    In Lua you must remember to return the payload at the end of your function in the same structure as you received it. See `"return payload"` highlighted in the code above.
 
 !!! Tip
-    If you choose to `nil` instead of the `payload`, the server will halt further processing of that message. This can be a workaround to stop the server from accepting certain messages or blacklisting certain server features.
+    In Go, if you choose to return a non-nil error OR in Lua, if you choose to return `nil` instead of the `payload`, the server will halt further processing of that message. This can be a workaround to stop the server from accepting certain messages or blacklisting certain server features.
 
 ### After hook
 
@@ -133,7 +229,7 @@ Similar to [Before hook](#before-hook) you can attach a function to operate on a
 
 The second argument is the "outgoing payload" containing the server's response to the request. The third argument contains the "incoming payload" containing the data originally passed to the server for this request.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local function add_reward(context, outgoing_payload, incoming_payload)
@@ -152,13 +248,55 @@ end
 nk.register_req_after(add_reward, "AddFriends")
 ```
 
+```go fct_label="Go"
+func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
+	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	if !ok {
+		// Handle error
+		return errors.New("Missing userid")
+	}
+
+	type cFriends struct {
+		UserIds []string `json:"user_ids"`
+	}
+	friends := &cFriends{in.GetIds()}
+
+	// Marshal friends into json to store in DB
+	value, err := json.Marshal(friends)
+	if err != nil {
+		// Handle error
+		return err
+	}
+
+	if _, err := nk.StorageWrite(ctx, []*runtime.StorageWrite{
+		&runtime.StorageWrite{
+			Collection: "rewards",
+			Key:        "reward",
+			UserID:     userId,
+			Value:      string(value), // IMP: value for storage object should be json marshalled string
+		},
+	}); err != nil {
+		// Handle error
+		return err
+	}
+
+	return nil
+}
+
+// Register after hook in InitModule
+if err := initializer.RegisterAfterAddFriends(AfterAddFriends); err != nil {
+  logger.Error("Unable to register after friends add, %v", err)
+  return err
+}
+```
+
 The simple code above writes a record to a user's storage when they add a friend. Any data returned by the function will be discarded.
 
 ### RPC hook
 
 Some logic between client and server is best handled as RPC functions which clients can execute.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local function custom_rpc_func(context, payload)
@@ -173,13 +311,26 @@ end
 nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
 ```
 
-The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function and return the result. Results are always returned as a Lua string (or optionally `nil`).
+```go fct_label="Go"
+func Test(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+  logger.Printf("Payload: %s", payload)
+	return payload, nil
+}
+
+// Register RPC in InitModule
+if err := initializer.RegisterRpc("test", Test); err != nil {
+  logger.Error("Unable to register test, %s", err)
+  return err
+}
+```
+
+The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function and return the result. From Go runtime code, result is returned as (string, error). From Lua runtime code, results are always returned as a Lua string (or optionally `nil`).
 
 ### Server to server
 
 Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook), however this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local function http_handler(context, payload)
@@ -189,6 +340,19 @@ local function http_handler(context, payload)
 end
 
 nk.register_rpc(http_handler, "http_handler_path")
+```
+
+```lua fct_label="Lua"
+func HttpHandler(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+  logger.Printf("Message: %s", payload)
+	return "", nil
+}
+
+// Register RPC in InitModule
+if err := initializer.RegisterRpc("http_handler", HttpHandler); err != nil {
+  logger.Error("Unable to register http_handler, %s", err)
+  return err
+}
 ```
 
 This function can be called with any HTTP client. For example with cURL you could execute the function with the server.
@@ -207,7 +371,7 @@ curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaultkey" \
 
 The runtime environment allows you to run code that must only be executed only once. This is useful if you have custom SQL queries that you need to perform (like creating a new table) or to register with third party services.
 
-```lua
+```lua fct_label="Lua"
 nk.run_once(function(context)
   -- this is to create a system ID that cannot be used via a client.
   local system_id = context.env["SYSTEM_ID"]
@@ -220,9 +384,37 @@ ON CONFLICT (id) DO NOTHING
 end)
 ```
 
+```go fct_label="Go"
+func RunOnce(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule) {
+  // this is to create a system ID that cannot be used via a client.
+  env, ok := ctx.Value(runtime.RUNTIME_CTX_ENV).(map[string]interface{})
+	if !ok {
+    logger.Printf("Missing Env in context")
+		return
+	}
+
+  systemId, ok := env["SYSTEM_ID"]
+  if !ok {
+    logger.Printf("Missing system_id in env")
+    return
+  }
+
+  if _, err := db.Exec("INSERT INTO users (id, username)" +
+    "\n VALUES ($1, $2)" +
+    "\n ON CONFLICT (id) DO NOTHING", systemId, "system_id",
+  ); err != nil {
+    logger.Error("Error: %s", err.Error())
+    return
+	}
+}
+
+// Call RunOnce from InitModule
+RunOnce(ctx, logger, db, nk)
+```
+
 ## Errors and logs
 
-You can handle errors like you would normally in Lua code. If you want to trap the error which occurs in the execution of a function you'll need to execute it via `pcall` as a "protected call".
+While error handling is addressed in each of the functions in Go, it needs to be done separately for Lua. You can handle errors like you would normally in Lua code. If you want to trap the error which occurs in the execution of a function you'll need to execute it via `pcall` as a "protected call".
 
 ```lua
 local function will_error()
@@ -268,7 +460,7 @@ The list of available modules are: base module, "math", "os", "string", and "tab
 
 As a fun example lets use the [Pokéapi](http://pokeapi.co/) and build a helpful module named "pokeapi.lua".
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local M = {}
@@ -295,11 +487,8 @@ function M.lookup_pokemon(name)
 end
 
 return M
-```
+-- We can import the code up to this point into another module we'll call "pokemon.lua" which will register an RPC call.
 
-We can import it into another module we'll call "pokemon.lua" which will register an RPC call.
-
-```lua
 local nk = require("nakama")
 local pokeapi = require("pokeapi")
 
@@ -322,6 +511,42 @@ local function get_pokemon(_, payload)
 end
 
 nk.register_rpc(get_pokemon, "get_pokemon")
+```
+
+```go fct_label="Go"
+const API_BASE_URL = "https://pokeapi.co/api/v2"
+func LookupPokemon(name string) (string, error) {
+  resp, err := http.Get(API_BASE_URL + "/pokemon/" + name)
+  if err != nil {
+    // handle errors
+    return "", err
+  }
+  defer resp.Body.Close()
+  body, err := ioutil.ReadAll(resp.Body)
+  if err != nil {
+    // handle error
+    return "", error
+  }
+
+  // body is the byte array of json value received from Pokemon API.
+  return string(body), nil
+}
+
+func GetPokemon(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+  json, err := json.Unmarshal([]byte(payload))
+  if err != nil {
+    // Handle error
+    return "", err
+  }
+
+  return LookupPokemon(json.PokemonName)
+}
+
+// Register RPC in InitModule
+if err := initializer.RegisterRpc("get_pokemon", GetPokemon); err != nil {
+  logger.Error("Unable to register get_pokemon, %s", err)
+  return err
+}
 ```
 
 We can now make an RPC call for a pokemon from a client.
@@ -421,7 +646,9 @@ Authorization: Bearer <session token>
 
 ## Message names
 
-You should use the following request names for `register_req_before` and `register_req_after` hooks:
+If your runtime code is in Go, refer [this page](https://github.com/heroiclabs/nakama/blob/master/runtime/runtime.go) for a full list of hooks that are available in the runtime package.
+
+In Lua, you should use the following request names for `register_req_before` and `register_req_after` hooks:
 
 | Request Name | Description
 | ------------ | -----------

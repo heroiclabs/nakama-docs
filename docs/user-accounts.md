@@ -128,7 +128,7 @@ Nakama has the concept of a virtual wallet and transaction ledger. Nakama allows
 
 With server-side code it's possible to update the user's wallet.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local user_id = "95f05d94-cc66-445a-b4d1-9e262662cf79" -- who to send
@@ -140,6 +140,17 @@ local status, err = pcall(nk.wallet_update, user_id, content)
 if (not status) then
     nk.logger_info(("User wallet update error: %q"):format(err))
 end
+```
+
+```go fct_label="Go"
+userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
+content := map[string]interface{}{
+	"reward_coins": 10, // Add 10 coins to the user's wallet.
+}
+metadata := map[string]interface{}{"game_result": "won"}
+if err := nk.WalletUpdate(ctx, userID, changeset, metadata, true); err != nil {
+	// Handle error
+}
 ```
 
 The wallet is private to a user and cannot be seen by other users. You can fetch wallet information for a user via [Fetch Account](user-accounts.md#fetch-account) operation.
@@ -264,7 +275,7 @@ Authorization: Bearer <session token>
 
 You can also fetch one or more users in server-side code.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local user_ids = {
@@ -277,6 +288,19 @@ do
   local message = ("username: %q, displayname: %q"):format(u.username, u.display_name)
   nk.logger_info(message)
 end
+```
+
+```go fct_label="Go"
+if users, err := nk.UsersGetId(ctx, []string{
+	"3ea5608a-43c3-11e7-90f9-7b9397165f34",
+	"447524be-43c3-11e7-af09-3f7172f05936",
+}); err != nil {
+	// Handle error
+} else {
+	for _, u := range users {
+		logger.Printf("Userid: %s, username: %s, displayname: %s", u.Id, u.Username, u.DisplayName)
+	}
+}
 ```
 
 ## Update account
@@ -379,7 +403,7 @@ Authorization: Bearer <session token>
 
 With server-side code it's possible to update any user's profile.
 
-```lua
+```lua fct_label="Lua"
 local nk = require("nakama")
 
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user's id.
@@ -395,4 +419,19 @@ local status, err = pcall(nk.account_update_id, metadata, username, display_name
 if (not status) then
   nk.logger_info(("Account update error: %q"):format(err))
 end
+```
+
+```go fct_label="Go"
+userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user's id.
+username := "my-new-username" // must be unique
+metadata := make(map[string]interface{})
+displayName := "My new name"
+timezone := ""
+location := "San Francisco"
+langTag := ""
+avatarUrl := "http://graph.facebook.com/avatar_url"
+if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timezone, location, langTag, avatarUrl); err != nil {
+	// Handle error
+	logger.Error("Account update error: %s", err.Error())
+}
 ```
