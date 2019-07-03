@@ -35,29 +35,28 @@ end
 nk.register_rpc(remote_configuration, "rc")
 ```
 
-```go fct_label="Go"
-func RemoteConfig(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-  parameters := &map[string]interface{}{
-		"reachable_levels": 10,
-		"max_player_level": 90,
-		"min_version":      12,
-	}
-
-	if b, err := json.Marshal(parameters); err != nil {
-		// Handle error
-		return "", err
-	} else {
-		return string(b), nil
-	}  
+```golang fct_label="Go"
+var parameters = map[string]interface{}{
+  "reachable_levels": 10,
+  "max_player_level": 90,
+  "min_version":      12,
 }
 
-// Register RPC in InitModule
+func RemoteConfig(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	responseBytes, err := json.Marshal(map[string]interface{}{"rc": parameters})
+  if err != nil {
+		return "", err
+  }
+
+  return string(responseBytes), nil
+}
+
+// Register as RPC function, this call should be in InitModule.
 if err := initializer.RegisterRpc("rc", RemoteConfig); err != nil {
-  logger.Error("Unable to register rc, %s", err)
+  logger.Error("Unable to register: %v", err)
   return err
 }
 ```
-
 
 ### Dynamic parameters
 
@@ -74,36 +73,36 @@ local parameters = {
   min_version = 12
 }
 
-local record = {
+local object = {
   collection = "configuration",
-  record = "rc",
-  user_id = nil,
+  key = "rc",
   value = parameters,
   permission_read = 1,
   permission_write = 0,
-  version = "*"       -- only write record if it does not already exist.
+  version = "*" -- Only write object if it does not already exist.
 }
-pcall(nk.storage_write, { record }) -- write record, ignore errors.
+pcall(nk.storage_write, { object }) -- Write object, ignore errors.
 
 local function remote_configuration(_context, _payload)
   local rc = {
-    collection = record.Collection,
-    record = record.Record,
-    user_id = nil
+    collection = object.Collection,
+    key = object.Record
   }
-  local records = nk.storage_read({ rc })
-  return records[1].value
+  local objects = nk.storage_read({ rc })
+  return objects[1].value
 end
 
 nk.register_rpc(remote_configuration, "rc")
 ```
 
-```go fct_label="Go"
-const COLLECTION_CONFIG = "configuration"
-const KEY_CONFIG = "rc"
+```golang fct_label="Go"
+const (
+  configCollection = "configuration"
+  configKey = "rc"
+)
 
 func SaveConfig(ctx context.Context, nk runtime.NakamaModule, logger runtime.NakamaModule) error {
-	parameters := &map[string]interface{}{
+	parameters := map[string]interface{}{
 		"reachable_levels": 10,
 		"max_player_level": 90,
 		"min_version":      12,
@@ -111,54 +110,49 @@ func SaveConfig(ctx context.Context, nk runtime.NakamaModule, logger runtime.Nak
 
 	b, err := json.Marshal(parameters)
 	if err != nil {
-		// Handle error
 		return err
 	}
 
-	objectIds := []*runtime.StorageWrite{
+	objects := []*runtime.StorageWrite{
 		&runtime.StorageWrite{
-			Collection:      COLLECTION_CONFIG,
-			Key:             KEY_CONFIG,
+			Collection:      configCollection,
+			Key:             configKey,
 			Value:           string(b),
-			Version:         "*", // Only write if record does not exist already
+			Version:         "*", // Only write if object does not exist already.
 			PermissionRead:  1,
 			PermissionWrite: 0,
 		},
 	}
 
-	if _, err := nk.StorageWrite(ctx, objectIds); err != nil {
-		// Handle error, if any
+	if _, err := nk.StorageWrite(ctx, objects); err != nil {
 		return err
-	} else {
-		return nil
 	}
+  return nil
 }
 
 func RemoteConfig(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	objectIds := []*runtime.StorageRead{
 		&runtime.StorageRead{
-			Collection: COLLECTION_CONFIG,
-			Key:        KEY_CONFIG,
+			Collection: configCollection,
+			Key:        configKey,
 		},
 	}
 
 	records, err := nk.StorageRead(ctx, objectIds)
 	if err != nil {
-		// Handle error
 		return "", err
-	} else {
-		if len(records) == 0 {
-			return "", errors.New("No config found.")
-		} else {
-			return records[0].Value, nil
-		}
 	}
+  if len(records) == 0 {
+    return "", errors.New("No config found.")
+  }
+  return records[0].Value, nil
 }
 
-// Register RPC in InitModule
+// Ensure the configuration object is stored, this call should be in InitModule.
 SaveConfig(ctx, nk, logger)
+// Register as RPC function, this call should be in InitModule.
 if err := initializer.RegisterRpc("rc", RemoteConfig); err != nil {
-  logger.Error("Unable to register rc, %s", err)
+  logger.Error("Unable to register: %v", err)
   return err
 }
 ```
