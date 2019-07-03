@@ -40,45 +40,49 @@ Another way to write records for the new user is to run server-side code after r
 The ["register_after"](runtime-code-function-reference.md#register-hooks) hook can be used with one of the `"authenticaterequest_*"` message types to tell the server to run a function after that message has been processed. It's important to note that the server does not distinguish between register and login messages so we use a [conditional write](storage-collections.md#conditional-writes) to store the records.
 
 ```lua fct_label="Lua"
-local function initialize_user(context, _payload)
-  local changeset = {
-    coins = 10, -- Add 10 coins to the user's wallet.
-    gems = 5   -- Add 5 gems from the user's wallet.
-    artifacts = 0 -- No artifacts to start with.
-  }
-  local metadata = {}
-  nk.wallet_update(context.user_id, changeset, metadata, true)
+local function initialize_user(context, payload)
+  if payload.created then
+    -- Only run this logic if the account that has authenticated is new.
+    local changeset = {
+      coins = 10,   -- Add 10 coins to the user's wallet.
+      gems = 5      -- Add 5 gems from the user's wallet.
+      artifacts = 0 -- No artifacts to start with.
+    }
+    local metadata = {}
+    nk.wallet_update(context.user_id, changeset, metadata, true)
+  end
 end
 
 -- change to whatever message name matches your authentication type.
 nk.register_req_after(initialize_user, "authenticaterequest_device")
 ```
 
-```go fct_label="Go"
-func InitUser(ctx context.Context, logger Logger, db *sql.DB, nk NakamaModule, out *api.Session, in *api.AuthenticateDeviceRequest) error {
-  userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-  if !ok {
-    // If userid not found in context, invalid session return error
-    return "", errors.New("Invalid context")
+```golang fct_label="Go"
+func InitializeUser(ctx context.Context, logger Logger, db *sql.DB, nk NakamaModule, out *api.Session, in *api.AuthenticateDeviceRequest) error {
+  if out.Created {
+    // Only run this logic if the account that has authenticated is new.
+    userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+    if !ok {
+      return "", errors.New("Invalid context")
+    }
+    changeset := map[string]interface{}{
+      "coins": 10,    // Add 10 coins to the user's wallet.
+      "gems":  5,     // Add 5 gems from the user's wallet.
+      "artifacts": 0, // No artifacts to start with.
+    }
+    var metadata map[string]interface{}
+    if err := nk.WalletUpdate(ctx, userID, changeset, metadata, true); err != nil {
+      // Handle error.
+    }
   }
-  changeset := map[string]interface{}{
-  	"coins": 10, // Add 10 coins to the user's wallet.
-  	"gems":  5, // Add 5 gems from the user's wallet.
-    "artifacts": 0, // No artifacts to start with.
-  }
-  metadata := map[string]interface{}{"game_result": "won"}
-  if err := nk.WalletUpdate(ctx, userID, changeset, metadata, true); err != nil {
-  	// Handle error
-  }  
 }
 
-// Register after hook in InitModule
-if err := initializer.RegisterAfterAuthenticateDevice(InitUser); err != nil {
-  logger.Error("Unable to register init user, %s", err)
+// Register as after hook, this call should be in InitModule.
+if err := initializer.RegisterAfterAuthenticateDevice(InitializeUser); err != nil {
+  logger.Error("Unable to register: %v", err)
   return err
 }
 ```
-
 
 This approach avoids the tradeoff with client disconnects but requires a database write to happen after every login or register message. This could be acceptable depending on how frequently you write data to the storage engine and can be minimized if you [cache a user's session](authentication.md#sessions) for quick reconnects.
 
