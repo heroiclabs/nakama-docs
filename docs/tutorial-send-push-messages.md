@@ -4,8 +4,8 @@ Push messages are a great complement to [in-app notifications](social-in-app-not
 
 There are many different push providers available which you can integrate into your client code and combine it with the server but for this tutorial we'll use the One Signal service. They provide a HTTP API to register devices and send push messages to segments of users.
 
-!!! Note
-    For Go, kindly refer the [package onesignal](https://godoc.org/github.com/tbalthazar/onesignal-go). For Lua, you may follow the example as below:
+!!! Tip
+    This tutorial covers an example One Signal integration using Nakama's Lua runtime. For Go consider using an [existing One Signal library](https://godoc.org/github.com/tbalthazar/onesignal-go).
 
 ## Setup
 
