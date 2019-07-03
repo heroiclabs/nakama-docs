@@ -145,13 +145,13 @@ local object_ids = {
   { collection = "configuration", key = "config", user_id = nil },
 }
 local objects = nk.storage_read(object_ids)
-for _, r in ipairs(objects) do
-  local message = ("value: %q"):format(r.Value)
-  print(message)
+for _, o in ipairs(objects) do
+  local message = ("value: %q"):format(o.Value)
+  nk.logger_info(message)
 end
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 objectIds := []*runtime.StorageRead{
 	&runtime.StorageRead{
 		Collection: "configuration",
@@ -159,12 +159,12 @@ objectIds := []*runtime.StorageRead{
 	},
 }
 
-records, err := nk.StorageRead(ctx, objectIds)
+objects, err := nk.StorageRead(ctx, objectIds)
 if err != nil {
-	// Handle error
+	// Handle error.
 } else {
-	for _, record := range records {
-		logger.Printf("read: %d, write: %d, value: %s", record.PermissionRead, record.PermissionWrite, record.Value)
+	for _, object := range objects {
+		logger.Info("value: %s", object.Value)
 	}
 }
 ```
@@ -351,27 +351,27 @@ Authorization: Bearer <session token>
 You can store an object with custom permissions from the code runtime.
 
 ```lua fct_label="Lua"
-local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
-local new_records = {
+local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
+local new_objects = {
   { collection = "battle", key = "army", user_id = user_id, value = {}, permission_read = 2, permission_write = 1 }
 }
-nk.storage_write(new_records)
+nk.storage_write(new_objects)
 ```
 
-```go fct_label="Go"
-userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user ID.
-objectIds := []*runtime.StorageWrite{
+```golang fct_label="Go"
+userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
+objects := []*runtime.StorageWrite{
 	&runtime.StorageWrite{
 		Collection:      "battle",
 		Key:             "army",
 		UserID:          userID,
-		Value:           "{}", // Value must be a valid JSON encoded
+		Value:           "{}",
 		PermissionRead:  2,
 		PermissionWrite: 1,
 	},
 }
 
-if _, err := nk.StorageWrite(ctx, objectIds); err != nil {
-	// Handle error
+if _, err := nk.StorageWrite(ctx, objects); err != nil {
+	// Handle error.
 }
 ```
