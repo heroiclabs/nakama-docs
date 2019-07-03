@@ -80,8 +80,7 @@ end
 return M
 ```
 
-```go fct_label="Go"
-// Match State struct
+```golang fct_label="Go"
 type MatchState struct {
 	debug bool
 }
@@ -89,6 +88,10 @@ type MatchState struct {
 type Match struct{}
 
 func (m *Match) MatchInit(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, params map[string]interface{}) (interface{}, int, string) {
+  var debug bool
+  if d, ok := params["debug"]; ok {
+    debug, _ = d.(bool)
+  }
 	state := &MatchState{debug: debug}
 	tickRate := 1
 	label := ""
@@ -115,10 +118,11 @@ func (m *Match) MatchTerminate(ctx context.Context, logger runtime.Logger, db *s
 	return state
 }
 
-// Register match handler in InitModule
+// Register as match handler, this call should be in InitModule.
 if err := initializer.RegisterMatch("pingpong", func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule) (runtime.Match, error) {
   return &Match{}, nil
 }); err != nil {
+  logger.Error("Unable to register: %v", err)
   return err
 }
 ```
@@ -148,14 +152,14 @@ end
 nk.register_rpc(create_match, "create_match_rpc")
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func CreateMatchRPC(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	params := make(map[string]interface{})
 	if err := json.Unmarshal([]byte(payload), params); err != nil {
 		return "", err
 	}
 
-	modulename := "pingpong" // Name with which match handler was registered in InitModule, see example above
+	modulename := "pingpong" // Name with which match handler was registered in InitModule, see example above.
 	if matchId, err := nk.MatchCreate(ctx, modulename, params); err != nil {
 		return "", err
 	} else {
@@ -163,8 +167,9 @@ func CreateMatchRPC(ctx context.Context, logger runtime.Logger, db *sql.DB, nk r
 	}
 }
 
+// Register as RPC function, this call should be in InitModule.
 if err := initializer.RegisterRpc("create_match_rpc", CreateMatchRPC); err != nil {
-  logger.Error("Unable to register create_match_rpc, %s", err)
+  logger.Error("Unable to register: %v", err)
   return err
 }
 ```
@@ -182,9 +187,9 @@ local function makematch(context, matched_users)
   -- print matched users
   for _, user in ipairs(matched_users) do
     local presence = user.presence
-    print(("Matched user '%s' named '%s'"):format(presence.user_id, presence.username))
+    nk.logger_info(("Matched user '%s' named '%s'"):format(presence.user_id, presence.username))
     for k, v in pairs(user.properties) do
-      print(("Matched on '%s' value '%s'"):format(k, v))
+      nk.logger_info(("Matched on '%s' value '%s'"):format(k, v))
     end
   end
 
@@ -196,22 +201,16 @@ end
 nk.register_matchmaker_matched(makematch)
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func MakeMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, entries []runtime.MatchmakerEntry) (string, error) {
-	params := make(map[string]interface{})
 	for _, e := range entries {
-		userid := e.GetPresence().GetUserId()
-		username := e.GetPresence().GetUsername()
-		logger.Printf("Matched user: %s, named :%s", userid, username)
+		logger.Info("Matched user '%s' named '%s'", e.GetPresence().GetUserId(), e.GetPresence().GetUsername())
 		for k, v := range e.GetProperties() {
-			logger.Printf("Matched on %s, value %v", k, v)
-
-			// Store properties of each user to be passed to the match loop.
-			params[userid+"|"+k] = v
+			logger.Info("Matched on '%s' value '%v'", k, v)
 		}
 	}
 
-	matchId, err := nk.MatchCreate(ctx, "pingpong", params)
+	matchId, err := nk.MatchCreate(ctx, "pingpong", map[string]interface{}{"invited": entries})
 	if err != nil {
 		return "", err
 	}
@@ -219,15 +218,19 @@ func MakeMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtim
 	return matchId, nil
 }
 
+// Register as matchmaker matched hook, this call should be in InitModule.
 if err := initializer.RegisterMatchmakerMatched(MakeMatch); err != nil {
-  logger.Error("Unable to register matchmakermatched, %v", err)
+  logger.Error("Unable to register: %v", err)
   return err
 }
 ```
 
 The matchmaker matched hook must return a match ID or `nil` if the match should proceed as relayed multiplayer.
 
-The string passed into the match create function is a Lua module name. In this example it'd be a file named `pingpong.lua`. In case of golang, the string passed must be the string with which the match loop was registered with the RegisterMatch function in the InitModule.
+The string passed into the match create function depends on the server runtime language used:
+
+* For _Lua_ it should be the module name. In this example it'd be a file named `pingpong.lua`, so the match module is `pingpong`.
+* For _Go_ it must be the registered name of a match handler function. In the example above we've registered it as `pingpong` when invoking `initializer.RegisterMatch` in the Go module `InitModule` function.
 
 ## Join a match
 
@@ -245,27 +248,27 @@ For instance if a match was created with a label field of "skill=100-150" you ca
 local nk = require("nakama")
 
 local limit = 10
-local isauthoritative = true
+local isAuthoritative = true
 local label = "skill=100-150"
 local min_size = 0
 local max_size = 4
-local matches = nk.match_list(limit, isauthoritative, label, min_size, max_size)
+local matches = nk.match_list(limit, isAuthoritative, label, min_size, max_size)
 for _, match in ipairs(matches) do
-  print(("Match id %s"):format(match.match_id))
+  nk.logger_info(("Match id %s"):format(match.match_id))
 end
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 limit := 10
-isauthoritative := true
+isAuthoritative := true
 label := "skill=100-150"
 min_size := 0
 max_size := 4
-if matches, err := nk.MatchList(ctx, limit, isauthoritative, label, min_size, max_size, "*"); err != nil {
-  // Handle error
+if matches, err := nk.MatchList(ctx, limit, isAuthoritative, label, min_size, max_size, ""); err != nil {
+  // Handle error.
 } else {
   for _, match := range matches {
-    logger.Printf("Found match id %s", match.GetMatchId())
+    logger.Info("Match id %s", match.GetMatchId())
   }
 }
 ```
@@ -289,29 +292,20 @@ local function findorcreatematch(limit, label, min_size, max_size)
 end
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 if matches, err := nk.MatchList(ctx, limit, true, label, min_size, max_size, "*"); err != nil {
   return "", err
 } else {
-  matchId := ""
-  smallestSize := int32(-1)
-  for _, match := range matches {
-    if smallestSize == -1 || match.Size < smallestSize {
-      matchId = match.MatchId // Capture the id of the match with fewest members
-      smallestSize = match.Size
-    }
-  }
-
-  if matchId != "" {
-    //Found a match to add add the requesting player to
-    return matchId, nil
+  if len(matches) > 0 {
+    sort.Slice(matches, func(i, j int) bool {
+      return matches[i].Size < matches[j].Size
+    })
+    return matches[0].MatchId
   }
 }
 
-// No suitable match was found for the user, create a new match.
-modulename := "supermatch" // name with which match handler was registered in InitModule
-params := make(map[string]interface{}) // pass information about initial state of the match in here
-if matchId, err := nk.MatchCreate(ctx, modulename, params); err != nil {
+modulename := "supermatch"
+if matchId, err := nk.MatchCreate(ctx, modulename, nil); err != nil {
   return "", err
 } else {
   return matchId, nil
@@ -337,10 +331,11 @@ local max_size = 4
 local query = "+label.mode:freeforall label.level:>10"
 local matches = nk.match_list(limit, isauthoritative, label, min_size, max_size, query)
 for _, match in ipairs(matches) do
-  print(("Match id %s"):format(match.match_id))
+  nk.logger_info(("Match id %s"):format(match.match_id))
 end
 ```
-```go fct_label="Go"
+
+```golang fct_label="Go"
 limit := 10
 authoritative := true
 label := ""
@@ -349,10 +344,12 @@ maxSize := 4
 query := "+label.mode:freeforall label.level:>10"
 matches, err := nk.MatchList(ctx, limit, authoritative, label, minSize, maxSize, query)
 if err != nil {
-  logger.Error("failed to list matches: %v", err)
+  logger.Error("Failed to list matches: %v", err)
   return
 }
-logger.Printf("match listings results: %#v", matches)
+for _, match := range matches {
+  logger.Info("Match id %s", match.MatchId)
+}
 ```
 
 You can utilize the full power of the [Bleve](http://blevesearch.com/docs/Query-String-Query/) search engine inside Nakama's [matchmaker](gameplay-matchmaker.md) as well as match listing like above.
@@ -363,30 +360,29 @@ You can also use this to create an authoritative match if your listing query ret
 local query = "+label.mode:freeforall label.level:>10"
 local matches = nk.match_list(10, true, "", 2, 4, query)
 if #matches > 0 then
-  print(matches[0].match_id)
+  nk.logger_info(matches[0].match_id)
 else
-  local match = nk.match_create("matchname", {})
-  print(match.match_id)
+  local match_id = nk.match_create("matchname", {})
+  nk.logger_info(match_id)
 end
 ```
-```go fct_label="Go"
+
+```golang fct_label="Go"
 query := "+label.mode:freeforall label.level:>10"
 matches, err := nk.MatchList(ctx, 1, true, "", 2, 4, query)
 if err != nil {
-  logger.Error("failed to list matches: %v", err)
-  return ""
+  logger.Error("Failed to list matches: %v", err)
+  return
 }
 if len(matches) > 0 {
-  return matches[0].GetMatchId()
+  logger.Info(matches[0].MatchId)
 } else {
-  modulename := "supermatch" // name with which match handler was registered in InitModule
-  params := make(map[string]interface{}) // pass information about initial state of the match in here
-  match, err := nk.MatchCreate(ctx, modulename,params)
+  matchId, err := nk.MatchCreate(ctx, "matchname", nil)
   if err != nil {
-    logger.Error("failed to create new match: %v", err)
-    return ""
+    logger.Error("Failed to create new match: %v", err)
+    return
   }
-  return match
+  logger.Info(matchId)
 }
 ```
 
@@ -396,7 +392,7 @@ The match handler that governs Authoritative Multiplayer is an interface{} that 
 
 | Param | Type | Description |
 |:-----:|:----:| ----------- |
-|  ctx  | context.<br/>Context | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+|  ctx  | context.Context | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
 | dispatcher | runtime.MatchDispatcher | [Dispatcher](#match-runtime-api) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
 |   nk  | runtime.NakamaModule | NakamaModule object that will be required to call several of Nakama's runtime functions. |
 | logger| runtime.Logger | Logger object that will enable logging info, error, warn, etc. messages from the matchloop. |
@@ -425,7 +421,7 @@ You must return the following three values:
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchInit(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, params map[string]interface{}) (interface{}, int, string) {
 	state := &MatchState{Debug: true} // Define custom MatchState in the code as per your game's requirements
 	tickRate := 1                     // Call MatchLoop() every 1s.
@@ -456,7 +452,7 @@ You must return three values from this function:
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchJoinAttempt(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, presence runtime.Presence, metadata map[string]string) (interface{}, bool, string) {
   result := true
   // The following type assertion is required to access members of MatchState
@@ -484,7 +480,7 @@ You must return:
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchJoin(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, presences []runtime.Presence) interface{} {
   // The following type assertion is required to access members of MatchState
   mState, ok := state.(*MatchState)
@@ -511,7 +507,7 @@ You must return:
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchLeave(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, presences []runtime.Presence) interface{} {
   // The following type assertion is required to access members of MatchState
   mState, ok := state.(*MatchState)
@@ -546,7 +542,7 @@ You must return:
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   // The following type assertion is required to access members of MatchState
   mState, ok := state.(*MatchState)
@@ -583,7 +579,7 @@ You must return:
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchTerminate(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, graceSeconds int) interface{} {
   // The following type assertion is required to access members of MatchState
   mState, ok := state.(*MatchState)
@@ -619,7 +615,7 @@ _Parameters_
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   // The following type assertion is required to access members of MatchState
   mState, ok := state.(*MatchState)
@@ -650,7 +646,7 @@ Call at any point during the match loop to remove participants based on misbehav
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   // The following type assertion is required to access members of MatchState
   mState, ok := state.(*MatchState)
@@ -683,7 +679,7 @@ _Parameters_
 
 _Example_
 
-```go fct_label="Go"
+```golang fct_label="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   // The following code will update the match label in the 10th match tick.
   if tick == 10 {
@@ -699,7 +695,7 @@ func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB
 
 This is an example of a Ping-Pong match handler. Messages received by the server are broadcast back to the peer who sent them.
 
-```go fct_label="Go"
+```golang fct_label="Go"
 // Match State struct
 type MatchState struct {
 	debug     bool
