@@ -1,6 +1,9 @@
 # Basics
 
-The server integrates the <a href="https://www.lua.org/manual/5.1/manual.html" target="\_blank">Lua programming language</a> as a fast embedded code runtime. Alternately, you may also write the custom logic as go modules, compile them as a plugin and provide it as a parameter when the server is started. For details on how to compile your runtime code in go, please refer instructions [here](https://github.com/heroiclabs/nakama/tree/master/sample_go_module).
+The server exposes a fast embedded code runtime where you can integrate custom logic written as either <a href="https://golang.org/pkg/plugin/" target="\_blank">Go plugins</a> or <a href="https://www.lua.org/manual/5.1/manual.html" target="\_blank">Lua modules</a>.
+
+!!! Note
+    Go plugins must be compiled before they can be loaded by Nakama. The build process is different for binary and Docker-based Nakama installations, make sure you follow [the instructions](https://github.com/heroiclabs/nakama/tree/master/sample_go_module).
 
 It is useful to run custom logic which isn’t running on the device or browser. The code you deploy with the server can be used immediately by clients so you can change behavior on the fly and add new features faster.
 
@@ -8,21 +11,13 @@ You should use server-side code when you want to set rules around various featur
 
 ## Load modules
 
-### Go modules
-
-For instructions on how to load runtime modules written in go, you need to follow the instructions [here](https://github.com/heroiclabs/nakama/tree/master/sample_go_module).
-
-### Lua modules
-
-You can create a Lua file wherever you like on the filesystem as long as the server knows where to scan for the folder which contains your code.
-
 By default the server will scan all files within the "data/modules" folder relative to the server file or the folder specified in the YAML [configuration](install-configuration.md#runtime) at startup. You can also specify the modules folder via a command flag when you start the server.
 
 ```shell
 nakama --runtime.path "$HOME/some/path/"
 ```
 
-All files with the ".lua" extension will be loaded and evaluated as part of the boot up sequence. Each Lua file represents a module and all code in each module will be run and can be used to register functions which can operate on messages from clients as well as execute logic on demand.
+All files with the ".lua" or ".so" extensions found in the runtime path will be loaded and evaluated as part of the boot up sequence. Each Lua file represents a module and all code in each module will be run and can be used to register functions which can operate on messages from clients as well as execute logic on demand. Shared Object files are the equivalent for Go plugins.
 
 ## Simple example
 
@@ -92,7 +87,7 @@ All registered functions receive a "context" as the first argument. This argumen
 ```go fct_label="Go"
 userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 if !ok {
-  // userId not found in the context being queried. Handle accordingly
+  // User ID not found in the context being queried.
 }
 ```
 

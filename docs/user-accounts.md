@@ -131,25 +131,24 @@ With server-side code it's possible to update the user's wallet.
 ```lua fct_label="Lua"
 local nk = require("nakama")
 
-local user_id = "95f05d94-cc66-445a-b4d1-9e262662cf79" -- who to send
+local user_id = "95f05d94-cc66-445a-b4d1-9e262662cf79"
 local content = {
-  reward_coins = 1000
+  reward_coins = 1000 -- Add 1000 coins to the user's wallet.
 }
 
 local status, err = pcall(nk.wallet_update, user_id, content)
 if (not status) then
-    nk.logger_info(("User wallet update error: %q"):format(err))
+    nk.logger_error(("User wallet update error: %q"):format(err))
 end
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 content := map[string]interface{}{
-	"reward_coins": 10, // Add 10 coins to the user's wallet.
+	"reward_coins": 1000, // Add 1000 coins to the user's wallet.
 }
-metadata := map[string]interface{}{"game_result": "won"}
-if err := nk.WalletUpdate(ctx, userID, changeset, metadata, true); err != nil {
-	// Handle error
+if err := nk.WalletUpdate(ctx, userID, content, nil, true); err != nil {
+	logger.Error("User wallet update error: %v", err.Error())
 }
 ```
 
@@ -290,15 +289,15 @@ do
 end
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 if users, err := nk.UsersGetId(ctx, []string{
 	"3ea5608a-43c3-11e7-90f9-7b9397165f34",
 	"447524be-43c3-11e7-af09-3f7172f05936",
 }); err != nil {
-	// Handle error
+	// Handle error.
 } else {
 	for _, u := range users {
-		logger.Printf("Userid: %s, username: %s, displayname: %s", u.Id, u.Username, u.DisplayName)
+		logger.Info("username: %s, displayname: %s", u.Username, u.DisplayName)
 	}
 }
 ```
@@ -421,7 +420,7 @@ if (not status) then
 end
 ```
 
-```go fct_label="Go"
+```golang fct_label="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user's id.
 username := "my-new-username" // must be unique
 metadata := make(map[string]interface{})
@@ -431,7 +430,7 @@ location := "San Francisco"
 langTag := ""
 avatarUrl := "http://graph.facebook.com/avatar_url"
 if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timezone, location, langTag, avatarUrl); err != nil {
-	// Handle error
+	// Handle error.
 	logger.Error("Account update error: %s", err.Error())
 }
 ```
