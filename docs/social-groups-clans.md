@@ -720,13 +720,14 @@ local maxMemberCount = 100
 local success, err = pcall(nk.group_create, user_id, name, creator_id, lang,
     description, avatar_url, open, metadata, maxMemberCount)
 if (not success) then
-    nk.logger_error(("Error when creating group: %q"):format(err))
+    nk.logger_error(("Could not create group: %q"):format(err))
 end
 ```
 
-```go fct_label="Go"
-metadata := make(map[string]interface{})
-metadata["my_custom_field"] = "some value" // Add whatever custom fields you want.
+```golang fct_label="Go"
+metadata := map[string]interface{}{
+  "my_custom_field": "some value" // Add whatever custom fields you want.
+}
 
 userID := "<user id>"
 creatorID := userID
@@ -737,10 +738,8 @@ open := true
 avatarURL := "url://somelink"
 maxCount := 100
 
-if group, err := nk.GroupCreate(ctx, userID, name, creatorID, langTag, description, avatarURL, open, metadata, maxCount); err != nil {
+if _, err := nk.GroupCreate(ctx, userID, name, creatorID, langTag, description, avatarURL, open, metadata, maxCount); err != nil {
 	logger.Error("Could not create group: %s", err.Error())
-} else {
-	logger.Printf("Created group id %s, name %s with max %d members.", group.Id, group.GetName(), group.GetMaxCount())
 }
 ```
 
