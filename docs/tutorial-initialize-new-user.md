@@ -2,8 +2,12 @@
 
 It's often useful when a new user registers to have a bunch of records setup for them. In games this could be needed for a user's virtual wallet, initial inventory items, etc. In this tutorial we'll cover a few different ways to handle this use case.
 
+<!--
+
 !!! Summary
     While there are various ways to solve this use case we highly recommend you [initialize the records on usage](#initialize-record-when-used).
+
+-->
 
 ## After register callback
 

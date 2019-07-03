@@ -308,7 +308,7 @@ if users, err := nk.UsersGetId(ctx, []string{
 When a user is registered most of their profile is setup with default values. A user can update their own profile to change fields but cannot change any other user's profile.
 
 ```sh fct_label="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/account" \
+curl -X PUT "http://127.0.0.1:7350/v2/account" \
   -H 'authorization: Bearer <session token>' \
   --data '{
     "display_name": "My new name",
