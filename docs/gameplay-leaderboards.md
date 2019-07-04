@@ -170,7 +170,7 @@ local metadata = {
 nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 id := "level1"
 authoritative := false
 sort := "desc"

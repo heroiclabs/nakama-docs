@@ -232,7 +232,7 @@ end
 nk.register_rpc(join, "join")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func JoinStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
@@ -278,7 +278,7 @@ end
 nk.register_rpc(leave, "leave")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 // RPC Code
 func LeaveStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
@@ -321,7 +321,7 @@ local payload = nk.json_encode({ some = "data" })
 nk.stream_send(stream_id, payload)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 mode := uint8(123)
 label := "label"
 // Data does not have to be JSON, but it's a convenient format.
@@ -343,7 +343,7 @@ local stream_id = { mode = 123, label = "my custom stream" }
 nk.stream_close(stream_id)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 mode := uint8(123)
 label := "label"
 nk.StreamClose(mode, "", "", label)
@@ -358,7 +358,7 @@ local stream_id = { mode = 123, label = "my custom stream" }
 local count = nk.stream_count(stream_id)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 mode := uint8(123)
 label := "label"
 count, err := nk.StreamCount(mode, "", "", label)
@@ -380,7 +380,7 @@ for _, presence in ipairs(presences) do
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 mode := uint8(123)
 label := "label"
 includeHidden := true
@@ -415,7 +415,7 @@ end
 nk.register_rpc(check, "check")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func CheckStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
   if !ok {
@@ -478,7 +478,7 @@ local session_id = "session ID to kick"
 nk.stream_user_leave(user_id, session_id, stream_id)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 mode := uint8(123)
 label := "some chat room channel name"
 userId := "user ID to kick"
@@ -501,7 +501,7 @@ end
 nk.register_rpc(enable_silent_mode, "enable_silent_mode")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func EnableSilentMode(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
   if !ok {

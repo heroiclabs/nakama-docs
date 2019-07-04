@@ -57,7 +57,7 @@ end
 nk.register_req_after(initialize_user, "authenticaterequest_device")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func InitializeUser(ctx context.Context, logger Logger, db *sql.DB, nk NakamaModule, out *api.Session, in *api.AuthenticateDeviceRequest) error {
   if out.Created {
     // Only run this logic if the account that has authenticated is new.

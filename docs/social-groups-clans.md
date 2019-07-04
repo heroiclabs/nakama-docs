@@ -724,7 +724,7 @@ if (not success) then
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 metadata := map[string]interface{}{
   "my_custom_field": "some value" // Add whatever custom fields you want.
 }

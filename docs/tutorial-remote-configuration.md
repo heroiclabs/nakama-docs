@@ -35,7 +35,7 @@ end
 nk.register_rpc(remote_configuration, "rc")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 var parameters = map[string]interface{}{
   "reachable_levels": 10,
   "max_player_level": 90,
@@ -95,7 +95,7 @@ end
 nk.register_rpc(remote_configuration, "rc")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 const (
   configCollection = "configuration"
   configKey = "rc"

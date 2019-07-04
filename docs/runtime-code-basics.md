@@ -48,7 +48,7 @@ end
 nk.register_rpc(some_example, "my_unique_id")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 import (
   "context"
   "database/sql"
@@ -99,7 +99,7 @@ All registered functions receive a "context" as the first argument. This contain
 local user_id = context.user_id
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 if !ok {
   // User ID not found in the context.
@@ -146,7 +146,7 @@ nk.register_tournament_reset()
 nk.register_tournament_end()
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 // NOTE: All Go runtime registrations must be made in the module's InitModule function.
 
 // If you are sending requests to the server via the realtime connection, ensure that use this variant of the function.
@@ -193,7 +193,7 @@ end
 nk.register_req_before(limit_friends, "AddFriends")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
@@ -258,7 +258,7 @@ end
 nk.register_req_after(add_reward, "AddFriends")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
@@ -315,7 +315,7 @@ end
 nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func CustomRpcFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
   logger.Info("Payload: %s", payload)
 
@@ -360,7 +360,7 @@ end
 nk.register_rpc(http_handler, "http_handler_path")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func HttpHandler(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
   var message interface{}
   if err := json.Unmarshal([]byte(payload), &message); err != nil {
@@ -416,7 +416,7 @@ ON CONFLICT (id) DO NOTHING
 end)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
   // This is to create a system ID that cannot be used via a client.
   var systemId string
@@ -455,7 +455,7 @@ else
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 func willError() error {
   return errors.New("This function will always throw an error!")
 }
@@ -486,7 +486,7 @@ else
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 users, err := nk.UsersGetUsername([]string{"22e9ed62"})
 if err != nil {
   logger.Error("Error occurred: %v", err.Error())
@@ -591,7 +591,7 @@ end
 nk.register_rpc(get_pokemon, "get_pokemon")
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 import (
   "context"
   "database/sql"

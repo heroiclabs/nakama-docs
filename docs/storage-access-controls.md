@@ -151,7 +151,7 @@ for _, o in ipairs(objects) do
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 objectIds := []*runtime.StorageRead{
 	&runtime.StorageRead{
 		Collection: "configuration",
@@ -358,7 +358,7 @@ local new_objects = {
 nk.storage_write(new_objects)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
 objects := []*runtime.StorageWrite{
 	&runtime.StorageWrite{

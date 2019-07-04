@@ -142,7 +142,7 @@ if (not status) then
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 content := map[string]interface{}{
 	"reward_coins": 1000, // Add 1000 coins to the user's wallet.
@@ -289,7 +289,7 @@ do
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 if users, err := nk.UsersGetId(ctx, []string{
 	"3ea5608a-43c3-11e7-90f9-7b9397165f34",
 	"447524be-43c3-11e7-af09-3f7172f05936",
@@ -420,7 +420,7 @@ if (not status) then
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user's id.
 username := "my-new-username" // must be unique
 metadata := make(map[string]interface{})

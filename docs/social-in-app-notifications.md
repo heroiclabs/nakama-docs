@@ -33,7 +33,7 @@ local persistent = true
 nk.notification_send(user_id, subject, content, code, sender_id, persistent)
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 subject := "You earned a secret item!"
 content := map[string]interface{}{
   "item_id": "192308394345345",

@@ -336,7 +336,7 @@ if (not success) then
 end
 ```
 
-```golang fct_label="Go"
+```go fct_label="Go"
 if err := nk.UsersBanId(ctx, []string{
 	"someruserid",
 	"anotheruserid",
