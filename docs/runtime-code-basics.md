@@ -447,9 +447,37 @@ end
 
 ## Restrictions
 
+### Compatibility
+
+The Lua runtime is a Lua 5.1-compatible implementation with a small set of additional packages backported from newer versions - see [available functions](#available-functions). For best results ensure your Lua modules and any 3rd party libraries are compatible with Lua 5.1.
+
+Go runtime available functionality depends on the version of Go each Nakama release is compiled with. This is usually the latest stable version at the time of release. Check server startup logging for the exact Go version used by your Nakama installation.
+
+!!! Note
+    Lua runtime code cannot use the Lua C API or extensions. Make sure your code and any 3rd party libraries are pure Lua 5.1.
+
+### Available functions
+
 The Lua virtual machine embedded in the server uses a restricted set of Lua standard library modules. This ensures the code sandbox cannot tamper with operating system input/output or the filesystem.
 
-The list of available modules are: base module, "math", "os", "string", and "table".
+The list of available Lua modules are: base module, `math`, `string`, `table`, `bit32`, and a subset of `os` (only `clock`, `difftime`, `date`, and `time` functions).
+
+Go runtime code can make use of the full range of standard library functions and packages.
+
+!!! Tip
+    You cannot call Lua functions from the Go runtime, or Go functions from the Lua runtime.
+
+### Global state
+
+Lua runtime code is executed in instanced contexts. You cannot use global variables as a way to store state in memory, or communicate with other Lua processes or function calls.
+
+The Go runtime does not have this restriction and can store and share data as needed, but concurrency and access controls are the responsibility of the developer.
+
+### Sandboxing
+
+Lua runtime code is fully sandboxed and cannot access the filesystem, input/output devices, or spawn OS threads or processes. This allows the server to guarantee that Lua modules cannot cause fatal errors - Lua code cannot trigger unexpected client disconnects or affect the main server process.
+
+Go runtime code has full low level access to the server and its environment. This allows full flexibility and control to include powerful features and offer high performance, but cannot guarantee error safety - the server does not guard against fatal errors in Go runtime code, such as segmentation faults or pointer dereference failures.
 
 ## An example module
 
