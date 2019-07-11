@@ -801,9 +801,9 @@ socket.ReceivedMatchmakerMatched += async matched =>
 ```cpp fct_label="Cocos2d-x C++"
 rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
   {
-    CCLOG("Matched! matchId: %s", matched->matchId.c_str());
+    CCLOG("Matched! token: %s", matched->token.c_str());
 
-    rtClient->joinMatch(matched->matchId, [](const NMatch& match)
+    rtClient->joinMatchByToken(matched->token, [](const NMatch& match)
       {
         CCLOG("Joined Match!");
       });
@@ -826,9 +826,9 @@ this.socket.onmatchmakermatched = (matched) => {
 ```cpp fct_label="C++"
 rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
   {
-    std::cout << "Matched! matchId: " << matched->matchId << std::endl;
+    std::cout << "Matched! token: " << matched->token << std::endl;
 
-    rtClient->joinMatch(matched->matchId, [](const NMatch& match)
+    rtClient->joinMatchByToken(matched->token, [](const NMatch& match)
       {
         std::cout << "Joined Match!" << std::endl;
       });
