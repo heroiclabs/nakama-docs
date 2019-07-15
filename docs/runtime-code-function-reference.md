@@ -50,7 +50,7 @@ account, err := nk.AccountGetId(ctx, "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592")
 if err != nil {
   // Handle error.
 } else {
-  logger.Info("Wallet is: %v", account.Wallet)  
+  logger.Info("Wallet is: %v", account.Wallet)
 }
 ```
 
@@ -1643,7 +1643,7 @@ This can be used to apply custom logic to standard features in the server. It wi
 _Parameters_
 
 | Param | Go type | Lua type | Description |
-| ----- | ---- | ----------- |
+| ----- | ---- | ----------- | ----------- |
 | func | `function` | function | A function reference which will be executed on each `msgname` message (in Lua). In Go, there are separate functions for each of those actions. |
 | msgname | - | string | The specific message name to execute the `func` function after. |
 
@@ -1679,7 +1679,7 @@ Register a function with the server which will be executed before any non-realti
 _Parameters_
 
 | Param | Go type | Lua type | Description |
-| ----- | ---- | ----------- |
+| ----- | ---- | ----------- | ----------- |
 | func | `function` | function | A function reference which will be executed on each `msgname` message (in Lua). In Go, there are separate functions for each of those actions. |
 | msgname | - | string | The specific message name to execute the `func` function after. |
 
@@ -1707,7 +1707,7 @@ func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk
 // Register as an appropriate before hook, this call should be in InitModule.
 if err := initializer.RegisterBeforeAddFriends(BeforeAddFriends); err != nil {
   logger.Error("Unable to register: %v", err)
-  return err  
+  return err
 }
 ```
 
@@ -1745,7 +1745,7 @@ func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime N
 // Register as an appropriate after hook, this call should be in InitModule.
 if err := initializer.RegisterAfterRt("ChannelJoin", MyFunc); err != nil {
   logger.Error("Unable to register: %v", err)
-  return err  
+  return err
 }
 ```
 
@@ -1786,7 +1786,7 @@ func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.N
 // Register as an appropriate before hook, this call should be in InitModule.
 if err := initializer.RegisterBeforeRt("ChannelJoin", MyFunc); err != nil {
   logger.Error("Unable to register: %v", err)
-  return err  
+  return err
 }
 ```
 
