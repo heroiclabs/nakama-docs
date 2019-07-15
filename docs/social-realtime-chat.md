@@ -192,17 +192,17 @@ console.log("Now connected to channel id: '%o'", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-const roomname = "MarvelMovieFans";
-const persistence = true;
-const hidden = false;
+var roomname = "MarvelMovieFans";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
 Console.WriteLine("Now connected to channel id: '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-const roomname = "MarvelMovieFans";
-const persistence = true;
-const hidden = false;
+var roomname = "MarvelMovieFans";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
 Debug.LogFormat("Now connected to channel id: '{0}'", channel.Id);
 ```
@@ -300,17 +300,17 @@ console.log("You can now send messages to channel id: ", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-const groupId = "<group id>";
-const persistence = true;
-const hidden = false;
+var groupId = "<group id>";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
 Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-const groupId = "<group id>";
-const persistence = true;
-const hidden = false;
+var groupId = "<group id>";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
 Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
 ```
@@ -408,17 +408,17 @@ console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
 ```csharp fct_label=".NET"
-const userId = "<user id>";
-const persistence = true;
-const hidden = false;
+var userId = "<user id>";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
 Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
 ```csharp fct_label="Unity"
-const userId = "<user id>";
-const persistence = true;
-const hidden = false;
+var userId = "<user id>";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
 Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
 ```
@@ -549,9 +549,9 @@ socket.ReceivedChannelPresence += presenceEvent =>
     Console.WriteLine("Room users: [{0}]", string.Join(",\n  ", roomUsers));
 };
 
-const roomName = "PizzaFans";
-const persistence = true;
-const hidden = false;
+var roomName = "PizzaFans";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(roomName, ChannelType.Room, persistence, hidden);
 roomUsers.AddRange(channel.Presences);
 ```
@@ -569,9 +569,9 @@ socket.ReceivedChannelPresence += presenceEvent =>
     Debug.LogFormat("Room users: [{0}]", string.Join(",\n  ", roomUsers));
 };
 
-const roomname = "PizzaFans";
-const persistence = true;
-const hidden = false;
+var roomname = "PizzaFans";
+var persistence = true;
+var hidden = false;
 var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
 connectedUsers.AddRange(channel.Presences);
 ```
