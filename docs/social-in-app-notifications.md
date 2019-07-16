@@ -538,12 +538,13 @@ Authorization: Bearer <session token>
 
 ## Notification codes
 
-The server reserves all negative integer codes for messages sent implicitly on certain events. You can define your own notification codes by simply using values greater than or equal to 0.
+The server reserves all codes that are less than or equal to 0 for messages sent implicitly on certain events. You can define your own notification codes by simply using values greater than 0.
 
 The code is useful to decide how to display the notification in your UI.
 
 | Code | Purpose |
 | ---- | ------- |
+|&nbsp;0 | Reserved |
 |   -1 | User X wants to chat. |
 |   -2 | User X wants to add you as a friend. |
 |   -3 | User X accepted your friend invite. |
