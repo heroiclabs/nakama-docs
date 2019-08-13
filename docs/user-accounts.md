@@ -414,7 +414,7 @@ local location = "San Francisco"
 local lang_tag = nil
 local avatar_url = "http://graph.facebook.com/avatar_url"
 
-local status, err = pcall(nk.account_update_id, metadata, username, display_name, timezone, location, lang_tag, avatar_url)
+local status, err = pcall(nk.account_update_id, user_id, metadata, username, display_name, timezone, location, lang_tag, avatar_url)
 if (not status) then
   nk.logger_info(("Account update error: %q"):format(err))
 end
