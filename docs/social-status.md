@@ -10,31 +10,31 @@ The status is set for each connection, and is erased when the user disconnects. 
 
 By default users have no status when they first connect, and will not appear online to their followers. To appear online the user must set a status.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.send({ status_update: { status: "Hello everyone!" } });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 await socket.UpdateStatusAsync("Hello everyone!");
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 await socket.UpdateStatusAsync("Hello everyone!");
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtClient->updateStatus("Hello everyone!");
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.send({ status_update: { status: "Hello everyone!" } });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtClient->updateStatus("Hello everyone!");
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 socket.updateStatus("Hello everyone!").get();
 ```
 
@@ -47,31 +47,31 @@ The status can be set and updated as often as needed with this operation.
 
 If the user needs to appear offline or "invisible" they can do so by erasing their status. Their followers will receive the same status update as they would if the user disconnects.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.send({ status_update: {} });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 await socket.UpdateStatusAsync(null);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 await socket.UpdateStatusAsync(null);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtClient->updateStatus("");
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.send({ status_update: {} });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtClient->updateStatus("");
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 socket.updateStatus(null).get();
 ```
 
@@ -79,7 +79,7 @@ socket.updateStatus(null).get();
 
 When a user updates their status all of their followers receive an event that contains both the old status and the new one. Clients register an event handler to be called when receiving a status update.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onstatuspresence = (statuspresence) => {
   statuspresence.leaves.forEach((leave) => {
     console.log("User %o no longer has status %o", leave.user_id, leave.status);
@@ -90,7 +90,7 @@ socket.onstatuspresence = (statuspresence) => {
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 socket.ReceivedStatusPresence += presenceEvent =>
 {
     Console.WriteLine(presenceEvent);
@@ -105,7 +105,7 @@ socket.ReceivedStatusPresence += presenceEvent =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 socket.ReceivedStatusPresence += presenceEvent =>
 {
     Debug.Log(presenceEvent);
@@ -120,7 +120,7 @@ socket.ReceivedStatusPresence += presenceEvent =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
 {
   for (auto& presence : event.leaves)
@@ -135,7 +135,7 @@ rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
 });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.onstatuspresence = (statuspresence) => {
   statuspresence.leaves.forEach((leave) => {
     cc.log("User", leave.user_id, "no longer has status", leave.status);
@@ -146,7 +146,7 @@ socket.onstatuspresence = (statuspresence) => {
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
 {
   for (auto& presence : event.leaves)
@@ -161,7 +161,7 @@ rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
 });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onStatusPresence(final StatusPresenceEvent presence) {
@@ -184,22 +184,22 @@ Users only receive status updates from those they follow. Users can follow anyon
 
 When following a set of users the operation will immediately return the status of those that are online and have set a visible status.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var status = await socket.send({ status_follow: { user_ids: ["<user id>"] } });
 status.presences.forEach((presence) => {
   console.log("User %o has status %o", presence.user_id, presence.status);
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 await socket.FollowUsersAsync(new[] { "<user id>" });
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 await socket.FollowUsersAsync(new[] { "<user id>" });
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NStatus& status)
 {
   for (auto& presence : status.presences)
@@ -211,7 +211,7 @@ auto successCallback = [](const NStatus& status)
 rtClient->followUsers({ "<user id>" }, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.send({ status_follow: { user_ids: ["<user id>"] } })
   .then(function(status) {
       status.presences.forEach((presence) => {
@@ -223,7 +223,7 @@ socket.send({ status_follow: { user_ids: ["<user id>"] } })
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NStatus& status)
 {
   for (auto& presence : status.presences)
@@ -235,7 +235,7 @@ auto successCallback = [](const NStatus& status)
 rtClient->followUsers({ "<user id>" }, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 socket.followUsers("<user id>").get();
 ```
 
@@ -246,30 +246,30 @@ socket.followUsers("<user id>").get();
 
 Unfollowing a set of users immediately stops the user from receiving any further status updates from them.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.send({ status_unfollow: { user_ids: ["<user id>"] } });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 await socket.UnfollowUsersAsync(new[] { "<user id>" });
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 await socket.UnfollowUsersAsync(new[] { "<user id>" });
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtClient->unfollowUsers({ "<user id>" });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.send({ status_unfollow: { user_ids: ["<user id>"] } });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtClient->unfollowUsers({ "<user id>" });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 socket.unfollowUsers("<user id>").get();
 ```

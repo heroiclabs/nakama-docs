@@ -26,7 +26,7 @@ Once the droplet is running, make a note of its IP address from within your Digi
 
 For the next steps, you need to SSH into the droplet. There isn’t a need for username/password as you’ve pre-authorized yourself using a public key in the previous step.
 
-```shell fct_label="Shell"
+```shell tab="Shell"
 ssh root@<IP ADDRESS>
 # you are now connected to the droplet through an SSH session.
 # you can type `exit` to close the session.

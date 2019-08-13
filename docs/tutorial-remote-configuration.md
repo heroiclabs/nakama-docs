@@ -16,7 +16,7 @@ With both of these approaches you can access remote configuration before you've 
 
 The simplest approach uses server-side code to represent the in-app parameters as a static variable. A change to the parameters after the server has started would require an update to the Lua code and a server restart.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- The code could be stored in a module named `"rc.lua"` and placed in the runtime path for the server.
 
 local nk = require("nakama")
@@ -35,7 +35,7 @@ end
 nk.register_rpc(remote_configuration, "rc")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 var parameters = map[string]interface{}{
   "reachable_levels": 10,
   "max_player_level": 90,
@@ -62,7 +62,7 @@ if err := initializer.RegisterRpc("rc", RemoteConfig); err != nil {
 
 For in-app parameters which may be changed via Analytics or with a Liveops dashboard it's more flexible to store the configuration settings in the [storage engine](storage-collections.md) as a read-only record.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 --Same as above we'll use server-side code with a module named `"rc.lua"` and placed in the runtime path for the server.
 
 local nk = require("nakama")
@@ -95,7 +95,7 @@ end
 nk.register_rpc(remote_configuration, "rc")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 const (
   configCollection = "configuration"
   configKey = "rc"
@@ -164,7 +164,7 @@ With either approach used to store in-app parameters you can fetch the configura
 !!! Tip
     Remember to change the host, port, and auth values for how you've setup your server.
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var host = "127.0.0.1";
 var port = 7350;
 var path = "rc";
@@ -188,7 +188,7 @@ if (!string.IsNullOrEmpty(www.error)) {
 }
 ```
 
-```shell fct_label="cURL"
+```shell tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/rpc/rc?http_key=defaultkey" \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'

@@ -18,54 +18,54 @@ A user can add one or more friends by that user's ID or username. The user added
 
 When a friend request is sent or the user is added an in-app notification will be sent. See the [in-app notification](social-in-app-notifications.md#receive-notifications) section for more info.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var ids = ["user-id1", "user-id2"];
 var usernames = ["username1"];
 await client.addFriends(session, ids, usernames);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.AddFriendsAsync(session, ids, usernames);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.AddFriendsAsync(session, ids, usernames);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 vector<string> ids = { "user-id1", "user-id2" };
 vector<string> usernames = { "username1" };
 client->addFriends(session, ids, usernames);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var ids = ["user-id1", "user-id2"];
 var usernames = ["username1"];
 client.addFriends(session, ids, usernames);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 vector<string> ids = { "user-id1", "user-id2" };
 vector<string> usernames = { "username1" };
 client->addFriends(session, ids, usernames);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 List<String> ids = Arrays.asList("user-id1", "user-id2");
 String[] usernames = new String[] {"username1"};
 client.addFriends(session, ids, usernames).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let userID = ... // some user ID
 var message = FriendAddMessage()
@@ -75,7 +75,7 @@ client.send(message: message).catch { err in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -89,17 +89,17 @@ When both users have added eachother as friends it's easy to initiate realtime c
 
 You can list all of a user's friends, blocked users, friend requests received (invited), and invites they've sent. These statuses are returned together as part of the friend list which makes it easy to display in a UI.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/friend" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const friends = await client.listFriends(session);
 console.info("Successfully retrieved friend list:", friends);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var result = await client.ListFriendsAsync(session);
 foreach (var f in result.Friends)
 {
@@ -107,7 +107,7 @@ foreach (var f in result.Friends)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var result = await client.ListFriendsAsync(session);
 foreach (var f in result.Friends)
 {
@@ -115,7 +115,7 @@ foreach (var f in result.Friends)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NFriendsPtr friends)
 {
   CCLOG("Successfully retrieved friend list: %u", friends->friends.size());
@@ -124,7 +124,7 @@ auto successCallback = [](NFriendsPtr friends)
 client->listFriends(session, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.listFriends(session)
   .then(function(friends) {
       cc.log("Successfully retrieved friend list:", JSON.stringify(friends));
@@ -134,7 +134,7 @@ client.listFriends(session)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NFriendsPtr friends)
 {
   std::cout << "Successfully retrieved friend list: " << friends->friends.size() << std::endl;
@@ -143,14 +143,14 @@ auto successCallback = [](NFriendsPtr friends)
 client->listFriends(session, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 Friends friends = client.listFriends(session).get();
 for (Friend friend : friends.getFriendsList()) {
   System.out.format("Friend %s state %d", friend.getUser().getUsername(), friend.getState());
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var message = FriendListMessage()
 client.send(message: message).then { friends in
@@ -163,7 +163,7 @@ client.send(message: message).then { friends in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/friend
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -178,54 +178,54 @@ A user can remove a friend, reject a received invite, cancel a friend request se
 !!! Note
     If a user is unblocked they are removed from the friend list entirely. To re-add them each user must add the other again.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X DELETE "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var ids = ["user-id1", "user-id2"];
 var usernames = ["username1"];
 await client.deleteFriends(session, ids, usernames);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.DeleteFriendsAsync(session, ids, usernames);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.DeleteFriendsAsync(session, ids, usernames);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 vector<string> ids = { "user-id1", "user-id2" };
 vector<string> usernames = { "username1" };
 client->deleteFriends(session, ids, usernames);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var ids = ["user-id1", "user-id2"];
 var usernames = ["username1"];
 client.deleteFriends(session, ids, usernames);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 vector<string> ids = { "user-id1", "user-id2" };
 vector<string> usernames = { "username1" };
 client->deleteFriends(session, ids, usernames);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 List<String> ids = Arrays.asList("user-id1", "user-id2");
 String[] usernames = new String[] {"username1"};
 client.deleteFriends(session, ids, usernames).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let userID = ... // some user ID
 var message = FriendRemoveMessage()
@@ -237,7 +237,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 DELETE /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -251,54 +251,54 @@ You can stop a user from using 1-on-1 chat or other social features with a user 
 
 A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var ids = ["user-id1", "user-id2"];
 var usernames = ["username1"];
 await client.blockFriends(session, ids, usernames);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.BlockFriendsAsync(session, ids, usernames);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var ids = new[] {"user-id1", "user-id2"};
 var usernames = new[] {"username1"};
 await client.BlockFriendsAsync(session, ids, usernames);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 vector<string> ids = { "user-id1", "user-id2" };
 vector<string> usernames = { "username1" };
 client->blockFriends(session, ids, usernames);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var ids = ["user-id1", "user-id2"];
 var usernames = ["username1"];
 client.blockFriends(session, ids, usernames);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 vector<string> ids = { "user-id1", "user-id2" };
 vector<string> usernames = { "username1" };
 client->blockFriends(session, ids, usernames);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 List<String> ids = Arrays.asList("user-id1", "user-id2");
 String[] usernames = new String[] {"username1"};
 client.blockFriends(session, ids, usernames).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let userID = ... // some user ID
 var message = FriendBlockMessage()
@@ -310,7 +310,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -326,7 +326,7 @@ This is best used by a moderator system within your community. You could assign 
 
 See the [runtime code basics](runtime-code-basics.md) on how to write server-side code.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local bad_users = {"someuserid", "anotheruserid"}
@@ -336,7 +336,7 @@ if (not success) then
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 if err := nk.UsersBanId(ctx, []string{
 	"someruserid",
 	"anotheruserid",

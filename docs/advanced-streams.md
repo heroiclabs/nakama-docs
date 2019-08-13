@@ -44,14 +44,14 @@ Streams generate presence events that notify all users currently in the stream w
 
 Clients can register an event handler to consume stream data objects when received over the socket. The handler function will be called once for each stream data message.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onstreamdata = (streamdata) => {
   console.log("Received data from stream: %o", streamdata.stream.subject);
   console.log("Data content: %@.", streamdata.data);
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 socket.ReceivedStreamState += stream =>
 {
   Console.WriteLine("Received data from stream: '{0}'", stream.Stream.Subject);
@@ -59,7 +59,7 @@ socket.ReceivedStreamState += stream =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 socket.ReceivedStreamState += stream =>
 {
     Debug.LogFormat("Received data from stream: '{0}'", stream.Stream.Subject);
@@ -67,7 +67,7 @@ socket.ReceivedStreamState += stream =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 // add listener to header of your class: NRtDefaultClientListener listener;
 rtClient->setListener(&listener);
 listener.onStreamData([](const NStreamData& data)
@@ -77,14 +77,14 @@ listener.onStreamData([](const NStreamData& data)
 });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.onstreamdata = function (streamdata) {
   cc.log("Received data from stream:", streamdata.stream.subject);
   cc.log("Data content:", streamdata.data);
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 // add listener to header of your class: NRtDefaultClientListener listener;
 rtClient->setListener(&listener);
 listener.onStreamData([](const NStreamData& data)
@@ -94,7 +94,7 @@ listener.onStreamData([](const NStreamData& data)
 });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onStreamData(final StreamData data) {
@@ -108,7 +108,7 @@ SocketListener listener = new AbstractSocketListener() {
 
 When a new presence joins a stream or an existing presence leaves the server will broadcast presence events to all users currently on the stream.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onstreampresence = (streampresence) => {
   console.log("Received presence event for stream: %o", streampresence.id);
   streampresence.joins.forEach((join) => {
@@ -120,7 +120,7 @@ socket.onstreampresence = (streampresence) => {
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 socket.ReceivedStreamPresence += presenceEvent =>
 {
     Console.WriteLine("Received data from stream: '{0}'", presenceEvent.Stream.Subject);
@@ -135,7 +135,7 @@ socket.ReceivedStreamPresence += presenceEvent =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 socket.ReceivedStreamPresence += presenceEvent =>
 {
     Debug.LogFormat("Received data from stream: '{0}'", presenceEvent.Stream.Subject);
@@ -150,7 +150,7 @@ socket.ReceivedStreamPresence += presenceEvent =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 // add listener to header of your class: NRtDefaultClientListener listener;
 rtClient->setListener(&listener);
 listener.onStreamPresence([](const NStreamPresenceEvent& presence)
@@ -167,7 +167,7 @@ listener.onStreamPresence([](const NStreamPresenceEvent& presence)
 });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.onstreampresence = function(streampresence) {
   cc.log("Received presence event for stream:", streampresence.id);
   streampresence.joins.forEach(function(join) {
@@ -179,7 +179,7 @@ socket.onstreampresence = function(streampresence) {
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 // add listener to header of your class: NRtDefaultClientListener listener;
 rtClient->setListener(&listener);
 listener.onStreamPresence([](const NStreamPresenceEvent& presence)
@@ -196,7 +196,7 @@ listener.onStreamPresence([](const NStreamPresenceEvent& presence)
 });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onStreamPresence(final StreamPresenceEvent presence) {
@@ -222,7 +222,7 @@ The server can place users on any number of streams. To add a user to a stream t
 
 As an example we can register an RPC function that will place the user that calls it on a custom stream.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function join(context, _)
   local stream_id = { mode = 123, label = "my custom stream" }
   local hidden = false
@@ -232,7 +232,7 @@ end
 nk.register_rpc(join, "join")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func JoinStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
@@ -270,7 +270,7 @@ Leaving streams is also controlled by the server. To remove a user from a stream
 
 As an example we can register an RPC function that will remove the user that calls it from the custom stream.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function leave(context, _)
   local stream_id = { mode = 123, label = "my custom stream" }
   nk.stream_user_leave(context.user_id, context.session_id, stream_id)
@@ -278,7 +278,7 @@ end
 nk.register_rpc(leave, "leave")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // RPC Code
 func LeaveStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
@@ -315,13 +315,13 @@ If this user+session is not a member of the stream the operation will be a no-op
 
 The server can send data to a stream through a function call. The message will be delivered to all users present on the stream.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 local payload = nk.json_encode({ some = "data" })
 nk.stream_send(stream_id, payload)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 mode := uint8(123)
 label := "label"
 // Data does not have to be JSON, but it's a convenient format.
@@ -338,12 +338,12 @@ If the stream is empty the operation will be a no-op.
 
 Closing a stream removes all presences currently on it. It can be useful to explicitly close a stream and enable the server to reclaim resources more quickly.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 nk.stream_close(stream_id)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 mode := uint8(123)
 label := "label"
 nk.StreamClose(mode, "", "", label)
@@ -353,12 +353,12 @@ nk.StreamClose(mode, "", "", label)
 
 The server can peek at the presences on a stream to obtain a quick count without processing the full list of stream presences.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 local count = nk.stream_count(stream_id)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 mode := uint8(123)
 label := "label"
 count, err := nk.StreamCount(mode, "", "", label)
@@ -371,7 +371,7 @@ if err != nil {
 
 A list of stream presence contains every user currently online and connected to that stream, along with information about the session ID they are connected through and additional metadata.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local stream_id = { mode = 123, label = "my custom stream" }
 local presences = nk.stream_user_list(stream_id)
 
@@ -380,7 +380,7 @@ for _, presence in ipairs(presences) do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 mode := uint8(123)
 label := "label"
 includeHidden := true
@@ -402,7 +402,7 @@ If only a single user is needed the server can check if that user is present on 
 
 As an example we can register an RPC function that will check if the user that calls it is active on a custom stream.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function check(context, _)
   local stream_id = { mode = 123, label = "my custom stream" }
   local meta = nk.stream_user_get(context.user_id, context.session_id, stream_id)
@@ -415,7 +415,7 @@ end
 nk.register_rpc(check, "check")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func CheckStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
   if !ok {
@@ -471,14 +471,14 @@ Using these stream identifiers with the functions described above allows full co
 
 This code removes a user from a chat channel. If the user has more than one session connected to the channel only the specified one will be removed.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local stream_id = { mode = 2, label = "some chat channel name" }
 local user_id = "user ID to kick"
 local session_id = "session ID to kick"
 nk.stream_user_leave(user_id, session_id, stream_id)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 mode := uint8(123)
 label := "some chat room channel name"
 userId := "user ID to kick"
@@ -493,7 +493,7 @@ if err := nk.StreamUserLeave(mode, "", "", label, userId, sessionId); err != nil
 
 By calling this RPC function a user can "silence" their notifications. Even if they remain online they will no longer receive realtime delivery of any in-app notifications.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function enable_silent_mode(context, _)
   local stream_id = { mode = 0, subject = context.user_id }
   nk.stream_user_leave(context.user_id, context.session_id, stream_id)
@@ -501,7 +501,7 @@ end
 nk.register_rpc(enable_silent_mode, "enable_silent_mode")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func EnableSilentMode(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
   if !ok {

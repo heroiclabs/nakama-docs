@@ -18,12 +18,12 @@ A tournament can also be played by opponents who are not users. For example a gu
 
 Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/tournament?category_start=<category_start>&category_end=<category_end>&start_time=<start_time>&end_time=<end_time>&limit=<limit>&cursor=<cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var categoryStart = 1;
 var categoryEnd = 2;
 var startTime = 1538147711;
@@ -33,7 +33,7 @@ var cursor = null;
 var result = await client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var categoryStart = 1;
 var categoryEnd = 2;
 var startTime = 1538147711;
@@ -43,7 +43,7 @@ var cursor = null;
 var result = await client.ListTournamentsAsync(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var categoryStart = 1;
 var categoryEnd = 2;
 var startTime = 1538147711;
@@ -53,7 +53,7 @@ var cursor = null;
 var result = await client.ListTournamentsAsync(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NTournamentListPtr list)
 {
   CCLOG("Tournament count %u", list->tournaments.size());
@@ -81,7 +81,7 @@ client->listTournaments(session,
     );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var categoryStart = 1;
 var categoryEnd = 2;
 var startTime = 1538147711;
@@ -96,7 +96,7 @@ client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, 
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NTournamentListPtr list)
 {
   std::cout << "Tournament count " << list->tournaments.size() << std::endl;
@@ -124,7 +124,7 @@ client->listTournaments(session,
     );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 int categoryStart = 1;
 int categoryEnd = 2;
 int startTime = 1538147711;
@@ -134,11 +134,11 @@ String cursor = null;
 TournamentList tournaments = client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Will be made available soon.
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/tournament
   ?category_start=<category_start>
   &category_end=<category_end>
@@ -156,27 +156,27 @@ Authorization: Bearer <session token>
 
 A tournament may need to be joined before the owner can submit scores. This operation is idempotent and will always succeed for the owner even if they have already joined the tournament.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/tournament/<tournament_id>/join" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "someid";
 var success = await client.joinTournament(session, id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var id = "someid";
 var success = await client.JoinTournamentAsync(session, id);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var id = "someid";
 var success = await client.JoinTournamentAsync(session, id);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("Successfully joined tournament");
@@ -186,7 +186,7 @@ string id = "someid";
 client->joinTournament(session, id, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "someid";
 client.joinTournament(session, id)
   .then(function() {
@@ -197,7 +197,7 @@ client.joinTournament(session, id)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "Successfully joined tournament" << std::cout;
@@ -207,16 +207,16 @@ string id = "someid";
 client->joinTournament(session, id, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String id = "someid";
 client.joinTournament(session, id).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Will be made available soon.
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/tournament/<tournament_id>/join
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -228,12 +228,12 @@ Authorization: Bearer <session token>
 
 Fetch a mixed list of tournament records as well as a batch of records which belong to specific owners. This can be useful to build up a leaderboard view which shows the top 100 players as well as the scores between the current user and their friends.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/tournament/<tournament_id>?owner_ids=<owner_ids>&limit=<limit>&cursor=<cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "someid";
 var ownerIds = ["some", "friends", "user ids"];
 var result = await client.listTournamentRecords(session, id, owenrIds);
@@ -242,21 +242,21 @@ result.records.forEach(function(record) {
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var id = "someid";
 var limit = 100;
 var cursor = null;
 var result = await client.ListTournamentRecordsAsync(session, id, new []{ session.UserId }, limit, cursor);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var id = "someid";
 var limit = 100;
 var cursor = null;
 var result = await client.ListTournamentRecordsAsync(session, id, new []{ session.UserId }, limit, cursor);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NTournamentRecordListPtr list)
 {
   for (auto& record : list->records)
@@ -269,7 +269,7 @@ string id = "someid";
 client->listTournamentRecords(session, id, opt::nullopt, opt::nullopt, {}, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "someid";
 var ownerIds = ["some", "friends", "user ids"];
 client.listTournamentRecords(session, id, owenrIds)
@@ -283,7 +283,7 @@ client.listTournamentRecords(session, id, owenrIds)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NTournamentRecordListPtr list)
 {
   for (auto& record : list->records)
@@ -296,16 +296,16 @@ string id = "someid";
 client->listTournamentRecords(session, id, opt::nullopt, opt::nullopt, {}, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String id = "someid";
 LeaderboardRecordList records = client.listLeaderboardRecords(session, id, session.getUserId()).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Will be made available soon.
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/tournament/<tournament_id>?owner_ids=<owner_ids>&limit=<limit>&cursor=<cursor>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -317,33 +317,33 @@ Authorization: Bearer <session token>
 
 Fetch the list of tournament records around the owner.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "someid";
 var ownerId = "some user ID";
 var limit = 100;
 var result = await client.listTournamentRecordsAroundOwner(session, id, ownerId, limit);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var id = "someid";
 var ownerId = session.UserId;
 var limit = 100;
 var result = await client.ListTournamentRecordsAroundOwnerAsync(session, id, ownerId, limit);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var id = "someid";
 var ownerId = session.UserId;
 var limit = 100;
 var result = await client.ListTournamentRecordsAroundOwnerAsync(session, id, ownerId, limit);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NTournamentRecordListPtr list)
 {
   for (auto& record : list->records)
@@ -358,7 +358,7 @@ int32_t limit = 100;
 client->listTournamentRecordsAroundOwner(session, id, ownerId, limit, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "someid";
 var ownerIds = ["some", "friends", "user ids"];
 client.listTournamentRecords(session, id, owenrIds)
@@ -372,7 +372,7 @@ client.listTournamentRecords(session, id, owenrIds)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NTournamentRecordListPtr list)
 {
   for (auto& record : list->records)
@@ -387,7 +387,7 @@ int32_t limit = 100;
 client->listTournamentRecordsAroundOwner(session, id, ownerId, limit, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String id = "someid";
 String ownerId = session.getUserId();
 int expiry = -1;
@@ -395,11 +395,11 @@ int limit = 100;
 TournamentRecordList records = client.listTournamentRecordsAroundOwner(session, id, ownerId, expiry, limit).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Will be made available soon.
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/tournament/v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -411,12 +411,12 @@ Authorization: Bearer <session token>
 
 Submit a score and optional subscore to a tournament leaderboard. If the tournament has been configured with join required this will fail unless the owner has already joined the tournament.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/tournament/<tournament_id>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "someid";
 var score = 100;
 var subscore = 10;
@@ -427,7 +427,7 @@ var metadata = {
 var newrecord = client.writeTournamentRecord(session, id, score, subscore, metadata);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var id = "someid";
 var score = 100L;
 var subscore = 10L;
@@ -441,7 +441,7 @@ var newRecord = await client.WriteTournamentRecordAsync(session, id, score, subs
 Console.WriteLine(newRecord);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var id = "someid";
 var score = 100L;
 var subscore = 10L;
@@ -455,7 +455,7 @@ var newRecord = await client.WriteTournamentRecordAsync(session, id, score, subs
 Debug.Log(newRecord);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [this](const NLeaderboardRecord& record)
 {
   CCLOG("written tournament record");
@@ -468,7 +468,7 @@ string metadata = "{\"weather_conditions\": \"sunny\", \"track_name\" : \"Silver
 client->writeTournamentRecord(session, id, score, subscore, metadata, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "someid";
 var score = 100;
 var subscore = 10;
@@ -485,7 +485,7 @@ client.writeTournamentRecord(session, id, score, subscore, metadata)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [this](const NLeaderboardRecord& record)
 {
   std::cout << "written tournament record" << std::endl;
@@ -498,7 +498,7 @@ string metadata = "{\"weather_conditions\": \"sunny\", \"track_name\" : \"Silver
 client->writeTournamentRecord(session, id, score, subscore, metadata, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 string id = "someid";
 int score = 10;
 int subscore = 20;
@@ -506,11 +506,11 @@ final String metadata = "{\"tarmac\": \"wet\"}";
 LeaderboardRecord record = client.writeTournamentRecord(session, id, score, subscore, metadata).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Will be made available soon.
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/tournament/v2/tournament/<tournament_id>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -528,7 +528,7 @@ All API design examples are written in Go. For brevity imports and some variable
 
 Create a tournament with all it's configuration options.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local authoritative = false
 local sort = "desc"     -- one of: "desc", "asc"
@@ -550,7 +550,7 @@ nk.tournament_create(id, sort, operator, duration, reset, metadata, title, descr
     start_time, endTime, max_size, max_num_score, join_required)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // import "github.com/gofrs/uuid"
 id := uuid.Must(uuid.NewV4())
 sortOrder := "desc"  // one of: "desc", "asc"
@@ -578,12 +578,12 @@ if err != nil {
 
 Delete a tournament by it's ID.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 nk.tournament_delete(id)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 err := nk.TournamentDelete(id)
 if err != nil {
   logger.Printf("unable to delete tournament: %q", err.Error())
@@ -595,14 +595,14 @@ if err != nil {
 
 Add additional score attempts to the owner's tournament record. This overrides the max number of score attempts allowed in the tournament for this specific owner.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "someid"
 local owner = "someuserid"
 local attempts = 10
 nk.tournament_add_attempt(id, owner, attempts)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "someid"
 userID := "someuserid"
 attempts := 10
@@ -619,7 +619,7 @@ When a tournament's active period ends a function registered on the server will 
 
 To register a reward distribution function in Go use the `initializer`.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 local function distribute_rewards(_context, tournament, session_end, expiry)
   // ...
@@ -627,7 +627,7 @@ end
 nk.register_tournament_end(distribute_rewards)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 import (
   "context"
   "database/sql"
@@ -651,7 +651,7 @@ func distributeRewards(ctx context.Context, logger runtime.Logger, db *sql.DB, n
 
 A simple reward distribution function which sends a persistent notification to the top ten players to let them know they've won and adds coins to their virtual wallets would look like:
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 local function distribute_rewards(_context, tournament, session_end, expiry)
   local notifications = {}
@@ -677,7 +677,7 @@ local function distribute_rewards(_context, tournament, session_end, expiry)
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func distributeRewards(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, tournament *api.Tournament, end int64, reset int64) error {
   wallets := make([]*runtime.WalletUpdate, 0, 10)
   notifications := make([]*runtime.NotificationSend, 0, 10)

@@ -27,7 +27,7 @@ In the Lua example we will create a module called "example.lua". We will import 
 
 In the Go example, we will import the runtime package and use the `NakamaModule` which has all the same functions as referenced above.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local function some_example(context, payload)
@@ -48,7 +48,7 @@ end
 nk.register_rpc(some_example, "my_unique_id")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 import (
   "context"
   "database/sql"
@@ -95,11 +95,11 @@ The code in a module will be evaluated immediately and can be used to register f
 
 All registered functions receive a "context" as the first argument. This contains fields which depend on when and how the code is executed. You can extract information about the request or the user making it from the context.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = context.user_id
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 if !ok {
   // User ID not found in the context.
@@ -126,7 +126,7 @@ If you are writing your runtime code in Lua, the "context" will be a table from 
 
 There are multiple ways to register a function within the runtime each of which is used to handle specific behavior between client and server.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- If you are sending requests to the server via the realtime connection, ensure that use this variant of the function.
 nk.register_rt_before()
 nk.register_rt_after()
@@ -146,7 +146,7 @@ nk.register_tournament_reset()
 nk.register_tournament_end()
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // NOTE: All Go runtime registrations must be made in the module's InitModule function.
 
 // If you are sending requests to the server via the realtime connection, ensure that use this variant of the function.
@@ -179,7 +179,7 @@ Any function may be registered to intercept a message received from a client and
 
 In Go each hook will receive as input a variable containing the data that will be processed by ther server for that request, if that feature is expected to receive any input. In Lua the second argument will be the "incoming payload" containing data received that will be processed by the server.
 
-```lua hl_lines="9" fct_label="Lua"
+```lua hl_lines="9" tab="Lua"
 local nk = require("nakama")
 
 local function limit_friends(context, payload)
@@ -193,7 +193,7 @@ end
 nk.register_req_before(limit_friends, "AddFriends")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
@@ -239,7 +239,7 @@ Similar to [Before hook](#before-hook) you can attach a function to operate on a
 
 The second argument is the "outgoing payload" containing the server's response to the request. The third argument contains the "incoming payload" containing the data originally passed to the server for this request.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local function add_reward(context, outgoing_payload, incoming_payload)
@@ -258,7 +258,7 @@ end
 nk.register_req_after(add_reward, "AddFriends")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
 	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
@@ -300,7 +300,7 @@ The simple code above writes a record to a user's storage when they add a friend
 
 Some logic between client and server is best handled as RPC functions which clients can execute.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local function custom_rpc_func(context, payload)
@@ -315,7 +315,7 @@ end
 nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func CustomRpcFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
   logger.Info("Payload: %s", payload)
 
@@ -348,7 +348,7 @@ From Go runtime code, the result is returned as `(string, error)`. From Lua runt
 
 Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook), however this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local function http_handler(context, payload)
@@ -360,7 +360,7 @@ end
 nk.register_rpc(http_handler, "http_handler_path")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func HttpHandler(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
   var message interface{}
   if err := json.Unmarshal([]byte(payload), &message); err != nil {
@@ -403,7 +403,7 @@ curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaultkey" \
 
 The runtime environment allows you to run code that must only be executed only once. This is useful if you have custom SQL queries that you need to perform (like creating a new table) or to register with third party services.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 nk.run_once(function(context)
   -- This is to create a system ID that cannot be used via a client.
   local system_id = context.env["SYSTEM_ID"]
@@ -416,7 +416,7 @@ ON CONFLICT (id) DO NOTHING
 end)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
   // This is to create a system ID that cannot be used via a client.
   var systemId string
@@ -443,7 +443,7 @@ Error handling in Go follows the standard pattern of returning an `error` value 
 
 Lua error handling uses raised errors rather than error return values. If you want to trap the error which occurs in the execution of a function you'll need to execute it via `pcall` as a "protected call".
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function will_error()
   error("This function will always throw an error!")
 end
@@ -455,7 +455,7 @@ else
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func willError() error {
   return errors.New("This function will always throw an error!")
 }
@@ -471,7 +471,7 @@ The function `will_error` uses the `error` function in Lua to throw an error wit
 
 We recommend you use this pattern with your Lua code.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local status, result = pcall(nk.users_get_username, {"22e9ed62"})
@@ -486,7 +486,7 @@ else
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 users, err := nk.UsersGetUsername([]string{"22e9ed62"})
 if err != nil {
   logger.Error("Error occurred: %v", err.Error())
@@ -538,7 +538,7 @@ Go runtime code has full low level access to the server and its environment. Thi
 
 As a fun example lets use the [Pokéapi](http://pokeapi.co/) and build a helpful module named "pokeapi.lua".
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local M = {}
@@ -591,7 +591,7 @@ end
 nk.register_rpc(get_pokemon, "get_pokemon")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 import (
   "context"
   "database/sql"
@@ -664,34 +664,34 @@ func GetPokemon(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runti
 
 We can now make an RPC call for a pokemon from a client.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/rpc/get_pokemon" \
   -H 'authorization: Bearer <session token>'
   -d '"{\"PokemonName\": \"dragonite\"}"'
 ```
 
-```js fct_label="Javascript"
+```js tab="Javascript"
 const payload = { "PokemonName": "dragonite"};
 const rpcid = "get_pokemon";
 const pokemonInfo = await client.rpc(session, rpcid, payload);
 console.log("Retrieved pokemon info: %o", pokemonInfo);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var payload = "{\"PokemonName\": \"dragonite\"}";
 var rpcid = "get_pokemon";
 var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
 System.Console.WriteLine("Retrieved pokemon info: {0}", pokemonInfo);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var payload = "{\"PokemonName\": \"dragonite\"}";
 var rpcid = "get_pokemon";
 var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
 Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NRpc& rpc)
 {
   CCLOG("Retrieved pokemon info: %s", rpc.payload.c_str());
@@ -702,7 +702,7 @@ string rpcid = "get_pokemon";
 client->rpc(session, rpcid, payload, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const payload = { "PokemonName": "dragonite"};
 const rpcid = "get_pokemon";
 client.rpc(session, rpcid, payload)
@@ -714,7 +714,7 @@ client.rpc(session, rpcid, payload)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NRpc& rpc)
 {
   std::cout << "Retrieved pokemon info: " << rpc.payload << std::endl;
@@ -725,14 +725,14 @@ string rpcid = "get_pokemon";
 client->rpc(session, rpcid, payload, successCallback);
 ```
 
-```java fct_label="Android/Java"
+```java tab="Android/Java"
 String payload = "{\"PokemonName\": \"dragonite\"}";
 String rpcid = "get_pokemon";
 Rpc pokemonInfo = client.rpc(session, rpcid, payload);
 System.out.format("Retrieved pokemon info: %s", pokemonInfo.getPayload());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let payload = "{\"PokemonName\": \"dragonite\"}".data(using: .utf8)!
 
@@ -745,7 +745,7 @@ client.send(message: message).then { result in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/rpc/get_pokemon
 Host: 127.0.0.1:7350
 Accept: application/json

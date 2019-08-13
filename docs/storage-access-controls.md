@@ -10,7 +10,7 @@ An object which is system owned must have public read access permissions before 
 
 These code examples show how to retrieve an object owned by the system (marked with public read).
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -23,7 +23,7 @@ curl -X POST "http://127.0.0.1:7350/v2/storage" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const objects = await client.readStorageObjects(session, {
   "object_ids": [{
     "collection": "configurations",
@@ -33,7 +33,7 @@ const objects = await client.readStorageObjects(session, {
 console.info("Read objects: %o", objects);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "configuration",
   Key = "config"
@@ -41,7 +41,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Console.WriteLine("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "configuration",
   Key = "config"
@@ -49,7 +49,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Debug.LogFormat("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NStorageObjects& objects)
 {
   for (auto& object : objects)
@@ -66,7 +66,7 @@ objectIds.push_back(objectId);
 client->readStorageObjects(session, objectIds, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.readStorageObjects(session, {
   "object_ids": [{
     "collection": "configurations",
@@ -80,7 +80,7 @@ client.readStorageObjects(session, {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NStorageObjects& objects)
 {
   for (auto& object : objects)
@@ -97,14 +97,14 @@ objectIds.push_back(objectId);
 client->readStorageObjects(session, objectIds, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 StorageObjectId objectId = new StorageObjectId("configuration");
 objectId.setKey("config");
 StorageObjects objects = client.readStorageObjects(session, objectId).get();
 System.out.format("Read objects %s", objects.getObjectsList().toString());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let userID = session.userID // a Session object's Id.
@@ -121,7 +121,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/storage
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -140,7 +140,7 @@ Authorization: Bearer <session token>
 
 You can also use the code runtime to fetch an object. The code runtime is exempt from the standard rules around access permissions because it is run by the server as authoritative code.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local object_ids = {
   { collection = "configuration", key = "config", user_id = nil },
 }
@@ -151,7 +151,7 @@ for _, o in ipairs(objects) do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 objectIds := []*runtime.StorageRead{
 	&runtime.StorageRead{
 		Collection: "configuration",
@@ -189,7 +189,7 @@ When modifying objects from the client, the default permission of a object is se
 !!! note "Listing objects"
     When listing objects you'll only get back objects with appropriate permissions.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 # "2" refers to Public Read permission
 # "1" refers to Owner Write permission
 curl -X PUT "http://127.0.0.1:7350/v2/storage" \
@@ -207,7 +207,7 @@ curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var army_setup = { "soldiers": 50 };
 // "2" refers to Public Read permission
 // "1" refers to Owner Write permission
@@ -223,7 +223,7 @@ const object_ids = await client.writeStorageObjects(session, [
 console.info("Stored objects: %o", object_ids);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var armySetup = "{ \"soldiers\": 50 }";
 // "2" refers to Public Read permission
 // "1" refers to Owner Write permission
@@ -238,7 +238,7 @@ var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObje
 Console.WriteLine("Stored objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var armySetup = "{ \"soldiers\": 50 }";
 // "2" refers to Public Read permission
 // "1" refers to Owner Write permission
@@ -253,7 +253,7 @@ var result = await client.WriteStorageObjectsAsync(session, new WriteStorageObje
 Debug.LogFormat("Stored objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
 };
@@ -269,7 +269,7 @@ objects.push_back(object);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var army_setup = { "soldiers": 50 };
 // "2" refers to Public Read permission
 // "1" refers to Owner Write permission
@@ -289,7 +289,7 @@ client.writeStorageObjects(session, [
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
 };
@@ -305,14 +305,14 @@ objects.push_back(object);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String armySetup = "{ \"soldiers\": 50 }";
 StorageObjectWrite object = new StorageObjectWrite("saves", "savegame", armySetup, PermissionRead.PUBLIC_READ, PermissionWrite.OWNER_WRITE);
 StorageObjectAcks acks = client.writeStorageObjects(session, object).get();
 System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let armySetup = "{\"soldiers\": 50}".data(using: .utf8)!
@@ -328,7 +328,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/storage
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -350,7 +350,7 @@ Authorization: Bearer <session token>
 
 You can store an object with custom permissions from the code runtime.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
 local new_objects = {
   { collection = "battle", key = "army", user_id = user_id, value = {}, permission_read = 2, permission_write = 1 }
@@ -358,7 +358,7 @@ local new_objects = {
 nk.storage_write(new_objects)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
 objects := []*runtime.StorageWrite{
 	&runtime.StorageWrite{

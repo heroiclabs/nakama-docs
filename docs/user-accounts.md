@@ -8,33 +8,33 @@ A user can own [records](storage-access-controls.md), share public information w
 
 When a user has a session you can retrieve their account. The profile contains a variety of information which includes various "linked" social providers.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/account" \
   -H 'authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const account = await client.getAccount(session);
 const user = account.user;
 console.info("User id '%o' and username '%o'.", user.id, user.username);
 console.info("User's wallet:", account.wallet);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var account = await client.GetAccountAsync(session);
 var user = account.User;
 System.Console.WriteLine("User id '{0}' username '{1}'", user.Id, user.Username);
 System.Console.WriteLine("User wallet: '{0}'", account.Wallet);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var account = await client.GetAccountAsync(session);
 var user = account.User;
 Debug.LogFormat("User id '{0}' username '{1}'", user.Id, user.Username);
 Debug.LogFormat("User wallet: '{0}'", account.Wallet);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NAccount& account)
 {
   CCLOG("User's wallet: %s", account.wallet.c_str());
@@ -42,7 +42,7 @@ auto successCallback = [](const NAccount& account)
 client->getAccount(session, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.getAccount(session)
   .then(function(account) {
       cc.log("User's wallet:", account.wallet);
@@ -52,7 +52,7 @@ client.getAccount(session)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NAccount& account)
 {
   CCLOG("User's wallet: %s", account.wallet.c_str());
@@ -60,14 +60,14 @@ auto successCallback = [](const NAccount& account)
 client->getAccount(session, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 Account account = client.getAccount(session);
 User user = account.getUser();
 System.out.format("User id %s username %s", user.getId(), user.getUsername());
 System.out.format("User wallet %s", account.getWallet());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let message = SelfFetchMessage()
 client.send(message: message).then { selfuser in
@@ -78,7 +78,7 @@ client.send(message: message).then { selfuser in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/account
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -128,7 +128,7 @@ Nakama has the concept of a virtual wallet and transaction ledger. Nakama allows
 
 With server-side code it's possible to update the user's wallet.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local user_id = "95f05d94-cc66-445a-b4d1-9e262662cf79"
@@ -142,7 +142,7 @@ if (not status) then
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 content := map[string]interface{}{
 	"reward_coins": 1000, // Add 1000 coins to the user's wallet.
@@ -165,19 +165,19 @@ Nakama can report back user online indicators in two ways:
 
 You can fetch one or more users by their IDs or handles. This is useful for displaying public profiles with other users.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1" \
   -H 'authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const users = await client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"]);
 users.foreach(user => {
   console.info("User id '%o' and username '%o'.", user.id, user.username);
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var ids = new[] {"userid1", "userid2"};
 var usernames = new[] {"username1", "username2"};
 var facebookIds = new[] {"facebookid1"};
@@ -188,7 +188,7 @@ foreach (var u in result.Users)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var ids = new[] {"userid1", "userid2"};
 var usernames = new[] {"username1", "username2"};
 var facebookIds = new[] {"facebookid1"};
@@ -199,7 +199,7 @@ foreach (var u in result.Users)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NUsers& users)
 {
   for (auto& user : users.users)
@@ -214,7 +214,7 @@ client->getUsers(session,
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"])
   .then(function(users) {
       cc.log("Users:", JSON.stringify(users));
@@ -224,7 +224,7 @@ client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"])
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NUsers& users)
 {
   for (auto& user : users.users)
@@ -239,7 +239,7 @@ client->getUsers(session,
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 List<String> ids = Arrays.asList("userid1", "userid2");
 List<String> usernames = Arrays.asList("username1", "username1");
 String[] facebookIds = new String[] {"facebookid1"};
@@ -250,7 +250,7 @@ for (User user : users.getUsersList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let userID // a User ID
 var message = UsersFetchMessage()
@@ -264,7 +264,7 @@ client.send(message: message).then { users in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -274,7 +274,7 @@ Authorization: Bearer <session token>
 
 You can also fetch one or more users in server-side code.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local user_ids = {
@@ -289,7 +289,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 if users, err := nk.UsersGetId(ctx, []string{
 	"3ea5608a-43c3-11e7-90f9-7b9397165f34",
 	"447524be-43c3-11e7-af09-3f7172f05936",
@@ -306,7 +306,7 @@ if users, err := nk.UsersGetId(ctx, []string{
 
 When a user is registered most of their profile is setup with default values. A user can update their own profile to change fields but cannot change any other user's profile.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X PUT "http://127.0.0.1:7350/v2/account" \
   -H 'authorization: Bearer <session token>' \
   --data '{
@@ -316,7 +316,7 @@ curl -X PUT "http://127.0.0.1:7350/v2/account" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 await client.updateAccount(session, {
   display_name: "My new name",
   avatar_url: "http://graph.facebook.com/avatar_url",
@@ -324,21 +324,21 @@ await client.updateAccount(session, {
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string displayName = "My new name";
 const string avatarUrl = "http://graph.facebook.com/avatar_url";
 const string location = "San Francisco";
 await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string displayName = "My new name";
 const string avatarUrl = "http://graph.facebook.com/avatar_url";
 const string location = "San Francisco";
 await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 client->updateAccount(session,
     opt::nullopt,
     "My new name", // display name
@@ -348,7 +348,7 @@ client->updateAccount(session,
     );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.updateAccount(session, {
   display_name: "My new name",
   avatar_url: "http://graph.facebook.com/avatar_url",
@@ -356,7 +356,7 @@ client.updateAccount(session, {
 });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 client->updateAccount(session,
     opt::nullopt,
     "My new name", // display name
@@ -366,14 +366,14 @@ client->updateAccount(session,
     );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String displayName = "My new name";
 String avatarUrl = "http://graph.facebook.com/avatar_url";
 String location = "San Francisco";
 client.updateAccount(session, null, displayName, avatarUrl, null, location);
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var message = SelfUpdateMessage()
 message.avatarUrl = "http://graph.facebook.com/avatar_url"
@@ -386,7 +386,7 @@ client.send(message: message).then {
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/account HTTP/1.1
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -402,7 +402,7 @@ Authorization: Bearer <session token>
 
 With server-side code it's possible to update any user's profile.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user's id.
@@ -420,7 +420,7 @@ if (not status) then
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user's id.
 username := "my-new-username" // must be unique
 metadata := make(map[string]interface{})

@@ -30,14 +30,14 @@ Users can opt to hide their channel presence when connecting, so they will not g
 
 A user joins a chat channel to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onchannelmessage = (message) => {
   console.log("Received a message on channel: %o", message.channel_id);
   console.log("Message content: %o", message.content);
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 socket.ReceivedChannelMessage += message =>
 {
     Console.WriteLine("Received: {0}", message);
@@ -46,7 +46,7 @@ socket.ReceivedChannelMessage += message =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 socket.ReceivedChannelMessage += message =>
 {
     Debug.LogFormat("Received: {0}", message);
@@ -55,7 +55,7 @@ socket.ReceivedChannelMessage += message =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
 {
   // msg.content is JSON string
@@ -63,14 +63,14 @@ rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
 });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.onchannelmessage = (message) => {
   cc.log("Received a message on channel:", message.channel_id);
   cc.log("Message content:", JSON.stringify(message.content));
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
 {
   // msg.content is JSON string
@@ -78,7 +78,7 @@ rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
 });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onChannelMessage(final ChannelMessage message) {
@@ -88,7 +88,7 @@ SocketListener listener = new AbstractSocketListener() {
 };
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 client.onTopicMessage = { message in
   // Topic will be one of DirectMessage, Room, or Group.
@@ -101,53 +101,53 @@ In group chat a user will receive other messages from the server. These messages
 
 You can identify event messages from chat messages by the message "Type".
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 if (message.code != 0) {
   console.log("Received message with code:", message.code);
 }
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 if (message.Code != 0)
 {
   Console.WriteLine("Received message with code '{0}'", message.Code);
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 if (message.Code != 0)
 {
   Debug.LogFormat("Received message with code '{0}'", message.Code);
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 if (msg.code != 0)
 {
   CCLOG("Received message with code: %d", msg.code);
 }
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 if (message.code != 0) {
   cc.log("Received message with code:", message.code);
 }
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 if (msg.code != 0)
 {
   std::cout << "Received message with code: " << msg.code << std::endl;
 }
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 if (message.getCode() != 0) {
   System.out.println("Received message with code %s", message.getCode());
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let messageType = message.type; // enum
 switch messageType {
@@ -180,7 +180,7 @@ To send messages to other users a user must join the chat channel they want to c
 
 A room is created dynamically for users to chat. A room has a name and will be setup on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a [storage record](storage-collections.md).
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const roomname = "MarvelMovieFans";
 const response = await socket.send({ channel_join: {
     type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
@@ -191,7 +191,7 @@ const response = await socket.send({ channel_join: {
 console.log("Now connected to channel id: '%o'", response.channel.id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var roomname = "MarvelMovieFans";
 var persistence = true;
 var hidden = false;
@@ -199,7 +199,7 @@ var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence
 Console.WriteLine("Now connected to channel id: '{0}'", channel.Id);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var roomname = "MarvelMovieFans";
 var persistence = true;
 var hidden = false;
@@ -207,7 +207,7 @@ var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence
 Debug.LogFormat("Now connected to channel id: '{0}'", channel.Id);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NChannelPtr channel)
 {
   CCLOG("Now connected to channel id: '%s'", channel->id.c_str());
@@ -223,7 +223,7 @@ rtClient->joinChat(
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const roomname = "MarvelMovieFans";
 socket.send({ channel_join: {
     type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
@@ -238,7 +238,7 @@ socket.send({ channel_join: {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NChannelPtr channel)
 {
   std::cout << "Now connected to channel id: " << channel->id << std::endl;
@@ -254,7 +254,7 @@ rtClient->joinChat(
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String roomname = "MarvelMovieFans";
 boolean persistence = true;
 boolean hidden = false;
@@ -262,7 +262,7 @@ Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidde
 System.out.format("Now connected to channel id: %s", channel.getId());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var roomId : TopicId?
 let roomName = "Room-Name"
@@ -288,7 +288,7 @@ A group chat can only be joined by a user who is a member of the [group](social-
 
 A group ID is needed when a user joins group chat and can be [listed by the user](social-groups-clans.md#list-groups).
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const groupId = "<group id>";
 const response = await socket.send({ channel_join: {
     type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
@@ -299,7 +299,7 @@ const response = await socket.send({ channel_join: {
 console.log("You can now send messages to channel id: ", response.channel.id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var groupId = "<group id>";
 var persistence = true;
 var hidden = false;
@@ -307,7 +307,7 @@ var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence
 Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var groupId = "<group id>";
 var persistence = true;
 var hidden = false;
@@ -315,7 +315,7 @@ var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence
 Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NChannelPtr channel)
 {
   CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
@@ -331,7 +331,7 @@ rtClient->joinChat(
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const groupId = "<group id>";
 socket.send({ channel_join: {
     type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
@@ -346,7 +346,7 @@ socket.send({ channel_join: {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NChannelPtr channel)
 {
   std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
@@ -362,7 +362,7 @@ rtClient->joinChat(
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupId = "<group id>";
 boolean persistence = true;
 boolean hidden = false;
@@ -370,7 +370,7 @@ Channel channel = socket.joinChat(groupId, ChannelType.GROUP, persistence, hidde
 System.out.format("You can now send messages to channel id %s", channel.getId());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var groupTopicId : TopicId?
 let groupId = group.id
@@ -396,7 +396,7 @@ A user can direct message another user by ID. Each user will not receive message
 
 A user will receive an [in-app notification](social-in-app-notifications.md) when a request to chat has been received.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const userId = "<user id>";
 const response = await socket.send({ channel_join: {
     type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
@@ -407,7 +407,7 @@ const response = await socket.send({ channel_join: {
 console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var userId = "<user id>";
 var persistence = true;
 var hidden = false;
@@ -415,7 +415,7 @@ var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, pers
 Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var userId = "<user id>";
 var persistence = true;
 var hidden = false;
@@ -423,7 +423,7 @@ var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, pers
 Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NChannelPtr channel)
 {
   CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
@@ -439,7 +439,7 @@ rtClient->joinChat(
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const userId = "<user id>";
 socket.send({ channel_join: {
     type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
@@ -454,7 +454,7 @@ socket.send({ channel_join: {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NChannelPtr channel)
 {
   std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
@@ -470,7 +470,7 @@ rtClient->joinChat(
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String userId = "<user id>";
 boolean persistence = true;
 boolean hidden = false;
@@ -478,7 +478,7 @@ Channel channel = socket.joinChat(userId, ChannelType.DIRECT_MESSAGE, persistenc
 System.out.format("You can now send messages to channel id %s", channel.getId());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var directTopicId : TopicId?
 let userId = user.id
@@ -509,7 +509,7 @@ The user who [joins a chat channel](#join-chat) receives an initial presence lis
 !!! Summary
     A list of all online users is received when a user joins a chat channel you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var onlineUsers = [];
 socket.onchannelpresence = (presences) => {
   // Remove all users who left.
@@ -536,7 +536,7 @@ onlineUsers = onlineUsers.filter((user) => {
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var roomUsers = new List<IUserPresence>(10);
 socket.ReceivedChannelPresence += presenceEvent =>
 {
@@ -556,7 +556,7 @@ var channel = await socket.JoinChatAsync(roomName, ChannelType.Room, persistence
 roomUsers.AddRange(channel.Presences);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var roomUsers = new List<IUserPresence>(10);
 socket.ReceivedChannelPresence += presenceEvent =>
 {
@@ -576,7 +576,7 @@ var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence
 connectedUsers.AddRange(channel.Presences);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 // add this to your class: std::vector<NUserPresence> onlineUsers;
 
 rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
@@ -622,7 +622,7 @@ rtClient->joinChat(
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var onlineUsers = [];
 socket.onchannelpresence = (presences) => {
   // Remove all users who left.
@@ -652,7 +652,7 @@ socket.send({ channel_join: {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 // add this to your class: std::vector<NUserPresence> onlineUsers;
 
 rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
@@ -698,7 +698,7 @@ rtClient->joinChat(
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 final List<UserPresence> connectedUsers = new ArrayList<UserPresence>();
 SocketListener listener = new AbstractSocketListener() {
   @Override
@@ -721,7 +721,7 @@ Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidde
 connectedUsers.addAll(channel.getPresences());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var onlineUsers : [UserPresence] = []
 
@@ -757,7 +757,7 @@ When a user has [joined a chat channel](#join-chat) its ID can be used to send m
 
 Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var channelId = "<channel id>";
 var data = { "some": "data" };
 const messageAck = await socket.send({ channel_message_send: {
@@ -766,19 +766,19 @@ const messageAck = await socket.send({ channel_message_send: {
 } });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var channelId = "<channel id>";
 var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 var sendAck = await socket.WriteChatMessageAsync(channelId, content);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var channelId = "<channel id>";
 var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 var sendAck = await socket.WriteChatMessageAsync(channelId, content);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NChannelMessageAck& ack)
 {
   CCLOG("message id: %s", ack.messageId.c_str());
@@ -789,7 +789,7 @@ string data = "{ \"some\": \"data\" }";
 rtClient->writeChatMessage(channelId, data, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var channelId = "<channel id>";
 var data = { "some": "data" };
 socket.send({ channel_message_send: {
@@ -803,7 +803,7 @@ socket.send({ channel_message_send: {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NChannelMessageAck& ack)
 {
   std::cout << "message id: " << ack.messageId << std::endl;
@@ -814,13 +814,13 @@ string data = "{ \"some\": \"data\" }";
 rtClient->writeChatMessage(channelId, data, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String channelId = "<channel id>";
 final String content = "{\"message\":\"Hello world\"}";
 ChannelMessageAck sendAck = socket.writeChatMessage(channelId, content).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let chatTopicID = ... // A chat topic ID
 let json = "{\"some\":\"data\"}".data(using: .utf8)!
@@ -839,46 +839,46 @@ client.send(message: message).then { ack in
 
 A user can leave a chat channel to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var channelId = "<channel id>";
 await socket.send({ channel_leave: {
   channel_id: channelId
 } });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var channelId = "<channel id>";
 await socket.LeaveChatAsync(channelId);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var channelId = "<channel id>";
 await socket.LeaveChatAsync(channelId);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 string channelId = "<channel id>";
 rtClient->leaveChat(channelId);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var channelId = "<channel id>";
 socket.send({ channel_leave: {
   channel_id: channelId
 } });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 string channelId = "<channel id>";
 rtClient->leaveChat(channelId);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String channelId = "<channel id>";
 socket.leaveChat(channelId).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let chatTopicID = ... // A chat topic ID
 
@@ -900,12 +900,12 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
 !!! Tip
     A user does not have to join a chat channel to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>" \
   -H 'authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const channelId = "<channel id>";
 const result = await client.listChannelMessages(session, channelId, 10);
 result.messages.forEach((message) => {
@@ -914,7 +914,7 @@ result.messages.forEach((message) => {
 console.log("Get the next page of messages with the cursor:", result.next_cursor);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
@@ -923,7 +923,7 @@ foreach (var m in result.Messages)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
@@ -932,7 +932,7 @@ foreach (var m in result.Messages)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NChannelMessageListPtr list)
 {
   for (auto& message : list->messages)
@@ -951,7 +951,7 @@ client->listChannelMessages(session,
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const channelId = "<channel id>";
 client.listChannelMessages(session, channelId, 10)
   .then(function(result) {
@@ -965,7 +965,7 @@ client.listChannelMessages(session, channelId, 10)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NChannelMessageListPtr list)
 {
   for (auto& message : list->messages)
@@ -984,7 +984,7 @@ client->listChannelMessages(session,
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String channelId = "<channel id>";
 ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
 for (ChannelMessage message : messages.getMessagesList()) {
@@ -992,7 +992,7 @@ for (ChannelMessage message : messages.getMessagesList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let roomName = "Room-Name";
 
@@ -1009,7 +1009,7 @@ client.send(message: message).then { messages in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/channel?channel_id=<channelId>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -1021,12 +1021,12 @@ A cursor can be used to page after a batch of messages for the next set of resul
 
 We recommend you only list the most recent 100 messages in your UI. A good user experience could be to fetch the next 100 older messages when the user scrolls to the bottom of your UI panel.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var channelId = "<channel id>";
 var forward = true;
 var result = await client.listChannelMessages(session, channelId, 10, forward);
@@ -1043,7 +1043,7 @@ if (result.next_cursor) {
 }
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var channelId = "<channel id>";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
@@ -1061,7 +1061,7 @@ if (!string.IsNullOrEmpty(result.NextCursor)) {
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var channelId = "roomname";
 var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
 foreach (var m in result.Messages)
@@ -1079,7 +1079,7 @@ if (!string.IsNullOrEmpty(result.NextCursor)) {
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 void YourClass::listChannelMessages(const std::string& cursor)
 {
   auto successCallback = [this](NChannelMessageListPtr list)
@@ -1107,7 +1107,7 @@ void YourClass::listChannelMessages(const std::string& cursor)
 listChannelMessages("");
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 ver listChannelMessages(cursor) {
   var channelId = "<channel id>";
   var forward = true;
@@ -1130,7 +1130,7 @@ ver listChannelMessages(cursor) {
 listChannelMessages();
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 void YourClass::listChannelMessages(const std::string& cursor)
 {
   auto successCallback = [this](NChannelMessageListPtr list)
@@ -1158,7 +1158,7 @@ void YourClass::listChannelMessages(const std::string& cursor)
 listChannelMessages("");
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String channelId = "<channel id>";
 ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
 if (messages.getNextCursor() != null) {
@@ -1169,7 +1169,7 @@ if (messages.getNextCursor() != null) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let roomName = "Room-Name";
 
@@ -1191,7 +1191,7 @@ client.send(message: message).then { messages in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/channel?channel_id=<channel id>&forward=true&limit=10&cursor=<cursor>
 Host: 127.0.0.1:7350
 Accept: application/json

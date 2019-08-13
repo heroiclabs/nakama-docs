@@ -15,7 +15,7 @@ As new versions of Nakama, or CockroachDB, become available you might want to up
 
 You can pull down the most recent Nakama image and allow Docker Compose to perform the data migration.
 
-```shell fct_label="Shell"
+```shell tab="Shell"
 docker-compose down # top and remove both the Nakama and CockroachDB containers
 docker pull heroiclabs/nakama # download the latest Nakama image
 docker-compose up # start the containers (both Nakama and CockroachDB) as fresh installss
@@ -23,13 +23,13 @@ docker-compose up # start the containers (both Nakama and CockroachDB) as fresh 
 
 And, similarly, here’s how to update the CockroachDB container:
 
-```shell fct_label="Shell"
+```shell tab="Shell"
 docker pull cockroachdb/cockroach # download the latest CockroachDB image
 ```
 
 If you'd like to explicity run a database schema migration, issue the following command:
 
-```shell fct_label="Shell"
+```shell tab="Shell"
 docker run heroiclabs/nakama migrate up
 ```
 

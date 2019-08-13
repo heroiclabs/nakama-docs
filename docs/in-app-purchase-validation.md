@@ -79,7 +79,7 @@ If your app is in production, you'll need to set the value of `purchase.apple.pr
 
 Nakama only supports validating iOS 7+ receipts. In addition, Nakama only validates the first item in the receipt as Apple receipts can contain more than one in-app purchase item.
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var productId = "com.yourcompany.product";
 var receiptData = "...some-base64-encoded-data...";
 
@@ -148,7 +148,7 @@ Lastly, you'll need to update Nakama's configuration with the following informat
 
 ### Validate Purchase
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var productId = "com.yourcompany.product";
 var purchaseType = "product";
 var purchaseToken = "some-token-from-google";

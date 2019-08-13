@@ -15,7 +15,7 @@ The simplest approach is to write records in the success callback for the regist
 
 This code demonstrates how to do it with a condensed example. In real application code you'll break up the [authentication](authentication.md) and connect logic from the storage writes based on how you manage connect and reconnect.
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var deviceId = SystemInfo.deviceUniqueIdentifier;
 var session = await client.AuthenticateDeviceAsync(deviceId);
 
@@ -39,7 +39,7 @@ Another way to write records for the new user is to run server-side code after r
 
 The ["register_after"](runtime-code-function-reference.md#register-hooks) hook can be used with one of the `"authenticaterequest_*"` message types to tell the server to run a function after that message has been processed. It's important to note that the server does not distinguish between register and login messages so we use a [conditional write](storage-collections.md#conditional-writes) to store the records.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function initialize_user(context, payload)
   if payload.created then
     -- Only run this logic if the account that has authenticated is new.
@@ -57,7 +57,7 @@ end
 nk.register_req_after(initialize_user, "authenticaterequest_device")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func InitializeUser(ctx context.Context, logger Logger, db *sql.DB, nk NakamaModule, out *api.Session, in *api.AuthenticateDeviceRequest) error {
   if out.Created {
     // Only run this logic if the account that has authenticated is new.
@@ -94,7 +94,7 @@ The last way to write initial records for the user is to `"init"` the record wit
 
 In our example it means wherever you will update the "mywallet" record you ensure it's been initialized first.
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var json = "{\"coins\": 100, \"gems\": 10, \"artifacts\": 0}";
 
 var message = new NStorageUpdateMessage.Builder()

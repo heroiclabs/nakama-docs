@@ -22,7 +22,7 @@ This design gives great flexibility for developers to group sets of information 
 
 A user can write one or more objects which will be stored in the database server. These objects will be written in a single transaction which guarantees the writes succeed together.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{"objects":
@@ -41,7 +41,7 @@ curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var save_game = { "progress": 50 };
 var my_stats = { "skill": 24 };
 const object_ids = await client.writeStorageObjects(session, [
@@ -58,7 +58,7 @@ const object_ids = await client.writeStorageObjects(session, [
 console.info("Successfully stored objects: ", object_ids);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var saveGame = "{ \"progress\": 50 }";
 var myStats = "{ \"skill\": 24 }";
 var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
@@ -75,7 +75,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Console.WriteLine("Successfully stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var saveGame = "{ \"progress\": 50 }";
 var myStats = "{ \"skill\": 24 }";
 var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
@@ -92,7 +92,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Debug.LogFormat("Successfully stored objects: [{0}]", string.Join(",\n   ", objectIds));
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
   CCLOG("Successfully stored objects %u", acks.size());
@@ -112,7 +112,7 @@ objects.push_back(statsObject);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var save_game = { "progress": 50 };
 var my_stats = { "skill": 24 };
 client.writeStorageObjects(session, [
@@ -133,7 +133,7 @@ client.writeStorageObjects(session, [
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
   std::cout << "Successfully stored objects " << acks.size() << std::endl;
@@ -153,7 +153,7 @@ objects.push_back(statsObject);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String saveGame = "{ \"progress\": 50 }";
 String myStats = "{ \"skill\": 24 }";
 StorageObjectWrite saveGameObject = new StorageObjectWrite("saves", "savegame", saveGame, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
@@ -162,7 +162,7 @@ StorageObjectAcks acks = client.writeStorageObjects(session, saveGameObject, sta
 System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let saveGame = "{\"progress\": 50}".data(using: .utf8)!
@@ -181,7 +181,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/storage
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -210,7 +210,7 @@ When objects are successfully stored a version is returned which can be used wit
 
 A conditional write ensures a client can only update the object if they've seen the previous version of the object. The purpose is to prevent a change to the object if another client has changed the value between when the first client's read and it's next write.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -225,7 +225,7 @@ curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var save_game = { "progress": 50 };
 const object_ids = await client.writeStorageObjects(session, [
   {
@@ -238,7 +238,7 @@ const object_ids = await client.writeStorageObjects(session, [
 console.info("Stored objects: %o", object_ids);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var saveGame = "{ \"progress\": 50 }";
 var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
 {
@@ -250,7 +250,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Console.WriteLine("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var saveGame = "{ \"progress\": 50 }";
 var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
 {
@@ -262,7 +262,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Debug.LogFormat("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
   CCLOG("Successfully stored objects %u", acks.size());
@@ -278,7 +278,7 @@ objects.push_back(savesObject);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var save_game = { "progress": 50 };
 client.writeStorageObjects(session, [
   {
@@ -295,7 +295,7 @@ client.writeStorageObjects(session, [
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
   std::cout << "Successfully stored objects " << acks.size() << std::endl;
@@ -311,7 +311,7 @@ objects.push_back(savesObject);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String saveGame = "{ \"progress\": 50 }";
 StorageObjectWrite object = new StorageObjectWrite("saves", "savegame", saveGame, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
 object.setVersion("<version>");
@@ -319,7 +319,7 @@ StorageObjectAcks acks = client.writeStorageObjects(session, object).get();
 System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let saveGame = "{\"progress\": 54}".data(using: .utf8)!
@@ -334,7 +334,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/storage
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -355,7 +355,7 @@ Authorization: Bearer <session token>
 
 We support another kind of conditional write which is used to write an object only if none already exists for that object's collection and key.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -370,7 +370,7 @@ curl -X PUT "http://127.0.0.1:7350/v2/storage" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var save_game = { "progress": 50 };
 const object_ids = await client.writeStorageObjects(session, [
   {
@@ -383,7 +383,7 @@ const object_ids = await client.writeStorageObjects(session, [
 console.info("Stored objects: %o", object_ids);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var saveGame = "{ \"progress\": 50 }";
 var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
 {
@@ -395,7 +395,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Console.WriteLine("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var saveGame = "{ \"progress\": 50 }";
 var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageObject
 {
@@ -407,7 +407,7 @@ var objectIds = await client.WriteStorageObjectsAsync(session, new WriteStorageO
 Debug.LogFormat("Stored objects: [{0}]", string.Join(",\n  ", objectIds));
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
   CCLOG("Successfully stored objects %u", acks.size());
@@ -423,7 +423,7 @@ objects.push_back(savesObject);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var save_game = { "progress": 50 };
 client.writeStorageObjects(session, [
   {
@@ -440,7 +440,7 @@ client.writeStorageObjects(session, [
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NStorageObjectAcks& acks)
 {
   std::cout << "Successfully stored objects " << acks.size() << std::endl;
@@ -456,7 +456,7 @@ objects.push_back(savesObject);
 client->writeStorageObjects(session, objects, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String saveGame = "{ \"progress\": 50 }";
 StorageObjectWrite object = new StorageObjectWrite("saves", "savegame", saveGame, PermissionRead.OWNER_READ, PermissionWrite.OWNER_WRITE);
 object.setVersion("*");
@@ -464,7 +464,7 @@ StorageObjectAcks acks = client.writeStorageObjects(session, object).get();
 System.out.format("Stored objects %s", acks.getAcksList());
 ```
 
-```java fct_label="Android/Java"
+```java tab="Android/Java"
 // Requires Nakama 1.x
 
 String saveGame = "{\"progress\": 1}";
@@ -490,7 +490,7 @@ deferred.addCallback(new Callback<ResultSet<RecordId>, ResultSet<RecordId>>() {
 });
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let saveGame = "{\"progress\": 1}".data(using: .utf8)!
@@ -505,7 +505,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/storage
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -530,7 +530,7 @@ Just like with [writing objects](#write-objects) you can read one or more object
 
 Each object has an owner and permissions. An object can only be read if the permissions allow it. An object which has no owner can be fetched with `"null"` and is useful for global objects which all users should be able to read.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/storage" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -544,7 +544,7 @@ curl -X POST "http://127.0.0.1:7350/v2/storage" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const objects = await client.readStorageObjects(session, {
   "object_ids": [{
     "collection": "saves",
@@ -555,7 +555,7 @@ const objects = await client.readStorageObjects(session, {
 console.info("Read objects: %o", objects);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
   Key = "savegame",
@@ -564,7 +564,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Console.WriteLine("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
   Key = "savegame",
@@ -573,7 +573,7 @@ var result = await client.ReadStorageObjectsAsync(session, new StorageObjectId {
 Debug.LogFormat("Read objects: [{0}]", string.Join(",\n  ", result.Objects));
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NStorageObjects& objects)
 {
   for (auto& object : objects)
@@ -590,7 +590,7 @@ objectIds.push_back(objectId);
 client->readStorageObjects(session, objectIds, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.readStorageObjects(session, {
   "object_ids": [{
     "collection": "saves",
@@ -605,7 +605,7 @@ client.readStorageObjects(session, {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NStorageObjects& objects)
 {
   for (auto& object : objects)
@@ -622,7 +622,7 @@ objectIds.push_back(objectId);
 client->readStorageObjects(session, objectIds, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 StorageObjectId objectId = new StorageObjectId("saves");
 objectId.setKey("savegame");
 objectId.setUserId(session.getUserId());
@@ -630,7 +630,7 @@ StorageObjects objects = client.readStorageObjects(session, objectId).get();
 System.out.format("Read objects %s", objects.getObjectsList().toString());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let userID = session.userID // a Session object's Id.
@@ -649,7 +649,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/storage
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -671,30 +671,30 @@ Authorization: Bearer <session token>
 
 You can list objects in a collection and page through results. The objects returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/storage/saves?user_id=some-user-id&limit=10" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const limit = 100; // default is 10.
 const objects = await client.listStorageObjects(session, "saves", session.user_id, limit);
 console.info("List objects: %o", objects);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const int limit = 100; // default is 10.
 var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId, limit);
 Console.WriteLine("List objects: {0}", result);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const int limit = 100; // default is 10.
 var result = await client.ListUsersStorageObjectsAsync(session, "saves", session.UserId, limit);
 Debug.LogFormat("List objects: {0}", result);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NStorageObjectListPtr list)
 {
   for (auto& object : list->objects)
@@ -710,7 +710,7 @@ client->listUsersStorageObjects(session,
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.listStorageObjects(session, "saves", session.user_id)
   .then(function(objects) {
       cc.log("List objects:", JSON.stringify(objects));
@@ -720,7 +720,7 @@ client.listStorageObjects(session, "saves", session.user_id)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NStorageObjectListPtr list)
 {
   for (auto& object : list->objects)
@@ -736,12 +736,12 @@ client->listUsersStorageObjects(session,
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 StorageObjectList objects = client.listUsersStorageObjects(session, "saves", session.getUserId()).get();
 System.out.format("List objects %s", objects);
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let userId = session.userID // a Session object's Id.
@@ -760,7 +760,7 @@ client.send(message: message).then { list in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/storage/<collection>?user_id=<user_id>&limit=<limit>&cursor=<cursor>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -772,7 +772,7 @@ Authorization: Bearer <session token>
 
 A user can remove an object if it has the correct permissions and they own it.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X PUT "http://127.0.0.1:7350/v2/storage/delete" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -785,7 +785,7 @@ curl -X PUT "http://127.0.0.1:7350/v2/storage/delete" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 await client.deleteStorageObjects(session, {
   "object_ids": [{
     "collection": "saves",
@@ -795,7 +795,7 @@ await client.deleteStorageObjects(session, {
 console.info("Deleted objects.");
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
   Key = "savegame"
@@ -803,7 +803,7 @@ var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId
 Console.WriteLine("Deleted objects.");
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
   Key = "savegame"
@@ -811,7 +811,7 @@ var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId
 Debug.Log("Deleted objects.");
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("Deleted objects.");
@@ -825,7 +825,7 @@ objectIds.push_back(objectId);
 client->deleteStorageObjects(session, objectIds, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.deleteStorageObjects(session, {
   "object_ids": [{
     "collection": "saves",
@@ -839,7 +839,7 @@ client.deleteStorageObjects(session, {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "Deleted objects." << std::endl;
@@ -853,14 +853,14 @@ objectIds.push_back(objectId);
 client->deleteStorageObjects(session, objectIds, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 StorageObjectId objectId = new StorageObjectId("saves");
 objectId.setKey("savegame");
 client.deleteStorageObjects(session, objectId).get();
 System.out.format("Deleted objects.");
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 var message = StorageRemoveMessage()
@@ -872,7 +872,7 @@ client.send(message: message).then {
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/storage/delete
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -891,7 +891,7 @@ Authorization: Bearer <session token>
 
 You can also conditionally remove an object if the object version matches the version sent by the client.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X PUT \
   http://127.0.0.1:7350/v2/storage/delete \
   -H 'Authorization: Bearer <session token>' \
@@ -906,7 +906,7 @@ curl -X PUT \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 await client.deleteStorageObjects(session, {
   "object_ids": [{
     "collection": "saves",
@@ -917,7 +917,7 @@ await client.deleteStorageObjects(session, {
 console.info("Deleted objects.");
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
   Key = "savegame",
@@ -927,7 +927,7 @@ var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId
 Console.WriteLine("Deleted objects.");
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId {
   Collection = "saves",
   Key = "savegame",
@@ -937,7 +937,7 @@ var result = await client.DeleteStorageObjectsAsync(session, new StorageObjectId
 Debug.Log("Deleted objects.");
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("Deleted objects.");
@@ -952,7 +952,7 @@ objectIds.push_back(objectId);
 client->deleteStorageObjects(session, objectIds, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.deleteStorageObjects(session, {
   "object_ids": [{
     "collection": "saves",
@@ -967,7 +967,7 @@ client.deleteStorageObjects(session, {
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "Deleted objects." << std::endl;
@@ -982,7 +982,7 @@ objectIds.push_back(objectId);
 client->deleteStorageObjects(session, objectIds, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 StorageObjectId objectId = new StorageObjectId("saves");
 objectId.setKey("savegame");
 objectId.setVersion("<version>");
@@ -990,7 +990,7 @@ client.deleteStorageObjects(session, objectId).get();
 System.out.format("Deleted objects.");
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 
 let version = record.version // a StorageRecordId object's version.
@@ -1004,7 +1004,7 @@ client.send(message: message).then {
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/storage/delete
 Host: 127.0.0.1:7350
 Accept: application/json

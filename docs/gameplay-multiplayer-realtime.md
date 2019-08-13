@@ -10,29 +10,29 @@ Any data sent through a match is immediately routed to all other match opponents
 
 A match can be created by a user. The server will assign a unique ID which can be shared with other users for them to [join the match](#join-a-match). All users within a match are equal and it is up to the clients to decide on a host.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var response = await socket.send({ match_create: {} });
 console.log("Created match with ID:", response.match.match_id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var match = await socket.CreateMatchAsync();
 Console.WriteLine("New match with id '{0}'.", match.Id);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var match = await socket.CreateMatchAsync();
 Debug.LogFormat("New match with id '{0}'.", match.Id);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtClient->createMatch([](const NMatch& match)
   {
     CCLOG("Created Match with ID: %s", match.matchId.c_str());
   });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.send({ match_create: {} })
   .then(function(response) {
       cc.log("created match with ID:", response.match.match_id);
@@ -42,14 +42,14 @@ socket.send({ match_create: {} })
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtClient->createMatch([](const NMatch& match)
   {
     std::cout << "Created Match with ID: " << match.matchId << std::endl;
   });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 Match match = socket.createMatch().get();
 System.out.format("Created match with ID %s.", match.getId());
 ```
@@ -63,7 +63,7 @@ A user can join a specific match by ID. Matches can be joined at any point until
 !!! Hint
     To find a match instead of specify one by ID use the [matchmaker](gameplay-matchmaker.md).
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "<matchid>";
 var match = await socket.send({ match_join: { match_id: id } });
 var connectedOpponents = match.presences.filter((presence) => {
@@ -75,7 +75,7 @@ connectedOpponents.forEach((opponent) => {
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
 foreach (var presence in match.Presences)
@@ -84,7 +84,7 @@ foreach (var presence in match.Presences)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var matchId = "<matchid>";
 var match = await socket.JoinMatchAsync(matchId);
 foreach (var presence in match.Presences)
@@ -93,7 +93,7 @@ foreach (var presence in match.Presences)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 string matchId = "<matchid>";
 rtClient->joinMatch(matchId, [](const NMatch& match)
   {
@@ -109,7 +109,7 @@ rtClient->joinMatch(matchId, [](const NMatch& match)
   });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "<matchid>";
 socket.send({ match_join: { match_id: id } })
   .then(
@@ -130,7 +130,7 @@ socket.send({ match_join: { match_id: id } })
   );
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 string matchId = "<matchid>";
 rtClient->joinMatch(matchId, [](const NMatch& match)
   {
@@ -146,7 +146,7 @@ rtClient->joinMatch(matchId, [](const NMatch& match)
   });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String matchId = "<matchid>";
 Match match = socket.joinMatch(matchId).get();
 for (UserPresence presence : match.getPresences()) {
@@ -160,7 +160,7 @@ The list of match opponents returned in the success callback might not include a
 
 When a user joins a match they receive an initial list of connected opponents. As other users join or leave the server will push events to clients which can be used to update the list of connected opponents.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var connectedOpponents = [];
 socket.onmatchpresence = (presences) => {
   // Remove all users who left.
@@ -179,7 +179,7 @@ socket.onmatchpresence = (presences) => {
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var connectedOpponents = new List<IUserPresence>(2);
 socket.ReceivedMatchPresence += presenceEvent =>
 {
@@ -194,7 +194,7 @@ socket.ReceivedMatchPresence += presenceEvent =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var connectedOpponents = new List<IUserPresence>(2);
 socket.ReceivedMatchPresence += presenceEvent =>
 {
@@ -209,7 +209,7 @@ socket.ReceivedMatchPresence += presenceEvent =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtListener->setMatchPresenceCallback([](const NMatchPresenceEvent& event)
   {
     for (auto& presence : event.joins)
@@ -224,7 +224,7 @@ rtListener->setMatchPresenceCallback([](const NMatchPresenceEvent& event)
   });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var connectedOpponents = [];
 socket.onmatchpresence = (presences) => {
   // Remove all users who left.
@@ -243,7 +243,7 @@ socket.onmatchpresence = (presences) => {
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtListener->setMatchPresenceCallback([](const NMatchPresenceEvent& event)
   {
     for (auto& presence : event.joins)
@@ -258,7 +258,7 @@ rtListener->setMatchPresenceCallback([](const NMatchPresenceEvent& event)
   });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 List<UserPresence> connectedOpponents = new ArrayList<UserPresence>();
 public void onMatchPresence(final MatchPresenceEvent matchPresence) {
   connectedOpponents.addAll(matchPresence.getJoins());
@@ -282,14 +282,14 @@ An Op code is a numeric identifier for the type of message sent. These can be us
 
 The binary content in each data message should be as __small as possible__. It is common to use JSON or preferable to use a compact binary format like <a href="https://developers.google.com/protocol-buffers/" target="\_blank">Protocol Buffers</a> or <a href="https://google.github.io/flatbuffers/" target="\_blank">FlatBuffers</a>.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "<matchid>";
 var opCode = 1;
 var data = { "move": {"dir": "left", "steps": 4} };
 socket.send({ match_data_send: { match_id: id, op_code: opCode, data: data } });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 // using Nakama.TinyJson;
 var matchId = "<matchid>";
 var opCode = 1;
@@ -297,7 +297,7 @@ var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 socket.SendMatchStateAsync(matchId, opCode, newState);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // using Nakama.TinyJson;
 var id = "<matchid>";
 var opCode = 1;
@@ -305,28 +305,28 @@ var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
 socket.SendMatchStateAsync(matchId, opCode, newState);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 string id = "<matchid>";
 int64_t opCode = 1;
 NBytes data = "{ \"move\": {\"dir\": \"left\", \"steps\" : 4} }";
 rtClient->sendMatchData(id, opCode, data);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "<matchid>";
 var opCode = 1;
 var data = { "move": {"dir": "left", "steps": 4} };
 socket.send({ match_data_send: { match_id: id, op_code: opCode, data: data } });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 string id = "<matchid>";
 int64_t opCode = 1;
 NBytes data = "{ \"move\": {\"dir\": \"left\", \"steps\" : 4} }";
 rtClient->sendMatchData(id, opCode, data);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String id = "<matchid>";
 int opCode = 1;
 String data = "{\"message\":\"Hello world\"}";
@@ -340,7 +340,7 @@ A client can add a callback for incoming match data messages. This should be don
 !!! Note "Message sequences"
     The server delivers data in the order it processes data messages from clients.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onmatchdata = (result) => {
   var content = result.data;
   switch (result.op_code) {
@@ -353,7 +353,7 @@ socket.onmatchdata = (result) => {
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 // Use whatever decoder for your message contents.
 var enc = System.Text.Encoding.UTF8;
 socket.ReceivedMatchState += newState =>
@@ -370,7 +370,7 @@ socket.ReceivedMatchState += newState =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // Use whatever decoder for your message contents.
 var enc = System.Text.Encoding.UTF8;
 socket.ReceivedMatchState += newState =>
@@ -387,7 +387,7 @@ socket.ReceivedMatchState += newState =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtListener->setMatchDataCallback([](const NMatchData& data)
   {
     switch (data.opCode)
@@ -403,7 +403,7 @@ rtListener->setMatchDataCallback([](const NMatchData& data)
   });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.onmatchdata = (result) => {
   var content = result.data;
   switch (result.op_code) {
@@ -416,7 +416,7 @@ socket.onmatchdata = (result) => {
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtListener->setMatchDataCallback([](const NMatchData& data)
   {
     switch (data.opCode)
@@ -432,7 +432,7 @@ rtListener->setMatchDataCallback([](const NMatchData& data)
   });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onMatchData(final MatchData matchData) {
@@ -445,37 +445,37 @@ SocketListener listener = new AbstractSocketListener() {
 
 Users can leave a match at any point. A match ends when all users have left.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "<matchid>";
 socket.send({ match_leave: {match_id: id}});
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var matchId = "<matchid>";
 await socket.LeaveMatchAsync(matchId);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var matchId = "<matchid>";
 await socket.LeaveMatchAsync(matchId);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 string matchId = "<matchid>";
 rtClient->leaveMatch(matchId);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "<matchid>";
 socket.send({ match_leave: {match_id: id}});
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 string matchId = "<matchid>";
 rtClient->leaveMatch(matchId);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String matchId = "<matchid>";
 socket.leaveMatch(matchId).get();
 ```

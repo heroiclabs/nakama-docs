@@ -11,7 +11,6 @@ This project uses Markdown for documentation which is compiled with [mkdocs](htt
 pip install pip --upgrade
 pip install mkdocs --upgrade
 pip install mkdocs-material --upgrade
-pip install markdown-fenced-code-tabs --upgrade
 ```
 
 *Note:* For Python 3.7, you may need to run the following instead
@@ -19,7 +18,6 @@ pip install markdown-fenced-code-tabs --upgrade
 pip3 install pip --upgrade
 pip3 install mkdocs --upgrade
 pip3 install mkdocs-material --upgrade
-pip3 install markdown-fenced-code-tabs --upgrade
 ```
 
 ## Development

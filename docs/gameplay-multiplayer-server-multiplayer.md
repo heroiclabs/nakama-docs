@@ -46,7 +46,7 @@ Match presences will still be replicated so all nodes in a cluster to have immed
 
 The minimum structure of a match handler looks like:
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local M = {}
 
 function M.match_init(context, setupstate)
@@ -80,7 +80,7 @@ end
 return M
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 type MatchState struct {
 	debug bool
 }
@@ -139,7 +139,7 @@ You can use an RPC function which submits some user IDs to the server and will c
 
 A match ID will be created which could be sent out to the players with an in-app notification or push message (or both). This approach is great when you want to manually create a match and compete with specific users.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 local function create_match(context, payload)
   local modulename = "pingpong"
@@ -152,7 +152,7 @@ end
 nk.register_rpc(create_match, "create_match_rpc")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func CreateMatchRPC(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	params := make(map[string]interface{})
 	if err := json.Unmarshal([]byte(payload), params); err != nil {
@@ -180,7 +180,7 @@ Use the [matchmaker](gameplay-matchmaker.md) to find opponents and use the match
 
 The clients will receive the matchmaker callback as normal with a match ID.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local function makematch(context, matched_users)
@@ -201,7 +201,7 @@ end
 nk.register_matchmaker_matched(makematch)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func MakeMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, entries []runtime.MatchmakerEntry) (string, error) {
 	for _, e := range entries {
 		logger.Info("Matched user '%s' named '%s'", e.GetPresence().GetUserId(), e.GetPresence().GetUsername())
@@ -244,7 +244,7 @@ You can list matches that are currently active on the server. You can also filte
 
 For instance if a match was created with a label field of "skill=100-150" you can filter down to relevant matches.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local limit = 10
@@ -258,7 +258,7 @@ for _, match in ipairs(matches) do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 limit := 10
 isAuthoritative := true
 label := "skill=100-150"
@@ -275,7 +275,7 @@ if matches, err := nk.MatchList(ctx, limit, isAuthoritative, label, min_size, ma
 
 This is useful to present a lobby-like experience or search for matches before creating a new match.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 local function findorcreatematch(limit, label, min_size, max_size)
   local matches = nk.match_list(limit, true, label, min_size, max_size)
@@ -292,7 +292,7 @@ local function findorcreatematch(limit, label, min_size, max_size)
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 if matches, err := nk.MatchList(ctx, limit, true, label, min_size, max_size, "*"); err != nil {
   return "", err
 } else {
@@ -320,7 +320,7 @@ In the examples above, we looked at listing matches based on comparing labels ex
 
 In this example, we are looking for matches with "mode" that must match "freeforall", and preferably "level" higher than "10".
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local limit = 10
@@ -335,7 +335,7 @@ for _, match in ipairs(matches) do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 limit := 10
 authoritative := true
 label := ""
@@ -356,7 +356,7 @@ You can utilize the full power of the [Bleve](http://blevesearch.com/docs/Query-
 
 You can also use this to create an authoritative match if your listing query returns no result:
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local query = "+label.mode:freeforall label.level:>10"
 local matches = nk.match_list(10, true, "", 2, 4, query)
 if #matches > 0 then
@@ -367,7 +367,7 @@ else
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 query := "+label.mode:freeforall label.level:>10"
 matches, err := nk.MatchList(ctx, 1, true, "", 2, 4, query)
 if err != nil {
@@ -416,7 +416,7 @@ You must return three values:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 function match_init(context, params)
   local state = {}
   local tick_rate = 1
@@ -452,7 +452,7 @@ You must return two values, with an optional third:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function match_join_attempt(context, dispatcher, tick, state, presence, metadata)
   -- Presence format:
   -- {
@@ -491,7 +491,7 @@ You must return:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function match_join(context, dispatcher, tick, state, presences)
   -- Presences format:
   -- {
@@ -531,7 +531,7 @@ You must return:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function match_leave(context, dispatcher, tick, state, presences)
   return state
 end
@@ -563,7 +563,7 @@ You must return:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function match_loop(context, dispatcher, tick, state, messages)
   -- Messages format:
   -- {
@@ -611,7 +611,7 @@ You must return:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function match_terminate(context, dispatcher, tick, state, grace_seconds)
   return state
 end
@@ -638,7 +638,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 function match_loop(context, dispatcher, tick, state, messages)
   local opcode = 1234
@@ -667,7 +667,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 function match_loop(context, dispatcher, tick, state, messages)
   -- Assume we store presences in state
@@ -704,7 +704,7 @@ end
 
 This is an example of a Ping-Pong match handler. Messages received by the server are broadcast back to the peer who sent them.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local M = {}
@@ -792,7 +792,7 @@ The function must return:
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchInit(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, params map[string]interface{}) (interface{}, int, string) {
 	state := &MatchState{Debug: true} // Define custom MatchState in the code as per your game's requirements
 	tickRate := 1                     // Call MatchLoop() every 1s.
@@ -831,7 +831,7 @@ The function must return:
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchJoinAttempt(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, presence runtime.Presence, metadata map[string]string) (interface{}, bool, string) {
   result := true
 
@@ -868,7 +868,7 @@ The function must return:
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchJoin(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, presences []runtime.Presence) interface{} {
   // Custom code to process match join and send updated state to a joining or re-joining user.
   return state
@@ -902,7 +902,7 @@ The function must return:
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchLeave(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, presences []runtime.Presence) interface{} {
   // Custom code to handle a disconnected/leaving user.
   return state
@@ -938,7 +938,7 @@ The function must return:
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   // Custom code to:
   // - Process the messages received.
@@ -980,7 +980,7 @@ The function must return:
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchTerminate(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, graceSeconds int) interface{} {
   // Custom code to process the termination of match.
 	return state  
@@ -1012,7 +1012,7 @@ _Returns_
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   var opCode int64 = 123
   var data []byte = []byte("test")
@@ -1042,7 +1042,7 @@ _Returns_
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   if tick >= 10 {
     // Just as an example kick everyone that sends a message on or after tick 10.
@@ -1074,7 +1074,7 @@ _Returns_
 
 _Example_
 
-```go fct_label="Go"
+```go tab="Go"
 func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, messages []runtime.MatchData) interface{} {
   // As an example update the match label in the 10th match tick.
   if tick == 10 {
@@ -1089,7 +1089,7 @@ func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB
 
 This is an example of a Ping-Pong match handler. Messages received by the server are broadcast back to the peer who sent them.
 
-```go fct_label="Go"
+```go tab="Go"
 package example
 
 import (

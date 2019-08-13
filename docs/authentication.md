@@ -5,22 +5,22 @@ The server has builtin authentication so clients can only send requests and conn
 !!! Warning "Important"
     The default server key is `defaultkey` but it is very important to set a [unique value](install-configuration.md#socket). This value should be embedded within client code.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
 client.ssl = false;
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 // Use "https" scheme if you've setup SSL.
 var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // Use "https" scheme if you've setup SSL.
 var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 NClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
@@ -28,7 +28,7 @@ parameters.port = DEFAULT_PORT;
 NClientPtr client = NCocosHelper::createDefaultClient(parameters);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var serverkey = "defaultkey";
 var host = "127.0.0.1";
 var port = 7350;
@@ -38,7 +38,7 @@ var timeout = 7000; // ms
 var client = new nakamajs.Client(serverkey, host, port, useSSL, timeout);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 NClientParameters parameters;
 parameters.serverKey = "defaultkey";
 parameters.host = "127.0.0.1";
@@ -46,13 +46,13 @@ parameters.port = DEFAULT_PORT;
 NClientPtr client = createDefaultClient(parameters);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 Client client = new DefaultClient("defaultkey", "127.0.0.1", 7349, false)
 // or same as above.
 Client client = DefaultClient.defaults("defaultkey");
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let client : Client = Builder("defaultkey")
     .host("127.0.0.1")
@@ -82,13 +82,13 @@ You can choose a custom username when creating the account. To do this, set `use
 
 A device identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"id":"uniqueidentifier"}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 // This import is only required with React Native
 var deviceInfo = require('react-native-device-info');
 
@@ -111,14 +111,14 @@ const session = await client.authenticateDevice({ id: deviceId, create: true, us
 console.info("Successfully authenticated:", session);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 // Should use a platform API to obtain a device identifier.
 var deviceId = System.Guid.NewGuid().ToString();
 var session = await client.AuthenticateDeviceAsync(deviceId);
 System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var deviceId = PlayerPrefs.GetString("nakama.deviceid");
 if (string.IsNullOrEmpty(deviceId)) {
     deviceId = SystemInfo.deviceUniqueIdentifier;
@@ -128,7 +128,7 @@ var session = await client.AuthenticateDeviceAsync(deviceId);
 Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto loginFailedCallback = [](const NError& error)
 {
 };
@@ -148,7 +148,7 @@ client->authenticateDevice(
         loginFailedCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var deviceId = "unique device id";
 client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" })
   .then(function(session) {
@@ -159,7 +159,7 @@ client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusern
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto loginFailedCallback = [](const NError& error)
 {
 };
@@ -179,13 +179,13 @@ client->authenticateDevice(
         loginFailedCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String id = UUID.randomUUID().toString();
 Session session = client.authenticateDevice(id).get();
 System.out.format("Session: %s ", session.getAuthToken());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let defaults = UserDefaults.standard
 let deviceKey = "device_id"
@@ -213,7 +213,7 @@ client.login(with: message).then { session in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/authenticate/device?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -235,34 +235,34 @@ You can choose a custom username when creating the account. To do this, set `use
 
 An email address must be valid as defined by RFC-5322 and passwords must be at least 8 characters.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"email":"email@example.com", "password": "3bc8f72e95a9"}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const email = "email@example.com";
 const password = "3bc8f72e95a9";
 const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
 console.info("Successfully authenticated:", session);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string email = "email@example.com";
 const string password = "3bc8f72e95a9";
 var session = await client.AuthenticateEmailAsync(email, password);
 System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string email = "email@example.com";
 const string password = "3bc8f72e95a9";
 var session = await client.AuthenticateEmailAsync(email, password);
 Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NSessionPtr session)
 {
   CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
@@ -279,7 +279,7 @@ bool create = true;
 client->authenticateEmail(email, password, username, create, successCallback, errorCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const email = "email@example.com";
 const password = "3bc8f72e95a9";
 client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
@@ -291,7 +291,7 @@ client.authenticateEmail({ email: email, password: password, create: true, usern
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NSessionPtr session)
 {
     std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
@@ -308,14 +308,14 @@ bool create = true;
 client->authenticateEmail(email, password, username, create, successCallback, errorCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String email = "email@example.com";
 String password = "3bc8f72e95a9";
 Session session = client.authenticateEmail(email, password).get();
 System.out.format("Session: %s ", session.getAuthToken());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let email = "email@example.com"
 let password = "3bc8f72e95a9"
@@ -329,7 +329,7 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/authenticate/email?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -356,25 +356,25 @@ You can choose a custom username when creating the account. To do this, set `use
 
 You can optionally import Facebook friends into Nakama's [friend graph](social-friends.md) when authenticating. To do this, set `import` to true.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true" \
   --user 'defaultkey:' \
   --data '{"token":"valid-oauth-token"}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const oauthToken = "...";
 const session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true });
 console.log("Successfully authenticated:", session);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string oauthToken = "...";
 var session = await client.AuthenticateFacebookAsync(oauthToken);
 System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // using Facebook.Unity;
 // https://developers.facebook.com/docs/unity/examples#init
 var perms = new List<string>(){"public_profile", "email"};
@@ -387,7 +387,7 @@ FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
 });
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto loginFailedCallback = [](const NError& error)
 {
 };
@@ -409,7 +409,7 @@ client->authenticateFacebook(
         loginFailedCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const oauthToken = "...";
 client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
   .then(function(session) {
@@ -420,7 +420,7 @@ client.authenticateFacebook({ token: oauthToken, create: true, username: "mycust
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto loginFailedCallback = [](const NError& error)
 {
 };
@@ -442,13 +442,13 @@ client->authenticateFacebook(
         loginFailedCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String oauthToken = "...";
 Session session = client.authenticateFacebook(oauthToken).get();
 System.out.format("Session %s", session.getAuthToken());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let oauthToken = "..."
 let message = AuthenticateMessage(facebook: oauthToken)
@@ -459,7 +459,7 @@ client.register(with: message).then { session in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -473,7 +473,7 @@ Authorization: Basic base64(ServerKey:)
 
 You can add a button to your UI to login with Facebook.
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 FB.Login("email", (ILoginResult result) => {
   if (FB.IsLoggedIn) {
     var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
@@ -488,31 +488,31 @@ Similar to Facebook for register and login you should use one of Google's client
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"token":"valid-oauth-token"}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const playerIdToken = "...";
 const session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" });
 console.info("Successfully authenticated: %o", session);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string playerIdToken = "...";
 var session = await client.AuthenticateGoogleAsync(playerIdToken);
 System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string playerIdToken = "...";
 var session = await client.AuthenticateGoogleAsync(playerIdToken);
 Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NSessionPtr session)
 {
   CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
@@ -526,7 +526,7 @@ string oauthToken = "...";
 client->authenticateGoogle(oauthToken, "mycustomusername", true, successCallback, errorCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const oauthToken = "...";
 client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" })
   .then(function(session) {
@@ -537,7 +537,7 @@ client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustom
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NSessionPtr session)
 {
     std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
@@ -551,13 +551,13 @@ string oauthToken = "...";
 client->authenticateGoogle(oauthToken, "mycustomusername", true, successCallback, errorCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String playerIdToken = "...";
 Session session = client.authenticateGoogle(oauthToken).get();
 System.out.format("Session %s", session.getAuthToken());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let playerIdToken = "..."
 let message = AuthenticateMessage(google: oauthToken)
@@ -568,7 +568,7 @@ client.register(with: message).then { session in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/authenticate/google?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -586,13 +586,13 @@ Apple devices have builtin authentication which can be done without user interac
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"player_id":"...", "bundle_id":"...", "timestamp_seconds":0, "salt":"...", "public_key_url":"..."}'
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var bundleId = "...";
 var playerId = "...";
 var publicKeyUrl = "...";
@@ -604,7 +604,7 @@ var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
 System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // You'll need to use native code (Obj-C) with Unity.
 // The "UnityEngine.SocialPlatforms.GameCenter" doesn't give enough information
 // to enable authentication.
@@ -623,7 +623,7 @@ var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
 Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NSessionPtr session)
 {
   CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
@@ -653,7 +653,7 @@ client->authenticateGameCenter(
   errorCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const player_id = "...";
 const bundle_id = "...";
 const timestamp_seconds = "...";
@@ -678,7 +678,7 @@ client.authenticateGameCenter({
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NSessionPtr session)
 {
     std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
@@ -708,7 +708,7 @@ client->authenticateGameCenter(
   errorCallback);
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let playerID : String = "..."
 let bundleID : String = "..."
@@ -728,7 +728,7 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/authenticate/gamecenter?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -754,25 +754,25 @@ Steam requires you to configure the server before you can register a user.
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername" \
   --user 'defaultkey' \
   --data '{"token":"valid-steam-token"}'
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string token = "...";
 var session = await client.AuthenticateSteamAsync(token);
 System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string token = "...";
 var session = await client.AuthenticateSteamAsync(token);
 Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NSessionPtr session)
 {
   CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
@@ -788,7 +788,7 @@ bool create = true;
 client->authenticateSteam(token, username, create, successCallback, errorCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const token = "...";
 client.authenticateSteam({ token: token, create: true, username: "mycustomusername" })
   .then(function(session) {
@@ -799,7 +799,7 @@ client.authenticateSteam({ token: token, create: true, username: "mycustomuserna
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NSessionPtr session)
 {
     std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
@@ -815,13 +815,13 @@ bool create = true;
 client->authenticateSteam(token, username, create, successCallback, errorCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String token = "...";
 Session session = client.authenticateSteam(token).get();
 System.out.format("Session %s", session.getAuthToken());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let sessionToken = "..."
 let message = AuthenticateMessage(steam: sessionToken)
@@ -833,7 +833,7 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/authenticate/steam?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -853,31 +853,31 @@ A custom identifier must contain alphanumeric characters with dashes and be betw
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"id":"some-custom-id"}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const customId = "some-custom-id";
 const session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" });
 console.info("Successfully authenticated:", session);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string customId = "some-custom-id";
 var session = await client.AuthenticateCustomAsync(customId);
 System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string customId = "some-custom-id";
 var session = await client.AuthenticateCustomAsync(customId);
 Debug.LogFormat("New user: {0}, {1}", session.Created, session);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NSessionPtr session)
 {
   CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
@@ -893,7 +893,7 @@ bool create = true;
 client->authenticateCustom(id, username, create, successCallback, errorCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const customId = "some-custom-id";
 client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" })
   .then(function(session) {
@@ -904,7 +904,7 @@ client.authenticateCustom({ id: customId, create: true, username: "mycustomusern
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NSessionPtr session)
 {
     std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
@@ -920,13 +920,13 @@ bool create = true;
 client->authenticateCustom(id, username, create, successCallback, errorCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String customId = "some-custom-id";
 Session session = client.authenticateCustom(customId).get();
 System.out.format("Session %s", session.getAuthToken());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let customID = "some-custom-id"
 
@@ -939,7 +939,7 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/authenticate/custom?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -958,28 +958,28 @@ The register and login messages return a session on success. The session contain
 !!! Tip
     You can change how long a session token is valid before it expires in the [configuration](install-configuration.md) in the server. By default a session is only valid for 60 seconds.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 const session = await client.authenticateDevice({ id: id })
 console.info("id:", session.user_id, "username:", session.username);
 console.info("Session expired?", session.isexpired(Date.now() / 1000));
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 var session = await client.AuthenticateDeviceAsync(id);
 System.Console.WriteLine("Id '{0}' Username '{1}'", session.UserId, session.Username);
 System.Console.WriteLine("Session expired? {0}", session.IsExpired);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var deviceId = SystemInfo.deviceUniqueIdentifier;
 var session = await client.AuthenticateDeviceAsync(deviceId);
 Debug.LogFormat("Id '{0}' Username '{1}'", session.UserId, session.Username);
 Debug.LogFormat("Session expired? {0}", session.IsExpired);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto loginFailedCallback = [](const NError& error)
 {
 };
@@ -1000,7 +1000,7 @@ client->authenticateDevice(
         loginFailedCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
 client.authenticateDevice({ id: deviceId })
   .then(function(session) {
@@ -1011,7 +1011,7 @@ client.authenticateDevice({ id: deviceId })
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto loginFailedCallback = [](const NError& error)
 {
 };
@@ -1032,13 +1032,13 @@ client->authenticateDevice(
         loginFailedCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 var deviceid = SystemInfo.deviceUniqueIdentifier;
 Session session = client.authenticateDevice(deviceid).get();
 System.out.format("Session %s", session.getAuthToken());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = "3e70fd52-7192-11e7-9766-cb3ce5609916"
 let message = AuthenticateMessage(device: id)
@@ -1057,25 +1057,25 @@ With a session you can connect with the server and exchange realtime messages. M
 
 You can only send messages to the server once you've connected a client.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var socket = client.createSocket();
 session = await socket.connect(session);
 console.info("Socket connected.");
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var socket = Socket.From(client);
 await socket.ConnectAsync(session);
 System.Console.WriteLine("Socket connected.");
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var socket = client.NewSocket();
 await socket.ConnectAsync(session);
 Debug.Log("Socket connected.");
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 #include "NakamaCocos2d/NWebSocket.h"
 
 int port = 7350; // different port to the main API port
@@ -1091,7 +1091,7 @@ rtClient->setListener(&listener);
 rtClient->connect(session, createStatus);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const socket = client.createSocket();
 socket.connect(session)
   .then(
@@ -1104,7 +1104,7 @@ socket.connect(session)
     );
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 int port = 7350; // different port to the main API port
 bool createStatus = true; // if the server should show the user as online to others.
 // define realtime client in your class as NRtClientPtr rtClient;
@@ -1118,12 +1118,12 @@ rtClient->setListener(&listener);
 rtClient->connect(session, createStatus);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketClient socket = client.createSocket();
 socket.connect(session, new AbstractSocketListener() {}).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let session : Session = someSession // obtained from register or login.
 client.connect(with: session).then { _ in
@@ -1137,14 +1137,14 @@ Sessions can expire and become invalid. If this happens you'll need to reauthent
 
 You can check the expiry of a session using the following code:
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const nowUnixTime = Math.floor(Date.now() / 1000);
 if (session.isexpired(nowUnixTime)) {
   console.log("Session has expired. Must reauthenticate!");
 }
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var nowUnixTime = DateTime.UtcNow;
 if (session.HasExpired(nowUnixTime))
 {
@@ -1152,7 +1152,7 @@ if (session.HasExpired(nowUnixTime))
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var nowUnixTime = DateTime.UtcNow;
 if (session.HasExpired(nowUnixTime))
 {
@@ -1160,28 +1160,28 @@ if (session.HasExpired(nowUnixTime))
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 if (session->isExpired())
 {
   CCLOG("Session has expired. Must reauthenticate!");
 }
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const nowUnixTime = Math.floor(Date.now() / 1000);
 if (session.isexpired(nowUnixTime)) {
   cc.log("Session has expired. Must reauthenticate!");
 }
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 if (session->isExpired())
 {
   cout << "Session has expired. Must reauthenticate!";
 }
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 if (session.isExpired(new Date())) {
   System.out.println("Session has expired. Must reauthenticate!");
 }
@@ -1193,31 +1193,31 @@ You can link one or more other login option to the current user. This makes it e
 
 You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/link/custom" \
   --header 'Authorization: Bearer $session' \
   --data '{"id":"some-custom-id"}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const customId = "some-custom-id";
 const success = await client.linkCustom(session, { id: customId });
 console.log("Successfully linked custom ID to current user.");
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string customId = "some-custom-id";
 await client.LinkCustomAsync(session, customId);
 System.Console.WriteLine("Id '{0}' linked for user '{1}'", customId, session.UserId);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string customid = "some-custom-id";
 await client.LinkCustomAsync(session, customId);
 Debug.LogFormat("Id '{0}' linked for user '{1}'", customId, session.UserId);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto linkFailedCallback = [](const NError& error)
 {
 };
@@ -1232,7 +1232,7 @@ std::string customid = "some-custom-id";
 client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const customId = "some-custom-id";
 client.linkCustom(session, { id: customId })
   .then(function() {
@@ -1243,7 +1243,7 @@ client.linkCustom(session, { id: customId })
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto linkFailedCallback = [](const NError& error)
 {
 };
@@ -1258,13 +1258,13 @@ std::string customid = "some-custom-id";
 client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String customId = "some-custom-id";
 client.linkCustom(session, customId).get();
 System.out.format("Id %s linked for user %s", customId, session.getUserId());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = "some-custom-id"
 var message = SelfLinkMessage(device: id);
@@ -1275,7 +1275,7 @@ client.send(with: message).then {
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/link/custom
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -1289,32 +1289,32 @@ Authorization: Bearer <session token>
 
 You can unlink any linked login options for the current user.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/unlink/custom" \
   --header 'Authorization: Bearer $session' \
   --data '{"id":"some-custom-id"}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const customId = "some-custom-id";
 const success = await client.unlinkCustom(session, { id: customId });
 console.info("Successfully unlinked custom ID from the current user.");
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string customId = "some-custom-id";
 await client.UnlinkCustomAsync(session, customId);
 System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string customId = "some-custom-id";
 await client.UnlinkCustomAsync(session, customId);
 Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
 ```
 
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto unlinkFailedCallback = [](const NError& error)
 {
 };
@@ -1329,7 +1329,7 @@ std::string customid = "some-custom-id";
 client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const customId = "some-custom-id";
 client.unlinkCustom(session, { id: customId })
   .then(function() {
@@ -1340,7 +1340,7 @@ client.unlinkCustom(session, { id: customId })
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto unlinkFailedCallback = [](const NError& error)
 {
 };
@@ -1355,13 +1355,13 @@ std::string customid = "some-custom-id";
 client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String customId = "some-custom-id";
 client.unlinkCustom(session, customId).get();
 System.out.format("Id %s unlinked for user %s", customId, session.getUserId());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = "some-custom-id"
 var message = SelfUnlinkMessage(device: id);
@@ -1372,7 +1372,7 @@ client.send(with: message).then {
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/account/unlink/custom
 Host: 127.0.0.1:7350
 Accept: application/json

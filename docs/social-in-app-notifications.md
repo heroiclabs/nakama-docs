@@ -17,7 +17,7 @@ A notification has a content object which will be encoded as JSON.
 
 Notifications can be marked as persistent when sent. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read it should be marked as persistent when sent.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local user_id = "user id to send to"
@@ -33,7 +33,7 @@ local persistent = true
 nk.notification_send(user_id, subject, content, code, sender_id, persistent)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 subject := "You earned a secret item!"
 content := map[string]interface{}{
   "item_id": "192308394345345",
@@ -51,14 +51,14 @@ nk.NotificationSend(ctx, userID, subject, content, code, senderID, persistent)
 
 A callback can be registered for notifications received when a client is connected. The handler will be called whenever a notification is received as long as the client socket remains connected. When multiple messages are returned (batched for performance) the handler will be called once for each notification.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onnotification = (notification) => {
   console.log("Received %o", notification);
   console.log("Notification content %s", notification.content);
 }
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 socket.ReceivedNotification += notification =>
 {
     Console.WriteLine("Received: {0}", notification);
@@ -66,7 +66,7 @@ socket.ReceivedNotification += notification =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 socket.ReceivedNotification += notification =>
 {
     Debug.LogFormat("Received: {0}", notification);
@@ -74,7 +74,7 @@ socket.ReceivedNotification += notification =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtListener->setNotificationsCallback([](const NNotificationList& notifications)
 {
   for (auto& notification : notifications.notifications)
@@ -84,14 +84,14 @@ rtListener->setNotificationsCallback([](const NNotificationList& notifications)
 });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 socket.onnotification = (notification) => {
   cc.log("Received notification", JSON.stringify(notification));
   cc.log("Notification content", JSON.stringify(notification.content));
 }
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtListener->setNotificationsCallback([](const NNotificationList& notifications)
 {
   for (auto& notification : notifications.notifications)
@@ -101,7 +101,7 @@ rtListener->setNotificationsCallback([](const NNotificationList& notifications)
 });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onNotifications(final NotificationList notifications) {
@@ -113,7 +113,7 @@ SocketListener listener = new AbstractSocketListener() {
 };
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 client.onNotification = { notification in
   NSLog("Received code %d and subject %@", notification.code, notification.subject)
@@ -125,12 +125,12 @@ client.onNotification = { notification in
 
 You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. The exact logic depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/notification?limit=10" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const result = await client.listNotifications(session, 10);
 result.notifications.forEach(notification => {
   console.info("Notification code %o and subject %o.", notification.code, notification.subject);
@@ -138,7 +138,7 @@ result.notifications.forEach(notification => {
 console.info("Fetch more results with cursor:", result.cacheable_cursor);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var result = await client.ListNotificationsAsync(session, 10);
 foreach (var n in result.Notifications)
 {
@@ -146,7 +146,7 @@ foreach (var n in result.Notifications)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var result = await client.ListNotificationsAsync(session, 10);
 foreach (var n in result.Notifications)
 {
@@ -154,7 +154,7 @@ foreach (var n in result.Notifications)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NNotificationListPtr list)
 {
   for (auto& notification : list->notifications)
@@ -166,7 +166,7 @@ auto successCallback = [](NNotificationListPtr list)
 client->listNotifications(session, 10, opt::nullopt, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.listNotifications(session, 10)
   .then(function(result) {
       result.notifications.forEach(notification => {
@@ -179,7 +179,7 @@ client.listNotifications(session, 10)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NNotificationListPtr list)
 {
   for (auto& notification : list->notifications)
@@ -191,14 +191,14 @@ auto successCallback = [](NNotificationListPtr list)
 client->listNotifications(session, 10, opt::nullopt, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 NotificationList notifications = client.listNotifications(session, 10).get();
 for (Notification notification : notifications.getNotificationsList()) {
   System.out.format("Notification content: %s", notification.getContent());
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var message = NotificationListMessage(limit: 100)
 client.send(message: message).then { notifications in
@@ -210,7 +210,7 @@ client.send(message: message).then { notifications in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/notification?limit=10
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -223,12 +223,12 @@ A list of notifications can be retrieved in batches of up to 100 at a time. To r
 !!! Hint
     You usually only want to list 100 notifications at a time otherwise you might cause user fatigue. A better option could be to have the UI fetch the next 100 notifications when the user scrolls to the bottom of your UI panel.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/notification?limit=100&cursor=<cacheableCursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var allNotifications = [];
 
 var accumulateNotifications = (cursor) => {
@@ -242,7 +242,7 @@ var accumulateNotifications = (cursor) => {
 accumulateNotifications("");
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var result = await client.ListNotificationsAsync(session, 100);
 if (!string.IsNullOrEmpty(result.CacheableCursor))
 {
@@ -254,7 +254,7 @@ if (!string.IsNullOrEmpty(result.CacheableCursor))
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var result = await client.ListNotificationsAsync(session, 100);
 if (!string.IsNullOrEmpty(result.CacheableCursor))
 {
@@ -266,7 +266,7 @@ if (!string.IsNullOrEmpty(result.CacheableCursor))
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 // add to your class: std::vector<NNotification> allNotifications;
 
 void YourClass::accumulateNotifications(const string& cursor)
@@ -287,7 +287,7 @@ void YourClass::accumulateNotifications(const string& cursor)
 accumulateNotifications("");
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var allNotifications = [];
 
 var accumulateNotifications = (cursor) => {
@@ -306,7 +306,7 @@ var accumulateNotifications = (cursor) => {
 accumulateNotifications("");
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 // add to your class: std::vector<NNotification> allNotifications;
 
 void YourClass::accumulateNotifications(const string& cursor)
@@ -327,7 +327,7 @@ void YourClass::accumulateNotifications(const string& cursor)
 accumulateNotifications("");
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 NotificationList notifications = client.listNotifications(session, 10).get();
 if (notifications.getCacheableCursor() != null) {
   notifications = client.listNotifications(session, 10, notifications.getCacheableCursor()).get();
@@ -337,7 +337,7 @@ if (notifications.getCacheableCursor() != null) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var allNotifications : [Notification] = []
 
@@ -365,7 +365,7 @@ client.send(message: message).then { notifications in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/notification?limit=100&cursor=<cacheableCursor>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -377,12 +377,12 @@ It can be useful to retrieve only notifications which have been added since the 
 
 The cacheable cursor marks the position of the most recent notification retrieved. We recommend you store the cacheable cursor in device storage and use it when the client makes its next request for recent notifications.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/notification?limit=10&cursor=<cacheableCursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const cacheableCursor = "<cacheableCursor>";
 const result = await client.listNotifications(session, 10, cacheableCursor);
 result.notifications.forEach(notification => {
@@ -390,7 +390,7 @@ result.notifications.forEach(notification => {
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string cacheableCursor = "<cacheableCursor>";
 var result = await client.ListNotificationsAsync(session, 10, cacheableCursor);
 foreach (var n in result.Notifications)
@@ -399,7 +399,7 @@ foreach (var n in result.Notifications)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string cacheableCursor = "<cacheableCursor>";
 var result = await client.ListNotificationsAsync(session, 10, cacheableCursor);
 foreach (var n in result.Notifications)
@@ -408,7 +408,7 @@ foreach (var n in result.Notifications)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NNotificationListPtr list)
 {
   for (auto& notification : list->notifications)
@@ -421,7 +421,7 @@ string cacheableCursor = "<cacheableCursor>";
 client->listNotifications(session, 10, cacheableCursor, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const cacheableCursor = "<cacheableCursor>";
 client.listNotifications(session, 10, cacheableCursor)
   .then(function(result) {
@@ -434,7 +434,7 @@ client.listNotifications(session, 10, cacheableCursor)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NNotificationListPtr list)
 {
   for (auto& notification : list->notifications)
@@ -447,7 +447,7 @@ string cacheableCursor = "<cacheableCursor>";
 client->listNotifications(session, 10, cacheableCursor, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String cacheableCursor = "<cacheableCursor>";
 NotificationList notifications = client.listNotifications(session, 10, cacheableCursor).get();
 for (Notification notification : notifications.getNotificationsList()) {
@@ -455,7 +455,7 @@ for (Notification notification : notifications.getNotificationsList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var resumableCursor = "<cacheableCursor>";
 var message = NotificationListMessage(limit: 10)
@@ -467,7 +467,7 @@ client.send(message: message).then { notifications in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/notification?limit=10&cursor=<cacheableCursor>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -479,45 +479,45 @@ Authorization: Bearer <session token>
 
 You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted all record of it is removed from the system and it cannot be restored.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X DELETE "http://127.0.0.1:7350/v2/notification?ids=<notificationId>&ids=<notificationId>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const notificationIds = ["<notificationId>"];
 await client.deleteNotifications(session, notificationIds);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var notificationIds = new[] {"<notificationId>"};
 await client.DeleteNotificationsAsync(session, notificationIds);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var notificationIds = new[] {"<notificationId>"};
 await client.DeleteNotificationsAsync(session, notificationIds);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 client->deleteNotifications(session, { "<notificationId>" });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const notificationIds = ["<notificationId>"];
 client.deleteNotifications(session, notificationIds);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 client->deleteNotifications(session, { "<notificationId>" });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String[] notificationIds = new String[] {"<notificationId>"};
 client.deleteNotifications(session, notificationIds).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var message = NotificationRemoveMessage()
 message.notificationIds.append(...) // Add notification from your internal list
@@ -528,7 +528,7 @@ client.send(message: message).then {
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 DELETE /v2/notification?ids=<notificationId>&ids=<notificationId>
 Host: 127.0.0.1:7350
 Accept: application/json

@@ -14,7 +14,7 @@ repo_name: 'heroiclabs/nakama'
 repo_url: 'https://github.com/heroiclabs/nakama'
 
 # Copyright
-copyright: 'Copyright &copy; 2018 Heroic Labs'
+copyright: 'Copyright &copy; 2019 Heroic Labs'
 
 # Documentation and theme
 theme:
@@ -28,9 +28,6 @@ theme:
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
-
-extra_css:
-  - 'stylesheets/code-tabs.css'
 
 extra_javascript:
   - 'javascripts/main.js'
@@ -57,11 +54,10 @@ markdown_extensions:
       guess_lang: False
   - toc:
       permalink: True
-  - markdown_fenced_code_tabs:
-      single_block_as_tab: False
+  - pymdownx.superfences
 
 # Nav menu
-pages:
+nav:
 - 'Introduction': 'index.md'
 - 'Download': 'nakama-download.md'
 - 'Install and setup':

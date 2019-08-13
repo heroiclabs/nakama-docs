@@ -5,7 +5,7 @@ A YAML configuration file configures many aspects of how your Nakama server runs
 ## Specifying a config file
 You can specify a configuration file at run-time using --config flag.
 
-```shell fct_label="Shell"
+```shell tab="Shell"
 nakama --config my-special-config.yml
 ```
 
@@ -47,7 +47,7 @@ Nakama has various configuration options to make it as flexible as possible for 
 
 Nakama ships with sane default values for all config options, therefore you'll only need to override a subset of the options. You can also setup your own config file, and override the values in the config file via command-line flags. For instance, to override Runtime Path:
 
-```shell fct_label="Shell"
+```shell tab="Shell"
 nakama --runtime.path /tmp/my-modules
 ```
 

@@ -26,7 +26,7 @@ Properties are key-value pairs that describe the user. Rank information, connect
 
 When matchmaking completes these properties are visible to all matched users. You can store extra information without affecting the matchmaking process itself if it's useful to clients - just submit properties that aren't queried for as part of the matchmaking process.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -41,7 +41,7 @@ const message = { matchmaker_add: {
 var ticket = await socket.send(message);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
@@ -55,7 +55,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
@@ -69,7 +69,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
@@ -93,7 +93,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -114,7 +114,7 @@ socket.send(message)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
@@ -138,7 +138,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String query = "*";
 int minCount = 2;
 int maxCount = 4;
@@ -175,7 +175,7 @@ See the [Bleve query string syntax](http://www.blevesearch.com/docs/Query-String
 
 You can find opponents based on a mix of property filters with exact matches or ranges of values. This example searches for opponents that **must** be in `europe` and **must** have a `rank` between 5 and 10, inclusive:
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -190,7 +190,7 @@ const message = { matchmaker_add: {
 var ticket = await socket.send(message);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
 var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
@@ -202,7 +202,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, 2, 4, stringProperties, numericProperties);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
 var stringProperties = new Dictionary<string, string>() {
   {"region", "europe"}
@@ -214,7 +214,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, 2, 4, stringProperties, numericProperties);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
@@ -238,7 +238,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -259,7 +259,7 @@ socket.send(message)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
@@ -283,7 +283,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
 int minCount = 2;
 int maxCount = 4;
@@ -300,7 +300,7 @@ MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
 
 Or use the wildcard query `"*"` to ignore opponents properties and match with anyone:
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -315,7 +315,7 @@ const message = { matchmaker_add: {
 var ticket = await socket.send(message);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
@@ -329,7 +329,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
@@ -343,7 +343,7 @@ var matchmakerTicket = await socket.AddMatchmakerAsync(
     query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
@@ -367,7 +367,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -388,7 +388,7 @@ socket.send(message)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
@@ -412,7 +412,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String query = "*";
 int minCount = 2;
 int maxCount = 4;
@@ -435,7 +435,7 @@ The minimum and maximum count includes the user searching for opponents, so to f
 
 If the counts define a range, the matchmaker will try to return the max opponents possible but will never return less than the minimum count:
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -444,21 +444,21 @@ const message = { matchmaker_add: {
 var ticket = await socket.send(message);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String query = "*";
 int minCount = 2;
 int maxCount = 4;
@@ -467,7 +467,7 @@ MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCou
 
 To search for an exact number of opponents submit the same minimum and maximum count:
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const message = { matchmaker_add: {
   min_count: 4,
   max_count: 4,
@@ -476,21 +476,21 @@ const message = { matchmaker_add: {
 var ticket = await socket.send(message);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var query = "*";
 var minCount = 4;
 var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var query = "*";
 var minCount = 4;
 var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
@@ -509,7 +509,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -524,7 +524,7 @@ socket.send(message)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
@@ -543,7 +543,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String query = "*";
 int minCount = 4;
 int maxCount = 4;
@@ -555,7 +555,7 @@ MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCou
 
 Each time a user is added to the matchmaker pool they receive a ticket, a unique identifier for their entry into the pool.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -564,21 +564,21 @@ const message = { matchmaker_add: {
 var ticket = await socket.send(message);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var query = "*";
 var minCount = 2;
 var maxCount = 4;
 var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
@@ -597,7 +597,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const message = { matchmaker_add: {
   min_count: 2,
   max_count: 4,
@@ -612,7 +612,7 @@ socket.send(message)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NMatchmakerTicket& ticket)
 {
   std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
@@ -631,7 +631,7 @@ rtClient->addMatchmaker(
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String query = "*";
 int minCount = 2;
 int maxCount = 4;
@@ -645,7 +645,7 @@ This ticket is used when the server notifies the client on matching success. It 
 
 If a user decides they no longer wish to matchmake without disconnecting they can gracefully cancel the matchmaker process by removing themselves from the pool.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 // "ticket" is returned by the matchmaker.
 const message = {
   matchmaker_remove: {
@@ -655,17 +655,17 @@ const message = {
 socket.send(message);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 // "matchmakerTicket" is returned by the matchmaker.
 await socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // "matchmakerTicket" is returned by the matchmaker.
 await socket.RemoveMatchmakerAsync(matchmakerTicket);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 // "ticket" is returned by the matchmaker.
 rtClient->removeMatchmaker(ticket, []()
   {
@@ -673,7 +673,7 @@ rtClient->removeMatchmaker(ticket, []()
   });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 // "ticket" is returned by the matchmaker.
 const message = {
   matchmaker_remove: {
@@ -683,7 +683,7 @@ const message = {
 socket.send(message);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 // "ticket" is returned by the matchmaker.
 rtClient->removeMatchmaker(ticket, []()
   {
@@ -691,7 +691,7 @@ rtClient->removeMatchmaker(ticket, []()
   });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 // "matchmakerTicket" is returned by the matchmaker.
 socket.removeMatchmaker(matchmakerTicket.getTicket()).get();
 ```
@@ -704,14 +704,14 @@ Matchmaking is not always an instant process. Depending on the currently connect
 
 Clients should register an event handler that triggers when the server sends them a matchmaker result.
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onmatchmakermatched = (matched) => {
   console.info("Received MatchmakerMatched message: ", matched);
   console.info("Matched opponents: ", matched.users);
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 socket.ReceivedMatchmakerMatched += matched =>
 {
     Console.WriteLine("Received: {0}", matched);
@@ -720,7 +720,7 @@ socket.ReceivedMatchmakerMatched += matched =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 socket.ReceivedMatchmakerMatched += matched =>
 {
     Debug.LogFormat("Received: {0}", matched);
@@ -729,28 +729,28 @@ socket.ReceivedMatchmakerMatched += matched =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
   {
     CCLOG("Matched! matchId: %s", matched->matchId.c_str());
   });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 this.socket.onmatchmakermatched = (matched) => {
   cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
   cc.log("Matched opponents:", matched.users.toString());
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
   {
     std::cout << "Matched! matchId: " << matched->matchId << std::endl;
   });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onMatchmakerMatched(final MatchmakerMatched matched) {
@@ -770,7 +770,7 @@ Tokens are short-lived and must be used to join a match as soon as possible. Whe
 
 The match token is also used to prevent unwanted users from attempting to join a match they were not matched into. The rest of the multiplayer match code is the same as in the [realtime multiplayer section](gameplay-multiplayer-realtime.md).
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 socket.onmatchmakermatched = (matched) => {
   console.info("Received MatchmakerMatched message: ", matched);
   const message = {
@@ -782,7 +782,7 @@ socket.onmatchmakermatched = (matched) => {
 };
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 socket.ReceivedMatchmakerMatched += async matched =>
 {
     Console.WriteLine("Received: {0}", matched);
@@ -790,7 +790,7 @@ socket.ReceivedMatchmakerMatched += async matched =>
 };
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 socket.ReceivedMatchmakerMatched += async matched =>
 {
     Debug.LogFormat("Received: {0}", matched);
@@ -798,7 +798,7 @@ socket.ReceivedMatchmakerMatched += async matched =>
 };
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
   {
     CCLOG("Matched! token: %s", matched->token.c_str());
@@ -810,7 +810,7 @@ rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
   });
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 this.socket.onmatchmakermatched = (matched) => {
   cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
   cc.log("Matched opponents:", matched.users.toString());
@@ -823,7 +823,7 @@ this.socket.onmatchmakermatched = (matched) => {
 };
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
   {
     std::cout << "Matched! token: " << matched->token << std::endl;
@@ -835,7 +835,7 @@ rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
   });
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 SocketListener listener = new AbstractSocketListener() {
   @Override
   public void onMatchmakerMatched(final MatchmakerMatched matched) {

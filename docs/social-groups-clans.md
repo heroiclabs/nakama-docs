@@ -21,17 +21,17 @@ A user can find public groups to join by listing groups and filtering for groups
 
 Filtering is achieved using a wildcard query that uses the `%` as a way to look for similarities. For instance, if you are looking for groups that contain the world "persian" in them, make the filter `%persian%`. If you don't supply a filtering criteria, Nakama will simply list groups.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/group?limit=20&name=heroes%25" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const groups = await client.listGroups(session, "heroes%", 20); // fetch first 20 groups
 console.info("List of groups:", groups);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 // Filter for group names which start with "heroes"
 const string nameFilter = "heroes%";
 var result = await client.ListGroupsAsync(session, nameFilter, 20);
@@ -41,7 +41,7 @@ foreach (var g in result.Groups)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // Filter for group names which start with "heroes"
 const string nameFilter = "heroes%";
 var result = await client.ListGroupsAsync(session, nameFilter, 20);
@@ -51,7 +51,7 @@ foreach (var g in result.Groups)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [this](NGroupListPtr list)
 {
   for (auto& group : list->groups)
@@ -67,7 +67,7 @@ client->listGroups(session,
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.listGroups(session, "heroes%", 20) // fetch first 20 groups
   .then(function(groups) {
       cc.log("List of groups:", JSON.stringify(groups));
@@ -77,7 +77,7 @@ client.listGroups(session, "heroes%", 20) // fetch first 20 groups
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [this](NGroupListPtr list)
 {
   for (auto& group : list->groups)
@@ -93,7 +93,7 @@ client->listGroups(session,
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 // Filter for group names which start with "heroes"
 String nameFilter = "heroes%";
 GroupList groups = client.listGroups(session, nameFilter, 20).get();
@@ -102,7 +102,7 @@ for (Group group : groups.getGroupsList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var message = GroupsListMessage()
 message.lang = "en"
@@ -116,7 +116,7 @@ client.send(message: message).then { groups in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/group?limit=20&name=heroes%&cursor=<cursor>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -129,17 +129,17 @@ The message response for a list of groups contains a cursor. The cursor can be u
 !!! tip
     Cursors are used across different server features to page through batches of results quickly and efficiently. It's used with storage, friends, chat history, etc.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/group?limit=20&name=%25heroes%25&cursor=somecursor" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const groups = await client.listGroups(session, "heroes%", 20, cursor);
 console.info("List of groups:", groups);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 // Filter for group names which start with "heroes"
 const string nameFilter = "heroes%";
 var result = await client.ListGroupsAsync(session, nameFilter, 20);
@@ -154,7 +154,7 @@ if (result.Cursor != null)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 // Filter for group names which start with "heroes"
 const string nameFilter = "heroes%";
 var result = await client.ListGroupsAsync(session, nameFilter, 20);
@@ -169,7 +169,7 @@ if (result.Cursor != null)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 void YourClass::processGroupList(NGroupListPtr list)
 {
   for (auto& group : list->groups)
@@ -194,7 +194,7 @@ void YourClass::requestHeroes(const string& cursor)
 }
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 client.listGroups(session, "heroes%", 20) // fetch first 20 groups
   .then(function(groups) {
       cc.log("List of groups:", JSON.stringify(groups));
@@ -204,7 +204,7 @@ client.listGroups(session, "heroes%", 20) // fetch first 20 groups
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 void YourClass::processGroupList(NGroupListPtr list)
 {
   for (auto& group : list->groups)
@@ -229,7 +229,7 @@ void YourClass::requestHeroes(const string& cursor)
 }
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 // Filter for group names which start with "heroes"
 String nameFilter = "heroes%";
 GroupList groups = client.listGroups(session, nameFilter, 20).get();
@@ -241,7 +241,7 @@ if (groups.getCursor() != null) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var message = GroupsListMessage()
 message.lang = "en"
@@ -261,7 +261,7 @@ client.send(message: message).then { groups in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/group?limit=20&name=heroes%&cursor=somecursor
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -278,30 +278,30 @@ A user who's part of a group can join [group chat](social-realtime-chat.md#group
 !!! Tip
     When a user joins or leaves a group event messages are added to chat history. This makes it easy for members to see what's changed in the group.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/join" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 await client.joinGroup(session, group_id);
 console.info("Sent group join request", group_id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 await client.JoinGroupAsync(session, groupId);
 System.Console.WriteLine("Sent group join request '{0}'", groupId);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 await client.JoinGroupAsync(session, groupId);
 Debug.LogFormat("Sent group join request '{0}'", groupId);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("Sent group join request");
@@ -311,7 +311,7 @@ string group_id = "<group id>";
 client->joinGroup(session, group_id, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 client.joinGroup(session, group_id)
   .then(function(ticket) {
@@ -322,7 +322,7 @@ client.joinGroup(session, group_id)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "Sent group join request" << std::endl;
@@ -332,13 +332,13 @@ string group_id = "<group id>";
 client->joinGroup(session, group_id, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupid = "<group id>";
 client.joinGroup(session, groupid).get();
 System.out.format("Sent group join request %s", groupid);
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID
 var message = GroupJoinMessage()
@@ -350,7 +350,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/group/<group id>/join
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -364,12 +364,12 @@ The user will receive an [in-app notification](social-in-app-notifications.md) w
 
 Each user can list groups they've joined as a member or an admin or a superadmin. The list also contains groups which they've requested to join but not been accepted into yet.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/user/<user id>/group" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const userId = "<user id>";
 const groups = await client.listUserGroups(session, userid);
 groups.user_groups.forEach(function(userGroup){
@@ -379,7 +379,7 @@ groups.user_groups.forEach(function(userGroup){
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string userId = "<user id>";
 var result = await client.ListUserGroupsAsync(session, userId);
 foreach (var ug in result.UserGroups)
@@ -389,7 +389,7 @@ foreach (var ug in result.UserGroups)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string userId = "<user id>";
 var result = await client.ListUserGroupsAsync(session, userId);
 foreach (var ug in result.UserGroups)
@@ -399,7 +399,7 @@ foreach (var ug in result.UserGroups)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NUserGroupListPtr list)
 {
   for (auto& userGroup : list->userGroups)
@@ -412,7 +412,7 @@ string userId = "<user id>";
 client->listUserGroups(session, userId, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const userId = "<user id>";
 client.listUserGroups(session, userid)
   .then(function(groups) {
@@ -427,7 +427,7 @@ client.listUserGroups(session, userid)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NUserGroupListPtr list)
 {
   for (auto& userGroup : list->userGroups)
@@ -440,7 +440,7 @@ string userId = "<user id>";
 client->listUserGroups(session, userId, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String userid = "<user id>";
 UserGroupList userGroups = client.listUserGroups(session, userid).get();
 for (UserGroupList.UserGroup userGroup : userGroups.getUserGroupsList()) {
@@ -448,7 +448,7 @@ for (UserGroupList.UserGroup userGroup : userGroups.getUserGroupsList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var message = GroupsSelfListMessage()
 client.send(message: message).then { groups in
@@ -462,7 +462,7 @@ client.send(message: message).then { groups in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/user/<user id>/group
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -474,18 +474,18 @@ Authorization: Bearer <session token>
 
 A user can list all members who're part of their group. These include other users who've requested to join the private group but not been accepted into yet.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/group/<group id>/user" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 const users = await client.listGroupUsers(session, group_id);
 console.info("Users in group:", users);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 var result = await client.ListGroupUsersAsync(session, groupId);
 foreach (var ug in result.UserGroups)
@@ -495,7 +495,7 @@ foreach (var ug in result.UserGroups)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 var result = await client.ListGroupUsersAsync(session, groupId);
 foreach (var ug in result.UserGroups)
@@ -505,7 +505,7 @@ foreach (var ug in result.UserGroups)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NGroupUserListPtr list)
 {
   CCLOG("Users in group: %u", list->groupUsers.size());
@@ -515,7 +515,7 @@ string group_id = "<group id>";
 client->listGroupUsers(session, group_id, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 client.listGroupUsers(session, group_id)
   .then(function(users) {
@@ -526,7 +526,7 @@ client.listGroupUsers(session, group_id)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NGroupUserListPtr list)
 {
   std::cout << "Users in group: " << list->groupUsers << std::endl;
@@ -536,7 +536,7 @@ string group_id = "<group id>";
 client->listGroupUsers(session, group_id, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupid = "<group id>";
 GroupUserList groupUsers = client.listGroupUsers(session, groupid).get();
 for (GroupUserList.GroupUser groupUser : groupUsers.getGroupUsersList()) {
@@ -544,7 +544,7 @@ for (GroupUserList.GroupUser groupUser : groupUsers.getGroupUsersList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
 var message = GroupUsersListMessage(groupID)
@@ -559,7 +559,7 @@ client.send(message: message).then { users in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/group/<group id>/user
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -571,7 +571,7 @@ Authorization: Bearer <session token>
 
 A group can be created with a name and other optional fields. These optional fields are used when a user [lists and filter groups](#list-and-filter-groups). The user who creates the group becomes the owner and a superadmin for it.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/group" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -582,7 +582,7 @@ curl -X POST "http://127.0.0.1:7350/v2/group" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_name = "pizza-lovers";
 const description = "pizza lovers, pineapple haters";
 const group = await client.createGroup(session, {
@@ -594,21 +594,21 @@ const group = await client.createGroup(session, {
 console.info("New group:", group);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string name = "pizza-lovers";
 const string desc = "pizza lovers, pineapple haters";
 var group = await client.CreateGroupAsync(session, name, desc);
 System.Console.WriteLine("New group: {0}", group);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string name = "pizza-lovers";
 const string desc = "pizza lovers, pineapple haters";
 var group = await client.CreateGroupAsync(session, name, desc);
 Debug.LogFormat("New group: {0}", group);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NGroup& group)
 {
   CCLOG("New group ID: %s", group.id.c_str());
@@ -625,7 +625,7 @@ client->createGroup(session,
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_name = "pizza-lovers";
 const description = "pizza lovers, pineapple haters";
 client.createGroup(session, {
@@ -641,7 +641,7 @@ client.createGroup(session, {
   });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NGroup& group)
 {
   std::cout << "New group ID: " << group.id << std::endl;
@@ -658,14 +658,14 @@ client->createGroup(session,
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String name = "pizza-lovers";
 String desc = "pizza lovers, pineapple haters";
 Group group = client.createGroup(session, name, desc).get();
 System.out.format("New group %s", group.getId());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 var groupCreate = GroupCreate("pizza-lovers")
 groupCreate.description = "pizza lovers, pineapple haters"
@@ -685,7 +685,7 @@ client.send(message: message).then { groups in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/group
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -702,7 +702,7 @@ Authorization: Bearer <session token>
 
 You can also create a group with server-side code. This can be useful when the group must be created together with some other record or feature.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 
 local metadata = { -- Add whatever custom fields you want.
@@ -724,7 +724,7 @@ if (not success) then
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 metadata := map[string]interface{}{
   "my_custom_field": "some value" // Add whatever custom fields you want.
 }
@@ -747,7 +747,7 @@ if _, err := nk.GroupCreate(ctx, userID, name, creatorID, langTag, description, 
 
 When a group has been created it's admins can update optional fields.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X PUT "http://127.0.0.1:7350/v2/group/<group id>" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -755,28 +755,28 @@ curl -X PUT "http://127.0.0.1:7350/v2/group/<group id>" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 const description = "Better than Marvel Heroes!";
 const group = await client.updateGroup(session, group_id, { description: description });
 console.info("Updated group:", group);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 const string desc = "Better than Marvel Heroes!";
 var group = await client.UpdateGroupAsync(session, groupId, null, desc);
 System.Console.WriteLine("Updated group: {0}", group);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 const string desc = "Better than Marvel Heroes!";
 var group = await client.UpdateGroupAsync(session, groupId, null, desc);
 Debug.LogFormat("Updated group: {0}", group);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("Updated group");
@@ -794,7 +794,7 @@ client->updateGroup(session,
     successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 const description = "Better than Marvel Heroes!";
 client.updateGroup(session, group_id, { description: description })
@@ -806,7 +806,7 @@ client.updateGroup(session, group_id, { description: description })
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "Updated group" << std::endl;
@@ -824,14 +824,14 @@ client->updateGroup(session,
     successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupid = "<group id>";
 String desc = "Better than Marvel Heroes!";
 client.updateGroup(session, groupid, null, desc).get();
 System.out.format("Updated group %s", groupid);
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
 var groupUpdate = GroupUpdate(groupID)
@@ -846,7 +846,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 PUT /v2/group/<group id>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -865,47 +865,47 @@ A user can leave a group and will no longer be able to join [group chat](social-
 !!! Note
     Any user who leaves the group will generate an event message in group chat which other members can read.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/leave" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 await client.leaveGroup(session, group_id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 await client.LeaveGroupAsync(session, groupId);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 await client.LeaveGroupAsync(session, groupId);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 string group_id = "<group id>";
 client->leaveGroup(session, group_id);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 client.leaveGroup(session, group_id);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 string groupId = "<group id>";
 client->leaveGroup(session, groupId);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupId = "<group id>";
 client.leaveGroup(session, groupId).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
 var message = GroupLeaveMessage()
@@ -923,7 +923,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/group/<group id>/leave
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -942,7 +942,7 @@ Each group is managed by one or more superadmins or admins. These users are memb
 
 When a user joins a private group it will create a join request until an admin accepts or rejects the user. The superadmin or admin can accept the user into the group.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/add" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -950,25 +950,25 @@ curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/add" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 const user_id = "<user id>";
 await client.addGroupUsers(session, group_id, [user_id]);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
 await client.AddGroupUsersAsync(session, groupId, userIds);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
 await client.AddGroupUsersAsync(session, groupId, userIds);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("added user to group");
@@ -979,13 +979,13 @@ string user_id = "<user id>";
 client->addGroupUsers(session, group_id, { user_id }, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 const user_id = "<user id>";
 client.addGroupUsers(session, group_id, [user_id]);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "added user to group" << std::endl;
@@ -996,13 +996,13 @@ string user_id = "<user id>";
 client->addGroupUsers(session, group_id, { user_id }, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupid = "<group id>";
 String[] userIds = new String[] {"<user id>"};
 client.addGroupUsers(session, groupid, userIds).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
 let userID = "<user id>"
@@ -1018,7 +1018,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/group/<group id>/add
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -1038,7 +1038,7 @@ To reject the user from joining the group you should [kick them](#kick-a-member)
 
 An admin can promote another member of the group as an admin. This grants the member the same privileges to [manage the group](#manage-groups). A group can have one or more admins.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/promote" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -1046,25 +1046,25 @@ curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/promote" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 const user_id = "<user id>";
 await client.promoteGroupUsers(session, group_id, [user_id]);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
 await client.PromoteGroupUsersAsync(session, groupId, userIds);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
 await client.PromoteGroupUsersAsync(session, groupId, userIds);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("user has been promoted");
@@ -1075,13 +1075,13 @@ string user_id = "<user id>";
 client->promoteGroupUsers(session, group_id, { user_id }, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 const user_id = "<user id>";
 client.promoteGroupUsers(session, group_id, [user_id]);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "user has been promoted" << std::endl;
@@ -1092,13 +1092,13 @@ string user_id = "<user id>";
 client->promoteGroupUsers(session, group_id, { user_id }, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupid = "<group id>";
 String[] userIds = new String[] {"<user id>"};
 client.promoteGroupUsers(session, groupid, userIds).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
 let userID = "<user id>"
@@ -1112,7 +1112,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/group/<group id>/promote
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -1132,7 +1132,7 @@ An admin or superadmin can kick a member from the group. The user is removed but
 
 If a user is removed from a group it does not prevent them from joining other groups.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/kick" \
   -H 'Authorization: Bearer <session token>' \
   -d '{
@@ -1140,25 +1140,25 @@ curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/kick" \
   }'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 const user_id = "<user id>";
 await client.kickGroupUsers(session, group_id, [user_id]);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
 await client.KickGroupUsersAsync(session, groupId, userIds);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 var userIds = new[] {"<user id>"};
 await client.KickGroupUsersAsync(session, groupId, userIds);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("user has been kicked");
@@ -1169,13 +1169,13 @@ string user_id = "<user id>";
 client->kickGroupUsers(session, group_id, { user_id }, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 const user_id = "<user id>";
 client.kickGroupUsers(session, group_id, [user_id]);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "user has been kicked" << std::endl;
@@ -1186,13 +1186,13 @@ string user_id = "<user id>";
 client->kickGroupUsers(session, group_id, { user_id }, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupid = "<group id>";
 String[] userIds = new String[] {"<user id>"};
 client.kickGroupUsers(session, groupid, userIds).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
 let userID = "<user id>"
@@ -1206,7 +1206,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/group/<group id>/kick
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -1225,27 +1225,27 @@ Authorization: Bearer <session token>
 
 A group can only be removed by one of the superadmins which will disband all members. When a group is removed it's name can be re-used to [create a new group](#create-a-group).
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X DELETE "http://127.0.0.1:7350/v2/group/<group id>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 const group_id = "<group id>";
 await client.deleteGroup(session, group_id);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string groupId = "<group id>";
 await client.DeleteGroupAsync(session, groupId);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string groupId = "<group id>";
 await client.DeleteGroupAsync(session, groupId);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = []()
 {
   CCLOG("group deleted");
@@ -1255,12 +1255,12 @@ string group_id = "<group id>";
 client->deleteGroup(session, group_id, successCallback);
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 const group_id = "<group id>";
 client.deleteGroup(session, group_id);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = []()
 {
   std::cout << "group deleted" << std::endl;
@@ -1270,12 +1270,12 @@ string group_id = "<group id>";
 client->deleteGroup(session, group_id, successCallback);
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String groupid = "<group id>";
 client.deleteGroup(session, groupid).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let groupID = "<group id>"
 var message = GroupRemoveMessage()
@@ -1287,7 +1287,7 @@ client.send(message: message).then { _ in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 DELETE /v2/group/<group id>
 Host: 127.0.0.1:7350
 Accept: application/json

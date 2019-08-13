@@ -6,11 +6,11 @@ The code runtime built into the server includes a module with functions to imple
 
 This module contains all the core gameplay APIs, all registration functions used at server startup, utilities for various codecs, and cryptographic primitives.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local nk = require("nakama")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 import (
   "github.com/heroiclabs/nakama/runtime"
 )
@@ -40,12 +40,12 @@ All account information including wallet, device IDs and more.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local account = nk.account_get_id("8f4d52c7-bf28-4fcf-8af2-1d4fcf685592")
 nk.logger_info(("Wallet is: %s"):format(nk.json_encode(account.wallet)))
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 account, err := nk.AccountGetId(ctx, "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592")
 if err != nil {
   // Handle error.
@@ -79,7 +79,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
 local metadata = {}
 local username = ""
@@ -91,7 +91,7 @@ local avatar_url = nil
 nk.account_update_id(user_id, metadata, username, display_name, timezone, location, language, avatar_url)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
 username := ""
 metadata := make(map[string]interface{})
@@ -125,11 +125,11 @@ The decrypted input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local plaintext = nk.aes128_decrypt("48656C6C6F20776F726C64", "goldenbridge_key")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go crypto package.
 import "crypto/aes"
 ```
@@ -153,11 +153,11 @@ The encrypted input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local cyphertext = nk.aes128_encrypt("48656C6C6F20776F726C64", "goldenbridge_key")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go crypto package.
 import "crypto/aes"
 ```
@@ -183,11 +183,11 @@ The user's ID, username, and a boolean flag indicating if the account was just c
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id, username, created = nk.authenticate_custom("48656C6C6F20776F726C64", "username", true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid, username, created, err := AuthenticateCustom(ctx, "48656C6C6F20776F726C64", "username", true)
 if err != nil {
   // Handle error.
@@ -215,11 +215,11 @@ The user's ID, username, and a boolean flag indicating if the account was just c
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id, username, created = nk.authenticate_device("48656C6C6F20776F726C64", "username", true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid, username, created, err := AuthenticateDevice(ctx, "48656C6C6F20776F726C64", "username", true)
 if err != nil {
   // Handle error.
@@ -248,11 +248,11 @@ The user's ID, username, and a boolean flag indicating if the account was just c
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id, username, created = nk.authenticate_email("email@example.com", "48656C6C6F20776F726C64", "username", true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid, username, created, err := AuthenticateEmail(ctx, "email@example.com", "48656C6C6F20776F726C64", "username", true)
 if err != nil {
   // Handle error.
@@ -281,11 +281,11 @@ The user's ID, username, and a boolean flag indicating if the account was just c
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id, username, created = nk.authenticate_facebook("some-oauth-access-token", true, "username", true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid, username, created, err := AuthenticateFacebook(ctx, "some-oauth-access-token", true, "username", true)
 if err != nil {
   // Handle error.
@@ -316,11 +316,11 @@ _Returns_
 
 The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id, username, created = nk.authenticate_gamecenter (player_id, bundle_id, timestamp, salt, signature, public_key_url, username, create)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid, username, created, err := AuthenticateGameCenter(ctx, playerID, bundleID, timestamp, salt, signature, publicKeyUrl, username, create)
 if err != nil {
   // Handle error.
@@ -348,11 +348,11 @@ The user's ID, username, and a boolean flag indicating if the account was just c
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id, username, created = nk.authenticate_google("some-id-token", "username", true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid, username, created, err := AuthenticateGoogle(ctx, "some-id-token", "username", true)
 if err != nil {
   // Handle error.
@@ -380,11 +380,11 @@ The user's ID, username, and a boolean flag indicating if the account was just c
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id, username, created = nk.authenticate_steam("steam-token", "username", true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid, username, created, err := AuthenticateGoogle(ctx, "steam-token", "username", true)
 if err != nil {
   // Handle error.
@@ -414,12 +414,12 @@ The session token created for the given user details, an the expiry time of the 
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local token, exp = nk.authenticate_token_generate("user_id", "username")
 nk.logger_info(("Access token: %q, valid for %q seconds"):format(token, exp))
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 token, validity, err := AuthenticateTokenGenerate("user_id", "username", 0)
 if err != nil {
   // Handle error.
@@ -446,12 +446,12 @@ The base 16 decoded input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local decoded = nk.base16_decode("48656C6C6F20776F726C64")
 nk.logger_info(decoded) -- Outputs "Hello world".
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go encoding package.
 import "encoding/hex"
 ```
@@ -474,12 +474,12 @@ The base 16 encoded input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local encoded = nk.base16_encode("Hello world")
 nk.logger_info(encoded) -- Outputs "48656C6C6F20776F726C64".
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go encoding package.
 import "encoding/hex"
 ```
@@ -502,12 +502,12 @@ The base 64 decoded input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local decoded = nk.base64_decode("SGVsbG8gd29ybGQ=")
 nk.logger_info(decoded) -- Outputs "Hello world".
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go encoding package.
 import "encoding/base64"
 ```
@@ -530,12 +530,12 @@ The base 64 encoded input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local encoded = nk.base64_encode("Hello world")
 nk.logger_info(encoded) -- Outputs "SGVsbG8gd29ybGQ=".
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go encoding package.
 import "encoding/base64"
 ```
@@ -558,12 +558,12 @@ The base 64 URL decoded input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local decoded = nk.base64url_decode("SGVsbG8gd29ybGQ=")
 nk.logger_info(decoded) -- Outputs "Hello world".
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go encoding package.
 import "encoding/base64"
 ```
@@ -586,12 +586,12 @@ The base 64 URL encoded input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local encoded = nk.base64url_encode("Hello world")
 nk.logger_info(encoded) -- Outputs "SGVsbG8gd29ybGQ=".
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go encoding package.
 import "encoding/base64"
 ```
@@ -614,12 +614,12 @@ The hashed input.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local hashed = nk.bcrypt_hash("Hello World")
 nk.logger_info(hashed)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go crypto package.
 import "golang.org/x/crypto/bcrypt"
 ```
@@ -643,12 +643,12 @@ True if they are the same, false otherwise.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local is_same = nk.bcrypt_compare("$2a$04$bl3tac7Gwbjy04Q8H2QWLuUOEkpoNiAeTxazxi4fVQQRMGbMaUHQ2", "123456")
 nk.logger_info(is_same) -- Outputs true.
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go crypto package.
 import "golang.org/x/crypto/bcrypt"
 ```
@@ -672,7 +672,7 @@ The next UTC seconds timestamp that matches the given CRON expression, and is im
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- Based on the current time, return the UTC seconds value representing the
 -- nearest upcoming Monday at 00:00 UTC (midnight.)
 local expr = "0 0 * * 1"
@@ -680,7 +680,7 @@ local ts = os.time()
 local next = nk.cron_next(expr, ts)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use a Go CRON package, for example:
 import "github.com/robfig/cron"
 ```
@@ -710,7 +710,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local metadata = { -- Add whatever custom fields you want.
   my_custom_field = "some value"
 }
@@ -728,7 +728,7 @@ local maxMemberCount = 100
 nk.group_create(user_id, name, creator_id, lang, description, avatar_url, open, metadata, maxMemberCount)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 metadata := map[string]interface{}{ // Add whatever custom fields you want.
   "my_custom_field": "some value",
 }
@@ -762,12 +762,12 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
 nk.group_delete(group_id)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 groupID := "f00fa79a-750f-11e7-8626-0fb79f45ff97"
 if group, err := nk.GroupDelete(ctx, groupID); err != nil {
   logger.Error("Could not delete group: %s", err.Error())
@@ -797,7 +797,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local metadata = {
   some_field = "some value"
 }
@@ -807,7 +807,7 @@ description = "An updated description."
 nk.group_update(group_id, "", "", "", description, "", nil, metadata, 0)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 metadata := map[string]interface{}{ // Add whatever custom fields you want.
   "my_custom_field": "some value",
 }
@@ -839,7 +839,7 @@ The user information for members, admins and superadmins for the group. Also use
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
 local members = nk.group_users_list(group_id)
 for _, m in ipairs(members)
@@ -849,7 +849,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
 if groupUserList, err := nk.GroupUsersList(ctx, groupID); err != nil {
@@ -881,7 +881,7 @@ A table (array) of groups with their fields.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local group_ids = {"0BF154F1-F7D1-4AAA-A060-5FFED3CDB982", "997C0D18-0B25-4AEC-8331-9255BD36665D"}
 local groups = nk.groups_get_id(group_ids)
 for _, g in ipairs(groups)
@@ -891,7 +891,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
 if groups, err := nk.GroupsGetId(ctx, []string{groupID}); err != nil {
@@ -922,7 +922,7 @@ A list of groups for the user.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "64ef6cb0-7512-11e7-9e52-d7789d80b70b"
 local groups = nk.user_groups_list(user_id)
 for _, g in ipairs(groups)
@@ -932,7 +932,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "dcb891ea-a311-4681-9213-6741351c9994"
 
 if groups, err := nk.UserGroupsList(ctx, userID); err != nil {
@@ -963,12 +963,12 @@ Hashed input using the key.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local hash = nk.hmac_sha256_hash("encryptthis", "somekey")
 print(hash)
 ```
 
-```go  fct_label="Go"
+```go  tab="Go"
 // Use the standard Go crypto package.
 import "crypto/hmac"
 ```
@@ -994,7 +994,7 @@ _Returns_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local url = "https://google.com/"
 local method = "HEAD"
 local headers = {
@@ -1012,7 +1012,7 @@ else
 end
 ```
 
-```go  fct_label="Go"
+```go  tab="Go"
 // Use the standard Go HTTP package.
 import "net/http"
 ```
@@ -1035,12 +1035,12 @@ A Lua table with the decoded JSON.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local json = nk.json_decode('{"hello": "world"}')
 nk.logger_info(json.hello)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go JSON package.
 import "encoding/json"
 ```
@@ -1063,13 +1063,13 @@ The encoded JSON string.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local input = {["some"] = "json"}
 local json = nk.json_encode(input)
 nk.logger_info(json) -- Outputs '{"some": "json"}'.
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go JSON package.
 import "encoding/json"
 ```
@@ -1094,7 +1094,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local authoritative = false
 local sort = "desc"
@@ -1106,7 +1106,7 @@ local metadata = {
 nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 authoritative := false
 sortOrder := "desc"
@@ -1136,12 +1136,12 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 nk.leaderboard_delete(id)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 if err := nk.LeaderboardDelete(ctx, id); err != nil {
   logger.Error("Error deleting leaderboard: %s", err.Error())
@@ -1168,7 +1168,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local metadata = {
   weather_conditions = "rain"
 }
@@ -1180,7 +1180,7 @@ local subscore = 0
 nk.leaderboard_record_write(id, owner, username, score, subscore, metadata)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 ownerID := "4c2ae592-b2a7-445e-98ec-697694478b1c"
 username := "02ebb2c8"
@@ -1211,13 +1211,13 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
 nk.leaderboard_record_delete(id, owner)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 ownerID := "4c2ae592-b2a7-445e-98ec-697694478b1c"
 
@@ -1248,14 +1248,14 @@ A page of leaderboard records, a list of owner leaderboard records (empty if the
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owners = {}
 local limit = 10
 local records, owner_records, next_cursor, prev_cursor = nk.leaderboard_records_list(id, owners, limit)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 ownerIDs := []string{}
 limit := 10
@@ -1282,12 +1282,12 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local message = ("%q - %q"):format("hello", "world")
 nk.logger_error(message)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 logger.Error("%s - %s", "hello", "world")
 ```
 
@@ -1306,12 +1306,12 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local message = ("%q - %q"):format("hello", "world")
 nk.logger_info(message)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 logger.Info("%s - %s", "hello", "world")
 ```
 
@@ -1330,12 +1330,12 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local message = ("%q - %q"):format("hello", "world")
 nk.logger_warn(message)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 logger.Warn("%s - %s", "hello", "world")
 ```
 
@@ -1359,14 +1359,14 @@ _Returns_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- Assumes you've registered a runtime module with a path of "my/match/module.lua".
 local module = "my.match.module"
 local params = { some = "data" }
 local match_id = nk.match_create(module, params)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Assumes you've registered a match with initializer.RegisterMatch("my.match.module", ...)
 modulename := "my.match.module"
 params := map[string]interface{}{
@@ -1397,7 +1397,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- List at most 10 matches, not authoritative, and that
 -- have between 2 and 4 players currently participating.
 local limit = 10
@@ -1413,7 +1413,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // List at most 10 matches, not authoritative, and that
 // have between 2 and 4 players currently participating.
 limit := 10
@@ -1444,13 +1444,13 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local input = "somestring"
 local hashed = nk.md5_hash(input)
 nk.logger_info(hashed)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go crypto package.
 import "crypto/md5"
 ```
@@ -1473,7 +1473,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local subject = "You've unlocked level 100!"
 local content = nk.json_encode({
   reward_coins = 1000
@@ -1486,7 +1486,7 @@ local persistent = true
 nk.notification_send(user_id, subject, content, code, sender_id, persistent)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 subject := "You've unlocked level 100!"
 content := map[string]interface{}{
   "reward_coins": 1000,
@@ -1514,7 +1514,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local subject = "You've unlocked level 100!"
 local content = nk.json_encode({
   reward_coins = 1000
@@ -1529,7 +1529,7 @@ local new_notifications = {
 nk.notifications_send(new_notifications)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 notifications := []*runtime.NotificationSend{
   &runtime.NotificationSend{
     UserID:     "4c2ae592-b2a7-445e-98ec-697694478b1c",
@@ -1565,7 +1565,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- For example let's create a two player authoritative match.
 local function matchmaker_matched(context, matchmaker_users)
   for _, m in ipairs(matched_users)
@@ -1597,7 +1597,7 @@ end
 nk.register_matchmaker_matched(matchmaker_matched)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func MakeMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, entries []runtime.MatchmakerEntry) (string, error) {
   for _, e := range entries {
     logger.Info(e.GetPresence().GetUserId())
@@ -1651,14 +1651,14 @@ For a complete list of RegisterBefore functions, refer [this page](https://githu
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function my_func(context, payload)
   -- Run some code.
 end
 nk.register_req_after(my_func, "FriendsAdd")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
   // Run some code.
 }
@@ -1690,7 +1690,7 @@ For a complete list of RegisterBefore functions, refer [this page](https://githu
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function my_func(context, payload)
   -- Run some code.
   return payload -- Important!
@@ -1698,7 +1698,7 @@ end
 nk.register_req_before(my_func, "FriendsAdd")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
   // Run some code.
   return in, nil // Important!
@@ -1730,14 +1730,14 @@ For message names, have a look at [this section](runtime-code-basics.md#message-
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function my_func(context, payload)
   -- Run some code.
 end
 nk.register_rt_after(my_func, "ChannelJoin")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime NakamaModule, envelope *rtapi.Envelope) error {
   // Run some code.
 }
@@ -1769,7 +1769,7 @@ For message names, have a look at [this section](runtime-code-basics.md#message-
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function my_func(context, payload)
   -- Run some code.
   return payload -- Important!
@@ -1777,7 +1777,7 @@ end
 nk.register_rt_before(my_func, "ChannelJoin")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, envelope *rtapi.Envelope) (*rtapi.Envelope, error) {}
   // run some code
   return envelope, nil // For code to keep processing the request.
@@ -1812,7 +1812,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local function my_func(context, payload)
   -- Run some code.
   return payload
@@ -1820,7 +1820,7 @@ end
 nk.register_rpc(my_func, "my_func_id")
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
   logger.Info("Payload: %s", payload)
   return payload, nil
@@ -1849,7 +1849,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 nk.run_once(function(context)
   -- This is to create a system ID that cannot be used via a client.
   local system_id = context.env["SYSTEM_ID"]
@@ -1862,7 +1862,7 @@ ON CONFLICT (id) DO NOTHING
 end)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
   // This is to create a system ID that cannot be used via a client.
   var systemId string
@@ -1901,7 +1901,7 @@ A table array of object result set.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user ID.
 local object_ids = {
   {collection = "save", key = "save1", user_id = user_id},
@@ -1916,7 +1916,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userid := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user ID.
 objectIds := []*runtime.StorageRead{
   &runtime.StorageRead{
@@ -1968,7 +1968,7 @@ A table array of the records result set.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
 local records = nk.storage_list(user_id "collection", 10, "")
 for _, r in ipairs(records)
@@ -1978,7 +1978,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
 if listRecords, nextCursor, err := nk.StorageList(ctx, userID, "collection", 10, ""); err != nil {
   // Handle error.
@@ -2004,7 +2004,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
 local friend_user_id = "8d98ee3f-8c9f-42c5-b6c9-c8f79ad1b820" -- Friend ID.
 local object_ids = {
@@ -2015,7 +2015,7 @@ local object_ids = {
 nk.storage_delete(object_ids)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"       // Some user ID.
 friendUserID := "8d98ee3f-8c9f-42c5-b6c9-c8f79ad1b820" // Friend ID.
 objectIds := []*runtime.StorageDelete{
@@ -2088,7 +2088,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
 local new_objects = {
   {collection = "save", key = "save1", user_id = user_id, value = {}},
@@ -2099,7 +2099,7 @@ local new_objects = {
 nk.storage_write(new_objects)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
 objectIds := []*runtime.StorageWrite{
   &runtime.StorageWrite{
@@ -2158,7 +2158,7 @@ A single number indicating the number of rows affected by the query.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- This example query deletes all expired leaderboard records.
 local query = [[DELETE FROM leaderboard_record
                 WHERE expires_at > 0 AND expires_at <= $1]]
@@ -2166,7 +2166,7 @@ local parameters = {os.time() * 1000}
 local affected_rows_count = nk.sql_exec(query, parameters)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go sql package.
 import "database/sql"
 ```
@@ -2186,7 +2186,7 @@ _Returns_
 
 A Lua table containing the result rows in the format:
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 {
   {column1 = "value1", column2 = "value2", ...}, -- Row 1.
   {column1 = "value1", column2 = "value2", ...}, -- Row 2.
@@ -2194,14 +2194,14 @@ A Lua table containing the result rows in the format:
 }
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go sql package.
 import "database/sql"
 ```
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 -- Example fetching a list of usernames for the 100 most recetly signed up users.
 local query = [[SELECT username, create_time
                 FROM users
@@ -2217,7 +2217,7 @@ for i, row in ipairs(rows) do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go sql package.
 import "database/sql"
 ```
@@ -2237,11 +2237,11 @@ A number representing the current UTC time in milliseconds.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local utc_msec = nk.time()
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use the standard Go time package.
 import "time"
 ```
@@ -2274,7 +2274,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local authoritative = false
 local sort = "desc"     -- One of: "desc", "asc".
@@ -2296,7 +2296,7 @@ nk.tournament_create(id, sort, operator, duration, reset, metadata, title, descr
     category, start_time, endTime, max_size, max_num_score, join_required)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 sortOrder := "desc"           // One of: "desc", "asc".
 operator := "best"            // One of: "best", "set", "incr".
@@ -2333,12 +2333,12 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 nk.tournament_delete(id)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 if err := nk.TournamentDelete(ctx, id); err != nil {
   // Handle error.
@@ -2362,14 +2362,14 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owner = "leaderboard-record-owner"
 local count = -10
 nk.tournament_add_attempt(id, owner, count)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 ownerID := "leaderboard-record-owner"
 count := -10
@@ -2395,14 +2395,14 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 local owner = "leaderboard-record-owner"
 local username = "myusername"
 nk.tournament_join(id, owner, username)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 ownerID := "leaderboard-record-owner"
 userName := "myusername"
@@ -2435,7 +2435,7 @@ A table of tournament objects.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local category_start = 1
 local category_end = 2
 local start_time = 1538147711
@@ -2447,7 +2447,7 @@ for i, row in ipairs(tournaments) do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 categoryStart := 1
 categoryEnd := 2
 startTime := int(time.Now().Unix())
@@ -2487,7 +2487,7 @@ A table of tournament record objects.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local metadata = {
   weather_conditions = "rain"
 }
@@ -2499,7 +2499,7 @@ local subscore = 0
 nk.tournament_record_write(id, owner, username, score, subscore, metadata)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 ownerID := "4c2ae592-b2a7-445e-98ec-697694478b1c"
 username := "02ebb2c8"
@@ -2534,7 +2534,7 @@ A table of tournament record objects.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local metadata = {
   weather_conditions = "rain"
 }
@@ -2543,7 +2543,7 @@ local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
 nk.tournament_records_haystack(id, owner, 10)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
 ownerID := "4c2ae592-b2a7-445e-98ec-697694478b1c"
 limit := 10
@@ -2578,7 +2578,7 @@ A table array of the user result set.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_ids = {
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936"
@@ -2591,7 +2591,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 if users, err := nk.UsersGetId(ctx, []string{
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936",
@@ -2623,7 +2623,7 @@ A table array of the user result set.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local usernames = {"b7865e7e", "c048ba7a"}
 local users = nk.users_get_username(usernames)
 for _, u in ipairs(users)
@@ -2633,7 +2633,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 if users, err := nk.UsersGetUsername(ctx, []string{"b7865e7e", "c048ba7a"}); err != nil {
   // Handle error
 } else {
@@ -2658,7 +2658,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_ids = {
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936"
@@ -2666,7 +2666,7 @@ local user_ids = {
 nk.users_ban_id(user_ids)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 if err := nk.UsersBanId(ctx, []string{
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936",
@@ -2690,7 +2690,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_ids = {
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936"
@@ -2698,7 +2698,7 @@ local user_ids = {
 nk.users_unban_id(user_ids)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 if err := nk.UsersUnbanId(ctx, []string{
   "3ea5608a-43c3-11e7-90f9-7b9397165f34",
   "447524be-43c3-11e7-af09-3f7172f05936",
@@ -2719,12 +2719,12 @@ The generated version 4 UUID identifier.
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local uuid = nk.uuid_v4()
 nk.logger_info(uuid)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use a Go CRON package, for example:
 import "github.com/gofrs/uuid"
 ```
@@ -2747,13 +2747,13 @@ A string containing the equivalent 36-character standard representation of the U
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local uuid_bytes = "\78\196\241\38\63\157\17\231\132\239\183\193\130\179\101\33" -- some uuid bytes.
 local uuid_string = nk.uuid_bytes_to_string(uuid_bytes)
 nk.logger_info(uuid_string)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use a Go CRON package, for example:
 import "github.com/gofrs/uuid"
 ```
@@ -2776,13 +2776,13 @@ A string containing the equivalent 16-byte representation of the UUID. This func
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local uuid_string = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some uuid string.
 local uuid_bytes = nk.uuid_string_to_bytes(uuid_string)
 nk.logger_info(uuid_bytes)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 // Use a Go CRON package, for example:
 import "github.com/gofrs/uuid"
 ```
@@ -2805,7 +2805,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 local changeset = {
   coins = 10, -- Add 10 coins to the user's wallet.
@@ -2817,7 +2817,7 @@ local metadata = {
 nk.wallet_update(user_id, changeset, metadata, true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 changeset := map[string]interface{}{
   "coins": 10, // Add 10 coins to the user's wallet.
@@ -2849,7 +2849,7 @@ _Parameters_
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local updates = {
   {
     user_id = "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592",
@@ -2865,7 +2865,7 @@ local updates = {
 nk.wallets_update(updates, true)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 updates := []*runtime.WalletUpdate{
   &runtime.WalletUpdate{
     UserID: "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592",
@@ -2901,7 +2901,7 @@ _Returns_
 
 A Lua table / Go slice containing wallet entries, with the following parameters:
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 {
   {
     id = "...",
@@ -2914,7 +2914,7 @@ A Lua table / Go slice containing wallet entries, with the following parameters:
 }
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 {
   {
     Id: "...",
@@ -2929,7 +2929,7 @@ A Lua table / Go slice containing wallet entries, with the following parameters:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local user_id = "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 local updates = nk.wallet_ledger_list(user_id)
 for _, u in ipairs(updates)
@@ -2939,7 +2939,7 @@ do
 end
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 
 if items, err := nk.WalletLedgerList(ctx, userID); err != nil {
@@ -2968,7 +2968,7 @@ _Returns_
 
 The updated wallet ledger item as a Lua table with the following format:
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 {
   {
     id = "...",
@@ -2981,7 +2981,7 @@ The updated wallet ledger item as a Lua table with the following format:
 }
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 {
   {
     Id: "...",
@@ -2996,7 +2996,7 @@ The updated wallet ledger item as a Lua table with the following format:
 
 _Example_
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "2745ba53-4b43-4f83-ab8f-93e9b677f33a"
 local metadata = {
   game_result = "loss"
@@ -3004,7 +3004,7 @@ local metadata = {
 local u = nk.wallet_ledger_update(id, metadata
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 itemID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
 metadata := map[string]interface{}{
   "game_result": "loss",

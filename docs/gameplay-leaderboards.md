@@ -37,34 +37,34 @@ The score in each record can be updated as the owner progresses. Scores can be u
 
 Each record can optionally include additional data about the score or the owner when submitted. The extra fields must be JSON encoded and submitted as the metadata. A good use case for metadata is info about race conditions in a driving game, such as weather, which can give extra UI hints when users list scores.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
   -H 'Authorization: Bearer <session token>'
   -d '{"record": {"score": 100}}'
 ```
 
-```js fct_label="Javascript"
+```js tab="Javascript"
 var leaderboardId = "level1";
 var submission = {score: 100};
 var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
 console.log("New record username %o and score %o", record.username, record.score);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string leaderboardId = "level1";
 const long score = 100L;
 var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
 System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string leaderboardId = "level1";
 const long score = 100L;
 var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
 Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NLeaderboardRecord& record)
 {
   CCLOG("New record with score %ld", record.score);
@@ -82,7 +82,7 @@ client->writeLeaderboardRecord(session,
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var leaderboardId = "level1";
 var submission = {score: 100};
 client.writeLeaderboardRecord(session, leaderboardId, submission)
@@ -94,7 +94,7 @@ client.writeLeaderboardRecord(session, leaderboardId, submission)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NLeaderboardRecord& record)
 {
   std::cout << "New record with score " << record.score << std::endl;
@@ -112,14 +112,14 @@ client->writeLeaderboardRecord(session,
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 final String leaderboard = "level1";
 long score = 100L;
 LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
 System.out.format("New record for %s score %s", r.getUsername(), r.getScore());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id //a Leaderboard ID.
 let score = 1200
@@ -140,7 +140,7 @@ client.send(message: message).then { records in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/leaderboard/<leaderboardId>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -158,7 +158,7 @@ Authorization: Bearer <session token>
 
 A leaderboard can be created via server-side code at startup or within a [registered function](runtime-code-function-reference.md#register-hooks). The ID given to the leaderboard is used to submit scores to it.
 
-```lua fct_label="Lua"
+```lua tab="Lua"
 local id = "level1"
 local authoritative = false
 local sort = "desc"
@@ -170,7 +170,7 @@ local metadata = {
 nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
 ```
 
-```go fct_label="Go"
+```go tab="Go"
 id := "level1"
 authoritative := false
 sort := "desc"
@@ -193,34 +193,34 @@ Submitting to a leaderboard with the "best" operator ensures the record tracks t
 
 With the "incr" operator the new value is added to any existing score for that record. If there is no previous value for the record, this behaves like "set".
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
   -H 'Authorization: Bearer <session token>'
   -d '{"score": 100}'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var leaderboardId = "level1";
 var submission = {score: 100};
 var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
 console.log("New record username %o and score %o", record.username, record.score);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string leaderboard = "level1";
 const long score = 100L;
 var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
 System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string leaderboard = "level1";
 const long score = 100L;
 var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
 Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](const NLeaderboardRecord& record)
 {
   CCLOG("New record with score %ld", record.score);
@@ -238,7 +238,7 @@ client->writeLeaderboardRecord(session,
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var leaderboardId = "level1";
 var submission = {score: 100};
 client.writeLeaderboardRecord(session, leaderboardId, submission)
@@ -250,7 +250,7 @@ client.writeLeaderboardRecord(session, leaderboardId, submission)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](const NLeaderboardRecord& record)
 {
   std::cout << "New record with score " << record.score << std::endl;
@@ -268,14 +268,14 @@ client->writeLeaderboardRecord(session,
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 final String leaderboard = "level1";
 long score = 100L;
 LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
 System.out.format("New record for %s score %d", r.getUsername(), r.getScore());
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id //a Leaderboard ID.
 let score = 1200
@@ -294,7 +294,7 @@ client.send(message: message).then { records in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 POST /v2/leaderboard/<leaderboardId>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -314,12 +314,12 @@ A user can list records from a leaderboard. This makes it easy to compare scores
 
 The standard way to list records is ordered by score based on the sort order in the leaderboard.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var leaderboardId = "level1";
 var result = await client.listLeaderboardRecords(session, leaderboardId);
 result.records.forEach(function(record) {
@@ -327,7 +327,7 @@ result.records.forEach(function(record) {
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string leaderboardId = "level1";
 var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
@@ -336,7 +336,7 @@ foreach (var r in result.Records)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string leaderboardId = "level1";
 var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
@@ -345,7 +345,7 @@ foreach (var r in result.Records)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NLeaderboardRecordListPtr recordsList)
 {
   for (auto& record : recordsList->records)
@@ -365,7 +365,7 @@ client->listLeaderboardRecords(session,
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var leaderboardId = "level1";
 client.listLeaderboardRecords(session, leaderboardId)
   .then(function(result) {
@@ -378,7 +378,7 @@ client.listLeaderboardRecords(session, leaderboardId)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NLeaderboardRecordListPtr recordsList)
 {
   for (auto& record : recordsList->records)
@@ -398,7 +398,7 @@ client->listLeaderboardRecords(session,
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 final String leaderboard = "level1";
 LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
 for (LeaderboardRecord record : records.getRecordsList()) {
@@ -406,7 +406,7 @@ for (LeaderboardRecord record : records.getRecordsList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id //a Leaderboard ID.
 var message = LeaderboardRecordsListMessage(leaderboardID: id)
@@ -419,7 +419,7 @@ client.send(message: message).then { records in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/leaderboard/<leaderboardId>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -429,12 +429,12 @@ Authorization: Bearer <session token>
 
 You can fetch the next set of results with a cursor.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?cursor=<next_cursor>" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var leaderboardId = "level1";
 
 var result = await client.listLeaderboardRecords(session, leaderboardId);
@@ -451,7 +451,7 @@ if (result.next_cursor) {
 }
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string leaderboardId = "level1";
 var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
@@ -470,7 +470,7 @@ if (result.NextCursor != null)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string leaderboardId = "level1";
 var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
 foreach (var r in result.Records)
@@ -490,7 +490,7 @@ if (result.NextCursor != null)
 ```
 
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NLeaderboardRecordListPtr recordsList)
 {
   for (auto& record : recordsList->records)
@@ -531,7 +531,7 @@ client->listLeaderboardRecords(session,
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var leaderboardId = "level1";
 client.listLeaderboardRecords(session, leaderboardId)
   .then(function(result) {
@@ -554,7 +554,7 @@ client.listLeaderboardRecords(session, leaderboardId)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
 {
   for (auto& record : recordsList->records)
@@ -595,7 +595,7 @@ client->listLeaderboardRecords(session,
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 final String leaderboard = "level1";
 LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
 for (LeaderboardRecord record : records.getRecordsList()) {
@@ -612,7 +612,7 @@ if (records.getCursor() != null) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id //a Leaderboard ID.
 var message = LeaderboardRecordsListMessage(leaderboardID: id)
@@ -633,7 +633,7 @@ client.send(message: message).then { records in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/leaderboard/<leaderboardId>?cursor=<next_cursor>
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -645,12 +645,12 @@ Authorization: Bearer <session token>
 
 You can use a bunch of owner IDs to filter the records to only ones owned by those users. This can be used to retrieve only scores belonging to the user's friends.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends" \
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var leaderboardId = "level1";
 var ownerIds = ["some", "friends", "user ids"];
 var result = await client.listLeaderboardRecords(session, leaderboardId, ownerIds);
@@ -659,7 +659,7 @@ result.records.forEach(function(record) {
 });
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 const string leaderboardId = "level1";
 var ownerIds = new[] {"some", "friends", "user ids"};
 var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
@@ -669,7 +669,7 @@ foreach (var r in result.OwnerRecords)
 }
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 const string leaderboardId = "level1";
 var ownerIds = new[] {"some", "friends", "user ids"};
 var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
@@ -679,7 +679,7 @@ foreach (var r in result.OwnerRecords)
 }
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 auto successCallback = [](NLeaderboardRecordListPtr recordsList)
 {
   for (auto& record : recordsList->records)
@@ -701,7 +701,7 @@ client->listLeaderboardRecords(session,
 );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var leaderboardId = "level1";
 var ownerIds = ["some", "friends", "user ids"];
 client.listLeaderboardRecords(session, leaderboardId, ownerIds)
@@ -715,7 +715,7 @@ client.listLeaderboardRecords(session, leaderboardId, ownerIds)
     });
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 auto successCallback = [](NLeaderboardRecordListPtr recordsList)
 {
   for (auto& record : recordsList->records)
@@ -737,7 +737,7 @@ client->listLeaderboardRecords(session,
 );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String leaderboard = "level1";
 String[] ownerIds = new String[] {"some", "friends", "user ids"};
 LeaderboardRecordList records = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
@@ -746,7 +746,7 @@ for (LeaderboardRecord record : records.getRecordsList()) {
 }
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Requires Nakama 1.x
 let id = leaderboard.id // a Leaderboard ID.
 let ownerIds : [String] = []
@@ -763,7 +763,7 @@ client.send(message: message).then { records in
 }
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends
 Host: 127.0.0.1:7350
 Accept: application/json
@@ -775,33 +775,33 @@ Authorization: Bearer <session token>
 
 Fetch the list of leaderboard records around the owner.
 
-```sh fct_label="cURL"
+```sh tab="cURL"
 curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>"
   -H 'Authorization: Bearer <session token>'
 ```
 
-```js fct_label="JavaScript"
+```js tab="JavaScript"
 var id = "someid";
 var ownerId = "some user ID";
 var limit = 100;
 var result = await client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit);
 ```
 
-```csharp fct_label=".NET"
+```csharp tab=".NET"
 var leaderboardId = "someid";
 var ownerId = session.UserId;
 var limit = 100;
 var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
 ```
 
-```csharp fct_label="Unity"
+```csharp tab="Unity"
 var leaderboardId = "someid";
 var ownerId = session.UserId;
 var limit = 100;
 var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
 ```
 
-```cpp fct_label="Cocos2d-x C++"
+```cpp tab="Cocos2d-x C++"
 string leaderboardId = "level1";
 string ownerId = "some user ID";
 int32_t limit = 100;
@@ -813,7 +813,7 @@ client->listLeaderboardRecordsAroundOwner(session,
   );
 ```
 
-```js fct_label="Cocos2d-x JS"
+```js tab="Cocos2d-x JS"
 var id = "someid";
 var ownerId = "some user ID";
 var limit = 100;
@@ -821,7 +821,7 @@ client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit)
   .then(...);
 ```
 
-```cpp fct_label="C++"
+```cpp tab="C++"
 string leaderboardId = "level1";
 string ownerId = "some user ID";
 int32_t limit = 100;
@@ -833,18 +833,18 @@ client->listLeaderboardRecordsAroundOwner(session,
   );
 ```
 
-```java fct_label="Java"
+```java tab="Java"
 String id = "someid";
 String ownerId = session.getUserId();
 int limit = 100;
 LeaderboardRecordList records = client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit).get();
 ```
 
-```swift fct_label="Swift"
+```swift tab="Swift"
 // Will be made available soon.
 ```
 
-```fct_label="REST"
+```tab="REST"
 GET /v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>
 Host: 127.0.0.1:7350
 Accept: application/json
