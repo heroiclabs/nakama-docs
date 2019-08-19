@@ -844,7 +844,7 @@ local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
 local members = nk.group_users_list(group_id)
 for _, m in ipairs(members)
 do
-  local msg = ("Member username %q has state %q"):format(m.username, m.state)
+  local msg = ("Member username %q has state %q"):format(m.user.username, m.state)
   nk.logger_info(msg)
 end
 ```
@@ -927,7 +927,7 @@ local user_id = "64ef6cb0-7512-11e7-9e52-d7789d80b70b"
 local groups = nk.user_groups_list(user_id)
 for _, g in ipairs(groups)
 do
-  local msg = ("Group name %q with id %q"):format(g.name, g.id)
+  local msg = ("User has state %q in group %q"):format(g.state, g.group.name)
   nk.logger_info(msg)
 end
 ```
@@ -939,7 +939,7 @@ if groups, err := nk.UserGroupsList(ctx, userID); err != nil {
   logger.Error("Could not list groups: %s", err.Error())
 } else {
   for _, group := range groups {
-    logger.Printf("Group name %s with id %s.", group.GetGroup().Name, group.GetGroup().Id)
+    logger.Printf("User has state %d in group %s.", group.GetState(), group.GetGroup().Name)
   }
 }
 ```
