@@ -410,8 +410,8 @@ _Returns_
 
 You must return three values:
 
-(table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.
-(number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.
+(table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.<br>
+(number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.<br>
 (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 256 characters long. This is used in [match listing](#match-listing) to filter matches.
 
 _Example_
@@ -425,6 +425,7 @@ function match_init(context, params)
   return state, tick_rate, label
 end
 ```
+
 ---
 
 __match_join_attempt(context, dispatcher, tick, state, presence, metadata) -> state, accepted, reject_reason__
@@ -446,8 +447,8 @@ _Returns_
 
 You must return two values, with an optional third:
 
-(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
-(boolean) - True if the join attempt should be allowed, false otherwise.
+(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.<br>
+(boolean) - True if the join attempt should be allowed, false otherwise.<br>
 (string) - If the join attempt should be rejected, an optional string rejection reason can be returned to the client.
 
 _Example_
