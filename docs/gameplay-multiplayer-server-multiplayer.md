@@ -20,7 +20,7 @@ To support this functionality the Authoritative Multiplayer feature introduces s
 
 ### Match handler
 
-A match handler represents all server-side functions grouped together to handle game inputs and operate on them. 5 functions are required to process logic for a match at a fixed rate on the server. The server can run many thousands of matches per machine depending on the player counts and hardware. The match handler has an API to broadcast messages out to connected players.
+A match handler represents all server-side functions grouped together to handle game inputs and operate on them. 6 functions are required to process logic for a match at a fixed rate on the server. The server can run many thousands of matches per machine depending on the player counts and hardware. The match handler has an API to broadcast messages out to connected players.
 
 ### Tick rate
 
@@ -412,7 +412,7 @@ You must return three values:
 
 (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.<br>
 (number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.<br>
-(string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 256 characters long. This is used in [match listing](#match-listing) to filter matches.
+(string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in [match listing](#match-listing) to filter matches.
 
 _Example_
 

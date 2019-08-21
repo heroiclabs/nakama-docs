@@ -1,4 +1,4 @@
-[nakama_logo]: /images/nakama-logo.png "Nakama Logo"
+[nakama_logo]: images/nakama-logo.png "Nakama Logo"
 
 # Nakama server
 
