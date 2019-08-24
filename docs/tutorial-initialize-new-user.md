@@ -54,7 +54,7 @@ local function initialize_user(context, payload)
 end
 
 -- change to whatever message name matches your authentication type.
-nk.register_req_after(initialize_user, "authenticaterequest_device")
+nk.register_req_after(initialize_user, "AuthenticateDevice")
 ```
 
 ```go tab="Go"

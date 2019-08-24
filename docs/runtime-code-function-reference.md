@@ -110,7 +110,7 @@ if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timez
 
 __aes128_decrypt (input, key)__
 
-AES decrypt input with the key. Key must be 16 bytes long.
+AES-128 CFB decrypt input with the key. Key must be 16 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
 
 _Parameters_
 
@@ -138,7 +138,7 @@ import "crypto/aes"
 
 __aes128_encrypt (input, key)__
 
-AES encrypt input with the key. Key must be 16 bytes long.
+AES-128 CFB encrypt input with the key. Key must be 16 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
 
 _Parameters_
 
