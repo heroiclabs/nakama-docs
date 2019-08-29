@@ -220,8 +220,8 @@ Options related to connection socket and transport protocol between the server a
 | `max_message_size_bytes` | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Used for real-time, gRPC and HTTP connections. Default value is 4096.
 | `outgoing_queue_size` | `socket.outgoing_queue_size` | The maximum number of messages waiting to be sent to the client. If this is exceeded the client is considered too slow and will disconnect. Used when processing real-time connections. Default value is 16.
 | `ping_backoff_threshold` | `socket.ping_backoff_threshold` | Minimum number of messages received from the client during a single ping period that will delay the sending of a ping until the next ping period, to avoid sending unnecessary pings on regularly active connections. Default value is 20.
-| `ping_period_ms` | `socket.ping_period_ms` | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Used for real-time connections. Default value is 8000.
-| `pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 10000.
+| `ping_period_ms` | `socket.ping_period_ms` | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Used for real-time connections. Default value is 15000.
+| `pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 25000.
 | `port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
 | `protocol` | `socket.protocol` | The network protocol to listen for traffic on. Possible values are `tcp` for both IPv4 and IPv6, `tcp4` for IPv4 only, or `tcp6` for IPv6 only. Default `tcp`."
 | `read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
