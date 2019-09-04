@@ -1,12 +1,12 @@
-[apple_iap_1]: /images/apple_iap_1.jpg "Apple iTunes Connect"
-[apple_iap_2]: /images/apple_iap_2.jpg "Apple iTunes Connect Shared Secret"
-[google_iap_1_create_service_account]: /images/google_iap_1_create_service_account.jpg "Create Service Account"
-[google_iap_2_create_key]: /images/google_iap_2_create_key.jpg "Create Key"
-[google_iap_3_create_key_2]: /images/google_iap_3_create_key_2.jpg "Create Key"
-[google_iap_4_create_key_3]: /images/google_iap_4_create_key_3.jpg "Create Key"
-[google_iap_5_play_api]: /images/google_iap_5_play_api.jpg "Create API Access"
-[google_iap_6_grant_access]: /images/google_iap_6_grant_access.jpg "Grand Access"
-[google_iap_7_play_users]: /images/google_iap_7_play_users.jpg "List users with access"
+[apple_iap_1]: images/apple_iap_1.jpg "Apple iTunes Connect"
+[apple_iap_2]: images/apple_iap_2.jpg "Apple iTunes Connect Shared Secret"
+[google_iap_1_create_service_account]: images/google_iap_1_create_service_account.jpg "Create Service Account"
+[google_iap_2_create_key]: images/google_iap_2_create_key.jpg "Create Key"
+[google_iap_3_create_key_2]: images/google_iap_3_create_key_2.jpg "Create Key"
+[google_iap_4_create_key_3]: images/google_iap_4_create_key_3.jpg "Create Key"
+[google_iap_5_play_api]: images/google_iap_5_play_api.jpg "Create API Access"
+[google_iap_6_grant_access]: images/google_iap_6_grant_access.jpg "Grand Access"
+[google_iap_7_play_users]: images/google_iap_7_play_users.jpg "List users with access"
 
 # In-app Purchase Validation
 

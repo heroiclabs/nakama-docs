@@ -1,4 +1,4 @@
-[deployment-digital-ocean]: /images/deployment-digital-ocean.png "Digital Ocean Dashboard "
+[deployment-digital-ocean]: images/deployment-digital-ocean.png "Digital Ocean Dashboard"
 
 # Deploy on Digital Ocean
 
