@@ -42,8 +42,9 @@ Once Nakama is running via Docker, use the following connection detail to config
 **SSL**: `False`
 **Server Key**: `defaultkey`
 
-In the Javascript client, you can create a `client` like this:
-```js tab="Javascript"
+In the JavaScript client, you can create a `client` like this:
+
+```js tab="JavaScript"
 var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
 client.ssl = false;
 ```

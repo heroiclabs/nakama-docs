@@ -80,7 +80,7 @@ A device identifier can be used as a way to unobtrusively register a user with t
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-A device identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.
+A device identifier must contain alphanumeric characters with dashes and be between 10 and 128 bytes.
 
 ```sh tab="cURL"
 curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
@@ -849,7 +849,7 @@ Authorization: Basic base64(ServerKey:)
 
 A custom identifier can be used in a similar way to a device identifier to login or register a user. This option should be used if you have an external or custom user identity service which you want to use. For example EA's Origin service handles accounts which have their own user IDs.
 
-A custom identifier must contain alphanumeric characters with dashes and be between 10 and 60 bytes.
+A custom identifier must contain alphanumeric characters with dashes and be between 6 and 128 bytes.
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 

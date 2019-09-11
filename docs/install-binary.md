@@ -127,6 +127,7 @@ If you prefer to run Nakama as a service, and you’re running a distro that use
     You’ll need to update the paths within the systemd configuration.
 
 1\. Create the service file: `/usr/lib/systemd/system/nakama.service`
+
 ```ini tab="nakama.service"
 [Unit]
 Description=Nakama server

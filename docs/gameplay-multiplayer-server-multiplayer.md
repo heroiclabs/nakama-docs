@@ -238,6 +238,12 @@ Players are not in the match until they join even after matched by the matchmake
 
 This can be done by clients in the same way as with relayed multiplayer. A full example of how to do this is covered [here](gameplay-multiplayer-realtime.md#join-a-match).
 
+## End authoritative matches
+
+Unlike [relayed matches](gameplay-multiplayer-realtime.md), authoritative multiplayer matches do not end automatically when all players leave. This is normal and intended to allow you to support use cases where players are allowed to temporarily disconnect while the game world continues to advance.
+
+Authoritative match handlers will only stop when any of the callbacks return a `nil` state. You can choose to do this at any point during the lifetime of the match, whether or not there are still players connected to it.
+
 ## Match listings
 
 You can list matches that are currently active on the server. You can also filter matches based on exact-match queries on the label field.
