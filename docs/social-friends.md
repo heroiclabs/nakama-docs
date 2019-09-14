@@ -121,7 +121,7 @@ auto successCallback = [](NFriendsPtr friends)
   CCLOG("Successfully retrieved friend list: %u", friends->friends.size());
 };
 
-client->listFriends(session, successCallback);
+client->listFriends(session, {}, {}, {}, successCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
@@ -140,7 +140,7 @@ auto successCallback = [](NFriendsPtr friends)
   std::cout << "Successfully retrieved friend list: " << friends->friends.size() << std::endl;
 };
 
-client->listFriends(session, successCallback);
+client->listFriends(session, {}, {}, {}, successCallback);
 ```
 
 ```java tab="Java"

@@ -144,6 +144,7 @@ client->authenticateDevice(
         deviceId,
         opt::nullopt,
         opt::nullopt,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```
@@ -175,6 +176,7 @@ client->authenticateDevice(
         deviceId,
         opt::nullopt,
         opt::nullopt,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```
@@ -276,7 +278,7 @@ string email = "email@example.com";
 string password = "3bc8f72e95a9";
 string username = "mycustomusername";
 bool create = true;
-client->authenticateEmail(email, password, username, create, successCallback, errorCallback);
+client->authenticateEmail(email, password, username, create, {}, successCallback, errorCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
@@ -305,7 +307,7 @@ string email = "email@example.com";
 string password = "3bc8f72e95a9";
 string username = "mycustomusername";
 bool create = true;
-client->authenticateEmail(email, password, username, create, successCallback, errorCallback);
+client->authenticateEmail(email, password, username, create, {}, successCallback, errorCallback);
 ```
 
 ```java tab="Java"
@@ -405,6 +407,7 @@ client->authenticateFacebook(
         "mycustomusername",
         true,
         importFriends,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```
@@ -438,6 +441,7 @@ client->authenticateFacebook(
         "mycustomusername",
         true,
         importFriends,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```
@@ -523,7 +527,7 @@ auto errorCallback = [](const NError& error)
 };
 
 string oauthToken = "...";
-client->authenticateGoogle(oauthToken, "mycustomusername", true, successCallback, errorCallback);
+client->authenticateGoogle(oauthToken, "mycustomusername", true, {}, successCallback, errorCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
@@ -548,7 +552,7 @@ auto errorCallback = [](const NError& error)
 };
 
 string oauthToken = "...";
-client->authenticateGoogle(oauthToken, "mycustomusername", true, successCallback, errorCallback);
+client->authenticateGoogle(oauthToken, "mycustomusername", true, {}, successCallback, errorCallback);
 ```
 
 ```java tab="Java"
@@ -649,6 +653,7 @@ client->authenticateGameCenter(
   publicKeyUrl,
   "mycustomusername",
   true,
+  {},
   successCallback,
   errorCallback);
 ```
@@ -704,6 +709,7 @@ client->authenticateGameCenter(
   publicKeyUrl,
   "mycustomusername",
   true,
+  {},
   successCallback,
   errorCallback);
 ```
@@ -785,7 +791,7 @@ auto errorCallback = [](const NError& error)
 string token = "...";
 string username = "mycustomusername";
 bool create = true;
-client->authenticateSteam(token, username, create, successCallback, errorCallback);
+client->authenticateSteam(token, username, create, {}, successCallback, errorCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
@@ -812,7 +818,7 @@ auto errorCallback = [](const NError& error)
 string token = "...";
 string username = "mycustomusername";
 bool create = true;
-client->authenticateSteam(token, username, create, successCallback, errorCallback);
+client->authenticateSteam(token, username, create, {}, successCallback, errorCallback);
 ```
 
 ```java tab="Java"
@@ -890,7 +896,7 @@ auto errorCallback = [](const NError& error)
 string id = "some-custom-id";
 string username = "mycustomusername";
 bool create = true;
-client->authenticateCustom(id, username, create, successCallback, errorCallback);
+client->authenticateCustom(id, username, create, {}, successCallback, errorCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
@@ -917,7 +923,7 @@ auto errorCallback = [](const NError& error)
 string id = "some-custom-id";
 string username = "mycustomusername";
 bool create = true;
-client->authenticateCustom(id, username, create, successCallback, errorCallback);
+client->authenticateCustom(id, username, create, {}, successCallback, errorCallback);
 ```
 
 ```java tab="Java"
@@ -996,6 +1002,7 @@ client->authenticateDevice(
         deviceId,
         opt::nullopt,
         opt::nullopt,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```
@@ -1028,6 +1035,7 @@ client->authenticateDevice(
         deviceId,
         opt::nullopt,
         opt::nullopt,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```

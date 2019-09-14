@@ -95,7 +95,7 @@ foreach (var presence in match.Presences)
 
 ```cpp tab="Cocos2d-x C++"
 string matchId = "<matchid>";
-rtClient->joinMatch(matchId, [](const NMatch& match)
+rtClient->joinMatch(matchId, {}, [](const NMatch& match)
   {
     CCLOG("Joined Match!");
 
@@ -132,7 +132,7 @@ socket.send({ match_join: { match_id: id } })
 
 ```cpp tab="C++"
 string matchId = "<matchid>";
-rtClient->joinMatch(matchId, [](const NMatch& match)
+rtClient->joinMatch(matchId, {}, [](const NMatch& match)
   {
     std::cout << "Joined Match!" << std::endl;
 
