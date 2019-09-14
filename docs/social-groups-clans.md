@@ -409,7 +409,7 @@ auto successCallback = [](NUserGroupListPtr list)
 };
 
 string userId = "<user id>";
-client->listUserGroups(session, userId, successCallback);
+client->listUserGroups(session, userId, {}, {}, {}, successCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
@@ -437,7 +437,7 @@ auto successCallback = [](NUserGroupListPtr list)
 };
 
 string userId = "<user id>";
-client->listUserGroups(session, userId, successCallback);
+client->listUserGroups(session, userId, {}, {}, {}, successCallback);
 ```
 
 ```java tab="Java"
@@ -512,7 +512,7 @@ auto successCallback = [](NGroupUserListPtr list)
 };
 
 string group_id = "<group id>";
-client->listGroupUsers(session, group_id, successCallback);
+client->listGroupUsers(session, group_id, {}, {}, {}, successCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
@@ -533,7 +533,7 @@ auto successCallback = [](NGroupUserListPtr list)
 };
 
 string group_id = "<group id>";
-client->listGroupUsers(session, group_id, successCallback);
+client->listGroupUsers(session, group_id, {}, {}, {}, successCallback);
 ```
 
 ```java tab="Java"
@@ -622,6 +622,7 @@ client->createGroup(session,
     "",  // avatar URL
     "en_US",
     true, // open
+    {},
     successCallback);
 ```
 
@@ -655,6 +656,7 @@ client->createGroup(session,
     "",  // avatar URL
     "en_US",
     true, // open
+    {},
     successCallback);
 ```
 

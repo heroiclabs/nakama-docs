@@ -4,7 +4,7 @@ The official C++ client handles all communication in realtime with the server. I
 
 ## Download
 
-The client can be downloaded from <a href="https://github.com/heroiclabs/nakama-cpp/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-cpp-$version.zip".
+The client can be downloaded from <a href="https://github.com/heroiclabs/nakama-cpp/releases/latest" target="\_blank">GitHub releases</a>. You can download "nakama-cpp-sdk_$version_$platform.7z".
 
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-cpp/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
 
@@ -193,6 +193,7 @@ client->authenticateDevice(
         deviceId,
         opt::nullopt,
         opt::nullopt,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```
@@ -451,7 +452,7 @@ public:
         {
         };
 
-        _client->authenticateDevice(deviceId, opt::nullopt, opt::nullopt, successCallback, errorCallback);
+        _client->authenticateDevice(deviceId, opt::nullopt, opt::nullopt, {}, successCallback, errorCallback);
     }
 
 protected:
