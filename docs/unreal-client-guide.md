@@ -131,6 +131,7 @@ client->authenticateDevice(
         deviceId,
         opt::nullopt,
         opt::nullopt,
+        {},
         loginSucceededCallback,
         loginFailedCallback);
 ```
