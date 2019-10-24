@@ -11,6 +11,8 @@ There is a single, minimal Nakama image that contains the Nakama binary. The bas
 docker run heroiclabs/nakama <command> [options]
 ```
 
+(Nakama requires a database server, so don't run this yet.)
+
 Installing Nakama using Docker is ideal for a few reasons, including:
 
 - you install to a pristine environment
@@ -33,23 +35,14 @@ In a Docker container you run a suite of tools to do a particular job; in this c
 
 - Use the [Docker Store](https://store.docker.com/search?offering=community&q=&type=edition) to find the right version of Docker Community Edition for your environment.
 
-## Connecting the Nakama client
+# Running Nakama
 
-Once Nakama is running via Docker, use the following connection detail to configure your client to connect to the server:
+There are 2 ways to run Nakama and Cockroach:
 
-**Host**: `127.0.0.1` (or `localhost`)
-**Port** : `7350`
-**SSL**: `False`
-**Server Key**: `defaultkey`
+ 1. Without Docker Compose
+ 2. With Docker Compose
 
-In the JavaScript client, you can create a `client` like this:
-
-```js tab="JavaScript"
-var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
-client.ssl = false;
-```
-
-## Running Nakama
+## Running Nakama without Docker Compose
 
 You can run Nakama and Cockroach without using Docker-Compose. This will mean you have greater control over how they are started, and various data volumes options but in return, you'll have to configure the two containers:
 
@@ -74,7 +67,7 @@ You can also change Nakama config options simply by editing the last line. For i
 docker run --link=db -p 7350:7350 -p 7351:7351 heroiclabs/nakama --database.address root@db:26257 --config /path/to/config.yml --socket.server_key "mynewkey"
 ```
 
-## Using Docker-Compose
+## Running Nakama with Docker-Compose
 
 Docker Compose simplifies running more than one Docker container in conjunction. For Nakama, we’ll need two containers: one for Nakama itself and one for the database it relies on, CockroachDB.
 
@@ -241,3 +234,19 @@ If you need to temporarily pause the Docker containers, without losing the state
 You can re-activate them by running `docker-compose up`.
 
 To stop the containers and purge all stored data, run `docker-compose down`.
+
+## Connecting the Nakama client
+
+Once Nakama is running via Docker, use the following connection detail to configure your client to connect to the server:
+
+**Host**: `127.0.0.1` (or `localhost`)
+**Port** : `7350`
+**SSL**: `False`
+**Server Key**: `defaultkey`
+
+In the JavaScript client, you can create a `client` like this:
+
+```js tab="JavaScript"
+var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
+client.ssl = false;
+```
