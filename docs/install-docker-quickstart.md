@@ -11,7 +11,8 @@ There is a single, minimal Nakama image that contains the Nakama binary. The bas
 docker run heroiclabs/nakama <command> [options]
 ```
 
-(Nakama requires a database server, so don't run this yet.)
+!!! note "Database server"
+    Nakama requires a database server running. Make sure you start the database before Nakama, or [use docker-compose to run both](#running-nakama-with-docker-compose).
 
 Installing Nakama using Docker is ideal for a few reasons, including:
 
@@ -67,7 +68,7 @@ You can also change Nakama config options simply by editing the last line. For i
 docker run --link=db -p 7350:7350 -p 7351:7351 heroiclabs/nakama --database.address root@db:26257 --config /path/to/config.yml --socket.server_key "mynewkey"
 ```
 
-## Running Nakama with Docker-Compose
+## Running Nakama with docker-compose
 
 Docker Compose simplifies running more than one Docker container in conjunction. For Nakama, we’ll need two containers: one for Nakama itself and one for the database it relies on, CockroachDB.
 
