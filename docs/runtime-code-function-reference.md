@@ -12,7 +12,7 @@ local nk = require("nakama")
 
 ```go tab="Go"
 import (
-  "github.com/heroiclabs/nakama/runtime"
+  "github.com/heroiclabs/nakama-common/runtime"
 )
 ```
 
