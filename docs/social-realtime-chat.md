@@ -504,7 +504,7 @@ Each user who joins a chat becomes a "presence" in the chat channel (unless they
 
 A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat channel.
 
-The user who [joins a chat channel](#join-chat) receives an initial presence list of all other connected users in the chat channel. A callback can be used to receive presence changes from the server about users who join and leaves. This makes it easy to maintain a list of online users and update it when changes occur.
+The user who [joins a chat channel](#join-chat) receives an initial presence list of all other connected users in the chat channel. A callback can be used to receive presence changes from the server about users who join and leave. This makes it easy to maintain a list of online users and update it when changes occur.
 
 !!! Summary
     A list of all online users is received when a user joins a chat channel you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
