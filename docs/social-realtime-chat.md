@@ -8,7 +8,7 @@ Every message which flows through the realtime chat engine belongs to a channel 
 
 There are 3 types of channel:
 
-1. A chat room is great for public chat. Any user can join and participate without need for permission. These rooms can scale to millions of users all in simultaneous communication. This is perfect for live participation apps or games with live events or tournaments.
+1. A chat room is great for public chat. Any user can join and participate without the need for permission. These rooms can scale to millions of users all in simultaneous communication. This is perfect for live participation apps or games with live events or tournaments.
 
 2. A group chat is private to only users part of a [group](social-groups-clans.md). Each user must be a member of the group and no other users can participate. You can use group chat with team-based gameplay or collaboration.
 
@@ -16,13 +16,13 @@ There are 3 types of channel:
 
 ### Persistence and message history
 
-By default all channels are persistent, so messages sent through them are saved to the database and available in message history later. This history can be used by offline users to catch up with messages they've missed when they next connect.
+By default all channels are persistent, so messages sent through them are saved to the database and available in message history later. This history can be used by offline users to catch up with messages they've missed the next time they connect.
 
-If messages should only be sent to online users and never kept in messsage history, clients can join channels with persistence disabled.
+If messages should only be sent to online users and never kept in message history, clients can join channels with persistence disabled.
 
 ### Hidden channel members
 
-By default all users joining a channel are visible to other users. Existing channel participants will receive an event when the user connects and disconnects, and new channel joiners will receive a list of users already in the channel.
+By default, all users joining a channel are visible to other users. Existing channel participants will receive an event when the user connects and disconnects, and new channel joiners will receive a list of users already in the channel.
 
 Users can opt to hide their channel presence when connecting, so they will not generate join/leave notifications and will not appear in listings of channel members. They will still be able to send and receive realtime messages as normal.
 
@@ -178,7 +178,7 @@ To send messages to other users a user must join the chat channel they want to c
 
 ### rooms
 
-A room is created dynamically for users to chat. A room has a name and will be setup on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a [storage record](storage-collections.md).
+A room is created dynamically for users to chat. A room has a name and will be set up on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a [storage record](storage-collections.md).
 
 ```js tab="JavaScript"
 const roomname = "MarvelMovieFans";
@@ -504,7 +504,7 @@ Each user who joins a chat becomes a "presence" in the chat channel (unless they
 
 A presence is made up of a unique session combined with a user ID. This makes it easy to distinguish between the same user connected from multiple devices in the chat channel.
 
-The user who [joins a chat channel](#join-chat) receives an initial presence list of all other connected users in the chat channel. A callback can be used to receive presence changes from the server about users who joins and leaves. This makes it easy to maintain a list of online users and update it when changes occur.
+The user who [joins a chat channel](#join-chat) receives an initial presence list of all other connected users in the chat channel. A callback can be used to receive presence changes from the server about users who join and leaves. This makes it easy to maintain a list of online users and update it when changes occur.
 
 !!! Summary
     A list of all online users is received when a user joins a chat channel you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
@@ -755,7 +755,7 @@ client.send(message: message).then { topics in
 
 When a user has [joined a chat channel](#join-chat) its ID can be used to send messages with JSON encoded strings.
 
-Every message sent returns an acknowledgement when it's received by the server. The acknowledgement returned contains a message ID, timestamp, and details back about the user who sent it.
+Every message sent returns an acknowledgment when it's received by the server. The acknowledgment returned contains a message ID, timestamp, and details back about the user who sent it.
 
 ```js tab="JavaScript"
 var channelId = "<channel id>";
