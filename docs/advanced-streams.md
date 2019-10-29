@@ -234,21 +234,21 @@ nk.register_rpc(join, "join")
 
 ```go tab="Go"
 func JoinStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
 		// If user ID is not found, RPC was called without a session token.
 		return "", errors.New("Invalid context")
 	}
-	sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
+	sessionID, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
 	if !ok {
-		// If user ID is not found, RPC was not called over a connected socket.
+		// If session ID is not found, RPC was not called over a connected socket.
 		return "", errors.New("Invalid context")
 	}
 
   mode := 123
 	hidden := false
 	persistence := false
-	if _, err := nk.StreamUserJoin(mode, "", "", "label", userId, sessionId, hidden, persistence, ""); err != nil {
+	if _, err := nk.StreamUserJoin(mode, "", "", "label", userID, sessionID, hidden, persistence, ""); err != nil {
 		return "", err
 	}
 
@@ -281,18 +281,18 @@ nk.register_rpc(leave, "leave")
 ```go tab="Go"
 // RPC Code
 func LeaveStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
   if !ok {
     // If user ID is not found, RPC was called without a session token.
     return "", errors.New("Invalid context")
   }
-  sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
+  sessionID, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
   if !ok {
-    // If user ID is not found, RPC was not called over a connected socket.
+    // If session ID is not found, RPC was not called over a connected socket.
     return "", errors.New("Invalid context")
   }
 
-	if err := nk.StreamUserLeave(123, "", "", "label", userId, sessionId); err != nil {
+	if err := nk.StreamUserLeave(123, "", "", "label", userID, sessionID); err != nil {
 		return "", err
 	}
 
@@ -417,26 +417,26 @@ nk.register_rpc(check, "check")
 
 ```go tab="Go"
 func CheckStream(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
   if !ok {
     // If user ID is not found, RPC was called without a session token.
     return "", errors.New("Invalid context")
   }
-  sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
+  sessionID, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
   if !ok {
-    // If user ID is not found, RPC was not called over a connected socket.
+    // If session ID is not found, RPC was not called over a connected socket.
     return "", errors.New("Invalid context")
   }
 
 	mode := uint8(123)
 	label := "label"
 
-	if metaPresence, err := nk.StreamUserGet(mode, "", "", label, userId, sessionId); err != nil {
+	if metaPresence, err := nk.StreamUserGet(mode, "", "", label, userID, sessionID); err != nil {
 		// Handle error.
 	} else if metaPresence != nil {
 		logger.Info("User found on stream")
 	} else {
-		logger.Info("User not found on stream")		
+		logger.Info("User not found on stream")
 	}
 
 	return "Success", nil
@@ -481,10 +481,10 @@ nk.stream_user_leave(user_id, session_id, stream_id)
 ```go tab="Go"
 mode := uint8(123)
 label := "some chat room channel name"
-userId := "user ID to kick"
-sessionId := "session ID to kick"
+userID := "user ID to kick"
+sessionID := "session ID to kick"
 
-if err := nk.StreamUserLeave(mode, "", "", label, userId, sessionId); err != nil {
+if err := nk.StreamUserLeave(mode, "", "", label, userID, sessionID); err != nil {
   // Handle error.
 }
 ```
@@ -503,18 +503,18 @@ nk.register_rpc(enable_silent_mode, "enable_silent_mode")
 
 ```go tab="Go"
 func EnableSilentMode(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
   if !ok {
     // If user ID is not found, RPC was called without a session token.
     return "", errors.New("Invalid context")
   }
-  sessionId, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
+  sessionID, ok := ctx.Value(runtime.RUNTIME_CTX_SESSION_ID).(string)
   if !ok {
-    // If user ID is not found, RPC was not called over a connected socket.
+    // If session ID is not found, RPC was not called over a connected socket.
     return "", errors.New("Invalid context")
   }
 
-  if err := nk.StreamUserLeave(0, userId, "", "", userId, sessionId); err != nil {
+  if err := nk.StreamUserLeave(0, userId, "", "", userID, sessionID); err != nil {
 		// Handle error.
 	}
 
