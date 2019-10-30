@@ -53,7 +53,7 @@ import (
   "context"
   "database/sql"
   "encoding/json"
-  "github.com/heroiclabs/nakama/runtime"
+  "github.com/heroiclabs/nakama-common/runtime"
 )
 
 // All Go modules must have a InitModule function with this exact signature.
@@ -195,12 +195,12 @@ nk.register_req_before(limit_friends, "AddFriends")
 
 ```go tab="Go"
 func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
-	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
 		return nil, errors.New("Missing user ID.")
 	}
 
-	account, err := nk.UsersGetId(ctx, []string{userId})
+	account, err := nk.UsersGetId(ctx, []string{userID})
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +260,7 @@ nk.register_req_after(add_reward, "AddFriends")
 
 ```go tab="Go"
 func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
-	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
 	if !ok {
 		return errors.New("Missing user ID.")
 	}
@@ -274,7 +274,7 @@ func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk 
 		&runtime.StorageWrite{
 			Collection: "rewards",
 			Key:        "reward",
-			UserID:     userId,
+			UserID:     userID,
 			Value:      string(value),
 		},
 	}); err != nil {
@@ -374,7 +374,7 @@ func HttpHandler(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runt
     return "", err
   }
 
-	return string(response), nil
+  return string(response), nil
 }
 
 // Register as an RPC function, this call should be in InitModule.
@@ -600,7 +600,7 @@ import (
   "io/ioutil"
   "net/http"
 
-  "github.com/heroiclabs/nakama/runtime"
+  "github.com/heroiclabs/nakama-common/runtime"
 )
 
 const apiBaseUrl = "https://pokeapi.co/api/v2"
