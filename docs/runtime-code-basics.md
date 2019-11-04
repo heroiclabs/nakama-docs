@@ -837,4 +837,4 @@ You should use the following message names for `register_rt_before` and `registe
 | StatusUnfollow       | Stop following some set of users to no longer receive their status updates. |
 | StatusUpdate         | Set the user's own status.                                                      |
 
-Names are case-insensitive. For more information, have a look at ["api.proto"](https://github.com/heroiclabs/nakama/blob/master/api/api.proto) and ["realtime.proto"](https://github.com/heroiclabs/nakama/blob/master/rtapi/realtime.proto).
+Names are case-insensitive. For more information, have a look at ["apigrpc.proto"](https://github.com/heroiclabs/nakama/blob/master/apigrpc/apigrpc.proto).
