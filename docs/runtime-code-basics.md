@@ -818,6 +818,8 @@ In Lua, you should use the following request names for `register_req_before` and
 | WriteLeaderboardRecord  | Write a record to a leaderboard.                                                  |
 | WriteStorageObjects     | Write objects into the storage engine.                                            |
 
+Names are case-insensitive. For more information, have a look at ["apigrpc.proto"](https://github.com/heroiclabs/nakama/blob/master/apigrpc/apigrpc.proto).
+
 You should use the following message names for `register_rt_before` and `register_rt_after` hooks:
 
 | Message Name         | Description                                                                 |
@@ -835,6 +837,6 @@ You should use the following message names for `register_rt_before` and `registe
 | MatchmakerRemove     | Cancel a matchmaking process using a ticket.                                |
 | StatusFollow         | Start following some set of users to receive their status updates.          |
 | StatusUnfollow       | Stop following some set of users to no longer receive their status updates. |
-| StatusUpdate         | Set the user's own status.                                                      |
+| StatusUpdate         | Set the user's own status.                                                  |
 
-Names are case-insensitive. For more information, have a look at ["apigrpc.proto"](https://github.com/heroiclabs/nakama/blob/master/apigrpc/apigrpc.proto).
+Names are case-insensitive. For more information, have a look at ["realtime.proto"](https://github.com/heroiclabs/nakama-common/blob/master/rtapi/realtime.proto).
