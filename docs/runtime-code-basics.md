@@ -11,7 +11,7 @@ You should use server-side code when you want to set rules around various featur
 
 ## Load modules
 
-By default the server will scan all files within the "data/modules" folder relative to the server file or the folder specified in the YAML [configuration](install-configuration.md#runtime) at startup. You can also specify the modules folder via a command flag when you start the server.
+By default, the server will scan all files within the "data/modules" folder relative to the server file or the folder specified in the YAML [configuration](install-configuration.md#runtime) at startup. You can also specify the modules folder via a command flag when you start the server.
 
 ```shell
 nakama --runtime.path "$HOME/some/path/"
@@ -23,7 +23,7 @@ All files with the ".lua" or ".so" extensions found in the runtime path will be 
 
 The following example will show you how to create and register code to be run by a client as an [RPC call](#register_rpc).
 
-In the Lua example we will create a module called "example.lua". We will import the `"nakama"` module which is embedded within the server and contains lots of server-side functions which are helpful as you build your code. You can see all available functions in the [Lua module reference](runtime-code-function-reference.md).
+In the Lua example, we will create a module called "example.lua". We will import the `"nakama"` module which is embedded within the server and contains lots of server-side functions which are helpful as you build your code. You can see all available functions in the [Lua module reference](runtime-code-function-reference.md).
 
 In the Go example, we will import the runtime package and use the `NakamaModule` which has all the same functions as referenced above.
 
@@ -67,25 +67,25 @@ func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runti
 }
 
 func SomeExample(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	meta := make(map[string]interface{})
-	// Note below, json.Unmarshal can only take a pointer as second argument
-	if err := json.Unmarshal([]byte(payload), &meta); err != nil {
-		// Handle error
-		return "", err
-	}
+    meta := make(map[string]interface{})
+    // Note below, json.Unmarshal can only take a pointer as second argument
+    if err := json.Unmarshal([]byte(payload), &meta); err != nil {
+        // Handle error
+        return "", err
+    }
 
-	id := "SomeId"
-	authoritative := false
-	sort := "desc"
-	operator := "best"
-	reset := "0 0 * * 1"
+    id := "SomeId"
+    authoritative := false
+    sort := "desc"
+    operator := "best"
+    reset := "0 0 * * 1"
 
-	if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, meta); err != nil {
-		// Handle error
-		return "", err
-	}
+    if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, meta); err != nil {
+        // Handle error
+        return "", err
+    }
 
-	return "Success", nil
+    return "Success", nil
 }
 ```
 
@@ -108,26 +108,26 @@ if !ok {
 
 If you are writing your runtime code in Lua, the "context" will be a table from which you can access the fields directly. The Go runtime context is a standard `context.Context` type and its fields can be accessed as shown above.
 
-| Go context key | Go type | Lua context key | Purpose |
-| -------------- | ------- | --------------- | ------- |
-| `RUNTIME_CTX_ENV` | `map[string]string` | `env` | A table of key/value pairs which are defined in the YAML [configuration](install-configuration.md) of the server. This is useful to store API keys and other secrets which may be different between servers run in production and in development. |
-| `RUNTIME_CTX_MODE` | `string` | `execution_mode` | The mode associated with the execution context. It's one of these values: "run_once", "rpc", "before", "after", "match", "matchmaker", "leaderboard_reset", "tournament_reset", "tournament_end". |
-| `RUNTIME_CTX_QUERY_PARAMS` | `map[string]string` | `query_params` | Query params that was passed through from HTTP request. |
-| `RUNTIME_CTX_SESSION_ID` | `string` | `session_id` | The user session associated with the execution context. |
-| `RUNTIME_CTX_USER_ID` | `string` | `user_id` | The user ID associated with the execution context. |
-| `RUNTIME_CTX_USERNAME` | `string` | `username` | The username associated with the execution context. |
-| `RUNTIME_CTX_USER_SESSION_EXP` | `int64` | `user_session_exp` | The user session expiry in seconds associated with the execution context. |
-| `RUNTIME_CTX_CLIENT_IP` | `string` | `client_ip` | The IP address of the client making the request. |
-| `RUNTIME_CTX_CLIENT_PORT` | `string` | `client_port` | The port number of the client making the request. |
-| `RUNTIME_CTX_MATCH_ID` | `string` | `match_id` | The match ID that is currently being executed. Only applicable to server authoritative multiplayer. |
-| `RUNTIME_CTX_MATCH_NODE` | `string` | `match_node` | The node ID that the match is being executed on. Only applicable to server authoritative multiplayer. |
-| `RUNTIME_CTX_MATCH_LABEL` | `string` | `match_label` | Labels associated with the match. Only applicable to server authoritative multiplayer. |
-| `RUNTIME_CTX_MATCH_TICK_RATE` | `int` | `match_tick_rate` | Tick rate defined for this match. Only applicable to server authoritative multiplayer. |
+| Go context key                 | Go type             | Lua context key    | Purpose                                                                                                                                                                                                                                           |
+| ------------------------------ | ------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `RUNTIME_CTX_ENV`              | `map[string]string` | `env`              | A table of key/value pairs which are defined in the YAML [configuration](install-configuration.md) of the server. This is useful to store API keys and other secrets which may be different between servers run in production and in development. |
+| `RUNTIME_CTX_MODE`             | `string`            | `execution_mode`   | The mode associated with the execution context. It's one of these values: "run_once", "rpc", "before", "after", "match", "matchmaker", "leaderboard_reset", "tournament_reset", "tournament_end".                                                 |
+| `RUNTIME_CTX_QUERY_PARAMS`     | `map[string]string` | `query_params`     | Query params that was passed through from HTTP request.                                                                                                                                                                                           |
+| `RUNTIME_CTX_SESSION_ID`       | `string`            | `session_id`       | The user session associated with the execution context.                                                                                                                                                                                           |
+| `RUNTIME_CTX_USER_ID`          | `string`            | `user_id`          | The user ID associated with the execution context.                                                                                                                                                                                                |
+| `RUNTIME_CTX_USERNAME`         | `string`            | `username`         | The username associated with the execution context.                                                                                                                                                                                               |
+| `RUNTIME_CTX_USER_SESSION_EXP` | `int64`             | `user_session_exp` | The user session expiry in seconds associated with the execution context.                                                                                                                                                                         |
+| `RUNTIME_CTX_CLIENT_IP`        | `string`            | `client_ip`        | The IP address of the client making the request.                                                                                                                                                                                                  |
+| `RUNTIME_CTX_CLIENT_PORT`      | `string`            | `client_port`      | The port number of the client making the request.                                                                                                                                                                                                 |
+| `RUNTIME_CTX_MATCH_ID`         | `string`            | `match_id`         | The match ID that is currently being executed. Only applicable to server authoritative multiplayer.                                                                                                                                               |
+| `RUNTIME_CTX_MATCH_NODE`       | `string`            | `match_node`       | The node ID that the match is being executed on. Only applicable to server authoritative multiplayer.                                                                                                                                             |
+| `RUNTIME_CTX_MATCH_LABEL`      | `string`            | `match_label`      | Labels associated with the match. Only applicable to server authoritative multiplayer.                                                                                                                                                            |
+| `RUNTIME_CTX_MATCH_TICK_RATE`  | `int`               | `match_tick_rate`  | Tick rate defined for this match. Only applicable to server authoritative multiplayer.                                                                                                                                                            |
 
 There are multiple ways to register a function within the runtime each of which is used to handle specific behavior between client and server.
 
 ```lua tab="Lua"
--- If you are sending requests to the server via the realtime connection, ensure that use this variant of the function.
+-- If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
 nk.register_rt_before()
 nk.register_rt_after()
 
@@ -142,14 +142,14 @@ nk.register_matchmaker_matched()
 nk.register_leaderboard_reset()
 nk.register_tournament_reset()
 
--- Similary, you can run server code when the tournament ends.
+-- Similarly, you can run server code when the tournament ends.
 nk.register_tournament_end()
 ```
 
 ```go tab="Go"
 // NOTE: All Go runtime registrations must be made in the module's InitModule function.
 
-// If you are sending requests to the server via the realtime connection, ensure that use this variant of the function.
+// If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
 initializer.RegisterBeforeRt()
 initializer.RegisterAfterRt()
 
@@ -164,20 +164,20 @@ initializer.RegisterMatchmakerMatched()
 initializer.RegisterLeaderboardReset()
 initializer.RegisterTournamentReset()
 
-// Similary, you can run server code when the tournament ends.
+// Similarly, you can run server code when the tournament ends.
 initializer.RegisterTournamentEnd()
 ```
 
 Have a look at [this section](#message-names) for a complete list of the server message names.
 
 !!! Tip
-    Only one hook may be registered for each type. If you register more than one then only the last registration is used. RPC functions are unique per registered ID, and you can register the same function under multiple IDs.
+    Only one hook may be registered for each type. If you register more than one hook, then only the last registration is used. RPC functions are unique per registered ID, and you can register the same function under multiple IDs.
 
 ### Before hook
 
 Any function may be registered to intercept a message received from a client and operate on it (or reject it) based on custom logic. This is useful to enforce specific rules on top of the standard features in the server.
 
-In Go each hook will receive as input a variable containing the data that will be processed by ther server for that request, if that feature is expected to receive any input. In Lua the second argument will be the "incoming payload" containing data received that will be processed by the server.
+In Go, each hook will receive input as a variable containing the data that will be processed by the server for that request, if that feature is expected to receive any input. In Lua, the second argument will be the "incoming payload" containing data received that will be processed by the server.
 
 ```lua hl_lines="9" tab="Lua"
 local nk = require("nakama")
@@ -195,27 +195,27 @@ nk.register_req_before(limit_friends, "AddFriends")
 
 ```go tab="Go"
 func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
-	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-	if !ok {
-		return nil, errors.New("Missing user ID.")
-	}
+    userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+    if !ok {
+        return nil, errors.New("Missing user ID.")
+    }
 
-	account, err := nk.UsersGetId(ctx, []string{userID})
-	if err != nil {
-		return nil, err
-	}
+    account, err := nk.UsersGetId(ctx, []string{userID})
+    if err != nil {
+        return nil, err
+    }
 
-	var metadata map[string]interface{}
-	if err := json.Unmarshal([]byte(account.GetUser().GetMetadata()), &metadata); err != nil {
-		return nil, errors.New("Corrupted user metadata.")
-	}
+    var metadata map[string]interface{}
+    if err := json.Unmarshal([]byte(account.GetUser().GetMetadata()), &metadata); err != nil {
+        return nil, errors.New("Corrupted user metadata.")
+    }
 
-	// Let's assume we've stored a user's level in their metadata.
-	if level, ok := metadata["level"].(int); !ok || level <= 10 {
-		return nil, errors.New("Must reach level 10 before you can add friends.")
-	}
+    // Let's assume we've stored a user's level in their metadata.
+    if level, ok := metadata["level"].(int); !ok || level <= 10 {
+        return nil, errors.New("Must reach level 10 before you can add friends.")
+    }
 
-	return in, nil
+    return in, nil
 }
 
 // Register as a before hook for the appropriate feature, this call should be in InitModule.
@@ -231,7 +231,7 @@ The code above fetches the current user's profile and checks the metadata which 
     You must remember to return the payload at the end of your function in the same structure as you received it. See the lines highlighted in the code above.
 
 !!! Tip
-    If you choose to return `nil` instead of the `payload` (or a non-nil `error` in Go) the server will halt further processing of that message. This can be a used to stop the server from accepting certain messages or disabling/blacklisting certain server features.
+    If you choose to return `nil` instead of the `payload` (or a non-nil `error` in Go) the server will halt further processing of that message. This can be used to stop the server from accepting certain messages or disabling/blacklisting certain server features.
 
 ### After hook
 
@@ -260,28 +260,28 @@ nk.register_req_after(add_reward, "AddFriends")
 
 ```go tab="Go"
 func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
-	userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-	if !ok {
-		return errors.New("Missing user ID.")
-	}
+    userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+    if !ok {
+        return errors.New("Missing user ID.")
+    }
 
-	value, err := json.Marshal(map[string]interface{}{"user_ids": in.GetIds()})
-	if err != nil {
-		return err
-	}
+    value, err := json.Marshal(map[string]interface{}{"user_ids": in.GetIds()})
+    if err != nil {
+        return err
+    }
 
-	if _, err := nk.StorageWrite(ctx, []*runtime.StorageWrite{
-		&runtime.StorageWrite{
-			Collection: "rewards",
-			Key:        "reward",
-			UserID:     userID,
-			Value:      string(value),
-		},
-	}); err != nil {
-		return err
-	}
+    if _, err := nk.StorageWrite(ctx, []*runtime.StorageWrite{
+        &runtime.StorageWrite{
+            Collection: "rewards",
+            Key:        "reward",
+            UserID:     userID,
+            Value:      string(value),
+        },
+    }); err != nil {
+        return err
+    }
 
-	return nil
+    return nil
 }
 
 // Register as an after hook for the appropriate feature, this call should be in InitModule.
@@ -330,7 +330,7 @@ func CustomRpcFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk ru
     return "", err
   }
 
-	return string(response), nil
+    return string(response), nil
 }
 
 // Register as an RPC function, this call should be in InitModule.
@@ -346,7 +346,7 @@ From Go runtime code, the result is returned as `(string, error)`. From Lua runt
 
 ### Server to server
 
-Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook), however this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
+Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook). However, this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
 
 ```lua tab="Lua"
 local nk = require("nakama")
@@ -384,7 +384,7 @@ if err := initializer.RegisterRpc("http_handler_path", HttpHandler); err != nil 
 }
 ```
 
-This function can be called with any HTTP client. For example with cURL you could execute the function with the server.
+This function can be called with any HTTP client. For example, with cURL you could execute the function with the server.
 
 !!! Tip
     RPC functions can be called both from clients and through server to server calls. You can tell them apart by [checking if the context has a user ID](#register-hooks) - server to server calls will never have a user ID. If you want to scope functions to never be accessible from the client just return an error if you find a user ID in the context.
@@ -524,7 +524,7 @@ Go runtime code can make use of the full range of standard library functions and
 
 ### Global state
 
-Lua runtime code is executed in instanced contexts. You cannot use global variables as a way to store state in memory, or communicate with other Lua processes or function calls.
+Lua runtime code is executed in instanced contexts. You cannot use global variables as a way to store state in memory or communicate with other Lua processes or function calls.
 
 The Go runtime does not have this restriction and can store and share data as needed, but concurrency and access controls are the responsibility of the developer.
 
@@ -532,11 +532,11 @@ The Go runtime does not have this restriction and can store and share data as ne
 
 Lua runtime code is fully sandboxed and cannot access the filesystem, input/output devices, or spawn OS threads or processes. This allows the server to guarantee that Lua modules cannot cause fatal errors - Lua code cannot trigger unexpected client disconnects or affect the main server process.
 
-Go runtime code has full low level access to the server and its environment. This allows full flexibility and control to include powerful features and offer high performance, but cannot guarantee error safety - the server does not guard against fatal errors in Go runtime code, such as segmentation faults or pointer dereference failures.
+Go runtime code has full low-level access to the server and its environment. This allows full flexibility and control to include powerful features and offer high performance, but cannot guarantee error safety - the server does not guard against fatal errors in Go runtime code, such as segmentation faults or pointer dereference failures.
 
 ## An example module
 
-As a fun example lets use the [Pokéapi](http://pokeapi.co/) and build a helpful module named "pokeapi.lua".
+As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpful module named "pokeapi.lua".
 
 ```lua tab="Lua"
 local nk = require("nakama")
@@ -759,82 +759,82 @@ Authorization: Bearer <session token>
 
 ## Message names
 
-If your runtime code is in Go, refer to [the interface definition](https://github.com/heroiclabs/nakama/blob/master/runtime/runtime.go) for a full list of hooks that are available in the runtime package.
+If your runtime code is in Go, refer to [the interface definition](https://github.com/heroiclabs/nakama/blob/master/server/runtime.go) for a full list of hooks that are available in the runtime package.
 
 In Lua, you should use the following request names for `register_req_before` and `register_req_after` hooks:
 
-| Request Name | Description
-| ------------ | -----------
-| AddFriends | Add friends by ID or username to a user's account.
-| AddGroupUsers | Add users to a group.
-| AuthenticateCustom | Authenticate a user with a custom id against the server.
-| AuthenticateDevice | Authenticate a user with a device id against the server.
-| AuthenticateEmail | Authenticate a user with an email+password against the server.
-| AuthenticateFacebook | Authenticate a user with a Facebook OAuth token against the server.
-| AuthenticateGameCenter | Authenticate a user with Apple's GameCenter against the server.
-| AuthenticateGoogle | Authenticate a user with Google against the server.
-| AuthenticateSteam | Authenticate a user with Steam against the server.
-| BlockFriends | Block one or more users by ID or username.
-| CreateGroup | Create a new group with the current user as the owner.
-| DeleteFriends | Delete one or more users by ID or username.
-| DeleteGroup | Delete one or more groups by ID.
-| DeleteLeaderboardRecord | Delete a leaderboard record.
-| DeleteNotifications | Delete one or more notifications for the current user.
-| DeleteStorageObjects | Delete one or more objects by ID or username.
-| GetAccount | Fetch the current user's account.
-| GetUsers | Fetch zero or more users by ID and/or username.
-| Healthcheck | A healthcheck which load balancers can use to check the service.
-| ImportFacebookFriends | Import Facebook friends and add them to a user's account.
-| JoinGroup | Immediately join an open group, or request to join a closed one.
-| KickGroupUsers | Kick a set of users from a group.
-| LeaveGroup | Leave a group the user is a member of.
-| LinkCustom | Add a custom ID to the social profiles on the current user's account.
-| LinkDevice | Add a device ID to the social profiles on the current user's account.
-| LinkEmail | Add an email+password to the social profiles on the current user's account.
-| LinkFacebook | Add Facebook to the social profiles on the current user's account.
-| LinkGameCenter | Add Apple's GameCenter to the social profiles on the current user's account.
-| LinkGoogle | Add Google to the social profiles on the current user's account.
-| LinkSteam | Add Steam to the social profiles on the current user's account.
-| ListChannelMessages | List a channel's message history.
-| ListFriends | List all friends for the current user.
-| ListGroups | List groups based on given filters.
-| ListGroupUsers | List all users that are part of a group.
-| ListLeaderboardRecords | List leaderboard records
-| ListMatches | Fetch list of running matches.
-| ListNotifications | Fetch list of notifications.
-| ListStorageObjects | List publicly readable storage objects in a given collection.
-| ListUserGroups | List groups the current user belongs to.
-| PromoteGroupUsers | Promote a set of users in a group to the next role up.
-| ReadStorageObjects | Get storage objects.
-| UnlinkCustom | Remove the custom ID from the social profiles on the current user's account.
-| UnlinkDevice | Remove the device ID from the social profiles on the current user's account.
-| UnlinkEmail | Remove the email+password from the social profiles on the current user's account.
-| UnlinkFacebook | Remove Facebook from the social profiles on the current user's account.
-| UnlinkGameCenter | Remove Apple's GameCenter from the social profiles on the current user's account.
-| UnlinkGoogle | Remove Google from the social profiles on the current user's account.
-| UnlinkSteam | Remove Steam from the social profiles on the current user's account.
-| UpdateAccount | Update fields in the current user's account.
-| UpdateGroup | Update fields in a given group.
-| WriteLeaderboardRecord | Write a record to a leaderboard.
-| WriteStorageObjects | Write objects into the storage engine.
+| Request Name            | Description                                                                       |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| AddFriends              | Add friends by ID or username to a user's account.                                |
+| AddGroupUsers           | Add users to a group.                                                             |
+| AuthenticateCustom      | Authenticate a user with a custom id against the server.                          |
+| AuthenticateDevice      | Authenticate a user with a device id against the server.                          |
+| AuthenticateEmail       | Authenticate a user with an email+password against the server.                    |
+| AuthenticateFacebook    | Authenticate a user with a Facebook OAuth token against the server.               |
+| AuthenticateGameCenter  | Authenticate a user with Apple's GameCenter against the server.                   |
+| AuthenticateGoogle      | Authenticate a user with Google against the server.                               |
+| AuthenticateSteam       | Authenticate a user with Steam against the server.                                |
+| BlockFriends            | Block one or more users by ID or username.                                        |
+| CreateGroup             | Create a new group with the current user as the owner.                            |
+| DeleteFriends           | Delete one or more users by ID or username.                                       |
+| DeleteGroup             | Delete one or more groups by ID.                                                  |
+| DeleteLeaderboardRecord | Delete a leaderboard record.                                                      |
+| DeleteNotifications     | Delete one or more notifications for the current user.                            |
+| DeleteStorageObjects    | Delete one or more objects by ID or username.                                     |
+| GetAccount              | Fetch the current user's account.                                                 |
+| GetUsers                | Fetch zero or more users by ID and/or username.                                   |
+| Healthcheck             | A healthcheck which load balancers can use to check the service.                  |
+| ImportFacebookFriends   | Import Facebook friends and add them to a user's account.                         |
+| JoinGroup               | Immediately join an open group, or request to join a closed one.                  |
+| KickGroupUsers          | Kick a set of users from a group.                                                 |
+| LeaveGroup              | Leave a group the user is a member of.                                            |
+| LinkCustom              | Add a custom ID to the social profiles on the current user's account.             |
+| LinkDevice              | Add a device ID to the social profiles on the current user's account.             |
+| LinkEmail               | Add an email+password to the social profiles on the current user's account.       |
+| LinkFacebook            | Add Facebook to the social profiles on the current user's account.                |
+| LinkGameCenter          | Add Apple's GameCenter to the social profiles on the current user's account.      |
+| LinkGoogle              | Add Google to the social profiles on the current user's account.                  |
+| LinkSteam               | Add Steam to the social profiles on the current user's account.                   |
+| ListChannelMessages     | List a channel's message history.                                                 |
+| ListFriends             | List all friends for the current user.                                            |
+| ListGroups              | List groups based on given filters.                                               |
+| ListGroupUsers          | List all users that are part of a group.                                          |
+| ListLeaderboardRecords  | List leaderboard records                                                          |
+| ListMatches             | Fetch a list of running matches.                                                  |
+| ListNotifications       | Fetch a list of notifications.                                                    |
+| ListStorageObjects      | List publicly readable storage objects in a given collection.                     |
+| ListUserGroups          | List groups the current user belongs to.                                          |
+| PromoteGroupUsers       | Promote a set of users in a group to the next role up.                            |
+| ReadStorageObjects      | Get storage objects.                                                              |
+| UnlinkCustom            | Remove the custom ID from the social profiles on the current user's account.      |
+| UnlinkDevice            | Remove the device ID from the social profiles on the current user's account.      |
+| UnlinkEmail             | Remove the email+password from the social profiles on the current user's account. |
+| UnlinkFacebook          | Remove Facebook from the social profiles on the current user's account.           |
+| UnlinkGameCenter        | Remove Apple's GameCenter from the social profiles on the current user's account. |
+| UnlinkGoogle            | Remove Google from the social profiles on the current user's account.             |
+| UnlinkSteam             | Remove Steam from the social profiles on the current user's account.              |
+| UpdateAccount           | Update fields in the current user's account.                                      |
+| UpdateGroup             | Update fields in a given group.                                                   |
+| WriteLeaderboardRecord  | Write a record to a leaderboard.                                                  |
+| WriteStorageObjects     | Write objects into the storage engine.                                            |
 
 You should use the following message names for `register_rt_before` and `register_rt_after` hooks:
 
-| Message Name | Description
-| ------------ | -----------
-| ChannelJoin | Join a realtime chat channel.
-| ChannelLeave | Leave a realtime chat channel.
-| ChannelMessageSend | Send a message to a realtime chat channel.
-| ChannelMessageUpdate | Update a message previously sent to a realtime chat channel.
-| ChannelMessageRemove | Remove a message previously sent to a realtime chat channel.
-| MatchCreate | A client to server request to create a realtime match.
-| MatchDataSend | A client to server request to send data to a realtime match.
-| MatchJoin | A client to server request to join a realtime match.
-| MatchLeave | A client to server request to leave a realtime match.
-| MatchmakerAdd | Submit a new matchmaking process request.
-| MatchmakerRemove | Cancel a matchmaking process using a ticket.
-| StatusFollow | Start following some set of users to receive their status updates.
-| StatusUnfollow | Stop following some set of users to no longer receive their status updates.
-| StatusUpdate | Set the user's own status.
+| Message Name         | Description                                                                 |
+| -------------------- | --------------------------------------------------------------------------- |
+| ChannelJoin          | Join a realtime chat channel.                                               |
+| ChannelLeave         | Leave a realtime chat channel.                                              |
+| ChannelMessageSend   | Send a message to a realtime chat channel.                                  |
+| ChannelMessageUpdate | Update a message previously sent to a realtime chat channel.                |
+| ChannelMessageRemove | Remove a message previously sent to a realtime chat channel.                |
+| MatchCreate          | A client to server request to create a realtime match.                      |
+| MatchDataSend        | A client to server request to send data to a realtime match.                |
+| MatchJoin            | A client to server request to join a realtime match.                        |
+| MatchLeave           | A client to server request to leave a realtime match.                       |
+| MatchmakerAdd        | Submit a new matchmaking process request.                                   |
+| MatchmakerRemove     | Cancel a matchmaking process using a ticket.                                |
+| StatusFollow         | Start following some set of users to receive their status updates.          |
+| StatusUnfollow       | Stop following some set of users to no longer receive their status updates. |
+| StatusUpdate         | Set the user's own status.                                                      |
 
 Names are case-insensitive. For more information, have a look at ["api.proto"](https://github.com/heroiclabs/nakama/blob/master/api/api.proto) and ["realtime.proto"](https://github.com/heroiclabs/nakama/blob/master/rtapi/realtime.proto).
