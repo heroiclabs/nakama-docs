@@ -168,10 +168,10 @@ SocketListener listener = new AbstractSocketListener() {
 socket.connect(session, listener).get();
 
 final string roomName = "Heroes";
-final Channel channel = socket.channelJoin(roomName, ChannelType.ROOM).get();
+final Channel channel = socket.joinChat(roomName, ChannelType.ROOM).get();
 
 final String content = "{\"message\":\"Hello world\"}";
-ChannelMessageAck sendAck = socket.channelMessageSend(channel.getId(), content);
+ChannelMessageAck sendAck = socket.writeChatMessage(channel.getId(), content);
 ```
 
 There are more examples for chat channels [here](social-realtime-chat.md).
