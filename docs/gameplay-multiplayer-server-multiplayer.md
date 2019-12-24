@@ -678,9 +678,7 @@ _Example_
 local nk = require("nakama")
 function match_loop(context, dispatcher, tick, state, messages)
   -- Assume we store presences in state
-  for i, presence in ipairs(state.presences) do
-    dispatcher.match_kick(presence)
-  end
+  dispatcher.match_kick(state.presences)
   return state
 end
 ```
@@ -990,7 +988,7 @@ _Example_
 ```go tab="Go"
 func (m *Match) MatchTerminate(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, graceSeconds int) interface{} {
   // Custom code to process the termination of match.
-	return state  
+	return state
 }
 ```
 
