@@ -488,7 +488,7 @@ _Parameters_
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
 | tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
-| presences | table | Presences is a list of users that have joined the match. |
+| presences | table | Presences is a list of users that have just joined the match. |
 
 _Returns_
 
@@ -528,7 +528,7 @@ _Parameters_
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
 | tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
-| presences | table | Presences is a list of users that have joined the match. |
+| presences | table | Presences is a list of users that have just left the match. |
 
 _Returns_
 
