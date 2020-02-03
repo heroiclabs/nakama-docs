@@ -1,6 +1,6 @@
 # Godot client guide
 
-This client is built in [GDScript](https://github.com/heroiclabs/nakama-godot) and is compatibile with Godot Engine versions `3.1` and newer. To work with our Godot client you'll need to install and setup [Godot Engine](https://godotengine.org/download).
+This client is built in [GDScript](https://github.com/heroiclabs/nakama-godot) and is compatible with Godot Engine versions `3.1` and newer. To work with our Godot client you'll need to install and setup [Godot Engine](https://godotengine.org/download).
 
 The client is available on the <a href="https://godotengine.org/asset-library/asset" target="\_blank">Godot Asset Library</a> and also on <a href="https://github.com/heroiclabs/nakama-godot/releases/latest" target="\_blank">GitHub releases</a>. You can download "Nakama.zip" which contains all source code required in the client.
 
@@ -128,7 +128,7 @@ To join a chat channel and receive messages:
 
 ```gdscript
 	var room_name = "Heroes"
-	socket.connect("received_channel_message", self, "_on_channel_meesage_received")
+	socket.connect("received_channel_message", self, "_on_channel_message_received")
 	var channel = yield(socket.join_chat_async(room_name, NakamaClient.ChannelType.Room), "completed")
 	var content = {"hello": "world"} # Content MUST be a dictionary.
 	var send_ack = yield(socket.write_chat_message_async(channel.id, content), "completed")
@@ -225,5 +225,3 @@ func _ready():
 You can add this script as an autoload via `Project -> Project Settings -> AutoLoad` and access the client from other scripts via `MyClient.client`. A similar approach might be used for sockets.
 
 A collection of other code examples is available <a href="https://github.com/heroiclabs/nakama-godot/tree/master/snippets" target="\_blank">here</a>.
-<br>
-<br>
