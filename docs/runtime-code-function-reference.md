@@ -987,6 +987,7 @@ _Parameters_
 | method | string | The HTTP method verb used with the request. |
 | headers | table | A table of headers used with the request. |
 | content | string | The bytes to send with the request. |
+| timeout | number | Timeout of the request in milliseconds. Optional, by default is 5000ms. |
 
 _Returns_
 
@@ -1002,7 +1003,8 @@ local headers = {
   ["Accept"] = "application/json"
 }
 local content = nk.json_encode({}) -- encode table as JSON string
-local success, code, headers, body = pcall(nk.http_request, url, method, headers, content)
+local timeout = 5000 -- 5 seconds timeout
+local success, code, headers, body = pcall(nk.http_request, url, method, headers, content, timeout)
 if (not success) then
   nk.logger_error(("Failed %q"):format(code))
 elseif (code >= 400) then
