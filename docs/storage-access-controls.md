@@ -146,7 +146,7 @@ local object_ids = {
 }
 local objects = nk.storage_read(object_ids)
 for _, o in ipairs(objects) do
-  local message = ("value: %q"):format(o.Value)
+  local message = ("value: %q"):format(o.value)
   nk.logger_info(message)
 end
 ```
