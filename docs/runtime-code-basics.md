@@ -745,6 +745,16 @@ client.send(message: message).then { result in
 }
 ```
 
+```gdscript tab="Godot"
+var payload = {"PokemonName": "dragonite"}
+var rpc_id = "get_pokemon"
+var pokemon_info : NakamaAPI.ApiRpc = yield(client.rpc_async(session, rpc_id, JSON.print(payload)), "completed")
+if pokemon_info.is_exception():
+	print("An error occured: %s" % pokemon_info)
+	return
+print("Retrieved pokemon info: %s" % [parse_json(pokemon_info.payload)])
+```
+
 ```tab="REST"
 POST /v2/rpc/get_pokemon
 Host: 127.0.0.1:7350

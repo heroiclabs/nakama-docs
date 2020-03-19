@@ -75,6 +75,15 @@ client.send(message: message).catch { err in
 }
 ```
 
+```gdscript tab="Godot"
+var ids = ["user-id1", "user-id2"]
+var usernames = ["username1"]
+var result : NakamaAsyncResult = yield(client.add_friends_async(session, ids, usernames), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+```
+
 ```tab="REST"
 POST /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
@@ -163,6 +172,16 @@ client.send(message: message).then { friends in
 }
 ```
 
+```gdscript tab="Godot"
+var list : NakamaAPI.ApiFriendList = yield(client.list_friends_async(session), "completed")
+if list.is_exception():
+	print("An error occured: %s" % list)
+	return
+for f in list.friends:
+	var friend = f as NakamaAPI.ApiFriend
+	print("User %s, status %s" % [friend.user.id, friend.state])
+```
+
 ```tab="REST"
 GET /v2/friend
 Host: 127.0.0.1:7350
@@ -237,6 +256,16 @@ client.send(message: message).then { _ in
 }
 ```
 
+```gdscript tab="Godot"
+var ids = ["user-id1", "user-id2"]
+var usernames = ["username1"]
+var remove : NakamaAsyncResult = yield(client.delete_friends_async(session, ids, usernames), "completed")
+if remove.is_exception():
+	print("An error occured: %s" % remove)
+	return
+print("Remove friends: user ids %s, usernames %s" % [ids, usernames])
+```
+
 ```tab="REST"
 DELETE /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
 Host: 127.0.0.1:7350
@@ -308,6 +337,16 @@ client.send(message: message).then { _ in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var ids = ["user-id1", "user-id2"]
+var usernames = ["username1"]
+var block : NakamaAsyncResult = yield(client.block_friends_async(session, ids, usernames), "completed")
+if block.is_exception():
+	print("An error occured: %s" % block)
+	return
+print("Remove friends: user ids %s, usernames %s" % [ids, usernames])
 ```
 
 ```tab="REST"

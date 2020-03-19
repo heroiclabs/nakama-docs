@@ -140,6 +140,16 @@ client.send(message: message).then { records in
 }
 ```
 
+```gdscript tab="Godot"
+var leaderboard_id = "level1"
+var score = 100
+var record : NakamaAPI.ApiLeaderboardRecord = yield(client.write_leaderboard_record_async(session, leaderboard_id, score), "completed")
+if record.is_exception():
+	print("An error occured: %s" % record)
+	return
+print("New record username %s and score %s" % [record.username, record.score])
+```
+
 ```tab="REST"
 POST /v2/leaderboard/<leaderboardId>
 Host: 127.0.0.1:7350
@@ -294,6 +304,16 @@ client.send(message: message).then { records in
 }
 ```
 
+```gdscript tab="Godot"
+var leaderboard_id = "level1"
+var score = 100
+var record : NakamaAPI.ApiLeaderboardRecord = yield(client.write_leaderboard_record_async(session, leaderboard_id, score), "completed")
+if record.is_exception():
+	print("An error occured: %s" % record)
+	return
+print("New record username %s and score %s" % [record.username, record.score])
+```
+
 ```tab="REST"
 POST /v2/leaderboard/<leaderboardId>
 Host: 127.0.0.1:7350
@@ -418,6 +438,18 @@ client.send(message: message).then { records in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 ```
+
+```gdscript tab="Godot"
+var leaderboard_id = "level1"
+var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for r in result.records:
+	var record : NakamaAPI.ApiLeaderboardRecord = r
+	print("Record username %s and score %s" % [record.username, record.score])
+```
+
 
 ```tab="REST"
 GET /v2/leaderboard/<leaderboardId>
@@ -633,6 +665,26 @@ client.send(message: message).then { records in
 }
 ```
 
+```gdscript tab="Godot"
+var leaderboard_id = "level1"
+var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id, null, null, 100), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for r in result.records:
+	var record : NakamaAPI.ApiLeaderboardRecord = r
+	print("Record username %s and score %s" % [record.username, record.score])
+
+if result.next_cursor:
+	result = yield(client.list_leaderboard_records_async(session, leaderboard_id, null, null, 100, result.next_cursor), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	for r in result.records:
+		var record : NakamaAPI.ApiLeaderboardRecord = r
+		print("Record username %s and score %s" % [record.username, record.score])
+```
+
 ```tab="REST"
 GET /v2/leaderboard/<leaderboardId>?cursor=<next_cursor>
 Host: 127.0.0.1:7350
@@ -763,6 +815,18 @@ client.send(message: message).then { records in
 }
 ```
 
+```gdscript tab="Godot"
+var leaderboard_id = "level1"
+var owner_ids = ["some", "friend", "user id"]
+var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id, owner_ids), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for r in result.records:
+	var record : NakamaAPI.ApiLeaderboardRecord = r
+	print("Record username %s and score %s" % [record.username, record.score])
+```
+
 ```tab="REST"
 GET /v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends
 Host: 127.0.0.1:7350
@@ -842,6 +906,18 @@ LeaderboardRecordList records = client.listLeaderboardRecordsAroundOwner(session
 
 ```swift tab="Swift"
 // Will be made available soon.
+```
+
+```gdscript tab="Godot"
+var leaderboard_id = "level1"
+var owner_id = "user id"
+var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_around_owner_async(session, leaderboard_id, owner_id), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for r in result.records:
+	var record : NakamaAPI.ApiLeaderboardRecord = r
+	print("Record username %s and score %s" % [record.username, record.score])
 ```
 
 ```tab="REST"

@@ -121,6 +121,18 @@ client.send(message: message).then { list in
 }
 ```
 
+```gdscript tab="Godot"
+var result : NakamaAPI.ApiStorageObjects = yield(client.read_storage_objects_async(session, [
+	NakamaStorageObjectId.new("configuration", "config")
+]), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+print("Read objects:")
+for o in result.objects:
+	print("%s" % o)
+```
+
 ```tab="REST"
 POST /v2/storage
 Host: 127.0.0.1:7350
@@ -326,6 +338,19 @@ client.send(message: message).then { list in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var army_setup = "{ \"soldiers\": 50 }";
+# "2" refers to Public Read permission
+# "1" refers to Owner Write permission
+var acks : NakamaAPI.ApiStorageObjectAcks = yield(client.write_storage_objects_async(session, [
+	NakamaWriteStorageObject.new("saves", "savegame", 2, 1, army_setup, "")
+]), "completed")
+if acks.is_exception():
+	print("An error occured: %s" % acks)
+	return
+print("Stored objects: %s" % [acks.acks])
 ```
 
 ```tab="REST"

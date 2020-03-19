@@ -54,6 +54,14 @@ Match match = socket.createMatch().get();
 System.out.format("Created match with ID %s.", match.getId());
 ```
 
+```gdscript tab="Godot"
+var created_match : NakamaRTAPI.Match = yield(socket.create_match_async(), "completed")
+if created_match.is_exception():
+	print("An error occured: %s" % created_match)
+	return
+print("New match with id %s.", created_match.match_id)
+```
+
 A user can [leave a match](#leave-a-match) at any point which will notify all other users.
 
 ## Join a match
@@ -152,6 +160,16 @@ Match match = socket.joinMatch(matchId).get();
 for (UserPresence presence : match.getPresences()) {
   System.out.format("User id %s name %s.", presence.getUserId(), presence.getUsername());
 }
+```
+
+```gdscript tab="Godot"
+var match_id = "<matchid>"
+var joined_match = yield(socket.join_match_async(match_id), "completed")
+if joined_match.is_exception():
+	print("An error occured: %s" % joined_match)
+	return
+for presence in joined_match.presences:
+	print("User id %s name %s'." % [presence.user_id, presence.username])
 ```
 
 The list of match opponents returned in the success callback might not include all users. It contains users who are connected to the match so far.
@@ -272,6 +290,19 @@ public void onMatchPresence(final MatchPresenceEvent matchPresence) {
 });
 ```
 
+```gdscript tab="Godot"
+var connected_opponents = {}
+
+socket.connect("received_match_presence", self, "_on_match_presence")
+
+func _on_match_presence(p_presence : NakamaRTAPI.MatchPresenceEvent):
+	for p in p_presence.joins:
+		connected_opponents[p.user_id] = p
+	for p in p_presence.leaves:
+		connected_opponents.erase(p.user_id)
+	print("Connected opponents: %s" % [connected_opponents])
+```
+
 No server updates are sent if there are no changes to the presence list.
 
 ## Send data messages
@@ -331,6 +362,13 @@ String id = "<matchid>";
 int opCode = 1;
 String data = "{\"message\":\"Hello world\"}";
 socket.sendMatchData(id, opCode, data);
+```
+
+```gdscript tab="Godot"
+var match_id = "<matchid>"
+var op_code = 1
+var new_state = {"hello": "world"}
+socket.send_match_state_async(match_id, op_code, JSON.print(new_state))
 ```
 
 ## Receive data messages
@@ -441,6 +479,13 @@ SocketListener listener = new AbstractSocketListener() {
 };
 ```
 
+```gdscript tab="Godot"
+socket.connect("received_match_state", self, "_on_match_state")
+
+func _on_match_state(p_state : NakamaRTAPI.MatchData):
+	print("Received match state with opcode %s, data %s" % [p_state.op_code, parse_json(p_state.data)])
+```
+
 ## Leave a match
 
 Users can leave a match at any point. A match ends when all users have left.
@@ -478,6 +523,15 @@ rtClient->leaveMatch(matchId);
 ```java tab="Java"
 String matchId = "<matchid>";
 socket.leaveMatch(matchId).get();
+```
+
+```gdscript tab="Godot"
+var match_id = "<matchid>"
+var leave : NakamaAsyncResult = yield(socket.leave_match_async(match_id), "completed")
+if leave.is_exception():
+	print("An error occured: %s" % leave)
+	return
+print("Match left")
 ```
 
 !!! Note

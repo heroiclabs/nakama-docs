@@ -121,6 +121,14 @@ client.onNotification = { notification in
 }
 ```
 
+```gdscript tab="Godot"
+socket.connect("received_notification", self, "_on_notification")
+
+func _on_notification(p_notification : NakamaAPI.ApiNotification):
+	print(p_notification)
+	print(p_notification.content)
+```
+
 ## List notifications
 
 You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. The exact logic depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.
@@ -208,6 +216,15 @@ client.send(message: message).then { notifications in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var result : NakamaAPI.ApiNotificationList = yield(client.list_notifications_async(session, 10), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for n in result.notifications:
+	print("Subject '%s' content '%s'" % [n.subject, n.content])
 ```
 
 ```tab="REST"
@@ -365,6 +382,23 @@ client.send(message: message).then { notifications in
 }
 ```
 
+```gdscript tab="Godot"
+var result : NakamaAPI.ApiNotificationList = yield(client.list_notifications_async(session, 1), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for n in result.notifications:
+	print("Subject '%s' content '%s'" % [n.subject, n.content])
+while result.cacheable_cursor and result.notifications:
+	result = yield(client.list_notifications_async(session, 10, result.cacheable_cursor), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	for n in result.notifications:
+		print("Subject '%s' content '%s'" % [n.subject, n.content])
+print("Done")
+```
+
 ```tab="REST"
 GET /v2/notification?limit=100&cursor=<cacheableCursor>
 Host: 127.0.0.1:7350
@@ -467,6 +501,16 @@ client.send(message: message).then { notifications in
 }
 ```
 
+```gdscript tab="Godot"
+var cursor = "<cacheable-cursor>";
+var result : NakamaAPI.ApiNotificationList = yield(client.list_notifications_async(session, 10, cursor), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for n in result.notifications:
+	print("Subject '%s' content '%s'" % [n.subject, n.content])
+```
+
 ```tab="REST"
 GET /v2/notification?limit=10&cursor=<cacheableCursor>
 Host: 127.0.0.1:7350
@@ -526,6 +570,15 @@ client.send(message: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var notification_ids = ["<notification-id>"]
+var delete : NakamaAsyncResult = yield(client.delete_notifications_async(session, notification_ids), "completed")
+if delete.is_exception():
+	print("An error occured: %s" % delete)
+	return
+print("Deleted")
 ```
 
 ```tab="REST"

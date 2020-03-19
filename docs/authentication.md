@@ -63,6 +63,10 @@ let client : Client = Builder("defaultkey")
 let client : Client = Builder.defaults(serverKey: "defaultkey")
 ```
 
+```gdscript tab="Godot"
+var client := Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
+```
+
 Every user account is created from one of the [options used to authenticate](#authenticate). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
 
 ## Authenticate
@@ -215,6 +219,16 @@ client.login(with: message).then { session in
 }
 ```
 
+```gdscript tab="Godot"
+# Unique ID is not supported by Godot in HTML5, use a different way to generate an id, or a different authentication option.
+var deviceid = OS.get_unique_id()
+var session : NakamaSession = yield(client.authenticate_device_async(deviceid), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Successfully authenticated: %s" % session)
+```
+
 ```tab="REST"
 POST /v2/account/authenticate/device?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
@@ -329,6 +343,16 @@ client.register(with: message).then { session in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
+```
+
+```gdscript tab="Godot"
+var email = "email@example.com"
+var password = "3bc8f72e95a9"
+var session : NakamaSession = yield(client.authenticate_email_async(email, password, "mycustomusername", true), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Successfully authenticated: %s" % session)
 ```
 
 ```tab="REST"
@@ -463,6 +487,15 @@ client.register(with: message).then { session in
 }
 ```
 
+```gdscript tab="Godot"
+var oauth_token = "..."
+var session : NakamaSession = yield(client.authenticate_facebook_async(oauth_token), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Successfully authenticated: %s" % session)
+```
+
 ```tab="REST"
 POST /v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true
 Host: 127.0.0.1:7350
@@ -570,6 +603,15 @@ client.register(with: message).then { session in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var oauth_token = "..."
+var session : NakamaSession = yield(client.authenticate_google_async(oauth_token), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Successfully authenticated: %s" % session)
 ```
 
 ```tab="REST"
@@ -734,6 +776,20 @@ client.register(with: message).then { session in
 // Use client.login(...) after register.
 ```
 
+```gdscript tab="Godot"
+var bundle_id = "..."
+var player_id = "..."
+var public_key_url = "..."
+var salt = "..."
+var signature = "..."
+var timestamp = "..."
+var session : NakamaSession = yield(client.authenticate_game_center_async(bundle_id, player_id, public_key_url, salt, signature, timestamp), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Successfully authenticated: %s" % session)
+```
+
 ```tab="REST"
 POST /v2/account/authenticate/gamecenter?create=true&username=mycustomusername
 Host: 127.0.0.1:7350
@@ -837,6 +893,15 @@ client.register(with: message).then { session in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
+```
+
+```gdscript tab="Godot"
+var steam_token = "..."
+var session : NakamaSession = yield(client.authenticate_steam_async(steam_token), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Successfully authenticated: %s" % session)
 ```
 
 ```tab="REST"
@@ -943,6 +1008,15 @@ client.register(with: message).then { session in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
 // Use client.login(...) after register.
+```
+
+```gdscript tab="Godot"
+var custom_id = "some-custom-id"
+var session : NakamaSession = yield(client.authenticate_custom_async(custom_id), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Successfully authenticated: %s" % session)
 ```
 
 ```tab="REST"
@@ -1059,6 +1133,15 @@ client.login(with: message).then { session in
 }
 ```
 
+```gdscript tab="Godot"
+var session : NakamaSession = yield(client.authenticate_device_async(deviceid), "completed")
+if session.is_exception():
+	print("An error occured: %s" % session)
+	return
+print("Id '%s' Username '%s'" % [session.id, session.username])
+print("Session expired? %s" % session.expired)
+```
+
 ### Connect
 
 With a session you can connect with the server and exchange realtime messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.
@@ -1139,6 +1222,15 @@ client.connect(with: session).then { _ in
 });
 ```
 
+```gdscript tab="Godot"
+var socket := Nakama.create_socket_from(client)
+var connected : NakamaAsyncResult = yield(socket.connect_async(session), "completed")
+if connected.is_exception():
+	print("An error occured: %s" % connected)
+	return
+print("Socket connected.")
+```
+
 ### Expiry
 
 Sessions can expire and become invalid. If this happens you'll need to reauthenticate with the server and get a new session. You can adjust the session lifetime on the server with the cmdflag "--session.token_expiry_sec 604800". See the [Session configuration](#install-configuration.md#session) page.
@@ -1193,6 +1285,11 @@ if (session->isExpired())
 if (session.isExpired(new Date())) {
   System.out.println("Session has expired. Must reauthenticate!");
 }
+```
+
+```gdscript tab="Godot"
+if session.expired:
+	print("Session has expired. Must reauthenticate!")
 ```
 
 ## Link or unlink
@@ -1281,6 +1378,15 @@ client.send(with: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var custom_id = "some-custom-id"
+var linked : NakamaAsyncResult = yield(client.link_custom_async(session, custom_id), "completed")
+if linked.is_exception():
+	print("An error occured: %s" % linked)
+	return
+print("Id '%s' linked for user '%s'" % [custom_id, session.user_id])
 ```
 
 ```tab="REST"
@@ -1378,6 +1484,15 @@ client.send(with: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var custom_id = "some-custom-id"
+var unlinked : NakamaAsyncResult = yield(client.unlink_custom_async(session, custom_id), "completed")
+if unlinked.is_exception():
+	print("An error occured: %s" % unlinked)
+	return
+print("Id '%s' unlinked for user '%s'" % [custom_id, session.user_id])
 ```
 
 ```tab="REST"

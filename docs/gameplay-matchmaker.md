@@ -153,6 +153,22 @@ MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
     query, minCount, maxCount, stringProperties, numericProperties).get();
 ```
 
+```gdscript tab="Godot"
+var query = "*"
+var min_count = 2
+var max_count = 4
+var string_properties = { "region": "europe" }
+var numeric_properties = { "rank": 8 }
+var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+	socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
+	"completed"
+)
+if matchmaker_ticket.is_exception():
+	print("An error occured: %s" % matchmaker_ticket)
+	return
+print("Got ticket: %s" % [matchmaker_ticket])
+```
+
 ### Query
 
 The query defines how the user wants to find their opponents. Queries inspect the properties set by matchmaker users to find users eligible to be matched, or can ignore them to find any available users using the wildcard `*` query. A typical matchmaker query may look for opponents between given ranks, or in a particular region.
@@ -298,6 +314,20 @@ MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
     query, minCount, maxCount, stringProperties, numericProperties).get();
 ```
 
+```gdscript tab="Godot"
+var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10"
+var string_properties = { "region": "europe"}
+var numeric_properties = { "rank": 8 }
+var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+	socket.add_matchmaker_async(query, 2, 4, string_properties, numeric_properties),
+	"completed"
+)
+if matchmaker_ticket.is_exception():
+	print("An error occured: %s" % matchmaker_ticket)
+	return
+print("Got ticket: %s" % [matchmaker_ticket])
+```
+
 Or use the wildcard query `"*"` to ignore opponents properties and match with anyone:
 
 ```js tab="JavaScript"
@@ -427,6 +457,22 @@ MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
     query, minCount, maxCount, stringProperties, numericProperties).get();
 ```
 
+```gdscript tab="Godot"
+var query = "*"
+var min_count = 2
+var max_count = 4
+var string_properties = { "region": "europe" }
+var numeric_properties = { "rank": 8 }
+var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+	socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
+	"completed"
+)
+if matchmaker_ticket.is_exception():
+	print("An error occured: %s" % matchmaker_ticket)
+	return
+print("Got ticket: %s" % [matchmaker_ticket])
+```
+
 ### Minimum and maximum count
 
 Users wishing to matchmake must specify a minimum and maximum number of opponents the matchmaker must find to succeed. If there aren't enough users that match the query to satisfy the minimum count, the user remains in the pool.
@@ -551,6 +597,20 @@ int maxCount = 4;
 MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
 ```
 
+```gdscript tab="Godot"
+var query = "*"
+var min_count = 4
+var max_count = 4
+var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+	socket.add_matchmaker_async(query, min_count, max_count),
+	"completed"
+)
+if matchmaker_ticket.is_exception():
+	print("An error occured: %s" % matchmaker_ticket)
+	return
+print("Got ticket: %s" % [matchmaker_ticket])
+```
+
 ## Matchmaker tickets
 
 Each time a user is added to the matchmaker pool they receive a ticket, a unique identifier for their entry into the pool.
@@ -639,6 +699,20 @@ int maxCount = 4;
 MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
 ```
 
+```gdscript tab="Godot"
+var query = "*"
+var min_count = 2
+var max_count = 4
+var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+	socket.add_matchmaker_async(query, min_count, max_count),
+	"completed"
+)
+if matchmaker_ticket.is_exception():
+	print("An error occured: %s" % matchmaker_ticket)
+	return
+print("Got ticket: %s" % [matchmaker_ticket])
+```
+
 This ticket is used when the server notifies the client on matching success. It distinguishes between multiple possible matchmaker operations for the same user. The user may also cancel the matchmaking process using the ticket at any time, but only before the ticket has been fulfilled.
 
 ## Remove a user from the matchmaker
@@ -694,6 +768,14 @@ rtClient->removeMatchmaker(ticket, []()
 ```java tab="Java"
 // "matchmakerTicket" is returned by the matchmaker.
 socket.removeMatchmaker(matchmakerTicket.getTicket()).get();
+```
+
+```gdscript tab="Godot"
+var removed : NakamaAsyncResult = yield(socket.remove_matchmaker_async(matchmaker_ticket.ticket), "completed")
+if removed.is_exception():
+	print("An error occured: %s" % removed)
+	return
+print("Removed from matchmaking %s" % [matchmaker_ticket.ticket])
 ```
 
 If the user has multiple entries in the matchmaker only the one identified by the ticket will be removed.
@@ -758,6 +840,14 @@ SocketListener listener = new AbstractSocketListener() {
     System.out.format("Matched opponents: %s", opponents.toString());
   }
 };
+```
+
+```gdscript tab="Godot"
+socket.connect("received_matchmaker_matched", self, "_on_matchmaker_matched")
+
+func _on_matchmaker_matched(p_matched : NakamaRTAPI.MatchmakerMatched):
+	print("Received MatchmakerMatched message: %s" % [p_matched])
+	print("Matched opponents: %s" % [p_matched.users])
 ```
 
 ## Join a match
@@ -842,4 +932,14 @@ SocketListener listener = new AbstractSocketListener() {
     socket.joinMatchToken(matched.getToken()).get();
   }
 };
+```
+
+```gdscript tab="Godot"
+func _on_matchmaker_matched(p_matched : NakamaRTAPI.MatchmakerMatched):
+	print("Received MatchmakerMatched message: %s" % [p_matched])
+	var joined_match : NakamaRTAPI.Match = yield(socket.join_matched_async(p_matched), "completed")
+	if joined_match.is_exception():
+		print("An error occured: %s" % joined_match)
+		return
+	print("Joined match: %s" % [joined_match])
 ```
