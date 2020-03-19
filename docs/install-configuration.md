@@ -28,8 +28,8 @@ There are a few configuration properties that need to be changed in most environ
 
 | Parameter | Description
 | --------- | -----------
-| <a class="anchor" id="name">¶</a> `name` | Nakama node name (must be unique) - It will default to `nakama`.
-| <a class="anchor" id="data_dir">¶</a> `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
+| `name` | Nakama node name (must be unique) - It will default to `nakama`.
+| `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
 | `runtime.path` | Path of modules to scan and load. Defaults to `data_dir/modules`.
 | `database.address` | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
 | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
@@ -58,9 +58,9 @@ If fields are not specific, default values will be used. For more information on
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| `name` | `name` | Nakama node name (must be unique) - It will default to `nakama`. This name is also used in the log files.
-| `data_dir` | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
-| `shutdown_grace_sec` | `shutdown_grace_sec` | Maximum number of seconds to wait for the server to complete work before shutting down. If 0 the server will shut down immediately when it receives a termination signal. Default value is `0`.
+| <a class="anchor" id="name">¶</a> `name` | `name` | Nakama node name (must be unique) - It will default to `nakama`. This name is also used in the log files.
+| <a class="anchor" id="data_dir">¶</a> `data_dir` | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
+| <a class="anchor" id="shutdown_grace_sec">¶</a> `shutdown_grace_sec` | `shutdown_grace_sec` | Maximum number of seconds to wait for the server to complete work before shutting down. If 0 the server will shut down immediately when it receives a termination signal. Default value is `0`.
 
 ### Cluster
 
