@@ -1,0 +1,8 @@
+/*this fixes the issue of custom anchors being displayed a few lines off
+will be fixed in mkdocs-material 5.0.x - https://github.com/squidfunk/mkdocs-material/commit/bfca02762d325324191beb8325e77360f5679cd6
+*/
+a.anchor {
+    position: relative;
+    top: -60px;
+    visibility: hidden;
+}

@@ -32,6 +32,9 @@ theme:
 extra_javascript:
   - 'javascripts/main.js'
 
+extra_css:
+  - 'css/extra.css'
+
 # Options
 extra:
   search:
