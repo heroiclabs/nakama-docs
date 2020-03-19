@@ -85,9 +85,16 @@ This section defined the configuration related for the embedded developer consol
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
+| `address` | `console.address` | The IP address of the interface to listen for console traffic on. Default listen on all available addresses/interfaces.
+| `max_message_size_bytes` | `console.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message.
+| `idle_timeout_ms` | `console.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled.
 | `password` | `console.password` | Password for the embedded console. Default is "password".
 | `port` | `console.port` | The port for accepting connections for the embedded console, listening on all interfaces. Default value is 7351.
+| `read_timeout_ms` | `console.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request.
+| `signing_key` | `console.signing_key` | Key used to sign console session tokens.
+| `token_expiry_sec` | `console.token_expiry_sec` | Token expiry in seconds. Default 86400.
 | `username` | `console.username` | Username for the embedded console. Default is "admin".
+| `write_timeout_ms` | `console.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response.
 
 ### Database
 
@@ -114,6 +121,8 @@ You can change configuration options related to the leaderboard and tournament s
 | Parameter | Flag | Description
 | --------- | ---- | -----------
 | `blacklist_rank_cache` | `leaderboard.blacklist_rank_cache` | Disable rank cache for leaderboards with matching leaderboard names.
+| `callback_queue_size` | `leaderboard.callback_queue_size` | Size of the leaderboard and tournament callback queue that sequences expiry/reset/end invocations. Default 65536.
+| `callback_queue_workers` | `leaderboard.callback_queue_workers` | Number of workers to use for concurrent processing of leaderboard and tournament callbacks. Default 8.
 
 !!! tip "Disable rank cache"
     To disable rank cache entirely, use `*`, otherwise leave blank to enable rank cache.
@@ -126,6 +135,7 @@ Nakama produces logs in JSON format so various systems can interact with the log
 | --------- | ---- | -----------
 | `compress` | `logger.compress` | This determines if the rotated log files should be compressed using gzip.
 | `file` | `logger.file` | Log output to a file (as well as `stdout` if set). Make sure that the directory and the file is writable.
+| `format` | `logger.format` | Set logging output format. Can either be 'JSON' or 'Stackdriver'. Default is 'JSON'.
 | `level` | `logger.level` | Minimum log level to produce. Values are `debug`, `info`, `warn` and `error`. Default is `info`.
 | `local_time` | `logger.local_time` | This determines if the time used for formatting the timestamps in backup files is the computer's local time. The default is to use UTC time.
 | `max_age` | `logger.max_age` | The maximum number of days to retain old log files based on the timestamp encoded in their filename. The default is not to remove old log files based on age.
@@ -147,6 +157,7 @@ You can change configuration options related to the authoritative multiplayer ru
 | `input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
 | `join_attempt_queue_size` | `match.join_attempt_queue_size` | Size of the authoritative match buffer that limits the number of in-progress join attempts. Default 128.
 | `join_marker_deadline_ms` | `match.join_marker_deadline_ms` | Deadline in milliseconds that client authoritative match joins will wait for match handlers to acknowledge joins. Default 5000.
+| `max_empty_sec` | `match.max_empty_sec` | Maximum number of consecutive seconds that authoritative matches are allowed to be empty before they are stopped. 0 indicates no maximum. Default 0.
 
 ### Metrics
 
@@ -169,6 +180,8 @@ Options related to Lua-based runtime engine.
 | --------- | ---- | -----------
 | `call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
 | `env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
+| `event_queue_size` | `runtime.event_queue_size` | Size of the event queue buffer. Default 65536.
+| `event_queue_workers` | `runtime.event_queue_workers` | Number of workers to use for concurrent processing of events. Default 8. 
 | `http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
 | `max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
 | `min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
@@ -208,6 +221,14 @@ Configure Steam network settings. Facebook, Google and GameCenter don't require 
 | --------- | ---- | -----------
 | `app_id` | `steam.app_id` | Steam App ID.
 | `publisher_key` | `steam.publisher_key` | Steam Publisher Key.
+
+#### Facebook Instant Game
+
+Configuration relevant to Facebook Instant Games.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| `app_secret` | `facebook_instant_game.app_secret` | Facebook Instant App Secret.
 
 ### Socket
 
