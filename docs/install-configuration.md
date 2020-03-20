@@ -58,9 +58,9 @@ If fields are not specific, default values will be used. For more information on
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="name">¶</a> `name` | `name` | Nakama node name (must be unique) - It will default to `nakama`. This name is also used in the log files.
-| <a class="anchor" id="data_dir">¶</a> `data_dir` | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
-| <a class="anchor" id="shutdown_grace_sec">¶</a> `shutdown_grace_sec` | `shutdown_grace_sec` | Maximum number of seconds to wait for the server to complete work before shutting down. If 0 the server will shut down immediately when it receives a termination signal. Default value is `0`.
+| <a class="anchor" id="name"></a>`name` | `name` | Nakama node name (must be unique) - It will default to `nakama`. This name is also used in the log files.
+| <a class="anchor" id="data_dir"></a>`data_dir` | `data_dir` | An absolute path to a writeable folder where Nakama will store its data, including logs. Default value is the working directory that Nakama was started on.
+| <a class="anchor" id="shutdown_grace_sec"></a>`shutdown_grace_sec` | `shutdown_grace_sec` | Maximum number of seconds to wait for the server to complete work before shutting down. If 0 the server will shut down immediately when it receives a termination signal. Default value is `0`.
 
 ### Cluster
 
@@ -73,11 +73,11 @@ This section configures how the nodes should connect to each to other form a clu
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="cluster.gossip_bindaddr">¶</a> `gossip_bindaddr` | `cluster.gossip_bindaddr` | Interface address to bind Nakama to for discovery. By default listening on all interfaces.
-| <a class="anchor" id="cluster.gossip_bindport">¶</a> `gossip_bindport` | `cluster.gossip_bindport` | Port number to bind Nakama to for discovery. Default value is 7352.
-| <a class="anchor" id="cluster.join">¶</a> `join` | `cluster.join` | List of hostname and port of other Nakama nodes to connect to.
-| <a class="anchor" id="cluster.max_message_size_bytes">¶</a> `max_message_size_bytes` | `cluster.max_message_size_bytes` | Maximum amount of data in bytes allowed to be sent between Nakama nodes per message. Default value is 4194304.
-| <a class="anchor" id="cluster.rpc_port">¶</a> `rpc_port` | `cluster.rpc_port` | Port number to use to send data between Nakama nodes. Default value is 7353.
+| <a class="anchor" id="cluster.gossip_bindaddr"></a>`gossip_bindaddr` | `cluster.gossip_bindaddr` | Interface address to bind Nakama to for discovery. By default listening on all interfaces.
+| <a class="anchor" id="cluster.gossip_bindport"></a>`gossip_bindport` | `cluster.gossip_bindport` | Port number to bind Nakama to for discovery. Default value is 7352.
+| <a class="anchor" id="cluster.join"></a>`join` | `cluster.join` | List of hostname and port of other Nakama nodes to connect to.
+| <a class="anchor" id="cluster.max_message_size_bytes"></a>`max_message_size_bytes` | `cluster.max_message_size_bytes` | Maximum amount of data in bytes allowed to be sent between Nakama nodes per message. Default value is 4194304.
+| <a class="anchor" id="cluster.rpc_port"></a>`rpc_port` | `cluster.rpc_port` | Port number to use to send data between Nakama nodes. Default value is 7353.
 
 ### Console
 
@@ -85,16 +85,16 @@ This section defined the configuration related for the embedded developer consol
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="console.address">¶</a> `address` | `console.address` | The IP address of the interface to listen for console traffic on. Default listen on all available addresses/interfaces.
-| <a class="anchor" id="console.max_message_size_bytes">¶</a> `max_message_size_bytes` | `console.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message.
-| <a class="anchor" id="console.idle_timeout_ms">¶</a> `idle_timeout_ms` | `console.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled.
-| <a class="anchor" id="console.password">¶</a> `password` | `console.password` | Password for the embedded console. Default is "password".
-| <a class="anchor" id="console.port">¶</a> `port` | `console.port` | The port for accepting connections for the embedded console, listening on all interfaces. Default value is 7351.
-| <a class="anchor" id="console.read_timeout_ms">¶</a> `read_timeout_ms` | `console.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request.
-| <a class="anchor" id="console.signing_key">¶</a> `signing_key` | `console.signing_key` | Key used to sign console session tokens.
-| <a class="anchor" id="console.token_expiry_sec">¶</a> `token_expiry_sec` | `console.token_expiry_sec` | Token expiry in seconds. Default 86400.
-| <a class="anchor" id="console.username">¶</a> `username` | `console.username` | Username for the embedded console. Default is "admin".
-| <a class="anchor" id="console.write_timeout_ms">¶</a> `write_timeout_ms` | `console.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response.
+| <a class="anchor" id="console.address"></a>`address` | `console.address` | The IP address of the interface to listen for console traffic on. Default listen on all available addresses/interfaces.
+| <a class="anchor" id="console.max_message_size_bytes"></a>`max_message_size_bytes` | `console.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message.
+| <a class="anchor" id="console.idle_timeout_ms"></a>`idle_timeout_ms` | `console.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled.
+| <a class="anchor" id="console.password"></a>`password` | `console.password` | Password for the embedded console. Default is "password".
+| <a class="anchor" id="console.port"></a>`port` | `console.port` | The port for accepting connections for the embedded console, listening on all interfaces. Default value is 7351.
+| <a class="anchor" id="console.read_timeout_ms"></a>`read_timeout_ms` | `console.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request.
+| <a class="anchor" id="console.signing_key"></a>`signing_key` | `console.signing_key` | Key used to sign console session tokens.
+| <a class="anchor" id="console.token_expiry_sec"></a>`token_expiry_sec` | `console.token_expiry_sec` | Token expiry in seconds. Default 86400.
+| <a class="anchor" id="console.username"></a>`username` | `console.username` | Username for the embedded console. Default is "admin".
+| <a class="anchor" id="console.write_timeout_ms"></a>`write_timeout_ms` | `console.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response.
 
 ### Database
 
@@ -102,10 +102,10 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="database.address">¶</a> `address` | `database.address` | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
-| <a class="anchor" id="database.conn_max_lifetime_ms">¶</a> `conn_max_lifetime_ms` | `database.conn_max_lifetime_ms` | Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.. Default value is 0 (indefinite).
-| <a class="anchor" id="database.max_idle_conns">¶</a> `max_idle_conns` | `database.max_idle_conns` | Maximum number of allowed open but unused connections to the database. Default value is 100.
-| <a class="anchor" id="database.max_open_conns">¶</a> `max_open_conns` | `database.max_open_conns` | Maximum number of allowed open connections to the database. Default value is 0 (no limit).
+| <a class="anchor" id="database.address"></a>`address` | `database.address` | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
+| <a class="anchor" id="database.conn_max_lifetime_ms"></a>`conn_max_lifetime_ms` | `database.conn_max_lifetime_ms` | Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.. Default value is 0 (indefinite).
+| <a class="anchor" id="database.max_idle_conns"></a>`max_idle_conns` | `database.max_idle_conns` | Maximum number of allowed open but unused connections to the database. Default value is 100.
+| <a class="anchor" id="database.max_open_conns"></a>`max_open_conns` | `database.max_open_conns` | Maximum number of allowed open connections to the database. Default value is 0 (no limit).
 
 !!! tip "Database addresses"
     You can pass in multiple database addresses to Nakama via command like:
@@ -120,9 +120,9 @@ You can change configuration options related to the leaderboard and tournament s
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="leaderboard.blacklist_rank_cache">¶</a> `blacklist_rank_cache` | `leaderboard.blacklist_rank_cache` | Disable rank cache for leaderboards with matching leaderboard names.
-| <a class="anchor" id="leaderboard.callback_queue_size">¶</a> `callback_queue_size` | `leaderboard.callback_queue_size` | Size of the leaderboard and tournament callback queue that sequences expiry/reset/end invocations. Default 65536.
-| <a class="anchor" id="leaderboard.callback_queue_workers">¶</a> `callback_queue_workers` | `leaderboard.callback_queue_workers` | Number of workers to use for concurrent processing of leaderboard and tournament callbacks. Default 8.
+| <a class="anchor" id="leaderboard.blacklist_rank_cache"></a>`blacklist_rank_cache` | `leaderboard.blacklist_rank_cache` | Disable rank cache for leaderboards with matching leaderboard names.
+| <a class="anchor" id="leaderboard.callback_queue_size"></a>`callback_queue_size` | `leaderboard.callback_queue_size` | Size of the leaderboard and tournament callback queue that sequences expiry/reset/end invocations. Default 65536.
+| <a class="anchor" id="leaderboard.callback_queue_workers"></a>`callback_queue_workers` | `leaderboard.callback_queue_workers` | Number of workers to use for concurrent processing of leaderboard and tournament callbacks. Default 8.
 
 !!! tip "Disable rank cache"
     To disable rank cache entirely, use `*`, otherwise leave blank to enable rank cache.
@@ -133,16 +133,16 @@ Nakama produces logs in JSON format so various systems can interact with the log
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="logger.compress">¶</a> `compress` | `logger.compress` | This determines if the rotated log files should be compressed using gzip.
-| <a class="anchor" id="logger.file">¶</a> `file` | `logger.file` | Log output to a file (as well as `stdout` if set). Make sure that the directory and the file is writable.
-| <a class="anchor" id="logger.format">¶</a> `format` | `logger.format` | Set logging output format. Can either be 'JSON' or 'Stackdriver'. Default is 'JSON'.
-| <a class="anchor" id="logger.level">¶</a> `level` | `logger.level` | Minimum log level to produce. Values are `debug`, `info`, `warn` and `error`. Default is `info`.
-| <a class="anchor" id="logger.local_time">¶</a> `local_time` | `logger.local_time` | This determines if the time used for formatting the timestamps in backup files is the computer's local time. The default is to use UTC time.
-| <a class="anchor" id="logger.max_age">¶</a> `max_age` | `logger.max_age` | The maximum number of days to retain old log files based on the timestamp encoded in their filename. The default is not to remove old log files based on age.
-| <a class="anchor" id="logger.max_backups">¶</a> `max_backups` | `logger.max_backups` | The maximum number of old log files to retain. The default is to retain all old log files (though `max_age` may still cause them to get deleted.)
-| <a class="anchor" id="logger.max_size">¶</a> `max_size` | `logger.max_size` | The maximum size in megabytes of the log file before it gets rotated. It defaults to 100 megabytes. Default is 100.
-| <a class="anchor" id="logger.rotation">¶</a> `rotation` | `logger.rotation` | Rotate log files. Default is false.
-| <a class="anchor" id="logger.stdout">¶</a> `stdout` | `logger.stdout` | Redirect logs to console standard output. The log file will no longer be used. Default is `true`.
+| <a class="anchor" id="logger.compress"></a>`compress` | `logger.compress` | This determines if the rotated log files should be compressed using gzip.
+| <a class="anchor" id="logger.file"></a>`file` | `logger.file` | Log output to a file (as well as `stdout` if set). Make sure that the directory and the file is writable.
+| <a class="anchor" id="logger.format"></a>`format` | `logger.format` | Set logging output format. Can either be 'JSON' or 'Stackdriver'. Default is 'JSON'.
+| <a class="anchor" id="logger.level"></a>`level` | `logger.level` | Minimum log level to produce. Values are `debug`, `info`, `warn` and `error`. Default is `info`.
+| <a class="anchor" id="logger.local_time"></a>`local_time` | `logger.local_time` | This determines if the time used for formatting the timestamps in backup files is the computer's local time. The default is to use UTC time.
+| <a class="anchor" id="logger.max_age"></a>`max_age` | `logger.max_age` | The maximum number of days to retain old log files based on the timestamp encoded in their filename. The default is not to remove old log files based on age.
+| <a class="anchor" id="logger.max_backups"></a>`max_backups` | `logger.max_backups` | The maximum number of old log files to retain. The default is to retain all old log files (though `max_age` may still cause them to get deleted.)
+| <a class="anchor" id="logger.max_size"></a>`max_size` | `logger.max_size` | The maximum size in megabytes of the log file before it gets rotated. It defaults to 100 megabytes. Default is 100.
+| <a class="anchor" id="logger.rotation"></a>`rotation` | `logger.rotation` | Rotate log files. Default is false.
+| <a class="anchor" id="logger.stdout"></a>`stdout` | `logger.stdout` | Redirect logs to console standard output. The log file will no longer be used. Default is `true`.
 
 The standard startup log messages will always be printed to the console irrespective of the value of `logger.stdout` field.
 
@@ -152,12 +152,12 @@ You can change configuration options related to the authoritative multiplayer ru
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="match.call_queue_size">¶</a> `call_queue_size` | `match.call_queue_size` | Size of the authoritative match buffer that sequences calls to match handler callbacks to ensure no overlaps. Default 128.
-| <a class="anchor" id="match.deferred_queue_size">¶</a> `deferred_queue_size` | `match.deferred_queue_size` | Size of the authoritative match buffer that holds deferred message broadcasts until the end of each loop execution. Default 128.
-| <a class="anchor" id="match.input_queue_size">¶</a> `input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
-| <a class="anchor" id="match.join_attempt_queue_size">¶</a> `join_attempt_queue_size` | `match.join_attempt_queue_size` | Size of the authoritative match buffer that limits the number of in-progress join attempts. Default 128.
-| <a class="anchor" id="match.join_marker_deadline_ms">¶</a> `join_marker_deadline_ms` | `match.join_marker_deadline_ms` | Deadline in milliseconds that client authoritative match joins will wait for match handlers to acknowledge joins. Default 5000.
-| <a class="anchor" id="match.max_empty_sec">¶</a> `max_empty_sec` | `match.max_empty_sec` | Maximum number of consecutive seconds that authoritative matches are allowed to be empty before they are stopped. 0 indicates no maximum. Default 0.
+| <a class="anchor" id="match.call_queue_size"></a>`call_queue_size` | `match.call_queue_size` | Size of the authoritative match buffer that sequences calls to match handler callbacks to ensure no overlaps. Default 128.
+| <a class="anchor" id="match.deferred_queue_size"></a>`deferred_queue_size` | `match.deferred_queue_size` | Size of the authoritative match buffer that holds deferred message broadcasts until the end of each loop execution. Default 128.
+| <a class="anchor" id="match.input_queue_size"></a>`input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
+| <a class="anchor" id="match.join_attempt_queue_size"></a>`join_attempt_queue_size` | `match.join_attempt_queue_size` | Size of the authoritative match buffer that limits the number of in-progress join attempts. Default 128.
+| <a class="anchor" id="match.join_marker_deadline_ms"></a>`join_marker_deadline_ms` | `match.join_marker_deadline_ms` | Deadline in milliseconds that client authoritative match joins will wait for match handlers to acknowledge joins. Default 5000.
+| <a class="anchor" id="match.max_empty_sec"></a>`max_empty_sec` | `match.max_empty_sec` | Maximum number of consecutive seconds that authoritative matches are allowed to be empty before they are stopped. 0 indicates no maximum. Default 0.
 
 ### Metrics
 
@@ -165,10 +165,10 @@ Nakama produces metrics information. This information can be exported to Stackdr
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="metrics.namespace">¶</a> `namespace` | `metrics.namespace` | Namespace for Prometheus or prefix for Stackdriver metrics. It will always prepend node name. Default value is empty.
-| <a class="anchor" id="metrics.prometheus_port">¶</a> `prometheus_port` | `metrics.prometheus_port` | Port to expose Prometheus. Default value is '0' which disables Prometheus exports.
-| <a class="anchor" id="metrics.reporting_freq_sec">¶</a> `reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 60 seconds.
-| <a class="anchor" id="metrics.stackdriver_projectid">¶</a> `stackdriver_projectid` | `metrics.stackdriver_projectid` | This is the identifier of the Stackdriver project the server is uploading the stats data to. Setting this enables metrics to be exported to Stackdriver.
+| <a class="anchor" id="metrics.namespace"></a>`namespace` | `metrics.namespace` | Namespace for Prometheus or prefix for Stackdriver metrics. It will always prepend node name. Default value is empty.
+| <a class="anchor" id="metrics.prometheus_port"></a>`prometheus_port` | `metrics.prometheus_port` | Port to expose Prometheus. Default value is '0' which disables Prometheus exports.
+| <a class="anchor" id="metrics.reporting_freq_sec"></a>`reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 60 seconds.
+| <a class="anchor" id="metrics.stackdriver_projectid"></a>`stackdriver_projectid` | `metrics.stackdriver_projectid` | This is the identifier of the Stackdriver project the server is uploading the stats data to. Setting this enables metrics to be exported to Stackdriver.
 
 Ensure that metrics exports are protected as they contain sensitive server information.
 
@@ -178,15 +178,15 @@ Options related to Lua-based runtime engine.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="runtime.call_stack_size">¶</a> `call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
-| <a class="anchor" id="runtime.env">¶</a> `env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
-| <a class="anchor" id="runtime.event_queue_size">¶</a> `event_queue_size` | `runtime.event_queue_size` | Size of the event queue buffer. Default 65536.
-| <a class="anchor" id="runtime.event_queue_workers">¶</a> `event_queue_workers` | `runtime.event_queue_workers` | Number of workers to use for concurrent processing of events. Default 8. 
-| <a class="anchor" id="runtime.http_key">¶</a> `http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
-| <a class="anchor" id="runtime.max_count">¶</a> `max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
-| <a class="anchor" id="runtime.min_count">¶</a> `min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
-| <a class="anchor" id="runtime.path">¶</a> `path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
-| <a class="anchor" id="runtime.registry_size">¶</a> `registry_size` | `runtime.registry_size` | Size of each runtime instance's registry. Default 512.
+| <a class="anchor" id="runtime.call_stack_size"></a>`call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
+| <a class="anchor" id="runtime.env"></a>`env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
+| <a class="anchor" id="runtime.event_queue_size"></a>`event_queue_size` | `runtime.event_queue_size` | Size of the event queue buffer. Default 65536.
+| <a class="anchor" id="runtime.event_queue_workers"></a>`event_queue_workers` | `runtime.event_queue_workers` | Number of workers to use for concurrent processing of events. Default 8. 
+| <a class="anchor" id="runtime.http_key"></a>`http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
+| <a class="anchor" id="runtime.max_count"></a>`max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
+| <a class="anchor" id="runtime.min_count"></a>`min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
+| <a class="anchor" id="runtime.path"></a>`path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
+| <a class="anchor" id="runtime.registry_size"></a>`registry_size` | `runtime.registry_size` | Size of each runtime instance's registry. Default 512.
 
 !!! warning "Important"
     You must change `http_key` before going live with your app!
@@ -204,8 +204,8 @@ You can change configuration options related to each user session, such as the e
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="session.encryption_key">¶</a> `encryption_key` | `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
-| <a class="anchor" id="session.token_expiry_sec">¶</a> `token_expiry_sec` | `session.token_expiry_sec` | Token expiry in seconds. Default value is 60.
+| <a class="anchor" id="session.encryption_key"></a>`encryption_key` | `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
+| <a class="anchor" id="session.token_expiry_sec"></a>`token_expiry_sec` | `session.token_expiry_sec` | Token expiry in seconds. Default value is 60.
 
 !!! warning "Important"
     You must change `encryption_key` before going live with your app!
@@ -219,8 +219,8 @@ Configure Steam network settings. Facebook, Google and GameCenter don't require 
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="steam.app_id">¶</a> `app_id` | `steam.app_id` | Steam App ID.
-| <a class="anchor" id="steam.publisher_key">¶</a> `publisher_key` | `steam.publisher_key` | Steam Publisher Key.
+| <a class="anchor" id="steam.app_id"></a>`app_id` | `steam.app_id` | Steam App ID.
+| <a class="anchor" id="steam.publisher_key"></a>`publisher_key` | `steam.publisher_key` | Steam Publisher Key.
 
 #### Facebook Instant Game
 
@@ -228,7 +228,7 @@ Configuration relevant to Facebook Instant Games.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="facebook_instant_game.app_secret">¶</a> `app_secret` | `facebook_instant_game.app_secret` | Facebook Instant App Secret.
+| <a class="anchor" id="facebook_instant_game.app_secret"></a>`app_secret` | `facebook_instant_game.app_secret` | Facebook Instant App Secret.
 
 ### Socket
 
@@ -236,22 +236,22 @@ Options related to connection socket and transport protocol between the server a
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="socket.address">¶</a> `address` | `socket.address` | The IP address of the interface to listen for client traffic on. Default listen on all available addresses/interfaces.
-| <a class="anchor" id="socket.idle_timeout_ms">¶</a> `idle_timeout_ms` | `socket.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled. Used for HTTP connections. Default value is 60000.
-| <a class="anchor" id="socket.max_message_size_bytes">¶</a> `max_message_size_bytes` | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Used for real-time connections. Default value is 4096.
-| <a class="anchor" id="socket.max_request_size_bytes">¶</a> `max_request_size_bytes` | `socket.max_request_size_bytes` | Maximum amount of data in bytes allowed to be read from clients per request. Used for gRPC and HTTP connections.. Default value is 4096.
-| <a class="anchor" id="socket.outgoing_queue_size">¶</a> `outgoing_queue_size` | `socket.outgoing_queue_size` | The maximum number of messages waiting to be sent to the client. If this is exceeded the client is considered too slow and will disconnect. Used when processing real-time connections. Default value is 16.
-| <a class="anchor" id="socket.ping_backoff_threshold">¶</a> `ping_backoff_threshold` | `socket.ping_backoff_threshold` | Minimum number of messages received from the client during a single ping period that will delay the sending of a ping until the next ping period, to avoid sending unnecessary pings on regularly active connections. Default value is 20.
-| <a class="anchor" id="socket.ping_period_ms">¶</a> `ping_period_ms` | `socket.ping_period_ms` | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Used for real-time connections. Default value is 15000.
-| <a class="anchor" id="socket.pong_wait_ms">¶</a> `pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 25000.
-| <a class="anchor" id="socket.port">¶</a> `port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
-| <a class="anchor" id="socket.protocol">¶</a> `protocol` | `socket.protocol` | The network protocol to listen for traffic on. Possible values are `tcp` for both IPv4 and IPv6, `tcp4` for IPv4 only, or `tcp6` for IPv6 only. Default `tcp`."
-| <a class="anchor" id="socket.read_timeout_ms">¶</a> `read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
-| <a class="anchor" id="socket.server_key">¶</a> `server_key` | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
-| <a class="anchor" id="socket.ssl_certificate">¶</a> `ssl_certificate` | `socket.ssl_certificate` | Path to certificate file if you want the server to use SSL directly. Must also supply ssl_private_key. NOT recommended for production use.
-| <a class="anchor" id="socket.ssl_private_key">¶</a> `ssl_private_key` | `socket.ssl_private_key` | Path to private key file if you want the server to use SSL directly. Must also supply ssl_certificate. NOT recommended for production use.
-| <a class="anchor" id="socket.write_timeout_ms">¶</a> `write_timeout_ms` | `socket.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response. Used for HTTP connections. Default value is 10000.
-| <a class="anchor" id="socket.write_wait_ms">¶</a> `write_wait_ms` | `socket.write_wait_ms` | Time in milliseconds to wait for an ack from the client when writing data. Used for real-time connections. Default value is 5000.
+| <a class="anchor" id="socket.address"></a>`address` | `socket.address` | The IP address of the interface to listen for client traffic on. Default listen on all available addresses/interfaces.
+| <a class="anchor" id="socket.idle_timeout_ms"></a>`idle_timeout_ms` | `socket.idle_timeout_ms` | Maximum amount of time in milliseconds to wait for the next request when keep-alives are enabled. Used for HTTP connections. Default value is 60000.
+| <a class="anchor" id="socket.max_message_size_bytes"></a>`max_message_size_bytes` | `socket.max_message_size_bytes` | Maximum amount of data in bytes allowed to be read from the client socket per message. Used for real-time connections. Default value is 4096.
+| <a class="anchor" id="socket.max_request_size_bytes"></a>`max_request_size_bytes` | `socket.max_request_size_bytes` | Maximum amount of data in bytes allowed to be read from clients per request. Used for gRPC and HTTP connections.. Default value is 4096.
+| <a class="anchor" id="socket.outgoing_queue_size"></a>`outgoing_queue_size` | `socket.outgoing_queue_size` | The maximum number of messages waiting to be sent to the client. If this is exceeded the client is considered too slow and will disconnect. Used when processing real-time connections. Default value is 16.
+| <a class="anchor" id="socket.ping_backoff_threshold"></a>`ping_backoff_threshold` | `socket.ping_backoff_threshold` | Minimum number of messages received from the client during a single ping period that will delay the sending of a ping until the next ping period, to avoid sending unnecessary pings on regularly active connections. Default value is 20.
+| <a class="anchor" id="socket.ping_period_ms"></a>`ping_period_ms` | `socket.ping_period_ms` | Time in milliseconds to wait between client ping messages. This value must be less than the `pong_wait_ms`. Used for real-time connections. Default value is 15000.
+| <a class="anchor" id="socket.pong_wait_ms"></a>`pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 25000.
+| <a class="anchor" id="socket.port"></a>`port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
+| <a class="anchor" id="socket.protocol"></a>`protocol` | `socket.protocol` | The network protocol to listen for traffic on. Possible values are `tcp` for both IPv4 and IPv6, `tcp4` for IPv4 only, or `tcp6` for IPv6 only. Default `tcp`."
+| <a class="anchor" id="socket.read_timeout_ms"></a>`read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
+| <a class="anchor" id="socket.server_key"></a>`server_key` | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
+| <a class="anchor" id="socket.ssl_certificate"></a>`ssl_certificate` | `socket.ssl_certificate` | Path to certificate file if you want the server to use SSL directly. Must also supply ssl_private_key. NOT recommended for production use.
+| <a class="anchor" id="socket.ssl_private_key"></a>`ssl_private_key` | `socket.ssl_private_key` | Path to private key file if you want the server to use SSL directly. Must also supply ssl_certificate. NOT recommended for production use.
+| <a class="anchor" id="socket.write_timeout_ms"></a>`write_timeout_ms` | `socket.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response. Used for HTTP connections. Default value is 10000.
+| <a class="anchor" id="socket.write_wait_ms"></a>`write_wait_ms` | `socket.write_wait_ms` | Time in milliseconds to wait for an ack from the client when writing data. Used for real-time connections. Default value is 5000.
 
 !!! warning "Important"
     You must change `server_key` before going live with your app!
@@ -267,7 +267,7 @@ You can change configuration options related to session tracking.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="tracker.event_queue_size">¶</a> `event_queue_size` | `tracker.event_queue_size` | Size of the tracker presence event buffer. Increase if the server is expected to generate a large number of presence events in a short time. Default value is 1024.
+| <a class="anchor" id="tracker.event_queue_size"></a>`event_queue_size` | `tracker.event_queue_size` | Size of the tracker presence event buffer. Increase if the server is expected to generate a large number of presence events in a short time. Default value is 1024.
 
 !!! tip "Nakama Enterprise Only"
     The following configuration options are available only in the Nakama Enterprise version of the Nakama server
@@ -276,11 +276,11 @@ You can change configuration options related to session tracking.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="tracker.broadcast_period_ms">¶</a> `broadcast_period_ms` | `tracker.broadcast_period_ms` | Time in milliseconds between tracker presence replication broadcasts to each cluster node. Default value is 1500.
-| <a class="anchor" id="tracker.clock_sample_periods">¶</a> `clock_sample_periods` | `tracker.clock_sample_periods` | Number of broadcasts before a presence transfer will be requested from a cluster node if one is not received as expected. Default value is 2.
-| <a class="anchor" id="tracker.max_delta_sizes">¶</a> `max_delta_sizes` | `tracker.max_delta_sizes` | Number of deltas and maximum presence count per delta for presence snapshots used to broadcast minimal subsets of presence data to cluster nodes. Default values are 100, 1000 and 10000.
-| <a class="anchor" id="tracker.max_silent_periods">¶</a> `max_silent_periods` | `tracker.max_silent_periods` | Maximum number of missed broadcasts before a cluster node's presences are considered down. Default value is 10.
-| <a class="anchor" id="tracker.permdown_period_ms">¶</a> `permdown_period_ms` | `tracker.permdown_period_ms` | Time in milliseconds since last broadcast before a cluster node's presences are considered permanently down and will be removed. Default value is 1200000.
+| <a class="anchor" id="tracker.broadcast_period_ms"></a>`broadcast_period_ms` | `tracker.broadcast_period_ms` | Time in milliseconds between tracker presence replication broadcasts to each cluster node. Default value is 1500.
+| <a class="anchor" id="tracker.clock_sample_periods"></a>`clock_sample_periods` | `tracker.clock_sample_periods` | Number of broadcasts before a presence transfer will be requested from a cluster node if one is not received as expected. Default value is 2.
+| <a class="anchor" id="tracker.max_delta_sizes"></a>`max_delta_sizes` | `tracker.max_delta_sizes` | Number of deltas and maximum presence count per delta for presence snapshots used to broadcast minimal subsets of presence data to cluster nodes. Default values are 100, 1000 and 10000.
+| <a class="anchor" id="tracker.max_silent_periods"></a>`max_silent_periods` | `tracker.max_silent_periods` | Maximum number of missed broadcasts before a cluster node's presences are considered down. Default value is 10.
+| <a class="anchor" id="tracker.permdown_period_ms"></a>`permdown_period_ms` | `tracker.permdown_period_ms` | Time in milliseconds since last broadcast before a cluster node's presences are considered permanently down and will be removed. Default value is 1200000.
 
 <!--
 
@@ -294,9 +294,9 @@ Apple In-App Purchase configuration
 
 | Parameter    | Flag                  | Description
 | ---------    | ----                  | -----------
-| <a class="anchor" id="apple.password">¶</a> `password`   | `apple.password`      | Your application's shared secret.
-| <a class="anchor" id="apple.production">¶</a> `production` | `apple.production`    | The order in which the reciept verification server will be contacted. Set `false` for test apps and `true` for live apps. Default is `false`.
-| <a class="anchor" id="apple.timeout_ms">¶</a> `timeout_ms` | `apple.timeout_ms`    | Connection timeout to connect to Apple services. Default value is 1500.
+| <a class="anchor" id="apple.password"></a>`password`   | `apple.password`      | Your application's shared secret.
+| <a class="anchor" id="apple.production"></a>`production` | `apple.production`    | The order in which the reciept verification server will be contacted. Set `false` for test apps and `true` for live apps. Default is `false`.
+| <a class="anchor" id="apple.timeout_ms"></a>`timeout_ms` | `apple.timeout_ms`    | Connection timeout to connect to Apple services. Default value is 1500.
 
 #### Google
 
@@ -304,9 +304,9 @@ Google In-App Purchase configuration
 
 | Parameter          | Flag                       | Description
 | ---------          | ----                       | -----------
-| <a class="anchor" id="google.package">¶</a> `package`          | `google.package`           | The package name the app is published under, such as `com.myapp.testapp`.
-| <a class="anchor" id="google.service_key_file">¶</a> `service_key_file` | `google.service_key_file`  | Absolute file path to the service key JSON file.
-| <a class="anchor" id="google.timeout_ms">¶</a> `timeout_ms`       | `google..timeout_ms`       | Connection timeout to connect to Google services. Default value is 1500.
+| <a class="anchor" id="google.package"></a>`package`          | `google.package`           | The package name the app is published under, such as `com.myapp.testapp`.
+| <a class="anchor" id="google.service_key_file"></a>`service_key_file` | `google.service_key_file`  | Absolute file path to the service key JSON file.
+| <a class="anchor" id="google.timeout_ms"></a>`timeout_ms`       | `google..timeout_ms`       | Connection timeout to connect to Google services. Default value is 1500.
 
 -->
 
