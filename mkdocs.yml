@@ -109,6 +109,7 @@ nav:
   - 'Function Reference': 'runtime-code-function-reference.md'
 #- 'Nakama enterprise': 'nakama-enterprise.md'
 - 'Advanced':
+  - 'Events': 'advanced-events.md'
   - 'Streams': 'advanced-streams.md'
 - 'Benchmarks': 'benchmarks.md'
 - 'Deployment':
