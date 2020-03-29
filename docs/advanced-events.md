@@ -1,76 +1,140 @@
 # Events
 
-Events API is available to use as an internal message queue, decoupling __event producers__ from __event handlers__. It is widely employed for making blocking server-side requests in such a way that the user does not notice an increase in latency.
+Events are a powerful way to send data to the game server and create data to be processed in the background on the server. You can create and receive data which can be forwarded to 3rd-party services like Analytics, Ads, In-app Purchases, and more.
 
-One good example is implementing __analytics__ by having __events__ emitted by functions that execute game logic, and processing those __events__ in a separate thread by issuing network requests to a 3rd party server (such as Segment or Google Analytics). This way a user gets their response from the nakama-based game immediately, and a potentially slow external request is made in the background.
+This has a number of advantages for game studios and developers:
 
-## Event Handlers
+* It reduces the number of client-side SDKs which shrinks the game client; valuable to improve the FTUE and number of players who will download the game,
+* Less network traffic is used by game clients to various 3rd party services, and
+* It significantly reduces the integration time, and active maintenance cost spent by the development team.
 
-!!! Note
-    Events API __requires__ that a server-based Event Handler is implemented in __Go__.
+A good use case is to implement game analytics or Liveops by using events emitted in the client or by server-side functions. These events will be processed in the background inside Nakama server. Players have minimal interuption to their gameplay experience and developers can optimize and improve games based on the feedback from the analytics.
 
-Event Handlers are supported for events that are issued by either a client (these are called __external__) or the server itself (__internal__). Register a generic handler as
+Internally this feature is implemented with a high performance circular buffer to store events received and a worker pool of consumers (event handlers) to ensure that large numbers of events received cannot overload the server if the event handlers cannot keep up.
 
-```go tab="Go"
-initializer.RegisterEvent(func(ctx context.Context, logger runtime.Logger, event *api.Event) {})
+## Generate Events
+
+Events can be sent to the server by game clients or created on the server. An event has a name and a map of properties which decorate the event with more information.
+
+### Send Events
+
+Use the event API to send to the server.
+
+```bash tab="cURL"
+curl -vvv -H "Authorization: Bearer $SESSION"  http://127.0.0.1:7350/v2/event -d '{"name": "my_event", "properties": {"my_key": "my_value"}}'
 ```
 
-during module initialization.
+### Create Events
 
-Two additional handlers may be specified for processing __Session__ events
+Use the server side module to generate events in your Go code.
 
 ```go tab="Go"
-initializer.RegisterEventSessionStart(func(ctx context.Context, logger runtime.Logger, event *api.Event) {})
-initializer.RegisterEventSessionEnd(func(ctx context.Context, logger runtime.Logger, event *api.Event) {})
+// import "github.com/heroiclabs/nakama-common/api"
+// import "github.com/heroiclabs/nakama-common/runtime"
+
+// ctx context.Context, nk runtime.NakamaModule
+evt := &api.Event{
+	Name:       "event_name"
+	Properties: map[string]string{
+		"my_key": "my_value",
+	},
+	External:   true,
+}
+if err := nk.Event(ctx, evt); err != nil {
+	// Handle error.
+}
 ```
 
-these will only work on two types of events: `session_start` and `session_end`, and are useful for tracking users connecting to and disconnecting from the game server.
-
-## Event producers
-
 !!! Note
-    At the moment of writing, server-side events may only be produced in a __Go__ runtime.
+    It's not possible to create events from the Lua runtime yet.
 
-Events can be created:
+You can also take advantage of [after hooks](runtime-code-basics.md#after-hook) in the server runtime when you want to send events from other features in the server. For example when a user account is updated and you might want to send an event to be processed.
 
-- in __go__ plugins using
+```go tab="Go"
+func afterUpdateAccount(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.UpdateAccountRequest) error {
+	evt := &api.Event{
+		Name:       "account_updated",
+		Properties: map[string]string{},
+		External:   false,
+	}
+	return nk.Event(context.Background(), evt)
+}
 
-  ```go tab="Go"
-  err = nk.Event(ctx, &api.Event{
-    Name:           "event_name",
-    Timestamp:      timestamp,
-    Properties:     map[string]string {
-      "payload":  payload,
-    },
-    External:       false,
-  })
-  ```
+func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+	if err := initializer.RegisterAfterUpdateAccount(afterUpdateAccount); err != nil {
+		return err
+	}
+	return nil
+}
+```
 
-- by issuing HTTP requests to the `/v2/event` API endpoint
+### Builtin Events
 
-  ```bash tab="curl"
-  curl -vvv -H "Authorization: Bearer $TOKEN"  https://localhost:7350/v2/event -d '{"name": "my_event", "properties": {"my_key": "my_value"}}'
-  ```
+The server will generate builtin events which can be processed specifically for the __SessionStart__ and __SessionEnd__ actions. These special events occur when the server has a new socket session start and when it ends. See below for how to process these events.
 
-- and with various compatible nakama clients - please refer to clients documentation.
+## Process Events
 
-## Configuration
+Events can be processed with a function registered to the runtime initializer at server startup. Events will have its external field marked as `true` if its been generated by clients.
 
-Internally, the __event queue__ is a circular buffer; if __event handlers__ cannot cope with the rate of incoming __events__ then older records will be overwritten to maintain quality of service.
+```go tab="Go"
+func processEvent(ctx context.Context, logger runtime.Logger, evt *api.Event) {
+	switch evt.GetName() {
+	case "account_updated":
+		logger.Debug("process evt: %+v", evt)
+		// Send event to an analytics service.
+	default:
+		logger.Error("unrecognised evt: %+v", evt)
+	}
+}
 
-The __event queue__ has two configurable options
+// initializer runtime.Initializer
+if err := initializer.RegisterEvent(processEvent); err != nil {
+	return err
+}
+```
 
-- Size of the event queue buffer `-runtime.event_queue_size int`. Defaults to 65536.
+### Builtin Events
 
-- Number of workers to use for concurrent processing of events. `-runtime.event_queue_workers int`. Defaults to 8.
+Events which are internally generated have their own registration functions. The SessionStart is created when a new socket connection is opened on the server.
 
+```go tab="Go"
+func eventSessionStart(ctx context.Context, logger runtime.Logger, evt *api.Event) {
+	logger.Debug("process event session start: %+v", evt)
+}
+
+// initializer runtime.Initializer
+if err := initializer.RegisterEventSessionStart(eventSessionStart); err != nil {
+	return err
+}
+```
+
+The SessionEnd event is created when the socket connection for a session is closed. The socket could have closed for a number of reasons but can be observed to react on.
+
+```go tab="Go"
+func eventSessionEnd(ctx context.Context, logger runtime.Logger, evt *api.Event) {
+	logger.Debug("process event session end: %+v", evt)
+}
+
+// initializer runtime.Initializer
+if err := initializer.RegisterEventSessionEnd(eventSessionEnd); err != nil {
+	return err
+}
+```
+
+## Advanced Settings
+
+To protect the performance of the server the event processing subsystem is designed to limit the resources allocated to process events. You can adjust the resources allocated to this subsystem with these configuration settings.
+
+| Configuration Key | Value | Description |
+| ----------------- | ----- | ----------- |
+| runtime.event_queue_size | int | Size of the event queue buffer. Defaults to 65536. |
+| runtime.event_queue_workers | int | Number of workers to use for concurrent processing of events. Defaults to 8. |
+
+To review other configuration settings have a look at [these](install-configuration.md) docs.
 
 ## Example
 
-This is a complete sample plugin in __Go__ that registers an [RPC function](/runtime-code-basics) to use as a trigger for issuing an __event__ and defines a __handler__ for it, along with two (unused) handlers for following connection open and close events.
-
-!!! Note
-    All of the functions below return errors (handling omitted for brevity here), please make sure you process them in your code!
+This is a complete sample plugin in Go which processes SessionStart, SessionEnd, and events generated when a user account is updated.
 
 ```go tab="Go"
 package main
@@ -78,62 +142,53 @@ package main
 import (
 	"context"
 	"database/sql"
-	"time"
-
-	"github.com/golang/protobuf/ptypes"
-
+	"github.com/heroiclabs/kyoso-poker-backend/pokerengine"
 	"github.com/heroiclabs/nakama-common/api"
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 
-func trigger(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	logger.Info("events: processing trigger")
-
-	timestamp, _ := ptypes.TimestampProto(time.Now())
-
-	_ = nk.Event(ctx, &api.Event{
-		Name:		"RPC_triggered_event",
-		Timestamp:	timestamp,
-		Properties:	map[string]string {
-			"payload":  payload,
-			"property": "value",
-		},
-		External:	false,
-	})
-
-	return "triggered an event", nil
+func afterUpdateAccount(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.UpdateAccountRequest) error {
+	evt := &api.Event{
+		Name:       "account_updated",
+		Properties: map[string]string{},
+		External:   false,
+	}
+	return nk.Event(context.Background(), evt)
 }
 
+func processEvent(ctx context.Context, logger runtime.Logger, evt *api.Event) {
+	switch evt.GetName() {
+	case "account_updated":
+		logger.Debug("process evt: %+v", evt)
+		// Send event to an analytics service.
+	default:
+		logger.Error("unrecognised evt: %+v", evt)
+	}
+}
+
+func eventSessionEnd(ctx context.Context, logger runtime.Logger, evt *api.Event) {
+	logger.Debug("process event session end: %+v", evt)
+}
+
+func eventSessionStart(ctx context.Context, logger runtime.Logger, evt *api.Event) {
+	logger.Debug("process event session start: %+v", evt)
+}
+
+//noinspection GoUnusedExportedFunction
 func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
-	logger.Info("events: the plugin loaded")
-
-	_ = initializer.RegisterRpc("trigger_event", trigger)
-
-	_ = initializer.RegisterEvent(func(ctx context.Context, logger runtime.Logger, event *api.Event) {
-		// Having a switch-case in the event handling function is a common pattern for processing events of multiple kinds in the same function.
-		switch event.GetName() {
-		case "RPC_triggered_event":
-			event_type := "internal"
-			if event.GetExternal() {
-				event_type = "external"
-			}
-
-			for k, v := range event.GetProperties() {
-				logger.Info("events: %s event %s has property %s = %s", event_type, event.GetName(), k, v)
-			}
-		default:
-			logger.Warn("events: %s processing is not implemented", event.GetName())
-		}
-	})
-
-	_ = initializer.RegisterEventSessionStart(func(ctx context.Context, logger runtime.Logger, event *api.Event) {
-		logger.Info("event: received a session_start event %+v", event)
-	})
-
-	_ = initializer.RegisterEventSessionEnd(func(ctx context.Context, logger runtime.Logger, event *api.Event) {
-		logger.Info("event: received a session_close event %+v", event)
-	})
-
+	if err := initializer.RegisterAfterUpdateAccount(afterUpdateAccount); err != nil {
+		return err
+	}
+	if err := initializer.RegisterEvent(processEvent); err != nil {
+		return err
+	}
+	if err := initializer.RegisterEventSessionEnd(eventSessionEnd); err != nil {
+		return err
+	}
+	if err := initializer.RegisterEventSessionStart(eventSessionStart); err != nil {
+		return err
+	}
+	logger.Info("Server loaded.")
 	return nil
 }
 ```
