@@ -193,7 +193,9 @@ SocketListener listener = new AbstractSocketListener() {
 ```
 
 ```gdscript tab="Godot"
-socket.connect("received_status_presence", self, "_on_status_presence")
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_status_presence", self, "_on_status_presence")
 
 func _on_status_presence(p_presence : NakamaRTAPI.StatusPresenceEvent):
 	print(p_presence)

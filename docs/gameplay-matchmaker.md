@@ -843,7 +843,9 @@ SocketListener listener = new AbstractSocketListener() {
 ```
 
 ```gdscript tab="Godot"
-socket.connect("received_matchmaker_matched", self, "_on_matchmaker_matched")
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_matchmaker_matched", self, "_on_matchmaker_matched")
 
 func _on_matchmaker_matched(p_matched : NakamaRTAPI.MatchmakerMatched):
 	print("Received MatchmakerMatched message: %s" % [p_matched])

@@ -98,7 +98,9 @@ client.onTopicMessage = { message in
 ```
 
 ```gdscript tab="Godot"
-socket.connect("received_channel_message", self, "_on_channel_message")
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_channel_message", self, "_on_channel_message")
 
 func  _on_channel_message(p_message : NakamaAPI.ApiChannelMessage):
 	print(p_message)
@@ -802,7 +804,7 @@ client.send(message: message).then { topics in
 var room_users = {}
 
 func _ready():
-	# Listener for new chat room presences.
+	# First, setup the socket as explained in the authentication section.
 	socket.connect("received_channel_presence", self, "_on_channel_presence")
 
 	# Connect to the room.

@@ -122,7 +122,9 @@ client.onNotification = { notification in
 ```
 
 ```gdscript tab="Godot"
-socket.connect("received_notification", self, "_on_notification")
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_notification", self, "_on_notification")
 
 func _on_notification(p_notification : NakamaAPI.ApiNotification):
 	print(p_notification)

@@ -35,12 +35,13 @@ To authenticate you should follow our recommended pattern in your client code:
 &nbsp;&nbsp; 1\. Build an instance of the client.
 
 ```gdscript
-	var client = Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
+onready var client = Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
 ```
 
 &nbsp;&nbsp; 2\. Authenticate a user. By default the server will create a user if it doesn't exist.
 
 ```gdscript
+func _ready():
 	var email = "hello@example.com"
 	var password = "somesupersecretpassword"
 	# Use yield(client.function(), "completed") to wait for the request to complete. Hopefully, Godot will implement the await keyword in future versions.
@@ -105,7 +106,12 @@ Since Godot Engine does not support exceptions, whenever you make an async reque
 The client can create one or more sockets with the server. Each socket can have it's own event listeners registered for responses received from the server.
 
 ```gdscript
-	var socket = Nakama.create_socket_from(client)
+onready var client := Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
+onready var socket := Nakama.create_socket_from(client)
+
+func _ready():
+	# Authenticate with the client and receive the session as shown above.
+	# ...
 	socket.connect("connected", self, "_on_socket_connected")
 	socket.connect("closed", self, "_on_socket_closed")
 	socket.connect("received_error", self, "_on_socket_error")

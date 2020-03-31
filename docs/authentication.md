@@ -64,7 +64,7 @@ let client : Client = Builder.defaults(serverKey: "defaultkey")
 ```
 
 ```gdscript tab="Godot"
-var client := Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
+onready var client := Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
 ```
 
 Every user account is created from one of the [options used to authenticate](#authenticate). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
@@ -1223,12 +1223,15 @@ client.connect(with: session).then { _ in
 ```
 
 ```gdscript tab="Godot"
-var socket := Nakama.create_socket_from(client)
-var connected : NakamaAsyncResult = yield(socket.connect_async(session), "completed")
-if connected.is_exception():
-	print("An error occured: %s" % connected)
-	return
-print("Socket connected.")
+# Make this a node variable, or it will disconnect when the function that creates it returns.
+onready var socket := Nakama.create_socket_from(client)
+
+func _ready():
+	var connected : NakamaAsyncResult = yield(socket.connect_async(session), "completed")
+	if connected.is_exception():
+		print("An error occured: %s" % connected)
+		return
+	print("Socket connected.")
 ```
 
 ### Expiry

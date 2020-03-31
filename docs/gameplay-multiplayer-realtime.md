@@ -293,7 +293,9 @@ public void onMatchPresence(final MatchPresenceEvent matchPresence) {
 ```gdscript tab="Godot"
 var connected_opponents = {}
 
-socket.connect("received_match_presence", self, "_on_match_presence")
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_match_presence", self, "_on_match_presence")
 
 func _on_match_presence(p_presence : NakamaRTAPI.MatchPresenceEvent):
 	for p in p_presence.joins:
@@ -480,7 +482,9 @@ SocketListener listener = new AbstractSocketListener() {
 ```
 
 ```gdscript tab="Godot"
-socket.connect("received_match_state", self, "_on_match_state")
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_match_state", self, "_on_match_state")
 
 func _on_match_state(p_state : NakamaRTAPI.MatchData):
 	print("Received match state with opcode %s, data %s" % [p_state.op_code, parse_json(p_state.data)])
