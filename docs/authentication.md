@@ -83,7 +83,7 @@ You can choose a custom username when creating the account. To do this, set `use
 A device identifier must contain alphanumeric characters with dashes and be between 10 and 128 bytes.
 
 ```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
+curl "http://127.0.0.1:7350/v2/account/authenticate/device?create=true&username=mycustomusername" \
   --user 'defaultkey:' \
   --data '{"id":"uniqueidentifier"}'
 ```
