@@ -78,6 +78,16 @@ client.send(message: message).then { selfuser in
 }
 ```
 
+```gdscript tab="Godot"
+var account : NakamaAPI.ApiAccount = yield(client.get_account_async(session), "completed")
+if account.is_exception():
+	print("An error occured: %s" % account)
+	return
+var user = account.user
+print("User id '%s' and username '%s'." % [user.id, user.username])
+print("User's wallet: %s." % account.wallet)
+```
+
 ```tab="REST"
 GET /v2/account
 Host: 127.0.0.1:7350
@@ -264,6 +274,18 @@ client.send(message: message).then { users in
 }
 ```
 
+```gdscript tab="Godot"
+var ids = ["userid1", "userid2"]
+var usernames = ["username1", "username2"]
+var facebook_ids = ["facebookid1"]
+var result : NakamaAPI.ApiUsers = yield(client.get_users_async(session, ids, usernames, facebook_ids), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for u in result.users:
+	print("User id '%s' username '%s'" % [u.id, u.username])
+```
+
 ```tab="REST"
 GET /v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1
 Host: 127.0.0.1:7350
@@ -384,6 +406,17 @@ client.send(message: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var display_name = "My new name";
+var avatar_url = "http://graph.facebook.com/avatar_url";
+var location = "San Francisco";
+var update : NakamaAsyncResult = yield(client.update_account_async(session, null, display_name, avatar_url, null, location), "completed")
+if update.is_exception():
+	print("An error occured: %s" % update)
+	return
+print("Account updated")
 ```
 
 ```tab="REST"

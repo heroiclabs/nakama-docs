@@ -97,6 +97,17 @@ client.onTopicMessage = { message in
 }
 ```
 
+```gdscript tab="Godot"
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_channel_message", self, "_on_channel_message")
+
+func  _on_channel_message(p_message : NakamaAPI.ApiChannelMessage):
+	print(p_message)
+	print("Received a message on channel: %s" % [p_message.channel_id])
+	print("Message content: %s" % [p_message.content])
+```
+
 In group chat a user will receive other messages from the server. These messages contain events on users who join or leave the group, when someone is promoted as an admin, etc. You may want users to see these messages in the chat stream or ignore them in the UI.
 
 You can identify event messages from chat messages by the message "Type".
@@ -156,6 +167,11 @@ switch messageType {
   default:
     NSLog("Received message with event type %d", messageType.rawValue)
 }
+```
+
+```gdscript tab="Godot"
+if p_message.code != 0:
+	print("Received message with code:", p_message.code)
 ```
 
 | Code | Purpose | Source | Description |
@@ -277,6 +293,18 @@ client.send(message: message).then { topics in
 }
 ```
 
+```gdscript tab="Godot"
+var roomname = "MarvelMovieFans"
+var persistence = true
+var hidden = false
+var type = NakamaSocket.ChannelType.Room
+var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(roomname, type, persistence, hidden), "completed")
+if channel.is_exception():
+	print("An error occured: %s" % channel)
+	return
+print("Now connected to channel id: '%s'" % [channel.id])
+```
+
 The `roomId` variable contains an ID used to [send messages](#send-messages).
 
 ### groups
@@ -385,6 +413,18 @@ client.send(message: message).then { topics in
 }
 ```
 
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var persistence = true
+var hidden = false
+var type = NakamaSocket.ChannelType.Group
+var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(group_id, type, persistence, hidden), "completed")
+if channel.is_exception():
+	print("An error occured: %s" % channel)
+	return
+print("Now connected to channel id: '%s'" % [channel.id])
+```
+
 The `"<group id>"` variable must be an ID used to [send messages](#send-messages).
 
 ### direct
@@ -491,6 +531,18 @@ client.send(message: message).then { topics in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var user_id = "<user id>"
+var persistence = true
+var hidden = false
+var type = NakamaSocket.ChannelType.DirectMessage
+var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(user_id, type, persistence, hidden), "completed")
+if channel.is_exception():
+	print("An error occured: %s" % channel)
+	return
+print("Now connected to channel id: '%s'" % [channel.id])
 ```
 
 The `"<user id>"` variable must be an ID used to [send messages](#send-messages).
@@ -748,6 +800,36 @@ client.send(message: message).then { topics in
 }
 ```
 
+```gdscript tab="Godot"
+var room_users = {}
+
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_channel_presence", self, "_on_channel_presence")
+
+	# Connect to the room.
+	var roomname = "MarvelMovieFans"
+	var persistence = true
+	var hidden = false
+	var type = NakamaSocket.ChannelType.Room
+	var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(roomname, type, persistence, hidden), "completed")
+	if channel.is_exception():
+		print("An error occured: %s" % channel)
+		return
+
+	# Add users already present in chat room.
+	for p in channel.presences:
+		room_users[p.user_id] = p
+	print("Users in room: %s" % [room_users.keys()])
+
+func _on_channel_presence(p_presence : NakamaRTAPI.ChannelPresenceEvent):
+	for p in p_presence.joins:
+		room_users[p.user_id] = p
+	for p in p_presence.leaves:
+		room_users.erase(p.user_id)
+	print("Users in room: %s" % [room_users.keys()])
+```
+
 !!! Tip
     The server is optimized to only push presence updates when other users join or leave the chat.
 
@@ -835,6 +917,16 @@ client.send(message: message).then { ack in
 }
 ```
 
+```gdscript tab="Godot"
+var channel_id = "<channel id>"
+var data = { "some": "data" }
+var message_ack : NakamaRTAPI.ChannelMessageAck = yield(socket.write_chat_message_async(channel_id, data), "completed")
+if message_ack.is_exception():
+	print("An error occured: %s" % message_ack)
+	return
+print("Sent message %s" % [message_ack])
+```
+
 ## Leave chat
 
 A user can leave a chat channel to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.
@@ -889,6 +981,15 @@ client.send(message: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var channel_id = "<channel id>"
+var result : NakamaAsyncResult = yield(socket.leave_chat_async(channel_id), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+print("Left chat")
 ```
 
 ## Message history
@@ -1007,6 +1108,18 @@ client.send(message: message).then { messages in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var channel_id = "<channel id>"
+var result : NakamaAPI.ApiChannelMessageList = yield(client.list_channel_messages_async(session, channel_id, 10), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for m in result.messages:
+	var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
+	print("Message has id %s and content %s" % [message.message_id, message.content])
+print("Get the next page of messages with the cursor: %s" % [result.next_cursor])
 ```
 
 ```tab="REST"
@@ -1189,6 +1302,26 @@ client.send(message: message).then { messages in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var channel_id = "<channel id>"
+var forward = true
+var result : NakamaAPI.ApiChannelMessageList = yield(client.list_channel_messages_async(session, channel_id, 10, forward), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for m in result.messages:
+	var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
+	print("Message has id %s and content %s" % [message.message_id, message.content])
+if result.next_cursor:
+	result = yield(client.list_channel_messages_async(session, channel_id, 10, forward, result.next_cursor), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	for m in result.messages:
+		var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
+		print("Message has id %s and content %s" % [message.message_id, message.content])
 ```
 
 ```tab="REST"

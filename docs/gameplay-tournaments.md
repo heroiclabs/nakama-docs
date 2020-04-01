@@ -138,6 +138,20 @@ TournamentList tournaments = client.listTournaments(session, categoryStart, cate
 // Will be made available soon.
 ```
 
+```gdscript tab="Godot"
+var category_start = 1
+var category_end = 2
+var start_time = 1538147711
+var end_time = -1 # all tournaments from the start time
+var limit = 100 # number to list per page
+var cursor = null
+var result : NakamaAPI.ApiTournamentList = yield(client.list_tournaments_async(session, category_start, category_end, start_time, end_time, limit, cursor), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+print("Tournaments: %s" % [result])
+```
+
 ```tab="REST"
 GET /v2/tournament
   ?category_start=<category_start>
@@ -214,6 +228,15 @@ client.joinTournament(session, id).get();
 
 ```swift tab="Swift"
 // Will be made available soon.
+```
+
+```gdscript tab="Godot"
+var id = "someid"
+var success : NakamaAsyncResult = yield(client.join_tournament_async(session, id), "completed")
+if success.is_exception():
+	print("An error occured: %s" % success)
+	return
+print("Joined tournament")
 ```
 
 ```tab="REST"
@@ -303,6 +326,17 @@ LeaderboardRecordList records = client.listLeaderboardRecords(session, id, sessi
 
 ```swift tab="Swift"
 // Will be made available soon.
+```
+
+```gdscript tab="Godot"
+var id = "someid"
+var limit = 100
+var cursor = null
+var result : NakamaAPI.ApiTournamentRecordList = yield(client.list_tournament_records_async(session, id, [session.user_id], limit, cursor), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+print("Records: %s" % [result])
 ```
 
 ```tab="REST"
@@ -397,6 +431,17 @@ TournamentRecordList records = client.listTournamentRecordsAroundOwner(session, 
 
 ```swift tab="Swift"
 // Will be made available soon.
+```
+
+```gdscript tab="Godot"
+var id = "someid"
+var owner_id = "some user ID"
+var limit = 100
+var result : NakamaAPI.ApiTournamentRecordList = yield(client.list_tournament_records_around_owner_async(session, id, owner_id, limit), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+print("Records: %s" % [result])
 ```
 
 ```tab="REST"
@@ -508,6 +553,21 @@ LeaderboardRecord record = client.writeTournamentRecord(session, id, score, subs
 
 ```swift tab="Swift"
 // Will be made available soon.
+```
+
+```gdscript tab="Godot"
+var id = "someid"
+var score = 100
+var subscore = 10
+var metadata = JSON.print({
+	"weather_conditions": "sunny",
+	"track_name": "Silverstone"
+})
+var new_record : NakamaAPI.ApiLeaderboardRecord = yield(client.write_tournament_record_async(session, id, score, subscore, metadata), "completed")
+if new_record.is_exception():
+	print("An error occured: %s" % new_record)
+	return
+print("Record: %s" % [new_record])
 ```
 
 ```tab="REST"

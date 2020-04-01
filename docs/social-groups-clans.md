@@ -116,6 +116,16 @@ client.send(message: message).then { groups in
 }
 ```
 
+```gdscript tab="Godot"
+var list : NakamaAPI.ApiGroupList = yield(client.list_groups_async(session, "heroes*", 20), "completed")
+if list.is_exception():
+	print("An error occured: %s" % list)
+	return
+for g in list.groups:
+	var group = g as NakamaAPI.ApiGroup
+	print("Group: name %s, id %s", [group.name, group.id])
+```
+
 ```tab="REST"
 GET /v2/group?limit=20&name=heroes%&cursor=<cursor>
 Host: 127.0.0.1:7350
@@ -261,6 +271,27 @@ client.send(message: message).then { groups in
 }
 ```
 
+```gdscript tab="Godot"
+var list : NakamaAPI.ApiGroupList = yield(client.list_groups_async(session, "heroes*", 20), "completed")
+if list.is_exception():
+	print("An error occured: %s" % list)
+	return
+for g in list.groups:
+	var group = g as NakamaAPI.ApiGroup
+	print("Group: name %s, id %s", [group.name, group.id])
+
+var cursor = list.cursor
+while cursor: # While there are more results get next page.
+	list = yield(client.list_groups_async(session, "heroes*", 20, cursor), "completed")
+	if list.is_exception():
+		print("An error occured: %s" % list)
+		return
+	for g in list.groups:
+		var group = g as NakamaAPI.ApiGroup
+		print("Group: name %s, id %s", [group.name, group.id])
+	cursor = list.cursor
+```
+
 ```tab="REST"
 GET /v2/group?limit=20&name=heroes%&cursor=somecursor
 Host: 127.0.0.1:7350
@@ -348,6 +379,15 @@ client.send(message: message).then { _ in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var join : NakamaAsyncResult = yield(client.join_group_async(session, group_id), "completed")
+if join.is_exception():
+	print("An error occured: %s" % join)
+	return
+print("Sent group join request %s" % group_id)
 ```
 
 ```tab="REST"
@@ -462,6 +502,17 @@ client.send(message: message).then { groups in
 }
 ```
 
+```gdscript tab="Godot"
+var user_id = "<user id>"
+var result : NakamaAPI.ApiUserGroupList = yield(client.list_user_groups_async(session, user_id), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+for ug in result.user_groups:
+	var g = ug.group as NakamaAPI.ApiGroup
+	print("Group %s role %s", g.id, ug.state)
+```
+
 ```tab="REST"
 GET /v2/user/<user id>/group
 Host: 127.0.0.1:7350
@@ -557,6 +608,17 @@ client.send(message: message).then { users in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var member_list : NakamaAPI.ApiGroupUserList = yield(client.list_group_users_async(session, group_id), "completed")
+if member_list.is_exception():
+	print("An error occured: %s" % member_list)
+	return
+for ug in member_list.group_users:
+	var u = ug.user as NakamaAPI.ApiUser
+	print("User %s role %s" % [u.id, ug.state])
 ```
 
 ```tab="REST"
@@ -685,6 +747,16 @@ client.send(message: message).then { groups in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var group_name = "pizza-lovers"
+var group_desc = "pizza lovers, pineapple haters"
+var group : NakamaAPI.ApiGroup = yield(client.create_group_async(session, group_name, group_desc), "completed")
+if group.is_exception():
+	print("An error occured: %s" % group)
+	return
+print("New group: %s" % group)
 ```
 
 ```tab="REST"
@@ -848,6 +920,16 @@ client.send(message: message).then { _ in
 }
 ```
 
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var description = "Better than Marvel Heroes!"
+var update : NakamaAsyncResult = yield(client.update_group_async(session, group_id, null, description), "completed")
+if update.is_exception():
+	print("An error occured: %s" % update)
+	return
+print("Updated group")
+```
+
 ```tab="REST"
 PUT /v2/group/<group id>
 Host: 127.0.0.1:7350
@@ -923,6 +1005,15 @@ client.send(message: message).then { _ in
       NSLog("Error %@ : %@", err, nkErr.message)
   }
 }
+```
+
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var leave : NakamaAsyncResult = yield(client.leave_group_async(session, group_id), "completed")
+if leave.is_exception():
+	print("An error occured: %s" % leave)
+	return
+print("Group left")
 ```
 
 ```tab="REST"
@@ -1020,6 +1111,16 @@ client.send(message: message).then { _ in
 }
 ```
 
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var user_ids = ["<user id>"]
+var accept : NakamaAsyncResult = yield(client.add_group_users_async(session, group_id, user_ids), "completed")
+if accept.is_exception():
+	print("An error occured: %s" % accept)
+	return
+print("User added")
+```
+
 ```tab="REST"
 POST /v2/group/<group id>/add
 Host: 127.0.0.1:7350
@@ -1112,6 +1213,16 @@ client.send(message: message).then { _ in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var user_ids = ["<user id>"]
+var promote : NakamaAsyncResult = yield(client.promote_group_users_async(session, group_id, user_ids), "completed")
+if promote.is_exception():
+	print("An error occured: %s" % promote)
+	return
+print("User promoted")
 ```
 
 ```tab="REST"
@@ -1208,6 +1319,16 @@ client.send(message: message).then { _ in
 }
 ```
 
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var user_ids = ["<user id>"]
+var kick : NakamaAsyncResult = yield(client.kick_group_users_async(session, group_id, user_ids), "completed")
+if kick.is_exception():
+	print("An error occured: %s" % kick)
+	return
+print("User kicked")
+```
+
 ```tab="REST"
 POST /v2/group/<group id>/kick
 Host: 127.0.0.1:7350
@@ -1287,6 +1408,15 @@ client.send(message: message).then { _ in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var group_id = "<group id>"
+var remove : NakamaAsyncResult = yield(client.delete_group_async(session, group_id), "completed")
+if remove.is_exception():
+	print("An error occured: %s" % remove)
+	return
+print("Group removed")
 ```
 
 ```tab="REST"

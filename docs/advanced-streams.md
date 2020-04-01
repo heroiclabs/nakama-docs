@@ -104,6 +104,16 @@ SocketListener listener = new AbstractSocketListener() {
 };
 ```
 
+```gdscript tab="Godot"
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_stream_state", self, "_on_stream_state")
+
+func _on_stream_state(p_state : NakamaRTAPI.StreamData):
+	print("Received data from stream: %s" % [p_state.stream])
+	print("Data: %s" % [parse_json(p_state.state)])
+```
+
 ## Receiving stream presence events
 
 When a new presence joins a stream or an existing presence leaves the server will broadcast presence events to all users currently on the stream.
@@ -211,6 +221,19 @@ SocketListener listener = new AbstractSocketListener() {
     }
   }
 };
+```
+
+```gdscript tab="Godot"
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_stream_presence", self, "_on_stream_presence")
+
+func _on_stream_presence(p_presence : NakamaRTAPI.StreamPresenceEvent):
+	print("Received presences on stream: %s" % [p_presence.stream])
+	for p in p_presence.joins:
+		print("User ID: %s, Username: %s, Status: %s" % [p.user_id, p.username, p.status])
+	for p in p_presence.leaves:
+		print("User ID: %s, Username: %s, Status: %s" % [p.user_id, p.username, p.status])
 ```
 
 !!! Tip

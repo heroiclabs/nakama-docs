@@ -181,6 +181,24 @@ client.send(message: message).then { list in
 }
 ```
 
+```gdscript tab="Godot"
+var save_game = "{ \"progress\": 50 }"
+var my_stats = "{ \"skill\": 24 }"
+var can_read = 1
+var can_write = 1
+var version = ""
+var acks : NakamaAPI.ApiStorageObjectAcks = yield(client.write_storage_objects_async(session, [
+	NakamaWriteStorageObject.new("saves", "savegame", can_read, can_write, save_game, version),
+	NakamaWriteStorageObject.new("stats", "skills", can_read, can_write, my_stats, version)
+]), "completed")
+if acks.is_exception():
+	print("An error occured: %s" % acks)
+	return
+print("Successfully stored objects:")
+for a in acks.acks:
+	print("%s" % a)
+```
+
 ```tab="REST"
 PUT /v2/storage
 Host: 127.0.0.1:7350
@@ -332,6 +350,22 @@ client.send(message: message).then { list in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var save_game = "{ \"progress\": 50 }"
+var can_read = 1
+var can_write = 1
+var version = "<version>"
+var acks : NakamaAPI.ApiStorageObjectAcks = yield(client.write_storage_objects_async(session, [
+	NakamaWriteStorageObject.new("saves", "savegame", can_read, can_write, save_game, version)
+]), "completed")
+if acks.is_exception():
+	print("An error occured: %s" % acks)
+	return
+print("Successfully stored objects:")
+for a in acks.acks:
+	print("%s" % a)
 ```
 
 ```tab="REST"
@@ -505,6 +539,22 @@ client.send(message: message).then { list in
 }
 ```
 
+```gdscript tab="Godot"
+var save_game = "{ \"progress\": 50 }"
+var can_read = 1
+var can_write = 1
+var version = "*" # represents "no version".
+var acks : NakamaAPI.ApiStorageObjectAcks = yield(client.write_storage_objects_async(session, [
+	NakamaWriteStorageObject.new("saves", "savegame", can_read, can_write, save_game, version)
+]), "completed")
+if acks.is_exception():
+	print("An error occured: %s" % acks)
+	return
+print("Successfully stored objects:")
+for a in acks.acks:
+	print("%s" % a)
+```
+
 ```tab="REST"
 PUT /v2/storage
 Host: 127.0.0.1:7350
@@ -649,6 +699,18 @@ client.send(message: message).then { list in
 }
 ```
 
+```gdscript tab="Godot"
+var result : NakamaAPI.ApiStorageObjects = yield(client.read_storage_objects_async(session, [
+	NakamaStorageObjectId.new("saves", "savegame", session.user_id)
+]), "completed")
+if result.is_exception():
+	print("An error occured: %s" % result)
+	return
+print("Read objects:")
+for o in result.objects:
+	print("%s" % o)
+```
+
 ```tab="REST"
 POST /v2/storage
 Host: 127.0.0.1:7350
@@ -758,6 +820,15 @@ client.send(message: message).then { list in
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var limit = 100 # default is 10.
+var objects : NakamaAPI.ApiStorageObjectList = yield(client.list_storage_objects_async(session, "saves", session.user_id, limit), "completed")
+if objects.is_exception():
+	print("An error occured: %s" % objects)
+	return
+print("List objects: %s" % objects)
 ```
 
 ```tab="REST"
@@ -870,6 +941,16 @@ client.send(message: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var del : NakamaAsyncResult = yield(client.delete_storage_objects_async(session, [
+	NakamaStorageObjectId.new("saves", "savegame")
+]), "completed")
+if del.is_exception():
+	print("An error occured: %s" % del)
+	return
+print("Deleted objects.")
 ```
 
 ```tab="REST"
@@ -1002,6 +1083,16 @@ client.send(message: message).then {
 }.catch { err in
   NSLog("Error %@ : %@", err, (err as! NakamaError).message)
 }
+```
+
+```gdscript tab="Godot"
+var del = yield(client.delete_storage_objects_async(session, [
+	NakamaStorageObjectId.new("saves", "savegame", session.user_id, "<version>")
+]), "completed")
+if del.is_exception():
+	print("An error occured: %s" % del)
+	return
+print("Deleted objects.")
 ```
 
 ```tab="REST"

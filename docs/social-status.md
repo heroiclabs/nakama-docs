@@ -38,6 +38,14 @@ rtClient->updateStatus("Hello everyone!");
 socket.updateStatus("Hello everyone!").get();
 ```
 
+```gdscript tab="Godot"
+var update : NakamaAsyncResult = yield(socket.update_status_async(JSON.print({"status": "happy"})), "completed")
+if update.is_exception():
+	print("An error occured: %s" % update)
+	return
+print("Status updated")
+```
+
 The status can be set and updated as often as needed with this operation.
 
 !!! Tip
@@ -73,6 +81,14 @@ rtClient->updateStatus("");
 
 ```java tab="Java"
 socket.updateStatus(null).get();
+```
+
+```gdscript tab="Godot"
+var leave : NakamaAsyncResult = yield(socket.update_status_async(""), "completed")
+if leave.is_exception():
+	print("An error occured: %s" % leave)
+	return
+print("Status updated")
 ```
 
 ## Receive status updates
@@ -176,6 +192,19 @@ SocketListener listener = new AbstractSocketListener() {
 };
 ```
 
+```gdscript tab="Godot"
+func _ready():
+	# First, setup the socket as explained in the authentication section.
+	socket.connect("received_status_presence", self, "_on_status_presence")
+
+func _on_status_presence(p_presence : NakamaRTAPI.StatusPresenceEvent):
+	print(p_presence)
+	for j in p_presence.joins:
+		print("%s joined with status: %s" % [j.user_id, j.status])
+	for j in p_presence.leaves:
+		print("%s left with status: %s" % [j.user_id, j.status])
+```
+
 If a user is disconnecs or appears offline they will leave their previous status but there will be no corresponding new status.
 
 ## Follow users
@@ -239,6 +268,15 @@ rtClient->followUsers({ "<user id>" }, successCallback);
 socket.followUsers("<user id>").get();
 ```
 
+```gdscript tab="Godot"
+var user_ids = ["<user-id1>", "<user-id2>"]
+var status : NakamaRTAPI.Status = yield(socket.follow_users_async(user_ids), "completed")
+if status.is_exception():
+	print("An error occured: %s" % status)
+	return
+print(status)
+```
+
 !!! Note
     Following a user is only active with the current session. When the user disconnects they automatically unfollow anyone they may have followed while connected.
 
@@ -272,4 +310,13 @@ rtClient->unfollowUsers({ "<user id>" });
 
 ```java tab="Java"
 socket.unfollowUsers("<user id>").get();
+```
+
+```gdscript tab="Godot"
+var user_ids = ["<user-id1>", "<user-id2>"]
+var status : NakamaAsyncResult = yield(socket.unfollow_users_async(user_ids), "completed")
+if status.is_exception():
+	print("An error occured: %s" % status)
+	return
+print(status)
 ```
