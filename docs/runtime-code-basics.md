@@ -625,7 +625,7 @@ func LookupPokemon(logger runtime.Logger, name string) (map[string]interface{}, 
   body, err := ioutil.ReadAll(resp.Body)
   if err != nil {
     logger.Error("Failed to read body %v", err.Error())
-    return nil, error
+    return nil, err
   }
   if resp.StatusCode >= 400 {
     logger.Error("Failed request %v %v", resp.StatusCode, body)
