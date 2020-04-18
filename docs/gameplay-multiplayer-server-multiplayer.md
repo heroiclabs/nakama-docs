@@ -155,7 +155,7 @@ nk.register_rpc(create_match, "create_match_rpc")
 ```go tab="Go"
 func CreateMatchRPC(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	params := make(map[string]interface{})
-	if err := json.Unmarshal([]byte(payload), params); err != nil {
+	if err := json.Unmarshal([]byte(payload), &params); err != nil {
 		return "", err
 	}
 
