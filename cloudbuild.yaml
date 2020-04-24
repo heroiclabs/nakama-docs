@@ -1,0 +1,10 @@
+steps:
+- name: 'squidfunk/mkdocs-material:4.6.3'
+  entrypoint: sh
+  args: ['-c', 'mkdocs build -v']
+- name: gcr.io/cloud-builders/gsutil
+  args: ['-m', 'cp', '-r', '-z "css,htm,html,js,json,mjs,svg,xhtml"', 'site/', 'gs://docs.heroiclabs.com/docs'] # must suffix /docs because of the subfolder on the website
+  timeout: 3600s
+- name: gcr.io/cloud-builders/gsutil
+  args: ['-m', 'setmeta', '-r', '-h', 'Cache-Control:must-revalidate, max-age=3600', 'gs://docs.heroiclabs.com/*']
+timeout: 7200s
