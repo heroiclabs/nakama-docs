@@ -170,7 +170,7 @@ For development purposes, we suggest that you bind a folder in the local machine
 
     Make sure to change the line highlighted above to the correct path and restart Nakama.
 
-You can put your Lua scripts in the `/modules` directory and restart Nakama using `docker-compose --restart`.
+You can put your Lua scripts in the `/modules` directory and restart Nakama using `docker-compose restart`.
 
 ### Configuration
 
