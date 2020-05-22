@@ -128,6 +128,9 @@ This workload consists of authenticating a user, opening a socket connection to 
   </tr>
 </table>
 
+!!! Summary
+  A single Nakama instance with a single CPU core can have up to 19542 connected users. Scaling up to 2 nodes with 2 CPU cores each, this values goes up to 32092 CCU.
+
 ## Workload 2 - Register a new user
 
 This workload emulates the registration of new users through Nakama's [device authentication](../authentication/#device) API, which persists the new accounts to the database.
@@ -186,7 +189,7 @@ This workload emulates the registration of new users through Nakama's [device au
 </table>
 
 !!! Summary
-    A single Nakama server can handle mean loads of 519.46 requests/sec with requests served in 24.60 ms (mean) with a database write operation for a new user. At that rate your game would have 1.868 Million new players in an hour.
+    A single Nakama server can handle mean loads of 519.46 requests/sec with requests served in 24.60 ms (mean) with a database write operation for a new user. At that rate your game would have created 1.868 Million new players in one hour. This value goes up to 2.702 Million player accounts / hour scaling up to 2 Nodes - 2 CPU / 6GB RAM (each).
 
 ## Workload 3 - Authenticate a user
 
