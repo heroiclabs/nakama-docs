@@ -126,7 +126,7 @@ This workload consists of authenticating a user, opening a socket connection to 
 </table>
 
 !!! Summary
-  A single Nakama instance with a single CPU core can have up to \~19,500 connected users. Scaling up to 2 nodes with 2 CPU cores each this values goes up to \~32,000 CCU.
+    A single Nakama instance with a single CPU core can have up to ~19,500 connected users. Scaling up to 2 nodes with 2 CPU cores each this values goes up to ~32,000 CCU.
 
 ## Workload 2 - Register a new user
 
@@ -186,7 +186,7 @@ This workload emulates the registration of new users through the game server's [
 </table>
 
 !!! Summary
-    A single Nakama server can handle average loads of \~500 requests/sec with requests served in 24.60 ms (mean) with a database write operation for a new user. At this rate a game can create 1.86 million new players every hour. This value goes up to 2.7 million player accounts per hour when scaled to 2 nodes.
+    A single Nakama server can handle average loads of ~500 requests/sec with requests served in 24.60 ms (mean) with a database write operation for a new user. At this rate a game can create 1.86 million new players every hour. This value goes up to 2.7 million player accounts per hour when scaled to 2 nodes.
 
 ## Workload 3 - Authenticate a user
 
@@ -360,7 +360,7 @@ This workload executes a simple [RPC function](../runtime-code-basics/#rpc-hook)
 </table>
 
 !!! Summary
-    A single Nakama server can handle an average of \~600 requests/sec served in 19.97 msec (mean). When compared with the results with Workload 5, we see that the results between the Lua and Go runtime are very similar. This is because the benchmarked workload does not incur significant CPU computations; causing the results to be similar despite the differences of the Lua virtual machine. With CPU intensive code the performance results would start to differ as would RAM usage by the Lua runtime.
+    A single Nakama server can handle an average of ~600 requests/sec served in 19.97 msec (mean). When compared with the results with Workload 5, we see that the results between the Lua and Go runtime are very similar. This is because the benchmarked workload does not incur significant CPU computations; causing the results to be similar despite the differences of the Lua virtual machine. With CPU intensive code the performance results would start to differ as would RAM usage by the Lua runtime.
 
 ## Workload 6 - Custom authoritative match Logic
 
@@ -389,6 +389,7 @@ The client logic is also simple; each game client performs the following steps i
 
 The messages sent by the client contain a payload of fixed size with a string of 44 and 35 characters for opcode 1 and 2 respectively.
 
+| 1 Node - 1 CPU / 3GB RAM|
 |---                      |
 | Number of connected users      |
 | ![Benchmark Register](images/benchmarks/authoritative-match/1-node-1-cpu-graphes-Users-simultaneous.svg) |
