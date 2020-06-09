@@ -78,6 +78,7 @@ nav:
 - 'Cocos2d-x client guide (C++)': 'cocos2d-x-client-guide.md'
 - 'Cocos2d-x client guide (JavaScript)': 'cocos2d-x-js-client-guide.md'
 - 'Unreal client guide': 'unreal-client-guide.md'
+- 'Lua/Defold client guide': 'lua-client-guide.md'
 - 'Authentication': 'authentication.md'
 - 'User accounts': 'user-accounts.md'
 - 'Storage Engine':
