@@ -1466,7 +1466,7 @@ Send one in-app notification to a user. Have a look at the section on [in-app no
 _Parameters_
 
 | Param | Go type | Lua type | Description |
-| ----- | ---- | ----------- |
+| ----- | ---- | ----------- | ----------- |
 | ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information | | subject | `string` | string | Notification subject. Must be set. |
 | content | `map[string]interface{}` | table | Notification content. Must be set but can be an empty table. |
 | code | `int` | number | Notification code to use. Must be equal or greater than 0. |
