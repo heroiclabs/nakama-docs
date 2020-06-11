@@ -29,7 +29,8 @@ Add all files from `NakamaCocos2d` folder to your project.
 2. Add libs folder in `Build Settings > Library Search Paths`:
     - `NAKAMA_COCOS2D_SDK/libs/ios` - for iOS
     - `NAKAMA_COCOS2D_SDK/libs/mac` - for Mac
-3. Add `libnakama-cpp.dylib` file located in libs folder to `General > Linked Frameworks and Libraries`
+3. Add all `.a` files located in libs folder to `General > Frameworks, Libraries, and Embedded Content`
+4. Add `NAKAMA_COCOS2D_SDK/NakamaCocos2d` folder to your XCode project as group (not a reference).
 
 ### Setup for Android projects
 
