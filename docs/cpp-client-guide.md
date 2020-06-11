@@ -23,7 +23,7 @@ We don't recommend to copy Nakama C++ SDK to your project because it's quite big
 2. Add libs folder in `Build Settings > Library Search Paths`:
     - `NAKAMA_CPP_SDK/libs/ios` - for iOS
     - `NAKAMA_CPP_SDK/libs/mac` - for Mac
-3. Add all `.a` files located in libs folder and `libresolv.9.tbd` in `General > Linked Frameworks and Libraries`
+3. Add all `.a` files located in libs folder and `libresolv.9.tbd` to `General > Frameworks, Libraries, and Embedded Content`
 
 ### Setup for Android projects
 
