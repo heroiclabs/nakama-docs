@@ -1031,122 +1031,17 @@ Authorization: Basic base64(ServerKey:)
 }
 ```
 
-## Sessions
+## Session
 
-The register and login messages return a session on success. The session contains the current user's ID and handle as well as information on when it was created and when it expires.
+When an authentication call succeeds, the server returns a session in the response. A session contains the current user's ID and handle, as well as information on when it was created and when it expires.
 
-!!! Tip
-    You can change how long a session token is valid before it expires in the [configuration](install-configuration.md) in the server. By default a session is only valid for 60 seconds.
+Sessions are documented in more detail on [a separate page](/session)
 
-```js tab="JavaScript"
-const id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-const session = await client.authenticateDevice({ id: id })
-console.info("id:", session.user_id, "username:", session.username);
-console.info("Session expired?", session.isexpired(Date.now() / 1000));
-```
+## Socket
 
-```csharp tab=".NET"
-const string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-var session = await client.AuthenticateDeviceAsync(id);
-System.Console.WriteLine("Id '{0}' Username '{1}'", session.UserId, session.Username);
-System.Console.WriteLine("Session expired? {0}", session.IsExpired);
-```
+Socket is a means by which a client and a nakama server communicate to enable realtime features such as [multiplayer](/gameplay-multiplayer-realtime), [notifications](/social-in-app-notifications) and [status updates](/social-status), [passing stream data](/advanced-streams) or [real-time chat](/social-realtime-chat).
 
-```csharp tab="Unity"
-var deviceId = SystemInfo.deviceUniqueIdentifier;
-var session = await client.AuthenticateDeviceAsync(deviceId);
-Debug.LogFormat("Id '{0}' Username '{1}'", session.UserId, session.Username);
-Debug.LogFormat("Session expired? {0}", session.IsExpired);
-```
-
-```cpp tab="Cocos2d-x C++"
-auto loginFailedCallback = [](const NError& error)
-{
-};
-
-auto loginSucceededCallback = [](NSessionPtr session)
-{
-  CCLOG("id %s username %s", session->getUserId().c_str(), session->getUsername().c_str());
-  CCLOG("Session expired? %s", session->isExpired() ? "yes" : "no");
-};
-
-std::string deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-
-client->authenticateDevice(
-        deviceId,
-        opt::nullopt,
-        opt::nullopt,
-        {},
-        loginSucceededCallback,
-        loginFailedCallback);
-```
-
-```js tab="Cocos2d-x JS"
-var deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-client.authenticateDevice({ id: deviceId })
-  .then(function(session) {
-        cc.log("Authenticated successfully. User id:", session.user_id);
-    },
-    function(error) {
-        cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
-
-```cpp tab="C++"
-auto loginFailedCallback = [](const NError& error)
-{
-};
-
-auto loginSucceededCallback = [](NSessionPtr session)
-{
-  cout << "id " << session->getUserId() << " username " << session->getUsername() << endl;
-  cout << "Session expired? " << (session->isExpired() ? "yes" : "no") << endl;
-};
-
-std::string deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-
-client->authenticateDevice(
-        deviceId,
-        opt::nullopt,
-        opt::nullopt,
-        {},
-        loginSucceededCallback,
-        loginFailedCallback);
-```
-
-```java tab="Java"
-var deviceid = SystemInfo.deviceUniqueIdentifier;
-Session session = client.authenticateDevice(deviceid).get();
-System.out.format("Session %s", session.getAuthToken());
-```
-
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = "3e70fd52-7192-11e7-9766-cb3ce5609916"
-let message = AuthenticateMessage(device: id)
-client.login(with: message).then { session in
-  let expired = session.isExpired(currentTimeSince1970: Date().timeIntervalSince1970)
-  NSLog("Session id '%@' handle '%@'.", session.userID, session.handle)
-  NSLog("Session expired: '%@'", expired)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
-
-```gdscript tab="Godot"
-var session : NakamaSession = yield(client.authenticate_device_async(deviceid), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Id '%s' Username '%s'" % [session.id, session.username])
-print("Session expired? %s" % session.expired)
-```
-
-### Connect
-
-With a session you can connect with the server and exchange realtime messages. Most of our clients do not auto-reconnect for you so you should handle it with your own code.
-
-You can only send messages to the server once you've connected a client.
+A socket can be created after a session is obtained. Most of nakama clients do not do this automatically so you should handle the connection your own code.
 
 ```js tab="JavaScript"
 var socket = client.createSocket();
@@ -1232,67 +1127,6 @@ func _ready():
 		print("An error occured: %s" % connected)
 		return
 	print("Socket connected.")
-```
-
-### Expiry
-
-Sessions can expire and become invalid. If this happens you'll need to reauthenticate with the server and get a new session. You can adjust the session lifetime on the server with the cmdflag "--session.token_expiry_sec 604800". See the [Session configuration](#install-configuration.md#session) page.
-
-You can check the expiry of a session using the following code:
-
-```js tab="JavaScript"
-const nowUnixTime = Math.floor(Date.now() / 1000);
-if (session.isexpired(nowUnixTime)) {
-  console.log("Session has expired. Must reauthenticate!");
-}
-```
-
-```csharp tab=".NET"
-var nowUnixTime = DateTime.UtcNow;
-if (session.HasExpired(nowUnixTime))
-{
-  System.Console.WriteLine("Session has expired. Must reauthenticate!");
-}
-```
-
-```csharp tab="Unity"
-var nowUnixTime = DateTime.UtcNow;
-if (session.HasExpired(nowUnixTime))
-{
-  Debug.Log("Session has expired. Must reauthenticate!");
-}
-```
-
-```cpp tab="Cocos2d-x C++"
-if (session->isExpired())
-{
-  CCLOG("Session has expired. Must reauthenticate!");
-}
-```
-
-```js tab="Cocos2d-x JS"
-const nowUnixTime = Math.floor(Date.now() / 1000);
-if (session.isexpired(nowUnixTime)) {
-  cc.log("Session has expired. Must reauthenticate!");
-}
-```
-
-```cpp tab="C++"
-if (session->isExpired())
-{
-  cout << "Session has expired. Must reauthenticate!";
-}
-```
-
-```java tab="Java"
-if (session.isExpired(new Date())) {
-  System.out.println("Session has expired. Must reauthenticate!");
-}
-```
-
-```gdscript tab="Godot"
-if session.expired:
-	print("Session has expired. Must reauthenticate!")
 ```
 
 ## Link or unlink
