@@ -28,12 +28,12 @@ When you've [downloaded](#download) the "nakama-js.umd.js" file you should impor
 The client object is used to execute all logic against the server. In your main JavaScript function you'll need to create a client object:
 
 ```js
-var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
+var client = new nakamajs.Client("defaultkey", "127.0.0.1", "7350");
 client.ssl = false;
 ```
 
 !!! Note
-    By default the client uses connection settings "127.0.0.1" and 7350 to connect to a local Nakama server.
+    By default the client uses connection settings "127.0.0.1" and "7350" to connect to a local Nakama server.
 
 ```js
 var client = new nakamajs.Client("defaultkey");
