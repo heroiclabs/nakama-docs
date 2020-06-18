@@ -13,12 +13,7 @@ pip install mkdocs --upgrade
 pip install mkdocs-material --upgrade
 ```
 
-*Note:* For Python 3.7, you may need to run the following instead
-```shell
-pip3 install pip --upgrade
-pip3 install mkdocs --upgrade
-pip3 install mkdocs-material --upgrade
-```
+*Note:* For Python 3.7, you may need to run the above commands using `pip3` instead of `pip`.
 
 ## Development
 
