@@ -14,7 +14,7 @@ repo_name: 'heroiclabs/nakama'
 repo_url: 'https://github.com/heroiclabs/nakama'
 
 # Copyright
-copyright: 'Copyright &copy; 2019 Heroic Labs'
+copyright: 'Copyright &copy; 2020 Heroic Labs'
 
 # Documentation and theme
 theme:
@@ -36,18 +36,21 @@ extra_css:
   - 'css/extra.css'
 
 # Options
+plugins:
+  - search:
+      lang:
+        - en
+
 extra:
-  search:
-    language: 'en'
   social:
-  - type: 'globe'
-    link: 'https://heroiclabs.com'
-  - type: 'github'
-    link: 'https://github.com/heroiclabs'
-  - type: 'twitter'
-    link: 'https://twitter.com/heroicdev'
-  - type: 'linkedin'
-    link: 'https://www.linkedin.com/company/heroic-labs'
+    - icon: 'fontawesome/solid/globe'
+      link: 'https://heroiclabs.com'
+    - icon: 'fontawesome/brands/github'
+      link: 'https://github.com/heroiclabs'
+    - icon: 'fontawesome/brands/twitter'
+      link: 'https://twitter.com/heroicdev'
+    - icon: 'fontawesome/brands/linkedin'
+      link: 'https://www.linkedin.com/company/heroic-labs'
 
 # Extensions
 markdown_extensions:
