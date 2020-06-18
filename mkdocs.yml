@@ -14,7 +14,7 @@ repo_name: 'heroiclabs/nakama'
 repo_url: 'https://github.com/heroiclabs/nakama'
 
 # Copyright
-copyright: 'Copyright &copy; 2019 Heroic Labs'
+copyright: 'Copyright &copy; 2020 Heroic Labs'
 
 # Documentation and theme
 theme:
