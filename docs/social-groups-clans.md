@@ -1036,11 +1036,8 @@ Each group is managed by one or more superadmins or admins. These users are memb
 When a user joins a private group it will create a join request until an admin accepts or rejects the user. The superadmin or admin can accept the user into the group.
 
 ```sh tab="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/add" \
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/add?user_ids=<user id>" \
   -H 'Authorization: Bearer <session token>' \
-  -d '{
-    "user_ids":["<user id>"]
-  }'
 ```
 
 ```js tab="JavaScript"
@@ -1122,15 +1119,12 @@ print("User added")
 ```
 
 ```tab="REST"
-POST /v2/group/<group id>/add
+POST /v2/group/<group id>/add?user_ids=<user id>
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer <session token>
 
-{
-  "user_ids":["<user id>"]
-}
 ```
 
 The user will receive an [in-app notification](social-in-app-notifications.md) when they've been added to the group. In a private group an admin will receive a notification about the join request.
@@ -1142,11 +1136,8 @@ To reject the user from joining the group you should [kick them](#kick-a-member)
 An admin can promote another member of the group as an admin. This grants the member the same privileges to [manage the group](#manage-groups). A group can have one or more admins.
 
 ```sh tab="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/promote" \
-  -H 'Authorization: Bearer <session token>' \
-  -d '{
-    "user_ids":["<user id>"]
-  }'
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/promote?user_ids=<user id>" \
+  -H 'Authorization: Bearer <session token>'
 ```
 
 ```js tab="JavaScript"
@@ -1226,18 +1217,29 @@ print("User promoted")
 ```
 
 ```tab="REST"
-POST /v2/group/<group id>/promote
+POST /v2/group/<group id>/promote?user_ids=<user id>
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer <session token>
-
-{
-  "user_ids":["<user id>"]
-}
 ```
 
-To demote an admin as a member you can [kick](#kick-a-member) and [re-add](#accept-new-members) them.
+### Demote a member
+
+An admin can demote another member of the group. This removes admin priveleges from the member.
+
+```sh tab="cURL"
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/demote?user_ids=<user id>" \
+  -H 'Authorization: Bearer <session token>'
+```
+
+```tab="REST"
+POST /v2/group/<group id>/demote?user_ids=<user id>
+Host: 127.0.0.1:7350
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer <session token>
+```
 
 ### Kick a member
 
@@ -1246,11 +1248,8 @@ An admin or superadmin can kick a member from the group. The user is removed but
 If a user is removed from a group it does not prevent them from joining other groups.
 
 ```sh tab="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/kick" \
+curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/kick?user_ids=<user id>" \
   -H 'Authorization: Bearer <session token>' \
-  -d '{
-    "user_ids":["<user id>"]
-  }'
 ```
 
 ```js tab="JavaScript"
@@ -1330,15 +1329,12 @@ print("User kicked")
 ```
 
 ```tab="REST"
-POST /v2/group/<group id>/kick
+POST /v2/group/<group id>/kick?user_ids=<user id>
 Host: 127.0.0.1:7350
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer <session token>
 
-{
-  "user_ids":["<user id>"]
-}
 ```
 
 !!! Hint

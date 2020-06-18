@@ -815,6 +815,7 @@ In Lua, you should use the following request names for `register_req_before` and
 | ListStorageObjects      | List publicly readable storage objects in a given collection.                     |
 | ListUserGroups          | List groups the current user belongs to.                                          |
 | PromoteGroupUsers       | Promote a set of users in a group to the next role up.                            |
+| DemoteGroupUsers        | Demote a set of users in a group to a lower role.                                 |
 | ReadStorageObjects      | Get storage objects.                                                              |
 | UnlinkCustom            | Remove the custom ID from the social profiles on the current user's account.      |
 | UnlinkDevice            | Remove the device ID from the social profiles on the current user's account.      |
