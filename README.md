@@ -9,8 +9,8 @@ This project uses Markdown for documentation which is compiled with [mkdocs](htt
 
 ```shell
 pip install pip --upgrade
-pip install -I mkdocs==1.0.4
-pip install -I mkdocs-material==4.6.3
+pip install -I mkdocs==1.1.2
+pip install -I mkdocs-material==5.3.0
 ```
 
 *Note:* For Python 3.7, you may need to run the above commands using `pip3` instead of `pip`.
