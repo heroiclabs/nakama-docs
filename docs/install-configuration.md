@@ -33,7 +33,7 @@ There are a few configuration properties that need to be changed in most environ
 | `runtime.path` | Path of modules to scan and load. Defaults to `data_dir/modules`.
 | `database.address` | List of database nodes to connect to. It should follow the form of `username:password@address:port/dbname` (`postgres://` protocol is appended to the path automatically). Defaults to `root@localhost:26257`.
 | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
-| `runtime.http_key` | Key is used to protect the server's runtime HTTP invocations. Default value is `defaultkey`.
+| `runtime.http_key` | Key is used to protect the server's runtime HTTP invocations. Default value is `defaulthttpkey`.
 | `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
 | `session.token_expiry_sec` | Session token expiry in seconds. Default value is 60.
 
@@ -342,7 +342,7 @@ runtime:
     - "example_apikey=example_apivalue"
     - "encryptionkey=afefa==e332*u13=971mldq"
   path: "/tmp/modules/folders"
-  http_key: "defaultkey"
+  http_key: "defaulthttpkey"
 
 socket:
   server_key: "defaultkey"
