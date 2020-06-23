@@ -390,7 +390,7 @@ This function can be called with any HTTP client. For example, with cURL you cou
     RPC functions can be called both from clients and through server to server calls. You can tell them apart by [checking if the context has a user ID](#register-hooks) - server to server calls will never have a user ID. If you want to scope functions to never be accessible from the client just return an error if you find a user ID in the context.
 
 ```shell
-curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaultkey" \
+curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaulthttpkey" \
      -d '"{\"some\": \"data\"}"' \
      -H 'Content-Type: application/json' \
      -H 'Accept: application/json'
