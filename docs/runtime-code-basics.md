@@ -35,7 +35,7 @@ local function some_example(context, payload)
   local json = nk.json_decode(payload)
 
   -- log data sent to RPC call.
-  nk.logger_info(("Payload: %q"):format(json))
+  nk.logger_info(string.format("Payload: %q", json))
 
   local id = nk.uuid_v4()
   -- create a leaderboard with the json as metadata.
@@ -304,7 +304,7 @@ Some logic between client and server is best handled as RPC functions which clie
 local nk = require("nakama")
 
 local function custom_rpc_func(context, payload)
-  nk.logger_info(("Payload: %q"):format(payload))
+  nk.logger_info(string.format("Payload: %q", payload))
 
   -- "payload" is bytes sent by the client we'll JSON decode it.
   local json = nk.json_decode(payload)
@@ -353,7 +353,7 @@ local nk = require("nakama")
 
 local function http_handler(context, payload)
   local message = nk.json_decode(payload)
-  nk.logger_info(("Message: %q"):format(message))
+  nk.logger_info(string.format("Message: %q", message))
   return nk.json_encode({["context"] = context})
 end
 
@@ -476,11 +476,11 @@ local nk = require("nakama")
 
 local status, result = pcall(nk.users_get_username, {"22e9ed62"})
 if (not status) then
-  nk.logger_error(("Error occurred: %q"):format(result))
+  nk.logger_error(string.format("Error occurred: %q", result))
 else
   for _, u in ipairs(result)
   do
-    local message = ("id: %q, display name: %q"):format(u.id, u.display_name)
+    local message = string.format("id: %q, display name: %q", u.id, u.display_name)
     nk.logger_info(message) -- Will appear in logging output.
   end
 end
@@ -546,7 +546,7 @@ local M = {}
 local API_BASE_URL = "https://pokeapi.co/api/v2"
 
 function M.lookup_pokemon(name)
-  local url = ("%s/pokemon/%s"):format(API_BASE_URL, name)
+  local url = string.format("%s/pokemon/%s", API_BASE_URL, name)
   local method = "GET"
   local headers = {
     ["Content-Type"] = "application/json",
@@ -554,10 +554,10 @@ function M.lookup_pokemon(name)
   }
   local success, code, _, body = pcall(nk.http_request, url, method, headers, nil)
   if (not success) then
-    nk.logger_error(("Failed request %q"):format(code))
+    nk.logger_error(string.format("Failed request %q", code))
     error(code)
   elseif (code >= 400) then
-    nk.logger_error(("Failed request %q %q"):format(code, body))
+    nk.logger_error(string.format("Failed request %q %q", code, body))
     error(body)
   else
     return nk.json_decode(body)
