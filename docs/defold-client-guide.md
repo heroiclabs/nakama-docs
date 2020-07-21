@@ -1,6 +1,6 @@
-# Lua/Defold client guide
+# Defold client guide
 
-The client is built in [Lua 5.1](https://www.lua.org/manual/5.1/) on top of the [Defold game engine](https://defold.com/). It is available at [GitHub](https://github.com/heroiclabs/nakama-defold/releases). One can easily use it with other engines running lua, see [how](#adapting-to-other-engines).
+The client is built in [Lua 5.1](https://www.lua.org/manual/5.1/) on top of the [Defold game engine](https://defold.com/). It is available at [GitHub](https://github.com/heroiclabs/nakama-defold/releases). It can also be used by other engines running lua, see [how](#adapting-to-other-engines).
 
 !!! Tip "Contribute"
     The Defold client is <a href="https://github.com/heroiclabs/nakama-defold" target="\_blank">open source</a> on GitHub. Report issues and contribute code to help us improve it.
@@ -280,6 +280,3 @@ The engine module must provide the following functions:
     * `socket` - Socket instance returned from `socket_create()`
     * `message` - Message to send
     * `callback` - Function to call with message returned as a response (message)
-
-<br>
-<br>
