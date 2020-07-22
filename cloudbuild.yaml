@@ -4,7 +4,7 @@ steps:
   args: ['-c', 'mkdocs build -v']
 - name: gcr.io/cloud-builders/gsutil
   entrypoint: sh
-  args: ['-cxe', 'cd site && gsutil -m cp -r -z "css,htm,html,js,json,mjs,svg,xhtml" "*" "gs://docs.heroiclabs.com/docs"']
+  args: ['-cxe', 'cd site && gsutil -m cp -r -z "css,htm,html,js,json,mjs,svg,xhtml" "." "gs://docs.heroiclabs.com/docs"']
   timeout: 3600s
 - name: gcr.io/cloud-builders/gsutil
   args: ['-m', 'setmeta', '-r', '-h', 'Cache-Control:must-revalidate, max-age=3600', 'gs://docs.heroiclabs.com/*']
