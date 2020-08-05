@@ -1,6 +1,6 @@
 # Send push messages
 
-Push messages are a great complement to [in-app notifications](social-in-app-notifications.md) in Nakama. You can use in-app notifications to re-engage online users with closed or backgrounded apps.
+Push messages are a great complement to [in-app notifications](social-in-app-notifications.md) in Nakama. You can use push messages to re-engage users who have either closed or backgrounded your app.
 
 There are many different push providers you can integrate into your client code and Nakama, but for this tutorial we'll use the One Signal service. They provide an HTTP API to register devices and send push messages to segments of users.
 
