@@ -19,7 +19,7 @@ Download and add the "onesignal.lua" file to the location you use for your Lua m
 nakama --runtime.path "/some/path/dir/"
 ```
 
-When you server is started you'll see the One Signal module loaded and recorded in the startup logs. In development it can be helpful to run the server with "--log.stdout" for log output in the console.
+When your server is started you'll see the One Signal module loaded and recorded in the startup logs. In development it can be helpful to run the server with "--log.stdout" for log output in the console.
 
 ### Keys and credentials
 
