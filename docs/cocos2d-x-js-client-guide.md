@@ -151,6 +151,7 @@ socket.joinChat(channelId, 1, persistence, hidden).then(
       }
   );
 
+function sendChatMessage(channelId) {
   socket.writeChatMessage(channelId, {"message": "Pineapple doesn't belong on a pizza!"}).then(
       function(messageAck) {
           cc.log("Successfully sent chat message:", JSON.stringify(messageAck));
@@ -159,6 +160,7 @@ socket.joinChat(channelId, 1, persistence, hidden).then(
           cc.error("send message failed:", JSON.stringify(error));
       }
   );
+}
 ```
 
 You can find more information about the various chat features available [here](social-in-app-notifications.md).
