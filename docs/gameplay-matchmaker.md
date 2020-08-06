@@ -38,7 +38,7 @@ const stringProperties = {
 
 const numericProperties = {
     rank: 8
-}
+};
 
 var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
 ```
@@ -96,24 +96,24 @@ rtClient->addMatchmaker(
 ```
 
 ```js tab="Cocos2d-x JS"
-  const query = "*";
-  const minCount = 2;
-  const maxCount = 4;
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
 
-  const stringProperties = {
-    region: "europe"
-  };
-  const numericProperties = {
-    rank: 8
-  };
+const stringProperties = {
+  region: "europe"
+};
+const numericProperties = {
+  rank: 8
+};
 
-  socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
-  .then(function(ticket) {
-      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-    },
-    function(error) {
-      cc.error("matchmaker add failed:", JSON.stringify(error));
-    });
+socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
+.then(function(ticket) {
+    cc.log("matchmaker ticket:", JSON.stringify(ticket));
+  },
+  function(error) {
+    cc.error("matchmaker add failed:", JSON.stringify(error));
+  });
 ```
 
 ```cpp tab="C++"
@@ -198,7 +198,7 @@ You can find opponents based on a mix of property filters with exact matches or 
   const minCount = 2;
   const maxCount = 4;
 
-  const stringProperties: {
+  const stringProperties = {
     region: "europe"
   };
   const numericProperties = {
@@ -261,9 +261,10 @@ const query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<
 const minCount = 2;
 const maxCount = 4;
 
-const stringProperties: {
+const stringProperties = {
   region: "europe"
 };
+
 const numericProperties = {
   rank: 8
 };
@@ -556,9 +557,9 @@ rtClient->addMatchmaker(
 
 ```js tab="Cocos2d-x JS"
 
-  const query = "*";
-  const minCount =2;
-  const maxCount = 4;
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
 
 socket.addMatchmaker(query, minCount, maxCount)
   .then(function(ticket) {
@@ -656,9 +657,9 @@ rtClient->addMatchmaker(
 ```
 
 ```js tab="Cocos2d-x JS"
-  const query = "*";
-  const minCount = 2;
-  const maxCount = 4;
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
 
 socket.addMatchmaker(query, minCount, maxCount)
   .then(function(ticket) {

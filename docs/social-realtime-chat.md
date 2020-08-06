@@ -245,7 +245,7 @@ const persistence = true;
 const hidden = false;
 
  // 1 = Room, 2 = Direct Message, 3 = Group
-socket.joinChat(type: 1, roomname, persistence, hidden).then(function(response) {
+socket.joinChat(1, roomname, persistence, hidden).then(function(response) {
       cc.log("Now connected to channel id: ", response.channel.id);
     },
     function(error) {
