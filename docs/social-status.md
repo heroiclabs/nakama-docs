@@ -11,7 +11,7 @@ The status is set for each connection, and is erased when the user disconnects. 
 By default users have no status when they first connect, and will not appear online to their followers. To appear online the user must set a status.
 
 ```js tab="JavaScript"
-socket.send({ status_update: { status: "Hello everyone!" } });
+socket.updateStatus("Hello everyone!");
 ```
 
 ```csharp tab=".NET"
@@ -27,7 +27,7 @@ rtClient->updateStatus("Hello everyone!");
 ```
 
 ```js tab="Cocos2d-x JS"
-socket.send({ status_update: { status: "Hello everyone!" } });
+socket.updateStatus("Hello everyone!");
 ```
 
 ```cpp tab="C++"
@@ -56,7 +56,7 @@ The status can be set and updated as often as needed with this operation.
 If the user needs to appear offline or "invisible" they can do so by erasing their status. Their followers will receive the same status update as they would if the user disconnects.
 
 ```js tab="JavaScript"
-socket.send({ status_update: {} });
+socket.updateStatus();
 ```
 
 ```csharp tab=".NET"
@@ -72,7 +72,7 @@ rtClient->updateStatus("");
 ```
 
 ```js tab="Cocos2d-x JS"
-socket.send({ status_update: {} });
+socket.updateStatus();
 ```
 
 ```cpp tab="C++"
@@ -214,7 +214,7 @@ Users only receive status updates from those they follow. Users can follow anyon
 When following a set of users the operation will immediately return the status of those that are online and have set a visible status.
 
 ```js tab="JavaScript"
-var status = await socket.send({ status_follow: { user_ids: ["<user id>"] } });
+var status = await socket.followUsers(["<user id>"]);
 status.presences.forEach((presence) => {
   console.log("User %o has status %o", presence.user_id, presence.status);
 });
@@ -241,7 +241,7 @@ rtClient->followUsers({ "<user id>" }, successCallback);
 ```
 
 ```js tab="Cocos2d-x JS"
-socket.send({ status_follow: { user_ids: ["<user id>"] } })
+socket.followUsers(["<user id>"])
   .then(function(status) {
       status.presences.forEach((presence) => {
         cc.log("User", presence.user_id, "has status", presence.status);
@@ -285,7 +285,7 @@ print(status)
 Unfollowing a set of users immediately stops the user from receiving any further status updates from them.
 
 ```js tab="JavaScript"
-socket.send({ status_unfollow: { user_ids: ["<user id>"] } });
+socket.unfollowUsers(["<user id>"]);
 ```
 
 ```csharp tab=".NET"
@@ -301,7 +301,7 @@ rtClient->unfollowUsers({ "<user id>" });
 ```
 
 ```js tab="Cocos2d-x JS"
-socket.send({ status_unfollow: { user_ids: ["<user id>"] } });
+socket.unfollowUsers(["<user id>"]);
 ```
 
 ```cpp tab="C++"

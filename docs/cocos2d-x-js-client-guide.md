@@ -138,7 +138,6 @@ socket.onchannelmessage = function (channelMessage) {
 };
 
 const channelId = "pineapple-pizza-lovers-room";
-
 const persistence = false;
 const hidden = false;
 

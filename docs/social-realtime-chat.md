@@ -198,12 +198,12 @@ A room is created dynamically for users to chat. A room has a name and will be s
 
 ```js tab="JavaScript"
 const roomname = "MarvelMovieFans";
-const response = await socket.send({ channel_join: {
-    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: roomname,
-    persistence: true,
-    hidden: false
-} });
+const persistence = true;
+const hidden = false;
+
+ // 1 = Room, 2 = Direct Message, 3 = Group
+const response = await socket.joinChat(1, roomname, persistence, hidden);
+
 console.log("Now connected to channel id: '%o'", response.channel.id);
 ```
 
@@ -241,12 +241,11 @@ rtClient->joinChat(
 
 ```js tab="Cocos2d-x JS"
 const roomname = "MarvelMovieFans";
-socket.send({ channel_join: {
-    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: roomname,
-    persistence: true,
-    hidden: false
-} }).then(function(response) {
+const persistence = true;
+const hidden = false;
+
+ // 1 = Room, 2 = Direct Message, 3 = Group
+socket.joinChat(type: 1, roomname, persistence, hidden).then(function(response) {
       cc.log("Now connected to channel id: ", response.channel.id);
     },
     function(error) {
@@ -318,12 +317,11 @@ A group ID is needed when a user joins group chat and can be [listed by the user
 
 ```js tab="JavaScript"
 const groupId = "<group id>";
-const response = await socket.send({ channel_join: {
-    type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: groupId,
-    persistence: true,
-    hidden: false
-} });
+const persistence = true;
+const hidden = false;
+// 1 = Room, 2 = Direct Message, 3 = Group
+const response = await socket.joinChat(3, groupId, persistence, hidden);
+
 console.log("You can now send messages to channel id: ", response.channel.id);
 ```
 
@@ -361,12 +359,11 @@ rtClient->joinChat(
 
 ```js tab="Cocos2d-x JS"
 const groupId = "<group id>";
-socket.send({ channel_join: {
-    type: 3, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: groupId,
-    persistence: true,
-    hidden: false
-} }).then(function(response) {
+const persistence = true;
+const hidden = false;
+
+// 1 = Room, 2 = Direct Message, 3 = Group
+socket.joinChat(3, groupId, persistence, hidden).then(function(response) {
       cc.log("You can now send messages to channel id:", response.channel.id);
     },
     function(error) {
@@ -438,12 +435,10 @@ A user will receive an [in-app notification](social-in-app-notifications.md) whe
 
 ```js tab="JavaScript"
 const userId = "<user id>";
-const response = await socket.send({ channel_join: {
-    type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: userId,
-    persistence: true,
-    hidden: false
-} });
+const persistence = true;
+const hidden = false;
+// 1 = Room, 2 = Direct Message, 3 = Group
+const response = await socket.joinChat(userId, 2, persistence, hidden);
 console.log("You can now send messages to channel id:", response.channel.id);
 ```
 
@@ -481,12 +476,11 @@ rtClient->joinChat(
 
 ```js tab="Cocos2d-x JS"
 const userId = "<user id>";
-socket.send({ channel_join: {
-    type: 2, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: userId,
-    persistence: true,
-    hidden: false
-} }).then(function(response) {
+const persistence = true;
+const hidden = false;
+
+// 1 = Room, 2 = Direct Message, 3 = Group
+socket.joinChat(userId, 2, persistence, hidden).then(function(response) {
       cc.log("You can now send messages to channel id:", response.channel.id);
     },
     function(error) {
@@ -573,12 +567,11 @@ socket.onchannelpresence = (presences) => {
 };
 
 const roomname = "PizzaFans";
-const response = await socket.send({ channel_join: {
-    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: roomname,
-    persistence: true,
-    hidden: false
-} });
+const persistence = true;
+const hidden = false;
+
+// 1 = Room, 2 = Direct Message, 3 = Group
+const response = await socket.joinChat(roomname, 1, persistence, hidden);
 
 // Setup initial online user list.
 onlineUsers.concat(response.channel.presences);
@@ -686,12 +679,11 @@ socket.onchannelpresence = (presences) => {
 };
 
 const roomname = "PizzaFans";
-socket.send({ channel_join: {
-    type: 1, // 1 = Room, 2 = Direct Message, 3 = Group
-    target: roomname,
-    persistence: true,
-    hidden: false
-} }).then(function(response) {
+const persistence = true;
+const hidden = false;
+
+// 1 = Room, 2 = Direct Message, 3 = Group
+socket.joinChat(roomname, 1, persistence, hidden).then(function(response) {
       // Setup initial online user list.
       onlineUsers.concat(response.channel.presences);
       // Remove your own user from list.
@@ -842,10 +834,7 @@ Every message sent returns an acknowledgment when it's received by the server. T
 ```js tab="JavaScript"
 var channelId = "<channel id>";
 var data = { "some": "data" };
-const messageAck = await socket.send({ channel_message_send: {
-    channel_id: channelId,
-    content: data
-} });
+const messageAck = await socket.writeChatMessage(channelId, data);
 ```
 
 ```csharp tab=".NET"
@@ -874,10 +863,7 @@ rtClient->writeChatMessage(channelId, data, successCallback);
 ```js tab="Cocos2d-x JS"
 var channelId = "<channel id>";
 var data = { "some": "data" };
-socket.send({ channel_message_send: {
-    channel_id: channelId,
-    content: data
-} }).then(function(messageAck) {
+socket.writeChatMessage(channelId, data).then(function(messageAck) {
       cc.log("message acknowledgement:", JSON.stringify(messageAck));
     },
     function(error) {
@@ -933,9 +919,7 @@ A user can leave a chat channel to no longer be sent messages in realtime. This 
 
 ```js tab="JavaScript"
 var channelId = "<channel id>";
-await socket.send({ channel_leave: {
-  channel_id: channelId
-} });
+await socket.leaveChat(channelId);
 ```
 
 ```csharp tab=".NET"
@@ -955,9 +939,7 @@ rtClient->leaveChat(channelId);
 
 ```js tab="Cocos2d-x JS"
 var channelId = "<channel id>";
-socket.send({ channel_leave: {
-  channel_id: channelId
-} });
+socket.leaveChat(channelId);
 ```
 
 ```cpp tab="C++"
