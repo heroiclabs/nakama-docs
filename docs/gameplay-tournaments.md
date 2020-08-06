@@ -634,6 +634,9 @@ if err != nil {
 }
 ```
 
+!!! Note
+    If you don't create a tournament with a reset schedule then you must provide it with an end time.
+
 ### Delete tournament
 
 Delete a tournament by it's ID.
