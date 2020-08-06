@@ -17,6 +17,9 @@ pip install mkdocs-material==5.3.0
 
 ## Development
 
+From the root of this repository, run:
 ```
 mkdocs serve
 ```
+
+Then open `site/index.html` in your browser.
