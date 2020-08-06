@@ -519,6 +519,17 @@ FB.Login("email", (ILoginResult result) => {
 });
 ```
 
+#### Facebook Instant
+
+```js tab="JavaScript"
+const result = await FBInstant.player.getSignedPlayerInfoAsync();
+const authObj = {signed_player_info: result.getSignature()};
+var session = await client.authenticateFacebookInstantGame(authObj);
+console.info("Successfully authenticated: %o", session);
+```
+!!! Note "Server configuration"
+    Ensure you've configured your FB Instant App secret for Nakama https://heroiclabs.com/docs/install-configuration/#facebook-instant-game.
+
 #### Google
 
 Similar to Facebook for register and login you should use one of Google's client SDKs.
