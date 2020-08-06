@@ -36,7 +36,7 @@ const stringProperties = {
     region: "europe"
 };
 
-const numericProperties: {
+const numericProperties = {
     rank: 8
 }
 
@@ -103,7 +103,7 @@ rtClient->addMatchmaker(
   const stringProperties = {
     region: "europe"
   };
-  const numericProperties: {
+  const numericProperties = {
     rank: 8
   };
 
@@ -201,7 +201,7 @@ You can find opponents based on a mix of property filters with exact matches or 
   const stringProperties: {
     region: "europe"
   };
-  const numericProperties: {
+  const numericProperties = {
     rank: 8
   };
 
@@ -264,7 +264,7 @@ const maxCount = 4;
 const stringProperties: {
   region: "europe"
 };
-const numericProperties: {
+const numericProperties = {
   rank: 8
 };
 
