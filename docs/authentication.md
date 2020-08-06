@@ -521,6 +521,8 @@ FB.Login("email", (ILoginResult result) => {
 
 #### Facebook Instant
 
+Ensure that you've initialized the Facebook Instant Games SDK using `FBInstant.initializeAsync()`.
+
 ```js tab="JavaScript"
 const result = await FBInstant.player.getSignedPlayerInfoAsync();
 const authObj = {signed_player_info: result.getSignature()};
