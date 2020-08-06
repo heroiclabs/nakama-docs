@@ -27,18 +27,20 @@ Properties are key-value pairs that describe the user. Rank information, connect
 When matchmaking completes these properties are visible to all matched users. You can store extra information without affecting the matchmaking process itself if it's useful to clients - just submit properties that aren't queried for as part of the matchmaking process.
 
 ```js tab="JavaScript"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*",
-  string_properties: {
+
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
+
+const stringProperties = {
     region: "europe"
-  },
-  numeric_properties: {
+};
+
+const numericProperties: {
     rank: 8
-  }
-}};
-var ticket = await socket.send(message);
+}
+
+var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ```csharp tab=".NET"
@@ -94,18 +96,18 @@ rtClient->addMatchmaker(
 ```
 
 ```js tab="Cocos2d-x JS"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*",
-  string_properties: {
+  const query = "*";
+  const minCount = 2;
+  const maxCount = 4;
+
+  const stringProperties = {
     region: "europe"
-  },
-  numeric_properties: {
+  };
+  const numericProperties: {
     rank: 8
-  }
-}};
-socket.send(message)
+  };
+
+  socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
   .then(function(ticket) {
       cc.log("matchmaker ticket:", JSON.stringify(ticket));
     },
@@ -192,18 +194,18 @@ See the [Bleve query string syntax](http://www.blevesearch.com/docs/Query-String
 You can find opponents based on a mix of property filters with exact matches or ranges of values. This example searches for opponents that **must** be in `europe` and **must** have a `rank` between 5 and 10, inclusive:
 
 ```js tab="JavaScript"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10",
-  string_properties: {
+  const query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+  const minCount = 2;
+  const maxCount = 4;
+
+  const stringProperties: {
     region: "europe"
-  },
-  numeric_properties: {
+  };
+  const numericProperties: {
     rank: 8
-  }
-}};
-var ticket = await socket.send(message);
+  };
+
+  var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ```csharp tab=".NET"
@@ -255,18 +257,18 @@ rtClient->addMatchmaker(
 ```
 
 ```js tab="Cocos2d-x JS"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10",
-  string_properties: {
-    region: "europe"
-  },
-  numeric_properties: {
-    rank: 8
-  }
-}};
-socket.send(message)
+const query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+const minCount = 2;
+const maxCount = 4;
+
+const stringProperties: {
+  region: "europe"
+};
+const numericProperties: {
+  rank: 8
+};
+
+socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
   .then(function(ticket) {
       cc.log("matchmaker ticket:", JSON.stringify(ticket));
     },
@@ -331,18 +333,18 @@ print("Got ticket: %s" % [matchmaker_ticket])
 Or use the wildcard query `"*"` to ignore opponents properties and match with anyone:
 
 ```js tab="JavaScript"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*",
-  string_properties: {
-    region: "europe"
-  },
-  numeric_properties: {
-    rank: 8
-  }
-}};
-var ticket = await socket.send(message);
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
+
+const stringProperties = {
+  region: "europe"
+};
+const numericProperties = {
+  rank: 8
+};
+
+var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
 ```
 
 ```csharp tab=".NET"
@@ -398,18 +400,18 @@ rtClient->addMatchmaker(
 ```
 
 ```js tab="Cocos2d-x JS"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*",
-  string_properties: {
-    region: "europe"
-  },
-  numeric_properties: {
-    rank: 8
-  }
-}};
-socket.send(message)
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
+
+const stringProperties = {
+  region: "europe"
+};
+const numericProperties = {
+  rank: 8
+};
+
+socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
   .then(function(ticket) {
       cc.log("matchmaker ticket:", JSON.stringify(ticket));
     },
@@ -482,12 +484,11 @@ The minimum and maximum count includes the user searching for opponents, so to f
 If the counts define a range, the matchmaker will try to return the max opponents possible but will never return less than the minimum count:
 
 ```js tab="JavaScript"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*"
-}};
-var ticket = await socket.send(message);
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
+
+var ticket = await socket.addMatchmaker(query, minCount, maxCount);
 ```
 
 ```csharp tab=".NET"
@@ -514,12 +515,10 @@ MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCou
 To search for an exact number of opponents submit the same minimum and maximum count:
 
 ```js tab="JavaScript"
-const message = { matchmaker_add: {
-  min_count: 4,
-  max_count: 4,
-  query: "*"
-}};
-var ticket = await socket.send(message);
+const query = "*";
+const minCount = 4;
+const maxCount = 4;
+var ticket = await socket.addMatchmaker(query, minCount, maxCount);
 ```
 
 ```csharp tab=".NET"
@@ -556,12 +555,12 @@ rtClient->addMatchmaker(
 ```
 
 ```js tab="Cocos2d-x JS"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*"
-}};
-socket.send(message)
+
+  const query = "*";
+  const minCount =2;
+  const maxCount = 4;
+
+socket.addMatchmaker(query, minCount, maxCount)
   .then(function(ticket) {
       cc.log("matchmaker ticket:", JSON.stringify(ticket));
     },
@@ -616,12 +615,11 @@ print("Got ticket: %s" % [matchmaker_ticket])
 Each time a user is added to the matchmaker pool they receive a ticket, a unique identifier for their entry into the pool.
 
 ```js tab="JavaScript"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*"
-}};
-var ticket = await socket.send(message);
+
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
+var ticket = await socket.addMatchmaker(query, minCount, maxCount);
 ```
 
 ```csharp tab=".NET"
@@ -658,12 +656,11 @@ rtClient->addMatchmaker(
 ```
 
 ```js tab="Cocos2d-x JS"
-const message = { matchmaker_add: {
-  min_count: 2,
-  max_count: 4,
-  query: "*"
-}};
-socket.send(message)
+  const query = "*";
+  const minCount = 2;
+  const maxCount = 4;
+
+socket.addMatchmaker(query, minCount, maxCount)
   .then(function(ticket) {
       cc.log("matchmaker ticket:", JSON.stringify(ticket));
     },
@@ -720,13 +717,7 @@ This ticket is used when the server notifies the client on matching success. It 
 If a user decides they no longer wish to matchmake without disconnecting they can gracefully cancel the matchmaker process by removing themselves from the pool.
 
 ```js tab="JavaScript"
-// "ticket" is returned by the matchmaker.
-const message = {
-  matchmaker_remove: {
-    ticket: ticket
-  }
-}
-socket.send(message);
+socket.removeMatchmaker(ticket);
 ```
 
 ```csharp tab=".NET"
@@ -749,12 +740,7 @@ rtClient->removeMatchmaker(ticket, []()
 
 ```js tab="Cocos2d-x JS"
 // "ticket" is returned by the matchmaker.
-const message = {
-  matchmaker_remove: {
-    ticket: ticket
-  }
-}
-socket.send(message);
+socket.removeMatchmaker(ticket);
 ```
 
 ```cpp tab="C++"
@@ -865,12 +851,7 @@ The match token is also used to prevent unwanted users from attempting to join a
 ```js tab="JavaScript"
 socket.onmatchmakermatched = (matched) => {
   console.info("Received MatchmakerMatched message: ", matched);
-  const message = {
-    match_join: {
-      token: matched.token
-    }
-  };
-  socket.send(message);
+  socket.joinMatch(matched.token);
 };
 ```
 
@@ -906,12 +887,7 @@ rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
 this.socket.onmatchmakermatched = (matched) => {
   cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
   cc.log("Matched opponents:", matched.users.toString());
-  const message = {
-    match_join: {
-      token: matched.token
-    }
-  };
-  socket.send(message);
+  socket.joinMatch(matched.token);
 };
 ```
 
