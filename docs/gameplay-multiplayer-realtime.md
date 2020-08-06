@@ -11,7 +11,7 @@ Any data sent through a match is immediately routed to all other match opponents
 A match can be created by a user. The server will assign a unique ID which can be shared with other users for them to [join the match](#join-a-match). All users within a match are equal and it is up to the clients to decide on a host.
 
 ```js tab="JavaScript"
-var response = await socket.send({ match_create: {} });
+var response = await socket.createMatch();
 console.log("Created match with ID:", response.match.match_id);
 ```
 
@@ -33,7 +33,7 @@ rtClient->createMatch([](const NMatch& match)
 ```
 
 ```js tab="Cocos2d-x JS"
-socket.send({ match_create: {} })
+socket.createMatch()
   .then(function(response) {
       cc.log("created match with ID:", response.match.match_id);
     },
@@ -73,7 +73,7 @@ A user can join a specific match by ID. Matches can be joined at any point until
 
 ```js tab="JavaScript"
 var id = "<matchid>";
-var match = await socket.send({ match_join: { match_id: id } });
+var match = await socket.joinMatch(id);
 var connectedOpponents = match.presences.filter((presence) => {
   // Remove your own user from list.
   return presence.user_id != match.self.user_id;
@@ -119,7 +119,7 @@ rtClient->joinMatch(matchId, {}, [](const NMatch& match)
 
 ```js tab="Cocos2d-x JS"
 var id = "<matchid>";
-socket.send({ match_join: { match_id: id } })
+socket.joinMatch(id)
   .then(
     function (response) {
       cc.error("joined match:", JSON.stringify(response));
@@ -319,7 +319,7 @@ The binary content in each data message should be as __small as possible__. It i
 var id = "<matchid>";
 var opCode = 1;
 var data = { "move": {"dir": "left", "steps": 4} };
-socket.send({ match_data_send: { match_id: id, op_code: opCode, data: data } });
+socket.sendMatchState(id, opCode, data);
 ```
 
 ```csharp tab=".NET"
@@ -349,7 +349,7 @@ rtClient->sendMatchData(id, opCode, data);
 var id = "<matchid>";
 var opCode = 1;
 var data = { "move": {"dir": "left", "steps": 4} };
-socket.send({ match_data_send: { match_id: id, op_code: opCode, data: data } });
+socket.sendMatchState(id, opCode, data);
 ```
 
 ```cpp tab="C++"
@@ -496,7 +496,7 @@ Users can leave a match at any point. A match ends when all users have left.
 
 ```js tab="JavaScript"
 var id = "<matchid>";
-socket.send({ match_leave: {match_id: id}});
+socket.leaveMatch(id);
 ```
 
 ```csharp tab=".NET"
@@ -516,7 +516,7 @@ rtClient->leaveMatch(matchId);
 
 ```js tab="Cocos2d-x JS"
 var id = "<matchid>";
-socket.send({ match_leave: {match_id: id}});
+socket.leaveMatch(id);
 ```
 
 ```cpp tab="C++"
