@@ -18,7 +18,7 @@ Leaderboard records are sorted based on their configured sort order: DESC (defau
 The leaderboard operator controls how scores are submitted to the leaderboard: "best" always keeps the best score for each user, "set" uses the latest submitted score, and "incr" will add the new value to any existing score. The operator cannot be changed after the leaderboard is created.
 
 !!! Tip
-    You can implement arcade-style leaderboards - where a single user posts multiple entries - by setting the entry's id to a combination of the user's ID and a unique hash based on the current time (e.g., `<user-id>:<hashed-unix-time>`).
+    You can implement arcade-style leaderboards - where a single user posts multiple entries - by setting the entry's id to a combination of the user's ID and a current unix time (e.g., `<user-id>:<unix-time>`).
 
 All leaderboard configuration is immutable once created. You should delete the leaderboard and create a new one if you need to change the sort order or operator.
 
