@@ -2295,7 +2295,7 @@ max_size = 10000     -- First 10,000 players who join.
 max_num_score = 3    -- Each player can have 3 attempts to score.
 join_required = true -- Must join to compete.
 nk.tournament_create(id, sort, operator, duration, reset, metadata, title, description,
-    category, start_time, endTime, max_size, max_num_score, join_required)
+    category, start_time, end_time, max_size, max_num_score, join_required)
 ```
 
 ```go tab="Go"
