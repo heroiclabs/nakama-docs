@@ -24,10 +24,10 @@ using UnityEngine;
 
 public class YourGameObject : MonoBehaviour
 {
-  void Start()
-  {
+    void Start()
+    {
     var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
-  }
+    }
 }
 ```
 

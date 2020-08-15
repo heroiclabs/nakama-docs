@@ -15,19 +15,19 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 
 When you've downloaded the jar package you should include it in your project or if you use Gradle add the client as a dependency to your "build.gradle".
 
-<!-- ```groovy
-repositories {
-    maven {
-        url 'https://dl.bintray.com/heroiclabs/default/'
-    }
-}``` -->
+<!-- 	```groovy
+	repositories {
+	    maven {
+	        url 'https://dl.bintray.com/heroiclabs/default/'
+	    }
+	}``` -->
 
 ```groovy
 dependencies {
-  compile(group: 'com.heroiclabs.nakama', name: 'client', version: '+')
-  compile('org.slf4j:slf4j-api:1.7.25') {
+    compile(group: 'com.heroiclabs.nakama', name: 'client', version: '+')
+    compile('org.slf4j:slf4j-api:1.7.25') {
     force = true // don't upgrade to "1.8.0-alpha2"
-  }
+    }
 }
 ```
 
@@ -37,11 +37,11 @@ The client object is used to execute all logic against the server.
 import com.heroiclabs.nakama.Client;
 
 public class NakamaSessionManager {
-  private final Client client;
+    private final Client client;
 
-  public NakamaSessionManager() {
+    public NakamaSessionManager() {
     client = new DefaultClient("defaultkey", "127.0.0.1", 7349);
-  }
+    }
 }
 ```
 
@@ -142,10 +142,10 @@ The client can create one or more sockets with the server. Each socket can have 
 SocketClient socket = client.createWebSocket();
 
 SocketListener listener = new AbstractSocketListener() {
-  @Override
-  public void onDisconnect(final Throwable t) {
+    @Override
+    public void onDisconnect(final Throwable t) {
     System.out.println("Socket disconnected.");
-  }
+    }
 };
 
 socket.connect(session, listener).get();
@@ -158,11 +158,11 @@ To join a chat channel and receive messages:
 
 ```java
 SocketListener listener = new AbstractSocketListener() {
-  @Override
-  public void onChannelMessage(final ChannelMessage message) {
+    @Override
+    public void onChannelMessage(final ChannelMessage message) {
     System.out.format("Received a message on channel %s", message.getChannelId());
     System.out.format("Message content: %s", message.getContent());
-  }
+    }
 };
 
 socket.connect(session, listener).get();
@@ -182,16 +182,16 @@ A socket object has event handlers which are called on various messages received
 
 ```java
 SocketListener listener = new AbstractSocketListener() {
-  @Override
-  public void onStatusPresence(final StatusPresenceEvent presence) {
+    @Override
+    public void onStatusPresence(final StatusPresenceEvent presence) {
     for (UserPresence userPresence : presence.getJoins()) {
-      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+        System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
     }
 
     for (UserPresence userPresence : presence.getLeaves()) {
-      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+        System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
     }
-  }
+    }
 };
 ```
 
@@ -218,7 +218,7 @@ The client uses <a href="https://www.slf4j.org/manual.html" target="\_blank">SLF
 
 ```groovy
 dependencies {
-  compile(group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.+')
+    compile(group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.+')
 }
 ```
 
@@ -226,7 +226,7 @@ With Android you may want to use "slf4j-android" instead.
 
 ```groovy
 dependencies {
-  compile(group: 'org.slf4j', name: 'slf4j-android', version: '1.7.+')
+    compile(group: 'org.slf4j', name: 'slf4j-android', version: '1.7.+')
 }
 ```
 
@@ -234,11 +234,11 @@ Every error caused from within the `"SocketClient"` implements the `"Error"` cla
 
 ```java
 try {
-  Match match = socket.createMatch().get();
+    Match match = socket.createMatch().get();
 } catch (ExecutionException e) {
-  Error error = (Error) e.getCause();
-  System.out.println("Error code: " +  error.getCode());
-  System.out.println("Error message: " +  error.getMessage());
+    Error error = (Error) e.getCause();
+    System.out.println("Error code: " +  error.getCode());
+    System.out.println("Error message: " +  error.getMessage());
 }
 ```
 
@@ -248,20 +248,20 @@ An example class used to manage a session with the Java client.
 
 ```java
 public class NakamaSessionManager {
-  private final Client client = new DefaultClient("defaultkey");
-  private Session session;
+    private final Client client = new DefaultClient("defaultkey");
+    private Session session;
 
-  public void start(final String deviceId) {
+    public void start(final String deviceId) {
     SharedPreferences pref = activity.getPreferences(Context.MODE_PRIVATE);
     // Lets check if we can restore a cached session.
     String sessionString = pref.getString("nk.session", null);
     if (sessionString != null && !sessionString.isEmpty()) {
-      Session restoredSession = DefaultSession.restore(sessionString);
-      if (!restoredSession.isExpired(new Date())) {
+        Session restoredSession = DefaultSession.restore(sessionString);
+        if (!restoredSession.isExpired(new Date())) {
         // Session was valid and is restored now.
         this.session = restoredSession;
         return;
-      }
+        }
     }
 
     this.session = client.authenticateDevice(deviceId).get();
@@ -270,7 +270,7 @@ public class NakamaSessionManager {
     SharedPreferences pref = activity.getPreferences(Context.MODE_PRIVATE);
     pref.edit().putString("nk.session", session.getAuthToken()).apply();
     System.out.println(session.getAuthToken());
-  }
+    }
 }
 ```
 

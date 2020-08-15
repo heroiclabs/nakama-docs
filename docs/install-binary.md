@@ -34,10 +34,11 @@ Homebrew is a community-developed package manager for MacOS. If you’ve used `a
 
 If this is your first time using Homebrew, take a look at [their website](http://brew.sh/) for installation instructions. Once you’ve installed Homebrew, follow the instructions below.
 
-```shell tab="Shell"
-# run our brew recipe to download the Nakama code and build the binary
-brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/local/nakama.rb
-```
+=== "Shell"
+	```shell
+	# run our brew recipe to download the Nakama code and build the binary
+	brew install https://raw.githubusercontent.com/heroiclabs/nakama/master/install/local/nakama.rb
+	```
 
 Now you have Nakama running and you’re ready to start developing.
 -->
@@ -50,27 +51,30 @@ Installing the binaries directly rather than via Homebrew allows you the flexibi
 
 2\. Then extract the binary:
 
-```shell tab="Shell"
-# replace the X.X.X with the version number you have downloaded
-tar xfz nakama-X.X.X-darwin-amd64.tar.gz
-```
+=== "Shell"
+	```shell
+	# replace the X.X.X with the version number you have downloaded
+	tar xfz nakama-X.X.X-darwin-amd64.tar.gz
+	```
 
 3\. Add the directory containing the binary to your `PATH`. This makes it easy to execute Nakama commands from your terminal.
 
-```shell tab="Shell"
-cp -i nakama /usr/local/bin
-```
+=== "Shell"
+	```shell
+	cp -i nakama /usr/local/bin
+	```
 
 You may come across a permissions error. If you’re happy to perform the action with root permissions then prefix the command with `sudo`.
 
 4\. Migrate the database schema and then start Nakama
 
-```shell tab="Shell"
-# migrate schema
-nakama migrate up
-# start the server
-nakama
-```
+=== "Shell"
+	```shell
+	# migrate schema
+	nakama migrate up
+	# start the server
+	nakama
+	```
 
 ## Install Nakama on Windows
 
@@ -80,12 +84,13 @@ Nakama is also available as a [Windows binary](https://github.com/heroiclabs/nak
 2. Open a Powershell terminal and navigate to the folder you downloaded Nakama into.
 3. Migrate the database schema and then start Nakama
 
-```shell tab="Powershell"
-# migrate schema
-nakama.exe migrate up
-# start the server
-nakama.exe
-```
+=== "Powershell"
+	```shell
+	# migrate schema
+	nakama.exe migrate up
+	# start the server
+	nakama.exe
+	```
 
 ## Install Nakama on Linux
 
@@ -97,25 +102,28 @@ First you’ll need to create a suitable directory to install Nakama. To some ex
 
 2\. Then extract the binary:
 
-```shell tab="Shell"
-# replace the X.X.X with the version number you have downloaded
-tar xfz nakama-X.X.X-linux-amd64.tar.gz
-```
+=== "Shell"
+	```shell
+	# replace the X.X.X with the version number you have downloaded
+	tar xfz nakama-X.X.X-linux-amd64.tar.gz
+	```
 
 3\. Add the directory containing the binary to your `PATH`. This makes it easy to execute Nakama commands from your terminal.
 
-```shell tab="Shell"
-cp -i nakama /usr/local/bin
-```
+=== "Shell"
+	```shell
+	cp -i nakama /usr/local/bin
+	```
 
 4\. Migrate the database schema and then start Nakama
 
-```shell tab="Shell"
-# migrate schema
-nakama migrate up
-# start the server
-nakama
-```
+=== "Shell"
+	```shell
+	# migrate schema
+	nakama migrate up
+	# start the server
+	nakama
+	```
 
 You may come across a permissions error. If you’re happy to perform the action with root permissions then prefix the command with `sudo`.
 
@@ -128,29 +136,32 @@ If you prefer to run Nakama as a service, and you’re running a distro that use
 
 1\. Create the service file: `/usr/lib/systemd/system/nakama.service`
 
-```ini tab="nakama.service"
-[Unit]
-Description=Nakama server
-
-[Service]
-ExecStart=/path/to/nakama --config /path/to/nakama/config.yml
-KillMode=process
-
-[Install]
-WantedBy=multi-user.target
-```
+=== "nakama.service"
+	```ini
+	[Unit]
+	Description=Nakama server
+	
+	[Service]
+	ExecStart=/path/to/nakama --config /path/to/nakama/config.yml
+	KillMode=process
+	
+	[Install]
+	WantedBy=multi-user.target
+	```
 
 2\. Update file permission so it's readable by the `systemd` daemon process
 
-```shell tab="Shell"
-sudo chmod 644 /usr/lib/systemd/system/nakama.service
-```
+=== "Shell"
+	```shell
+	sudo chmod 644 /usr/lib/systemd/system/nakama.service
+	```
 
 3\. Enable and run the service
 
-```shell tab="Shell"
-sudo systemctl enable nakama
-sudo systemctl start nakama
-```
+=== "Shell"
+	```shell
+	sudo systemctl enable nakama
+	sudo systemctl start nakama
+	```
 
 

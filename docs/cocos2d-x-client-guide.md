@@ -59,25 +59,25 @@ Open for edit your `CMakeLists.txt` file and find following existing code:
 ```cmake
 # mark app complie info and libs info
 set(all_code_files
-    ${GAME_HEADER}
-    ${GAME_SOURCE}
+        ${GAME_HEADER}
+        ${GAME_SOURCE}
     )
 ```
 add next code before:
 ```cmake
 # Cocos2d Nakama sources
 list(APPEND GAME_SOURCE
-     Classes/NakamaCocos2d/NCocosWebSocket.cpp
-     Classes/NakamaCocos2d/NCocosHTTP.cpp
-     Classes/NakamaCocos2d/NCocosHelper.cpp
-     )
+        Classes/NakamaCocos2d/NCocosWebSocket.cpp
+        Classes/NakamaCocos2d/NCocosHTTP.cpp
+        Classes/NakamaCocos2d/NCocosHelper.cpp
+    )
 # Cocos2d Nakama headers
 list(APPEND GAME_HEADER
-     Classes/NakamaCocos2d/NCocosWebSocket.h
-     Classes/NakamaCocos2d/NCocosHTTP.h
-     Classes/NakamaCocos2d/NCocosLogSink.h
-     Classes/NakamaCocos2d/NCocosHelper.h
-     )
+        Classes/NakamaCocos2d/NCocosWebSocket.h
+        Classes/NakamaCocos2d/NCocosHTTP.h
+        Classes/NakamaCocos2d/NCocosLogSink.h
+        Classes/NakamaCocos2d/NCocosHelper.h
+    )
 ```
 
 At bottom of your `CMakeLists.txt` file add following:

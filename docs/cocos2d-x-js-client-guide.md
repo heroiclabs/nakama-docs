@@ -19,9 +19,9 @@ Import into your `project.json`:
 
 ```json
 "jsList" : [
-  ...
-  "src/NakamaSDK/ThirdParty/polyfill.min.js",
-  "src/NakamaSDK/nakama-js.umd.js"
+    ...
+    "src/NakamaSDK/ThirdParty/polyfill.min.js",
+    "src/NakamaSDK/nakama-js.umd.js"
 ]
 ```
 
@@ -62,16 +62,18 @@ const email = "hello@example.com";
 const password = "somesupersecretpassword";
 
 client.authenticateEmail({
-  email: email,
-  password: password
-}).then(function(session) {
-        cc.log("Authenticated successfully. User id:", session.user_id);
-        // Store session token for quick reconnects.
-        cc.sys.localStorage.setItem("nakamaToken", session.token);
-    },
-    function(error) {
-        cc.error("authenticate failed:", JSON.stringify(error));
-    });
+    email: email,
+    password: password
+}).then(
+        function(session) {
+            cc.log("Authenticated successfully. User id:", session.user_id);
+            // Store session token for quick reconnects.
+            cc.sys.localStorage.setItem("nakamaToken", session.token);
+        },
+        function(error) {
+            cc.error("authenticate failed:", JSON.stringify(error));
+        }
+    );
 ```
 
 In the code above we use `authenticateEmail` but for other authentication options have a look at the [code examples](authentication.md#register-or-login).
@@ -88,21 +90,23 @@ The server also provides a [storage engine](storage-collections.md) to keep save
 
 ```js
 const objects = [{
-  "collection": "collection",
-  "key": "key1",
-  "value": {"jsonKey": "jsonValue"}
+    "collection": "collection",
+    "key": "key1",
+    "value": {"jsonKey": "jsonValue"}
 }, {
-  "collection": "collection",
-  "key": "key2",
-  "value": {"jsonKey": "jsonValue"}
+    "collection": "collection",
+    "key": "key2",
+    "value": {"jsonKey": "jsonValue"}
 }];
 client.writeStorageObjects(session, objects)
-  .then(function(storageWriteAck) {
-        cc.log("Storage write was successful:", JSON.stringify(storageWriteAck));
-    },
-    function(error) {
-        cc.error("Storage write failed:", JSON.stringify(error));
-    });
+    .then(
+        function(storageWriteAck) {
+            cc.log("Storage write was successful:", JSON.stringify(storageWriteAck));
+        },
+        function(error) {
+            cc.error("Storage write failed:", JSON.stringify(error));
+        }
+    );
 ```
 
 Have a look at other sections of documentation for more code examples.
@@ -120,7 +124,7 @@ const createStatus = false;    // set `true` to send presence events to subscrib
 const socket = client.createSocket(useSSL, verboseLogging);
 var session = ""; // obtained by authentication.
 socket.connect(session, createStatus)
-  .then(
+    .then(
         function() {
             cc.log("connected");
         },
@@ -134,39 +138,39 @@ Then proceed to join a chat channel and send a message:
 
 ```js
 socket.onchannelmessage = function (channelMessage) {
-  cc.log("Received chat message:", JSON.stringify(channelMessage));
+    cc.log("Received chat message:", JSON.stringify(channelMessage));
 };
 
 const channelId = "pineapple-pizza-lovers-room";
 socket.send({ channel_join: {
-  type: 1, // 1 = room, 2 = Direct Message, 3 = Group
-  target: channelId,
-  persistence: false,
-  hidden: false
+    type: 1, // 1 = room, 2 = Direct Message, 3 = Group
+    target: channelId,
+    persistence: false,
+    hidden: false
 } }).then(
-      function(response) {
-          cc.log("Successfully joined channel:", response.channel.id);
-          sendChatMessage(response.channel.id);
-      },
-      function(error) {
-          cc.error("join channel failed:", JSON.stringify(error));
-      }
-  );
+        function(response) {
+            cc.log("Successfully joined channel:", response.channel.id);
+            sendChatMessage(response.channel.id);
+        },
+        function(error) {
+            cc.error("join channel failed:", JSON.stringify(error));
+        }
+    );
 
 function sendChatMessage(channel_id) {
-  socket.send({ 
-      channel_message_send: {
+    socket.send({
+        channel_message_send: {
         channel_id: response.channel.id,
         content: {"message": "Pineapple doesn't belong on a pizza!"}
-      }
+        }
     }).then(
-      function(messageAck) {
-          cc.log("Successfully sent chat message:", JSON.stringify(messageAck));
-      },
-      function(error) {
-          cc.error("send message failed:", JSON.stringify(error));
-      }
-  );
+        function(messageAck) {
+            cc.log("Successfully sent chat message:", JSON.stringify(messageAck));
+        },
+        function(error) {
+            cc.error("send message failed:", JSON.stringify(error));
+        }
+    );
 }
 ```
 
@@ -178,34 +182,34 @@ A client socket has event listeners which are called on various events received 
 
 ```js
 socket.ondisconnect = function (event) {
-  cc.log("Disconnected from the server. Event:", JSON.stringify(event));
+    cc.log("Disconnected from the server. Event:", JSON.stringify(event));
 };
 socket.onnotification = function (notification) {
-  cc.log("Received notification:", JSON.stringify(notification));
+    cc.log("Received notification:", JSON.stringify(notification));
 };
 socket.onchannelpresence = function (presence) {
-  cc.log("Received presence update:", JSON.stringify(presence));
+    cc.log("Received presence update:", JSON.stringify(presence));
 };
 socket.onchannelmessage = function (message) {
-  cc.log("Received new chat message:", JSON.stringify(message));
+    cc.log("Received new chat message:", JSON.stringify(message));
 };
 socket.onmatchdata = function (matchdata) {
-  cc.log("Received match data: ", JSON.stringify(matchdata));
+    cc.log("Received match data: ", JSON.stringify(matchdata));
 };
 socket.onmatchpresence = function (matchpresence) {
-  cc.log("Received match presence update:", JSON.stringify(matchpresence));
+    cc.log("Received match presence update:", JSON.stringify(matchpresence));
 };
 socket.onmatchmakermatched = function (matchmakerMatched) {
-  cc.log("Received matchmaker update:", JSON.stringify(matchmakerMatched));
+    cc.log("Received matchmaker update:", JSON.stringify(matchmakerMatched));
 };
 socket.onstatuspresence = function (statusPresence) {
-  cc.log("Received status presence update:", JSON.stringify(statusPresence));
+    cc.log("Received status presence update:", JSON.stringify(statusPresence));
 };
 socket.onstreampresence = function (streamPresence) {
-  cc.log("Received stream presence update:", JSON.stringify(streamPresence));
+    cc.log("Received stream presence update:", JSON.stringify(streamPresence));
 };
 socket.onstreamdata = function (streamdata) {
-  cc.log("Received stream data:", JSON.stringify(streamdata));
+    cc.log("Received stream data:", JSON.stringify(streamdata));
 };
 ```
 
@@ -248,57 +252,61 @@ var client = new nakamajs.Client("defaultkey");
 var currentSession = null;
 
 function storeSession(session) {
-  cc.sys.localStorage.setItem("nakamaToken", session.token);
-  cc.log("Session stored.");
+    cc.sys.localStorage.setItem("nakamaToken", session.token);
+    cc.log("Session stored.");
 }
 
 function getSessionFromStorage() {
-  return cc.sys.localStorage.getItem("nakamaToken");
+    return cc.sys.localStorage.getItem("nakamaToken");
 }
 
 function restoreSessionOrAuthenticate() {
 const email = "hello@example.com";
-  const password = "somesupersecretpassword";
-  var session = null;
-  try {
+    const password = "somesupersecretpassword";
+    var session = null;
+    try {
     var sessionString = getSessionFromStorage();
     if (sessionString && sessionString !== "") {
-      session = nakamajs.Session.restore(sessionString);
-      var currentTimeInSec = new Date() / 1000;
-      if (!session.isexpired(currentTimeInSec)) {
+        session = nakamajs.Session.restore(sessionString);
+        var currentTimeInSec = new Date() / 1000;
+        if (!session.isexpired(currentTimeInSec)) {
         cc.log("Restored session. User ID: ", session.user_id);
         return Promise.resolve(session);
-      }
+        }
     }
 
     return new Promise(function(resolve, reject) {
-      client.authenticateEmail({ email: email, password: password })
-        .then(function(session) {
-            storeSession(session);
-            cc.log("Authenticated successfully. User ID:", session.user_id);
-            resolve(session);
-          },
-          function(error) {
-            cc.error("authenticate failed:", JSON.stringify(error));
-            reject(error);
-          });
+        client.authenticateEmail({ email: email, password: password })
+        .then(
+            function(session) {
+                storeSession(session);
+                cc.log("Authenticated successfully. User ID:", session.user_id);
+                resolve(session);
+            },
+            function(error) {
+                cc.error("authenticate failed:", JSON.stringify(error));
+                reject(error);
+            }
+        );
     });
-  } catch(e) {
-    cc.log("An error occurred while trying to restore session or authenticate user:", JSON.stringify(e));
-    return Promise.reject(e);
-  }
+    } catch(e) {
+        cc.log("An error occurred while trying to restore session or authenticate user:", JSON.stringify(e));
+        return Promise.reject(e);
+    }
 }
 
 restoreSessionOrAuthenticate().then(function(session) {
-  currentSession = session;
-  return client.writeStorageObjects(currentSession, [{
-    "collection": "collection",
-    "key": "key1",
-    "value": {"jsonKey": "jsonValue"}
-  }]);
+    currentSession = session;
+    return client.writeStorageObjects(currentSession, [
+        {
+            "collection": "collection",
+            "key": "key1",
+            "value": {"jsonKey": "jsonValue"}
+        }
+    ]);
 }).then(function(writeAck) {
-  cc.log("Storage write was successful - ack:", JSON.stringify(writeAck));
+    cc.log("Storage write was successful - ack:", JSON.stringify(writeAck));
 }).catch(function(e) {
-  cc.log("An error occured:", JSON.stringify(e));
+    cc.log("An error occured:", JSON.stringify(e));
 });
 ```

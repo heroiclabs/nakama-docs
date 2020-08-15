@@ -13,9 +13,9 @@ You should use server-side code when you want to set rules around various featur
 
 By default, the server will scan all files within the "data/modules" folder relative to the server file or the folder specified in the YAML [configuration](install-configuration.md#runtime) at startup. You can also specify the modules folder via a command flag when you start the server.
 
-```shell
-nakama --runtime.path "$HOME/some/path/"
-```
+	```shell
+	nakama --runtime.path "$HOME/some/path/"
+	```
 
 All files with the ".lua" or ".so" extensions found in the runtime path will be loaded and evaluated as part of the boot up sequence. Each Lua file represents a module and all code in each module will be run and can be used to register functions which can operate on messages from clients as well as execute logic on demand. Shared Object files are the equivalent for Go plugins.
 
@@ -27,67 +27,69 @@ In the Lua example, we will create a module called "example.lua". We will import
 
 In the Go example, we will import the runtime package and use the `NakamaModule` which has all the same functions as referenced above.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local function some_example(context, payload)
-  -- we'll assume payload was sent as JSON and decode it.
-  local json = nk.json_decode(payload)
+	local function some_example(context, payload)
+	  -- we'll assume payload was sent as JSON and decode it.
+	  local json = nk.json_decode(payload)
 
-  -- log data sent to RPC call.
-  nk.logger_info(string.format("Payload: %q", json))
+	  -- log data sent to RPC call.
+	  nk.logger_info(string.format("Payload: %q", json))
 
-  local id = nk.uuid_v4()
-  -- create a leaderboard with the json as metadata.
-  nk.leaderboard_create(id, "desc", "best", "0 0 * * 1", json, false)
+	  local id = nk.uuid_v4()
+	  -- create a leaderboard with the json as metadata.
+	  nk.leaderboard_create(id, "desc", "best", "0 0 * * 1", json, false)
 
-  return nk.json_encode({["id"] = id})
-  -- will return "{'id': 'some UUID'}" (JSON) as bytes
-end
+	  return nk.json_encode({["id"] = id})
+	  -- will return "{'id': 'some UUID'}" (JSON) as bytes
+	end
 
-nk.register_rpc(some_example, "my_unique_id")
-```
+	nk.register_rpc(some_example, "my_unique_id")
+	```
 
-```go tab="Go"
-import (
-  "context"
-  "database/sql"
-  "encoding/json"
-  "github.com/heroiclabs/nakama-common/runtime"
-)
+=== "Go"
+	```go
+	import (
+	  "context"
+	  "database/sql"
+	  "encoding/json"
+	  "github.com/heroiclabs/nakama-common/runtime"
+	)
 
-// All Go modules must have a InitModule function with this exact signature.
-func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
-  // Register the RPC function.
-  if err := initializer.RegisterRpc("my_unique_id", SomeExample); err != nil {
-    logger.Error("Unable to register: %v", err)
-    return err
-  }
-  return nil
-}
+	// All Go modules must have a InitModule function with this exact signature.
+	func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+	  // Register the RPC function.
+	  if err := initializer.RegisterRpc("my_unique_id", SomeExample); err != nil {
+	    logger.Error("Unable to register: %v", err)
+	    return err
+	  }
+	  return nil
+	}
 
-func SomeExample(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-    meta := make(map[string]interface{})
-    // Note below, json.Unmarshal can only take a pointer as second argument
-    if err := json.Unmarshal([]byte(payload), &meta); err != nil {
-        // Handle error
-        return "", err
-    }
+	func SomeExample(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	    meta := make(map[string]interface{})
+	    // Note below, json.Unmarshal can only take a pointer as second argument
+	    if err := json.Unmarshal([]byte(payload), &meta); err != nil {
+	        // Handle error
+	        return "", err
+	    }
 
-    id := "SomeId"
-    authoritative := false
-    sort := "desc"
-    operator := "best"
-    reset := "0 0 * * 1"
+	    id := "SomeId"
+	    authoritative := false
+	    sort := "desc"
+	    operator := "best"
+	    reset := "0 0 * * 1"
 
-    if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, meta); err != nil {
-        // Handle error
-        return "", err
-    }
+	    if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, meta); err != nil {
+	        // Handle error
+	        return "", err
+	    }
 
-    return "Success", nil
-}
-```
+	    return "Success", nil
+	}
+	```
 
 ## Register hooks
 
@@ -95,16 +97,18 @@ The code in a module will be evaluated immediately and can be used to register f
 
 All registered functions receive a "context" as the first argument. This contains fields which depend on when and how the code is executed. You can extract information about the request or the user making it from the context.
 
-```lua tab="Lua"
-local user_id = context.user_id
-```
+=== "Lua"
+	```lua
+	local user_id = context.user_id
+	```
 
-```go tab="Go"
-userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-if !ok {
-  // User ID not found in the context.
-}
-```
+=== "Go"
+	```go
+	userId, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	if !ok {
+	  // User ID not found in the context.
+	}
+	```
 
 If you are writing your runtime code in Lua, the "context" will be a table from which you can access the fields directly. The Go runtime context is a standard `context.Context` type and its fields can be accessed as shown above.
 
@@ -126,47 +130,49 @@ If you are writing your runtime code in Lua, the "context" will be a table from 
 
 There are multiple ways to register a function within the runtime each of which is used to handle specific behavior between client and server.
 
-```lua tab="Lua"
--- If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
-nk.register_rt_before()
-nk.register_rt_after()
+=== "Lua"
+	```lua
+	-- If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
+	nk.register_rt_before()
+	nk.register_rt_after()
 
--- Otherwise use this.
-nk.register_req_after()
-nk.register_req_before()
+	-- Otherwise use this.
+	nk.register_req_after()
+	nk.register_req_before()
 
--- If you'd like to run server code when the matchmaker has matched players together, register your function using the following.
-nk.register_matchmaker_matched()
+	-- If you'd like to run server code when the matchmaker has matched players together, register your function using the following.
+	nk.register_matchmaker_matched()
 
--- If you'd like to run server code when the leaderboard/tournament resets register your function using the following.
-nk.register_leaderboard_reset()
-nk.register_tournament_reset()
+	-- If you'd like to run server code when the leaderboard/tournament resets register your function using the following.
+	nk.register_leaderboard_reset()
+	nk.register_tournament_reset()
 
--- Similarly, you can run server code when the tournament ends.
-nk.register_tournament_end()
-```
+	-- Similarly, you can run server code when the tournament ends.
+	nk.register_tournament_end()
+	```
 
-```go tab="Go"
-// NOTE: All Go runtime registrations must be made in the module's InitModule function.
+=== "Go"
+	```go
+	// NOTE: All Go runtime registrations must be made in the module's InitModule function.
 
-// If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
-initializer.RegisterBeforeRt()
-initializer.RegisterAfterRt()
+	// If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
+	initializer.RegisterBeforeRt()
+	initializer.RegisterAfterRt()
 
-// Otherwise use the relevant before / after hook, e.g.
-initializer.RegisterBeforeAddFriends()
-initializer.RegisterAfterAddFriends()
+	// Otherwise use the relevant before / after hook, e.g.
+	initializer.RegisterBeforeAddFriends()
+	initializer.RegisterAfterAddFriends()
 
-// If you'd like to run server code when the matchmaker has matched players together, register your function using the following.
-initializer.RegisterMatchmakerMatched()
+	// If you'd like to run server code when the matchmaker has matched players together, register your function using the following.
+	initializer.RegisterMatchmakerMatched()
 
-// If you'd like to run server code when the leaderboard/tournament resets register your function using the following.
-initializer.RegisterLeaderboardReset()
-initializer.RegisterTournamentReset()
+	// If you'd like to run server code when the leaderboard/tournament resets register your function using the following.
+	initializer.RegisterLeaderboardReset()
+	initializer.RegisterTournamentReset()
 
-// Similarly, you can run server code when the tournament ends.
-initializer.RegisterTournamentEnd()
-```
+	// Similarly, you can run server code when the tournament ends.
+	initializer.RegisterTournamentEnd()
+	```
 
 Have a look at [this section](#message-names) for a complete list of the server message names.
 
@@ -179,51 +185,53 @@ Any function may be registered to intercept a message received from a client and
 
 In Go, each hook will receive input as a variable containing the data that will be processed by the server for that request, if that feature is expected to receive any input. In Lua, the second argument will be the "incoming payload" containing data received that will be processed by the server.
 
-```lua hl_lines="9" tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local function limit_friends(context, payload)
-  local user = nk.users_get_id({context.user_id})[1]
-  -- Let's assume we've stored a user's level in their metadata.
-  if user.metadata.level <= 10 then
-    error("Must reach level 10 before you can add friends.")
-  end
-  return payload -- important!
-end
-nk.register_req_before(limit_friends, "AddFriends")
-```
+	local function limit_friends(context, payload)
+	  local user = nk.users_get_id({context.user_id})[1]
+	  -- Let's assume we've stored a user's level in their metadata.
+	  if user.metadata.level <= 10 then
+	    error("Must reach level 10 before you can add friends.")
+	  end
+	  return payload -- important!
+	end
+	nk.register_req_before(limit_friends, "AddFriends")
+	```
 
-```go tab="Go"
-func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
-    userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-    if !ok {
-        return nil, errors.New("Missing user ID.")
-    }
+=== "Go"
+	```go
+	func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
+	    userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	    if !ok {
+	        return nil, errors.New("Missing user ID.")
+	    }
 
-    account, err := nk.UsersGetId(ctx, []string{userID})
-    if err != nil {
-        return nil, err
-    }
+	    account, err := nk.UsersGetId(ctx, []string{userID})
+	    if err != nil {
+	        return nil, err
+	    }
 
-    var metadata map[string]interface{}
-    if err := json.Unmarshal([]byte(account.GetUser().GetMetadata()), &metadata); err != nil {
-        return nil, errors.New("Corrupted user metadata.")
-    }
+	    var metadata map[string]interface{}
+	    if err := json.Unmarshal([]byte(account.GetUser().GetMetadata()), &metadata); err != nil {
+	        return nil, errors.New("Corrupted user metadata.")
+	    }
 
-    // Let's assume we've stored a user's level in their metadata.
-    if level, ok := metadata["level"].(int); !ok || level <= 10 {
-        return nil, errors.New("Must reach level 10 before you can add friends.")
-    }
+	    // Let's assume we've stored a user's level in their metadata.
+	    if level, ok := metadata["level"].(int); !ok || level <= 10 {
+	        return nil, errors.New("Must reach level 10 before you can add friends.")
+	    }
 
-    return in, nil
-}
+	    return in, nil
+	}
 
-// Register as a before hook for the appropriate feature, this call should be in InitModule.
-if err := initializer.RegisterBeforeAddFriends(BeforeAddFriends); err != nil {
-  logger.Error("Unable to register: %v", err)
-  return err
-}
-```
+	// Register as a before hook for the appropriate feature, this call should be in InitModule.
+	if err := initializer.RegisterBeforeAddFriends(BeforeAddFriends); err != nil {
+	  logger.Error("Unable to register: %v", err)
+	  return err
+	}
+	```
 
 The code above fetches the current user's profile and checks the metadata which is assumed to be JSON encoded with `"{level: 12}"` in it. If a user's level is too low an error is thrown to prevent the Friend Add message from being passed onwards in the server pipeline.
 
@@ -239,57 +247,59 @@ Similar to [Before hook](#before-hook) you can attach a function to operate on a
 
 The second argument is the "outgoing payload" containing the server's response to the request. The third argument contains the "incoming payload" containing the data originally passed to the server for this request.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local function add_reward(context, outgoing_payload, incoming_payload)
-  local value = {
-    user_ids = {incoming_payload.user_id}
-  }
-  local object = {
-    collection = "rewards",
-    key = "reward",
-    user_id = context.user_id,
-    value = value
-  }
-  nk.storage_write({ object })
-end
+	local function add_reward(context, outgoing_payload, incoming_payload)
+	  local value = {
+	    user_ids = {incoming_payload.user_id}
+	  }
+	  local object = {
+	    collection = "rewards",
+	    key = "reward",
+	    user_id = context.user_id,
+	    value = value
+	  }
+	  nk.storage_write({ object })
+	end
 
-nk.register_req_after(add_reward, "AddFriends")
-```
+	nk.register_req_after(add_reward, "AddFriends")
+	```
 
-```go tab="Go"
-func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
-    userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
-    if !ok {
-        return errors.New("Missing user ID.")
-    }
+=== "Go"
+	```go
+	func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
+	    userID, ok := ctx.Value(runtime.RUNTIME_CTX_USER_ID).(string)
+	    if !ok {
+	        return errors.New("Missing user ID.")
+	    }
 
-    value, err := json.Marshal(map[string]interface{}{"user_ids": in.GetIds()})
-    if err != nil {
-        return err
-    }
+	    value, err := json.Marshal(map[string]interface{}{"user_ids": in.GetIds()})
+	    if err != nil {
+	        return err
+	    }
 
-    if _, err := nk.StorageWrite(ctx, []*runtime.StorageWrite{
-        &runtime.StorageWrite{
-            Collection: "rewards",
-            Key:        "reward",
-            UserID:     userID,
-            Value:      string(value),
-        },
-    }); err != nil {
-        return err
-    }
+	    if _, err := nk.StorageWrite(ctx, []*runtime.StorageWrite{
+	        &runtime.StorageWrite{
+	            Collection: "rewards",
+	            Key:        "reward",
+	            UserID:     userID,
+	            Value:      string(value),
+	        },
+	    }); err != nil {
+	        return err
+	    }
 
-    return nil
-}
+	    return nil
+	}
 
-// Register as an after hook for the appropriate feature, this call should be in InitModule.
-if err := initializer.RegisterAfterAddFriends(AfterAddFriends); err != nil {
-  logger.Error("Unable to register: %v", err)
-  return err
-}
-```
+	// Register as an after hook for the appropriate feature, this call should be in InitModule.
+	if err := initializer.RegisterAfterAddFriends(AfterAddFriends); err != nil {
+	  logger.Error("Unable to register: %v", err)
+	  return err
+	}
+	```
 
 The simple code above writes a record to a user's storage when they add a friend. Any data returned by the function will be discarded.
 
@@ -300,45 +310,47 @@ The simple code above writes a record to a user's storage when they add a friend
 
 Some logic between client and server is best handled as RPC functions which clients can execute.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local function custom_rpc_func(context, payload)
-  nk.logger_info(string.format("Payload: %q", payload))
+	local function custom_rpc_func(context, payload)
+	  nk.logger_info(string.format("Payload: %q", payload))
 
-  -- "payload" is bytes sent by the client we'll JSON decode it.
-  local json = nk.json_decode(payload)
+	  -- "payload" is bytes sent by the client we'll JSON decode it.
+	  local json = nk.json_decode(payload)
 
-  return nk.json_encode(json)
-end
+	  return nk.json_encode(json)
+	end
 
-nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
-```
+	nk.register_rpc(custom_rpc_func, "custom_rpc_func_id")
+	```
 
-```go tab="Go"
-func CustomRpcFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-  logger.Info("Payload: %s", payload)
+=== "Go"
+	```go
+	func CustomRpcFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	  logger.Info("Payload: %s", payload)
 
-  // "payload" is bytes sent by the client we'll JSON decode it.
-  var value interface{}
-  if err := json.Unmarshal([]byte(payload), &value); err != nil {
-    return "", err
-  }
+	  // "payload" is bytes sent by the client we'll JSON decode it.
+	  var value interface{}
+	  if err := json.Unmarshal([]byte(payload), &value); err != nil {
+	    return "", err
+	  }
 
-  response, err := json.Marshal(value)
-  if err != nil {
-    return "", err
-  }
+	  response, err := json.Marshal(value)
+	  if err != nil {
+	    return "", err
+	  }
 
-    return string(response), nil
-}
+	    return string(response), nil
+	}
 
-// Register as an RPC function, this call should be in InitModule.
-if err := initializer.RegisterRpc("custom_rpc_func_id", CustomRpcFunc); err != nil {
-  logger.Error("Unable to register: %v", err)
-  return err
-}
-```
+	// Register as an RPC function, this call should be in InitModule.
+	if err := initializer.RegisterRpc("custom_rpc_func_id", CustomRpcFunc); err != nil {
+	  logger.Error("Unable to register: %v", err)
+	  return err
+	}
+	```
 
 The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function on the server and return the result.
 
@@ -348,53 +360,55 @@ From Go runtime code, the result is returned as `(string, error)`. From Lua runt
 
 Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook). However, this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local function http_handler(context, payload)
-  local message = nk.json_decode(payload)
-  nk.logger_info(string.format("Message: %q", message))
-  return nk.json_encode({["context"] = context})
-end
+	local function http_handler(context, payload)
+	  local message = nk.json_decode(payload)
+	  nk.logger_info(string.format("Message: %q", message))
+	  return nk.json_encode({["context"] = context})
+	end
 
-nk.register_rpc(http_handler, "http_handler_path")
-```
+	nk.register_rpc(http_handler, "http_handler_path")
+	```
 
-```go tab="Go"
-func HttpHandler(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-  var message interface{}
-  if err := json.Unmarshal([]byte(payload), &message); err != nil {
-    return "", err
-  }
+=== "Go"
+	```go
+	func HttpHandler(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	  var message interface{}
+	  if err := json.Unmarshal([]byte(payload), &message); err != nil {
+	    return "", err
+	  }
 
-  logger.Info("Message: %v", message)
+	  logger.Info("Message: %v", message)
 
-  response, err := json.Marshal(map[string]interface{}{"context": ctx})
-  if err != nil {
-    return "", err
-  }
+	  response, err := json.Marshal(map[string]interface{}{"context": ctx})
+	  if err != nil {
+	    return "", err
+	  }
 
-  return string(response), nil
-}
+	  return string(response), nil
+	}
 
-// Register as an RPC function, this call should be in InitModule.
-if err := initializer.RegisterRpc("http_handler_path", HttpHandler); err != nil {
-  logger.Error("Unable to register: %v", err)
-  return err
-}
-```
+	// Register as an RPC function, this call should be in InitModule.
+	if err := initializer.RegisterRpc("http_handler_path", HttpHandler); err != nil {
+	  logger.Error("Unable to register: %v", err)
+	  return err
+	}
+	```
 
 This function can be called with any HTTP client. For example, with cURL you could execute the function with the server.
 
 !!! Tip
     RPC functions can be called both from clients and through server to server calls. You can tell them apart by [checking if the context has a user ID](#register-hooks) - server to server calls will never have a user ID. If you want to scope functions to never be accessible from the client just return an error if you find a user ID in the context.
 
-```shell
-curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaulthttpkey" \
-     -d '"{\"some\": \"data\"}"' \
-     -H 'Content-Type: application/json' \
-     -H 'Accept: application/json'
-```
+	```shell
+	curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaulthttpkey" \
+	     -d '"{\"some\": \"data\"}"' \
+	     -H 'Content-Type: application/json' \
+	     -H 'Accept: application/json'
+	```
 
 !!! Warning "HTTP key"
     You should change the default HTTP key before you deploy your code in production.
@@ -403,39 +417,41 @@ curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaulthttpkey" \
 
 The runtime environment allows you to run code that must only be executed only once. This is useful if you have custom SQL queries that you need to perform (like creating a new table) or to register with third party services.
 
-```lua tab="Lua"
-nk.run_once(function(context)
-  -- This is to create a system ID that cannot be used via a client.
-  local system_id = context.env["SYSTEM_ID"]
+=== "Lua"
+	```lua
+	nk.run_once(function(context)
+	  -- This is to create a system ID that cannot be used via a client.
+	  local system_id = context.env["SYSTEM_ID"]
 
-  nk.sql_exec([[
-INSERT INTO users (id, username)
-VALUES ($1, $2)
-ON CONFLICT (id) DO NOTHING
-  ]], { system_id, "system_id" })
-end)
-```
+	  nk.sql_exec([[
+	INSERT INTO users (id, username)
+	VALUES ($1, $2)
+	ON CONFLICT (id) DO NOTHING
+	  ]], { system_id, "system_id" })
+	end)
+	```
 
-```go tab="Go"
-func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
-  // This is to create a system ID that cannot be used via a client.
-  var systemId string
-  if env, ok := ctx.Value(runtime.RUNTIME_CTX_ENV).(map[string]string); ok {
-    systemId = env["SYSTEM_ID"]
-  }
+=== "Go"
+	```go
+	func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+	  // This is to create a system ID that cannot be used via a client.
+	  var systemId string
+	  if env, ok := ctx.Value(runtime.RUNTIME_CTX_ENV).(map[string]string); ok {
+	    systemId = env["SYSTEM_ID"]
+	  }
 
-  _, err := db.ExecContext(ctx, `
-INSERT INFO users (id, username)
-VALUES ($1, $2)
-ON CONFLICT (id) DO NOTHING
-  `, systemId, "sysmtem_id")
-  if err != nil {
-    logger.Error("Error: %s", err.Error())
-  }
+	  _, err := db.ExecContext(ctx, `
+	INSERT INFO users (id, username)
+	VALUES ($1, $2)
+	ON CONFLICT (id) DO NOTHING
+	  `, systemId, "sysmtem_id")
+	  if err != nil {
+	    logger.Error("Error: %s", err.Error())
+	  }
 
-  return nil
-}
-```
+	  return nil
+	}
+	```
 
 ## Errors and logs
 
@@ -443,59 +459,63 @@ Error handling in Go follows the standard pattern of returning an `error` value 
 
 Lua error handling uses raised errors rather than error return values. If you want to trap the error which occurs in the execution of a function you'll need to execute it via `pcall` as a "protected call".
 
-```lua tab="Lua"
-local function will_error()
-  error("This function will always throw an error!")
-end
+=== "Lua"
+	```lua
+	local function will_error()
+	  error("This function will always throw an error!")
+	end
 
-if pcall(will_error) then
-  -- No errors with "will_error".
-else
-  -- Handle errors.
-end
-```
+	if pcall(will_error) then
+	  -- No errors with "will_error".
+	else
+	  -- Handle errors.
+	end
+	```
 
-```go tab="Go"
-func willError() error {
-  return errors.New("This function will always throw an error!")
-}
+=== "Go"
+	```go
+	func willError() error {
+	  return errors.New("This function will always throw an error!")
+	}
 
-if err := willError(); err != nil {
-  // Handle errors.
-} else {
-  // No errors with "willError".
-}
-```
+	if err := willError(); err != nil {
+	  // Handle errors.
+	} else {
+	  // No errors with "willError".
+	}
+	```
 
 The function `will_error` uses the `error` function in Lua to throw an error with a reason message. The `pcall` will invoke the `will_error` function and trap any errors. We can then handle the success or error cases as needed.
 
 We recommend you use this pattern with your Lua code.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local status, result = pcall(nk.users_get_username, {"22e9ed62"})
-if (not status) then
-  nk.logger_error(string.format("Error occurred: %q", result))
-else
-  for _, u in ipairs(result)
-  do
-    local message = string.format("id: %q, display name: %q", u.id, u.display_name)
-    nk.logger_info(message) -- Will appear in logging output.
-  end
-end
-```
+	local status, result = pcall(nk.users_get_username, {"22e9ed62"})
+	if (not status) then
+	  nk.logger_error(string.format("Error occurred: %q", result))
+	else
+	  for _, u in ipairs(result)
+	  do
+	    local message = string.format("id: %q, display name: %q", u.id, u.display_name)
+	    nk.logger_info(message) -- Will appear in logging output.
+	  end
+	end
+	```
 
-```go tab="Go"
-users, err := nk.UsersGetUsername([]string{"22e9ed62"})
-if err != nil {
-  logger.Error("Error occurred: %v", err.Error())
-} else {
-  for _, u := range users {
-    logger.Info("id: %v, display name: %v", u.Id, u.DisplayName) // Will appear in logging output.
-  }
-}
-```
+=== "Go"
+	```go
+	users, err := nk.UsersGetUsername([]string{"22e9ed62"})
+	if err != nil {
+	  logger.Error("Error occurred: %v", err.Error())
+	} else {
+	  for _, u := range users {
+	    logger.Info("id: %v, display name: %v", u.Id, u.DisplayName) // Will appear in logging output.
+	  }
+	}
+	```
 
 !!! Warning "Lua stacktraces"
     If the server logger level is set to `info` (default level) or below, the server will return Lua stacktraces to the client. This is useful for debugging but should be disabled for production.
@@ -538,234 +558,247 @@ Go runtime code has full low-level access to the server and its environment. Thi
 
 As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpful module named "pokeapi.lua".
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local M = {}
+	local M = {}
 
-local API_BASE_URL = "https://pokeapi.co/api/v2"
+	local API_BASE_URL = "https://pokeapi.co/api/v2"
 
-function M.lookup_pokemon(name)
-  local url = string.format("%s/pokemon/%s", API_BASE_URL, name)
-  local method = "GET"
-  local headers = {
-    ["Content-Type"] = "application/json",
-    ["Accept"] = "application/json"
-  }
-  local success, code, _, body = pcall(nk.http_request, url, method, headers, nil)
-  if (not success) then
-    nk.logger_error(string.format("Failed request %q", code))
-    error(code)
-  elseif (code >= 400) then
-    nk.logger_error(string.format("Failed request %q %q", code, body))
-    error(body)
-  else
-    return nk.json_decode(body)
-  end
-end
+	function M.lookup_pokemon(name)
+	  local url = string.format("%s/pokemon/%s", API_BASE_URL, name)
+	  local method = "GET"
+	  local headers = {
+	    ["Content-Type"] = "application/json",
+	    ["Accept"] = "application/json"
+	  }
+	  local success, code, _, body = pcall(nk.http_request, url, method, headers, nil)
+	  if (not success) then
+	    nk.logger_error(string.format("Failed request %q", code))
+	    error(code)
+	  elseif (code >= 400) then
+	    nk.logger_error(string.format("Failed request %q %q", code, body))
+	    error(body)
+	  else
+	    return nk.json_decode(body)
+	  end
+	end
 
-return M
--- We can import the code up to this point into another module we'll call "pokemon.lua" which will register an RPC call.
+	return M
+	-- We can import the code up to this point into another module we'll call "pokemon.lua" which will register an RPC call.
 
-local nk = require("nakama")
-local pokeapi = require("pokeapi")
+	local nk = require("nakama")
+	local pokeapi = require("pokeapi")
 
-local function get_pokemon(_, payload)
-  -- We'll assume payload was sent as JSON and decode it.
-  local json = nk.json_decode(payload)
+	local function get_pokemon(_, payload)
+	  -- We'll assume payload was sent as JSON and decode it.
+	  local json = nk.json_decode(payload)
 
-  local success, result = pcall(pokeapi.lookup_pokemon, json.PokemonName)
-  if (not success) then
-    error("Unable to lookup pokemon.")
-  else
-    local pokemon = {
-      name = result.name,
-      height = result.height,
-      weight = result.weight,
-      image = result.sprites.front_default
-    }
-    return nk.json_encode(pokemon)
-  end
-end
+	  local success, result = pcall(pokeapi.lookup_pokemon, json.PokemonName)
+	  if (not success) then
+	    error("Unable to lookup pokemon.")
+	  else
+	    local pokemon = {
+	      name = result.name,
+	      height = result.height,
+	      weight = result.weight,
+	      image = result.sprites.front_default
+	    }
+	    return nk.json_encode(pokemon)
+	  end
+	end
 
-nk.register_rpc(get_pokemon, "get_pokemon")
-```
+	nk.register_rpc(get_pokemon, "get_pokemon")
+	```
 
-```go tab="Go"
-import (
-  "context"
-  "database/sql"
-  "encoding/json"
-  "errors"
-  "io/ioutil"
-  "net/http"
+=== "Go"
+	```go
+	import (
+	  "context"
+	  "database/sql"
+	  "encoding/json"
+	  "errors"
+	  "io/ioutil"
+	  "net/http"
 
-  "github.com/heroiclabs/nakama-common/runtime"
-)
+	  "github.com/heroiclabs/nakama-common/runtime"
+	)
 
-const apiBaseUrl = "https://pokeapi.co/api/v2"
+	const apiBaseUrl = "https://pokeapi.co/api/v2"
 
-// All Go modules must have a InitModule function with this exact signature.
-func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
-  // Register the RPC function.
-  if err := initializer.RegisterRpc("get_pokemon", GetPokemon); err != nil {
-    logger.Error("Unable to register: %v", err)
-    return err
-  }
-  return nil
-}
+	// All Go modules must have a InitModule function with this exact signature.
+	func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+	  // Register the RPC function.
+	  if err := initializer.RegisterRpc("get_pokemon", GetPokemon); err != nil {
+	    logger.Error("Unable to register: %v", err)
+	    return err
+	  }
+	  return nil
+	}
 
-func LookupPokemon(logger runtime.Logger, name string) (map[string]interface{}, error) {
-  resp, err := http.Get(apiBaseUrl + "/pokemon/" + name)
-  if err != nil {
-    logger.Error("Failed request %v", err.Error())
-    return nil, err
-  }
-  defer resp.Body.Close()
-  body, err := ioutil.ReadAll(resp.Body)
-  if err != nil {
-    logger.Error("Failed to read body %v", err.Error())
-    return nil, err
-  }
-  if resp.StatusCode >= 400 {
-    logger.Error("Failed request %v %v", resp.StatusCode, body)
-    return nil, errors.New(string(body))
-  }
+	func LookupPokemon(logger runtime.Logger, name string) (map[string]interface{}, error) {
+	  resp, err := http.Get(apiBaseUrl + "/pokemon/" + name)
+	  if err != nil {
+	    logger.Error("Failed request %v", err.Error())
+	    return nil, err
+	  }
+	  defer resp.Body.Close()
+	  body, err := ioutil.ReadAll(resp.Body)
+	  if err != nil {
+	    logger.Error("Failed to read body %v", err.Error())
+	    return nil, err
+	  }
+	  if resp.StatusCode >= 400 {
+	    logger.Error("Failed request %v %v", resp.StatusCode, body)
+	    return nil, errors.New(string(body))
+	  }
 
-  var result map[string]interface{}
-  err = json.Unmarshal(body, &result)
+	  var result map[string]interface{}
+	  err = json.Unmarshal(body, &result)
 
-  return result, err
-}
+	  return result, err
+	}
 
-func GetPokemon(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-  // We'll assume payload was sent as JSON and decode it.
-  var input map[string]string
-  err := json.Unmarshal([]byte(payload), &input)
-  if err != nil {
-    return "", err
-  }
+	func GetPokemon(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
+	  // We'll assume payload was sent as JSON and decode it.
+	  var input map[string]string
+	  err := json.Unmarshal([]byte(payload), &input)
+	  if err != nil {
+	    return "", err
+	  }
 
-  result, err := LookupPokemon(logger, input["PokemonName"])
-  if err != nil {
-    return "", err
-  }
+	  result, err := LookupPokemon(logger, input["PokemonName"])
+	  if err != nil {
+	    return "", err
+	  }
 
-  response, err := json.Marshal(result)
-  if err != nil {
-    return "", err
-  }
-  return string(response), nil
-}
-```
+	  response, err := json.Marshal(result)
+	  if err != nil {
+	    return "", err
+	  }
+	  return string(response), nil
+	}
+	```
 
 !!! Tip
     To use the Go runtime don't forget to compile your code following [these instructions](https://github.com/heroiclabs/nakama/tree/master/sample_go_module) carefully.
 
 We can now make an RPC call for a pokemon from a client.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/rpc/get_pokemon" \
-  -H 'authorization: Bearer <session token>'
-  -d '"{\"PokemonName\": \"dragonite\"}"'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/rpc/get_pokemon" \
+	  -H 'authorization: Bearer <session token>'
+	  -d '"{\"PokemonName\": \"dragonite\"}"'
+	```
 
-```js tab="Javascript"
-const payload = { "PokemonName": "dragonite"};
-const rpcid = "get_pokemon";
-const pokemonInfo = await client.rpc(session, rpcid, payload);
-console.log("Retrieved pokemon info: %o", pokemonInfo);
-```
+=== "Javascript"
+	```js
+	const payload = { "PokemonName": "dragonite"};
+	const rpcid = "get_pokemon";
+	const pokemonInfo = await client.rpc(session, rpcid, payload);
+	console.log("Retrieved pokemon info: %o", pokemonInfo);
+	```
 
-```csharp tab=".NET"
-var payload = "{\"PokemonName\": \"dragonite\"}";
-var rpcid = "get_pokemon";
-var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
-System.Console.WriteLine("Retrieved pokemon info: {0}", pokemonInfo);
-```
+=== ".NET"
+	```csharp
+	var payload = "{\"PokemonName\": \"dragonite\"}";
+	var rpcid = "get_pokemon";
+	var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
+	System.Console.WriteLine("Retrieved pokemon info: {0}", pokemonInfo);
+	```
 
-```csharp tab="Unity"
-var payload = "{\"PokemonName\": \"dragonite\"}";
-var rpcid = "get_pokemon";
-var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
-Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
-```
+=== "Unity"
+	```csharp
+	var payload = "{\"PokemonName\": \"dragonite\"}";
+	var rpcid = "get_pokemon";
+	var pokemonInfo = await client.RpcAsync(session, rpcid, payload);
+	Debug.LogFormat("Retrieved pokemon info: {0}", pokemonInfo);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](const NRpc& rpc)
-{
-  CCLOG("Retrieved pokemon info: %s", rpc.payload.c_str());
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](const NRpc& rpc)
+	{
+	  CCLOG("Retrieved pokemon info: %s", rpc.payload.c_str());
+	};
 
-string payload = "{ \"PokemonName\": \"dragonite\" }";
-string rpcid = "get_pokemon";
-client->rpc(session, rpcid, payload, successCallback);
-```
+	string payload = "{ \"PokemonName\": \"dragonite\" }";
+	string rpcid = "get_pokemon";
+	client->rpc(session, rpcid, payload, successCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const payload = { "PokemonName": "dragonite"};
-const rpcid = "get_pokemon";
-client.rpc(session, rpcid, payload)
-  .then(function(pokemonInfo) {
-      cc.log("Retrieved pokemon info:", JSON.stringify(pokemonInfo));
-    },
-    function(error) {
-      cc.error("rpc call failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const payload = { "PokemonName": "dragonite"};
+	const rpcid = "get_pokemon";
+	client.rpc(session, rpcid, payload)
+	  .then(function(pokemonInfo) {
+	      cc.log("Retrieved pokemon info:", JSON.stringify(pokemonInfo));
+	    },
+	    function(error) {
+	      cc.error("rpc call failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](const NRpc& rpc)
-{
-  std::cout << "Retrieved pokemon info: " << rpc.payload << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](const NRpc& rpc)
+	{
+	  std::cout << "Retrieved pokemon info: " << rpc.payload << std::endl;
+	};
 
-string payload = "{ \"PokemonName\": \"dragonite\" }";
-string rpcid = "get_pokemon";
-client->rpc(session, rpcid, payload, successCallback);
-```
+	string payload = "{ \"PokemonName\": \"dragonite\" }";
+	string rpcid = "get_pokemon";
+	client->rpc(session, rpcid, payload, successCallback);
+	```
 
-```java tab="Android/Java"
-String payload = "{\"PokemonName\": \"dragonite\"}";
-String rpcid = "get_pokemon";
-Rpc pokemonInfo = client.rpc(session, rpcid, payload);
-System.out.format("Retrieved pokemon info: %s", pokemonInfo.getPayload());
-```
+=== "Android/Java"
+	```java
+	String payload = "{\"PokemonName\": \"dragonite\"}";
+	String rpcid = "get_pokemon";
+	Rpc pokemonInfo = client.rpc(session, rpcid, payload);
+	System.out.format("Retrieved pokemon info: %s", pokemonInfo.getPayload());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let payload = "{\"PokemonName\": \"dragonite\"}".data(using: .utf8)!
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let payload = "{\"PokemonName\": \"dragonite\"}".data(using: .utf8)!
 
-let message = RPCMessage(id: "client_rpc_echo")
-message.payload = payload
-client.send(message: message).then { result in
-  NSLog("JSON response %@", result.payload)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+	let message = RPCMessage(id: "client_rpc_echo")
+	message.payload = payload
+	client.send(message: message).then { result in
+	  NSLog("JSON response %@", result.payload)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var payload = {"PokemonName": "dragonite"}
-var rpc_id = "get_pokemon"
-var pokemon_info : NakamaAPI.ApiRpc = yield(client.rpc_async(session, rpc_id, JSON.print(payload)), "completed")
-if pokemon_info.is_exception():
-	print("An error occured: %s" % pokemon_info)
-	return
-print("Retrieved pokemon info: %s" % [parse_json(pokemon_info.payload)])
-```
+=== "Go"dot
+	```gdscript
+	var payload = {"PokemonName": "dragonite"}
+	var rpc_id = "get_pokemon"
+	var pokemon_info : NakamaAPI.ApiRpc = yield(client.rpc_async(session, rpc_id, JSON.print(payload)), "completed")
+	if pokemon_info.is_exception():
+		print("An error occured: %s" % pokemon_info)
+		return
+	print("Retrieved pokemon info: %s" % [parse_json(pokemon_info.payload)])
+	```
 
-```tab="REST"
-POST /v2/rpc/get_pokemon
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+=== "REST"
+    ```
+	POST /v2/rpc/get_pokemon
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
 
-{
-  "PokemonName": "dragonite"
-}
-```
+	{
+	  "PokemonName": "dragonite"
+	}
+	```
 
 ## Message names
 
