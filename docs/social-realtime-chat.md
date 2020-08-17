@@ -163,7 +163,7 @@ if (message.getCode() != 0) {
 let messageType = message.type; // enum
 switch messageType {
   case .chat:
-    NSLog("Recieved a chat message")
+    NSLog("Received a chat message")
   default:
     NSLog("Received message with event type %d", messageType.rawValue)
 }

@@ -1226,7 +1226,7 @@ Authorization: Bearer <session token>
 
 ### Demote a member
 
-An admin can demote another member of the group. This removes admin priveleges from the member.
+An admin can demote members of a group. Demoting a set of members removes admin privileges from them.
 
 ```sh tab="cURL"
 curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/demote?user_ids=<user id>" \
