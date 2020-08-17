@@ -163,7 +163,7 @@ if (message.getCode() != 0) {
 let messageType = message.type; // enum
 switch messageType {
   case .chat:
-    NSLog("Recieved a chat message")
+    NSLog("Received a chat message")
   default:
     NSLog("Received message with event type %d", messageType.rawValue)
 }
@@ -184,6 +184,8 @@ if p_message.code != 0:
 | 5 | left group | server | An event message for when a user left a group. |
 | 6 | kicked from group | server | An event message for when an admin kicked a user from the group. |
 | 7 | promoted in group | server | An event message for when a user is promoted as a group admin. |
+| 8 | banned in group | server | An event message for when a user got banned from a group. |
+| 9 | demoted in group | server | An event message for when a user got demoted in group. |
 
 ## Join chat
 
