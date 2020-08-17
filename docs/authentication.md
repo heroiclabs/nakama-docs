@@ -1033,9 +1033,12 @@ Authorization: Basic base64(ServerKey:)
 
 ## Session
 
-When an authentication call succeeds, the server returns a session in the response. A session contains the current user's ID and handle, as well as information on when it was created and when it expires.
-
-Sessions are documented in more detail on [a separate page](/session)
+When an authentication call succeeds, the server responds with a [session](/session) object. A session object contains at least the following:
+- the user's ID
+- the user's name
+- a token used to authenticate subsequent user messages
+- the session creation time
+- the session expiration time
 
 ## Socket
 
