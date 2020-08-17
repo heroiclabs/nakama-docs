@@ -21,15 +21,14 @@ We don't recommend to copy Nakama Cocos2d SDK to your project because it's quite
 
 Copy `NakamaCocos2d` folder from `NAKAMA_COCOS2D_SDK` to your `Classes` folder.
 
-Add all files from `NakamaCocos2d` folder to your project.
-
 ### Setup for Mac and iOS projects
 
 1. Add `NAKAMA_COCOS2D_SDK/include` in `Build Settings > Header Search Paths`
 2. Add libs folder in `Build Settings > Library Search Paths`:
     - `NAKAMA_COCOS2D_SDK/libs/ios` - for iOS
     - `NAKAMA_COCOS2D_SDK/libs/mac` - for Mac
-3. Add `libnakama-cpp.dylib` file located in libs folder to `General > Linked Frameworks and Libraries`
+3. Add all `.a` files located in libs folder to `General > Frameworks, Libraries, and Embedded Content`
+4. Add `NAKAMA_COCOS2D_SDK/NakamaCocos2d` folder to your XCode project as group (not a reference).
 
 ### Setup for Android projects
 
@@ -56,7 +55,32 @@ Android uses a permissions system which determines which platform services the a
 
 ### Setup for CMake projects
 
-Add following to your `CMakeLists.txt` file:
+Open for edit your `CMakeLists.txt` file and find following existing code:
+```cmake
+# mark app complie info and libs info
+set(all_code_files
+    ${GAME_HEADER}
+    ${GAME_SOURCE}
+    )
+```
+add next code before:
+```cmake
+# Cocos2d Nakama sources
+list(APPEND GAME_SOURCE
+     Classes/NakamaCocos2d/NCocosWebSocket.cpp
+     Classes/NakamaCocos2d/NCocosHTTP.cpp
+     Classes/NakamaCocos2d/NCocosHelper.cpp
+     )
+# Cocos2d Nakama headers
+list(APPEND GAME_HEADER
+     Classes/NakamaCocos2d/NCocosWebSocket.h
+     Classes/NakamaCocos2d/NCocosHTTP.h
+     Classes/NakamaCocos2d/NCocosLogSink.h
+     Classes/NakamaCocos2d/NCocosHelper.h
+     )
+```
+
+At bottom of your `CMakeLists.txt` file add following:
 
 ```cmake
 add_subdirectory(NAKAMA_COCOS2D_SDK ${CMAKE_CURRENT_BINARY_DIR}/nakama-cpp)
@@ -76,6 +100,7 @@ In `Project Settings` add following:
     - `NAKAMA_COCOS2D_SDK/libs/win32/v142` - for VS 2019 x86
     - `NAKAMA_COCOS2D_SDK/libs/win64/v142` - for VS 2019 x64
 3. Add all `.lib` files located in above folder to `Linker > Input > Additional Dependencies`
+4. Add sources from `Classes/NakamaCocos2d` to your Visual Studio project.
 
 ## Usage
 

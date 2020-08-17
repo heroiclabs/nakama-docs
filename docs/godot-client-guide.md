@@ -185,7 +185,7 @@ Signal handlers only need to be implemented for the features you want to use.
 The [server](install-configuration.md#log) and the client can generate logs which are helpful to debug code. To log all messages sent by the client you can assign your custom logger with log level `DEBUG` to the `Nakama` singleton before creating the client.
 
 ```gdscript
-	Nakama.logger = NakamaLogger.new("MyLogger", NakamaLogger.DEBUG)
+	Nakama.logger = NakamaLogger.new("MyLogger", NakamaLogger.LOG_LEVEL.DEBUG)
 	# Our logger will be automatically assigned to newly created clients and sockets.
 	var my_client = Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http") # Client will log all messages.
 	var my_socket = Nakama.create_socket_from(client) # Socket will log all messages.
