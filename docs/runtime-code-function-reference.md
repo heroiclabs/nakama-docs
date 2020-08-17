@@ -1937,6 +1937,116 @@ _Example_
 	}
 	```
 
+---
+
+__Register Leaderboard Reset__
+
+Registers a function to be run when a [leaderboard](runtime-code-function-reference.md#leaderboards) resets.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| func | function | A function reference which will be executed on a leaderboard reset. |
+
+_Example_
+
+=== "Go"
+    ```go
+    func LeaderboardReset(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboard runtime.Leaderboard, reset int64) error {
+        // Custom logic
+        return nil
+    }
+
+    if err := initializer.RegisterLeaderboardReset(LeaderboardReset); err != nil {
+        logger.Error("Unable to register: %v", err)
+        return err
+    }
+    ```
+
+=== "Lua"
+    ```lua
+    nk.register_leaderboard_reset(
+        function(ctx, leaderboard, reset) {
+            // Custom logic
+        }
+    )
+    ```
+
+---
+
+__Register Tournament Reset__
+
+Registers a function to be run when a [tournament](runtime-code-function-reference.md#tournaments) resets.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| func | function | A function reference which will be executed on a tournament reset. |
+
+_Example_
+
+=== "Go"
+    ```go
+    func TournamentReset(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboard runtime.Tournament, reset int64) error {
+        // Custom logic
+        return nil
+    }
+
+    if err := initializer.RegisterTournamentReset(TournamentReset); err != nil {
+        logger.Error("Unable to register: %v", err)
+        return err
+    }
+    ```
+
+=== "Lua"
+    ```lua
+    nk.register_tournament_reset(
+        function(ctx, tournament, t_end, reset) {
+            // Custom logic
+        }
+    )
+    ```
+
+---
+
+__Register Tournament End__
+
+Registers a function to be run when a [tournament](runtime-code-function-reference.md#tournaments) ends.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| func | function | A function reference which will be executed on a tournament end. |
+
+_Example_
+
+=== "Go"
+    ```go
+    func TournamentEnd(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboard runtime.Tournament, reset int64) error {
+        // Custom logic
+        return nil
+    }
+
+    if err := initializer.RegisterTournamentEnd(TournamentEnd); err != nil {
+        logger.Error("Unable to register: %v", err)
+        return err
+    }
+    ```
+
+=== "Lua"
+    ```lua
+    nk.register_tournament_end(
+        function(ctx, tournament, t_end, reset) {
+            // Custom logic
+        }
+    )
+    ```
+
+---
+
 ### run once
 
 __Run Once__
