@@ -1,12 +1,16 @@
 # Session
 
-A session is a period during which a user is [authenticated](/authentication) with the nakama server and also an object that proves that the client was authenticated. It is used to access server functions on behalf of the user by the game client. It is orthogonal to the concept of a [socket](/authentication#socket).
+In general terms, a "session" is a period during which a user is authenticated with a system.
 
-Session duration can be set with the [token_expiry_sec](/install-configuration/#common-properties) property in the configuration. It is recommended to allow session duration of about 2 to 3 times the average playtime.
+In Nakama, the session is represented with a client-side object that proves that the client was [authenticated](/authentication) when accessing server functions.
 
-## Session Details and Expiry
+Session duration can be set with the [token_expiry_sec](/install-configuration/#common-properties) property in the configuration. It is recommended to set a session duration of about 2 to 3 times the length of your game's average play session.
 
-Sessions expire and become invalid after a set period. When this happens you'll need to reauthenticate with the server and get a new session. You can examine user ID and handle, and session expiration status using the following code:
+Sessions expire and become invalid after a set period. When this happens, you'll need to reauthenticate with the server to get a new session.
+
+## Session Details
+
+You can access a user's id, name, and whether their session is expired using the following code:
 
 ```js tab="JavaScript"
 const id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
