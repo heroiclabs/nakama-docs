@@ -27,6 +27,7 @@ Properties are key-value pairs that describe the user. Rank information, connect
 When matchmaking completes these properties are visible to all matched users. You can store extra information without affecting the matchmaking process itself if it's useful to clients - just submit properties that aren't queried for as part of the matchmaking process.
 
 ```js tab="JavaScript"
+// "ticket" is returned by the matchmaker.
 
 const query = "*";
 const minCount = 2;
