@@ -1033,18 +1033,15 @@ Authorization: Basic base64(ServerKey:)
 
 ## Session
 
-When an authentication call succeeds, the server responds with a [session](/session) object. A session object contains at least the following:
+When an authentication call succeeds, the server responds with a [session](/session) object. The session object contains at least the following:
 - the user's ID
 - the user's name
 - a token used to authenticate subsequent user messages
 - the session creation time
 - the session expiration time
 
-## Socket
+Once the client obtains the session object, you can utilize Nakama's realtime features such as [multiplayer](/gameplay-multiplayer-realtime), [notifications](/social-in-app-notifications) and [status updates](/social-status), [passing stream data](/advanced-streams) or [real-time chat](/social-realtime-chat).
 
-Socket is a means by which a client and a nakama server communicate to enable realtime features such as [multiplayer](/gameplay-multiplayer-realtime), [notifications](/social-in-app-notifications) and [status updates](/social-status), [passing stream data](/advanced-streams) or [real-time chat](/social-realtime-chat).
-
-A socket can be created after a session is obtained. Most of nakama clients do not do this automatically so you should handle the connection your own code.
 
 ```js tab="JavaScript"
 var socket = client.createSocket();
