@@ -28,11 +28,11 @@ function init(self)
     local defold = require "nakama.engine.defold"
     local nakama = require "nakama.nakama"
     local config = {
-    host = "127.0.0.1",
-    port = 7350,
-    username = "defaultkey",
-    password = "",
-    engine = defold,
+        host = "127.0.0.1",
+        port = 7350,
+        username = "defaultkey",
+        password = "",
+        engine = defold,
     }
     local client = nakama.create_client(config)
 
@@ -41,11 +41,11 @@ function init(self)
     local body = nakama.create_api_account_email(email, password)
 
     nakama.sync(function()
-    local session = nakama.authenticate_email(client, body)
-    nakama.set_bearer_token(client, session.token)
+        local session = nakama.authenticate_email(client, body)
+        nakama.set_bearer_token(client, session.token)
 
-    local account = nakama.get_account(client)
-    print("user id is " .. account.user_id .. " and username is " .. account.username)
+        local account = nakama.get_account(client)
+        print("user id is " .. account.user_id .. " and username is " .. account.username)
     end)
 end
 ```

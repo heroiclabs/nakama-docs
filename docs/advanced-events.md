@@ -48,7 +48,7 @@ Use the server side module to generate events in your Go code.
 	```
 
 === "Lua"
-    ```
+    ```lua
     local nk = require("nakama")
 
     local properties = {
@@ -56,7 +56,6 @@ Use the server side module to generate events in your Go code.
     }
     local timestamp = nk.time
     local external = false
-
 
     nk.event("event_name", properties, timestamp, external)
     ```
@@ -86,14 +85,14 @@ You can also take advantage of [after hooks](runtime-code-basics.md#after-hook) 
 	```lua
     local nk = require("nakama")
 
-    local function after_update_account(ctx, payload) {
+    local function after_update_account(ctx, payload)
         local properties = {
             my_key = "my_value"
         }
         local timestamp = nk.time
         local external = false  -- used to denote if the event was generated from the client
         return nk.event("event_name", properties, timestamp, external)
-    }
+    end
 
     nk.register_req_after(after_update_account, "UpdateAccount")
 	```
