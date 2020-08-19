@@ -84,6 +84,7 @@ nav:
 - 'Defold client guide': 'defold-client-guide.md'
 - 'Authentication': 'authentication.md'
 - 'User accounts': 'user-accounts.md'
+- 'Session': 'session.md'
 - 'Storage Engine':
   - 'Collections': 'storage-collections.md'
   - 'Access controls': 'storage-access-controls.md'
