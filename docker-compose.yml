@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  common:
+    build: .
+    volumes:
+      - ./:/nakama-docs
+
+  dev:
+    extends:
+      service: common
+    command: "python3 -m mkdocs serve --dev-addr 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+
+  build:
+    extends:
+      service: common
+    command: "python3 -m mkdocs build -v"

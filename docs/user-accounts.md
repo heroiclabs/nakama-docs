@@ -8,93 +8,104 @@ A user can own [records](storage-access-controls.md), share public information w
 
 When a user has a session you can retrieve their account. The profile contains a variety of information which includes various "linked" social providers.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/account" \
-  -H 'authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X GET "http://127.0.0.1:7350/v2/account" \
+	  -H 'authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-const account = await client.getAccount(session);
-const user = account.user;
-console.info("User id '%o' and username '%o'.", user.id, user.username);
-console.info("User's wallet:", account.wallet);
-```
+=== "JavaScript"
+	```js
+	const account = await client.getAccount(session);
+	const user = account.user;
+	console.info("User id '%o' and username '%o'.", user.id, user.username);
+	console.info("User's wallet:", account.wallet);
+	```
 
-```csharp tab=".NET"
-var account = await client.GetAccountAsync(session);
-var user = account.User;
-System.Console.WriteLine("User id '{0}' username '{1}'", user.Id, user.Username);
-System.Console.WriteLine("User wallet: '{0}'", account.Wallet);
-```
+=== ".NET"
+	```csharp
+	var account = await client.GetAccountAsync(session);
+	var user = account.User;
+	System.Console.WriteLine("User id '{0}' username '{1}'", user.Id, user.Username);
+	System.Console.WriteLine("User wallet: '{0}'", account.Wallet);
+	```
 
-```csharp tab="Unity"
-var account = await client.GetAccountAsync(session);
-var user = account.User;
-Debug.LogFormat("User id '{0}' username '{1}'", user.Id, user.Username);
-Debug.LogFormat("User wallet: '{0}'", account.Wallet);
-```
+=== "Unity"
+	```csharp
+	var account = await client.GetAccountAsync(session);
+	var user = account.User;
+	Debug.LogFormat("User id '{0}' username '{1}'", user.Id, user.Username);
+	Debug.LogFormat("User wallet: '{0}'", account.Wallet);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](const NAccount& account)
-{
-  CCLOG("User's wallet: %s", account.wallet.c_str());
-};
-client->getAccount(session, successCallback);
-```
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](const NAccount& account)
+	{
+	  CCLOG("User's wallet: %s", account.wallet.c_str());
+	};
+	client->getAccount(session, successCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-client.getAccount(session)
-  .then(function(account) {
-      cc.log("User's wallet:", account.wallet);
-    },
-    function(error) {
-      cc.error("get account failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	client.getAccount(session)
+	  .then(function(account) {
+	      cc.log("User's wallet:", account.wallet);
+	    },
+	    function(error) {
+	      cc.error("get account failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](const NAccount& account)
-{
-  CCLOG("User's wallet: %s", account.wallet.c_str());
-};
-client->getAccount(session, successCallback);
-```
+=== "C++"
+	```cpp
+	auto successCallback = [](const NAccount& account)
+	{
+	  CCLOG("User's wallet: %s", account.wallet.c_str());
+	};
+	client->getAccount(session, successCallback);
+	```
 
-```java tab="Java"
-Account account = client.getAccount(session);
-User user = account.getUser();
-System.out.format("User id %s username %s", user.getId(), user.getUsername());
-System.out.format("User wallet %s", account.getWallet());
-```
+=== "Java"
+	```java
+	Account account = client.getAccount(session);
+	User user = account.getUser();
+	System.out.format("User id %s username %s", user.getId(), user.getUsername());
+	System.out.format("User wallet %s", account.getWallet());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let message = SelfFetchMessage()
-client.send(message: message).then { selfuser in
-  NSLog("User id '%@' and handle '%@'", selfuser.id, selfuser.handle)
-  NSLog("User has JSON metadata '%@'", selfuser.metadata)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let message = SelfFetchMessage()
+	client.send(message: message).then { selfuser in
+	  NSLog("User id '%@' and handle '%@'", selfuser.id, selfuser.handle)
+	  NSLog("User has JSON metadata '%@'", selfuser.metadata)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var account : NakamaAPI.ApiAccount = yield(client.get_account_async(session), "completed")
-if account.is_exception():
-	print("An error occured: %s" % account)
-	return
-var user = account.user
-print("User id '%s' and username '%s'." % [user.id, user.username])
-print("User's wallet: %s." % account.wallet)
-```
+=== "Godot"
+	```gdscript
+	var account : NakamaAPI.ApiAccount = yield(client.get_account_async(session), "completed")
+	if account.is_exception():
+		print("An error occured: %s" % account)
+		return
+	var user = account.user
+	print("User id '%s' and username '%s'." % [user.id, user.username])
+	print("User's wallet: %s." % account.wallet)
+	```
 
-```tab="REST"
-GET /v2/account
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	GET /v2/account
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 Some information like wallet, device IDs and custom ID are private but part of the profile is visible to other users.
 
@@ -138,29 +149,31 @@ Nakama has the concept of a virtual wallet and transaction ledger. Nakama allows
 
 With server-side code it's possible to update the user's wallet.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local user_id = "95f05d94-cc66-445a-b4d1-9e262662cf79"
-local content = {
-  reward_coins = 1000 -- Add 1000 coins to the user's wallet.
-}
+	local user_id = "95f05d94-cc66-445a-b4d1-9e262662cf79"
+	local content = {
+	  reward_coins = 1000 -- Add 1000 coins to the user's wallet.
+	}
 
-local status, err = pcall(nk.wallet_update, user_id, content)
-if (not status) then
-    nk.logger_error(("User wallet update error: %q"):format(err))
-end
-```
+	local status, err = pcall(nk.wallet_update, user_id, content)
+	if (not status) then
+	    nk.logger_error(("User wallet update error: %q"):format(err))
+	end
+	```
 
-```go tab="Go"
-userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
-content := map[string]interface{}{
-	"reward_coins": 1000, // Add 1000 coins to the user's wallet.
-}
-if err := nk.WalletUpdate(ctx, userID, content, nil, true); err != nil {
-	logger.Error("User wallet update error: %v", err.Error())
-}
-```
+=== "Go"
+	```go
+	userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
+	content := map[string]interface{}{
+		"reward_coins": 1000, // Add 1000 coins to the user's wallet.
+	}
+	if err := nk.WalletUpdate(ctx, userID, content, nil, true); err != nil {
+		logger.Error("User wallet update error: %v", err.Error())
+	}
+	```
 
 The wallet is private to a user and cannot be seen by other users. You can fetch wallet information for a user via [Fetch Account](user-accounts.md#fetch-account) operation.
 
@@ -175,295 +188,321 @@ Nakama can report back user online indicators in two ways:
 
 You can fetch one or more users by their IDs or handles. This is useful for displaying public profiles with other users.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1" \
-  -H 'authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X GET "http://127.0.0.1:7350/v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1" \
+	  -H 'authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-const users = await client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"]);
-users.foreach(user => {
-  console.info("User id '%o' and username '%o'.", user.id, user.username);
-});
-```
+=== "JavaScript"
+	```js
+	const users = await client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"]);
+	users.foreach(user => {
+	  console.info("User id '%o' and username '%o'.", user.id, user.username);
+	});
+	```
 
-```csharp tab=".NET"
-var ids = new[] {"userid1", "userid2"};
-var usernames = new[] {"username1", "username2"};
-var facebookIds = new[] {"facebookid1"};
-var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
-foreach (var u in result.Users)
-{
-    System.Console.WriteLine("User id '{0}' username '{1}'", u.Id, u.Username);
-}
-```
+=== ".NET"
+	```csharp
+	var ids = new[] {"userid1", "userid2"};
+	var usernames = new[] {"username1", "username2"};
+	var facebookIds = new[] {"facebookid1"};
+	var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
+	foreach (var u in result.Users)
+	{
+	    System.Console.WriteLine("User id '{0}' username '{1}'", u.Id, u.Username);
+	}
+	```
 
-```csharp tab="Unity"
-var ids = new[] {"userid1", "userid2"};
-var usernames = new[] {"username1", "username2"};
-var facebookIds = new[] {"facebookid1"};
-var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
-foreach (var u in result.Users)
-{
-    Debug.LogFormat("User id '{0}' username '{1}'", u.Id, u.Username);
-}
-```
+=== "Unity"
+	```csharp
+	var ids = new[] {"userid1", "userid2"};
+	var usernames = new[] {"username1", "username2"};
+	var facebookIds = new[] {"facebookid1"};
+	var result = await client.GetUsersAsync(session, ids, usernames, facebookIds);
+	foreach (var u in result.Users)
+	{
+	    Debug.LogFormat("User id '{0}' username '{1}'", u.Id, u.Username);
+	}
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](const NUsers& users)
-{
-  for (auto& user : users.users)
-  {
-    CCLOG("User id '%s' username %s", user.id.c_str(), user.username.c_str());
-  }
-};
-client->getUsers(session,
-    { "user_id1" },
-    { "username1" },
-    { "facebookid1" },
-    successCallback);
-```
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](const NUsers& users)
+	{
+	  for (auto& user : users.users)
+	  {
+	    CCLOG("User id '%s' username %s", user.id.c_str(), user.username.c_str());
+	  }
+	};
+	client->getUsers(session,
+	    { "user_id1" },
+	    { "username1" },
+	    { "facebookid1" },
+	    successCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"])
-  .then(function(users) {
-      cc.log("Users:", JSON.stringify(users));
-    },
-    function(error) {
-      cc.error("get users failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	client.getUsers(session, ["user_id1"], ["username1"], ["facebookid1"])
+	  .then(function(users) {
+	      cc.log("Users:", JSON.stringify(users));
+	    },
+	    function(error) {
+	      cc.error("get users failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](const NUsers& users)
-{
-  for (auto& user : users.users)
-  {
-    std::cout << "User id '" << user.id << "' username " << user.username << std::endl;
-  }
-};
-client->getUsers(session,
-    { "user_id1" },
-    { "username1" },
-    { "facebookid1" },
-    successCallback);
-```
+=== "C++"
+	```cpp
+	auto successCallback = [](const NUsers& users)
+	{
+	  for (auto& user : users.users)
+	  {
+	    std::cout << "User id '" << user.id << "' username " << user.username << std::endl;
+	  }
+	};
+	client->getUsers(session,
+	    { "user_id1" },
+	    { "username1" },
+	    { "facebookid1" },
+	    successCallback);
+	```
 
-```java tab="Java"
-List<String> ids = Arrays.asList("userid1", "userid2");
-List<String> usernames = Arrays.asList("username1", "username1");
-String[] facebookIds = new String[] {"facebookid1"};
-Users users = client.getUsers(session, ids, usernames, facebookIds).get();
+=== "Java"
+	```java
+	List<String> ids = Arrays.asList("userid1", "userid2");
+	List<String> usernames = Arrays.asList("username1", "username1");
+	String[] facebookIds = new String[] {"facebookid1"};
+	Users users = client.getUsers(session, ids, usernames, facebookIds).get();
 
-for (User user : users.getUsersList()) {
-  System.out.format("User id %s username %s", user.getId(), user.getUsername());
-}
-```
+	for (User user : users.getUsersList()) {
+	  System.out.format("User id %s username %s", user.getId(), user.getUsername());
+	}
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let userID // a User ID
-var message = UsersFetchMessage()
-message.userIDs.append(userID)
-client.send(message: message).then { users in
-  for user in users {
-    NSLog("User id '%@' and handle '%@'", user.id, user.handle)
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let userID // a User ID
+	var message = UsersFetchMessage()
+	message.userIDs.append(userID)
+	client.send(message: message).then { users in
+	  for user in users {
+	    NSLog("User id '%@' and handle '%@'", user.id, user.handle)
+	  }
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var ids = ["userid1", "userid2"]
-var usernames = ["username1", "username2"]
-var facebook_ids = ["facebookid1"]
-var result : NakamaAPI.ApiUsers = yield(client.get_users_async(session, ids, usernames, facebook_ids), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-for u in result.users:
-	print("User id '%s' username '%s'" % [u.id, u.username])
-```
+=== "Godot"
+	```gdscript
+	var ids = ["userid1", "userid2"]
+	var usernames = ["username1", "username2"]
+	var facebook_ids = ["facebookid1"]
+	var result : NakamaAPI.ApiUsers = yield(client.get_users_async(session, ids, usernames, facebook_ids), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	for u in result.users:
+		print("User id '%s' username '%s'" % [u.id, u.username])
+	```
 
-```tab="REST"
-GET /v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	GET /v2/user?ids=userid1&ids=userid2&usernames=username1&usernames=username2&facebook_ids=facebookid1
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 You can also fetch one or more users in server-side code.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local user_ids = {
-  "3ea5608a-43c3-11e7-90f9-7b9397165f34",
-  "447524be-43c3-11e7-af09-3f7172f05936"
-}
-local users = nk.users_get_id(user_ids)
-for _, u in ipairs(users)
-do
-  local message = ("username: %q, displayname: %q"):format(u.username, u.display_name)
-  nk.logger_info(message)
-end
-```
-
-```go tab="Go"
-if users, err := nk.UsersGetId(ctx, []string{
-	"3ea5608a-43c3-11e7-90f9-7b9397165f34",
-	"447524be-43c3-11e7-af09-3f7172f05936",
-}); err != nil {
-	// Handle error.
-} else {
-	for _, u := range users {
-		logger.Info("username: %s, displayname: %s", u.Username, u.DisplayName)
+	local user_ids = {
+	  "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+	  "447524be-43c3-11e7-af09-3f7172f05936"
 	}
-}
-```
+	local users = nk.users_get_id(user_ids)
+	for _, u in ipairs(users)
+	do
+	  local message = ("username: %q, displayname: %q"):format(u.username, u.display_name)
+	  nk.logger_info(message)
+	end
+	```
+
+=== "Go"
+	```go
+	if users, err := nk.UsersGetId(ctx, []string{
+		"3ea5608a-43c3-11e7-90f9-7b9397165f34",
+		"447524be-43c3-11e7-af09-3f7172f05936",
+	}); err != nil {
+		// Handle error.
+	} else {
+		for _, u := range users {
+			logger.Info("username: %s, displayname: %s", u.Username, u.DisplayName)
+		}
+	}
+	```
 
 ## Update account
 
 When a user is registered most of their profile is setup with default values. A user can update their own profile to change fields but cannot change any other user's profile.
 
-```sh tab="cURL"
-curl -X PUT "http://127.0.0.1:7350/v2/account" \
-  -H 'authorization: Bearer <session token>' \
-  --data '{
-    "display_name": "My new name",
-    "avatar_url": "http://graph.facebook.com/avatar_url",
-    "location": "San Francisco"
-  }'
-```
+=== "cURL"
+	```sh
+	curl -X PUT "http://127.0.0.1:7350/v2/account" \
+	  -H 'authorization: Bearer <session token>' \
+	  --data '{
+	    "display_name": "My new name",
+	    "avatar_url": "http://graph.facebook.com/avatar_url",
+	    "location": "San Francisco"
+	  }'
+	```
 
-```js tab="JavaScript"
-await client.updateAccount(session, {
-  display_name: "My new name",
-  avatar_url: "http://graph.facebook.com/avatar_url",
-  location: "San Francisco"
-});
-```
+=== "JavaScript"
+	```js
+	await client.updateAccount(session, {
+	  display_name: "My new name",
+	  avatar_url: "http://graph.facebook.com/avatar_url",
+	  location: "San Francisco"
+	});
+	```
 
-```csharp tab=".NET"
-const string displayName = "My new name";
-const string avatarUrl = "http://graph.facebook.com/avatar_url";
-const string location = "San Francisco";
-await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
-```
+=== ".NET"
+	```csharp
+	const string displayName = "My new name";
+	const string avatarUrl = "http://graph.facebook.com/avatar_url";
+	const string location = "San Francisco";
+	await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
+	```
 
-```csharp tab="Unity"
-const string displayName = "My new name";
-const string avatarUrl = "http://graph.facebook.com/avatar_url";
-const string location = "San Francisco";
-await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
-```
+=== "Unity"
+	```csharp
+	const string displayName = "My new name";
+	const string avatarUrl = "http://graph.facebook.com/avatar_url";
+	const string location = "San Francisco";
+	await client.UpdateAccountAsync(session, null, displayName, avatarUrl, null, location);
+	```
 
-```cpp tab="Cocos2d-x C++"
-client->updateAccount(session,
-    opt::nullopt,
-    "My new name", // display name
-    "http://graph.facebook.com/avatar_url", // avatar URL
-    opt::nullopt,
-    "San Francisco" // location
-    );
-```
+=== "Cocos2d-x C++"
+	```cpp
+	client->updateAccount(session,
+	    opt::nullopt,
+	    "My new name", // display name
+	    "http://graph.facebook.com/avatar_url", // avatar URL
+	    opt::nullopt,
+	    "San Francisco" // location
+	    );
+	```
 
-```js tab="Cocos2d-x JS"
-client.updateAccount(session, {
-  display_name: "My new name",
-  avatar_url: "http://graph.facebook.com/avatar_url",
-  location: "San Francisco"
-});
-```
+=== "Cocos2d-x JS"
+	```js
+	client.updateAccount(session, {
+	  display_name: "My new name",
+	  avatar_url: "http://graph.facebook.com/avatar_url",
+	  location: "San Francisco"
+	});
+	```
 
-```cpp tab="C++"
-client->updateAccount(session,
-    opt::nullopt,
-    "My new name", // display name
-    "http://graph.facebook.com/avatar_url", // avatar URL
-    opt::nullopt,
-    "San Francisco" // location
-    );
-```
+=== "C++"
+	```cpp
+	client->updateAccount(session,
+	    opt::nullopt,
+	    "My new name", // display name
+	    "http://graph.facebook.com/avatar_url", // avatar URL
+	    opt::nullopt,
+	    "San Francisco" // location
+	    );
+	```
 
-```java tab="Java"
-String displayName = "My new name";
-String avatarUrl = "http://graph.facebook.com/avatar_url";
-String location = "San Francisco";
-client.updateAccount(session, null, displayName, avatarUrl, null, location);
-```
+=== "Java"
+	```java
+	String displayName = "My new name";
+	String avatarUrl = "http://graph.facebook.com/avatar_url";
+	String location = "San Francisco";
+	client.updateAccount(session, null, displayName, avatarUrl, null, location);
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-var message = SelfUpdateMessage()
-message.avatarUrl = "http://graph.facebook.com/avatar_url"
-message.fullname = "My New Name"
-message.location = "San Francisco"
-client.send(message: message).then {
-  NSLog("Successfully updated yourself.")
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	var message = SelfUpdateMessage()
+	message.avatarUrl = "http://graph.facebook.com/avatar_url"
+	message.fullname = "My New Name"
+	message.location = "San Francisco"
+	client.send(message: message).then {
+	  NSLog("Successfully updated yourself.")
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var display_name = "My new name";
-var avatar_url = "http://graph.facebook.com/avatar_url";
-var location = "San Francisco";
-var update : NakamaAsyncResult = yield(client.update_account_async(session, null, display_name, avatar_url, null, location), "completed")
-if update.is_exception():
-	print("An error occured: %s" % update)
-	return
-print("Account updated")
-```
+=== "Godot"
+	```gdscript
+	var display_name = "My new name";
+	var avatar_url = "http://graph.facebook.com/avatar_url";
+	var location = "San Francisco";
+	var update : NakamaAsyncResult = yield(client.update_account_async(session, null, display_name, avatar_url, null, location), "completed")
+	if update.is_exception():
+		print("An error occured: %s" % update)
+		return
+	print("Account updated")
+	```
 
-```tab="REST"
-PUT /v2/account HTTP/1.1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+=== "REST"
+    ```
+	PUT /v2/account HTTP/1.1
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
 
-{
-  "display_name": "My new name",
-  "avatar_url": "http://graph.facebook.com/avatar_url",
-  "location": "San Francisco"
-}
-```
+	{
+	  "display_name": "My new name",
+	  "avatar_url": "http://graph.facebook.com/avatar_url",
+	  "location": "San Francisco"
+	}
+	```
 
 With server-side code it's possible to update any user's profile.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user's id.
-local metadata = {}
-local username = "my-new-username"
-local display_name = "My new Name"
-local timezone = nil
-local location = "San Francisco"
-local lang_tag = nil
-local avatar_url = "http://graph.facebook.com/avatar_url"
+	local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- some user's id.
+	local metadata = {}
+	local username = "my-new-username"
+	local display_name = "My new Name"
+	local timezone = nil
+	local location = "San Francisco"
+	local lang_tag = nil
+	local avatar_url = "http://graph.facebook.com/avatar_url"
 
-local status, err = pcall(nk.account_update_id, user_id, metadata, username, display_name, timezone, location, lang_tag, avatar_url)
-if (not status) then
-  nk.logger_info(("Account update error: %q"):format(err))
-end
-```
+	local status, err = pcall(nk.account_update_id, user_id, metadata, username, display_name, timezone, location, lang_tag, avatar_url)
+	if (not status) then
+	  nk.logger_info(("Account update error: %q"):format(err))
+	end
+	```
 
-```go tab="Go"
-userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user's id.
-username := "my-new-username" // must be unique
-metadata := make(map[string]interface{})
-displayName := "My new name"
-timezone := ""
-location := "San Francisco"
-langTag := ""
-avatarUrl := "http://graph.facebook.com/avatar_url"
-if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timezone, location, langTag, avatarUrl); err != nil {
-	// Handle error.
-	logger.Error("Account update error: %s", err.Error())
-}
-```
+=== "Go"
+	```go
+	userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user's id.
+	username := "my-new-username" // must be unique
+	metadata := make(map[string]interface{})
+	displayName := "My new name"
+	timezone := ""
+	location := "San Francisco"
+	langTag := ""
+	avatarUrl := "http://graph.facebook.com/avatar_url"
+	if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timezone, location, langTag, avatarUrl); err != nil {
+		// Handle error.
+		logger.Error("Account update error: %s", err.Error())
+	}
+	```

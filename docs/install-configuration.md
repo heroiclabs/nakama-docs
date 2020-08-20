@@ -5,9 +5,10 @@ A YAML configuration file configures many aspects of how your Nakama server runs
 ## Specifying a config file
 You can specify a configuration file at run-time using --config flag.
 
-```shell tab="Shell"
-nakama --config my-special-config.yml
-```
+=== "Shell"
+	```shell
+	nakama --config my-special-config.yml
+	```
 
 If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to [setup folder binding](install-docker-quickstart.md#data).
 
@@ -47,9 +48,10 @@ Nakama has various configuration options to make it as flexible as possible for 
 
 Nakama ships with sane default values for all config options, therefore you'll only need to override a subset of the options. You can also setup your own config file, and override the values in the config file via command-line flags. For instance, to override Runtime Path:
 
-```shell tab="Shell"
-nakama --runtime.path /tmp/my-modules
-```
+=== "Shell"
+	```shell
+	nakama --runtime.path /tmp/my-modules
+	```
 
 If fields are not specific, default values will be used. For more information on how to override flags, have a look at the [server command-line](install-server-cli.md) page.
 
@@ -110,9 +112,9 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 !!! tip "Database addresses"
     You can pass in multiple database addresses to Nakama via command like:
 
-    ```
-    nakama --database.address "root@db1:26257" --database.address "root@db2:26257"
-    ```
+    	```
+	    nakama --database.address "root@db1:26257" --database.address "root@db2:26257"
+	    ```
 
 ### Leaderboard
 
@@ -194,9 +196,9 @@ Options related to Lua-based runtime engine.
 !!! tip "Runtime env value"
     The runtime environment is a key-value pair. They are separated by the `=` character like this:
 
-    ```
-    nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
-    ```
+    	```
+	    nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
+	    ```
 
 ### Session
 
@@ -315,66 +317,66 @@ Google In-App Purchase configuration
 
 You can use the entire file or just a subset of the configuration.
 
-```yaml
-name: nakama-node-1
-data_dir: "./data/"
-
-logger:
-  stdout: false
-  level: "warn"
-  file: "/tmp/path/to/logfile.log"
-
-metrics:
-  reporting_freq_sec: 60
-  namespace: ""
-  stackdriver_projectid: ""
-  prometheus_port: 0
-
-database:
-  address:
-    - "root@localhost:26257"
-  conn_max_lifetime_ms: 0
-  max_open_conns: 0
-  max_idle_conns: 100
-
-runtime:
-  env:
-    - "example_apikey=example_apivalue"
-    - "encryptionkey=afefa==e332*u13=971mldq"
-  path: "/tmp/modules/folders"
-  http_key: "defaulthttpkey"
-
-socket:
-  server_key: "defaultkey"
-  port: 7350
-  max_message_size_bytes: 4096 # bytes
-  read_timeout_ms: 10000
-  write_timeout_ms: 10000
-  idle_timeout_ms: 60000
-  write_wait_ms: 5000
-  pong_wait_ms: 10000
-  ping_period_ms: 8000 # Must be less than pong_wait_ms
-  outgoing_queue_size: 16
-
-session:
-  encryption_key: "defaultencryptionkey"
-  token_expiry_sec: 60
-
-social:
-  steam:
-    publisher_key: ""
-    app_id: 0
-
-console:
-  port: 7351
-  username: "admin"
-  password: "password"
-
-cluster:
-  join:
-    - "10.0.0.2:7352"
-    - "10.0.0.3:7352"
-  gossip_bindaddr: "0.0.0.0"
-  gossip_bindport: 7352
-  rpc_port: 7353
-```
+	```yaml
+	name: nakama-node-1
+	data_dir: "./data/"
+	
+	logger:
+	  stdout: false
+	  level: "warn"
+	  file: "/tmp/path/to/logfile.log"
+	
+	metrics:
+	  reporting_freq_sec: 60
+	  namespace: ""
+	  stackdriver_projectid: ""
+	  prometheus_port: 0
+	
+	database:
+	  address:
+	    - "root@localhost:26257"
+	  conn_max_lifetime_ms: 0
+	  max_open_conns: 0
+	  max_idle_conns: 100
+	
+	runtime:
+	  env:
+	    - "example_apikey=example_apivalue"
+	    - "encryptionkey=afefa==e332*u13=971mldq"
+	  path: "/tmp/modules/folders"
+	  http_key: "defaulthttpkey"
+	
+	socket:
+	  server_key: "defaultkey"
+	  port: 7350
+	  max_message_size_bytes: 4096 # bytes
+	  read_timeout_ms: 10000
+	  write_timeout_ms: 10000
+	  idle_timeout_ms: 60000
+	  write_wait_ms: 5000
+	  pong_wait_ms: 10000
+	  ping_period_ms: 8000 # Must be less than pong_wait_ms
+	  outgoing_queue_size: 16
+	
+	session:
+	  encryption_key: "defaultencryptionkey"
+	  token_expiry_sec: 60
+	
+	social:
+	  steam:
+	    publisher_key: ""
+	    app_id: 0
+	
+	console:
+	  port: 7351
+	  username: "admin"
+	  password: "password"
+	
+	cluster:
+	  join:
+	    - "10.0.0.2:7352"
+	    - "10.0.0.3:7352"
+	  gossip_bindaddr: "0.0.0.0"
+	  gossip_bindport: 7352
+	  rpc_port: 7353
+	```

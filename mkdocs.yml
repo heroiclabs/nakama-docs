@@ -61,6 +61,7 @@ markdown_extensions:
   - toc:
       permalink: True
   - pymdownx.superfences
+  - pymdownx.tabbed
 
 # Nav menu
 nav:

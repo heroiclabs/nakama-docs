@@ -26,12 +26,12 @@ If you've configured your database to run with specific connection settings have
 
 When the command runs you'll see logs output to the shell console.
 
-```
-{"level":"info","ts":"<sometimestamp>","msg":"Database connection","db":"root@localhost:26257"}
-{"level":"info","ts":"<sometimestamp>","msg":"Database information","version":"CockroachDB CCL v1.1.5"}
-{"level":"info","ts":"<sometimestamp>","msg":"Using existing database","name":"nakama"}
-{"level":"info","ts":"<sometimestamp>","msg":"Successfully applied migration","count":1}
-```
+	```
+	{"level":"info","ts":"<sometimestamp>","msg":"Database connection","db":"root@localhost:26257"}
+	{"level":"info","ts":"<sometimestamp>","msg":"Database information","version":"CockroachDB CCL v1.1.5"}
+	{"level":"info","ts":"<sometimestamp>","msg":"Using existing database","name":"nakama"}
+	{"level":"info","ts":"<sometimestamp>","msg":"Successfully applied migration","count":1}
+	```
 
 The logs indicate how many migrations were run to update the schema definition in the database to the latest version with the release of the server. You will only need to migrate the server once with each new server release. This command does __not__ need to be run before each server start.
 

@@ -24,19 +24,19 @@ To use nakama-unreal in your Unreal project, you'll need to copy the nakama-unre
 
 So, you might end up with the file that looks something like this:
 
-```c#
+```csharp
 using UnrealBuildTool;
 
 public class MyUnrealProject : ModuleRules
 {
-	public MyUnrealProject(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+    public MyUnrealProject(ReadOnlyTargetRules Target) : base(Target)
+    {
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "Nakama" });
-	}
+        PrivateDependencyModuleNames.AddRange(new string[] { "Nakama" });
+    }
 }
 ```
 

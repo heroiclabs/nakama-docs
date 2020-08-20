@@ -37,161 +37,174 @@ The score in each record can be updated as the owner progresses. Scores can be u
 
 Each record can optionally include additional data about the score or the owner when submitted. The extra fields must be JSON encoded and submitted as the metadata. A good use case for metadata is info about race conditions in a driving game, such as weather, which can give extra UI hints when users list scores.
 
-```sh tab="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
-  -H 'Authorization: Bearer <session token>'
-  -d '{"record": {"score": 100}}'
-```
+=== "cURL"
+	```sh
+	curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
+	  -H 'Authorization: Bearer <session token>'
+	  -d '{"record": {"score": 100}}'
+	```
 
-```js tab="Javascript"
-var leaderboardId = "level1";
-var submission = {score: 100};
-var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
-console.log("New record username %o and score %o", record.username, record.score);
-```
+=== "Javascript"
+	```js
+	var leaderboardId = "level1";
+	var submission = {score: 100};
+	var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
+	console.log("New record username %o and score %o", record.username, record.score);
+	```
 
-```csharp tab=".NET"
-const string leaderboardId = "level1";
-const long score = 100L;
-var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
-System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
-```
+=== ".NET"
+	```csharp
+	const string leaderboardId = "level1";
+	const long score = 100L;
+	var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
+	System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
+	```
 
-```csharp tab="Unity"
-const string leaderboardId = "level1";
-const long score = 100L;
-var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
-Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
-```
+=== "Unity"
+	```csharp
+	const string leaderboardId = "level1";
+	const long score = 100L;
+	var r = await client.WriteLeaderboardRecordAsync(session, leaderboardId, score);
+	Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](const NLeaderboardRecord& record)
-{
-  CCLOG("New record with score %ld", record.score);
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](const NLeaderboardRecord& record)
+	{
+	  CCLOG("New record with score %ld", record.score);
+	};
 
-string leaderboardId = "level1";
-int64_t score = 100;
+	string leaderboardId = "level1";
+	int64_t score = 100;
 
-client->writeLeaderboardRecord(session,
-  leaderboardId,
-  score,
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
+	client->writeLeaderboardRecord(session,
+	  leaderboardId,
+	  score,
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
 
-```js tab="Cocos2d-x JS"
-var leaderboardId = "level1";
-var submission = {score: 100};
-client.writeLeaderboardRecord(session, leaderboardId, submission)
-  .then(function(record) {
-      cc.log("New record with score", record.score);
-    },
-    function(error) {
-      cc.error("write leaderboard record failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	var leaderboardId = "level1";
+	var submission = {score: 100};
+	client.writeLeaderboardRecord(session, leaderboardId, submission)
+	  .then(function(record) {
+	      cc.log("New record with score", record.score);
+	    },
+	    function(error) {
+	      cc.error("write leaderboard record failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](const NLeaderboardRecord& record)
-{
-  std::cout << "New record with score " << record.score << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](const NLeaderboardRecord& record)
+	{
+	  std::cout << "New record with score " << record.score << std::endl;
+	};
 
-string leaderboardId = "level1";
-int64_t score = 100;
+	string leaderboardId = "level1";
+	int64_t score = 100;
 
-client->writeLeaderboardRecord(session,
-  leaderboardId,
-  score,
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
+	client->writeLeaderboardRecord(session,
+	  leaderboardId,
+	  score,
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
 
-```java tab="Java"
-final String leaderboard = "level1";
-long score = 100L;
-LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
-System.out.format("New record for %s score %s", r.getUsername(), r.getScore());
-```
+=== "Java"
+	```java
+	final String leaderboard = "level1";
+	long score = 100L;
+	LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
+	System.out.format("New record for %s score %s", r.getUsername(), r.getScore());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = leaderboard.id //a Leaderboard ID.
-let score = 1200
-let metadata = "{\"race_conditions\": [\"sunny\", \"clear\"]}".data(using: .utf8)!
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let id = leaderboard.id //a Leaderboard ID.
+	let score = 1200
+	let metadata = "{\"race_conditions\": [\"sunny\", \"clear\"]}".data(using: .utf8)!
 
-var recordWrite : LeaderboardRecordWrite(leaderboardID: id)
-recordWrite.set = score
-recordWrite.metadata = metadata
+	var recordWrite : LeaderboardRecordWrite(leaderboardID: id)
+	recordWrite.set = score
+	recordWrite.metadata = metadata
 
-var message = LeaderboardRecordWriteMessage()
-message.leaderboardRecords.append(recordWrite)
-client.send(message: message).then { records in
-  for record in records {
-    NSLog("Record handle %@ and score %d.", record.handle, record.score)
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+	var message = LeaderboardRecordWriteMessage()
+	message.leaderboardRecords.append(recordWrite)
+	client.send(message: message).then { records in
+	  for record in records {
+	    NSLog("Record handle %@ and score %d.", record.handle, record.score)
+	  }
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var leaderboard_id = "level1"
-var score = 100
-var record : NakamaAPI.ApiLeaderboardRecord = yield(client.write_leaderboard_record_async(session, leaderboard_id, score), "completed")
-if record.is_exception():
-	print("An error occured: %s" % record)
-	return
-print("New record username %s and score %s" % [record.username, record.score])
-```
+=== "Godot"
+	```gdscript
+	var leaderboard_id = "level1"
+	var score = 100
+	var record : NakamaAPI.ApiLeaderboardRecord = yield(client.write_leaderboard_record_async(session, leaderboard_id, score), "completed")
+	if record.is_exception():
+		print("An error occured: %s" % record)
+		return
+	print("New record username %s and score %s" % [record.username, record.score])
+	```
 
-```tab="REST"
-POST /v2/leaderboard/<leaderboardId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+=== "REST"
+    ```
+	POST /v2/leaderboard/<leaderboardId>
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
 
-{
-  "record": {
-    "score": 100
-  }
-}
-```
+	{
+	  "record": {
+	    "score": 100
+	  }
+	}
+	```
 
 ## Create a leaderboard
 
 A leaderboard can be created via server-side code at startup or within a [registered function](runtime-code-function-reference.md#register-hooks). The ID given to the leaderboard is used to submit scores to it.
 
-```lua tab="Lua"
-local id = "level1"
-local authoritative = false
-local sort = "desc"
-local operator = "best"
-local reset = "0 0 * * 1"
-local metadata = {
-  weather_conditions = "rain"
-}
-nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
-```
+=== "Lua"
+	```lua
+	local id = "level1"
+	local authoritative = false
+	local sort = "desc"
+	local operator = "best"
+	local reset = "0 0 * * 1"
+	local metadata = {
+	  weather_conditions = "rain"
+	}
+	nk.leaderboard_create(id, authoritative, sort, operator, reset, metadata)
+	```
 
-```go tab="Go"
-id := "level1"
-authoritative := false
-sort := "desc"
-operator := "best"
-reset := "0 0 * * 1"
-metadata := map[string]interface{}{"weather_conditions": "rain"}
+=== "Go"
+	```go
+	id := "level1"
+	authoritative := false
+	sort := "desc"
+	operator := "best"
+	reset := "0 0 * * 1"
+	metadata := map[string]interface{}{"weather_conditions": "rain"}
 
-if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, metadata); err != nil {
-  // Handle error.
-}
-```
+	if err := nk.LeaderboardCreate(ctx, id, authoritative, sort, operator, reset, metadata); err != nil {
+	  // Handle error.
+	}
+	```
 
 ## Submit a score
 
@@ -203,128 +216,139 @@ Submitting to a leaderboard with the "best" operator ensures the record tracks t
 
 With the "incr" operator the new value is added to any existing score for that record. If there is no previous value for the record, this behaves like "set".
 
-```sh tab="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
-  -H 'Authorization: Bearer <session token>'
-  -d '{"score": 100}'
-```
+=== "cURL"
+	```sh
+	curl -X POST "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
+	  -H 'Authorization: Bearer <session token>'
+	  -d '{"score": 100}'
+	```
 
-```js tab="JavaScript"
-var leaderboardId = "level1";
-var submission = {score: 100};
-var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
-console.log("New record username %o and score %o", record.username, record.score);
-```
+=== "Javascript"
+	```js
+	var leaderboardId = "level1";
+	var submission = {score: 100};
+	var record = await client.writeLeaderboardRecord(session, leaderboardId, submission);
+	console.log("New record username %o and score %o", record.username, record.score);
+	```
 
-```csharp tab=".NET"
-const string leaderboard = "level1";
-const long score = 100L;
-var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
-System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
-```
+=== ".NET"
+	```csharp
+	const string leaderboard = "level1";
+	const long score = 100L;
+	var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+	System.Console.WriteLine("New record for '{0}' score '{1}'", r.Username, r.Score);
+	```
 
-```csharp tab="Unity"
-const string leaderboard = "level1";
-const long score = 100L;
-var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
-Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
-```
+=== "Unity"
+	```csharp
+	const string leaderboard = "level1";
+	const long score = 100L;
+	var r = await client.WriteLeaderboardRecordAsync(session, leaderboard, score);
+	Debug.LogFormat("New record for '{0}' score '{1}'", r.Username, r.Score);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](const NLeaderboardRecord& record)
-{
-  CCLOG("New record with score %ld", record.score);
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](const NLeaderboardRecord& record)
+	{
+	  CCLOG("New record with score %ld", record.score);
+	};
 
-string leaderboardId = "level1";
-int64_t score = 100;
+	string leaderboardId = "level1";
+	int64_t score = 100;
 
-client->writeLeaderboardRecord(session,
-  leaderboardId,
-  score,
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
+	client->writeLeaderboardRecord(session,
+	  leaderboardId,
+	  score,
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
 
-```js tab="Cocos2d-x JS"
-var leaderboardId = "level1";
-var submission = {score: 100};
-client.writeLeaderboardRecord(session, leaderboardId, submission)
-  .then(function(record) {
-      cc.log("New record with score", record.score);
-    },
-    function(error) {
-      cc.error("write leaderboard record failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	var leaderboardId = "level1";
+	var submission = {score: 100};
+	client.writeLeaderboardRecord(session, leaderboardId, submission)
+	  .then(function(record) {
+	      cc.log("New record with score", record.score);
+	    },
+	    function(error) {
+	      cc.error("write leaderboard record failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](const NLeaderboardRecord& record)
-{
-  std::cout << "New record with score " << record.score << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](const NLeaderboardRecord& record)
+	{
+	  std::cout << "New record with score " << record.score << std::endl;
+	};
 
-string leaderboardId = "level1";
-int64_t score = 100;
+	string leaderboardId = "level1";
+	int64_t score = 100;
 
-client->writeLeaderboardRecord(session,
-  leaderboardId,
-  score,
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
+	client->writeLeaderboardRecord(session,
+	  leaderboardId,
+	  score,
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
 
-```java tab="Java"
-final String leaderboard = "level1";
-long score = 100L;
-LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
-System.out.format("New record for %s score %d", r.getUsername(), r.getScore());
-```
+=== "Java"
+	```java
+	final String leaderboard = "level1";
+	long score = 100L;
+	LeaderboardRecord r = client.writeLeaderboardRecord(session, leaderboard, score);
+	System.out.format("New record for %s score %d", r.getUsername(), r.getScore());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = leaderboard.id //a Leaderboard ID.
-let score = 1200
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let id = leaderboard.id //a Leaderboard ID.
+	let score = 1200
 
-var recordWrite : LeaderboardRecordWrite(leaderboardID: id)
-recordWrite.best = score
+	var recordWrite : LeaderboardRecordWrite(leaderboardID: id)
+	recordWrite.best = score
 
-var message = LeaderboardRecordWriteMessage()
-message.leaderboardRecords.append(recordWrite)
-client.send(message: message).then { records in
-  for record in records {
-    NSLog("Record handle %@ and score %d.", record.handle, record.score)
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+	var message = LeaderboardRecordWriteMessage()
+	message.leaderboardRecords.append(recordWrite)
+	client.send(message: message).then { records in
+	  for record in records {
+	    NSLog("Record handle %@ and score %d.", record.handle, record.score)
+	  }
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var leaderboard_id = "level1"
-var score = 100
-var record : NakamaAPI.ApiLeaderboardRecord = yield(client.write_leaderboard_record_async(session, leaderboard_id, score), "completed")
-if record.is_exception():
-	print("An error occured: %s" % record)
-	return
-print("New record username %s and score %s" % [record.username, record.score])
-```
+=== "Godot"
+	```gdscript
+	var leaderboard_id = "level1"
+	var score = 100
+	var record : NakamaAPI.ApiLeaderboardRecord = yield(client.write_leaderboard_record_async(session, leaderboard_id, score), "completed")
+	if record.is_exception():
+		print("An error occured: %s" % record)
+		return
+	print("New record username %s and score %s" % [record.username, record.score])
+	```
 
-```tab="REST"
-POST /v2/leaderboard/<leaderboardId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+=== "REST"
+    ```
+	POST /v2/leaderboard/<leaderboardId>
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
 
-{
-  "score": 100
-}
-```
+	{
+	  "score": 100
+	}
+	```
 
 ## List records
 
@@ -334,596 +358,640 @@ A user can list records from a leaderboard. This makes it easy to compare scores
 
 The standard way to list records is ordered by score based on the sort order in the leaderboard.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>" \
+	  -H 'Authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-var leaderboardId = "level1";
-var result = await client.listLeaderboardRecords(session, leaderboardId);
-result.records.forEach(function(record) {
-  console.log("Record username %o and score %o", record.username, record.score);
-});
-```
+=== "Javascript"
+	```js
+	var leaderboardId = "level1";
+	var result = await client.listLeaderboardRecords(session, leaderboardId);
+	result.records.forEach(function(record) {
+	  console.log("Record username %o and score %o", record.username, record.score);
+	});
+	```
 
-```csharp tab=".NET"
-const string leaderboardId = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
-foreach (var r in result.Records)
-{
-    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
-}
-```
+=== ".NET"
+	```csharp
+	const string leaderboardId = "level1";
+	var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
+	foreach (var r in result.Records)
+	{
+	    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+	}
+	```
 
-```csharp tab="Unity"
-const string leaderboardId = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
-foreach (var r in result.Records)
-{
-    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
-}
-```
+=== "Unity"
+	```csharp
+	const string leaderboardId = "level1";
+	var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
+	foreach (var r in result.Records)
+	{
+	    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+	}
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NLeaderboardRecordListPtr recordsList)
-{
-  for (auto& record : recordsList->records)
-  {
-    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
-  }
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+	{
+	  for (auto& record : recordsList->records)
+	  {
+	    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+	  }
+	};
 
-string leaderboardId = "level1";
+	string leaderboardId = "level1";
 
-client->listLeaderboardRecords(session,
-  leaderboardId,
-  {},
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
+	client->listLeaderboardRecords(session,
+	  leaderboardId,
+	  {},
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
 
-```js tab="Cocos2d-x JS"
-var leaderboardId = "level1";
-client.listLeaderboardRecords(session, leaderboardId)
-  .then(function(result) {
-      result.records.forEach(function(record) {
-        cc.log("Record username", record.username, "and score", record.score);
-      });
-    },
-    function(error) {
-      cc.error("list leaderboard records failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	var leaderboardId = "level1";
+	client.listLeaderboardRecords(session, leaderboardId)
+	  .then(function(result) {
+	      result.records.forEach(function(record) {
+	        cc.log("Record username", record.username, "and score", record.score);
+	      });
+	    },
+	    function(error) {
+	      cc.error("list leaderboard records failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NLeaderboardRecordListPtr recordsList)
-{
-  for (auto& record : recordsList->records)
-  {
-    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
-  }
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+	{
+	  for (auto& record : recordsList->records)
+	  {
+	    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+	  }
+	};
 
-string leaderboardId = "level1";
+	string leaderboardId = "level1";
 
-client->listLeaderboardRecords(session,
-  leaderboardId,
-  {},
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
+	client->listLeaderboardRecords(session,
+	  leaderboardId,
+	  {},
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
 
-```java tab="Java"
-final String leaderboard = "level1";
-LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
-for (LeaderboardRecord record : records.getRecordsList()) {
-  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
-}
-```
+=== "Java"
+	```java
+	final String leaderboard = "level1";
+	LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
+	for (LeaderboardRecord record : records.getRecordsList()) {
+	  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
+	}
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = leaderboard.id //a Leaderboard ID.
-var message = LeaderboardRecordsListMessage(leaderboardID: id)
-client.send(message: message).then { records in
-  for record in records {
-    NSLog("Record handle %@ and score %d.", record.handle, record.score)
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let id = leaderboard.id //a Leaderboard ID.
+	var message = LeaderboardRecordsListMessage(leaderboardID: id)
+	client.send(message: message).then { records in
+	  for record in records {
+	    NSLog("Record handle %@ and score %d.", record.handle, record.score)
+	  }
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var leaderboard_id = "level1"
-var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-for r in result.records:
-	var record : NakamaAPI.ApiLeaderboardRecord = r
-	print("Record username %s and score %s" % [record.username, record.score])
-```
-
-
-```tab="REST"
-GET /v2/leaderboard/<leaderboardId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
-
-You can fetch the next set of results with a cursor.
-
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?cursor=<next_cursor>" \
-  -H 'Authorization: Bearer <session token>'
-```
-
-```js tab="JavaScript"
-var leaderboardId = "level1";
-
-var result = await client.listLeaderboardRecords(session, leaderboardId);
-result.records.forEach(function(record) {
-  console.log("Record username %o and score %o", record.username, record.score);
-});
-
-// If there are more results get next page.
-if (result.next_cursor) {
-  result = await client.listLeaderboardRecords(session, leaderboardId, null, null, result.next_cursor);
-  result.records.forEach(function(record) {
-    console.log("Record username %o and score %o", record.username, record.score);
-  });
-}
-```
-
-```csharp tab=".NET"
-const string leaderboardId = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
-foreach (var r in result.Records)
-{
-    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
-}
-// If there are more results get next page.
-if (result.NextCursor != null)
-{
-    var c = result.NextCursor;
-    result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, null, 100, c);
-    foreach (var r in result.Records)
-    {
-        System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
-    }
-}
-```
-
-```csharp tab="Unity"
-const string leaderboardId = "level1";
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
-foreach (var r in result.Records)
-{
-    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
-}
-// If there are more results get next page.
-if (result.NextCursor != null)
-{
-    var c = result.NextCursor;
-    result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, null, 100, c);
-    foreach (var r in result.Records)
-    {
-        Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
-    }
-}
-```
-
-
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NLeaderboardRecordListPtr recordsList)
-{
-  for (auto& record : recordsList->records)
-  {
-    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
-  }
-
-  if (!recordsList->nextCursor.empty())
-  {
-    auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
-    {
-      for (auto& record : recordsList->records)
-      {
-        CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
-      }
-    };
-
-    string leaderboardId = "level1";
-
-    client->listLeaderboardRecords(session,
-        leaderboardId,
-        {},
-        opt::nullopt,
-        recordsList->nextCursor,
-        successCallback
-    );
-  }
-};
-
-string leaderboardId = "level1";
-
-client->listLeaderboardRecords(session,
-  leaderboardId,
-  {},
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
-
-```js tab="Cocos2d-x JS"
-var leaderboardId = "level1";
-client.listLeaderboardRecords(session, leaderboardId)
-  .then(function(result) {
-      result.records.forEach(function(record) {
-        cc.log("Record username", record.username, "and score", record.score);
-      });
-
-      // If there are more results get next page.
-      if (result.next_cursor) {
-        client.listLeaderboardRecords(session, leaderboardId, null, null, result.next_cursor)
-          .then(function(result) {
-              result.records.forEach(function(record) {
-                cc.log("Record username", record.username, "and score", record.score);
-              }
-          });
-      }
-    },
-    function(error) {
-      cc.error("list leaderboard records failed:", JSON.stringify(error));
-    });
-```
-
-```cpp tab="C++"
-auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
-{
-  for (auto& record : recordsList->records)
-  {
-    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
-  }
-
-  if (!recordsList->nextCursor.empty())
-  {
-    auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
-    {
-      for (auto& record : recordsList->records)
-      {
-        std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
-      }
-    };
-
-    string leaderboardId = "level1";
-
-    client->listLeaderboardRecords(session,
-        leaderboardId,
-        {},
-        opt::nullopt,
-        recordsList->nextCursor,
-        successCallback
-    );
-  }
-};
-
-string leaderboardId = "level1";
-
-client->listLeaderboardRecords(session,
-  leaderboardId,
-  {},
-  opt::nullopt,
-  opt::nullopt,
-  successCallback
-);
-```
-
-```java tab="Java"
-final String leaderboard = "level1";
-LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
-for (LeaderboardRecord record : records.getRecordsList()) {
-  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
-}
-
-// If there are more results get next page.
-if (records.getCursor() != null) {
-  var c = result.NextCursor;
-  records = client.listLeaderboardRecords(session, leaderboard, null, 100, records.getNextCursor());
-  for (LeaderboardRecord record : records.getRecordsList()) {
-    System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
-  }
-}
-```
-
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = leaderboard.id //a Leaderboard ID.
-var message = LeaderboardRecordsListMessage(leaderboardID: id)
-
-client.send(message: message).then { records in
-  if let cursor = records.cursor && records.count > 0 {
-    message.cursor = cursor
-    client.send(message: message).then { r in
-      for record in r {
-        NSLog("Record handle %@ and score %d.", record.handle, record.score)
-      }
-    }.catch { err in
-      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-    }
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
-
-```gdscript tab="Godot"
-var leaderboard_id = "level1"
-var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id, null, null, 100), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-for r in result.records:
-	var record : NakamaAPI.ApiLeaderboardRecord = r
-	print("Record username %s and score %s" % [record.username, record.score])
-
-if result.next_cursor:
-	result = yield(client.list_leaderboard_records_async(session, leaderboard_id, null, null, 100, result.next_cursor), "completed")
+=== "Godot"
+	```gdscript
+	var leaderboard_id = "level1"
+	var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id), "completed")
 	if result.is_exception():
 		print("An error occured: %s" % result)
 		return
 	for r in result.records:
 		var record : NakamaAPI.ApiLeaderboardRecord = r
 		print("Record username %s and score %s" % [record.username, record.score])
-```
+	```
 
-```tab="REST"
-GET /v2/leaderboard/<leaderboardId>?cursor=<next_cursor>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+
+=== "REST"
+    ```
+	GET /v2/leaderboard/<leaderboardId>
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
+
+You can fetch the next set of results with a cursor.
+
+=== "cURL"
+	```sh
+	curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?cursor=<next_cursor>" \
+	  -H 'Authorization: Bearer <session token>'
+	```
+
+=== "Javascript"
+	```js
+	var leaderboardId = "level1";
+
+	var result = await client.listLeaderboardRecords(session, leaderboardId);
+	result.records.forEach(function(record) {
+	  console.log("Record username %o and score %o", record.username, record.score);
+	});
+
+	// If there are more results get next page.
+	if (result.next_cursor) {
+	  result = await client.listLeaderboardRecords(session, leaderboardId, null, null, result.next_cursor);
+	  result.records.forEach(function(record) {
+	    console.log("Record username %o and score %o", record.username, record.score);
+	  });
+	}
+	```
+
+=== ".NET"
+	```csharp
+	const string leaderboardId = "level1";
+	var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
+	foreach (var r in result.Records)
+	{
+	    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+	}
+	// If there are more results get next page.
+	if (result.NextCursor != null)
+	{
+	    var c = result.NextCursor;
+	    result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, null, 100, c);
+	    foreach (var r in result.Records)
+	    {
+	        System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+	    }
+	}
+	```
+
+=== "Unity"
+	```csharp
+	const string leaderboardId = "level1";
+	var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId);
+	foreach (var r in result.Records)
+	{
+	    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+	}
+	// If there are more results get next page.
+	if (result.NextCursor != null)
+	{
+	    var c = result.NextCursor;
+	    result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, null, 100, c);
+	    foreach (var r in result.Records)
+	    {
+	        Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+	    }
+	}
+	```
+
+
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+	{
+	  for (auto& record : recordsList->records)
+	  {
+	    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+	  }
+
+	  if (!recordsList->nextCursor.empty())
+	  {
+	    auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
+	    {
+	      for (auto& record : recordsList->records)
+	      {
+	        CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+	      }
+	    };
+
+	    string leaderboardId = "level1";
+
+	    client->listLeaderboardRecords(session,
+	        leaderboardId,
+	        {},
+	        opt::nullopt,
+	        recordsList->nextCursor,
+	        successCallback
+	    );
+	  }
+	};
+
+	string leaderboardId = "level1";
+
+	client->listLeaderboardRecords(session,
+	  leaderboardId,
+	  {},
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
+
+=== "Cocos2d-x JS"
+	```js
+	var leaderboardId = "level1";
+	client.listLeaderboardRecords(session, leaderboardId)
+	  .then(function(result) {
+	      result.records.forEach(function(record) {
+	        cc.log("Record username", record.username, "and score", record.score);
+	      });
+
+	      // If there are more results get next page.
+	      if (result.next_cursor) {
+	        client.listLeaderboardRecords(session, leaderboardId, null, null, result.next_cursor)
+	          .then(function(result) {
+	              result.records.forEach(function(record) {
+	                cc.log("Record username", record.username, "and score", record.score);
+	              }
+	          });
+	      }
+	    },
+	    function(error) {
+	      cc.error("list leaderboard records failed:", JSON.stringify(error));
+	    });
+	```
+
+=== "C++"
+	```cpp
+	auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
+	{
+	  for (auto& record : recordsList->records)
+	  {
+	    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+	  }
+
+	  if (!recordsList->nextCursor.empty())
+	  {
+	    auto successCallback = [this](NLeaderboardRecordListPtr recordsList)
+	    {
+	      for (auto& record : recordsList->records)
+	      {
+	        std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+	      }
+	    };
+
+	    string leaderboardId = "level1";
+
+	    client->listLeaderboardRecords(session,
+	        leaderboardId,
+	        {},
+	        opt::nullopt,
+	        recordsList->nextCursor,
+	        successCallback
+	    );
+	  }
+	};
+
+	string leaderboardId = "level1";
+
+	client->listLeaderboardRecords(session,
+	  leaderboardId,
+	  {},
+	  opt::nullopt,
+	  opt::nullopt,
+	  successCallback
+	);
+	```
+
+=== "Java"
+	```java
+	final String leaderboard = "level1";
+	LeaderboardRecordList records = client.listLeaderboardRecords(session, leaderboard);
+	for (LeaderboardRecord record : records.getRecordsList()) {
+	  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
+	}
+
+	// If there are more results get next page.
+	if (records.getCursor() != null) {
+	  var c = result.NextCursor;
+	  records = client.listLeaderboardRecords(session, leaderboard, null, 100, records.getNextCursor());
+	  for (LeaderboardRecord record : records.getRecordsList()) {
+	    System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
+	  }
+	}
+	```
+
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let id = leaderboard.id //a Leaderboard ID.
+	var message = LeaderboardRecordsListMessage(leaderboardID: id)
+
+	client.send(message: message).then { records in
+	  if let cursor = records.cursor && records.count > 0 {
+	    message.cursor = cursor
+	    client.send(message: message).then { r in
+	      for record in r {
+	        NSLog("Record handle %@ and score %d.", record.handle, record.score)
+	      }
+	    }.catch { err in
+	      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	    }
+	  }
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
+
+=== "Godot"
+	```gdscript
+	var leaderboard_id = "level1"
+	var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id, null, null, 100), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	for r in result.records:
+		var record : NakamaAPI.ApiLeaderboardRecord = r
+		print("Record username %s and score %s" % [record.username, record.score])
+
+	if result.next_cursor:
+		result = yield(client.list_leaderboard_records_async(session, leaderboard_id, null, null, 100, result.next_cursor), "completed")
+		if result.is_exception():
+			print("An error occured: %s" % result)
+			return
+		for r in result.records:
+			var record : NakamaAPI.ApiLeaderboardRecord = r
+			print("Record username %s and score %s" % [record.username, record.score])
+	```
+
+=== "REST"
+    ```
+	GET /v2/leaderboard/<leaderboardId>?cursor=<next_cursor>
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 ### List by friends
 
 You can use a bunch of owner IDs to filter the records to only ones owned by those users. This can be used to retrieve only scores belonging to the user's friends.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends" \
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends" \
+	  -H 'Authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-var leaderboardId = "level1";
-var ownerIds = ["some", "friends", "user ids"];
-var result = await client.listLeaderboardRecords(session, leaderboardId, ownerIds);
-result.records.forEach(function(record) {
-  console.log("Record username %o and score %o", record.username, record.score);
-});
-```
+=== "Javascript"
+	```js
+	var leaderboardId = "level1";
+	var ownerIds = ["some", "friends", "user ids"];
+	var result = await client.listLeaderboardRecords(session, leaderboardId, ownerIds);
+	result.records.forEach(function(record) {
+	  console.log("Record username %o and score %o", record.username, record.score);
+	});
+	```
 
-```csharp tab=".NET"
-const string leaderboardId = "level1";
-var ownerIds = new[] {"some", "friends", "user ids"};
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
-foreach (var r in result.OwnerRecords)
-{
-    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
-}
-```
+=== ".NET"
+	```csharp
+	const string leaderboardId = "level1";
+	var ownerIds = new[] {"some", "friends", "user ids"};
+	var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
+	foreach (var r in result.OwnerRecords)
+	{
+	    System.Console.WriteLine("Record for '{0}' score '{1}'", r.Username, r.Score);
+	}
+	```
 
-```csharp tab="Unity"
-const string leaderboardId = "level1";
-var ownerIds = new[] {"some", "friends", "user ids"};
-var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
-foreach (var r in result.OwnerRecords)
-{
-    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
-}
-```
+=== "Unity"
+	```csharp
+	const string leaderboardId = "level1";
+	var ownerIds = new[] {"some", "friends", "user ids"};
+	var result = await client.ListLeaderboardRecordsAsync(session, leaderboardId, ownerIds);
+	foreach (var r in result.OwnerRecords)
+	{
+	    Debug.LogFormat("Record for '{0}' score '{1}'", r.Username, r.Score);
+	}
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NLeaderboardRecordListPtr recordsList)
-{
-  for (auto& record : recordsList->records)
-  {
-    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
-  }
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+	{
+	  for (auto& record : recordsList->records)
+	  {
+	    CCLOG("Record username %s and score %ld", record.username.c_str(), record.score);
+	  }
+	};
 
-vector<string> ownerIds = { "some", "friends", "user ids" };
+	vector<string> ownerIds = { "some", "friends", "user ids" };
 
-string leaderboardId = "level1";
+	string leaderboardId = "level1";
 
-client->listLeaderboardRecords(session,
-    leaderboardId,
-    ownerIds,
-    opt::nullopt,
-    opt::nullopt,
-    successCallback
-);
-```
+	client->listLeaderboardRecords(session,
+	    leaderboardId,
+	    ownerIds,
+	    opt::nullopt,
+	    opt::nullopt,
+	    successCallback
+	);
+	```
 
-```js tab="Cocos2d-x JS"
-var leaderboardId = "level1";
-var ownerIds = ["some", "friends", "user ids"];
-client.listLeaderboardRecords(session, leaderboardId, ownerIds)
-  .then(function(result) {
-      result.records.forEach(function(record) {
-        cc.log("Record username", record.username, "and score", record.score);
-      });
-    },
-    function(error) {
-      cc.error("list leaderboard records failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	var leaderboardId = "level1";
+	var ownerIds = ["some", "friends", "user ids"];
+	client.listLeaderboardRecords(session, leaderboardId, ownerIds)
+	  .then(function(result) {
+	      result.records.forEach(function(record) {
+	        cc.log("Record username", record.username, "and score", record.score);
+	      });
+	    },
+	    function(error) {
+	      cc.error("list leaderboard records failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NLeaderboardRecordListPtr recordsList)
-{
-  for (auto& record : recordsList->records)
-  {
-    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
-  }
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NLeaderboardRecordListPtr recordsList)
+	{
+	  for (auto& record : recordsList->records)
+	  {
+	    std::cout << "Record username " << record.username << " and score " << record.score << std::endl;
+	  }
+	};
 
-vector<string> ownerIds = { "some", "friends", "user ids" };
+	vector<string> ownerIds = { "some", "friends", "user ids" };
 
-string leaderboardId = "level1";
+	string leaderboardId = "level1";
 
-client->listLeaderboardRecords(session,
-    leaderboardId,
-    ownerIds,
-    opt::nullopt,
-    opt::nullopt,
-    successCallback
-);
-```
+	client->listLeaderboardRecords(session,
+	    leaderboardId,
+	    ownerIds,
+	    opt::nullopt,
+	    opt::nullopt,
+	    successCallback
+	);
+	```
 
-```java tab="Java"
-String leaderboard = "level1";
-String[] ownerIds = new String[] {"some", "friends", "user ids"};
-LeaderboardRecordList records = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
-for (LeaderboardRecord record : records.getRecordsList()) {
-  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
-}
-```
+=== "Java"
+	```java
+	String leaderboard = "level1";
+	String[] ownerIds = new String[] {"some", "friends", "user ids"};
+	LeaderboardRecordList records = await client.ListLeaderboardRecordsAsync(session, leaderboard, ownerIds);
+	for (LeaderboardRecord record : records.getRecordsList()) {
+	  System.out.format("Record for %s score %d", record.getUsername(), record.getScore());
+	}
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = leaderboard.id // a Leaderboard ID.
-let ownerIds : [String] = []
-ownersIds.append(user.id) // a user ID
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let id = leaderboard.id // a Leaderboard ID.
+	let ownerIds : [String] = []
+	ownersIds.append(user.id) // a user ID
 
-var message = LeaderboardRecordsListMessage(leaderboardID: id)
-message.filterByOwnerIds = ownerIds
-client.send(message: message).then { records in
-  for record in records {
-    NSLog("Record handle %@ and score %d.", record.handle, record.score)
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+	var message = LeaderboardRecordsListMessage(leaderboardID: id)
+	message.filterByOwnerIds = ownerIds
+	client.send(message: message).then { records in
+	  for record in records {
+	    NSLog("Record handle %@ and score %d.", record.handle, record.score)
+	  }
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var leaderboard_id = "level1"
-var owner_ids = ["some", "friend", "user id"]
-var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id, owner_ids), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-for r in result.records:
-	var record : NakamaAPI.ApiLeaderboardRecord = r
-	print("Record username %s and score %s" % [record.username, record.score])
-```
+=== "Godot"
+	```gdscript
+	var leaderboard_id = "level1"
+	var owner_ids = ["some", "friend", "user id"]
+	var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_async(session, leaderboard_id, owner_ids), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	for r in result.records:
+		var record : NakamaAPI.ApiLeaderboardRecord = r
+		print("Record username %s and score %s" % [record.username, record.score])
+	```
 
-```tab="REST"
-GET /v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	GET /v2/leaderboard/<leaderboardId>?owner_ids=some&owner_ids=friends
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 ## List leaderboard records around owner
 
 Fetch the list of leaderboard records around the owner.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>"
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X GET "http://127.0.0.1:7350/v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>"
+	  -H 'Authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-var id = "someid";
-var ownerId = "some user ID";
-var limit = 100;
-var result = await client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit);
-```
+=== "Javascript"
+	```js
+	var id = "someid";
+	var ownerId = "some user ID";
+	var limit = 100;
+	var result = await client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit);
+	```
 
-```csharp tab=".NET"
-var leaderboardId = "someid";
-var ownerId = session.UserId;
-var limit = 100;
-var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
-```
+=== ".NET"
+	```csharp
+	var leaderboardId = "someid";
+	var ownerId = session.UserId;
+	var limit = 100;
+	var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
+	```
 
-```csharp tab="Unity"
-var leaderboardId = "someid";
-var ownerId = session.UserId;
-var limit = 100;
-var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
-```
+=== "Unity"
+	```csharp
+	var leaderboardId = "someid";
+	var ownerId = session.UserId;
+	var limit = 100;
+	var result = await client.ListLeaderboardRecordsAroundOwnerAsync(session, leaderboardId, ownerId, limit);
+	```
 
-```cpp tab="Cocos2d-x C++"
-string leaderboardId = "level1";
-string ownerId = "some user ID";
-int32_t limit = 100;
-client->listLeaderboardRecordsAroundOwner(session,
-      leaderboardId,
-      ownerId,
-      limit,
-      successCallback
-  );
-```
+=== "Cocos2d-x C++"
+	```cpp
+	string leaderboardId = "level1";
+	string ownerId = "some user ID";
+	int32_t limit = 100;
+	client->listLeaderboardRecordsAroundOwner(session,
+	      leaderboardId,
+	      ownerId,
+	      limit,
+	      successCallback
+	  );
+	```
 
-```js tab="Cocos2d-x JS"
-var id = "someid";
-var ownerId = "some user ID";
-var limit = 100;
-client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit)
-  .then(...);
-```
+=== "Cocos2d-x JS"
+	```js
+	var id = "someid";
+	var ownerId = "some user ID";
+	var limit = 100;
+	client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit)
+	  .then(...);
+	```
 
-```cpp tab="C++"
-string leaderboardId = "level1";
-string ownerId = "some user ID";
-int32_t limit = 100;
-client->listLeaderboardRecordsAroundOwner(session,
-      leaderboardId,
-      ownerId,
-      limit,
-      successCallback
-  );
-```
+=== "C++"
+	```cpp
+	string leaderboardId = "level1";
+	string ownerId = "some user ID";
+	int32_t limit = 100;
+	client->listLeaderboardRecordsAroundOwner(session,
+	      leaderboardId,
+	      ownerId,
+	      limit,
+	      successCallback
+	  );
+	```
 
-```java tab="Java"
-String id = "someid";
-String ownerId = session.getUserId();
-int limit = 100;
-LeaderboardRecordList records = client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit).get();
-```
+=== "Java"
+	```java
+	String id = "someid";
+	String ownerId = session.getUserId();
+	int limit = 100;
+	LeaderboardRecordList records = client.listLeaderboardRecordsAroundOwner(session, id, ownerId, limit).get();
+	```
 
-```swift tab="Swift"
-// Will be made available soon.
-```
+=== "Swift"
+	```swift
+	// Will be made available soon.
+	```
 
-```gdscript tab="Godot"
-var leaderboard_id = "level1"
-var owner_id = "user id"
-var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_around_owner_async(session, leaderboard_id, owner_id), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-for r in result.records:
-	var record : NakamaAPI.ApiLeaderboardRecord = r
-	print("Record username %s and score %s" % [record.username, record.score])
-```
+=== "Godot"
+	```gdscript
+	var leaderboard_id = "level1"
+	var owner_id = "user id"
+	var result : NakamaAPI.ApiLeaderboardRecordList = yield(client.list_leaderboard_records_around_owner_async(session, leaderboard_id, owner_id), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	for r in result.records:
+		var record : NakamaAPI.ApiLeaderboardRecord = r
+		print("Record username %s and score %s" % [record.username, record.score])
+	```
 
-```tab="REST"
-GET /v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	GET /v2/leaderboard/<leaderboard_id>/owner/<owner_id>?limit=<limit>
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```

@@ -79,27 +79,28 @@ If your app is in production, you'll need to set the value of `purchase.apple.pr
 
 Nakama only supports validating iOS 7+ receipts. In addition, Nakama only validates the first item in the receipt as Apple receipts can contain more than one in-app purchase item.
 
-```csharp tab="Unity"
-var productId = "com.yourcompany.product";
-var receiptData = "...some-base64-encoded-data...";
-
-var message = NPurchaseValidateMessage.Apple(productId, receiptData);
-client.Send(message, (INPurchaseRecord record) =>
-{
-  if (!record.Success) {
-    Debug.Log("Purchase was not validation. Reason: {0}.", record.Message);
-  } else {
-    if (record.SeenBefore) {
-      // This is useful for recovering previous purchases
-      Debug.Log("This is a valid purchase but the purchase item was redeemed once before.");
-    } else {
-      Debug.Log("New purchase was validated");
-    }
-  }
-}, (INError e) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-```
+=== "Unity"
+	```csharp
+	var productId = "com.yourcompany.product";
+	var receiptData = "...some-base64-encoded-data...";
+	
+	var message = NPurchaseValidateMessage.Apple(productId, receiptData);
+	client.Send(message, (INPurchaseRecord record) =>
+	{
+	  if (!record.Success) {
+	    Debug.Log("Purchase was not validation. Reason: {0}.", record.Message);
+	  } else {
+	    if (record.SeenBefore) {
+	      // This is useful for recovering previous purchases
+	      Debug.Log("This is a valid purchase but the purchase item was redeemed once before.");
+	    } else {
+	      Debug.Log("New purchase was validated");
+	    }
+	  }
+	}, (INError e) => {
+	  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+	});
+	```
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
@@ -148,28 +149,29 @@ Lastly, you'll need to update Nakama's configuration with the following informat
 
 ### Validate Purchase
 
-```csharp tab="Unity"
-var productId = "com.yourcompany.product";
-var purchaseType = "product";
-var purchaseToken = "some-token-from-google";
-
-var message = NPurchaseValidateMessage.Google(productId, purchaseType, purchaseToken);
-client.Send(message, (INPurchaseRecord record) =>
-{
-  if (!record.Success) {
-    Debug.Log("Purchase was not validation. Reason: {0}.", record.Message);
-  } else {
-    if (record.SeenBefore) {
-      // This is useful for recovering previous purchases
-      Debug.Log("This is a valid purchase but the purchase item was redeemed once before.");
-    } else {
-      Debug.Log("New purchase was validated");
-    }
-  }
-}, (INError e) => {
-  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-});
-```
+=== "Unity"
+	```csharp
+	var productId = "com.yourcompany.product";
+	var purchaseType = "product";
+	var purchaseToken = "some-token-from-google";
+	
+	var message = NPurchaseValidateMessage.Google(productId, purchaseType, purchaseToken);
+	client.Send(message, (INPurchaseRecord record) =>
+	{
+	  if (!record.Success) {
+	    Debug.Log("Purchase was not validation. Reason: {0}.", record.Message);
+	  } else {
+	    if (record.SeenBefore) {
+	      // This is useful for recovering previous purchases
+	      Debug.Log("This is a valid purchase but the purchase item was redeemed once before.");
+	    } else {
+	      Debug.Log("New purchase was validated");
+	    }
+	  }
+	}, (INError e) => {
+	  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
+	});
+	```
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
