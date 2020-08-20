@@ -1,5 +1,5 @@
 steps:
-- name: 'squidfunk/mkdocs-material:5.3.0'
+- name: 'squidfunk/mkdocs-material:5.5.6'
   entrypoint: sh
   args: ['-c', 'mkdocs build -v']
 - name: gcr.io/cloud-builders/gsutil
