@@ -308,7 +308,7 @@ The simple code above writes a record to a user's storage when they add a friend
 
 ### RPC hook
 
-Some logic between client and server is best handled as RPC functions which clients can execute.
+Some logic between client and server is best handled as RPC functions which clients can execute. For this purpose Nakama supports the registration of custom RPC hooks.
 
 === "Lua"
 	```lua
@@ -356,7 +356,7 @@ The code above registers a function with the identifier "custom_rpc_func_id". Th
 
 From Go runtime code, the result is returned as `(string, error)`. From Lua runtime code, results are always returned as a Lua string (or optionally `nil`).
 
-### Server to server
+#### Server to server
 
 Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook). However, this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
 
@@ -398,17 +398,30 @@ Sometimes it's useful to create HTTP REST handlers which can be used by web serv
 	}
 	```
 
-This function can be called with any HTTP client. For example, with cURL you could execute the function with the server.
-
 !!! Tip
     RPC functions can be called both from clients and through server to server calls. You can tell them apart by [checking if the context has a user ID](#register-hooks) - server to server calls will never have a user ID. If you want to scope functions to never be accessible from the client just return an error if you find a user ID in the context.
 
-	```shell
-	curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaulthttpkey" \
-	     -d '"{\"some\": \"data\"}"' \
-	     -H 'Content-Type: application/json' \
-	     -H 'Accept: application/json'
-	```
+The registered RPC Functions can be invoked with any HTTP client of your choice. For example, with cURL you could execute the function with the server as follows.
+
+=== "Bash"
+    ```shell
+    curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaulthttpkey" \
+            -d '"{\"some\": \"data\"}"' \
+            -H 'Content-Type: application/json' \
+            -H 'Accept: application/json'
+    ```
+
+Notice that the JSON payload is escaped and wrapped inside a string. This is by design due to gRPC not having a type that would map between a Protobuf type and a JSON object at the time the RPC API was designed. Support for JSON has since been added to gRPC but we have kept it this way to not break the API contract and ensure compatibility.
+
+Since Nakama v.2.7.0 an `unwrap` query parameter is supported which allows to invoke RPC functions with raw JSON data in the payload. An example is provided below.
+
+=== "Bash"
+    ```shell
+    curl "http://127.0.0.1:7350/v2/rpc/http_handler_path?http_key=defaulthttpkey&unwrap" \
+            -d '{"some": "data"}' \
+            -H 'Content-Type: application/json' \
+            -H 'Accept: application/json'
+    ```
 
 !!! Warning "HTTP key"
     You should change the default HTTP key before you deploy your code in production.
