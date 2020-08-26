@@ -1466,7 +1466,7 @@ Send one in-app notification to a user. Have a look at the section on [in-app no
 _Parameters_
 
 | Param | Go type | Lua type | Description |
-| ----- | ---- | ----------- |
+| ----- | ---- | ----------- | ----------- |
 | ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information | | subject | `string` | string | Notification subject. Must be set. |
 | content | `map[string]interface{}` | table | Notification content. Must be set but can be an empty table. |
 | code | `int` | number | Notification code to use. Must be equal or greater than 0. |
@@ -2295,7 +2295,7 @@ max_size = 10000     -- First 10,000 players who join.
 max_num_score = 3    -- Each player can have 3 attempts to score.
 join_required = true -- Must join to compete.
 nk.tournament_create(id, sort, operator, duration, reset, metadata, title, description,
-    category, start_time, endTime, max_size, max_num_score, join_required)
+    category, start_time, end_time, max_size, max_num_score, join_required)
 ```
 
 ```go tab="Go"
