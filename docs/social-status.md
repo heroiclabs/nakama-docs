@@ -77,7 +77,7 @@ If the user needs to appear offline or "invisible" they can do so by erasing the
 	await socket.UpdateStatusAsync(null);
 	```
 
-=== Cocos2d-x C++"
+=== "Cocos2d-x C++"
 	```cpp
 	rtClient->updateStatus("");
 	```
