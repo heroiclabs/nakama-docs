@@ -18,79 +18,90 @@ A user can add one or more friends by that user's ID or username. The user added
 
 When a friend request is sent or the user is added an in-app notification will be sent. See the [in-app notification](social-in-app-notifications.md#receive-notifications) section for more info.
 
-```sh tab="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X POST "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
+	  -H 'Authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-var ids = ["user-id1", "user-id2"];
-var usernames = ["username1"];
-await client.addFriends(session, ids, usernames);
-```
+=== "JavaScript"
+	```js
+	var ids = ["user-id1", "user-id2"];
+	var usernames = ["username1"];
+	await client.addFriends(session, ids, usernames);
+	```
 
-```csharp tab=".NET"
-var ids = new[] {"user-id1", "user-id2"};
-var usernames = new[] {"username1"};
-await client.AddFriendsAsync(session, ids, usernames);
-```
+=== ".NET"
+	```csharp
+	var ids = new[] {"user-id1", "user-id2"};
+	var usernames = new[] {"username1"};
+	await client.AddFriendsAsync(session, ids, usernames);
+	```
 
-```csharp tab="Unity"
-var ids = new[] {"user-id1", "user-id2"};
-var usernames = new[] {"username1"};
-await client.AddFriendsAsync(session, ids, usernames);
-```
+=== "Unity"
+	```csharp
+	var ids = new[] {"user-id1", "user-id2"};
+	var usernames = new[] {"username1"};
+	await client.AddFriendsAsync(session, ids, usernames);
+	```
 
-```cpp tab="Cocos2d-x C++"
-vector<string> ids = { "user-id1", "user-id2" };
-vector<string> usernames = { "username1" };
-client->addFriends(session, ids, usernames);
-```
+=== "Cocos2d-x C++"
+	```cpp
+	vector<string> ids = { "user-id1", "user-id2" };
+	vector<string> usernames = { "username1" };
+	client->addFriends(session, ids, usernames);
+	```
 
-```js tab="Cocos2d-x JS"
-var ids = ["user-id1", "user-id2"];
-var usernames = ["username1"];
-client.addFriends(session, ids, usernames);
-```
+=== "Cocos2d-x JS"
+	```js
+	var ids = ["user-id1", "user-id2"];
+	var usernames = ["username1"];
+	client.addFriends(session, ids, usernames);
+	```
 
-```cpp tab="C++"
-vector<string> ids = { "user-id1", "user-id2" };
-vector<string> usernames = { "username1" };
-client->addFriends(session, ids, usernames);
-```
+=== "C++"
+	```cpp
+	vector<string> ids = { "user-id1", "user-id2" };
+	vector<string> usernames = { "username1" };
+	client->addFriends(session, ids, usernames);
+	```
 
-```java tab="Java"
-List<String> ids = Arrays.asList("user-id1", "user-id2");
-String[] usernames = new String[] {"username1"};
-client.addFriends(session, ids, usernames).get();
-```
+=== "Java"
+	```java
+	List<String> ids = Arrays.asList("user-id1", "user-id2");
+	String[] usernames = new String[] {"username1"};
+	client.addFriends(session, ids, usernames).get();
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let userID = ... // some user ID
-var message = FriendAddMessage()
-message.userIds.append(userID)
-client.send(message: message).catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let userID = ... // some user ID
+	var message = FriendAddMessage()
+	message.userIds.append(userID)
+	client.send(message: message).catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var ids = ["user-id1", "user-id2"]
-var usernames = ["username1"]
-var result : NakamaAsyncResult = yield(client.add_friends_async(session, ids, usernames), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-```
+=== "Godot"
+	```gdscript
+	var ids = ["user-id1", "user-id2"]
+	var usernames = ["username1"]
+	var result : NakamaAsyncResult = yield(client.add_friends_async(session, ids, usernames), "completed")
+	if result.is_exception():
+		print("An error occured: %s" % result)
+		return
+	```
 
-```tab="REST"
-POST /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	POST /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](social-realtime-chat.md) section for more info.
 
@@ -98,97 +109,108 @@ When both users have added eachother as friends it's easy to initiate realtime c
 
 You can list all of a user's friends, blocked users, friend requests received (invited), and invites they've sent. These statuses are returned together as part of the friend list which makes it easy to display in a UI.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/friend" \
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X GET "http://127.0.0.1:7350/v2/friend" \
+	  -H 'Authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-const friends = await client.listFriends(session);
-console.info("Successfully retrieved friend list:", friends);
-```
+=== "JavaScript"
+	```js
+	const friends = await client.listFriends(session);
+	console.info("Successfully retrieved friend list:", friends);
+	```
 
-```csharp tab=".NET"
-var result = await client.ListFriendsAsync(session);
-foreach (var f in result.Friends)
-{
-    System.Console.WriteLine("Friend '{0}' state '{1}'", f.User.Username, f.State);
-}
-```
+=== ".NET"
+	```csharp
+	var result = await client.ListFriendsAsync(session);
+	foreach (var f in result.Friends)
+	{
+	    System.Console.WriteLine("Friend '{0}' state '{1}'", f.User.Username, f.State);
+	}
+	```
 
-```csharp tab="Unity"
-var result = await client.ListFriendsAsync(session);
-foreach (var f in result.Friends)
-{
-    Debug.LogFormat("Friend '{0}' state '{1}'", f.User.Username, f.State);
-}
-```
+=== "Unity"
+	```csharp
+	var result = await client.ListFriendsAsync(session);
+	foreach (var f in result.Friends)
+	{
+	    Debug.LogFormat("Friend '{0}' state '{1}'", f.User.Username, f.State);
+	}
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NFriendsPtr friends)
-{
-  CCLOG("Successfully retrieved friend list: %u", friends->friends.size());
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NFriendsPtr friends)
+	{
+	  CCLOG("Successfully retrieved friend list: %u", friends->friends.size());
+	};
 
-client->listFriends(session, {}, {}, {}, successCallback);
-```
+	client->listFriends(session, {}, {}, {}, successCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-client.listFriends(session)
-  .then(function(friends) {
-      cc.log("Successfully retrieved friend list:", JSON.stringify(friends));
-    },
-    function(error) {
-      cc.error("list friends failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	client.listFriends(session)
+	  .then(function(friends) {
+	      cc.log("Successfully retrieved friend list:", JSON.stringify(friends));
+	    },
+	    function(error) {
+	      cc.error("list friends failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NFriendsPtr friends)
-{
-  std::cout << "Successfully retrieved friend list: " << friends->friends.size() << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NFriendsPtr friends)
+	{
+	  std::cout << "Successfully retrieved friend list: " << friends->friends.size() << std::endl;
+	};
 
-client->listFriends(session, {}, {}, {}, successCallback);
-```
+	client->listFriends(session, {}, {}, {}, successCallback);
+	```
 
-```java tab="Java"
-Friends friends = client.listFriends(session).get();
-for (Friend friend : friends.getFriendsList()) {
-  System.out.format("Friend %s state %d", friend.getUser().getUsername(), friend.getState());
-}
-```
+=== "Java"
+	```java
+	Friends friends = client.listFriends(session).get();
+	for (Friend friend : friends.getFriendsList()) {
+	  System.out.format("Friend %s state %d", friend.getUser().getUsername(), friend.getState());
+	}
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-var message = FriendListMessage()
-client.send(message: message).then { friends in
-  for friend in friends {
-    // friend.State is one of: Friend, Invite, Invited, Blocked.
-    NSLog("User %@ has state %@.", friend.id, friend.state.rawValue)
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	var message = FriendListMessage()
+	client.send(message: message).then { friends in
+	  for friend in friends {
+	    // friend.State is one of: Friend, Invite, Invited, Blocked.
+	    NSLog("User %@ has state %@.", friend.id, friend.state.rawValue)
+	  }
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var list : NakamaAPI.ApiFriendList = yield(client.list_friends_async(session), "completed")
-if list.is_exception():
-	print("An error occured: %s" % list)
-	return
-for f in list.friends:
-	var friend = f as NakamaAPI.ApiFriend
-	print("User %s, status %s" % [friend.user.id, friend.state])
-```
+=== "Godot"
+	```gdscript
+	var list : NakamaAPI.ApiFriendList = yield(client.list_friends_async(session), "completed")
+	if list.is_exception():
+		print("An error occured: %s" % list)
+		return
+	for f in list.friends:
+		var friend = f as NakamaAPI.ApiFriend
+		print("User %s, status %s" % [friend.user.id, friend.state])
+	```
 
-```tab="REST"
-GET /v2/friend
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	GET /v2/friend
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 ## Remove friends
 
@@ -197,82 +219,93 @@ A user can remove a friend, reject a received invite, cancel a friend request se
 !!! Note
     If a user is unblocked they are removed from the friend list entirely. To re-add them each user must add the other again.
 
-```sh tab="cURL"
-curl -X DELETE "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X DELETE "http://127.0.0.1:7350/v2/friend?ids=user-id1&ids=user-id2&usernames=username1" \
+	  -H 'Authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-var ids = ["user-id1", "user-id2"];
-var usernames = ["username1"];
-await client.deleteFriends(session, ids, usernames);
-```
+=== "JavaScript"
+	```js
+	var ids = ["user-id1", "user-id2"];
+	var usernames = ["username1"];
+	await client.deleteFriends(session, ids, usernames);
+	```
 
-```csharp tab=".NET"
-var ids = new[] {"user-id1", "user-id2"};
-var usernames = new[] {"username1"};
-await client.DeleteFriendsAsync(session, ids, usernames);
-```
+=== ".NET"
+	```csharp
+	var ids = new[] {"user-id1", "user-id2"};
+	var usernames = new[] {"username1"};
+	await client.DeleteFriendsAsync(session, ids, usernames);
+	```
 
-```csharp tab="Unity"
-var ids = new[] {"user-id1", "user-id2"};
-var usernames = new[] {"username1"};
-await client.DeleteFriendsAsync(session, ids, usernames);
-```
+=== "Unity"
+	```csharp
+	var ids = new[] {"user-id1", "user-id2"};
+	var usernames = new[] {"username1"};
+	await client.DeleteFriendsAsync(session, ids, usernames);
+	```
 
-```cpp tab="Cocos2d-x C++"
-vector<string> ids = { "user-id1", "user-id2" };
-vector<string> usernames = { "username1" };
-client->deleteFriends(session, ids, usernames);
-```
+=== "Cocos2d-x C++"
+	```cpp
+	vector<string> ids = { "user-id1", "user-id2" };
+	vector<string> usernames = { "username1" };
+	client->deleteFriends(session, ids, usernames);
+	```
 
-```js tab="Cocos2d-x JS"
-var ids = ["user-id1", "user-id2"];
-var usernames = ["username1"];
-client.deleteFriends(session, ids, usernames);
-```
+=== "Cocos2d-x JS"
+	```js
+	var ids = ["user-id1", "user-id2"];
+	var usernames = ["username1"];
+	client.deleteFriends(session, ids, usernames);
+	```
 
-```cpp tab="C++"
-vector<string> ids = { "user-id1", "user-id2" };
-vector<string> usernames = { "username1" };
-client->deleteFriends(session, ids, usernames);
-```
+=== "C++"
+	```cpp
+	vector<string> ids = { "user-id1", "user-id2" };
+	vector<string> usernames = { "username1" };
+	client->deleteFriends(session, ids, usernames);
+	```
 
-```java tab="Java"
-List<String> ids = Arrays.asList("user-id1", "user-id2");
-String[] usernames = new String[] {"username1"};
-client.deleteFriends(session, ids, usernames).get();
-```
+=== "Java"
+	```java
+	List<String> ids = Arrays.asList("user-id1", "user-id2");
+	String[] usernames = new String[] {"username1"};
+	client.deleteFriends(session, ids, usernames).get();
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let userID = ... // some user ID
-var message = FriendRemoveMessage()
-message.userIds.append(userID)
-client.send(message: message).then { _ in
-  NSLog("User %@ has been removed", userID)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let userID = ... // some user ID
+	var message = FriendRemoveMessage()
+	message.userIds.append(userID)
+	client.send(message: message).then { _ in
+	  NSLog("User %@ has been removed", userID)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var ids = ["user-id1", "user-id2"]
-var usernames = ["username1"]
-var remove : NakamaAsyncResult = yield(client.delete_friends_async(session, ids, usernames), "completed")
-if remove.is_exception():
-	print("An error occured: %s" % remove)
-	return
-print("Remove friends: user ids %s, usernames %s" % [ids, usernames])
-```
+=== "Godot"
+	```gdscript
+	var ids = ["user-id1", "user-id2"]
+	var usernames = ["username1"]
+	var remove : NakamaAsyncResult = yield(client.delete_friends_async(session, ids, usernames), "completed")
+	if remove.is_exception():
+		print("An error occured: %s" % remove)
+		return
+	print("Remove friends: user ids %s, usernames %s" % [ids, usernames])
+	```
 
-```tab="REST"
-DELETE /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	DELETE /v2/friend?ids=user-id1&ids=user-id2&usernames=username1
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 ## Block a friend
 
@@ -280,82 +313,93 @@ You can stop a user from using 1-on-1 chat or other social features with a user 
 
 A user who has been blocked will not know which users have blocked them. That user can continue to add friends and interact with other users.
 
-```sh tab="cURL"
-curl -X POST "http://127.0.0.1:7350/v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1" \
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+	```sh
+	curl -X POST "http://127.0.0.1:7350/v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1" \
+	  -H 'Authorization: Bearer <session token>'
+	```
 
-```js tab="JavaScript"
-var ids = ["user-id1", "user-id2"];
-var usernames = ["username1"];
-await client.blockFriends(session, ids, usernames);
-```
+=== "JavaScript"
+	```js
+	var ids = ["user-id1", "user-id2"];
+	var usernames = ["username1"];
+	await client.blockFriends(session, ids, usernames);
+	```
 
-```csharp tab=".NET"
-var ids = new[] {"user-id1", "user-id2"};
-var usernames = new[] {"username1"};
-await client.BlockFriendsAsync(session, ids, usernames);
-```
+=== ".NET"
+	```csharp
+	var ids = new[] {"user-id1", "user-id2"};
+	var usernames = new[] {"username1"};
+	await client.BlockFriendsAsync(session, ids, usernames);
+	```
 
-```csharp tab="Unity"
-var ids = new[] {"user-id1", "user-id2"};
-var usernames = new[] {"username1"};
-await client.BlockFriendsAsync(session, ids, usernames);
-```
+=== "Unity"
+	```csharp
+	var ids = new[] {"user-id1", "user-id2"};
+	var usernames = new[] {"username1"};
+	await client.BlockFriendsAsync(session, ids, usernames);
+	```
 
-```cpp tab="Cocos2d-x C++"
-vector<string> ids = { "user-id1", "user-id2" };
-vector<string> usernames = { "username1" };
-client->blockFriends(session, ids, usernames);
-```
+=== "Cocos2d-x C++"
+	```cpp
+	vector<string> ids = { "user-id1", "user-id2" };
+	vector<string> usernames = { "username1" };
+	client->blockFriends(session, ids, usernames);
+	```
 
-```js tab="Cocos2d-x JS"
-var ids = ["user-id1", "user-id2"];
-var usernames = ["username1"];
-client.blockFriends(session, ids, usernames);
-```
+=== "Cocos2d-x JS"
+	```js
+	var ids = ["user-id1", "user-id2"];
+	var usernames = ["username1"];
+	client.blockFriends(session, ids, usernames);
+	```
 
-```cpp tab="C++"
-vector<string> ids = { "user-id1", "user-id2" };
-vector<string> usernames = { "username1" };
-client->blockFriends(session, ids, usernames);
-```
+=== "C++"
+	```cpp
+	vector<string> ids = { "user-id1", "user-id2" };
+	vector<string> usernames = { "username1" };
+	client->blockFriends(session, ids, usernames);
+	```
 
-```java tab="Java"
-List<String> ids = Arrays.asList("user-id1", "user-id2");
-String[] usernames = new String[] {"username1"};
-client.blockFriends(session, ids, usernames).get();
-```
+=== "Java"
+	```java
+	List<String> ids = Arrays.asList("user-id1", "user-id2");
+	String[] usernames = new String[] {"username1"};
+	client.blockFriends(session, ids, usernames).get();
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let userID = ... // some user ID
-var message = FriendBlockMessage()
-message.userIds.append(userID)
-client.send(message: message).then { _ in
-  NSLog("User %@ has been blocked", userID)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let userID = ... // some user ID
+	var message = FriendBlockMessage()
+	message.userIds.append(userID)
+	client.send(message: message).then { _ in
+	  NSLog("User %@ has been blocked", userID)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var ids = ["user-id1", "user-id2"]
-var usernames = ["username1"]
-var block : NakamaAsyncResult = yield(client.block_friends_async(session, ids, usernames), "completed")
-if block.is_exception():
-	print("An error occured: %s" % block)
-	return
-print("Remove friends: user ids %s, usernames %s" % [ids, usernames])
-```
+=== "Godot"
+	```gdscript
+	var ids = ["user-id1", "user-id2"]
+	var usernames = ["username1"]
+	var block : NakamaAsyncResult = yield(client.block_friends_async(session, ids, usernames), "completed")
+	if block.is_exception():
+		print("An error occured: %s" % block)
+		return
+	print("Remove friends: user ids %s, usernames %s" % [ids, usernames])
+	```
 
-```tab="REST"
-POST /v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+	POST /v2/friend/block?ids=user-id1&ids=user-id2&usernames=username1
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 ### Ban a user
 
@@ -365,24 +409,26 @@ This is best used by a moderator system within your community. You could assign 
 
 See the [runtime code basics](runtime-code-basics.md) on how to write server-side code.
 
-```lua tab="Lua"
-local nk = require("nakama")
+=== "Lua"
+	```lua
+	local nk = require("nakama")
 
-local bad_users = {"someuserid", "anotheruserid"}
-local success, err = pcall(nk.users_ban_id, bad_users)
-if (not success) then
-  nk.logger_error(("Ban failed: %q"):format(err))
-end
-```
+	local bad_users = {"someuserid", "anotheruserid"}
+	local success, err = pcall(nk.users_ban_id, bad_users)
+	if (not success) then
+	  nk.logger_error(("Ban failed: %q"):format(err))
+	end
+	```
 
-```go tab="Go"
-if err := nk.UsersBanId(ctx, []string{
-	"someruserid",
-	"anotheruserid",
-}); err != nil {
-	logger.Error("Ban failed: %s", err.Error())
-}
-```
+=== "Go"
+	```go
+	if err := nk.UsersBanId(ctx, []string{
+		"someruserid",
+		"anotheruserid",
+	}); err != nil {
+		logger.Error("Ban failed: %s", err.Error())
+	}
+	```
 
 ## Friend state
 

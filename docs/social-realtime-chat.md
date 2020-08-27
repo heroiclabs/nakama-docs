@@ -30,149 +30,167 @@ Users can opt to hide their channel presence when connecting, so they will not g
 
 A user joins a chat channel to start receiving messages in realtime. Each new message is received by an event handler and can be added to your UI. Messages are delivered in the order they are handled by the server.
 
-```js tab="JavaScript"
-socket.onchannelmessage = (message) => {
-  console.log("Received a message on channel: %o", message.channel_id);
-  console.log("Message content: %o", message.content);
-};
-```
+=== "JavaScript"
+    ```js
+    socket.onchannelmessage = (message) => {
+      console.log("Received a message on channel: %o", message.channel_id);
+      console.log("Message content: %o", message.content);
+    };
+    ```
 
-```csharp tab=".NET"
-socket.ReceivedChannelMessage += message =>
-{
-    Console.WriteLine("Received: {0}", message);
-    Console.WriteLine("Message has channel id: {0}", message.ChannelId);
-    Console.WriteLine("Message content: {0}", message.Content);
-};
-```
+=== ".NET"
+    ```csharp
+    socket.ReceivedChannelMessage += message =>
+    {
+        Console.WriteLine("Received: {0}", message);
+        Console.WriteLine("Message has channel id: {0}", message.ChannelId);
+        Console.WriteLine("Message content: {0}", message.Content);
+    };
+    ```
 
-```csharp tab="Unity"
-socket.ReceivedChannelMessage += message =>
-{
-    Debug.LogFormat("Received: {0}", message);
-    Debug.LogFormat("Message has channel id: {0}", message.ChannelId);
-    Debug.LogFormat("Message content: {0}", message.Content);
-};
-```
+=== "Unity"
+    ```csharp
+    socket.ReceivedChannelMessage += message =>
+    {
+        Debug.LogFormat("Received: {0}", message);
+        Debug.LogFormat("Message has channel id: {0}", message.ChannelId);
+        Debug.LogFormat("Message content: {0}", message.Content);
+    };
+    ```
 
-```cpp tab="Cocos2d-x C++"
-rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
-{
-  // msg.content is JSON string
-  CCLOG("OnChannelMessage %s", msg.content.c_str());
-});
-```
+=== "Cocos2d-x C++"
+    ```cpp
+    rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
+    {
+      // msg.content is JSON string
+      CCLOG("OnChannelMessage %s", msg.content.c_str());
+    });
+    ```
 
-```js tab="Cocos2d-x JS"
-socket.onchannelmessage = (message) => {
-  cc.log("Received a message on channel:", message.channel_id);
-  cc.log("Message content:", JSON.stringify(message.content));
-};
-```
+=== "Cocos2d-x JS"
+    ```js
+    socket.onchannelmessage = (message) => {
+      cc.log("Received a message on channel:", message.channel_id);
+      cc.log("Message content:", JSON.stringify(message.content));
+    };
+    ```
 
-```cpp tab="C++"
-rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
-{
-  // msg.content is JSON string
-  std::cout << "OnChannelMessage " << msg.content << std::cout;
-});
-```
+=== "C++"
+    ```cpp
+    rtListener->setChannelMessageCallback([](const NChannelMessage& msg)
+    {
+      // msg.content is JSON string
+      std::cout << "OnChannelMessage " << msg.content << std::cout;
+    });
+    ```
 
-```java tab="Java"
-SocketListener listener = new AbstractSocketListener() {
-  @Override
-  public void onChannelMessage(final ChannelMessage message) {
-    System.out.format("Received a message on channel %s", message.getChannelId());
-    System.out.format("Message content: %s", message.getContent());
-  }
-};
-```
+=== "Java"
+    ```java
+    SocketListener listener = new AbstractSocketListener() {
+      @Override
+      public void onChannelMessage(final ChannelMessage message) {
+        System.out.format("Received a message on channel %s", message.getChannelId());
+        System.out.format("Message content: %s", message.getContent());
+      }
+    };
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-client.onTopicMessage = { message in
-  // Topic will be one of DirectMessage, Room, or Group.
-  NSLog("Received a %@ message", message.topic.description)
-  NSLog("Message content: %@", message.data)
-}
-```
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    client.onTopicMessage = { message in
+      // Topic will be one of DirectMessage, Room, or Group.
+      NSLog("Received a %@ message", message.topic.description)
+      NSLog("Message content: %@", message.data)
+    }
+    ```
 
-```gdscript tab="Godot"
-func _ready():
-	# First, setup the socket as explained in the authentication section.
-	socket.connect("received_channel_message", self, "_on_channel_message")
+=== "Godot"
+    ```gdscript
+    func _ready():
+      # First, setup the socket as explained in the authentication section.
+      socket.connect("received_channel_message", self, "_on_channel_message")
 
-func  _on_channel_message(p_message : NakamaAPI.ApiChannelMessage):
-	print(p_message)
-	print("Received a message on channel: %s" % [p_message.channel_id])
-	print("Message content: %s" % [p_message.content])
-```
+    func  _on_channel_message(p_message : NakamaAPI.ApiChannelMessage):
+      print(p_message)
+      print("Received a message on channel: %s" % [p_message.channel_id])
+      print("Message content: %s" % [p_message.content])
+    ```
 
 In group chat a user will receive other messages from the server. These messages contain events on users who join or leave the group, when someone is promoted as an admin, etc. You may want users to see these messages in the chat stream or ignore them in the UI.
 
 You can identify event messages from chat messages by the message "Type".
 
-```js tab="JavaScript"
-if (message.code != 0) {
-  console.log("Received message with code:", message.code);
-}
-```
+=== "JavaScript"
+    ```js
+    if (message.code != 0) {
+      console.log("Received message with code:", message.code);
+    }
+    ```
 
-```csharp tab=".NET"
-if (message.Code != 0)
-{
-  Console.WriteLine("Received message with code '{0}'", message.Code);
-}
-```
+=== ".NET"
+    ```csharp
+    if (message.Code != 0)
+    {
+      Console.WriteLine("Received message with code '{0}'", message.Code);
+    }
+    ```
 
-```csharp tab="Unity"
-if (message.Code != 0)
-{
-  Debug.LogFormat("Received message with code '{0}'", message.Code);
-}
-```
+=== "Unity"
+    ```csharp
+    if (message.Code != 0)
+    {
+      Debug.LogFormat("Received message with code '{0}'", message.Code);
+    }
+    ```
 
-```cpp tab="Cocos2d-x C++"
-if (msg.code != 0)
-{
-  CCLOG("Received message with code: %d", msg.code);
-}
-```
+=== "Cocos2d-x C++"
+    ```cpp
+    if (msg.code != 0)
+    {
+      CCLOG("Received message with code: %d", msg.code);
+    }
+    ```
 
-```js tab="Cocos2d-x JS"
-if (message.code != 0) {
-  cc.log("Received message with code:", message.code);
-}
-```
+=== "Cocos2d-x JS"
+    ```js
+    if (message.code != 0) {
+      cc.log("Received message with code:", message.code);
+    }
+    ```
 
-```cpp tab="C++"
-if (msg.code != 0)
-{
-  std::cout << "Received message with code: " << msg.code << std::endl;
-}
-```
+=== "C++"
+    ```cpp
+    if (msg.code != 0)
+    {
+      std::cout << "Received message with code: " << msg.code << std::endl;
+    }
+    ```
 
-```java tab="Java"
-if (message.getCode() != 0) {
-  System.out.println("Received message with code %s", message.getCode());
-}
-```
+=== "Java"
+    ```java
+    if (message.getCode() != 0) {
+      System.out.println("Received message with code %s", message.getCode());
+    }
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let messageType = message.type; // enum
-switch messageType {
-  case .chat:
-    NSLog("Received a chat message")
-  default:
-    NSLog("Received message with event type %d", messageType.rawValue)
-}
-```
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    let messageType = message.type; // enum
+    switch messageType {
+      case .chat:
+        NSLog("Received a chat message")
+      default:
+        NSLog("Received message with event type %d", messageType.rawValue)
+    }
+    ```
 
-```gdscript tab="Godot"
-if p_message.code != 0:
-	print("Received message with code:", p_message.code)
-```
+=== "Godot"
+    ```gdscript
+    if p_message.code != 0:
+      print("Received message with code:", p_message.code)
+    ```
 
 | Code | Purpose | Source | Description |
 | ---- | ------- | ------ | ----------- |
@@ -198,113 +216,122 @@ To send messages to other users a user must join the chat channel they want to c
 
 A room is created dynamically for users to chat. A room has a name and will be set up on the server when any user joins. The list of room names available to join can be stored within client code or via remote configuration with a [storage record](storage-collections.md).
 
-```js tab="JavaScript"
-const roomname = "MarvelMovieFans";
-const persistence = true;
-const hidden = false;
+=== "JavaScript"
+    ```js
+    const roomname = "MarvelMovieFans";
+    const persistence = true;
+    const hidden = false;
 
- // 1 = Room, 2 = Direct Message, 3 = Group
-const response = await socket.joinChat(1, roomname, persistence, hidden);
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    const response = await socket.joinChat(1, roomname, persistence, hidden);
 
-console.log("Now connected to channel id: '%o'", response.channel.id);
-```
+    console.log("Now connected to channel id: '%o'", response.channel.id);
+    ```
 
-```csharp tab=".NET"
-var roomname = "MarvelMovieFans";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-Console.WriteLine("Now connected to channel id: '{0}'", channel.Id);
-```
+=== ".NET"
+    ```csharp
+    var roomname = "MarvelMovieFans";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
+    Console.WriteLine("Now connected to channel id: '{0}'", channel.Id);
+    ```
 
-```csharp tab="Unity"
-var roomname = "MarvelMovieFans";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-Debug.LogFormat("Now connected to channel id: '{0}'", channel.Id);
-```
+=== "Unity"
+    ```csharp
+    var roomname = "MarvelMovieFans";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
+    Debug.LogFormat("Now connected to channel id: '{0}'", channel.Id);
+    ```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NChannelPtr channel)
-{
-  CCLOG("Now connected to channel id: '%s'", channel->id.c_str());
-};
+=== "Cocos2d-x C++"
+    ```cpp
+    auto successCallback = [](NChannelPtr channel)
+    {
+      CCLOG("Now connected to channel id: '%s'", channel->id.c_str());
+    };
 
-string roomname = "MarvelMovieFans";
-rtClient->joinChat(
-    roomname,
-    NChannelType::ROOM,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
+    string roomname = "MarvelMovieFans";
+    rtClient->joinChat(
+        roomname,
+        NChannelType::ROOM,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
 
-```js tab="Cocos2d-x JS"
-const roomname = "MarvelMovieFans";
-const persistence = true;
-const hidden = false;
+=== "Cocos2d-x JS"
+    ```js
+    const roomname = "MarvelMovieFans";
+    const persistence = true;
+    const hidden = false;
 
- // 1 = Room, 2 = Direct Message, 3 = Group
-socket.joinChat(1, roomname, persistence, hidden).then(function(response) {
-      cc.log("Now connected to channel id: ", response.channel.id);
-    },
-    function(error) {
-      cc.error("join channel failed:", JSON.stringify(error));
-    });
-```
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    socket.joinChat(1, roomname, persistence, hidden).then(function(response) {
+          cc.log("Now connected to channel id: ", response.channel.id);
+        },
+        function(error) {
+          cc.error("join channel failed:", JSON.stringify(error));
+        });
+    ```
 
-```cpp tab="C++"
-auto successCallback = [](NChannelPtr channel)
-{
-  std::cout << "Now connected to channel id: " << channel->id << std::endl;
-};
+=== "C++"
+    ```cpp
+    auto successCallback = [](NChannelPtr channel)
+    {
+      std::cout << "Now connected to channel id: " << channel->id << std::endl;
+    };
 
-string roomname = "MarvelMovieFans";
-rtClient->joinChat(
-    roomname,
-    NChannelType::ROOM,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
+    string roomname = "MarvelMovieFans";
+    rtClient->joinChat(
+        roomname,
+        NChannelType::ROOM,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
 
-```java tab="Java"
-String roomname = "MarvelMovieFans";
-boolean persistence = true;
-boolean hidden = false;
-Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidden).get();
-System.out.format("Now connected to channel id: %s", channel.getId());
-```
+=== "Java"
+    ```java
+    String roomname = "MarvelMovieFans";
+    boolean persistence = true;
+    boolean hidden = false;
+    Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidden).get();
+    System.out.format("Now connected to channel id: %s", channel.getId());
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-var roomId : TopicId?
-let roomName = "Room-Name"
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    var roomId : TopicId?
+    let roomName = "Room-Name"
 
-var message = TopicJoinMessage()
-message.rooms.append(roomName)
-client.send(message: message).then { topics in
-  roomId = topics[0].topic
-  NSLog("Successfully joined the room.")
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+    var message = TopicJoinMessage()
+    message.rooms.append(roomName)
+    client.send(message: message).then { topics in
+      roomId = topics[0].topic
+      NSLog("Successfully joined the room.")
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
 
-```gdscript tab="Godot"
-var roomname = "MarvelMovieFans"
-var persistence = true
-var hidden = false
-var type = NakamaSocket.ChannelType.Room
-var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(roomname, type, persistence, hidden), "completed")
-if channel.is_exception():
-	print("An error occured: %s" % channel)
-	return
-print("Now connected to channel id: '%s'" % [channel.id])
-```
+=== "Godot"
+    ```gdscript
+    var roomname = "MarvelMovieFans"
+    var persistence = true
+    var hidden = false
+    var type = NakamaSocket.ChannelType.Room
+    var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(roomname, type, persistence, hidden), "completed")
+    if channel.is_exception():
+      print("An error occured: %s" % channel)
+      return
+    print("Now connected to channel id: '%s'" % [channel.id])
+    ```
 
 The `roomId` variable contains an ID used to [send messages](#send-messages).
 
@@ -317,24 +344,27 @@ A group chat can only be joined by a user who is a member of the [group](social-
 
 A group ID is needed when a user joins group chat and can be [listed by the user](social-groups-clans.md#list-groups).
 
-```js tab="JavaScript"
-const groupId = "<group id>";
-const persistence = true;
-const hidden = false;
-// 1 = Room, 2 = Direct Message, 3 = Group
-const response = await socket.joinChat(3, groupId, persistence, hidden);
+=== "JavaScript"
+    ```js
+    const groupId = "<group id>";
+    const persistence = true;
+    const hidden = false;
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    const response = await socket.joinChat(3, groupId, persistence, hidden);
 
-console.log("You can now send messages to channel id: ", response.channel.id);
-```
+    console.log("You can now send messages to channel id: ", response.channel.id);
+    ```
 
-```csharp tab=".NET"
-var groupId = "<group id>";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
-Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
-```
+=== ".NET"
+    ```csharp
+    var groupId = "<group id>";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
+    Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
+    ```
 
+=== "Unity"
 ```csharp tab="Unity"
 var groupId = "<group id>";
 var persistence = true;
@@ -343,86 +373,92 @@ var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence
 Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
 ```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NChannelPtr channel)
-{
-  CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
-};
+=== "Cocos2d-x C++"
+    ```cpp
+    auto successCallback = [](NChannelPtr channel)
+    {
+      CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
+    };
 
-string groupId = "<group id>";
-rtClient->joinChat(
-    groupId,
-    NChannelType::GROUP,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
+    string groupId = "<group id>";
+    rtClient->joinChat(
+        groupId,
+        NChannelType::GROUP,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
 
-```js tab="Cocos2d-x JS"
-const groupId = "<group id>";
-const persistence = true;
-const hidden = false;
+=== "Cocos2d-x JS"
+    ```js
+    const groupId = "<group id>";
+    const persistence = true;
+    const hidden = false;
 
-// 1 = Room, 2 = Direct Message, 3 = Group
-socket.joinChat(3, groupId, persistence, hidden).then(function(response) {
-      cc.log("You can now send messages to channel id:", response.channel.id);
-    },
-    function(error) {
-      cc.error("join channel failed:", JSON.stringify(error));
-    });
-```
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    socket.joinChat(3, groupId, persistence, hidden).then(function(response) {
+          cc.log("You can now send messages to channel id:", response.channel.id);
+        },
+        function(error) {
+          cc.error("join channel failed:", JSON.stringify(error));
+        });
+    ```
 
-```cpp tab="C++"
-auto successCallback = [](NChannelPtr channel)
-{
-  std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
-};
+=== "C++"
+    ```cpp
+    auto successCallback = [](NChannelPtr channel)
+    {
+      std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
+    };
 
-string groupId = "<group id>";
-rtClient->joinChat(
-    groupId,
-    NChannelType::GROUP,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
+    string groupId = "<group id>";
+    rtClient->joinChat(
+        groupId,
+        NChannelType::GROUP,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
 
-```java tab="Java"
-String groupId = "<group id>";
-boolean persistence = true;
-boolean hidden = false;
-Channel channel = socket.joinChat(groupId, ChannelType.GROUP, persistence, hidden).get();
-System.out.format("You can now send messages to channel id %s", channel.getId());
-```
+=== "Java"
+    ```java
+    String groupId = "<group id>";
+    boolean persistence = true;
+    boolean hidden = false;
+    Channel channel = socket.joinChat(groupId, ChannelType.GROUP, persistence, hidden).get();
+    System.out.format("You can now send messages to channel id %s", channel.getId());
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-var groupTopicId : TopicId?
-let groupId = group.id
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    var groupTopicId : TopicId?
+    let groupId = group.id
 
-var message = TopicJoinMessage()
-message.groups.append(groupId)
-client.send(message: message).then { topics in
-  groupTopicId = topics[0].topic
-  NSLog("Successfully joined the group chat.")
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+    var message = TopicJoinMessage()
+    message.groups.append(groupId)
+    client.send(message: message).then { topics in
+      groupTopicId = topics[0].topic
+      NSLog("Successfully joined the group chat.")
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
 
-```gdscript tab="Godot"
-var group_id = "<group id>"
-var persistence = true
-var hidden = false
-var type = NakamaSocket.ChannelType.Group
-var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(group_id, type, persistence, hidden), "completed")
-if channel.is_exception():
-	print("An error occured: %s" % channel)
-	return
-print("Now connected to channel id: '%s'" % [channel.id])
-```
+=== "Godot"
+    ```gdscript
+    var group_id = "<group id>"
+    var persistence = true
+    var hidden = false
+    var type = NakamaSocket.ChannelType.Group
+    var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(group_id, type, persistence, hidden), "completed")
+    if channel.is_exception():
+      print("An error occured: %s" % channel)
+      return
+    print("Now connected to channel id: '%s'" % [channel.id])
+    ```
 
 The `"<group id>"` variable must be an ID used to [send messages](#send-messages).
 
@@ -435,111 +471,120 @@ A user can direct message another user by ID. Each user will not receive message
 
 A user will receive an [in-app notification](social-in-app-notifications.md) when a request to chat has been received.
 
-```js tab="JavaScript"
-const userId = "<user id>";
-const persistence = true;
-const hidden = false;
-// 1 = Room, 2 = Direct Message, 3 = Group
-const response = await socket.joinChat(userId, 2, persistence, hidden);
-console.log("You can now send messages to channel id:", response.channel.id);
-```
+=== "JavaScript"
+    ```js
+    const userId = "<user id>";
+    const persistence = true;
+    const hidden = false;
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    const response = await socket.joinChat(userId, 2, persistence, hidden);
+    console.log("You can now send messages to channel id:", response.channel.id);
+    ```
 
-```csharp tab=".NET"
-var userId = "<user id>";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
-Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
-```
+=== ".NET"
+    ```csharp
+    var userId = "<user id>";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
+    Console.WriteLine("You can now send messages to channel id: '{0}'", channel.Id);
+    ```
 
-```csharp tab="Unity"
-var userId = "<user id>";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
-Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
-```
+=== "Unity"
+    ```csharp
+    var userId = "<user id>";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(userId, ChannelType.DirectMessage, persistence, hidden);
+    Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
+    ```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NChannelPtr channel)
-{
-  CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
-};
+=== "C++"
+    ```cpp
+    auto successCallback = [](NChannelPtr channel)
+    {
+      CCLOG("You can now send messages to channel id: %s", channel->id.c_str());
+    };
 
-string userId = "<user id>";
-rtClient->joinChat(
-    userId,
-    NChannelType::DIRECT_MESSAGE,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
+    string userId = "<user id>";
+    rtClient->joinChat(
+        userId,
+        NChannelType::DIRECT_MESSAGE,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
 
-```js tab="Cocos2d-x JS"
-const userId = "<user id>";
-const persistence = true;
-const hidden = false;
+=== "Cocos2d-x JS"
+    ```js
+    const userId = "<user id>";
+    const persistence = true;
+    const hidden = false;
 
-// 1 = Room, 2 = Direct Message, 3 = Group
-socket.joinChat(userId, 2, persistence, hidden).then(function(response) {
-      cc.log("You can now send messages to channel id:", response.channel.id);
-    },
-    function(error) {
-      cc.error("join channel failed:", JSON.stringify(error));
-    });
-```
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    socket.joinChat(userId, 2, persistence, hidden).then(function(response) {
+          cc.log("You can now send messages to channel id:", response.channel.id);
+        },
+        function(error) {
+          cc.error("join channel failed:", JSON.stringify(error));
+        });
+    ```
 
-```cpp tab="C++"
-auto successCallback = [](NChannelPtr channel)
-{
-  std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
-};
+=== "C++"
+    ```cpp
+    auto successCallback = [](NChannelPtr channel)
+    {
+      std::cout << "You can now send messages to channel id: " << channel->id << std::endl;
+    };
 
-string userId = "<user id>";
-rtClient->joinChat(
-    userId,
-    NChannelType::DIRECT_MESSAGE,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
+    string userId = "<user id>";
+    rtClient->joinChat(
+        userId,
+        NChannelType::DIRECT_MESSAGE,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
 
-```java tab="Java"
-String userId = "<user id>";
-boolean persistence = true;
-boolean hidden = false;
-Channel channel = socket.joinChat(userId, ChannelType.DIRECT_MESSAGE, persistence, hidden).get();
-System.out.format("You can now send messages to channel id %s", channel.getId());
-```
+=== "Java"
+    ```java
+    String userId = "<user id>";
+    boolean persistence = true;
+    boolean hidden = false;
+    Channel channel = socket.joinChat(userId, ChannelType.DIRECT_MESSAGE, persistence, hidden).get();
+    System.out.format("You can now send messages to channel id %s", channel.getId());
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-var directTopicId : TopicId?
-let userId = user.id
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    var directTopicId : TopicId?
+    let userId = user.id
 
-var message = TopicJoinMessage()
-message.userIds.append(userIds)
-client.send(message: message).then { topics in
-  directTopicId = topics[0].topic
-  NSLog("Successfully joined the direct chat.")
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+    var message = TopicJoinMessage()
+    message.userIds.append(userIds)
+    client.send(message: message).then { topics in
+      directTopicId = topics[0].topic
+      NSLog("Successfully joined the direct chat.")
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
 
-```gdscript tab="Godot"
-var user_id = "<user id>"
-var persistence = true
-var hidden = false
-var type = NakamaSocket.ChannelType.DirectMessage
-var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(user_id, type, persistence, hidden), "completed")
-if channel.is_exception():
-	print("An error occured: %s" % channel)
-	return
-print("Now connected to channel id: '%s'" % [channel.id])
-```
+=== "Godot"
+    ```gdscript
+    var user_id = "<user id>"
+    var persistence = true
+    var hidden = false
+    var type = NakamaSocket.ChannelType.DirectMessage
+    var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(user_id, type, persistence, hidden), "completed")
+    if channel.is_exception():
+      print("An error occured: %s" % channel)
+      return
+    print("Now connected to channel id: '%s'" % [channel.id])
+    ```
 
 The `"<user id>"` variable must be an ID used to [send messages](#send-messages).
 
@@ -557,272 +602,281 @@ The user who [joins a chat channel](#join-chat) receives an initial presence lis
 !!! Summary
     A list of all online users is received when a user joins a chat channel you can combine it with an event handler which notifies when users join or leave. Together it becomes easy to maintain a list of online users.
 
-```js tab="JavaScript"
-var onlineUsers = [];
-socket.onchannelpresence = (presences) => {
-  // Remove all users who left.
-  onlineUsers = onlineUsers.filter((user) => {
-    return !presences.leave.includes(user);
-  });
-  // Add all users who joined.
-  onlineUsers.concat(presences.join);
-};
-
-const roomname = "PizzaFans";
-const persistence = true;
-const hidden = false;
-
-// 1 = Room, 2 = Direct Message, 3 = Group
-const response = await socket.joinChat(roomname, 1, persistence, hidden);
-
-// Setup initial online user list.
-onlineUsers.concat(response.channel.presences);
-// Remove your own user from list.
-onlineUsers = onlineUsers.filter((user) => {
-  return user != channel.self;
-});
-```
-
-```csharp tab=".NET"
-var roomUsers = new List<IUserPresence>(10);
-socket.ReceivedChannelPresence += presenceEvent =>
-{
-    foreach (var presence in presenceEvent.Leaves)
-    {
-        roomUsers.Remove(presence);
-    }
-
-    roomUsers.AddRange(presenceEvent.Joins);
-    Console.WriteLine("Room users: [{0}]", string.Join(",\n  ", roomUsers));
-};
-
-var roomName = "PizzaFans";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(roomName, ChannelType.Room, persistence, hidden);
-roomUsers.AddRange(channel.Presences);
-```
-
-```csharp tab="Unity"
-var roomUsers = new List<IUserPresence>(10);
-socket.ReceivedChannelPresence += presenceEvent =>
-{
-    foreach (var presence in presenceEvent.Leaves)
-    {
-        roomUsers.Remove(presence);
-    }
-
-    roomUsers.AddRange(presenceEvent.Joins);
-    Debug.LogFormat("Room users: [{0}]", string.Join(",\n  ", roomUsers));
-};
-
-var roomname = "PizzaFans";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
-connectedUsers.AddRange(channel.Presences);
-```
-
-```cpp tab="Cocos2d-x C++"
-// add this to your class: std::vector<NUserPresence> onlineUsers;
-
-rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
-{
-  // Remove all users who left.
-  for (auto& left : event.leaves)
-  {
-    for (auto it = onlineUsers.begin(); it != onlineUsers.end(); ++it)
-    {
-      if (it->userId == left.userId)
-      {
-        onlineUsers.erase(it);
-        break;
-      }
-    }
-  }
-
-  // Add all users who joined.
-  onlineUsers.insert(onlineUsers.end(), event.joins.begin(), event.joins.end());
-});
-
-auto successCallback = [this](NChannelPtr channel)
-{
-  onlineUsers.reserve(channel->presences.size());
-
-  // Setup initial online user list without self.
-  for (auto& joined : channel->presences)
-  {
-    if (joined.userId != channel->self.userId)
-    {
-      onlineUsers.push_back(joined);
-    }
-  }
-};
-
-string roomname = "PizzaFans";
-rtClient->joinChat(
-    roomname,
-    NChannelType::ROOM,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
-
-```js tab="Cocos2d-x JS"
-var onlineUsers = [];
-socket.onchannelpresence = (presences) => {
-  // Remove all users who left.
-  onlineUsers = onlineUsers.filter((user) => {
-    return !presences.leave.includes(user);
-  });
-  // Add all users who joined.
-  onlineUsers.concat(presences.join);
-};
-
-const roomname = "PizzaFans";
-const persistence = true;
-const hidden = false;
-
-// 1 = Room, 2 = Direct Message, 3 = Group
-socket.joinChat(roomname, 1, persistence, hidden).then(function(response) {
-      // Setup initial online user list.
-      onlineUsers.concat(response.channel.presences);
-      // Remove your own user from list.
+=== "JavaScript"
+    ```js
+    var onlineUsers = [];
+    socket.onchannelpresence = (presences) => {
+      // Remove all users who left.
       onlineUsers = onlineUsers.filter((user) => {
-        return user != channel.self;
+        return !presences.leave.includes(user);
       });
-    },
-    function(error) {
-      cc.error("join chat failed:", JSON.stringify(error));
+      // Add all users who joined.
+      onlineUsers.concat(presences.join);
+    };
+
+    const roomname = "PizzaFans";
+    const persistence = true;
+    const hidden = false;
+
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    const response = await socket.joinChat(roomname, 1, persistence, hidden);
+
+    // Setup initial online user list.
+    onlineUsers.concat(response.channel.presences);
+    // Remove your own user from list.
+    onlineUsers = onlineUsers.filter((user) => {
+      return user != channel.self;
     });
-```
+    ```
 
-```cpp tab="C++"
-// add this to your class: std::vector<NUserPresence> onlineUsers;
-
-rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
-{
-  // Remove all users who left.
-  for (auto& left : event.leaves)
-  {
-    for (auto it = onlineUsers.begin(); it != onlineUsers.end(); ++it)
+=== ".NET"
+    ```csharp
+    var roomUsers = new List<IUserPresence>(10);
+    socket.ReceivedChannelPresence += presenceEvent =>
     {
-      if (it->userId == left.userId)
+        foreach (var presence in presenceEvent.Leaves)
+        {
+            roomUsers.Remove(presence);
+        }
+
+        roomUsers.AddRange(presenceEvent.Joins);
+        Console.WriteLine("Room users: [{0}]", string.Join(",\n  ", roomUsers));
+    };
+
+    var roomName = "PizzaFans";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(roomName, ChannelType.Room, persistence, hidden);
+    roomUsers.AddRange(channel.Presences);
+    ```
+
+=== "Unity"
+    ```csharp
+    var roomUsers = new List<IUserPresence>(10);
+    socket.ReceivedChannelPresence += presenceEvent =>
+    {
+        foreach (var presence in presenceEvent.Leaves)
+        {
+            roomUsers.Remove(presence);
+        }
+
+        roomUsers.AddRange(presenceEvent.Joins);
+        Debug.LogFormat("Room users: [{0}]", string.Join(",\n  ", roomUsers));
+    };
+
+    var roomname = "PizzaFans";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(roomname, ChannelType.Room, persistence, hidden);
+    connectedUsers.AddRange(channel.Presences);
+    ```
+
+=== "C++"
+    ```cpp
+    // add this to your class: std::vector<NUserPresence> onlineUsers;
+
+    rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
+    {
+      // Remove all users who left.
+      for (auto& left : event.leaves)
       {
-        onlineUsers.erase(it);
-        break;
-      }
-    }
-  }
-
-  // Add all users who joined.
-  onlineUsers.insert(onlineUsers.end(), event.joins.begin(), event.joins.end());
-});
-
-auto successCallback = [this](NChannelPtr channel)
-{
-  onlineUsers.reserve(channel->presences.size());
-
-  // Setup initial online user list without self.
-  for (auto& joined : channel->presences)
-  {
-    if (joined.userId != channel->self.userId)
-    {
-      onlineUsers.push_back(joined);
-    }
-  }
-};
-
-string roomname = "PizzaFans";
-rtClient->joinChat(
-    roomname,
-    NChannelType::ROOM,
-    true,  // persistence
-    false, // hidden
-    successCallback
-);
-```
-
-```java tab="Java"
-final List<UserPresence> connectedUsers = new ArrayList<UserPresence>();
-SocketListener listener = new AbstractSocketListener() {
-  @Override
-  public void onChannelPresence(final ChannelPresenceEvent presence) {
-    connectedUsers.addAll(presence.getJoins());
-    for (UserPresence presence : presence.getLeaves()) {
-      for (int i = 0; i < connectedUsers.size(); i++) {
-        if (connectedUsers.get(i).getUserId().equals(presence.getUserId())) {
-          connectedUsers.remove(i);
+        for (auto it = onlineUsers.begin(); it != onlineUsers.end(); ++it)
+        {
+          if (it->userId == left.userId)
+          {
+            onlineUsers.erase(it);
+            break;
+          }
         }
       }
+
+      // Add all users who joined.
+      onlineUsers.insert(onlineUsers.end(), event.joins.begin(), event.joins.end());
+    });
+
+    auto successCallback = [this](NChannelPtr channel)
+    {
+      onlineUsers.reserve(channel->presences.size());
+
+      // Setup initial online user list without self.
+      for (auto& joined : channel->presences)
+      {
+        if (joined.userId != channel->self.userId)
+        {
+          onlineUsers.push_back(joined);
+        }
+      }
+    };
+
+    string roomname = "PizzaFans";
+    rtClient->joinChat(
+        roomname,
+        NChannelType::ROOM,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
+
+=== "Cocos2d-x JS"
+    ```js
+    var onlineUsers = [];
+    socket.onchannelpresence = (presences) => {
+      // Remove all users who left.
+      onlineUsers = onlineUsers.filter((user) => {
+        return !presences.leave.includes(user);
+      });
+      // Add all users who joined.
+      onlineUsers.concat(presences.join);
+    };
+
+    const roomname = "PizzaFans";
+    const persistence = true;
+    const hidden = false;
+
+    // 1 = Room, 2 = Direct Message, 3 = Group
+    socket.joinChat(roomname, 1, persistence, hidden).then(function(response) {
+          // Setup initial online user list.
+          onlineUsers.concat(response.channel.presences);
+          // Remove your own user from list.
+          onlineUsers = onlineUsers.filter((user) => {
+            return user != channel.self;
+          });
+        },
+        function(error) {
+          cc.error("join chat failed:", JSON.stringify(error));
+        });
+    ```
+
+=== "C++"
+    ```cpp
+    // add this to your class: std::vector<NUserPresence> onlineUsers;
+
+    rtListener->setChannelPresenceCallback([this](const NChannelPresenceEvent& event)
+    {
+      // Remove all users who left.
+      for (auto& left : event.leaves)
+      {
+        for (auto it = onlineUsers.begin(); it != onlineUsers.end(); ++it)
+        {
+          if (it->userId == left.userId)
+          {
+            onlineUsers.erase(it);
+            break;
+          }
+        }
+      }
+
+      // Add all users who joined.
+      onlineUsers.insert(onlineUsers.end(), event.joins.begin(), event.joins.end());
+    });
+
+    auto successCallback = [this](NChannelPtr channel)
+    {
+      onlineUsers.reserve(channel->presences.size());
+
+      // Setup initial online user list without self.
+      for (auto& joined : channel->presences)
+      {
+        if (joined.userId != channel->self.userId)
+        {
+          onlineUsers.push_back(joined);
+        }
+      }
+    };
+
+    string roomname = "PizzaFans";
+    rtClient->joinChat(
+        roomname,
+        NChannelType::ROOM,
+        true,  // persistence
+        false, // hidden
+        successCallback
+    );
+    ```
+
+=== "Java"
+    ```java
+    final List<UserPresence> connectedUsers = new ArrayList<UserPresence>();
+    SocketListener listener = new AbstractSocketListener() {
+      @Override
+      public void onChannelPresence(final ChannelPresenceEvent presence) {
+        connectedUsers.addAll(presence.getJoins());
+        for (UserPresence presence : presence.getLeaves()) {
+          for (int i = 0; i < connectedUsers.size(); i++) {
+            if (connectedUsers.get(i).getUserId().equals(presence.getUserId())) {
+              connectedUsers.remove(i);
+            }
+          }
+        }
+      }
+    };
+
+    String roomname = "PizzaFans";
+    boolean persistence = true;
+    boolean hidden = false;
+    Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidden);
+    connectedUsers.addAll(channel.getPresences());
+    ```
+
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    var onlineUsers : [UserPresence] = []
+
+    client.onTopicPresence = { presence in
+      // Remove all users who left.
+      for user in presence.leave {
+        onlineUsers.removeAtIndex(onlineUsers.indexOf(user))
+      }
+      // Add all users who joined.
+      onlineUsers.append(contentOf: presence.join)
     }
-  }
-};
 
-String roomname = "PizzaFans";
-boolean persistence = true;
-boolean hidden = false;
-Channel channel = socket.joinChat(roomname, ChannelType.ROOM, persistence, hidden);
-connectedUsers.addAll(channel.getPresences());
-```
+    let roomName = "Room-Name"
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-var onlineUsers : [UserPresence] = []
+    var message = TopicJoinMessage()
+    message.rooms.append(roomName)
+    client.send(message: message).then { topics in
+      // Setup initial online user list.
+      onlineUsers.append(contentOf: topic[0].presences)
+      // Remove your own user from list.
+      onlineUsers.removeAtIndex(onlineUsers.indexOf(topic[0].self))
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
 
-client.onTopicPresence = { presence in
-  // Remove all users who left.
-  for user in presence.leave {
-    onlineUsers.removeAtIndex(onlineUsers.indexOf(user))
-  }
-  // Add all users who joined.
-  onlineUsers.append(contentOf: presence.join)
-}
+=== "Godot"
+    ```gdscript
+    var room_users = {}
 
-let roomName = "Room-Name"
+    func _ready():
+      # First, setup the socket as explained in the authentication section.
+      socket.connect("received_channel_presence", self, "_on_channel_presence")
 
-var message = TopicJoinMessage()
-message.rooms.append(roomName)
-client.send(message: message).then { topics in
-  // Setup initial online user list.
-  onlineUsers.append(contentOf: topic[0].presences)
-  // Remove your own user from list.
-  onlineUsers.removeAtIndex(onlineUsers.indexOf(topic[0].self))
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+      # Connect to the room.
+      var roomname = "MarvelMovieFans"
+      var persistence = true
+      var hidden = false
+      var type = NakamaSocket.ChannelType.Room
+      var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(roomname, type, persistence, hidden), "completed")
+      if channel.is_exception():
+        print("An error occured: %s" % channel)
+        return
 
-```gdscript tab="Godot"
-var room_users = {}
+      # Add users already present in chat room.
+      for p in channel.presences:
+        room_users[p.user_id] = p
+      print("Users in room: %s" % [room_users.keys()])
 
-func _ready():
-	# First, setup the socket as explained in the authentication section.
-	socket.connect("received_channel_presence", self, "_on_channel_presence")
-
-	# Connect to the room.
-	var roomname = "MarvelMovieFans"
-	var persistence = true
-	var hidden = false
-	var type = NakamaSocket.ChannelType.Room
-	var channel : NakamaRTAPI.Channel = yield(socket.join_chat_async(roomname, type, persistence, hidden), "completed")
-	if channel.is_exception():
-		print("An error occured: %s" % channel)
-		return
-
-	# Add users already present in chat room.
-	for p in channel.presences:
-		room_users[p.user_id] = p
-	print("Users in room: %s" % [room_users.keys()])
-
-func _on_channel_presence(p_presence : NakamaRTAPI.ChannelPresenceEvent):
-	for p in p_presence.joins:
-		room_users[p.user_id] = p
-	for p in p_presence.leaves:
-		room_users.erase(p.user_id)
-	print("Users in room: %s" % [room_users.keys()])
-```
+    func _on_channel_presence(p_presence : NakamaRTAPI.ChannelPresenceEvent):
+      for p in p_presence.joins:
+        room_users[p.user_id] = p
+      for p in p_presence.leaves:
+        room_users.erase(p.user_id)
+      print("Users in room: %s" % [room_users.keys()])
+    ```
 
 !!! Tip
     The server is optimized to only push presence updates when other users join or leave the chat.
@@ -833,148 +887,166 @@ When a user has [joined a chat channel](#join-chat) its ID can be used to send m
 
 Every message sent returns an acknowledgment when it's received by the server. The acknowledgment returned contains a message ID, timestamp, and details back about the user who sent it.
 
-```js tab="JavaScript"
-var channelId = "<channel id>";
-var data = { "some": "data" };
-const messageAck = await socket.writeChatMessage(channelId, data);
-```
+=== "JavaScript"
+    ```js
+    var channelId = "<channel id>";
+    var data = { "some": "data" };
+    const messageAck = await socket.writeChatMessage(channelId, data);
+    ```
 
-```csharp tab=".NET"
-var channelId = "<channel id>";
-var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
-var sendAck = await socket.WriteChatMessageAsync(channelId, content);
-```
+== ".NET"
+    ```csharp
+    var channelId = "<channel id>";
+    var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
+    var sendAck = await socket.WriteChatMessageAsync(channelId, content);
+    ```
 
-```csharp tab="Unity"
-var channelId = "<channel id>";
-var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
-var sendAck = await socket.WriteChatMessageAsync(channelId, content);
-```
+=== "Unity"
+    ```csharp
+    var channelId = "<channel id>";
+    var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
+    var sendAck = await socket.WriteChatMessageAsync(channelId, content);
+    ```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](const NChannelMessageAck& ack)
-{
-  CCLOG("message id: %s", ack.messageId.c_str());
-};
+=== "Cocos2d-x C++"
+    ```cpp
+    auto successCallback = [](const NChannelMessageAck& ack)
+    {
+      CCLOG("message id: %s", ack.messageId.c_str());
+    };
 
-string channelId = "<channel id>";
-string data = "{ \"some\": \"data\" }";
-rtClient->writeChatMessage(channelId, data, successCallback);
-```
+    string channelId = "<channel id>";
+    string data = "{ \"some\": \"data\" }";
+    rtClient->writeChatMessage(channelId, data, successCallback);
+    ```
 
-```js tab="Cocos2d-x JS"
-var channelId = "<channel id>";
-var data = { "some": "data" };
-socket.writeChatMessage(channelId, data).then(function(messageAck) {
-      cc.log("message acknowledgement:", JSON.stringify(messageAck));
-    },
-    function(error) {
-      cc.error("send channel message failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+    ```js
+    var channelId = "<channel id>";
+    var data = { "some": "data" };
+    socket.writeChatMessage(channelId, data).then(function(messageAck) {
+          cc.log("message acknowledgement:", JSON.stringify(messageAck));
+        },
+        function(error) {
+          cc.error("send channel message failed:", JSON.stringify(error));
+        });
+    ```
 
-```cpp tab="C++"
-auto successCallback = [](const NChannelMessageAck& ack)
-{
-  std::cout << "message id: " << ack.messageId << std::endl;
-};
+=== "C++"
+    ```cpp
+    auto successCallback = [](const NChannelMessageAck& ack)
+    {
+      std::cout << "message id: " << ack.messageId << std::endl;
+    };
 
-string channelId = "<channel id>";
-string data = "{ \"some\": \"data\" }";
-rtClient->writeChatMessage(channelId, data, successCallback);
-```
+    string channelId = "<channel id>";
+    string data = "{ \"some\": \"data\" }";
+    rtClient->writeChatMessage(channelId, data, successCallback);
+    ```
 
-```java tab="Java"
-String channelId = "<channel id>";
-final String content = "{\"message\":\"Hello world\"}";
-ChannelMessageAck sendAck = socket.writeChatMessage(channelId, content).get();
-```
+=== "Java"
+    ```java
+    String channelId = "<channel id>";
+    final String content = "{\"message\":\"Hello world\"}";
+    ChannelMessageAck sendAck = socket.writeChatMessage(channelId, content).get();
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let chatTopicID = ... // A chat topic ID
-let json = "{\"some\":\"data\"}".data(using: .utf8)!
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    let chatTopicID = ... // A chat topic ID
+    let json = "{\"some\":\"data\"}".data(using: .utf8)!
 
-var message = TopicMessageSendMessage()
-message.topicId = chatTopicID
-message.data = json
-client.send(message: message).then { ack in
-  NSLog("New message sent has id %@.", ack.messageID)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+    var message = TopicMessageSendMessage()
+    message.topicId = chatTopicID
+    message.data = json
+    client.send(message: message).then { ack in
+      NSLog("New message sent has id %@.", ack.messageID)
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
 
-```gdscript tab="Godot"
-var channel_id = "<channel id>"
-var data = { "some": "data" }
-var message_ack : NakamaRTAPI.ChannelMessageAck = yield(socket.write_chat_message_async(channel_id, data), "completed")
-if message_ack.is_exception():
-	print("An error occured: %s" % message_ack)
-	return
-print("Sent message %s" % [message_ack])
-```
+=== "Godot"
+    ```gdscript
+    var channel_id = "<channel id>"
+    var data = { "some": "data" }
+    var message_ack : NakamaRTAPI.ChannelMessageAck = yield(socket.write_chat_message_async(channel_id, data), "completed")
+    if message_ack.is_exception():
+      print("An error occured: %s" % message_ack)
+      return
+    print("Sent message %s" % [message_ack])
+    ```
 
 ## Leave chat
 
 A user can leave a chat channel to no longer be sent messages in realtime. This can be useful to "mute" a chat while in some other part of the UI.
 
-```js tab="JavaScript"
-var channelId = "<channel id>";
-await socket.leaveChat(channelId);
-```
+=== "JavaScript"
+    ```js
+    var channelId = "<channel id>";
+    await socket.leaveChat(channelId);
+    ```
 
-```csharp tab=".NET"
-var channelId = "<channel id>";
-await socket.LeaveChatAsync(channelId);
-```
+=== ".NET"
+    ```csharp
+    var channelId = "<channel id>";
+    await socket.LeaveChatAsync(channelId);
+    ```
 
-```csharp tab="Unity"
-var channelId = "<channel id>";
-await socket.LeaveChatAsync(channelId);
-```
+=== "Unity"
+    ```csharp
+    var channelId = "<channel id>";
+    await socket.LeaveChatAsync(channelId);
+    ```
 
-```cpp tab="Cocos2d-x C++"
-string channelId = "<channel id>";
-rtClient->leaveChat(channelId);
-```
+=== "Cocos2d-x C++"
+    ```cpp
+    string channelId = "<channel id>";
+    rtClient->leaveChat(channelId);
+    ```
 
-```js tab="Cocos2d-x JS"
-var channelId = "<channel id>";
-socket.leaveChat(channelId);
-```
+=== "Cocos2d-x JS"
+    ```js
+    var channelId = "<channel id>";
+    socket.leaveChat(channelId);
+    ```
 
-```cpp tab="C++"
-string channelId = "<channel id>";
-rtClient->leaveChat(channelId);
-```
+=== "C++"
+    ```cpp
+    string channelId = "<channel id>";
+    rtClient->leaveChat(channelId);
+    ```
 
-```java tab="Java"
-String channelId = "<channel id>";
-socket.leaveChat(channelId).get();
-```
+=== "Java"
+    ```java
+    String channelId = "<channel id>";
+    socket.leaveChat(channelId).get();
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let chatTopicID = ... // A chat topic ID
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    let chatTopicID = ... // A chat topic ID
 
-var message = TopicLeaveMessage()
-message.topics.append(chatTopicID)
-client.send(message: message).then {
-  NSLog("Successfully left chat.")
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+    var message = TopicLeaveMessage()
+    message.topics.append(chatTopicID)
+    client.send(message: message).then {
+      NSLog("Successfully left chat.")
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
 
-```gdscript tab="Godot"
-var channel_id = "<channel id>"
-var result : NakamaAsyncResult = yield(socket.leave_chat_async(channel_id), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-print("Left chat")
-```
+=== "Godot"
+    ```gdscript
+    var channel_id = "<channel id>"
+    var result : NakamaAsyncResult = yield(socket.leave_chat_async(channel_id), "completed")
+    if result.is_exception():
+      print("An error occured: %s" % result)
+      return
+    print("Left chat")
+    ```
 
 ## Message history
 
@@ -985,58 +1057,63 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
 !!! Tip
     A user does not have to join a chat channel to see chat history. This is useful to "peek" at old messages without the user appearing online in the chat.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>" \
-  -H 'authorization: Bearer <session token>'
-```
+=== "cURL"
+    ```sh
+    curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>" \
+      -H 'authorization: Bearer <session token>'
+    ```
 
-```js tab="JavaScript"
-const channelId = "<channel id>";
-const result = await client.listChannelMessages(session, channelId, 10);
-result.messages.forEach((message) => {
-  console.log("Message has id %o and content %o", message.message_id, message.data);
-});
-console.log("Get the next page of messages with the cursor:", result.next_cursor);
-```
+==== "JavaScript"
+    ```js
+    const channelId = "<channel id>";
+    const result = await client.listChannelMessages(session, channelId, 10);
+    result.messages.forEach((message) => {
+      console.log("Message has id %o and content %o", message.message_id, message.data);
+    });
+    console.log("Get the next page of messages with the cursor:", result.next_cursor);
+    ```
 
-```csharp tab=".NET"
-var channelId = "<channel id>";
-var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
-foreach (var m in result.Messages)
-{
-    Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
-}
-```
+=== ".NET"
+    ```csharp
+    var channelId = "<channel id>";
+    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+    foreach (var m in result.Messages)
+    {
+        Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
+    }
+    ```
 
-```csharp tab="Unity"
-var channelId = "<channel id>";
-var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
-foreach (var m in result.Messages)
-{
-    Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
-}
-```
+=== "Unity"
+    ```csharp
+    var channelId = "<channel id>";
+    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+    foreach (var m in result.Messages)
+    {
+        Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
+    }
+    ```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NChannelMessageListPtr list)
-{
-  for (auto& message : list->messages)
-  {
-    CCLOG("message content: %s", message.content.c_str());
-  }
-  CCLOG("Get the next page of messages with the cursor: %s", list->nextCursor.c_str());
-};
+=== "Cocos2d-x C++"
+    ```cpp
+    auto successCallback = [](NChannelMessageListPtr list)
+    {
+      for (auto& message : list->messages)
+      {
+        CCLOG("message content: %s", message.content.c_str());
+      }
+      CCLOG("Get the next page of messages with the cursor: %s", list->nextCursor.c_str());
+    };
 
-string channelId = "<channel id>";
-client->listChannelMessages(session,
-    channelId,
-    10,
-    opt::nullopt,
-    opt::nullopt,
-    successCallback);
-```
-
-```js tab="Cocos2d-x JS"
+    string channelId = "<channel id>";
+    client->listChannelMessages(session,
+        channelId,
+        10,
+        opt::nullopt,
+        opt::nullopt,
+        successCallback);
+    ```
+=== "Cocos2d-x JS"
+```js
 const channelId = "<channel id>";
 client.listChannelMessages(session, channelId, 10)
   .then(function(result) {
@@ -1050,133 +1127,143 @@ client.listChannelMessages(session, channelId, 10)
     });
 ```
 
-```cpp tab="C++"
-auto successCallback = [](NChannelMessageListPtr list)
-{
-  for (auto& message : list->messages)
-  {
-    std::cout << "message content: " << message.content << std::endl;
-  }
-  std::cout << "Get the next page of messages with the cursor: " << list->nextCursor << std::endl;
-};
+=== "C++"
+    ```cpp
+    auto successCallback = [](NChannelMessageListPtr list)
+    {
+      for (auto& message : list->messages)
+      {
+        std::cout << "message content: " << message.content << std::endl;
+      }
+      std::cout << "Get the next page of messages with the cursor: " << list->nextCursor << std::endl;
+    };
 
-string channelId = "<channel id>";
-client->listChannelMessages(session,
-    channelId,
-    10,
-    opt::nullopt,
-    opt::nullopt,
-    successCallback);
-```
+    string channelId = "<channel id>";
+    client->listChannelMessages(session,
+        channelId,
+        10,
+        opt::nullopt,
+        opt::nullopt,
+        successCallback);
+    ```
 
-```java tab="Java"
-String channelId = "<channel id>";
-ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
-for (ChannelMessage message : messages.getMessagesList()) {
-  System.out.format("Message content: %s", message.getContent());
-}
-```
+=== "Java"
+    ```java
+    String channelId = "<channel id>";
+    ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
+    for (ChannelMessage message : messages.getMessagesList()) {
+      System.out.format("Message content: %s", message.getContent());
+    }
+    ```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let roomName = "Room-Name";
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    let roomName = "Room-Name";
 
-// Fetch 10 messages on the chat room with oldest first.
-var message = TopicMessagesListMessage(room: roomName)
-message.forward(false)
-message.limit(10)
-client.send(message: message).then { messages in
-  for message in messages {
-    NSLog("Message has id %@ and content %@", message.topicId.description, message.data)
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+    // Fetch 10 messages on the chat room with oldest first.
+    var message = TopicMessagesListMessage(room: roomName)
+    message.forward(false)
+    message.limit(10)
+    client.send(message: message).then { messages in
+      for message in messages {
+        NSLog("Message has id %@ and content %@", message.topicId.description, message.data)
+      }
+    }.catch { err in
+      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
 
-```gdscript tab="Godot"
-var channel_id = "<channel id>"
-var result : NakamaAPI.ApiChannelMessageList = yield(client.list_channel_messages_async(session, channel_id, 10), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-for m in result.messages:
-	var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
-	print("Message has id %s and content %s" % [message.message_id, message.content])
-print("Get the next page of messages with the cursor: %s" % [result.next_cursor])
-```
+=== "Godot"
+    ```gdscript
+    var channel_id = "<channel id>"
+    var result : NakamaAPI.ApiChannelMessageList = yield(client.list_channel_messages_async(session, channel_id, 10), "completed")
+    if result.is_exception():
+      print("An error occured: %s" % result)
+      return
+    for m in result.messages:
+      var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
+      print("Message has id %s and content %s" % [message.message_id, message.content])
+    print("Get the next page of messages with the cursor: %s" % [result.next_cursor])
+    ```
 
-```tab="REST"
-GET /v2/channel?channel_id=<channelId>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+=== "REST"
+    ```
+    GET /v2/channel?channel_id=<channelId>
+    Host: 127.0.0.1:7350
+    Accept: application/json
+    Content-Type: application/json
+    Authorization: Bearer <session token>
+    ```
 
 A cursor can be used to page after a batch of messages for the next set of results.
 
 We recommend you only list the most recent 100 messages in your UI. A good user experience could be to fetch the next 100 older messages when the user scrolls to the bottom of your UI panel.
 
-```sh tab="cURL"
-curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>" \
-  -H 'Authorization: Bearer <session token>'
-```
+=== "cURL"
+    ```sh
+    curl -X GET "http://127.0.0.1:7350/v2/channel?channel_id=<channelId>&forward=true&limit=10&cursor=<cursor>" \
+      -H 'Authorization: Bearer <session token>'
+    ```
 
-```js tab="JavaScript"
-var channelId = "<channel id>";
-var forward = true;
-var result = await client.listChannelMessages(session, channelId, 10, forward);
-result.messages.forEach((message) => {
-  console.log("Message has id %o and content %o", message.message_id, message.data);
-});
+=== "JavaScript"
+    ```js
+    var channelId = "<channel id>";
+    var forward = true;
+    var result = await client.listChannelMessages(session, channelId, 10, forward);
+    result.messages.forEach((message) => {
+      console.log("Message has id %o and content %o", message.message_id, message.data);
+    });
 
-if (result.next_cursor) {
-  // Get the next 10 messages.
-  var result = await client.listChannelMessages(session, channelId, 10, forward, result.next_cursor);
-  result.messages.forEach((message) => {
-    console.log("Message has id %o and content %o", message.message_id, message.data);
-  });
-}
-```
+    if (result.next_cursor) {
+      // Get the next 10 messages.
+      var result = await client.listChannelMessages(session, channelId, 10, forward, result.next_cursor);
+      result.messages.forEach((message) => {
+        console.log("Message has id %o and content %o", message.message_id, message.data);
+      });
+    }
+    ```
 
-```csharp tab=".NET"
-var channelId = "<channel id>";
-var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
-foreach (var m in result.Messages)
-{
-    Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
-}
-
-if (!string.IsNullOrEmpty(result.NextCursor)) {
-    // Get the next 10 messages.
-    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
-    foreach (var m in messages)
+=== ".NET"
+    ```csharp
+    var channelId = "<channel id>";
+    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+    foreach (var m in result.Messages)
     {
         Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
     }
-};
-```
 
-```csharp tab="Unity"
-var channelId = "roomname";
-var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
-foreach (var m in result.Messages)
-{
-    Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
-}
+    if (!string.IsNullOrEmpty(result.NextCursor)) {
+        // Get the next 10 messages.
+        var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
+        foreach (var m in messages)
+        {
+            Console.WriteLine("Message id '{0}' content '{1}'", m.MessageId, m.Content);
+        }
+    };
+    ```
 
-if (!string.IsNullOrEmpty(result.NextCursor)) {
-    // Get the next 10 messages.
-    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
-    foreach (var m in messages)
+=== "Unity"
+    ```csharp
+    var channelId = "roomname";
+    var result = await client.ListChannelMessagesAsync(session, channelId, 10, true);
+    foreach (var m in result.Messages)
     {
         Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
     }
-};
-```
 
-```cpp tab="Cocos2d-x C++"
+    if (!string.IsNullOrEmpty(result.NextCursor)) {
+        // Get the next 10 messages.
+        var result = await client.ListChannelMessagesAsync(session, channelId, 10, true, result.NextCursor);
+        foreach (var m in messages)
+        {
+            Debug.LogFormat("Message id '{0}' content '{1}'", m.MessageId, m.Content);
+        }
+    };
+    ```
+
+=== "Cocos2d-x C++"
+```cpp
 void YourClass::listChannelMessages(const std::string& cursor)
 {
   auto successCallback = [this](NChannelMessageListPtr list)
@@ -1204,111 +1291,117 @@ void YourClass::listChannelMessages(const std::string& cursor)
 listChannelMessages("");
 ```
 
-```js tab="Cocos2d-x JS"
-ver listChannelMessages(cursor) {
-  var channelId = "<channel id>";
-  var forward = true;
-  client.listChannelMessages(session, channelId, 10, forward, cursor)
-    .then(function(result) {
-        result.messages.forEach((message) => {
-          cc.log("Message content", message.data);
-        });
+=== "Cocos2d-x JS"
+    ```js tab="Cocos2d-x JS"
+    function listChannelMessages(cursor) {
+      var channelId = "<channel id>";
+      var forward = true;
+      client.listChannelMessages(session, channelId, 10, forward, cursor)
+        .then(function(result) {
+            result.messages.forEach((message) => {
+              cc.log("Message content", message.data);
+            });
 
-        if (result.next_cursor) {
-          // Get the next 10 messages.
-          listChannelMessages(result.next_cursor);
+            if (result.next_cursor) {
+              // Get the next 10 messages.
+              listChannelMessages(result.next_cursor);
+            }
+          },
+          function(error) {
+            cc.error("list channel messages failed:", JSON.stringify(error));
+          });
+    }
+
+    listChannelMessages();
+    ```
+
+=== "C++"
+    ```cpp
+    void YourClass::listChannelMessages(const std::string& cursor)
+    {
+      auto successCallback = [this](NChannelMessageListPtr list)
+      {
+        for (auto& message : list->messages)
+        {
+          std::cout << "message content: " << message.content << std::endl;
         }
-      },
-      function(error) {
-        cc.error("list channel messages failed:", JSON.stringify(error));
-      });
-}
 
-listChannelMessages();
-```
+        if (!list->nextCursor.empty())
+        {
+          listChannelMessages(list->nextCursor);
+        }
+      };
 
-```cpp tab="C++"
-void YourClass::listChannelMessages(const std::string& cursor)
-{
-  auto successCallback = [this](NChannelMessageListPtr list)
-  {
-    for (auto& message : list->messages)
-    {
-      std::cout << "message content: " << message.content << std::endl;
+      string channelId = "<channel id>";
+      client->listChannelMessages(session,
+          channelId,
+          10,
+          cursor,
+          true, // forward
+          successCallback);
     }
 
-    if (!list->nextCursor.empty())
-    {
-      listChannelMessages(list->nextCursor);
+    listChannelMessages("");
+    ```
+
+=== "Java"
+    ```java
+    String channelId = "<channel id>";
+    ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
+    if (messages.getNextCursor() != null) {
+      messages = client.listChannelMessages(session, channelId, 10, messages.getNextCursor()).get();
+      for (ChannelMessage message : messages.getMessagesList()) {
+        System.out.format("Message content: %s", message.getContent());
+      }
     }
-  };
+    ```
 
-  string channelId = "<channel id>";
-  client->listChannelMessages(session,
-      channelId,
-      10,
-      cursor,
-      true, // forward
-      successCallback);
-}
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    let roomName = "Room-Name";
 
-listChannelMessages("");
-```
-
-```java tab="Java"
-String channelId = "<channel id>";
-ChannelMessageList messages = client.listChannelMessages(session, channelId, 10).get();
-if (messages.getNextCursor() != null) {
-  messages = client.listChannelMessages(session, channelId, 10, messages.getNextCursor()).get();
-  for (ChannelMessage message : messages.getMessagesList()) {
-    System.out.format("Message content: %s", message.getContent());
-  }
-}
-```
-
-```swift tab="Swift"
-// Requires Nakama 1.x
-let roomName = "Room-Name";
-
-var message = TopicMessagesListMessage(room: roomName)
-message.limit(100)
-client.send(message: message).then { messages in
-  if let _cursor = messages.cursor && messages.count > 0 {
-    message.cursor = _cursor
+    var message = TopicMessagesListMessage(room: roomName)
+    message.limit(100)
     client.send(message: message).then { messages in
-      for message in messages {
-        NSLog("Message has id %@ and content %@", message.topicId.description, message.data)
+      if let _cursor = messages.cursor && messages.count > 0 {
+        message.cursor = _cursor
+        client.send(message: message).then { messages in
+          for message in messages {
+            NSLog("Message has id %@ and content %@", message.topicId.description, message.data)
+          }
+        }.catch { err in
+          NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+        }
       }
     }.catch { err in
       NSLog("Error %@ : %@", err, (err as! NakamaError).message)
     }
-  }
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+    ```
 
-```gdscript tab="Godot"
-var channel_id = "<channel id>"
-var forward = true
-var result : NakamaAPI.ApiChannelMessageList = yield(client.list_channel_messages_async(session, channel_id, 10, forward), "completed")
-if result.is_exception():
-	print("An error occured: %s" % result)
-	return
-for m in result.messages:
-	var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
-	print("Message has id %s and content %s" % [message.message_id, message.content])
-if result.next_cursor:
-	result = yield(client.list_channel_messages_async(session, channel_id, 10, forward, result.next_cursor), "completed")
-	if result.is_exception():
-		print("An error occured: %s" % result)
-		return
-	for m in result.messages:
-		var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
-		print("Message has id %s and content %s" % [message.message_id, message.content])
-```
+=== "Godot"
+    ```gdscript
+    var channel_id = "<channel id>"
+    var forward = true
+    var result : NakamaAPI.ApiChannelMessageList = yield(client.list_channel_messages_async(session, channel_id, 10, forward), "completed")
+    if result.is_exception():
+      print("An error occured: %s" % result)
+      return
+    for m in result.messages:
+      var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
+      print("Message has id %s and content %s" % [message.message_id, message.content])
+    if result.next_cursor:
+      result = yield(client.list_channel_messages_async(session, channel_id, 10, forward, result.next_cursor), "completed")
+      if result.is_exception():
+        print("An error occured: %s" % result)
+        return
+      for m in result.messages:
+        var message : NakamaAPI.ApiChannelMessage = m as NakamaAPI.ApiChannelMessage
+        print("Message has id %s and content %s" % [message.message_id, message.content])
+    ```
 
-```tab="REST"
+=== "REST"
+```
 GET /v2/channel?channel_id=<channel id>&forward=true&limit=10&cursor=<cursor>
 Host: 127.0.0.1:7350
 Accept: application/json

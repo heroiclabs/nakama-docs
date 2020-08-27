@@ -26,11 +26,12 @@ Once the droplet is running, make a note of its IP address from within your Digi
 
 For the next steps, you need to SSH into the droplet. There isn’t a need for username/password as you’ve pre-authorized yourself using a public key in the previous step.
 
-```shell tab="Shell"
-ssh root@<IP ADDRESS>
-# you are now connected to the droplet through an SSH session.
-# you can type `exit` to close the session.
-```
+=== "Shell"
+	```shell
+	ssh root@<IP ADDRESS>
+	# you are now connected to the droplet through an SSH session.
+	# you can type `exit` to close the session.
+	```
 
 #### Creating a user to run Nakama
 You should create a separate user, with sudo privileges, to run Nakama. You’ll see how in this guide.

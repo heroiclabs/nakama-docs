@@ -5,67 +5,76 @@ The server has builtin authentication so clients can only send requests and conn
 !!! Warning "Important"
     The default server key is `defaultkey` but it is very important to set a [unique value](install-configuration.md#socket). This value should be embedded within client code.
 
-```js tab="JavaScript"
-var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
-client.ssl = false;
-```
+=== "JavaScript"
+	```js
+	var client = new nakamajs.Client("defaultkey", "127.0.0.1", 7350);
+	client.ssl = false;
+	```
 
-```csharp tab=".NET"
-// Use "https" scheme if you've setup SSL.
-var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
-```
+=== ".NET"
+	```csharp
+	// Use "https" scheme if you've setup SSL.
+	var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
+	```
 
-```csharp tab="Unity"
-// Use "https" scheme if you've setup SSL.
-var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
-```
+=== "Unity"
+	```csharp
+	// Use "https" scheme if you've setup SSL.
+	var client = new Client("http", "127.0.0.1", 7350, "defaultkey");
+	```
 
-```cpp tab="Cocos2d-x C++"
-NClientParameters parameters;
-parameters.serverKey = "defaultkey";
-parameters.host = "127.0.0.1";
-parameters.port = DEFAULT_PORT;
-NClientPtr client = NCocosHelper::createDefaultClient(parameters);
-```
+=== "Cocos2d-x C++"
+	```cpp
+	NClientParameters parameters;
+	parameters.serverKey = "defaultkey";
+	parameters.host = "127.0.0.1";
+	parameters.port = DEFAULT_PORT;
+	NClientPtr client = NCocosHelper::createDefaultClient(parameters);
+	```
 
-```js tab="Cocos2d-x JS"
-var serverkey = "defaultkey";
-var host = "127.0.0.1";
-var port = 7350;
-var useSSL = false;
-var timeout = 7000; // ms
+=== "Cocos2d-x JS"
+	```js
+	var serverkey = "defaultkey";
+	var host = "127.0.0.1";
+	var port = 7350;
+	var useSSL = false;
+	var timeout = 7000; // ms
 
-var client = new nakamajs.Client(serverkey, host, port, useSSL, timeout);
-```
+	var client = new nakamajs.Client(serverkey, host, port, useSSL, timeout);
+	```
 
-```cpp tab="C++"
-NClientParameters parameters;
-parameters.serverKey = "defaultkey";
-parameters.host = "127.0.0.1";
-parameters.port = DEFAULT_PORT;
-NClientPtr client = createDefaultClient(parameters);
-```
+=== "C++"
+	```cpp
+	NClientParameters parameters;
+	parameters.serverKey = "defaultkey";
+	parameters.host = "127.0.0.1";
+	parameters.port = DEFAULT_PORT;
+	NClientPtr client = createDefaultClient(parameters);
+	```
 
-```java tab="Java"
-Client client = new DefaultClient("defaultkey", "127.0.0.1", 7349, false)
-// or same as above.
-Client client = DefaultClient.defaults("defaultkey");
-```
+=== "Java"
+	```java
+	Client client = new DefaultClient("defaultkey", "127.0.0.1", 7349, false)
+	// or same as above.
+	Client client = DefaultClient.defaults("defaultkey");
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let client : Client = Builder("defaultkey")
-    .host("127.0.0.1")
-    .port(7350)
-    .ssl(false)
-    .build()
-// or same as above.
-let client : Client = Builder.defaults(serverKey: "defaultkey")
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let client : Client = Builder("defaultkey")
+	    .host("127.0.0.1")
+	    .port(7350)
+	    .ssl(false)
+	    .build()
+	// or same as above.
+	let client : Client = Builder.defaults(serverKey: "defaultkey")
+	```
 
-```gdscript tab="Godot"
-onready var client := Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
-```
+=== "Godot"
+	```gdscript
+	onready var client := Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
+	```
 
 Every user account is created from one of the [options used to authenticate](#authenticate). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
 
@@ -86,160 +95,171 @@ You can choose a custom username when creating the account. To do this, set `use
 
 A device identifier must contain alphanumeric characters with dashes and be between 10 and 128 bytes.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/device?create=true&username=mycustomusername" \
-  --user 'defaultkey:' \
-  --data '{"id":"uniqueidentifier"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/authenticate/device?create=true&username=mycustomusername" \
+	  --user 'defaultkey:' \
+	  --data '{"id":"uniqueidentifier"}'
+	```
 
-```js tab="JavaScript"
-// This import is only required with React Native
-var deviceInfo = require('react-native-device-info');
+=== "Javascript"
+	```js
+	// This import is only required with React Native
+	var deviceInfo = require('react-native-device-info');
 
-var deviceId = null;
-try {
-  const value = await AsyncStorage.getItem('@MyApp:deviceKey');
-  if (value !== null){
-    deviceId = value
-  } else {
-    deviceId = deviceInfo.getUniqueID();
-    AsyncStorage.setItem('@MyApp:deviceKey', deviceId).catch(function(error){
-      console.log("An error occured: %o", error);
-    });
-  }
-} catch (error) {
-  console.log("An error occured: %o", error);
-}
+	var deviceId = null;
+	try {
+	  const value = await AsyncStorage.getItem('@MyApp:deviceKey');
+	  if (value !== null){
+	    deviceId = value
+	  } else {
+	    deviceId = deviceInfo.getUniqueID();
+	    AsyncStorage.setItem('@MyApp:deviceKey', deviceId).catch(function(error){
+	      console.log("An error occured: %o", error);
+	    });
+	  }
+	} catch (error) {
+	  console.log("An error occured: %o", error);
+	}
 
-const session = await client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" });
-console.info("Successfully authenticated:", session);
-```
+	const session = await client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" });
+	console.info("Successfully authenticated:", session);
+	```
 
-```csharp tab=".NET"
-// Should use a platform API to obtain a device identifier.
-var deviceId = System.Guid.NewGuid().ToString();
-var session = await client.AuthenticateDeviceAsync(deviceId);
-System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
-```
+=== ".NET"
+	```csharp
+	// Should use a platform API to obtain a device identifier.
+	var deviceId = System.Guid.NewGuid().ToString();
+	var session = await client.AuthenticateDeviceAsync(deviceId);
+	System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+	```
 
-```csharp tab="Unity"
-var deviceId = PlayerPrefs.GetString("nakama.deviceid");
-if (string.IsNullOrEmpty(deviceId)) {
-    deviceId = SystemInfo.deviceUniqueIdentifier;
-    PlayerPrefs.SetString("nakama.deviceid", deviceId); // cache device id.
-}
-var session = await client.AuthenticateDeviceAsync(deviceId);
-Debug.LogFormat("New user: {0}, {1}", session.Created, session);
-```
+=== "Unity"
+	```csharp
+	var deviceId = PlayerPrefs.GetString("nakama.deviceid");
+	if (string.IsNullOrEmpty(deviceId)) {
+	    deviceId = SystemInfo.deviceUniqueIdentifier;
+	    PlayerPrefs.SetString("nakama.deviceid", deviceId); // cache device id.
+	}
+	var session = await client.AuthenticateDeviceAsync(deviceId);
+	Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto loginFailedCallback = [](const NError& error)
-{
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto loginFailedCallback = [](const NError& error)
+	{
+	};
 
-auto loginSucceededCallback = [](NSessionPtr session)
-{
-  CCLOG("Successfully authenticated");
-};
+	auto loginSucceededCallback = [](NSessionPtr session)
+	{
+	  CCLOG("Successfully authenticated");
+	};
 
-std::string deviceId = "unique device id";
+	std::string deviceId = "unique device id";
 
-client->authenticateDevice(
-        deviceId,
-        opt::nullopt,
-        opt::nullopt,
-        {},
-        loginSucceededCallback,
-        loginFailedCallback);
-```
+	client->authenticateDevice(
+	        deviceId,
+	        opt::nullopt,
+	        opt::nullopt,
+	        {},
+	        loginSucceededCallback,
+	        loginFailedCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-var deviceId = "unique device id";
-client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" })
-  .then(function(session) {
-        cc.log("Authenticated successfully. User id:", session.user_id);
-    },
-    function(error) {
-        cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	var deviceId = "unique device id";
+	client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" })
+	  .then(function(session) {
+	        cc.log("Authenticated successfully. User id:", session.user_id);
+	    },
+	    function(error) {
+	        cc.error("authenticate failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto loginFailedCallback = [](const NError& error)
-{
-};
+=== "C++"
+	```cpp
+	auto loginFailedCallback = [](const NError& error)
+	{
+	};
 
-auto loginSucceededCallback = [](NSessionPtr session)
-{
-  cout << "Successfully authenticated" << endl;
-};
+	auto loginSucceededCallback = [](NSessionPtr session)
+	{
+	  cout << "Successfully authenticated" << endl;
+	};
 
-std::string deviceId = "unique device id";
+	std::string deviceId = "unique device id";
 
-client->authenticateDevice(
-        deviceId,
-        opt::nullopt,
-        opt::nullopt,
-        {},
-        loginSucceededCallback,
-        loginFailedCallback);
-```
+	client->authenticateDevice(
+	        deviceId,
+	        opt::nullopt,
+	        opt::nullopt,
+	        {},
+	        loginSucceededCallback,
+	        loginFailedCallback);
+	```
 
-```java tab="Java"
-String id = UUID.randomUUID().toString();
-Session session = client.authenticateDevice(id).get();
-System.out.format("Session: %s ", session.getAuthToken());
-```
+=== "Java"
+	```java
+	String id = UUID.randomUUID().toString();
+	Session session = client.authenticateDevice(id).get();
+	System.out.format("Session: %s ", session.getAuthToken());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let defaults = UserDefaults.standard
-let deviceKey = "device_id"
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let defaults = UserDefaults.standard
+	let deviceKey = "device_id"
 
-var deviceId : String? = defaults.string(forKey: deviceKey)
-if deviceId == nil {
-  deviceId = UIDevice.current.identifierForVendor!.uuidString
-  defaults.set(deviceId!, forKey: deviceKey)
-}
+	var deviceId : String? = defaults.string(forKey: deviceKey)
+	if deviceId == nil {
+	  deviceId = UIDevice.current.identifierForVendor!.uuidString
+	  defaults.set(deviceId!, forKey: deviceKey)
+	}
 
-let message = AuthenticateMessage(device: deviceId!)
-client.login(with: message).then { session in
-  print("Login successful")
-}.catch{ err in
-  if (err is NakamaError) {
-    switch err as! NakamaError {
-    case .userNotFound(_):
-      let _ = self.client.register(with: message)
-      return
-    default:
-      break
-    }
-  }
-  print("Could not login: %@", err)
-}
-```
+	let message = AuthenticateMessage(device: deviceId!)
+	client.login(with: message).then { session in
+	  print("Login successful")
+	}.catch{ err in
+	  if (err is NakamaError) {
+	    switch err as! NakamaError {
+	    case .userNotFound(_):
+	      let _ = self.client.register(with: message)
+	      return
+	    default:
+	      break
+	    }
+	  }
+	  print("Could not login: %@", err)
+	}
+	```
 
-```gdscript tab="Godot"
-# Unique ID is not supported by Godot in HTML5, use a different way to generate an id, or a different authentication option.
-var deviceid = OS.get_unique_id()
-var session : NakamaSession = yield(client.authenticate_device_async(deviceid), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Successfully authenticated: %s" % session)
-```
+=== "Godot"
+	```gdscript
+	# Unique ID is not supported by Godot in HTML5, use a different way to generate an id, or a different authentication option.
+	var deviceid = OS.get_unique_id()
+	var session : NakamaSession = yield(client.authenticate_device_async(deviceid), "completed")
+	if session.is_exception():
+		print("An error occured: %s" % session)
+		return
+	print("Successfully authenticated: %s" % session)
+	```
 
-```tab="REST"
-POST /v2/account/authenticate/device?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+=== "REST"
+    ```
+	POST /v2/account/authenticate/device?create=true&username=mycustomusername
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Basic base64(ServerKey:)
 
-{
-    "id": "uniqueidentifier"
-}
-```
+	{
+	    "id": "uniqueidentifier"
+	}
+	```
 
 In games it is often a better option to use [Google](#google) or [Game Center](#game-center) to unobtrusively register the user.
 
@@ -251,122 +271,133 @@ You can choose a custom username when creating the account. To do this, set `use
 
 An email address must be valid as defined by RFC-5322 and passwords must be at least 8 characters.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername" \
-  --user 'defaultkey:' \
-  --data '{"email":"email@example.com", "password": "3bc8f72e95a9"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername" \
+	  --user 'defaultkey:' \
+	  --data '{"email":"email@example.com", "password": "3bc8f72e95a9"}'
+	```
 
-```js tab="JavaScript"
-const email = "email@example.com";
-const password = "3bc8f72e95a9";
-const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
-console.info("Successfully authenticated:", session);
-```
+=== "Javascript"
+	```js
+	const email = "email@example.com";
+	const password = "3bc8f72e95a9";
+	const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
+	console.info("Successfully authenticated:", session);
+	```
 
-```csharp tab=".NET"
-const string email = "email@example.com";
-const string password = "3bc8f72e95a9";
-var session = await client.AuthenticateEmailAsync(email, password);
-System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
-```
+=== ".NET"
+	```csharp
+	const string email = "email@example.com";
+	const string password = "3bc8f72e95a9";
+	var session = await client.AuthenticateEmailAsync(email, password);
+	System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+	```
 
-```csharp tab="Unity"
-const string email = "email@example.com";
-const string password = "3bc8f72e95a9";
-var session = await client.AuthenticateEmailAsync(email, password);
-Debug.LogFormat("New user: {0}, {1}", session.Created, session);
-```
+=== "Unity"
+	```csharp
+	const string email = "email@example.com";
+	const string password = "3bc8f72e95a9";
+	var session = await client.AuthenticateEmailAsync(email, password);
+	Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NSessionPtr session)
-{
-  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string email = "email@example.com";
-string password = "3bc8f72e95a9";
-string username = "mycustomusername";
-bool create = true;
-client->authenticateEmail(email, password, username, create, {}, successCallback, errorCallback);
-```
+	string email = "email@example.com";
+	string password = "3bc8f72e95a9";
+	string username = "mycustomusername";
+	bool create = true;
+	client->authenticateEmail(email, password, username, create, {}, successCallback, errorCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const email = "email@example.com";
-const password = "3bc8f72e95a9";
-client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
-  .then(function(session) {
-      cc.log("Authenticated successfully. User ID:", session.user_id);
-    },
-    function(error) {
-      cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const email = "email@example.com";
+	const password = "3bc8f72e95a9";
+	client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
+	  .then(function(session) {
+	      cc.log("Authenticated successfully. User ID:", session.user_id);
+	    },
+	    function(error) {
+	      cc.error("authenticate failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NSessionPtr session)
-{
-    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string email = "email@example.com";
-string password = "3bc8f72e95a9";
-string username = "mycustomusername";
-bool create = true;
-client->authenticateEmail(email, password, username, create, {}, successCallback, errorCallback);
-```
+	string email = "email@example.com";
+	string password = "3bc8f72e95a9";
+	string username = "mycustomusername";
+	bool create = true;
+	client->authenticateEmail(email, password, username, create, {}, successCallback, errorCallback);
+	```
 
-```java tab="Java"
-String email = "email@example.com";
-String password = "3bc8f72e95a9";
-Session session = client.authenticateEmail(email, password).get();
-System.out.format("Session: %s ", session.getAuthToken());
-```
+=== "Java"
+	```java
+	String email = "email@example.com";
+	String password = "3bc8f72e95a9";
+	Session session = client.authenticateEmail(email, password).get();
+	System.out.format("Session: %s ", session.getAuthToken());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let email = "email@example.com"
-let password = "3bc8f72e95a9"
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let email = "email@example.com"
+	let password = "3bc8f72e95a9"
 
-let message = AuthenticateMessage(email: email, password: password)
-client.register(with: message).then { session in
-  NSLog("Session: %@", session.token)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-// Use client.login(...) after register.
-```
+	let message = AuthenticateMessage(email: email, password: password)
+	client.register(with: message).then { session in
+	  NSLog("Session: %@", session.token)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	// Use client.login(...) after register.
+	```
 
-```gdscript tab="Godot"
-var email = "email@example.com"
-var password = "3bc8f72e95a9"
-var session : NakamaSession = yield(client.authenticate_email_async(email, password, "mycustomusername", true), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Successfully authenticated: %s" % session)
-```
+=== "Godot"
+	```gdscript
+	var email = "email@example.com"
+	var password = "3bc8f72e95a9"
+	var session : NakamaSession = yield(client.authenticate_email_async(email, password, "mycustomusername", true), "completed")
+	if session.is_exception():
+		print("An error occured: %s" % session)
+		return
+	print("Successfully authenticated: %s" % session)
+	```
 
-```tab="REST"
-POST /v2/account/authenticate/email?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+=== "REST"
+    ```
+	POST /v2/account/authenticate/email?create=true&username=mycustomusername
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Basic base64(ServerKey:)
 
-{
-    "email": "email@example.com",
-    "password": "3bc8f72e95a9"
-}
-```
+	{
+	    "email": "email@example.com",
+	    "password": "3bc8f72e95a9"
+	}
+	```
 
 ### Social providers
 
@@ -382,142 +413,154 @@ You can choose a custom username when creating the account. To do this, set `use
 
 You can optionally import Facebook friends into Nakama's [friend graph](social-friends.md) when authenticating. To do this, set `import` to true.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true" \
-  --user 'defaultkey:' \
-  --data '{"token":"valid-oauth-token"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true" \
+	  --user 'defaultkey:' \
+	  --data '{"token":"valid-oauth-token"}'
+	```
 
-```js tab="JavaScript"
-const oauthToken = "...";
-const session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true });
-console.log("Successfully authenticated:", session);
-```
+=== "Javascript"
+	```js
+	const oauthToken = "...";
+	const session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true });
+	console.log("Successfully authenticated:", session);
+	```
 
-```csharp tab=".NET"
-const string oauthToken = "...";
-var session = await client.AuthenticateFacebookAsync(oauthToken);
-System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
-```
+=== ".NET"
+	```csharp
+	const string oauthToken = "...";
+	var session = await client.AuthenticateFacebookAsync(oauthToken);
+	System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+	```
 
-```csharp tab="Unity"
-// using Facebook.Unity;
-// https://developers.facebook.com/docs/unity/examples#init
-var perms = new List<string>(){"public_profile", "email"};
-FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
-    if (FB.IsLoggedIn) {
-        var accessToken = Facebook.Unity.AccessToken.CurrentAccessToken;
-        var session = await client.LinkFacebookAsync(session, accessToken);
-        Debug.LogFormat("New user: {0}, {1}", session.Created, session);
-    }
-});
-```
+=== "Unity"
+	```csharp
+	// using Facebook.Unity;
+	// https://developers.facebook.com/docs/unity/examples#init
+	var perms = new List<string>(){"public_profile", "email"};
+	FB.LogInWithReadPermissions(perms, async (ILoginResult result) => {
+	    if (FB.IsLoggedIn) {
+	        var accessToken = Facebook.Unity.AccessToken.CurrentAccessToken;
+	        var session = await client.LinkFacebookAsync(session, accessToken);
+	        Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+	    }
+	});
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto loginFailedCallback = [](const NError& error)
-{
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto loginFailedCallback = [](const NError& error)
+	{
+	};
 
-auto loginSucceededCallback = [](NSessionPtr session)
-{
-  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
-};
+	auto loginSucceededCallback = [](NSessionPtr session)
+	{
+	  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+	};
 
-std::string oauthToken = "...";
-bool importFriends = true;
+	std::string oauthToken = "...";
+	bool importFriends = true;
 
-client->authenticateFacebook(
-        oauthToken,
-        "mycustomusername",
-        true,
-        importFriends,
-        {},
-        loginSucceededCallback,
-        loginFailedCallback);
-```
+	client->authenticateFacebook(
+	        oauthToken,
+	        "mycustomusername",
+	        true,
+	        importFriends,
+	        {},
+	        loginSucceededCallback,
+	        loginFailedCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const oauthToken = "...";
-client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
-  .then(function(session) {
-      cc.log("Authenticated successfully. User ID:", session.user_id);
-    },
-    function(error) {
-      cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const oauthToken = "...";
+	client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
+	  .then(function(session) {
+	      cc.log("Authenticated successfully. User ID:", session.user_id);
+	    },
+	    function(error) {
+	      cc.error("authenticate failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto loginFailedCallback = [](const NError& error)
-{
-};
+=== "C++"
+	```cpp
+	auto loginFailedCallback = [](const NError& error)
+	{
+	};
 
-auto loginSucceededCallback = [](NSessionPtr session)
-{
-  cout << "Authenticated successfully. User ID: " << session->getUserId() << endl;
-};
+	auto loginSucceededCallback = [](NSessionPtr session)
+	{
+	  cout << "Authenticated successfully. User ID: " << session->getUserId() << endl;
+	};
 
-std::string oauthToken = "...";
-bool importFriends = true;
+	std::string oauthToken = "...";
+	bool importFriends = true;
 
-client->authenticateFacebook(
-        oauthToken,
-        "mycustomusername",
-        true,
-        importFriends,
-        {},
-        loginSucceededCallback,
-        loginFailedCallback);
-```
+	client->authenticateFacebook(
+	        oauthToken,
+	        "mycustomusername",
+	        true,
+	        importFriends,
+	        {},
+	        loginSucceededCallback,
+	        loginFailedCallback);
+	```
 
-```java tab="Java"
-String oauthToken = "...";
-Session session = client.authenticateFacebook(oauthToken).get();
-System.out.format("Session %s", session.getAuthToken());
-```
+=== "Java"
+	```java
+	String oauthToken = "...";
+	Session session = client.authenticateFacebook(oauthToken).get();
+	System.out.format("Session %s", session.getAuthToken());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let oauthToken = "..."
-let message = AuthenticateMessage(facebook: oauthToken)
-client.register(with: message).then { session in
-  NSLog("Session: %@", session.token)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let oauthToken = "..."
+	let message = AuthenticateMessage(facebook: oauthToken)
+	client.register(with: message).then { session in
+	  NSLog("Session: %@", session.token)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var oauth_token = "..."
-var session : NakamaSession = yield(client.authenticate_facebook_async(oauth_token), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Successfully authenticated: %s" % session)
-```
+=== "Godot"
+	```gdscript
+	var oauth_token = "..."
+	var session : NakamaSession = yield(client.authenticate_facebook_async(oauth_token), "completed")
+	if session.is_exception():
+		print("An error occured: %s" % session)
+		return
+	print("Successfully authenticated: %s" % session)
+	```
 
-```tab="REST"
-POST /v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+=== "REST"
+    ```
+	POST /v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Basic base64(ServerKey:)
 
-{
-  "token": "...",
-}
-```
+	{
+	  "token": "...",
+	}
+	```
 
 You can add a button to your UI to login with Facebook.
 
-```csharp tab="Unity"
-FB.Login("email", (ILoginResult result) => {
-  if (FB.IsLoggedIn) {
-    var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
-    var session = await client.LinkFacebookAsync(session, accesstoken);
-    Debug.LogFormat("Session: '{0}'.", session.AuthToken);
-});
-```
+=== "Unity"
+	```csharp
+	FB.Login("email", (ILoginResult result) => {
+	  if (FB.IsLoggedIn) {
+	    var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
+	    var session = await client.LinkFacebookAsync(session, accesstoken);
+	    Debug.LogFormat("Session: '{0}'.", session.AuthToken);
+	});
+	```
 
 #### Facebook Instant
 
@@ -538,106 +581,117 @@ Similar to Facebook for register and login you should use one of Google's client
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername" \
-  --user 'defaultkey:' \
-  --data '{"token":"valid-oauth-token"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/authenticate/google?create=true&username=mycustomusername" \
+	  --user 'defaultkey:' \
+	  --data '{"token":"valid-oauth-token"}'
+	```
 
-```js tab="JavaScript"
-const playerIdToken = "...";
-const session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" });
-console.info("Successfully authenticated: %o", session);
-```
+=== "Javascript"
+	```js
+	const playerIdToken = "...";
+	const session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" });
+	console.info("Successfully authenticated: %o", session);
+	```
 
-```csharp tab=".NET"
-const string playerIdToken = "...";
-var session = await client.AuthenticateGoogleAsync(playerIdToken);
-System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
-```
+=== ".NET"
+	```csharp
+	const string playerIdToken = "...";
+	var session = await client.AuthenticateGoogleAsync(playerIdToken);
+	System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+	```
 
-```csharp tab="Unity"
-const string playerIdToken = "...";
-var session = await client.AuthenticateGoogleAsync(playerIdToken);
-Debug.LogFormat("New user: {0}, {1}", session.Created, session);
-```
+=== "Unity"
+	```csharp
+	const string playerIdToken = "...";
+	var session = await client.AuthenticateGoogleAsync(playerIdToken);
+	Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NSessionPtr session)
-{
-  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string oauthToken = "...";
-client->authenticateGoogle(oauthToken, "mycustomusername", true, {}, successCallback, errorCallback);
-```
+	string oauthToken = "...";
+	client->authenticateGoogle(oauthToken, "mycustomusername", true, {}, successCallback, errorCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const oauthToken = "...";
-client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" })
-  .then(function(session) {
-      cc.log("Authenticated successfully. User ID:", session.user_id);
-    },
-    function(error) {
-      cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const oauthToken = "...";
+	client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" })
+	  .then(function(session) {
+	      cc.log("Authenticated successfully. User ID:", session.user_id);
+	    },
+	    function(error) {
+	      cc.error("authenticate failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NSessionPtr session)
-{
-    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string oauthToken = "...";
-client->authenticateGoogle(oauthToken, "mycustomusername", true, {}, successCallback, errorCallback);
-```
+	string oauthToken = "...";
+	client->authenticateGoogle(oauthToken, "mycustomusername", true, {}, successCallback, errorCallback);
+	```
 
-```java tab="Java"
-String playerIdToken = "...";
-Session session = client.authenticateGoogle(oauthToken).get();
-System.out.format("Session %s", session.getAuthToken());
-```
+=== "Java"
+	```java
+	String playerIdToken = "...";
+	Session session = client.authenticateGoogle(oauthToken).get();
+	System.out.format("Session %s", session.getAuthToken());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let playerIdToken = "..."
-let message = AuthenticateMessage(google: oauthToken)
-client.register(with: message).then { session in
-  NSLog("Session: %@", session.token)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let playerIdToken = "..."
+	let message = AuthenticateMessage(google: oauthToken)
+	client.register(with: message).then { session in
+	  NSLog("Session: %@", session.token)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var oauth_token = "..."
-var session : NakamaSession = yield(client.authenticate_google_async(oauth_token), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Successfully authenticated: %s" % session)
-```
+=== "Godot"
+	```gdscript
+	var oauth_token = "..."
+	var session : NakamaSession = yield(client.authenticate_google_async(oauth_token), "completed")
+	if session.is_exception():
+		print("An error occured: %s" % session)
+		return
+	print("Successfully authenticated: %s" % session)
+	```
 
-```tab="REST"
-POST /v2/account/authenticate/google?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+=== "REST"
+    ```
+	POST /v2/account/authenticate/google?create=true&username=mycustomusername
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Basic base64(ServerKey:)
 
-{
-  "token": "...",
-}
-```
+	{
+	  "token": "...",
+	}
+	```
 
 #### Game Center
 
@@ -645,180 +699,189 @@ Apple devices have builtin authentication which can be done without user interac
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername" \
-  --user 'defaultkey:' \
-  --data '{"player_id":"...", "bundle_id":"...", "timestamp_seconds":0, "salt":"...", "public_key_url":"..."}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/authenticate/gamecenter?create=true&username=mycustomusername" \
+	  --user 'defaultkey:' \
+	  --data '{"player_id":"...", "bundle_id":"...", "timestamp_seconds":0, "salt":"...", "public_key_url":"..."}'
+	```
 
-```csharp tab=".NET"
-var bundleId = "...";
-var playerId = "...";
-var publicKeyUrl = "...";
-var salt = "...";
-var signature = "...";
-var timestamp = "...";
-var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
-    publicKeyUrl, salt, signature, timestamp);
-System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
-```
+=== ".NET"
+	```csharp
+	var bundleId = "...";
+	var playerId = "...";
+	var publicKeyUrl = "...";
+	var salt = "...";
+	var signature = "...";
+	var timestamp = "...";
+	var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
+	    publicKeyUrl, salt, signature, timestamp);
+	System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+	```
 
-```csharp tab="Unity"
-// You'll need to use native code (Obj-C) with Unity.
-// The "UnityEngine.SocialPlatforms.GameCenter" doesn't give enough information
-// to enable authentication.
+=== "Unity"
+	```csharp
+	// You'll need to use native code (Obj-C) with Unity.
+	// The "UnityEngine.SocialPlatforms.GameCenter" doesn't give enough information
+	// to enable authentication.
 
-// We recommend you use a library which handles native Game Center auth like
-// https://github.com/desertkun/GameCenterAuth
+	// We recommend you use a library which handles native Game Center auth like
+	// https://github.com/desertkun/GameCenterAuth
 
-var bundleId = "...";
-var playerId = "...";
-var publicKeyUrl = "...";
-var salt = "...";
-var signature = "...";
-var timestamp = "...";
-var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
-    publicKeyUrl, salt, signature, timestamp);
-Debug.LogFormat("New user: {0}, {1}", session.Created, session);
-```
+	var bundleId = "...";
+	var playerId = "...";
+	var publicKeyUrl = "...";
+	var salt = "...";
+	var signature = "...";
+	var timestamp = "...";
+	var session = await client.AuthenticateGameCenterAsync(bundleId, playerId,
+	    publicKeyUrl, salt, signature, timestamp);
+	Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NSessionPtr session)
-{
-  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-std::string playerId = "...";
-std::string	bundleId = "...";
-NTimestamp timestampSeconds = "...";
-std::string salt = "...";
-std::string signature = "...";
-std::string publicKeyUrl = "...";
+	std::string playerId = "...";
+	std::string	bundleId = "...";
+	NTimestamp timestampSeconds = "...";
+	std::string salt = "...";
+	std::string signature = "...";
+	std::string publicKeyUrl = "...";
 
-client->authenticateGameCenter(
-  playerId,
-  bundleId,
-  timestampSeconds,
-  salt,
-  signature,
-  publicKeyUrl,
-  "mycustomusername",
-  true,
-  {},
-  successCallback,
-  errorCallback);
-```
+	client->authenticateGameCenter(
+	  playerId,
+	  bundleId,
+	  timestampSeconds,
+	  salt,
+	  signature,
+	  publicKeyUrl,
+	  "mycustomusername",
+	  true,
+	  {},
+	  successCallback,
+	  errorCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const player_id = "...";
-const bundle_id = "...";
-const timestamp_seconds = "...";
-const salt = "...";
-const signature = "...";
-const public_key_url = "...";
-client.authenticateGameCenter({
-  player_id: player_id,
-  bundle_id: bundle_id,
-  password: password,
-  timestamp_seconds: timestamp_seconds,
-  salt: salt,
-  signature: signature,
-  public_key_url: public_key_url,
-  username: "mycustomusername",
-  create: true
-}).then(function(session) {
-      cc.log("Authenticated successfully. User ID:", session.user_id);
-    },
-    function(error) {
-      cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const player_id = "...";
+	const bundle_id = "...";
+	const timestamp_seconds = "...";
+	const salt = "...";
+	const signature = "...";
+	const public_key_url = "...";
+	client.authenticateGameCenter({
+	  player_id: player_id,
+	  bundle_id: bundle_id,
+	  password: password,
+	  timestamp_seconds: timestamp_seconds,
+	  salt: salt,
+	  signature: signature,
+	  public_key_url: public_key_url,
+	  username: "mycustomusername",
+	  create: true
+	}).then(function(session) {
+	      cc.log("Authenticated successfully. User ID:", session.user_id);
+	    },
+	    function(error) {
+	      cc.error("authenticate failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NSessionPtr session)
-{
-    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-std::string playerId = "...";
-std::string	bundleId = "...";
-NTimestamp timestampSeconds = "...";
-std::string salt = "...";
-std::string signature = "...";
-std::string publicKeyUrl = "...";
+	std::string playerId = "...";
+	std::string	bundleId = "...";
+	NTimestamp timestampSeconds = "...";
+	std::string salt = "...";
+	std::string signature = "...";
+	std::string publicKeyUrl = "...";
 
-client->authenticateGameCenter(
-  playerId,
-  bundleId,
-  timestampSeconds,
-  salt,
-  signature,
-  publicKeyUrl,
-  "mycustomusername",
-  true,
-  {},
-  successCallback,
-  errorCallback);
-```
+	client->authenticateGameCenter(
+	  playerId,
+	  bundleId,
+	  timestampSeconds,
+	  salt,
+	  signature,
+	  publicKeyUrl,
+	  "mycustomusername",
+	  true,
+	  {},
+	  successCallback,
+	  errorCallback);
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let playerID : String = "..."
-let bundleID : String = "..."
-let base64salt : String = "..."
-let base64signature : String = "..."
-let publicKeyURL : String = "..."
-let timestamp : Int = 0
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let playerID : String = "..."
+	let bundleID : String = "..."
+	let base64salt : String = "..."
+	let base64signature : String = "..."
+	let publicKeyURL : String = "..."
+	let timestamp : Int = 0
 
-let message = AuthenticateMessage(
-    gamecenter: bundleID, playerID: playerID, publicKeyURL: publicKeyURL,
-    salt: base64salt, timestamp: timestamp, signature: base64signature)
-client.register(with: message).then { session in
-  NSLog("Session: %@", session.token)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-// Use client.login(...) after register.
-```
+	let message = AuthenticateMessage(
+	    gamecenter: bundleID, playerID: playerID, publicKeyURL: publicKeyURL,
+	    salt: base64salt, timestamp: timestamp, signature: base64signature)
+	client.register(with: message).then { session in
+	  NSLog("Session: %@", session.token)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	// Use client.login(...) after register.
+	```
 
-```gdscript tab="Godot"
-var bundle_id = "..."
-var player_id = "..."
-var public_key_url = "..."
-var salt = "..."
-var signature = "..."
-var timestamp = "..."
-var session : NakamaSession = yield(client.authenticate_game_center_async(bundle_id, player_id, public_key_url, salt, signature, timestamp), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Successfully authenticated: %s" % session)
-```
+=== "Godot"
+	```gdscript
+	var bundle_id = "..."
+	var player_id = "..."
+	var public_key_url = "..."
+	var salt = "..."
+	var signature = "..."
+	var timestamp = "..."
+	var session : NakamaSession = yield(client.authenticate_game_center_async(bundle_id, player_id, public_key_url, salt, signature, timestamp), "completed")
+	if session.is_exception():
+		print("An error occured: %s" % session)
+		return
+	print("Successfully authenticated: %s" % session)
+	```
 
-```tab="REST"
-POST /v2/account/authenticate/gamecenter?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+=== "REST"
+    ```
+	POST /v2/account/authenticate/gamecenter?create=true&username=mycustomusername
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Basic base64(ServerKey:)
 
-{
-  "player_id": "...",
-  "bundle_id": "...",
-  "timestamp_seconds": 0,
-  "salt": "...",
-  "signature": "...",
-  "public_key_url": "..."
-}
-```
+	{
+	  "player_id": "...",
+	  "bundle_id": "...",
+	  "timestamp_seconds": 0,
+	  "salt": "...",
+	  "signature": "...",
+	  "public_key_url": "..."
+	}
+	```
 
 #### Steam
 
@@ -829,105 +892,115 @@ Steam requires you to configure the server before you can register a user.
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername" \
-  --user 'defaultkey' \
-  --data '{"token":"valid-steam-token"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/authenticate/steam?create=true&username=mycustomusername" \
+	  --user 'defaultkey' \
+	  --data '{"token":"valid-steam-token"}'
+	```
 
-```csharp tab=".NET"
-const string token = "...";
-var session = await client.AuthenticateSteamAsync(token);
-System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
-```
+=== ".NET"
+	```csharp
+	const string token = "...";
+	var session = await client.AuthenticateSteamAsync(token);
+	System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+	```
 
-```csharp tab="Unity"
-const string token = "...";
-var session = await client.AuthenticateSteamAsync(token);
-Debug.LogFormat("New user: {0}, {1}", session.Created, session);
-```
+=== "Unity"
+	```csharp
+	const string token = "...";
+	var session = await client.AuthenticateSteamAsync(token);
+	Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NSessionPtr session)
-{
-  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string token = "...";
-string username = "mycustomusername";
-bool create = true;
-client->authenticateSteam(token, username, create, {}, successCallback, errorCallback);
-```
+	string token = "...";
+	string username = "mycustomusername";
+	bool create = true;
+	client->authenticateSteam(token, username, create, {}, successCallback, errorCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const token = "...";
-client.authenticateSteam({ token: token, create: true, username: "mycustomusername" })
-  .then(function(session) {
-      cc.log("Authenticated successfully. User ID:", session.user_id);
-    },
-    function(error) {
-      cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const token = "...";
+	client.authenticateSteam({ token: token, create: true, username: "mycustomusername" })
+	  .then(function(session) {
+	      cc.log("Authenticated successfully. User ID:", session.user_id);
+	    },
+	    function(error) {
+	      cc.error("authenticate failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NSessionPtr session)
-{
-    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string token = "...";
-string username = "mycustomusername";
-bool create = true;
-client->authenticateSteam(token, username, create, {}, successCallback, errorCallback);
-```
+	string token = "...";
+	string username = "mycustomusername";
+	bool create = true;
+	client->authenticateSteam(token, username, create, {}, successCallback, errorCallback);
+	```
 
-```java tab="Java"
-String token = "...";
-Session session = client.authenticateSteam(token).get();
-System.out.format("Session %s", session.getAuthToken());
-```
+=== "Java"
+	```java
+	String token = "...";
+	Session session = client.authenticateSteam(token).get();
+	System.out.format("Session %s", session.getAuthToken());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let sessionToken = "..."
-let message = AuthenticateMessage(steam: sessionToken)
-client.register(with: message).then { session in
-  NSLog("Session: %@", session.token)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-// Use client.login(...) after register.
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let sessionToken = "..."
+	let message = AuthenticateMessage(steam: sessionToken)
+	client.register(with: message).then { session in
+	  NSLog("Session: %@", session.token)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	// Use client.login(...) after register.
+	```
 
-```gdscript tab="Godot"
-var steam_token = "..."
-var session : NakamaSession = yield(client.authenticate_steam_async(steam_token), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Successfully authenticated: %s" % session)
-```
+=== "Godot"
+	```gdscript
+	var steam_token = "..."
+	var session : NakamaSession = yield(client.authenticate_steam_async(steam_token), "completed")
+	if session.is_exception():
+		print("An error occured: %s" % session)
+		return
+	print("Successfully authenticated: %s" % session)
+	```
 
-```tab="REST"
-POST /v2/account/authenticate/steam?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+=== "REST"
+    ```
+	POST /v2/account/authenticate/steam?create=true&username=mycustomusername
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Basic base64(ServerKey:)
 
-{
-  "token": "...",
-}
-```
+	{
+	  "token": "...",
+	}
+	```
 
 ### Custom
 
@@ -937,112 +1010,123 @@ A custom identifier must contain alphanumeric characters with dashes and be betw
 
 You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
-  --user 'defaultkey:' \
-  --data '{"id":"some-custom-id"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/authenticate/custom?create=true&username=mycustomusername" \
+	  --user 'defaultkey:' \
+	  --data '{"id":"some-custom-id"}'
+	```
 
-```js tab="JavaScript"
-const customId = "some-custom-id";
-const session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" });
-console.info("Successfully authenticated:", session);
-```
+=== "Javascript"
+	```js
+	const customId = "some-custom-id";
+	const session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" });
+	console.info("Successfully authenticated:", session);
+	```
 
-```csharp tab=".NET"
-const string customId = "some-custom-id";
-var session = await client.AuthenticateCustomAsync(customId);
-System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
-```
+=== ".NET"
+	```csharp
+	const string customId = "some-custom-id";
+	var session = await client.AuthenticateCustomAsync(customId);
+	System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+	```
 
-```csharp tab="Unity"
-const string customId = "some-custom-id";
-var session = await client.AuthenticateCustomAsync(customId);
-Debug.LogFormat("New user: {0}, {1}", session.Created, session);
-```
+=== "Unity"
+	```csharp
+	const string customId = "some-custom-id";
+	var session = await client.AuthenticateCustomAsync(customId);
+	Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto successCallback = [](NSessionPtr session)
-{
-  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	  CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string id = "some-custom-id";
-string username = "mycustomusername";
-bool create = true;
-client->authenticateCustom(id, username, create, {}, successCallback, errorCallback);
-```
+	string id = "some-custom-id";
+	string username = "mycustomusername";
+	bool create = true;
+	client->authenticateCustom(id, username, create, {}, successCallback, errorCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const customId = "some-custom-id";
-client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" })
-  .then(function(session) {
-      cc.log("Authenticated successfully. User ID:", session.user_id);
-    },
-    function(error) {
-      cc.error("authenticate failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const customId = "some-custom-id";
+	client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" })
+	  .then(function(session) {
+	      cc.log("Authenticated successfully. User ID:", session.user_id);
+	    },
+	    function(error) {
+	      cc.error("authenticate failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto successCallback = [](NSessionPtr session)
-{
-    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
-};
+=== "C++"
+	```cpp
+	auto successCallback = [](NSessionPtr session)
+	{
+	    std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+	};
 
-auto errorCallback = [](const NError& error)
-{
-};
+	auto errorCallback = [](const NError& error)
+	{
+	};
 
-string id = "some-custom-id";
-string username = "mycustomusername";
-bool create = true;
-client->authenticateCustom(id, username, create, {}, successCallback, errorCallback);
-```
+	string id = "some-custom-id";
+	string username = "mycustomusername";
+	bool create = true;
+	client->authenticateCustom(id, username, create, {}, successCallback, errorCallback);
+	```
 
-```java tab="Java"
-String customId = "some-custom-id";
-Session session = client.authenticateCustom(customId).get();
-System.out.format("Session %s", session.getAuthToken());
-```
+=== "Java"
+	```java
+	String customId = "some-custom-id";
+	Session session = client.authenticateCustom(customId).get();
+	System.out.format("Session %s", session.getAuthToken());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let customID = "some-custom-id"
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let customID = "some-custom-id"
 
-let message = AuthenticateMessage(custom: customID)
-client.register(with: message).then { session in
-  NSLog("Session: %@", session.token)
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-// Use client.login(...) after register.
-```
+	let message = AuthenticateMessage(custom: customID)
+	client.register(with: message).then { session in
+	  NSLog("Session: %@", session.token)
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	// Use client.login(...) after register.
+	```
 
-```gdscript tab="Godot"
-var custom_id = "some-custom-id"
-var session : NakamaSession = yield(client.authenticate_custom_async(custom_id), "completed")
-if session.is_exception():
-	print("An error occured: %s" % session)
-	return
-print("Successfully authenticated: %s" % session)
-```
+=== "Godot"
+	```gdscript
+	var custom_id = "some-custom-id"
+	var session : NakamaSession = yield(client.authenticate_custom_async(custom_id), "completed")
+	if session.is_exception():
+		print("An error occured: %s" % session)
+		return
+	print("Successfully authenticated: %s" % session)
+	```
 
-```tab="REST"
-POST /v2/account/authenticate/custom?create=true&username=mycustomusername
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Basic base64(ServerKey:)
+=== "REST"
+    ```
+	POST /v2/account/authenticate/custom?create=true&username=mycustomusername
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Basic base64(ServerKey:)
 
-{
-  "id": "some-custom-id",
-}
-```
+	{
+	  "id": "some-custom-id",
+	}
+	```
 
 ## Session
 
@@ -1055,92 +1139,100 @@ When an authentication call succeeds, the server responds with a [session](/sess
 
 Once the client obtains the session object, you can utilize Nakama's realtime features such as [multiplayer](/gameplay-multiplayer-realtime), [notifications](/social-in-app-notifications) and [status updates](/social-status), [passing stream data](/advanced-streams) or [real-time chat](/social-realtime-chat).
 
+=== "Javascript"
+	```js
+	var socket = client.createSocket();
+	session = await socket.connect(session);
+	console.info("Socket connected.");
+	```
 
-```js tab="JavaScript"
-var socket = client.createSocket();
-session = await socket.connect(session);
-console.info("Socket connected.");
-```
+=== ".NET"
+	```csharp
+	var socket = Socket.From(client);
+	await socket.ConnectAsync(session);
+	System.Console.WriteLine("Socket connected.");
+	```
 
-```csharp tab=".NET"
-var socket = Socket.From(client);
-await socket.ConnectAsync(session);
-System.Console.WriteLine("Socket connected.");
-```
+=== "Unity"
+	```csharp
+	var socket = client.NewSocket();
+	await socket.ConnectAsync(session);
+	Debug.Log("Socket connected.");
+	```
 
-```csharp tab="Unity"
-var socket = client.NewSocket();
-await socket.ConnectAsync(session);
-Debug.Log("Socket connected.");
-```
+=== "Cocos2d-x C++"
+	```cpp
+	#include "NakamaCocos2d/NWebSocket.h"
 
-```cpp tab="Cocos2d-x C++"
-#include "NakamaCocos2d/NWebSocket.h"
+	int port = 7350; // different port to the main API port
+	bool createStatus = true; // if the server should show the user as online to others.
+	// define realtime client in your class as NRtClientPtr rtClient;
+	rtClient = client->createRtClient(port, NRtTransportPtr(new NWebSocket()));
+	// define listener in your class as NRtDefaultClientListener listener;
+	listener.setConnectCallback([]()
+	{
+	  CCLOG("Socket connected.");
+	});
+	rtClient->setListener(&listener);
+	rtClient->connect(session, createStatus);
+	```
 
-int port = 7350; // different port to the main API port
-bool createStatus = true; // if the server should show the user as online to others.
-// define realtime client in your class as NRtClientPtr rtClient;
-rtClient = client->createRtClient(port, NRtTransportPtr(new NWebSocket()));
-// define listener in your class as NRtDefaultClientListener listener;
-listener.setConnectCallback([]()
-{
-  CCLOG("Socket connected.");
-});
-rtClient->setListener(&listener);
-rtClient->connect(session, createStatus);
-```
+=== "Cocos2d-x JS"
+	```js
+	const socket = client.createSocket();
+	socket.connect(session)
+	  .then(
+	      function() {
+	        cc.log("Socket connected.");
+	      },
+	      function(error) {
+	        cc.error("connect failed:", JSON.stringify(error));
+	      }
+	    );
+	```
 
-```js tab="Cocos2d-x JS"
-const socket = client.createSocket();
-socket.connect(session)
-  .then(
-      function() {
-        cc.log("Socket connected.");
-      },
-      function(error) {
-        cc.error("connect failed:", JSON.stringify(error));
-      }
-    );
-```
+=== "C++"
+	```cpp
+	int port = 7350; // different port to the main API port
+	bool createStatus = true; // if the server should show the user as online to others.
+	// define realtime client in your class as NRtClientPtr rtClient;
+	rtClient = client->createRtClient(port);
+	// define listener in your class as NRtDefaultClientListener listener;
+	listener.setConnectCallback([]()
+	{
+	  cout << "Socket connected." << endl;
+	});
+	rtClient->setListener(&listener);
+	rtClient->connect(session, createStatus);
+	```
 
-```cpp tab="C++"
-int port = 7350; // different port to the main API port
-bool createStatus = true; // if the server should show the user as online to others.
-// define realtime client in your class as NRtClientPtr rtClient;
-rtClient = client->createRtClient(port);
-// define listener in your class as NRtDefaultClientListener listener;
-listener.setConnectCallback([]()
-{
-  cout << "Socket connected." << endl;
-});
-rtClient->setListener(&listener);
-rtClient->connect(session, createStatus);
-```
+=== "Java"
+	```java
+	SocketClient socket = client.createSocket();
+	socket.connect(session, new AbstractSocketListener() {}).get();
+	```
 
-```java tab="Java"
-SocketClient socket = client.createSocket();
-socket.connect(session, new AbstractSocketListener() {}).get();
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let session : Session = someSession // obtained from register or login.
+	client.connect(with: session).then { _ in
+	  NSLog("Socket connected.")
+	});
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let session : Session = someSession // obtained from register or login.
-client.connect(with: session).then { _ in
-  NSLog("Socket connected.")
-});
-```
+=== "Godot"
+	```gdscript
+	# Make this a node variable, or it will disconnect when the function that creates it returns.
+	onready var socket := Nakama.create_socket_from(client)
 
-```gdscript tab="Godot"
-# Make this a node variable, or it will disconnect when the function that creates it returns.
-onready var socket := Nakama.create_socket_from(client)
-
-func _ready():
-	var connected : NakamaAsyncResult = yield(socket.connect_async(session), "completed")
-	if connected.is_exception():
-		print("An error occured: %s" % connected)
-		return
-	print("Socket connected.")
-```
+	func _ready():
+		var connected : NakamaAsyncResult = yield(socket.connect_async(session), "completed")
+		if connected.is_exception():
+			print("An error occured: %s" % connected)
+			return
+		print("Socket connected.")
+	```
 
 ## Link or unlink
 
@@ -1148,214 +1240,236 @@ You can link one or more other login option to the current user. This makes it e
 
 You can only link device Ids, custom Ids, and social provider IDs which are not already in-use with another user account.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/link/custom" \
-  --header 'Authorization: Bearer $session' \
-  --data '{"id":"some-custom-id"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/link/custom" \
+	  --header 'Authorization: Bearer $session' \
+	  --data '{"id":"some-custom-id"}'
+	```
 
-```js tab="JavaScript"
-const customId = "some-custom-id";
-const success = await client.linkCustom(session, { id: customId });
-console.log("Successfully linked custom ID to current user.");
-```
+=== "Javascript"
+	```js
+	const customId = "some-custom-id";
+	const success = await client.linkCustom(session, { id: customId });
+	console.log("Successfully linked custom ID to current user.");
+	```
 
-```csharp tab=".NET"
-const string customId = "some-custom-id";
-await client.LinkCustomAsync(session, customId);
-System.Console.WriteLine("Id '{0}' linked for user '{1}'", customId, session.UserId);
-```
+=== ".NET"
+	```csharp
+	const string customId = "some-custom-id";
+	await client.LinkCustomAsync(session, customId);
+	System.Console.WriteLine("Id '{0}' linked for user '{1}'", customId, session.UserId);
+	```
 
-```csharp tab="Unity"
-const string customid = "some-custom-id";
-await client.LinkCustomAsync(session, customId);
-Debug.LogFormat("Id '{0}' linked for user '{1}'", customId, session.UserId);
-```
+=== "Unity"
+	```csharp
+	const string customid = "some-custom-id";
+	await client.LinkCustomAsync(session, customId);
+	Debug.LogFormat("Id '{0}' linked for user '{1}'", customId, session.UserId);
+	```
 
-```cpp tab="Cocos2d-x C++"
-auto linkFailedCallback = [](const NError& error)
-{
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto linkFailedCallback = [](const NError& error)
+	{
+	};
 
-auto linkSucceededCallback = []()
-{
-  CCLOG("Linked successfully");
-};
+	auto linkSucceededCallback = []()
+	{
+	  CCLOG("Linked successfully");
+	};
 
-std::string customid = "some-custom-id";
+	std::string customid = "some-custom-id";
 
-client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
-```
+	client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const customId = "some-custom-id";
-client.linkCustom(session, { id: customId })
-  .then(function() {
-      cc.log("Linked successfully");
-    },
-    function(error) {
-      cc.error("link failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const customId = "some-custom-id";
+	client.linkCustom(session, { id: customId })
+	  .then(function() {
+	      cc.log("Linked successfully");
+	    },
+	    function(error) {
+	      cc.error("link failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto linkFailedCallback = [](const NError& error)
-{
-};
+=== "C++"
+	```cpp
+	auto linkFailedCallback = [](const NError& error)
+	{
+	};
 
-auto linkSucceededCallback = []()
-{
-  cout << "Linked successfully" << endl;
-};
+	auto linkSucceededCallback = []()
+	{
+	  cout << "Linked successfully" << endl;
+	};
 
-std::string customid = "some-custom-id";
+	std::string customid = "some-custom-id";
 
-client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
-```
+	client->linkCustom(customid, linkSucceededCallback, linkFailedCallback);
+	```
 
-```java tab="Java"
-String customId = "some-custom-id";
-client.linkCustom(session, customId).get();
-System.out.format("Id %s linked for user %s", customId, session.getUserId());
-```
+=== "Java"
+	```java
+	String customId = "some-custom-id";
+	client.linkCustom(session, customId).get();
+	System.out.format("Id %s linked for user %s", customId, session.getUserId());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = "some-custom-id"
-var message = SelfLinkMessage(device: id);
-client.send(with: message).then {
-  NSLog("Successfully linked device ID to current user.")
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let id = "some-custom-id"
+	var message = SelfLinkMessage(device: id);
+	client.send(with: message).then {
+	  NSLog("Successfully linked device ID to current user.")
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var custom_id = "some-custom-id"
-var linked : NakamaAsyncResult = yield(client.link_custom_async(session, custom_id), "completed")
-if linked.is_exception():
-	print("An error occured: %s" % linked)
-	return
-print("Id '%s' linked for user '%s'" % [custom_id, session.user_id])
-```
+=== "Godot"
+	```gdscript
+	var custom_id = "some-custom-id"
+	var linked : NakamaAsyncResult = yield(client.link_custom_async(session, custom_id), "completed")
+	if linked.is_exception():
+		print("An error occured: %s" % linked)
+		return
+	print("Id '%s' linked for user '%s'" % [custom_id, session.user_id])
+	```
 
-```tab="REST"
-POST /v2/account/link/custom
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+=== "REST"
+    ```
+	POST /v2/account/link/custom
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
 
-{
-    "id":"some-custom-id"
-}
-```
+	{
+	    "id":"some-custom-id"
+	}
+	```
 
 You can unlink any linked login options for the current user.
 
-```sh tab="cURL"
-curl "http://127.0.0.1:7350/v2/account/unlink/custom" \
-  --header 'Authorization: Bearer $session' \
-  --data '{"id":"some-custom-id"}'
-```
+=== "cURL"
+	```sh
+	curl "http://127.0.0.1:7350/v2/account/unlink/custom" \
+	  --header 'Authorization: Bearer $session' \
+	  --data '{"id":"some-custom-id"}'
+	```
 
-```js tab="JavaScript"
-const customId = "some-custom-id";
-const success = await client.unlinkCustom(session, { id: customId });
-console.info("Successfully unlinked custom ID from the current user.");
-```
+=== "Javascript"
+	```js
+	const customId = "some-custom-id";
+	const success = await client.unlinkCustom(session, { id: customId });
+	console.info("Successfully unlinked custom ID from the current user.");
+	```
 
-```csharp tab=".NET"
-const string customId = "some-custom-id";
-await client.UnlinkCustomAsync(session, customId);
-System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
-```
+=== ".NET"
+	```csharp
+	const string customId = "some-custom-id";
+	await client.UnlinkCustomAsync(session, customId);
+	System.Console.WriteLine("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
+	```
 
-```csharp tab="Unity"
-const string customId = "some-custom-id";
-await client.UnlinkCustomAsync(session, customId);
-Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
-```
+=== "Unity"
+	```csharp
+	const string customId = "some-custom-id";
+	await client.UnlinkCustomAsync(session, customId);
+	Debug.LogFormat("Id '{0}' unlinked for user '{1}'", customId, session.UserId);
+	```
 
 
-```cpp tab="Cocos2d-x C++"
-auto unlinkFailedCallback = [](const NError& error)
-{
-};
+=== "Cocos2d-x C++"
+	```cpp
+	auto unlinkFailedCallback = [](const NError& error)
+	{
+	};
 
-auto unlinkSucceededCallback = []()
-{
-  CCLOG("Successfully unlinked custom ID from the current user.");
-};
+	auto unlinkSucceededCallback = []()
+	{
+	  CCLOG("Successfully unlinked custom ID from the current user.");
+	};
 
-std::string customid = "some-custom-id";
+	std::string customid = "some-custom-id";
 
-client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
-```
+	client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
+	```
 
-```js tab="Cocos2d-x JS"
-const customId = "some-custom-id";
-client.unlinkCustom(session, { id: customId })
-  .then(function() {
-      cc.log("Successfully unlinked custom ID from the current user.");
-    },
-    function(error) {
-      cc.error("unlink failed:", JSON.stringify(error));
-    });
-```
+=== "Cocos2d-x JS"
+	```js
+	const customId = "some-custom-id";
+	client.unlinkCustom(session, { id: customId })
+	  .then(function() {
+	      cc.log("Successfully unlinked custom ID from the current user.");
+	    },
+	    function(error) {
+	      cc.error("unlink failed:", JSON.stringify(error));
+	    });
+	```
 
-```cpp tab="C++"
-auto unlinkFailedCallback = [](const NError& error)
-{
-};
+=== "C++"
+	```cpp
+	auto unlinkFailedCallback = [](const NError& error)
+	{
+	};
 
-auto unlinkSucceededCallback = []()
-{
-  cout << "Successfully unlinked custom ID from the current user." << endl;
-};
+	auto unlinkSucceededCallback = []()
+	{
+	  cout << "Successfully unlinked custom ID from the current user." << endl;
+	};
 
-std::string customid = "some-custom-id";
+	std::string customid = "some-custom-id";
 
-client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
-```
+	client->unlinkCustom(customid, unlinkSucceededCallback, unlinkFailedCallback);
+	```
 
-```java tab="Java"
-String customId = "some-custom-id";
-client.unlinkCustom(session, customId).get();
-System.out.format("Id %s unlinked for user %s", customId, session.getUserId());
-```
+=== "Java"
+	```java
+	String customId = "some-custom-id";
+	client.unlinkCustom(session, customId).get();
+	System.out.format("Id %s unlinked for user %s", customId, session.getUserId());
+	```
 
-```swift tab="Swift"
-// Requires Nakama 1.x
-let id = "some-custom-id"
-var message = SelfUnlinkMessage(device: id);
-client.send(with: message).then {
-  NSLog("Successfully unlinked device ID from current user.")
-}.catch { err in
-  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
-}
-```
+=== "Swift"
+	```swift
+	// Requires Nakama 1.x
+	let id = "some-custom-id"
+	var message = SelfUnlinkMessage(device: id);
+	client.send(with: message).then {
+	  NSLog("Successfully unlinked device ID from current user.")
+	}.catch { err in
+	  NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+	}
+	```
 
-```gdscript tab="Godot"
-var custom_id = "some-custom-id"
-var unlinked : NakamaAsyncResult = yield(client.unlink_custom_async(session, custom_id), "completed")
-if unlinked.is_exception():
-	print("An error occured: %s" % unlinked)
-	return
-print("Id '%s' unlinked for user '%s'" % [custom_id, session.user_id])
-```
+=== "Godot"
+	```gdscript
+	var custom_id = "some-custom-id"
+	var unlinked : NakamaAsyncResult = yield(client.unlink_custom_async(session, custom_id), "completed")
+	if unlinked.is_exception():
+		print("An error occured: %s" % unlinked)
+		return
+	print("Id '%s' unlinked for user '%s'" % [custom_id, session.user_id])
+	```
 
-```tab="REST"
-POST /v2/account/unlink/custom
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
+=== "REST"
+    ```
+	POST /v2/account/unlink/custom
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
 
-{
-  "id":"some-custom-id"
-}
-```
+	{
+	  "id":"some-custom-id"
+	}
+	```
 
 You can link or unlink many different account options.
 
