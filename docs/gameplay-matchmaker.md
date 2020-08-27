@@ -27,155 +27,159 @@ Properties are key-value pairs that describe the user. Rank information, connect
 When matchmaking completes these properties are visible to all matched users. You can store extra information without affecting the matchmaking process itself if it's useful to clients - just submit properties that aren't queried for as part of the matchmaking process.
 
 === "JavaScript"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*",
-	  string_properties: {
-	    region: "europe"
-	  },
-	  numeric_properties: {
-	    rank: 8
-	  }
-	}};
-	var ticket = await socket.send(message);
-	```
+    ```js
+    // "ticket" is returned by the matchmaker.
+
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
+
+    const stringProperties = {
+        region: "europe"
+    };
+
+    const numericProperties = {
+        rank: 8
+    };
+
+    var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
+    ```
 
 === ".NET"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var stringProperties = new Dictionary<string, string>() {
-	  {"region", "europe"}
-	};
-	var numericProperties = new Dictionary<string, int>() {
-	  {"rank", 8}
-	};
-	var matchmakerTicket = await socket.AddMatchmakerAsync(
-	    query, minCount, maxCount, stringProperties, numericProperties);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var stringProperties = new Dictionary<string, string>() {
+      {"region", "europe"}
+    };
+    var numericProperties = new Dictionary<string, int>() {
+      {"rank", 8}
+    };
+    var matchmakerTicket = await socket.AddMatchmakerAsync(
+        query, minCount, maxCount, stringProperties, numericProperties);
+    ```
 
-=== "Unity"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var stringProperties = new Dictionary<string, string>() {
-	  {"region", "europe"}
-	};
-	var numericProperties = new Dictionary<string, int>() {
-	  {"rank", 8}
-	};
-	var matchmakerTicket = await socket.AddMatchmakerAsync(
-	    query, minCount, maxCount, stringProperties, numericProperties);
-	```
+  === "Unity"
+
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var stringProperties = new Dictionary<string, string>() {
+      {"region", "europe"}
+    };
+    var numericProperties = new Dictionary<string, int>() {
+      {"rank", 8}
+    };
+    var matchmakerTicket = await socket.AddMatchmakerAsync(
+        query, minCount, maxCount, stringProperties, numericProperties);
+    ```
 
 === "Cocos2d-x C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	NStringMap stringProperties;
-	NStringDoubleMap numericProperties;
-	
-	stringProperties.emplace("region", "europe");
-	numericProperties.emplace("rank", 8.0);
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    stringProperties,
-	    numericProperties,
-	    successCallback);
-	```
+
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+    NStringMap stringProperties;
+    NStringDoubleMap numericProperties;
+
+    stringProperties.emplace("region", "europe");
+    numericProperties.emplace("rank", 8.0);
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        stringProperties,
+        numericProperties,
+        successCallback);
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*",
-	  string_properties: {
-	    region: "europe"
-	  },
-	  numeric_properties: {
-	    rank: 8
-	  }
-	}};
-	socket.send(message)
-	  .then(function(ticket) {
-	      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-	    },
-	    function(error) {
-	      cc.error("matchmaker add failed:", JSON.stringify(error));
-	    });
-	```
+    ```js
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
+
+    const stringProperties = {
+      region: "europe"
+    };
+    const numericProperties = {
+      rank: 8
+    };
+
+    socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
+    .then(function(ticket) {
+        cc.log("matchmaker ticket:", JSON.stringify(ticket));
+      },
+      function(error) {
+        cc.error("matchmaker add failed:", JSON.stringify(error));
+      });
+    ```
 
 === "C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	NStringMap stringProperties;
-	NStringDoubleMap numericProperties;
-	
-	stringProperties.emplace("region", "europe");
-	numericProperties.emplace("rank", 8.0);
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    stringProperties,
-	    numericProperties,
-	    successCallback);
-	```
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+    };
 
-=== "Java"
-	```java
-	String query = "*";
-	int minCount = 2;
-	int maxCount = 4;
-	Map<String, String> stringProperties = new HashMap<String, String>() {{
-	  put("region", "europe");
-	}};
-	Map<String, Double> numericProperties = new HashMap<String, Double>() {{
-	  put("rank", 8.0);
-	}};
-	
-	MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
-	    query, minCount, maxCount, stringProperties, numericProperties).get();
-	```
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+    NStringMap stringProperties;
+    NStringDoubleMap numericProperties;
+
+    stringProperties.emplace("region", "europe");
+    numericProperties.emplace("rank", 8.0);
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        stringProperties,
+        numericProperties,
+        successCallback);
+    ```
+
+    ```java tab="Java"
+    String query = "*";
+    int minCount = 2;
+    int maxCount = 4;
+    Map<String, String> stringProperties = new HashMap<String, String>() {{
+      put("region", "europe");
+    }};
+    Map<String, Double> numericProperties = new HashMap<String, Double>() {{
+      put("rank", 8.0);
+    }};
+
+    MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
+        query, minCount, maxCount, stringProperties, numericProperties).get();
+    ```
 
 === "Godot"
-	```gdscript
-	var query = "*"
-	var min_count = 2
-	var max_count = 4
-	var string_properties = { "region": "europe" }
-	var numeric_properties = { "rank": 8 }
-	var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
-		socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
-		"completed"
-	)
-	if matchmaker_ticket.is_exception():
-		print("An error occured: %s" % matchmaker_ticket)
-		return
-	print("Got ticket: %s" % [matchmaker_ticket])
-	```
+    ```gdscript
+    var query = "*"
+    var min_count = 2
+    var max_count = 4
+    var string_properties = { "region": "europe" }
+    var numeric_properties = { "rank": 8 }
+    var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+      socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
+      "completed"
+    )
+    if matchmaker_ticket.is_exception():
+      print("An error occured: %s" % matchmaker_ticket)
+      return
+    print("Got ticket: %s" % [matchmaker_ticket])
+    ```
 
 ### Query
 
@@ -200,302 +204,304 @@ See the [Bleve query string syntax](http://www.blevesearch.com/docs/Query-String
 You can find opponents based on a mix of property filters with exact matches or ranges of values. This example searches for opponents that **must** be in `europe` and **must** have a `rank` between 5 and 10, inclusive:
 
 === "JavaScript"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10",
-	  string_properties: {
-	    region: "europe"
-	  },
-	  numeric_properties: {
-	    rank: 8
-	  }
-	}};
-	var ticket = await socket.send(message);
-	```
+    ```js
+      const query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+      const minCount = 2;
+      const maxCount = 4;
+
+      const stringProperties = {
+        region: "europe"
+      };
+      const numericProperties = {
+        rank: 8
+      };
+
+      var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
+    ```
 
 === ".NET"
-	```csharp
-	var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-	var stringProperties = new Dictionary<string, string>() {
-	  {"region", "europe"}
-	};
-	var numericProperties = new Dictionary<string, int>() {
-	  {"rank", 8}
-	};
-	var matchmakerTicket = await socket.AddMatchmakerAsync(
-	    query, 2, 4, stringProperties, numericProperties);
-	```
+    ```csharp
+    var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+    var stringProperties = new Dictionary<string, string>() {
+      {"region", "europe"}
+    };
+    var numericProperties = new Dictionary<string, int>() {
+      {"rank", 8}
+    };
+    var matchmakerTicket = await socket.AddMatchmakerAsync(
+        query, 2, 4, stringProperties, numericProperties);
+    ```
 
 === "Unity"
-	```csharp
-	var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-	var stringProperties = new Dictionary<string, string>() {
-	  {"region", "europe"}
-	};
-	var numericProperties = new Dictionary<string, int>() {
-	  {"rank", 8}
-	};
-	var matchmakerTicket = await socket.AddMatchmakerAsync(
-	    query, 2, 4, stringProperties, numericProperties);
-	```
+    ```csharp
+    var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+    var stringProperties = new Dictionary<string, string>() {
+      {"region", "europe"}
+    };
+    var numericProperties = new Dictionary<string, int>() {
+      {"rank", 8}
+    };
+    var matchmakerTicket = await socket.AddMatchmakerAsync(
+        query, 2, 4, stringProperties, numericProperties);
+    ```
 
-=== "Cocos2d-x C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-	NStringMap stringProperties;
-	NStringDoubleMap numericProperties;
-	
-	stringProperties.emplace("region", "europe");
-	numericProperties.emplace("rank", 8.0);
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    stringProperties,
-	    numericProperties,
-	    successCallback);
-	```
+
+==="Cocos2d-x C++"
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+    NStringMap stringProperties;
+    NStringDoubleMap numericProperties;
+
+    stringProperties.emplace("region", "europe");
+    numericProperties.emplace("rank", 8.0);
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        stringProperties,
+        numericProperties,
+        successCallback);
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10",
-	  string_properties: {
-	    region: "europe"
-	  },
-	  numeric_properties: {
-	    rank: 8
-	  }
-	}};
-	socket.send(message)
-	  .then(function(ticket) {
-	      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-	    },
-	    function(error) {
-	      cc.error("matchmaker add failed:", JSON.stringify(error));
-	    });
-	```
+    ```js
+    const query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+    const minCount = 2;
+    const maxCount = 4;
 
-=== "C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-	NStringMap stringProperties;
-	NStringDoubleMap numericProperties;
-	
-	stringProperties.emplace("region", "europe");
-	numericProperties.emplace("rank", 8.0);
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    stringProperties,
-	    numericProperties,
-	    successCallback);
-	```
+    const stringProperties = {
+      region: "europe"
+    };
+
+    const numericProperties = {
+      rank: 8
+    };
+
+    socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
+      .then(function(ticket) {
+          cc.log("matchmaker ticket:", JSON.stringify(ticket));
+        },
+        function(error) {
+          cc.error("matchmaker add failed:", JSON.stringify(error));
+        });
+    ```
+
+==="C++"
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+    NStringMap stringProperties;
+    NStringDoubleMap numericProperties;
+
+    stringProperties.emplace("region", "europe");
+    numericProperties.emplace("rank", 8.0);
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        stringProperties,
+        numericProperties,
+        successCallback);
+    ```
 
 === "Java"
-	```java
-	String query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-	int minCount = 2;
-	int maxCount = 4;
-	Map<String, String> stringProperties = new HashMap<String, String>() {{
-	  put("region", "europe");
-	}};
-	Map<String, Double> numericProperties = new HashMap<String, Double>() {{
-	  put("rank", 8.0);
-	}};
-	
-	MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
-	    query, minCount, maxCount, stringProperties, numericProperties).get();
-	```
+    ```java
+    String query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+    int minCount = 2;
+    int maxCount = 4;
+    Map<String, String> stringProperties = new HashMap<String, String>() {{
+      put("region", "europe");
+    }};
+    Map<String, Double> numericProperties = new HashMap<String, Double>() {{
+      put("rank", 8.0);
+    }};
+
+    MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
+        query, minCount, maxCount, stringProperties, numericProperties).get();
+    ```
 
 === "Godot"
-	```gdscript
-	var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10"
-	var string_properties = { "region": "europe"}
-	var numeric_properties = { "rank": 8 }
-	var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
-		socket.add_matchmaker_async(query, 2, 4, string_properties, numeric_properties),
-		"completed"
-	)
-	if matchmaker_ticket.is_exception():
-		print("An error occured: %s" % matchmaker_ticket)
-		return
-	print("Got ticket: %s" % [matchmaker_ticket])
-	```
+    ```gdscript
+    var query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10"
+    var string_properties = { "region": "europe"}
+    var numeric_properties = { "rank": 8 }
+    var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+      socket.add_matchmaker_async(query, 2, 4, string_properties, numeric_properties),
+      "completed"
+    )
+    if matchmaker_ticket.is_exception():
+      print("An error occured: %s" % matchmaker_ticket)
+      return
+    print("Got ticket: %s" % [matchmaker_ticket])
+    ```
 
 Or use the wildcard query `"*"` to ignore opponents properties and match with anyone:
 
 === "JavaScript"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*",
-	  string_properties: {
-	    region: "europe"
-	  },
-	  numeric_properties: {
-	    rank: 8
-	  }
-	}};
-	var ticket = await socket.send(message);
-	```
+    ```js
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
+
+    const stringProperties = {
+      region: "europe"
+    };
+    const numericProperties = {
+      rank: 8
+    };
+
+    var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
+    ```
 
 === ".NET"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var stringProperties = new Dictionary<string, string>() {
-	  {"region", "europe"}
-	};
-	var numericProperties = new Dictionary<string, int>() {
-	  {"rank", 8}
-	};
-	var matchmakerTicket = await socket.AddMatchmakerAsync(
-	    query, minCount, maxCount, stringProperties, numericProperties);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var stringProperties = new Dictionary<string, string>() {
+      {"region", "europe"}
+    };
+    var numericProperties = new Dictionary<string, int>() {
+      {"rank", 8}
+    };
+    var matchmakerTicket = await socket.AddMatchmakerAsync(
+        query, minCount, maxCount, stringProperties, numericProperties);
+    ```
 
 === "Unity"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var stringProperties = new Dictionary<string, string>() {
-	  {"region", "europe"}
-	};
-	var numericProperties = new Dictionary<string, int>() {
-	  {"rank", 8}
-	};
-	var matchmakerTicket = await socket.AddMatchmakerAsync(
-	    query, minCount, maxCount, stringProperties, numericProperties);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var stringProperties = new Dictionary<string, string>() {
+      {"region", "europe"}
+    };
+    var numericProperties = new Dictionary<string, int>() {
+      {"rank", 8}
+    };
+    var matchmakerTicket = await socket.AddMatchmakerAsync(
+        query, minCount, maxCount, stringProperties, numericProperties);
+    ```
 
 === "Cocos2d-x C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	NStringMap stringProperties;
-	NStringDoubleMap numericProperties;
-	
-	stringProperties.emplace("region", "europe");
-	numericProperties.emplace("rank", 8.0);
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    stringProperties,
-	    numericProperties,
-	    successCallback);
-	```
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+    NStringMap stringProperties;
+    NStringDoubleMap numericProperties;
+
+    stringProperties.emplace("region", "europe");
+    numericProperties.emplace("rank", 8.0);
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        stringProperties,
+        numericProperties,
+        successCallback);
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*",
-	  string_properties: {
-	    region: "europe"
-	  },
-	  numeric_properties: {
-	    rank: 8
-	  }
-	}};
-	socket.send(message)
-	  .then(function(ticket) {
-	      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-	    },
-	    function(error) {
-	      cc.error("matchmaker add failed:", JSON.stringify(error));
-	    });
-	```
+```js
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
+
+const stringProperties = {
+  region: "europe"
+};
+const numericProperties = {
+  rank: 8
+};
+
+socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
+  .then(function(ticket) {
+      cc.log("matchmaker ticket:", JSON.stringify(ticket));
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
 
 === "C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	NStringMap stringProperties;
-	NStringDoubleMap numericProperties;
-	
-	stringProperties.emplace("region", "europe");
-	numericProperties.emplace("rank", 8.0);
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    stringProperties,
-	    numericProperties,
-	    successCallback);
-	```
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+    NStringMap stringProperties;
+    NStringDoubleMap numericProperties;
+
+    stringProperties.emplace("region", "europe");
+    numericProperties.emplace("rank", 8.0);
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        stringProperties,
+        numericProperties,
+        successCallback);
+    ```
 
 === "Java"
-	```java
-	String query = "*";
-	int minCount = 2;
-	int maxCount = 4;
-	Map<String, String> stringProperties = new HashMap<String, String>() {{
-	  put("region", "europe");
-	}};
-	Map<String, Double> numericProperties = new HashMap<String, Double>() {{
-	  put("rank", 8.0);
-	}};
-	
-	MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
-	    query, minCount, maxCount, stringProperties, numericProperties).get();
-	```
+    ```java
+    String query = "*";
+    int minCount = 2;
+    int maxCount = 4;
+    Map<String, String> stringProperties = new HashMap<String, String>() {{
+      put("region", "europe");
+    }};
+    Map<String, Double> numericProperties = new HashMap<String, Double>() {{
+      put("rank", 8.0);
+    }};
+
+    MatchmakerTicket matchmakerTicket = socket.addMatchmaker(
+        query, minCount, maxCount, stringProperties, numericProperties).get();
+    ```
 
 === "Godot"
-	```gdscript
-	var query = "*"
-	var min_count = 2
-	var max_count = 4
-	var string_properties = { "region": "europe" }
-	var numeric_properties = { "rank": 8 }
-	var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
-		socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
-		"completed"
-	)
-	if matchmaker_ticket.is_exception():
-		print("An error occured: %s" % matchmaker_ticket)
-		return
-	print("Got ticket: %s" % [matchmaker_ticket])
-	```
+```gdscript tab="Godot"
+var query = "*"
+var min_count = 2
+var max_count = 4
+var string_properties = { "region": "europe" }
+var numeric_properties = { "rank": 8 }
+var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+	socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
+	"completed"
+)
+if matchmaker_ticket.is_exception():
+	print("An error occured: %s" % matchmaker_ticket)
+	return
+print("Got ticket: %s" % [matchmaker_ticket])
+```
 
 ### Minimum and maximum count
 
@@ -505,257 +511,253 @@ The minimum and maximum count includes the user searching for opponents, so to f
 
 If the counts define a range, the matchmaker will try to return the max opponents possible but will never return less than the minimum count:
 
-=== "JavaScript"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*"
-	}};
-	var ticket = await socket.send(message);
-	```
+=== "Javascript"
+    ```js
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
+
+    var ticket = await socket.addMatchmaker(query, minCount, maxCount);
+    ```
 
 === ".NET"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+    ```
 
 === "Unity"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+    ```
 
 === "Java"
-	```java
-	String query = "*";
-	int minCount = 2;
-	int maxCount = 4;
-	MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
-	```
+    ```java
+    String query = "*";
+    int minCount = 2;
+    int maxCount = 4;
+    MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
+    ```
 
 To search for an exact number of opponents submit the same minimum and maximum count:
 
-=== "JavaScript"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 4,
-	  max_count: 4,
-	  query: "*"
-	}};
-	var ticket = await socket.send(message);
-	```
+=== "Javascript"
+    ```js
+    const query = "*";
+    const minCount = 4;
+    const maxCount = 4;
+    var ticket = await socket.addMatchmaker(query, minCount, maxCount);
+    ```
 
 === ".NET"
-	```csharp
-	var query = "*";
-	var minCount = 4;
-	var maxCount = 4;
-	var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 4;
+    var maxCount = 4;
+    var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+    ```
 
 === "Unity"
-	```csharp
-	var query = "*";
-	var minCount = 4;
-	var maxCount = 4;
-	var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 4;
+    var maxCount = 4;
+    var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+    ```
 
 === "Cocos2d-x C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    {},
-	    {},
-	    successCallback);
-	```
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        {},
+        {},
+        successCallback);
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*"
-	}};
-	socket.send(message)
-	  .then(function(ticket) {
-	      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-	    },
-	    function(error) {
-	      cc.error("matchmaker add failed:", JSON.stringify(error));
-	    });
-	```
+    ```js
+
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
+
+    socket.addMatchmaker(query, minCount, maxCount)
+      .then(function(ticket) {
+          cc.log("matchmaker ticket:", JSON.stringify(ticket));
+        },
+        function(error) {
+          cc.error("matchmaker add failed:", JSON.stringify(error));
+        });
+    ```
 
 === "C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    {},
-	    {},
-	    successCallback);
-	```
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        {},
+        {},
+        successCallback);
+    ```
 
 === "Java"
-	```java
-	String query = "*";
-	int minCount = 4;
-	int maxCount = 4;
-	
-	MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
-	```
+    ```java
+    String query = "*";
+    int minCount = 4;
+    int maxCount = 4;
+
+    MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
+    ```
 
 === "Godot"
-	```gdscript
-	var query = "*"
-	var min_count = 4
-	var max_count = 4
-	var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
-		socket.add_matchmaker_async(query, min_count, max_count),
-		"completed"
-	)
-	if matchmaker_ticket.is_exception():
-		print("An error occured: %s" % matchmaker_ticket)
-		return
-	print("Got ticket: %s" % [matchmaker_ticket])
-	```
+    ```gdscript
+    var query = "*"
+    var min_count = 4
+    var max_count = 4
+    var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+      socket.add_matchmaker_async(query, min_count, max_count),
+      "completed"
+    )
+    if matchmaker_ticket.is_exception():
+      print("An error occured: %s" % matchmaker_ticket)
+      return
+    print("Got ticket: %s" % [matchmaker_ticket])
+    ```
 
 ## Matchmaker tickets
 
 Each time a user is added to the matchmaker pool they receive a ticket, a unique identifier for their entry into the pool.
 
 === "JavaScript"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*"
-	}};
-	var ticket = await socket.send(message);
-	```
+
+    ```js
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
+    var ticket = await socket.addMatchmaker(query, minCount, maxCount);
+    ```
 
 === ".NET"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
-	```
+
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+    ```
 
 === "Unity"
-	```csharp
-	var query = "*";
-	var minCount = 2;
-	var maxCount = 4;
-	var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
-	```
+    ```csharp
+    var query = "*";
+    var minCount = 2;
+    var maxCount = 4;
+    var matchmakerTicket = await socket.AddMatchmakerAsync(query, minCount, maxCount);
+    ```
 
-=== "Cocos2d-x C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    {},
-	    {},
-	    successCallback);
-	```
+=== "Cocos2d-x C++""
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      CCLOG("Matchmaker ticket: %s", ticket.ticket.c_str());
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        {},
+        {},
+        successCallback);
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	const message = { matchmaker_add: {
-	  min_count: 2,
-	  max_count: 4,
-	  query: "*"
-	}};
-	socket.send(message)
-	  .then(function(ticket) {
-	      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-	    },
-	    function(error) {
-	      cc.error("matchmaker add failed:", JSON.stringify(error));
-	    });
-	```
+```js
+const query = "*";
+const minCount = 2;
+const maxCount = 4;
+
+socket.addMatchmaker(query, minCount, maxCount)
+  .then(function(ticket) {
+      cc.log("matchmaker ticket:", JSON.stringify(ticket));
+    },
+    function(error) {
+      cc.error("matchmaker add failed:", JSON.stringify(error));
+    });
+```
 
 === "C++"
-	```cpp
-	auto successCallback = [](const NMatchmakerTicket& ticket)
-	{
-	  std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
-	};
-	
-	int32_t minCount = 2;
-	int32_t maxCount = 4;
-	string query = "*";
-	
-	rtClient->addMatchmaker(
-	    minCount,
-	    maxCount,
-	    query,
-	    {},
-	    {},
-	    successCallback);
-	```
+    ```cpp
+    auto successCallback = [](const NMatchmakerTicket& ticket)
+    {
+      std::cout << "Matchmaker ticket: " << ticket.ticket << std::endl;
+    };
+
+    int32_t minCount = 2;
+    int32_t maxCount = 4;
+    string query = "*";
+
+    rtClient->addMatchmaker(
+        minCount,
+        maxCount,
+        query,
+        {},
+        {},
+        successCallback);
+    ```
 
 === "Java"
-	```java
-	String query = "*";
-	int minCount = 2;
-	int maxCount = 4;
-	
-	MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
-	```
+    ```java
+    String query = "*";
+    int minCount = 2;
+    int maxCount = 4;
+
+    MatchmakerTicket matchmakerTicket = socket.addMatchmaker(query, minCount, maxCount).get();
+    ```
 
 === "Godot"
-	```gdscript
-	var query = "*"
-	var min_count = 2
-	var max_count = 4
-	var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
-		socket.add_matchmaker_async(query, min_count, max_count),
-		"completed"
-	)
-	if matchmaker_ticket.is_exception():
-		print("An error occured: %s" % matchmaker_ticket)
-		return
-	print("Got ticket: %s" % [matchmaker_ticket])
-	```
+    ```gdscript
+    var query = "*"
+    var min_count = 2
+    var max_count = 4
+    var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+      socket.add_matchmaker_async(query, min_count, max_count),
+      "completed"
+    )
+    if matchmaker_ticket.is_exception():
+      print("An error occured: %s" % matchmaker_ticket)
+      return
+    print("Got ticket: %s" % [matchmaker_ticket])
+    ```
 
 This ticket is used when the server notifies the client on matching success. It distinguishes between multiple possible matchmaker operations for the same user. The user may also cancel the matchmaking process using the ticket at any time, but only before the ticket has been fulfilled.
 
@@ -764,71 +766,60 @@ This ticket is used when the server notifies the client on matching success. It 
 If a user decides they no longer wish to matchmake without disconnecting they can gracefully cancel the matchmaker process by removing themselves from the pool.
 
 === "JavaScript"
-	```js
-	// "ticket" is returned by the matchmaker.
-	const message = {
-	  matchmaker_remove: {
-	    ticket: ticket
-	  }
-	}
-	socket.send(message);
-	```
+    ```js
+    socket.removeMatchmaker(ticket);
+    ```
 
 === ".NET"
-	```csharp
-	// "matchmakerTicket" is returned by the matchmaker.
-	await socket.RemoveMatchmakerAsync(matchmakerTicket);
-	```
+    ```csharp
+    // "matchmakerTicket" is returned by the matchmaker.
+    await socket.RemoveMatchmakerAsync(matchmakerTicket);
+    ```
 
 === "Unity"
-	```csharp
-	// "matchmakerTicket" is returned by the matchmaker.
-	await socket.RemoveMatchmakerAsync(matchmakerTicket);
-	```
+    ```csharp
+    // "matchmakerTicket" is returned by the matchmaker.
+    await socket.RemoveMatchmakerAsync(matchmakerTicket);
+    ```
 
 === "Cocos2d-x C++"
-	```cpp
-	// "ticket" is returned by the matchmaker.
-	rtClient->removeMatchmaker(ticket, []()
-	  {
-	    CCLOG("removed from Matchmaker");
-	  });
-	```
+    ```cpp
+    // "ticket" is returned by the matchmaker.
+    rtClient->removeMatchmaker(ticket, []()
+      {
+        CCLOG("removed from Matchmaker");
+      });
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	// "ticket" is returned by the matchmaker.
-	const message = {
-	  matchmaker_remove: {
-	    ticket: ticket
-	  }
-	}
-	socket.send(message);
-	```
+    ```js
+    // "ticket" is returned by the matchmaker.
+    socket.removeMatchmaker(ticket);
+    ```
 
 === "C++"
-	```cpp
-	// "ticket" is returned by the matchmaker.
-	rtClient->removeMatchmaker(ticket, []()
-	  {
-	    std::cout << "removed from Matchmaker" << std::endl;
-	  });
-	```
+    ```cpp
+    // "ticket" is returned by the matchmaker.
+    rtClient->removeMatchmaker(ticket, []()
+      {
+        std::cout << "removed from Matchmaker" << std::endl;
+      });
+    ```
 
 === "Java"
-	```java
-	// "matchmakerTicket" is returned by the matchmaker.
-	socket.removeMatchmaker(matchmakerTicket.getTicket()).get();
-	```
+    ```java
+    // "matchmakerTicket" is returned by the matchmaker.
+    socket.removeMatchmaker(matchmakerTicket.getTicket()).get();
+    ```
 
 === "Godot"
-	```gdscript
-	var removed : NakamaAsyncResult = yield(socket.remove_matchmaker_async(matchmaker_ticket.ticket), "completed")
-	if removed.is_exception():
-		print("An error occured: %s" % removed)
-		return
-	print("Removed from matchmaking %s" % [matchmaker_ticket.ticket])
-	```
+    ```gdscript
+    var removed : NakamaAsyncResult = yield(socket.remove_matchmaker_async(matchmaker_ticket.ticket), "completed")
+    if removed.is_exception():
+      print("An error occured: %s" % removed)
+      return
+    print("Removed from matchmaking %s" % [matchmaker_ticket.ticket])
+    ```
 
 If the user has multiple entries in the matchmaker only the one identified by the ticket will be removed.
 
@@ -839,78 +830,78 @@ Matchmaking is not always an instant process. Depending on the currently connect
 Clients should register an event handler that triggers when the server sends them a matchmaker result.
 
 === "JavaScript"
-	```js
-	socket.onmatchmakermatched = (matched) => {
-	  console.info("Received MatchmakerMatched message: ", matched);
-	  console.info("Matched opponents: ", matched.users);
-	};
-	```
+    ```js
+    socket.onmatchmakermatched = (matched) => {
+      console.info("Received MatchmakerMatched message: ", matched);
+      console.info("Matched opponents: ", matched.users);
+    };
+    ```
 
 === ".NET"
-	```csharp
-	socket.ReceivedMatchmakerMatched += matched =>
-	{
-	    Console.WriteLine("Received: {0}", matched);
-	    var opponents = string.Join(",\n  ", matched.Users); // printable list.
-	    Console.WriteLine("Matched opponents: [{0}]", opponents);
-	};
-	```
+  ```csharp
+  socket.ReceivedMatchmakerMatched += matched =>
+  {
+      Console.WriteLine("Received: {0}", matched);
+      var opponents = string.Join(",\n  ", matched.Users); // printable list.
+      Console.WriteLine("Matched opponents: [{0}]", opponents);
+  };
+  ```
 
 === "Unity"
-	```csharp
-	socket.ReceivedMatchmakerMatched += matched =>
-	{
-	    Debug.LogFormat("Received: {0}", matched);
-	    var opponents = string.Join(",\n  ", matched.Users); // printable list.
-	    Debug.LogFormat("Matched opponents: [{0}]", opponents);
-	};
-	```
+    ```csharp
+    socket.ReceivedMatchmakerMatched += matched =>
+    {
+        Debug.LogFormat("Received: {0}", matched);
+        var opponents = string.Join(",\n  ", matched.Users); // printable list.
+        Debug.LogFormat("Matched opponents: [{0}]", opponents);
+    };
+    ```
 
 === "Cocos2d-x C++"
-	```cpp
-	rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
-	  {
-	    CCLOG("Matched! matchId: %s", matched->matchId.c_str());
-	  });
-	```
+    ```cpp
+    rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
+      {
+        CCLOG("Matched! matchId: %s", matched->matchId.c_str());
+      });
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	this.socket.onmatchmakermatched = (matched) => {
-	  cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
-	  cc.log("Matched opponents:", matched.users.toString());
-	};
-	```
+    ```js
+    this.socket.onmatchmakermatched = (matched) => {
+      cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
+      cc.log("Matched opponents:", matched.users.toString());
+    };
+    ```
 
 === "C++"
-	```cpp
-	rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
-	  {
-	    std::cout << "Matched! matchId: " << matched->matchId << std::endl;
-	  });
-	```
+    ```cpp
+    rtListener->setMatchmakerMatchedCallback([](NMatchmakerMatchedPtr matched)
+      {
+        std::cout << "Matched! matchId: " << matched->matchId << std::endl;
+      });
+    ```
 
 === "Java"
-	```java
-	SocketListener listener = new AbstractSocketListener() {
-	  @Override
-	  public void onMatchmakerMatched(final MatchmakerMatched matched) {
-	    System.out.format("Received MatchmakerMatched message: %s", matched.toString());
-	    System.out.format("Matched opponents: %s", opponents.toString());
-	  }
-	};
-	```
+    ```java
+    SocketListener listener = new AbstractSocketListener() {
+      @Override
+      public void onMatchmakerMatched(final MatchmakerMatched matched) {
+        System.out.format("Received MatchmakerMatched message: %s", matched.toString());
+        System.out.format("Matched opponents: %s", opponents.toString());
+      }
+    };
+    ```
 
 === "Godot"
-	```gdscript
-	func _ready():
-		# First, setup the socket as explained in the authentication section.
-		socket.connect("received_matchmaker_matched", self, "_on_matchmaker_matched")
-	
-	func _on_matchmaker_matched(p_matched : NakamaRTAPI.MatchmakerMatched):
-		print("Received MatchmakerMatched message: %s" % [p_matched])
-		print("Matched opponents: %s" % [p_matched.users])
-	```
+    ```gdscript
+    func _ready():
+      # First, setup the socket as explained in the authentication section.
+      socket.connect("received_matchmaker_matched", self, "_on_matchmaker_matched")
+
+    func _on_matchmaker_matched(p_matched : NakamaRTAPI.MatchmakerMatched):
+      print("Received MatchmakerMatched message: %s" % [p_matched])
+      print("Matched opponents: %s" % [p_matched.users])
+    ```
 
 ## Join a match
 
@@ -923,93 +914,83 @@ Tokens are short-lived and must be used to join a match as soon as possible. Whe
 The match token is also used to prevent unwanted users from attempting to join a match they were not matched into. The rest of the multiplayer match code is the same as in the [realtime multiplayer section](gameplay-multiplayer-realtime.md).
 
 === "JavaScript"
-	```js
-	socket.onmatchmakermatched = (matched) => {
-	  console.info("Received MatchmakerMatched message: ", matched);
-	  const message = {
-	    match_join: {
-	      token: matched.token
-	    }
-	  };
-	  socket.send(message);
-	};
-	```
+    ```js
+    socket.onmatchmakermatched = (matched) => {
+      console.info("Received MatchmakerMatched message: ", matched);
+      socket.joinMatch(matched.token);
+    };
+    ```
 
 === ".NET"
-	```csharp
-	socket.ReceivedMatchmakerMatched += async matched =>
-	{
-	    Console.WriteLine("Received: {0}", matched);
-	    await socket.JoinMatchAsync(matched);
-	};
-	```
+    ```csharp
+    socket.ReceivedMatchmakerMatched += async matched =>
+    {
+        Console.WriteLine("Received: {0}", matched);
+        await socket.JoinMatchAsync(matched);
+    };
+    ```
 
 === "Unity"
-	```csharp
-	socket.ReceivedMatchmakerMatched += async matched =>
-	{
-	    Debug.LogFormat("Received: {0}", matched);
-	    await socket.JoinMatchAsync(matched);
-	};
-	```
+    ```csharp
+    socket.ReceivedMatchmakerMatched += async matched =>
+    {
+        Debug.LogFormat("Received: {0}", matched);
+        await socket.JoinMatchAsync(matched);
+    };
+    ```
 
 === "Cocos2d-x C++"
-	```cpp
-	rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
-	  {
-	    CCLOG("Matched! token: %s", matched->token.c_str());
-	
-	    rtClient->joinMatchByToken(matched->token, [](const NMatch& match)
-	      {
-	        CCLOG("Joined Match!");
-	      });
-	  });
-	```
+    ```cpp
+    rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
+      {
+        CCLOG("Matched! token: %s", matched->token.c_str());
+
+        rtClient->joinMatchByToken(matched->token, [](const NMatch& match)
+          {
+            CCLOG("Joined Match!");
+          });
+      });
+    ```
 
 === "Cocos2d-x JS"
-	```js
-	this.socket.onmatchmakermatched = (matched) => {
-	  cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
-	  cc.log("Matched opponents:", matched.users.toString());
-	  const message = {
-	    match_join: {
-	      token: matched.token
-	    }
-	  };
-	  socket.send(message);
-	};
-	```
+    ```js
+    this.socket.onmatchmakermatched = (matched) => {
+      cc.log("Received MatchmakerMatched message:", JSON.stringify(matched));
+      cc.log("Matched opponents:", matched.users.toString());
+      socket.joinMatch(matched.token);
+    };
+    ```
 
 === "C++"
-	```cpp
-	rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
-	  {
-	    std::cout << "Matched! token: " << matched->token << std::endl;
-	
-	    rtClient->joinMatchByToken(matched->token, [](const NMatch& match)
-	      {
-	        std::cout << "Joined Match!" << std::endl;
-	      });
-	  });
-	```
+    ```cpp
+    rtListener->setMatchmakerMatchedCallback([this](NMatchmakerMatchedPtr matched)
+      {
+        std::cout << "Matched! token: " << matched->token << std::endl;
+
+        rtClient->joinMatchByToken(matched->token, [](const NMatch& match)
+          {
+            std::cout << "Joined Match!" << std::endl;
+          });
+      });
+    ```
 
 === "Java"
-	```java
-	SocketListener listener = new AbstractSocketListener() {
-	  @Override
-	  public void onMatchmakerMatched(final MatchmakerMatched matched) {
-	    socket.joinMatchToken(matched.getToken()).get();
-	  }
-	};
-	```
+    ```java
+    SocketListener listener = new AbstractSocketListener() {
+      @Override
+      public void onMatchmakerMatched(final MatchmakerMatched matched) {
+        socket.joinMatchToken(matched.getToken()).get();
+      }
+    };
+    ```
 
 === "Godot"
-	```gdscript
-	func _on_matchmaker_matched(p_matched : NakamaRTAPI.MatchmakerMatched):
-		print("Received MatchmakerMatched message: %s" % [p_matched])
-		var joined_match : NakamaRTAPI.Match = yield(socket.join_matched_async(p_matched), "completed")
-		if joined_match.is_exception():
-			print("An error occured: %s" % joined_match)
-			return
-		print("Joined match: %s" % [joined_match])
-	```
+    ```gdscript
+    func _on_matchmaker_matched(p_matched : NakamaRTAPI.MatchmakerMatched):
+      print("Received MatchmakerMatched message: %s" % [p_matched])
+      var joined_match : NakamaRTAPI.Match = yield(socket.join_matched_async(p_matched), "completed")
+      if joined_match.is_exception():
+        print("An error occured: %s" % joined_match)
+        return
+      print("Joined match: %s" % [joined_match])
+    ```

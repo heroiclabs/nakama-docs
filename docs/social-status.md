@@ -12,7 +12,7 @@ By default users have no status when they first connect, and will not appear onl
 
 === "JavaScript"
 	```js
-	socket.send({ status_update: { status: "Hello everyone!" } });
+	socket.updateStatus("Hello everyone!");
 	```
 
 === ".NET"
@@ -32,7 +32,7 @@ By default users have no status when they first connect, and will not appear onl
 
 === "Cocos2d-x JS"
 	```js
-	socket.send({ status_update: { status: "Hello everyone!" } });
+	socket.updateStatus("Hello everyone!");
 	```
 
 === "C++"
@@ -65,14 +65,13 @@ If the user needs to appear offline or "invisible" they can do so by erasing the
 
 === "JavaScript"
 	```js
-	socket.send({ status_update: {} });
+	socket.updateStatus();
 	```
 
 === ".NET"
 	```csharp
 	await socket.UpdateStatusAsync(null);
 	```
-
 === "Unity"
 	```csharp
 	await socket.UpdateStatusAsync(null);
@@ -85,7 +84,7 @@ If the user needs to appear offline or "invisible" they can do so by erasing the
 
 === "Cocos2d-x JS"
 	```js
-	socket.send({ status_update: {} });
+	socket.updateStatus();
 	```
 
 === "C++"
@@ -114,12 +113,12 @@ When a user updates their status all of their followers receive an event that co
 === "JavaScript"
 	```js
 	socket.onstatuspresence = (statuspresence) => {
-	  statuspresence.leaves.forEach((leave) => {
-	    console.log("User %o no longer has status %o", leave.user_id, leave.status);
-	  });
-	  statuspresence.joins.forEach((join) => {
-	    console.log("User %o now has status %o", join.user_id, join.status);
-	  });
+	statuspresence.leaves.forEach((leave) => {
+		console.log("User %o no longer has status %o", leave.user_id, leave.status);
+	});
+	statuspresence.joins.forEach((join) => {
+		console.log("User %o now has status %o", join.user_id, join.status);
+	});
 	};
 	```
 
@@ -127,15 +126,15 @@ When a user updates their status all of their followers receive an event that co
 	```csharp
 	socket.ReceivedStatusPresence += presenceEvent =>
 	{
-	    Console.WriteLine(presenceEvent);
-	    foreach (var joined in presenceEvent.Joins)
-	    {
-	        Console.WriteLine("User id '{0}' status joined '{1}'", joined.UserId, joined.Status);
-	    }
-	    foreach (var left in presenceEvent.Leaves)
-	    {
-	        Console.WriteLine("User id '{0}' status left '{1}'", left.UserId, left.Status);
-	    }
+		Console.WriteLine(presenceEvent);
+		foreach (var joined in presenceEvent.Joins)
+		{
+			Console.WriteLine("User id '{0}' status joined '{1}'", joined.UserId, joined.Status);
+		}
+		foreach (var left in presenceEvent.Leaves)
+		{
+			Console.WriteLine("User id '{0}' status left '{1}'", left.UserId, left.Status);
+		}
 	};
 	```
 
@@ -143,43 +142,15 @@ When a user updates their status all of their followers receive an event that co
 	```csharp
 	socket.ReceivedStatusPresence += presenceEvent =>
 	{
-	    Debug.Log(presenceEvent);
-	    foreach (var joined in presenceEvent.Joins)
-	    {
-	        Debug.LogFormat("User id '{0}' status joined '{1}'", joined.UserId, joined.Status);
-	    }
-	    foreach (var left in presenceEvent.Leaves)
-	    {
-	        Debug.LogFormat("User id '{0}' status left '{1}'", left.UserId, left.Status);
-	    }
-	};
-	```
-
-=== "Cocos2d-x C++"
-	```cpp
-	rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
-	{
-	  for (auto& presence : event.leaves)
-	  {
-	    CCLOG("User %s no longer has status %s", presence.username.c_str(), presence.status.c_str());
-	  }
-	
-	  for (auto& presence : event.joins)
-	  {
-	    CCLOG("User %s now has status %s", presence.username.c_str(), presence.status.c_str());
-	  }
-	});
-	```
-
-=== "Cocos2d-x JS"
-	```js
-	socket.onstatuspresence = (statuspresence) => {
-	  statuspresence.leaves.forEach((leave) => {
-	    cc.log("User", leave.user_id, "no longer has status", leave.status);
-	  });
-	  statuspresence.joins.forEach((join) => {
-	    cc.log("User", join.user_id, "now has status", join.status);
-	  });
+		Debug.Log(presenceEvent);
+		foreach (var joined in presenceEvent.Joins)
+		{
+			Debug.LogFormat("User id '{0}' status joined '{1}'", joined.UserId, joined.Status);
+		}
+		foreach (var left in presenceEvent.Leaves)
+		{
+			Debug.LogFormat("User id '{0}' status left '{1}'", left.UserId, left.Status);
+		}
 	};
 	```
 
@@ -187,40 +158,69 @@ When a user updates their status all of their followers receive an event that co
 	```cpp
 	rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
 	{
-	  for (auto& presence : event.leaves)
-	  {
-	    std::cout << "User " << presence.username << " no longer has status " << presence.status << std::endl;
-	  }
-	
-	  for (auto& presence : event.joins)
-	  {
-	    std::cout << "User " << presence.username << " now has status " << presence.status << std::endl;
-	  }
+	for (auto& presence : event.leaves)
+	{
+		CCLOG("User %s no longer has status %s", presence.username.c_str(), presence.status.c_str());
+	}
+
+	for (auto& presence : event.joins)
+	{
+		CCLOG("User %s now has status %s", presence.username.c_str(), presence.status.c_str());
+	}
+	});
+	```
+
+=== "JavaScript"
+	```js
+	socket.onstatuspresence = (statuspresence) => {
+	statuspresence.leaves.forEach((leave) => {
+		cc.log("User", leave.user_id, "no longer has status", leave.status);
+	});
+	statuspresence.joins.forEach((join) => {
+		cc.log("User", join.user_id, "now has status", join.status);
+	});
+	};
+	```
+
+=== "C++"
+	```cpp
+	rtListener->setStatusPresenceCallback([](const NStatusPresenceEvent& event)
+	{
+	for (auto& presence : event.leaves)
+	{
+		std::cout << "User " << presence.username << " no longer has status " << presence.status << std::endl;
+	}
+
+	for (auto& presence : event.joins)
+	{
+		std::cout << "User " << presence.username << " now has status " << presence.status << std::endl;
+	}
 	});
 	```
 
 === "Java"
 	```java
 	SocketListener listener = new AbstractSocketListener() {
-	  @Override
-	  public void onStatusPresence(final StatusPresenceEvent presence) {
-	    for (UserPresence userPresence : presence.getJoins()) {
-	      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
-	    }
-	
-	    for (UserPresence userPresence : presence.getLeaves()) {
-	      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
-	    }
-	  }
+	@Override
+	public void onStatusPresence(final StatusPresenceEvent presence) {
+		for (UserPresence userPresence : presence.getJoins()) {
+		System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+		}
+
+		for (UserPresence userPresence : presence.getLeaves()) {
+		System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
+		}
+	}
 	};
 	```
 
 === "Godot"
+
 	```gdscript
 	func _ready():
 		# First, setup the socket as explained in the authentication section.
 		socket.connect("received_status_presence", self, "_on_status_presence")
-	
+
 	func _on_status_presence(p_presence : NakamaRTAPI.StatusPresenceEvent):
 		print(p_presence)
 		for j in p_presence.joins:
@@ -239,9 +239,9 @@ When following a set of users the operation will immediately return the status o
 
 === "JavaScript"
 	```js
-	var status = await socket.send({ status_follow: { user_ids: ["<user id>"] } });
+	var status = await socket.followUsers(["<user id>"]);
 	status.presences.forEach((presence) => {
-	  console.log("User %o has status %o", presence.user_id, presence.status);
+	console.log("User %o has status %o", presence.user_id, presence.status);
 	});
 	```
 
@@ -255,42 +255,42 @@ When following a set of users the operation will immediately return the status o
 	await socket.FollowUsersAsync(new[] { "<user id>" });
 	```
 
-=== "Cocos2d-x C++"
+=== "C++"
 	```cpp
 	auto successCallback = [](const NStatus& status)
 	{
-	  for (auto& presence : status.presences)
-	  {
-	    CCLOG("User %s has status %s", presence.username.c_str(), presence.status.c_str());
-	  }
+	for (auto& presence : status.presences)
+	{
+		CCLOG("User %s has status %s", presence.username.c_str(), presence.status.c_str());
+	}
 	};
-	
+
 	rtClient->followUsers({ "<user id>" }, successCallback);
 	```
 
 === "Cocos2d-x JS"
 	```js
-	socket.send({ status_follow: { user_ids: ["<user id>"] } })
-	  .then(function(status) {
-	      status.presences.forEach((presence) => {
-	        cc.log("User", presence.user_id, "has status", presence.status);
-	      });
-	    },
-	    function(error) {
-	      cc.error("follow status failed:", JSON.stringify(error));
-	    });
+	socket.followUsers(["<user id>"])
+	.then(function(status) {
+		status.presences.forEach((presence) => {
+			cc.log("User", presence.user_id, "has status", presence.status);
+		});
+		},
+		function(error) {
+		cc.error("follow status failed:", JSON.stringify(error));
+		});
 	```
 
 === "C++"
 	```cpp
 	auto successCallback = [](const NStatus& status)
 	{
-	  for (auto& presence : status.presences)
-	  {
-	    std::cout << "User " << presence.username << " has status " << presence.status << std::endl;
-	  }
+	for (auto& presence : status.presences)
+	{
+		std::cout << "User " << presence.username << " has status " << presence.status << std::endl;
+	}
 	};
-	
+
 	rtClient->followUsers({ "<user id>" }, successCallback);
 	```
 
@@ -318,7 +318,7 @@ Unfollowing a set of users immediately stops the user from receiving any further
 
 === "JavaScript"
 	```js
-	socket.send({ status_unfollow: { user_ids: ["<user id>"] } });
+	socket.unfollowUsers(["<user id>"]);
 	```
 
 === ".NET"
@@ -338,7 +338,7 @@ Unfollowing a set of users immediately stops the user from receiving any further
 
 === "Cocos2d-x JS"
 	```js
-	socket.send({ status_unfollow: { user_ids: ["<user id>"] } });
+	socket.unfollowUsers(["<user id>"]);
 	```
 
 === "C++"

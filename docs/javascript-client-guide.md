@@ -59,8 +59,8 @@ If you are in an environment that supports `localStorage` then use the following
 const email = "hello@example.com";
 const password = "somesupersecretpassword";
 const session = await client.authenticateEmail({
-    email: email,
-    password: password
+  email: email,
+  password: password
 });
 // Store session for quick reconnects.
 localStorage.nakamaAuthToken = session.token;
@@ -91,13 +91,13 @@ The server also provides a [storage engine](storage-collections.md) to keep save
 
 ```js
 const objects = [{
-    "collection": "collection",
-    "key": "key1",
-    "value": {"jsonKey": "jsonValue"}
+  "collection": "collection",
+  "key": "key1",
+  "value": {"jsonKey": "jsonValue"}
 }, {
-    "collection": "collection",
-    "key": "key2",
-    "value": {"jsonKey": "jsonValue"}
+  "collection": "collection",
+  "key": "key2",
+  "value": {"jsonKey": "jsonValue"}
 }];
 const storageWriteAck = await client.writeStorageObjects(session, objects);
 console.info("Storage write was successful:", storageWriteAck);
@@ -125,22 +125,17 @@ Then proceed to join a chat channel and send a message:
 
 ```js
 socket.onchannelmessage = (channelMessage) => {
-    console.info("Received chat message:", channelMessage);
+  console.info("Received chat message:", channelMessage);
 };
 
 const channelId = "pineapple-pizza-lovers-room";
-var response = await socket.send({ channel_join: {
-    type: 1, // 1 = room, 2 = Direct Message, 3 = Group
-    target: channelId,
-    persistence: false,
-    hidden: false
-} });
+const persistence = false;
+const hidden = false;
+
+var response = await socket.joinChat(channelId, 1, persistence, hidden);
 console.info("Successfully joined channel:", response.channel.id);
 
-const messageAck = await socket.send({ channel_message_send: {
-    channel_id: response.channel.id,
-    content: {"message": "Pineapple doesn't belong on a pizza!"}
-} });
+const messageAck = await socket.writeChatMessage(response.channel.id, {"message": "Pineapple doesn't belong on a pizza!"});
 console.info("Successfully sent chat message:", messageAck);
 ```
 
@@ -152,34 +147,34 @@ A client socket has event listeners which are called on various events received 
 
 ```js
 socket.ondisconnect = (event) => {
-    console.info("Disconnected from the server. Event:", event);
+  console.info("Disconnected from the server. Event:", event);
 };
 socket.onnotification = (notification) => {
-    console.info("Received notification:", notification);
+  console.info("Received notification:", notification);
 };
 socket.onchannelpresence = (presence) => {
-    console.info("Received presence update:", presence);
+  console.info("Received presence update:", presence);
 };
 socket.onchannelmessage = (message) => {
-    console.info("Received new chat message:", message);
+  console.info("Received new chat message:", message);
 };
 socket.onmatchdata = (matchdata) => {
-    console.info("Received match data: %o", matchdata);
+  console.info("Received match data: %o", matchdata);
 };
 socket.onmatchpresence = (matchpresence) => {
-    console.info("Received match presence update:", matchpresence);
+  console.info("Received match presence update:", matchpresence);
 };
 socket.onmatchmakermatched = (matchmakerMatched) => {
-    console.info("Received matchmaker update:", matchmakerMatched);
+  console.info("Received matchmaker update:", matchmakerMatched);
 };
 socket.onstatuspresence = (statusPresence) => {
-    console.info("Received status presence update:", statusPresence);
+  console.info("Received status presence update:", statusPresence);
 };
 socket.onstreampresence = (streamPresence) => {
-    console.info("Received stream presence update:", streamPresence);
+  console.info("Received stream presence update:", streamPresence);
 };
 socket.onstreamdata = (streamdata) => {
-    console.info("Received stream data:", streamdata);
+  console.info("Received stream data:", streamdata);
 };
 ```
 
@@ -222,69 +217,67 @@ var client = new nakamajs.Client("defaultkey");
 var currentSession = null;
 
 function storeSession(session) {
-    if (typeof(Storage) !== "undefined") {
-        localStorage.setItem("nakamaToken", session.token);
-        console.log("Session stored.");
-    } else {
-        // We'll assume this is a React Native project.
-        AsyncStorage.setItem('@MyApp:nakamaToken', session.token).then(function(session) {
-            console.log("Session stored.");
-        }).catch(function(error) {
-            console.log("An error occured while storing session: %o", error);
-        })
-    };
+  if (typeof(Storage) !== "undefined") {
+    localStorage.setItem("nakamaToken", session.token);
+    console.log("Session stored.");
+  } else {
+    // We'll assume this is a React Native project.
+    AsyncStorage.setItem('@MyApp:nakamaToken', session.token).then(function(session) {
+      console.log("Session stored.");
+    }).catch(function(error) {
+      console.log("An error occured while storing session: %o", error);
+    })
+  };
 }
 
 async function getSessionFromStorage() {
-    if (typeof(Storage) !== "undefined") {
-        return Promise.resolve(localStorage.getItem("nakamaToken"));
-    } else {
-        try {
-            // Example assumes you use React Native.
-            return AsyncStorage.getItem('@MyApp:nakamaToken');
-        } catch(e) {
-            console.log("Could not fetch data, error: %o", error);
-        }
+  if (typeof(Storage) !== "undefined") {
+    return Promise.resolve(localStorage.getItem("nakamaToken"));
+  } else {
+    try {
+      // Example assumes you use React Native.
+      return AsyncStorage.getItem('@MyApp:nakamaToken');
+    } catch(e) {
+      console.log("Could not fetch data, error: %o", error);
     }
+  }
 }
 
 async function restoreSessionOrAuthenticate() {
-    const email = "hello@example.com";
-    const password = "somesupersecretpassword";
-    var session = null;
-    try {
-        var sessionString = await getSessionFromStorage();
-        if (sessionString && sessionString != "") {
-            session = nakamajs.Session.restore(sessionString);
-            var currentTimeInSec = new Date() / 1000;
-            if (!session.isexpired(currentTimeInSec)) {
-                console.log("Restored session. User ID: %o", session.user_id);
-                return Promise.resolve(session);
-            }
-        }
-
-        var session = await client.authenticateEmail({ email: email, password: password });
-        storeSession(session);
-
-        console.log("Authenticated successfully. User ID: %o", session.user_id);
+  const email = "hello@example.com";
+  const password = "somesupersecretpassword";
+  var session = null;
+  try {
+    var sessionString = await getSessionFromStorage();
+    if (sessionString && sessionString != "") {
+      session = nakamajs.Session.restore(sessionString);
+      var currentTimeInSec = new Date() / 1000;
+      if (!session.isexpired(currentTimeInSec)) {
+        console.log("Restored session. User ID: %o", session.user_id);
         return Promise.resolve(session);
-    } catch(e) {
-        console.log("An error occured while trying to restore session or authenticate user: %o", e)
+      }
     }
+
+    var session = await client.authenticateEmail({ email: email, password: password });
+    storeSession(session);
+
+    console.log("Authenticated successfully. User ID: %o", session.user_id);
+    return Promise.resolve(session);
+  } catch(e) {
+    console.log("An error occured while trying to restore session or authenticate user: %o", e)
+  }
 }
 
 restoreSessionOrAuthenticate().then(function(session) {
-    currentSession = session;
-    return client.writeStorageObjects(currentSession, [
-        {
-            "collection": "collection",
-            "key": "key1",
-            "value": {"jsonKey": "jsonValue"}
-        },
-    ]);
+  currentSession = session;
+  return client.writeStorageObjects(currentSession, [{
+    "collection": "collection",
+    "key": "key1",
+    "value": {"jsonKey": "jsonValue"}
+  }]);
 }).then(function(writeAck) {
-    console.log("Storage write was successful - ack: %o", writeAck);
+  console.log("Storage write was successful - ack: %o", writeAck);
 }).catch(function(e) {
-    console.log("An error occured: %o", e);
+  console.log("An error occured: %o", e);
 });
 ```

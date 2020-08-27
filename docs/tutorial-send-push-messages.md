@@ -1,8 +1,8 @@
 # Send push messages
 
-Push messages are a great complement to [in-app notifications](social-in-app-notifications.md) in Nakama. You can use in-app notifications for when a user is online but for when the app is closed or backgrounded and you want to bring the user back or re-engage push messages are a great option.
+Push messages are a great complement to [in-app notifications](social-in-app-notifications.md) in Nakama. You can use push messages to re-engage users who have either closed or backgrounded your app.
 
-There are many different push providers available which you can integrate into your client code and combine it with the server but for this tutorial we'll use the One Signal service. They provide a HTTP API to register devices and send push messages to segments of users.
+There are many different push providers you can integrate into your client code and Nakama, but for this tutorial we'll use the One Signal service. They provide an HTTP API to register devices and send push messages to segments of users.
 
 !!! Tip
     This tutorial covers an example One Signal integration using Nakama's Lua runtime. For Go consider using an [existing One Signal library](https://godoc.org/github.com/tbalthazar/onesignal-go).
@@ -19,7 +19,7 @@ Download and add the "onesignal.lua" file to the location you use for your Lua m
 nakama --runtime.path "/some/path/dir/"
 ```
 
-When you server is started you'll see the One Signal module loaded and recorded in the startup logs. In development it can be helpful to run the server with "--log.stdout" for log output in the console.
+When your server is started you'll see the One Signal module loaded and recorded in the startup logs. In development it can be helpful to run the server with "--log.stdout" for log output in the console.
 
 ### Keys and credentials
 
