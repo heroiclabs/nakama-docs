@@ -789,7 +789,7 @@ We can now make an RPC call for a pokemon from a client.
 	}
 	```
 
-=== "Go"dot
+=== "Godot"
 	```gdscript
 	var payload = {"PokemonName": "dragonite"}
 	var rpc_id = "get_pokemon"
