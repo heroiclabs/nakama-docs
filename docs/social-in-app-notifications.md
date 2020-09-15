@@ -131,7 +131,7 @@ A callback can be registered for notifications received when a client is connect
 	}
 	```
 
-=== "Go"dot
+=== "Godot"
 	```gdscript
 	func _ready():
 		# First, setup the socket as explained in the authentication section.
@@ -240,7 +240,7 @@ You can list notifications which were received when the user was offline. These 
 	}
 	```
 
-=== "Go"dot
+=== "Godot"
 	```gdscript
 	var result : NakamaAPI.ApiNotificationList = yield(client.list_notifications_async(session, 10), "completed")
 	if result.is_exception():
@@ -415,7 +415,7 @@ A list of notifications can be retrieved in batches of up to 100 at a time. To r
 	}
 	```
 
-=== "Go"dot
+=== "Godot"
 	```gdscript
 	var result : NakamaAPI.ApiNotificationList = yield(client.list_notifications_async(session, 1), "completed")
 	if result.is_exception():
@@ -545,7 +545,7 @@ The cacheable cursor marks the position of the most recent notification retrieve
 	}
 	```
 
-=== "Go"dot
+=== "Godot"
 	```gdscript
 	var cursor = "<cacheable-cursor>";
 	var result : NakamaAPI.ApiNotificationList = yield(client.list_notifications_async(session, 10, cursor), "completed")
@@ -627,7 +627,7 @@ You can delete one or more notifications from the client. This is useful to purg
 	}
 	```
 
-=== "Go"dot
+=== "Godot"
 	```gdscript
 	var notification_ids = ["<notification-id>"]
 	var delete : NakamaAsyncResult = yield(client.delete_notifications_async(session, notification_ids), "completed")
