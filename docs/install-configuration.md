@@ -66,7 +66,7 @@ If fields are not specific, default values will be used. For more information on
 
 ### Cluster
 
-This section configures how the nodes should connect to each to other form a cluster.
+This section configures how the nodes should connect to each other to form a cluster.
 
 !!! tip "Nakama Enterprise Only"
     The following configuration options are available only in the Nakama Enterprise version of the Nakama server
@@ -118,7 +118,7 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 
 ### Leaderboard
 
-You can change configuration options related to the leaderboard and tournament system.
+You can change configuration options related to the leaderboard and tournament systems.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
@@ -317,66 +317,66 @@ Google In-App Purchase configuration
 
 You can use the entire file or just a subset of the configuration.
 
-	```yaml
-	name: nakama-node-1
-	data_dir: "./data/"
-	
-	logger:
-	  stdout: false
-	  level: "warn"
-	  file: "/tmp/path/to/logfile.log"
-	
-	metrics:
-	  reporting_freq_sec: 60
-	  namespace: ""
-	  stackdriver_projectid: ""
-	  prometheus_port: 0
-	
-	database:
-	  address:
-	    - "root@localhost:26257"
-	  conn_max_lifetime_ms: 0
-	  max_open_conns: 0
-	  max_idle_conns: 100
-	
-	runtime:
-	  env:
-	    - "example_apikey=example_apivalue"
-	    - "encryptionkey=afefa==e332*u13=971mldq"
-	  path: "/tmp/modules/folders"
-	  http_key: "defaulthttpkey"
-	
-	socket:
-	  server_key: "defaultkey"
-	  port: 7350
-	  max_message_size_bytes: 4096 # bytes
-	  read_timeout_ms: 10000
-	  write_timeout_ms: 10000
-	  idle_timeout_ms: 60000
-	  write_wait_ms: 5000
-	  pong_wait_ms: 10000
-	  ping_period_ms: 8000 # Must be less than pong_wait_ms
-	  outgoing_queue_size: 16
-	
-	session:
-	  encryption_key: "defaultencryptionkey"
-	  token_expiry_sec: 60
-	
-	social:
-	  steam:
-	    publisher_key: ""
-	    app_id: 0
-	
-	console:
-	  port: 7351
-	  username: "admin"
-	  password: "password"
-	
-	cluster:
-	  join:
-	    - "10.0.0.2:7352"
-	    - "10.0.0.3:7352"
-	  gossip_bindaddr: "0.0.0.0"
-	  gossip_bindport: 7352
-	  rpc_port: 7353
-	```
+```yaml
+name: nakama-node-1
+data_dir: "./data/"
+
+logger:
+	stdout: false
+	level: "warn"
+	file: "/tmp/path/to/logfile.log"
+
+metrics:
+	reporting_freq_sec: 60
+	namespace: ""
+	stackdriver_projectid: ""
+	prometheus_port: 0
+
+database:
+	address:
+	- "root@localhost:26257"
+	conn_max_lifetime_ms: 0
+	max_open_conns: 0
+	max_idle_conns: 100
+
+runtime:
+	env:
+	- "example_apikey=example_apivalue"
+	- "encryptionkey=afefa==e332*u13=971mldq"
+	path: "/tmp/modules/folders"
+	http_key: "defaulthttpkey"
+
+socket:
+	server_key: "defaultkey"
+	port: 7350
+	max_message_size_bytes: 4096 # bytes
+	read_timeout_ms: 10000
+	write_timeout_ms: 10000
+	idle_timeout_ms: 60000
+	write_wait_ms: 5000
+	pong_wait_ms: 10000
+	ping_period_ms: 8000 # Must be less than pong_wait_ms
+	outgoing_queue_size: 16
+
+session:
+	encryption_key: "defaultencryptionkey"
+	token_expiry_sec: 60
+
+social:
+	steam:
+	publisher_key: ""
+	app_id: 0
+
+console:
+	port: 7351
+	username: "admin"
+	password: "password"
+
+cluster:
+	join:
+	- "10.0.0.2:7352"
+	- "10.0.0.3:7352"
+	gossip_bindaddr: "0.0.0.0"
+	gossip_bindport: 7352
+	rpc_port: 7353
+```
