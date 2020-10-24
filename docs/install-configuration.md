@@ -66,7 +66,7 @@ If fields are not specific, default values will be used. For more information on
 
 ### Cluster
 
-This section configures how the nodes should connect to each to other form a cluster.
+This section configures how the nodes should connect to each other to form a cluster.
 
 !!! tip "Nakama Enterprise Only"
     The following configuration options are available only in the Nakama Enterprise version of the Nakama server
@@ -118,7 +118,7 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 
 ### Leaderboard
 
-You can change configuration options related to the leaderboard and tournament system.
+You can change configuration options related to the leaderboard and tournament systems.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
