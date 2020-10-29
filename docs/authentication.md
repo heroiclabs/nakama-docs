@@ -1130,14 +1130,14 @@ You can choose a custom username when creating the account. To do this, set `use
 
 ## Session
 
-When an authentication call succeeds, the server responds with a [session](/session) object. The session object contains at least the following:
+When an authentication call succeeds, the server responds with a [session](/docs/session) object. The session object contains at least the following:
 - the user's ID
 - the user's name
 - a token used to authenticate subsequent user messages
 - the session creation time
 - the session expiration time
 
-Once the client obtains the session object, you can utilize Nakama's realtime features such as [multiplayer](/gameplay-multiplayer-realtime), [notifications](/social-in-app-notifications) and [status updates](/social-status), [passing stream data](/advanced-streams) or [real-time chat](/social-realtime-chat).
+Once the client obtains the session object, you can utilize Nakama's realtime features such as [multiplayer](/docs/gameplay-multiplayer-realtime), [notifications](/docs/social-in-app-notifications) and [status updates](/docs/social-status), [passing stream data](/docs/advanced-streams) or [real-time chat](/docs/social-realtime-chat).
 
 === "Javascript"
 	```js
