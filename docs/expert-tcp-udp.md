@@ -112,7 +112,6 @@ If you’re thinking that this only begins to dig into thinking about net code, 
 
 Read Ruoyu Sun’s *[Game Networking Demystifie*d](https://ruoyusun.com/2019/03/28/game-networking-1.html), which takes a closer look at game states and client inputs and how they relate to cheating, server authority, and game genre.
 
-Another great read is *[Peeking into VALORANT's Netcod*e](https://technology.riotgames.com/news/peeking-valorants-netcode) from Riot Games, which goes in-depth on how product design goals can lead to specific decisions in netcode design.
+Another great read is *[Peeking into VALORANT's Netcode](https://technology.riotgames.com/news/peeking-valorants-netcode)* from Riot Games, which goes in-depth on how product design goals can lead to specific decisions in netcode design.
 
 And it always pays to read others’ code. Check out [Josh Bothun’s open-source implementation of a Quake-style FPS with contemporary netcode techniques](https://github.com/minism/fps-netcode) to see some actual code.
-
