@@ -489,7 +489,7 @@ Fetch the list of tournament records around the owner.
 
 === "REST"
     ```
-	GET /v2/tournament/v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>
+	GET /v2/tournament/<tournament_id>/owner/<owner_id>?limit=<limit>
 	Host: 127.0.0.1:7350
 	Accept: application/json
 	Content-Type: application/json
@@ -502,9 +502,11 @@ Submit a score and optional subscore to a tournament leaderboard. If the tournam
 
 === "cURL"
 	```sh
-	curl -X GET "http://127.0.0.1:7350/v2/tournament/<tournament_id>" \
+	curl -X PUT "http://127.0.0.1:7350/v2/tournament/<tournament_id>" \
 	  -H 'Authorization: Bearer <session token>'
+	  -d '{"score": 100, "subscore": 10, "metadata": "{\"weather_conditions\": \"sunny\", \"track_name\" : \"Silverstone\" }"}'
 	```
+  
 
 === "JavaScript"
 	```js
@@ -626,11 +628,17 @@ Submit a score and optional subscore to a tournament leaderboard. If the tournam
 
 === "REST"
     ```
-	GET /v2/tournament/v2/tournament/<tournament_id>
+	PUT /v2/tournament/<tournament_id>
 	Host: 127.0.0.1:7350
 	Accept: application/json
 	Content-Type: application/json
 	Authorization: Bearer <session token>
+	
+	{
+	  "score": 100,
+	  "subscore": 10,
+	  "metadata": "{\"weather_conditions\": \"sunny\", \"track_name\" : \"Silverstone\" }"
+	}
 	```
 
 ## Authoritative functions
