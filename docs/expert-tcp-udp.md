@@ -110,7 +110,7 @@ Before you start sending messages, make sure you**_ _****know what you need to s
 
 If you’re thinking that this only begins to dig into thinking about net code, then you’re right. As you build out your games netcode, you’ll need to learn more about different aspects of prediction, interpolation, serialization, and beyond.
 
-Read Ruoyu Sun’s *[Game Networking Demystifie*d](https://ruoyusun.com/2019/03/28/game-networking-1.html), which takes a closer look at game states and client inputs and how they relate to cheating, server authority, and game genre.
+Read Ruoyu Sun’s [*Game Networking Demystified*](https://ruoyusun.com/2019/03/28/game-networking-1.html), which takes a closer look at game states and client inputs and how they relate to cheating, server authority, and game genre.
 
 Another great read is *[Peeking into VALORANT's Netcode](https://technology.riotgames.com/news/peeking-valorants-netcode)* from Riot Games, which goes in-depth on how product design goals can lead to specific decisions in netcode design.
 
