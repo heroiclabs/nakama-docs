@@ -100,7 +100,7 @@ But whether you choose UDP or TCP or optionally reliable UDP comes down to the *
 
 The content of your messages matters more than the vehicle they travel in. Start by focusing on your payloads, then figure out how to get them there.
 
-Before you start sending messages, make sure you**_ _****know what you need to send over the wire** (and what you don’t). For example, in an action game, your player’s movements will probably be sent to the server many times per second, while your player’s inventory status only needs to be sent when it changes. Smaller data structures are less likely to pay fragmentation penalties. The fastest packet is the one you never send.
+Before you start sending messages, make sure you **know what you need to send over the wire** (and what you don’t). For example, in an action game, your player’s movements will probably be sent to the server many times per second, while your player’s inventory status only needs to be sent when it changes. Smaller data structures are less likely to pay fragmentation penalties. The fastest packet is the one you never send.
 
 **Know your player’s context**. Your netcode should reflect when and how your player is interacting with the game. This starts with the player’s physical environment, such as playing on a desktop computer with a high-quality wired connection versus playing from a mobile device on a spotty mobile network. It also includes the game context; the game state may make certain kinds of messages more likely than others.
 
