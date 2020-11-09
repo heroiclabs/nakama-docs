@@ -88,8 +88,8 @@ For in-app parameters which may be changed via Analytics or with a Liveops dashb
 	
 	local function remote_configuration(_context, _payload)
 	  local rc = {
-	    collection = object.Collection,
-	    key = object.Record
+	    collection = object.collection,
+	    key = object.key
 	  }
 	  local objects = nk.storage_read({ rc })
 	  return objects[1].value
