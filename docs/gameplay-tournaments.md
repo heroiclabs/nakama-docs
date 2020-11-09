@@ -654,7 +654,6 @@ Create a tournament with all it's configuration options.
 === "Lua"
 	```lua
 	local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
-	local authoritative = false
 	local sort = "desc"     -- one of: "desc", "asc"
 	local operator = "best" -- one of: "best", "set", "incr"
 	local reset = "0 12 * * *" -- noon UTC each day
@@ -671,7 +670,7 @@ Create a tournament with all it's configuration options.
 	max_num_score = 3             -- each player can have 3 attempts to score
 	join_required = true          -- must join to compete
 	nk.tournament_create(id, sort, operator, duration, reset, metadata, title, description, category,
-	    start_time, endTime, max_size, max_num_score, join_required)
+	    start_time, end_time, max_size, max_num_score, join_required)
 	```
 
 === "Go"
