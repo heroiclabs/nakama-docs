@@ -503,10 +503,9 @@ Submit a score and optional subscore to a tournament leaderboard. If the tournam
 === "cURL"
 	```sh
 	curl -X PUT "http://127.0.0.1:7350/v2/tournament/<tournament_id>" \
-	  -H 'Authorization: Bearer <session token>'
+	  -H 'Authorization: Bearer <session token>' \
 	  -d '{"score": 100, "subscore": 10, "metadata": "{\"weather_conditions\": \"sunny\", \"track_name\" : \"Silverstone\" }"}'
 	```
-  
 
 === "JavaScript"
 	```js
@@ -633,7 +632,7 @@ Submit a score and optional subscore to a tournament leaderboard. If the tournam
 	Accept: application/json
 	Content-Type: application/json
 	Authorization: Bearer <session token>
-	
+
 	{
 	  "score": 100,
 	  "subscore": 10,
