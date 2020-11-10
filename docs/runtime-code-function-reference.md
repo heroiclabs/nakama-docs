@@ -810,7 +810,7 @@ _Example_
 
 === "Lua"
 	```lua
-	group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
+	local group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
 	nk.group_delete(group_id)
 	```
 
@@ -911,6 +911,40 @@ _Example_
 	    // States are => 0: Superadmin, 1: Admin, 2: Member, 3: Requested to join
 	    logger.Info("Member username %s has state %d", member.GetUser().Username, member.GetState())
 	  }
+	}
+	```
+
+---
+
+__Group Users Kick__
+
+Kick users from a group.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| group_id | `string` | string | The Id of the group who's members, admins and superadmins you want to list. |
+| user_ids | `[]string` | table | A table array of user ids to kick. |
+
+_Example_
+
+=== "Lua"
+	```lua
+    local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+    local user_ids = {"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+    nk.group_users_kick(group_id, userna)
+	```
+
+=== "Go"
+	```go
+    groupID := "dcb891ea-a311-4681-9213-6741351c9994"
+    userIds := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+	if err := nk.GroupUsersKick(ctx, groupID, userIds); err != nil {
+	  logger.Error("Could not kick users: %s", err.Error())
 	}
 	```
 
