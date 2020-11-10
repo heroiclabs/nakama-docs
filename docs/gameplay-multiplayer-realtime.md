@@ -92,7 +92,7 @@ A user can join a specific match by ID. Matches can be joined at any point until
     });
     ```
 
-===".NET"
+=== ".NET"
     ```csharp
     var matchId = "<matchid>";
     var match = await socket.JoinMatchAsync(matchId);
