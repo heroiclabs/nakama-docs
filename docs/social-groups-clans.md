@@ -868,7 +868,7 @@ You can also create a group with server-side code. This can be useful when the g
 === "Go"
 	```go
 	metadata := map[string]interface{}{
-	  "my_custom_field": "some value" // Add whatever custom fields you want.
+	  "my_custom_field": "some value", // Add whatever custom fields you want.
 	}
 
 	userID := "<user id>"
@@ -1342,14 +1342,6 @@ An admin can promote another member of the group as an admin. This grants the me
 	  "user_ids":["<user id>"]
 	}
 	```
-
-```tab="REST"
-POST /v2/group/<group id>/demote?user_ids=<user id>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
 
 ### Kick a member
 

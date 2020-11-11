@@ -719,6 +719,7 @@ _Parameters_
 
 _Example_
 
+=== "Lua"
 	```lua
 	local nk = require("nakama")
 	function match_loop(context, dispatcher, tick, state, messages)

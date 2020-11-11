@@ -154,6 +154,24 @@ To set the variables in the client's request for authentication, use
     var session = await _client.AuthenticateEmailAsync(email, password, username, create, vars);
     ```
 
+=== "REST"
+    ```
+    POST /v2/account/authenticate/email?create=true&username=mycustomusername
+    Host: 127.0.0.1:7350
+    Accept: application/json
+    Content-Type: application/json
+    Authorization: Bearer <session token>
+
+    {
+      "email": "hello@heroiclabs.com",
+      "password": "password",
+      "vars": {
+        "key": "value"
+      }
+    }
+
+    ```
+
 This example shows setting session variables with Email Authentication, but this feature is available for all of the other [authentication options](/authentication) and in all client libraries.
 
 ### Setting with server

@@ -60,8 +60,7 @@ When matchmaking completes these properties are visible to all matched users. Yo
         query, minCount, maxCount, stringProperties, numericProperties);
     ```
 
-  === "Unity"
-
+=== "Unity"
     ```csharp
     var query = "*";
     var minCount = 2;
@@ -77,7 +76,6 @@ When matchmaking completes these properties are visible to all matched users. Yo
     ```
 
 === "Cocos2d-x C++"
-
     ```cpp
     auto successCallback = [](const NMatchmakerTicket& ticket)
     {
@@ -205,18 +203,18 @@ You can find opponents based on a mix of property filters with exact matches or 
 
 === "JavaScript"
     ```js
-      const query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
-      const minCount = 2;
-      const maxCount = 4;
+    const query = "+properties.region:europe +properties.rank:>=5 +properties.rank:<=10";
+    const minCount = 2;
+    const maxCount = 4;
 
-      const stringProperties = {
-        region: "europe"
-      };
-      const numericProperties = {
-        rank: 8
-      };
+    const stringProperties = {
+      region: "europe"
+    };
+    const numericProperties = {
+      rank: 8
+    };
 
-      var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
+    var ticket = await socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties);
     ```
 
 === ".NET"
@@ -246,7 +244,7 @@ You can find opponents based on a mix of property filters with exact matches or 
     ```
 
 
-==="Cocos2d-x C++"
+=== "Cocos2d-x C++"
     ```cpp
     auto successCallback = [](const NMatchmakerTicket& ticket)
     {
@@ -294,7 +292,7 @@ You can find opponents based on a mix of property filters with exact matches or 
         });
     ```
 
-==="C++"
+=== "C++"
     ```cpp
     auto successCallback = [](const NMatchmakerTicket& ticket)
     {
@@ -424,26 +422,26 @@ Or use the wildcard query `"*"` to ignore opponents properties and match with an
     ```
 
 === "Cocos2d-x JS"
-```js
-const query = "*";
-const minCount = 2;
-const maxCount = 4;
+    ```js
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
 
-const stringProperties = {
-  region: "europe"
-};
-const numericProperties = {
-  rank: 8
-};
+    const stringProperties = {
+      region: "europe"
+    };
+    const numericProperties = {
+      rank: 8
+    };
 
-socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
-  .then(function(ticket) {
-      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-    },
-    function(error) {
-      cc.error("matchmaker add failed:", JSON.stringify(error));
-    });
-```
+    socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericProperties)
+      .then(function(ticket) {
+          cc.log("matchmaker ticket:", JSON.stringify(ticket));
+        },
+        function(error) {
+          cc.error("matchmaker add failed:", JSON.stringify(error));
+        });
+    ```
 
 === "C++"
     ```cpp
@@ -487,21 +485,21 @@ socket.addMatchmaker(query, minCount, maxCount, stringProperties, numericPropert
     ```
 
 === "Godot"
-```gdscript tab="Godot"
-var query = "*"
-var min_count = 2
-var max_count = 4
-var string_properties = { "region": "europe" }
-var numeric_properties = { "rank": 8 }
-var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
-	socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
-	"completed"
-)
-if matchmaker_ticket.is_exception():
-	print("An error occured: %s" % matchmaker_ticket)
-	return
-print("Got ticket: %s" % [matchmaker_ticket])
-```
+    ```gdscript
+    var query = "*"
+    var min_count = 2
+    var max_count = 4
+    var string_properties = { "region": "europe" }
+    var numeric_properties = { "rank": 8 }
+    var matchmaker_ticket : NakamaRTAPI.MatchmakerTicket = yield(
+	    socket.add_matchmaker_async(query, min_count, max_count, string_properties, numeric_properties),
+	    "completed"
+    )
+    if matchmaker_ticket.is_exception():
+	    print("An error occured: %s" % matchmaker_ticket)
+	    return
+    print("Got ticket: %s" % [matchmaker_ticket])
+    ```
 
 ### Minimum and maximum count
 
@@ -701,19 +699,19 @@ Each time a user is added to the matchmaker pool they receive a ticket, a unique
     ```
 
 === "Cocos2d-x JS"
-```js
-const query = "*";
-const minCount = 2;
-const maxCount = 4;
+    ```js
+    const query = "*";
+    const minCount = 2;
+    const maxCount = 4;
 
-socket.addMatchmaker(query, minCount, maxCount)
-  .then(function(ticket) {
-      cc.log("matchmaker ticket:", JSON.stringify(ticket));
-    },
-    function(error) {
-      cc.error("matchmaker add failed:", JSON.stringify(error));
-    });
-```
+    socket.addMatchmaker(query, minCount, maxCount)
+      .then(function(ticket) {
+          cc.log("matchmaker ticket:", JSON.stringify(ticket));
+        },
+        function(error) {
+          cc.error("matchmaker add failed:", JSON.stringify(error));
+        });
+    ```
 
 === "C++"
     ```cpp
@@ -838,14 +836,14 @@ Clients should register an event handler that triggers when the server sends the
     ```
 
 === ".NET"
-  ```csharp
-  socket.ReceivedMatchmakerMatched += matched =>
-  {
-      Console.WriteLine("Received: {0}", matched);
-      var opponents = string.Join(",\n  ", matched.Users); // printable list.
-      Console.WriteLine("Matched opponents: [{0}]", opponents);
-  };
-  ```
+    ```csharp
+    socket.ReceivedMatchmakerMatched += matched =>
+    {
+        Console.WriteLine("Received: {0}", matched);
+        var opponents = string.Join(",\n  ", matched.Users); // printable list.
+        Console.WriteLine("Matched opponents: [{0}]", opponents);
+    };
+    ```
 
 === "Unity"
     ```csharp
