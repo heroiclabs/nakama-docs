@@ -365,13 +365,13 @@ A group ID is needed when a user joins group chat and can be [listed by the user
     ```
 
 === "Unity"
-```csharp tab="Unity"
-var groupId = "<group id>";
-var persistence = true;
-var hidden = false;
-var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
-Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
-```
+    ```csharp tab="Unity"
+    var groupId = "<group id>";
+    var persistence = true;
+    var hidden = false;
+    var channel = await socket.JoinChatAsync(groupId, ChannelType.Group, persistence, hidden);
+    Debug.LogFormat("You can now send messages to channel id: '{0}'", channel.Id);
+    ```
 
 === "Cocos2d-x C++"
     ```cpp
@@ -1112,20 +1112,21 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
         opt::nullopt,
         successCallback);
     ```
+
 === "Cocos2d-x JS"
-```js
-const channelId = "<channel id>";
-client.listChannelMessages(session, channelId, 10)
-  .then(function(result) {
-      result.messages.forEach((message) => {
-        cc.log("Message content", message.data);
-      });
-      cc.log("Get the next page of messages with the cursor:", result.next_cursor);
-    },
-    function(error) {
-      cc.error("matchmaker add failed:", JSON.stringify(error));
-    });
-```
+    ```js
+    const channelId = "<channel id>";
+    client.listChannelMessages(session, channelId, 10)
+      .then(function(result) {
+          result.messages.forEach((message) => {
+            cc.log("Message content", message.data);
+          });
+          cc.log("Get the next page of messages with the cursor:", result.next_cursor);
+        },
+        function(error) {
+          cc.error("matchmaker add failed:", JSON.stringify(error));
+        });
+    ```
 
 === "C++"
     ```cpp
@@ -1263,33 +1264,33 @@ We recommend you only list the most recent 100 messages in your UI. A good user 
     ```
 
 === "Cocos2d-x C++"
-```cpp
-void YourClass::listChannelMessages(const std::string& cursor)
-{
-  auto successCallback = [this](NChannelMessageListPtr list)
-  {
-    for (auto& message : list->messages)
+    ```cpp
+    void YourClass::listChannelMessages(const std::string& cursor)
     {
-      CCLOG("message content: %s", message.content.c_str());
+      auto successCallback = [this](NChannelMessageListPtr list)
+      {
+        for (auto& message : list->messages)
+        {
+          CCLOG("message content: %s", message.content.c_str());
+        }
+
+        if (!list->nextCursor.empty())
+        {
+          listChannelMessages(list->nextCursor);
+        }
+      };
+
+      string channelId = "<channel id>";
+      client->listChannelMessages(session,
+          channelId,
+          10,
+          cursor,
+          true, // forward
+          successCallback);
     }
 
-    if (!list->nextCursor.empty())
-    {
-      listChannelMessages(list->nextCursor);
-    }
-  };
-
-  string channelId = "<channel id>";
-  client->listChannelMessages(session,
-      channelId,
-      10,
-      cursor,
-      true, // forward
-      successCallback);
-}
-
-listChannelMessages("");
-```
+    listChannelMessages("");
+    ```
 
 === "Cocos2d-x JS"
     ```js tab="Cocos2d-x JS"
@@ -1401,10 +1402,10 @@ listChannelMessages("");
     ```
 
 === "REST"
-```
-GET /v2/channel?channel_id=<channel id>&forward=true&limit=10&cursor=<cursor>
-Host: 127.0.0.1:7350
-Accept: application/json
-Content-Type: application/json
-Authorization: Bearer <session token>
-```
+    ```
+    GET /v2/channel?channel_id=<channel id>&forward=true&limit=10&cursor=<cursor>
+    Host: 127.0.0.1:7350
+    Accept: application/json
+    Content-Type: application/json
+    Authorization: Bearer <session token>
+    ```
