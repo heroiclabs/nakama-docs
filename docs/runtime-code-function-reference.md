@@ -729,6 +729,64 @@ _Example_
 	import "github.com/robfig/cron"
 	```
 
+### friends
+
+__Friends List__
+
+List all friends, invites, invited, and blocked which belong to a user.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | The ID of the user who's friends, invites, invited, and blocked you want to list. |
+| limit | `int` | number | The number of friends to retrieve in this page of results. No more than 1000 limit allowed per result. |
+| state | `int` | number | The state of the friendship with the user. If unspecified this returns friends in all states for the user. |
+| cursor | `string` | The cursor returned from a previous listing request. Used to obtain the next page of results. |
+
+_Returns_
+
+The user information for users of the current user who're friends.
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_id = "b1aafe16-7540-11e7-9738-13777fcc7cd8"
+    local limit = 100
+    local state = nil -- optional
+    local cursor = nil -- optional
+
+    local friends = nk.friends_list(user_id, limit, state, cursor)
+    for _, m in ipairs(friends)
+    do
+      -- States are: friend(0), invite_sent(1), invite_received(2), blocked(3)
+      local msg = ("Friend username %q has state %q"):format(m.user.username, m.state)
+      nk.logger_info(msg)
+    end
+    ```
+
+=== "Go"
+    ```go
+    userID := "b1aafe16-7540-11e7-9738-13777fcc7cd8"
+    limit := 100
+    state := 0
+    cursor := ""
+
+    friends, err := nk.FriendsList(ctx, userID, limit, state, cursor)
+    if err != nil {
+      logger.WithField("err", err).Error("nk.FriendsList error.")
+    } else {
+      for _, friend := range friends {
+        // States are: friend(0), invite_sent(1), invite_received(2), blocked(3)
+        logger.Info("Friend username %s has state %d", friend.GetUser().Username, friend.GetState())
+      }
+    }
+    ```
+
+---
+
 ### groups
 
 __Group Create__
