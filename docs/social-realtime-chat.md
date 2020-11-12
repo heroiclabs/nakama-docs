@@ -1063,7 +1063,7 @@ Messages can be listed in order of most recent to oldest and also in reverse (ol
       -H 'authorization: Bearer <session token>'
     ```
 
-==== "JavaScript"
+=== "JavaScript"
     ```js
     const channelId = "<channel id>";
     const result = await client.listChannelMessages(session, channelId, 10);
