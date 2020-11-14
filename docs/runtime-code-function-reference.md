@@ -33,7 +33,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | User ID to fetch information for. Must be valid UUID. |
 
 _Returns_
@@ -72,7 +72,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string |User ID for which the information is to be updated. Must be valid UUID. |
 | metadata | `map[string]interface{}` | table | Metadata to update. Use `nil` if it is not being updated. |
 | username | `string` | string | Username to be set. Must be unique. Use `""` (Go) or `nil` (Lua) if it is not being updated. |
@@ -182,7 +182,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | Custom ID to use to authenticate the user. Must be between 6-128 characters. |
 | username | `string` | string | Optional username. If left empty, one is generated. |
 | create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
@@ -216,7 +216,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | Device ID to use to authenticate the user. Must be between 1 - 128 characters. |
 | username | `string` | string | Optional username. If left empty, one is generated. |
 | create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
@@ -250,7 +250,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | email | `string` | string | Email address to use to authenticate the user. Must be between 10-255 characters. |
 | password | `string` | string | Password to set - must be longer than 8 characters. |
 | username | `string` | string | Optional username. If left empty, one is generated. |
@@ -285,7 +285,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | token | `string` | string | Facebook OAuth access token. |
 | import | `bool` | bool | Whether to import facebook friends after authenticated automatically. This is true by default. |
 | username | `string` | string | Optional username. If left empty, one is generated. |
@@ -320,7 +320,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | player_id | `string` | string | PlayerId provided by GameCenter. |
 | bundle_id | `string` | string | BundleId of your app on iTunesConnect. |
 | timestamp | `int64` | number | Timestamp at which Game Center authenticated the client and issued a signature. |
@@ -357,7 +357,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | token | `string` | string | Google OAuth access token. |
 | username | `string` | string | Optional username. If left empty, one is generated. |
 | create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
@@ -391,7 +391,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | token | `string` | string | Steam token. |
 | username | `string` | string | Optional username. If left empty, one is generated. |
 | create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
@@ -427,7 +427,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | User ID you'd like to use to generated the token. |
 | username | `string` | string | Username information to embed in the token. This is mandatory. |
 | expires_at | `number` | string | Number of seconds the token should be valid for. Optional, defaults to [server configured expiry time](install-configuration.md#session). |
@@ -565,7 +565,7 @@ _Example_
 === "Lua"
     ```lua
     local encoded = nk.base64_encode("Hello world")
-    nk.logger_info(encoded) -- Outputs "SGVsbG8gd29ybGQ=".
+    nk.logger_info(encoded) -- outputs "SGVsbG8gd29ybGQ=".
     ```
 
 === "Go"
@@ -595,7 +595,7 @@ _Example_
 === "Lua"
     ```lua
     local decoded = nk.base64url_decode("SGVsbG8gd29ybGQ=")
-    nk.logger_info(decoded) -- Outputs "Hello world".
+    nk.logger_info(decoded) -- outputs "Hello world".
     ```
 
 === "Go"
@@ -625,7 +625,7 @@ _Example_
 === "Lua"
     ```lua
     local encoded = nk.base64url_encode("Hello world")
-    nk.logger_info(encoded) -- Outputs "SGVsbG8gd29ybGQ=".
+    nk.logger_info(encoded) -- outputs "SGVsbG8gd29ybGQ=".
     ```
 
 === "Go"
@@ -686,7 +686,7 @@ _Example_
 === "Lua"
     ```lua
     local is_same = nk.bcrypt_compare("$2a$04$bl3tac7Gwbjy04Q8H2QWLuUOEkpoNiAeTxazxi4fVQQRMGbMaUHQ2", "123456")
-    nk.logger_info(is_same) -- Outputs true.
+    nk.logger_info(is_same) -- outputs true.
     ```
 
 === "Go"
@@ -799,7 +799,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | The user ID to be associcated as the group superadmin. Mandatory field. |
 | name | `string` | string | Group name, must be set and unique. |
 | creator_id | `string` | string | The user ID to be associcated as creator. If not set, system user will be set. |
@@ -847,7 +847,7 @@ _Example_
     maxCount := 100
 
     if group, err := nk.GroupCreate(ctx, userID, name, creatorID, langTag, description, avatarURL, open, metadata, maxCount); err != nil {
-      logger.Error("Could not create group: %s", err.Error())
+      logger.WithField("err", err).Error("Group create error.")
     }
     ```
 
@@ -861,7 +861,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | group_id | `string` | string | The group ID to delete. |
 
 _Example_
@@ -876,7 +876,7 @@ _Example_
     ```go
     groupID := "f00fa79a-750f-11e7-8626-0fb79f45ff97"
     if group, err := nk.GroupDelete(ctx, groupID); err != nil {
-      logger.Error("Could not delete group: %s", err.Error())
+      logger.WithField("err", err).Error("Group delete error.")
     }
     ```
 
@@ -890,7 +890,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | group_id | `string` | string | The group ID to update. |
 | name | `string` | string | Group name, can be empty if not changed. |
 | creator_id | `string` | string | The user ID to be associcated as creator. Can be empty if not changed. |
@@ -924,7 +924,7 @@ _Example_
     description := "An updated description."
 
     if err := nk.GroupUpdate(ctx, groupID, "", "", "", description, "", true, metadata, 0); err != nil {
-      logger.Error("Could not update group: %s", err.Error())
+      logger.WithField("err", err).Error("Group update error.")
     }
     ```
 
@@ -938,7 +938,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | group_id | `string` | string | The Id of the group who's members, admins and superadmins you want to list. |
 
 _Returns_
@@ -953,7 +953,7 @@ _Example_
     local members = nk.group_users_list(group_id)
     for _, m in ipairs(members)
     do
-      local msg = ("Member username %q has state %q"):format(m.user.username, m.state)
+      local msg = string.format("Member username %q has state %q", m.user.username, m.state)
       nk.logger_info(msg)
     end
     ```
@@ -963,7 +963,7 @@ _Example_
     groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
     if groupUserList, err := nk.GroupUsersList(ctx, groupID); err != nil {
-      logger.Error("Could not get user list for group: %s", err.Error())
+      logger.WithField("err", err).Error("Group users list error.")
     } else {
       for _, member := range groupUserList {
         // States are => 0: Superadmin, 1: Admin, 2: Member, 3: Requested to join
@@ -982,7 +982,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | group_id | `string` | string | The Id of the group who's members, admins and superadmins you want to list. |
 | user_ids | `[]string` | table | A table array of user ids to kick. |
 
@@ -1002,7 +1002,7 @@ _Example_
     userIds := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
 
     if err := nk.GroupUsersKick(ctx, groupID, userIds); err != nil {
-      logger.Error("Could not kick users: %s", err.Error())
+      logger.WithField("err", err).Error("Group users kick error.")
     }
     ```
 
@@ -1016,7 +1016,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | group_ids | `[]string` | table | A set of strings of the ID for the groups to get. |
 
 _Returns_
@@ -1027,11 +1027,15 @@ _Example_
 
 === "Lua"
     ```lua
-    local group_ids = {"0BF154F1-F7D1-4AAA-A060-5FFED3CDB982", "997C0D18-0B25-4AEC-8331-9255BD36665D"}
+    local group_ids = {
+      "0BF154F1-F7D1-4AAA-A060-5FFED3CDB982",
+      "997C0D18-0B25-4AEC-8331-9255BD36665D"
+    }
+
     local groups = nk.groups_get_id(group_ids)
     for _, g in ipairs(groups)
     do
-      local msg = ("Group name %q with id %q"):format(g.name, g.id)
+      local msg = string.format("Group name %q with id %q", g.name, g.id)
       nk.logger_info(msg)
     end
     ```
@@ -1041,7 +1045,7 @@ _Example_
     groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
     if groups, err := nk.GroupsGetId(ctx, []string{groupID}); err != nil {
-      logger.Error("Could not get groups: %s", err.Error())
+      logger.WithField("err", err).Error("Groups get by ID error.")
     } else {
       for _, group := range groups {
         logger.Info("Group name %s with id %s.", group.Name, group.Id)
@@ -1059,7 +1063,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | The Id of the user who's groups you want to list. |
 
 _Returns_
@@ -1074,7 +1078,7 @@ _Example_
     local groups = nk.user_groups_list(user_id)
     for _, g in ipairs(groups)
     do
-      local msg = ("User has state %q in group %q"):format(g.state, g.group.name)
+      local msg = string.format("User has state %q in group %q", g.state, g.group.name)
       nk.logger_info(msg)
     end
     ```
@@ -1084,7 +1088,7 @@ _Example_
     userID := "dcb891ea-a311-4681-9213-6741351c9994"
 
     if groups, err := nk.UserGroupsList(ctx, userID); err != nil {
-      logger.Error("Could not list groups: %s", err.Error())
+      logger.WithField("err", err).Error("User groups list error.")
     } else {
       for _, group := range groups {
         logger.Printf("User has state %d in group %s.", group.GetState(), group.GetGroup().Name)
@@ -1157,11 +1161,11 @@ _Example_
     local timeout = 5000 -- 5 seconds timeout
     local success, code, headers, body = pcall(nk.http_request, url, method, headers, content, timeout)
     if (not success) then
-      nk.logger_error(("Failed %q"):format(code))
+      nk.logger_error(string.format("Failed %q", code))
     elseif (code >= 400) then
-      nk.logger_error(("Failed %q %q"):format(code, body))
+      nk.logger_error(string.format("Failed %q %q", code, body))
     else
-      nk.logger_info(("Success %q %q"):format(code, body))
+      nk.logger_info(string.format("Success %q %q", code, body))
     end
     ```
 
@@ -1242,7 +1246,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | The unique identifier for the new leaderboard. This is used by clients to submit scores. |
 | authoritative | `bool` | bool | Mark the leaderboard as authoritative which ensures updates can only be made via the Lua runtime. No client can submit a score directly. Optional in Lua. Default false. |
 | sort | `string` | string | The sort order for records in the leaderboard; possible values are "asc" or "desc". Optional in Lua. Default "desc". |
@@ -1277,7 +1281,7 @@ _Example_
     }
 
     if err := nk.LeaderboardCreate(ctx, id, authoritative, sortOrder, operator, resetSchedule, metadata); err != nil {
-      logger.Error("Error creating leaderboard: %s", err.Error())
+      logger.WithField("err", err).Error("Leaderboard create error.")
     }
     ```
 
@@ -1291,7 +1295,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | The unique identifier for the leaderboard to delete. Mandatory field. |
 
 _Example_
@@ -1306,7 +1310,7 @@ _Example_
     ```go
     id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     if err := nk.LeaderboardDelete(ctx, id); err != nil {
-      logger.Error("Error deleting leaderboard: %s", err.Error())
+      logger.WithField("err", err).Error("Leaderboard delete error.")
     }
     ```
 
@@ -1320,7 +1324,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
 | owner | `string` | string | The owner of this score submission. Mandatory field. |
 | username | `string` | string | The owner username of this score submission, if it's a user. Optional in Lua. |
@@ -1355,7 +1359,7 @@ _Example_
     }
 
     if record, err := nk.LeaderboardRecordWrite(ctx, id, ownerID, username, score, subscore, metadata); err != nil {
-      logger.Error("Error writing leaderboard record: %s", err.Error())
+      logger.WithField("err", err).Error("Leaderboard record write error.")
     }
     ```
 
@@ -1369,7 +1373,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | The unique identifier for the leaderboard to delete from. Mandatory field. |
 | owner | `string` | string | The owner of the score to delete. Mandatory field. |
 
@@ -1388,7 +1392,7 @@ _Example_
     ownerID := "4c2ae592-b2a7-445e-98ec-697694478b1c"
 
     if err := nk.LeaderboardRecordDelete(ctx, id, ownerID); err != nil {
-      logger.Error("Error deleting leaderboard record: %s", err.Error())
+      logger.WithField("err", err).Error("Leaderboard record delete error.")
     }
     ```
 
@@ -1402,11 +1406,11 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
-| id | `string` | string | The unique identifier of the leaderboard to list from. Mandatory field. |
-| owners | `[]string` | table | Table array of owners to filter to. Optional in Lua. |
-| limit | `int` |  number | The maximum number of records to return, from 10 to 100. Optional in Lua. |
-| cursor | `string` | string | A cursor used to fetch the next page when applicable. Optional in Lua. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | The unique identifier of the leaderboard to list. |
+| owners | `[]string` | table | Table array of owners to filter to. An optional input. |
+| limit | `int` |  number | The maximum number of records to return from 10 to 100. An optional input. |
+| cursor | `string` | string | A cursor used to fetch the next page when applicable. An optional input. |
 
 _Returns_
 
@@ -1430,8 +1434,9 @@ _Example_
     cursor := ""
     expiry := int64(0)
 
-    if records, ownerRecords, prevCursor, nextCursor, err := nk.LeaderboardRecordsList(ctx, id, ownerIDs, limit, cursor, expiry); err != nil {
-      logger.Error("Unable to fetch records: %s", err.Error())
+    records, ownerRecords, prevCursor, nextCursor, err := nk.LeaderboardRecordsList(ctx, id, ownerIDs, limit, cursor, expiry)
+    if err != nil {
+      logger.WithField("err", err).Error("Leaderboard record list error.")
     }
     ```
 
@@ -1452,7 +1457,7 @@ _Example_
 
 === "Lua"
     ```lua
-    local message = ("%q - %q"):format("hello", "world")
+    local message = string.format("%q - %q", "hello", "world")
     nk.logger_error(message)
     ```
 
@@ -1478,7 +1483,7 @@ _Example_
 
 === "Lua"
     ```lua
-    local message = ("%q - %q"):format("hello", "world")
+    local message = string.format("%q - %q", "hello", "world")
     nk.logger_info(message)
     ```
 
@@ -1504,7 +1509,7 @@ _Example_
 
 === "Lua"
     ```lua
-    local message = ("%q - %q"):format("hello", "world")
+    local message = string.format("%q - %q", "hello", "world")
     nk.logger_warn(message)
     ```
 
@@ -1523,7 +1528,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | module | `string` | string | The name of an available runtime module that will be responsible for the match. In Go, this was registered in InitModule. In Lua, this was provided as an independent match handler module. |
 | params | `map[string]interface{}` | any | Any value to pass to the match's init hook. Optional in Lua. |
 
@@ -1535,20 +1540,24 @@ _Example_
 
 === "Lua"
     ```lua
-    -- Assumes you've registered a runtime module with a path of "my/match/module.lua".
-    local module = "my.match.module"
-    local params = { some = "data" }
+    -- Assumes you've registered a runtime module with a path of "some/folder/module.lua".
+    local module = "some.folder.module"
+    local params = {
+      some = "data"
+    }
     local match_id = nk.match_create(module, params)
     ```
 
 === "Go"
     ```go
-    // Assumes you've registered a match with initializer.RegisterMatch("my.match.module", ...)
-    modulename := "my.match.module"
+    // Assumes you've registered a match with initializer.RegisterMatch("some.folder.module", ...)
+    modulename := "some.folder.module"
     params := map[string]interface{}{
       "some": "data",
     }
-    if matchId, err := nk.MatchCreate(ctx, modulename, params); err != nil {
+
+    matchID, err := nk.MatchCreate(ctx, modulename, params)
+    if err != nil {
       return "", err
     }
     ```
@@ -1563,7 +1572,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | limit | `int` | number | The maximum number of matches to list. Optional in Lua. Default 1. |
 | authoritative | `bool` | bool | Boolean `true` if listing should only return authoritative matches, `false` to only return relayed matches, `nil` to return both. Optional in Lua. Default `false` (Go) or `nil` (Lua). |
 | label | `string` | string | A label to filter authoritative matches by. Optional in Lua. Default "" (Go) or `nil` (Lua) meaning any label matches. |
@@ -1582,10 +1591,11 @@ _Example_
     local label = nil
     local min_size = 2
     local max_size = 4
+
     local matches = nk.match_list(limit, authoritative, label, min_size, max_size)
     for _, m in ipairs(matches)
     do
-      local message = ("Found match with id: %q"):format(m.match_id)
+      local message = string.format("Found match with id: %q", m.match_id)
       nk.logger_info(message)
     end
     ```
@@ -1599,8 +1609,10 @@ _Example_
     label := ""
     min_size := 2
     max_size := 4
-    if matches, err := nk.MatchList(ctx, limit, isauthoritative, label, min_size, max_size, ""); err != nil {
-      // Handle error.
+
+    matches, err := nk.MatchList(ctx, limit, isauthoritative, label, min_size, max_size, "")
+    if err != nil {
+      logger.WithField("err", err).Error("Match list error.")
     } else {
       for _, match := range matches {
         logger.Info("Found match with id: %s", match.GetMatchId())
@@ -1645,7 +1657,8 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ---- | ----------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information | | subject | `string` | string | Notification subject. Must be set. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| subject | `string` | string | Notification subject. Must be set. |
 | content | `map[string]interface{}` | table | Notification content. Must be set but can be an empty table. |
 | code | `int` | number | Notification code to use. Must be equal or greater than 0. |
 | sender_id | `string` | string | The sender of this notification. If left empty, it will be assumed that it is a system notification. |
@@ -1656,15 +1669,15 @@ _Example_
 === "Lua"
     ```lua
     local subject = "You've unlocked level 100!"
-    local content = nk.json_encode({
+    local content = {
       reward_coins = 1000
-    })
-    local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c" -- who to send
-    local sender_id = "dcb891ea-a311-4681-9213-6741351c9994" -- who the message if from
+    }
+    local receiver_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    local sender_id = "dcb891ea-a311-4681-9213-6741351c9994"
     local code = 101
     local persistent = true
 
-    nk.notification_send(user_id, subject, content, code, sender_id, persistent)
+    nk.notification_send(receiver_id, subject, content, code, sender_id, persistent)
     ```
 
 === "Go"
@@ -1673,12 +1686,12 @@ _Example_
     content := map[string]interface{}{
       "reward_coins": 1000,
     }
-    userID := "4c2ae592-b2a7-445e-98ec-697694478b1c"   // who to send
+    receiverID := "4c2ae592-b2a7-445e-98ec-697694478b1c"
     senderID := "dcb891ea-a311-4681-9213-6741351c9994" // who the message if from
     code := 101
     persistent := true
 
-    nk.NotificationSend(ctx, userID, subject, content, code, senderID, persistent)
+    nk.NotificationSend(ctx, receiverID, subject, content, code, senderID, persistent)
     ```
 
 ---
@@ -1691,7 +1704,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - |  [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | notifications | `[]*runtime.NotifictionSend` | table | A list of notifications to be sent together. |
 
 _Example_
@@ -1699,9 +1712,9 @@ _Example_
 === "Lua"
     ```lua
     local subject = "You've unlocked level 100!"
-    local content = nk.json_encode({
+    local content = {
       reward_coins = 1000
-    })
+    }
     local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c" -- who to send
     local sender_id = "dcb891ea-a311-4681-9213-6741351c9994" -- who the message if from
     local code = 101
@@ -1731,7 +1744,7 @@ _Example_
       },
     }
     if err := nk.NotificationsSend(ctx, notifications); err != nil {
-      logger.Error("Could not send notifications: %s", err.Error())
+      logger.WithField("err", err).Error("Notifications send error.")
     }
     ```
 
@@ -1777,7 +1790,7 @@ _Example_
         return nil
       end
 
-      return nk.match_create("match", {debug = true, expected_users = matchmaker_users})
+      return nk.match_create("match", { debug = true, expected_users = matchmaker_users })
     end
     nk.register_matchmaker_matched(matchmaker_matched)
     ```
@@ -1786,10 +1799,7 @@ _Example_
     ```go
     func MakeMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, entries []runtime.MatchmakerEntry) (string, error) {
       for _, e := range entries {
-        logger.Info(e.GetPresence().GetUserId())
-        logger.Info(e.GetPresence().GetSessionId())
-        logger.Info(e.GetPresence().GetUsername())
-        logger.Info(e.GetPresence().GetNode())
+      	logger.Info("%+v", e.GetPresence())
 
         for k, v := range e.GetProperties() {
           logger.Info("%v: %v", k, v)
@@ -1801,12 +1811,12 @@ _Example_
         "expected_users": entries,
       }
 
-      matchId, err := nk.MatchCreate(ctx, "pingpong", params)
+      matchID, err := nk.MatchCreate(ctx, "pingpong", params)
       if err != nil {
         return "", err
       }
 
-      return matchId, nil
+      return matchID, nil
     }
 
     // Register as matchmaker matched hook, this call should be in InitModule.
@@ -1853,7 +1863,7 @@ _Example_
 
     // Register as an appropriate after hook, this call should be in InitModule.
     if err := initializer.RegisterAfterAddFriends(AfterAddFriends); err != nil {
-      logger.Error("Unable to register: %v", err)
+      logger.WithField("err", err).Error("After add friends hook registration error.")
       return err
     }
     ```
@@ -1896,7 +1906,7 @@ _Example_
 
     // Register as an appropriate before hook, this call should be in InitModule.
     if err := initializer.RegisterBeforeAddFriends(BeforeAddFriends); err != nil {
-      logger.Error("Unable to register: %v", err)
+      logger.WithField("err", err).Error("Before add friends hook registration error.")
       return err
     }
     ```
@@ -1936,7 +1946,7 @@ _Example_
 
     // Register as an appropriate after hook, this call should be in InitModule.
     if err := initializer.RegisterAfterRt("ChannelJoin", MyFunc); err != nil {
-      logger.Error("Unable to register: %v", err)
+      logger.WithField("err", err).Error("After realtime hook registration error.")
       return err
     }
     ```
@@ -1972,14 +1982,13 @@ _Example_
 
 === "Go"
     ```go
-    func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, envelope *rtapi.Envelope) (*rtapi.Envelope, error) {}
-      // run some code
-      return envelope, nil // For code to keep processing the request.
+    func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, envelope *rtapi.Envelope) (*rtapi.Envelope, error) {
+      return envelope, nil // For code to keep processing the input message.
     }
 
     // Register as an appropriate before hook, this call should be in InitModule.
     if err := initializer.RegisterBeforeRt("ChannelJoin", MyFunc); err != nil {
-      logger.Error("Unable to register: %v", err)
+      logger.WithField("err", err).Error("Before realtime hook registration error.")
       return err
     }
     ```
@@ -2024,7 +2033,7 @@ _Example_
 
     // Register as an RPC function, this call should be in InitModule.
     if err := initializer.RegisterRpc("my_func_id", MyFunc); err != nil {
-      logger.Error("Unable to register: %v", err)
+      logger.WithField("err", err).Error("RPC registration error.")
       return err
     }
     ```
@@ -2043,26 +2052,25 @@ _Parameters_
 
 _Example_
 
+=== "Lua"
+    ```lua
+    local fn = function(ctx, leaderboard, reset) {
+        -- Custom logic
+    }
+    nk.register_leaderboard_reset(fn)
+    ```
+
 === "Go"
     ```go
-    func LeaderboardReset(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboard runtime.Leaderboard, reset int64) error {
-        // Custom logic
+    func LeaderboardReset(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, lb runtime.Leaderboard, reset int64) error {
+        // Custom logic runs on reset.
         return nil
     }
 
     if err := initializer.RegisterLeaderboardReset(LeaderboardReset); err != nil {
-        logger.Error("Unable to register: %v", err)
+        logger.WithField("err", err).Error("Leaderboard reset registration error.")
         return err
     }
-    ```
-
-=== "Lua"
-    ```lua
-    nk.register_leaderboard_reset(
-        function(ctx, leaderboard, reset) {
-            // Custom logic
-        }
-    )
     ```
 
 ---
@@ -2079,26 +2087,25 @@ _Parameters_
 
 _Example_
 
+=== "Lua"
+    ```lua
+    local fn = function(ctx, tournament, t_end, reset) {
+        -- Custom logic
+    }
+    nk.register_tournament_reset(fn)
+    ```
+
 === "Go"
     ```go
-    func TournamentReset(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboard runtime.Tournament, reset int64) error {
-        // Custom logic
+    func TournamentReset(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, lb runtime.Tournament, reset int64) error {
+        // Custom logic runs on reset.
         return nil
     }
 
     if err := initializer.RegisterTournamentReset(TournamentReset); err != nil {
-        logger.Error("Unable to register: %v", err)
+        logger.WithField("err", err).Error("Tournament reset registration error.")
         return err
     }
-    ```
-
-=== "Lua"
-    ```lua
-    nk.register_tournament_reset(
-        function(ctx, tournament, t_end, reset) {
-            // Custom logic
-        }
-    )
     ```
 
 ---
@@ -2117,24 +2124,23 @@ _Example_
 
 === "Go"
     ```go
-    func TournamentEnd(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, leaderboard runtime.Tournament, reset int64) error {
+    func TournamentEnd(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, lb runtime.Tournament, reset int64) error {
         // Custom logic
         return nil
     }
 
     if err := initializer.RegisterTournamentEnd(TournamentEnd); err != nil {
-        logger.Error("Unable to register: %v", err)
+        logger.WithField("err", err).Error("Tournament end registration error.")
         return err
     }
     ```
 
 === "Lua"
     ```lua
-    nk.register_tournament_end(
-        function(ctx, tournament, t_end, reset) {
-            // Custom logic
-        }
-    )
+    local fn = function(ctx, tournament, t_end, reset) {
+        -- Custom logic
+    }
+    nk.register_tournament_end(fn)
     ```
 
 ---
@@ -2183,7 +2189,8 @@ _Example_
     VALUES ($1, $2)
     ON CONFLICT (id) DO NOTHING`, systemId, "system_id")
       if err != nil {
-        logger.Error("Error: %s", err.Error())
+        logger.WithField("err", err).Error("DB exec error.")
+        return err
       }
 
       return nil
@@ -2200,7 +2207,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | object_ids | `[]*runtime.StorageRead` | table | A table / array of object identifiers to be fetched. |
 
 _Returns_
@@ -2220,35 +2227,35 @@ _Example_
     local objects = nk.storage_read(object_ids)
     for _, r in ipairs(objects)
     do
-      local message = ("read: %q, write: %q, value: %q"):format(r.permission_read, r.permission_write, r.value)
+      local message = string.format("read: %q, write: %q, value: %q", r.permission_read, r.permission_write, r.value)
       nk.logger_info(message)
     end
     ```
 
 === "Go"
     ```go
-    userid := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user ID.
+    userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // some user ID.
     objectIds := []*runtime.StorageRead{
       &runtime.StorageRead{
         Collection: "save",
         Key: "save1",
-        UserID: userid,
+        UserID: userID,
       },
       &runtime.StorageRead{
         Collection: "save",
         Key: "save2",
-        UserID: userid,
+        UserID: userID,
       },
       &runtime.StorageRead{
         Collection: "save",
         Key: "save3",
-        UserID: userid,
+        UserID: userID,
       },
     }
 
     records, err := nk.StorageRead(ctx, objectIds)
     if err != nil {
-      // Handle error.
+      logger.WithField("err", err).Error("Storage read error.")
     } else {
       for _, record := range records {
         logger.Info("read: %d, write: %d, value: %s", record.PermissionRead, record.PermissionWrite, record.Value)
@@ -2266,7 +2273,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | User ID or "" (empty string) for public records. |
 | collection | `string` | string | Collection to list data from. |
 | limit | `int` | number | Limit number of records retrieved. Min 10, Max 100. |
@@ -2284,16 +2291,17 @@ _Example_
     local records = nk.storage_list(user_id "collection", 10, "")
     for _, r in ipairs(records)
     do
-      local message = ("read: %q, write: %q, value: %q"):format(r.permission_read, r.permission_write, r.value)
-      nk.logger_info(message)
+      local m = string.format("read: %q, write: %q, value: %q", r.permission_read, r.permission_write, r.value)
+      nk.logger_info(m)
     end
     ```
 
 === "Go"
     ```go
     userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
-    if listRecords, nextCursor, err := nk.StorageList(ctx, userID, "collection", 10, ""); err != nil {
-      // Handle error.
+    listRecords, nextCursor, err := nk.StorageList(ctx, userID, "collection", 10, "")
+    if err != nil {
+      logger.WithField("err", err).Error("Storage list error.")
     } else {
       for _, r := range listRecords {
         logger.Info("read: %d, write: %d, value: %s", r.PermissionRead, r.PermissionWrite, r.Value)
@@ -2311,7 +2319,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | object_ids | `[]*runtime.StorageDelete` | table | A table / array of object identifiers to be fetched. |
 
 _Example_
@@ -2321,9 +2329,9 @@ _Example_
     local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
     local friend_user_id = "8d98ee3f-8c9f-42c5-b6c9-c8f79ad1b820" -- Friend ID.
     local object_ids = {
-      {collection = "save", key = "save1", user_id = user_id},
-      {collection = "save", key = "save2", user_id = user_id},
-      {collection = "public", key = "progress", user_id = friend_user_id}
+      { collection = "save", key = "save1", user_id = user_id },
+      { collection = "save", key = "save2", user_id = user_id },
+      { collection = "public", key = "progress", user_id = friend_user_id }
     }
     nk.storage_delete(object_ids)
     ```
@@ -2350,8 +2358,9 @@ _Example_
       },
     }
 
-    if err := nk.StorageDelete(ctx, objectIds); err != nil {
-      // Handle error.
+    err := nk.StorageDelete(ctx, objectIds)
+    if err != nil {
+      logger.WithField("err", err).Error("Storage delete error.")
     }
     ```
 
@@ -2397,7 +2406,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | object_ids | `[]*runtime.StorageWrite` | table | A table / array of object identifiers to be fetched. |
 
 _Example_
@@ -2406,10 +2415,10 @@ _Example_
     ```lua
     local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
     local new_objects = {
-      {collection = "save", key = "save1", user_id = user_id, value = {}},
-      {collection = "save", key = "save2", user_id = user_id, value = {}},
-      {collection = "save", key = "save3", user_id = user_id, value = {}, permission_read = 2, permission_write = 1},
-      {collection = "save", key = "save3", user_id = user_id, value = {}, version="*", permission_read = 1, permission_write = 1}
+      { collection = "save", key = "save1", user_id = user_id, value = {} },
+      { collection = "save", key = "save2", user_id = user_id, value = {} },
+      { collection = "save", key = "save3", user_id = user_id, value = {}, permission_read = 2, permission_write = 1 },
+      { collection = "save", key = "save3", user_id = user_id, value = {}, version="*", permission_read = 1, permission_write = 1 }
     }
     nk.storage_write(new_objects)
     ```
@@ -2417,7 +2426,7 @@ _Example_
 === "Go"
     ```go
     userID := "4ec4f126-3f9d-11e7-84ef-b7c182b36521" // Some user ID.
-    objectIds := []*runtime.StorageWrite{
+    objectIDs := []*runtime.StorageWrite{
       &runtime.StorageWrite{
         Collection: "save",
         Key:        "save1",
@@ -2449,8 +2458,9 @@ _Example_
       },
     }
 
-    if _, err := nk.StorageWrite(ctx, objectIds); err != nil {
-      // Handle error.
+    _, err := nk.StorageWrite(ctx, objectIDs)
+    if err != nil {
+      logger.WithField("err", err).Error("Storage write error.")
     }
     ```
 
@@ -2461,7 +2471,7 @@ _Example_
 
 __sql_exec (query, parameters)__
 
-Execute an arbitrary SQL query and return the number of rows affected. Typically an `INSERT`, `DELETE`, or `UPDATE` statement with no return columns.
+Execute an arbitrary SQL query and return the number of rows affected. Typically an `"INSERT"`, `"DELETE"`, or `"UPDATE"` statement with no return columns.
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
@@ -2479,7 +2489,7 @@ _Example_
     -- This example query deletes all expired leaderboard records.
     local query = [[DELETE FROM leaderboard_record
                     WHERE expires_at > 0 AND expires_at <= $1]]
-    local parameters = {os.time() * 1000}
+    local parameters = { os.time() * 1000 }
     local affected_rows_count = nk.sql_exec(query, parameters)
     ```
 
@@ -2493,7 +2503,7 @@ _Example_
 
 __sql_query (query, parameters)__
 
-Execute an arbitrary SQL query that is expected to return row data. Typically a `SELECT` statement.
+Execute an arbitrary SQL query that is expected to return row data. Typically a `"SELECT"` statement.
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
@@ -2534,7 +2544,7 @@ _Example_
     -- Example of processing the rows.
     nk.logger_info("Selected " .. #rows .. " rows.")
     for i, row in ipairs(rows) do
-      nk.logger_info("Username " .. row.username .. " created at " .. row.create_time)
+      nk.logger_info(string.format("Username %q created at %q", row.username, row.create_time))
     end
     ```
 
@@ -2580,21 +2590,21 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | The unique identifier for the new tournament. This is used by clients to submit scores. |
-| sort | `string` | string | The sort order for records in the tournament; possible values are "asc" or "desc". Optional in Lua. Default "desc". |
-| operator | `string` | string | The operator that determines how scores behave when submitted; possible values are "best", "set", or "incr". Optional in Lua. Default "best". |
-| duration | `int` | number | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever sooner. Clients can query the tournament for results between end of duration and next reset period. Required.
-| reset | `string` | string | The cron format used to define the reset schedule for the tournament. This controls when the underlying leaderboard resets and the tournament is considered active again. Optional in Lua. |
-| metadata | `map[string]interface{}` | table | The metadata you want associated to the tournament. Some good examples are weather conditions for a racing game. Optional in Lua. |
-| title | `string` | string | The title of the tournament. Optional in Lua.
-| description | `string` | string | The description of the tournament. Optional in Lua.
-| category | `int` | number | A category associated with the tournament. This can be used to filter different types of tournaments. Between 0 and 127. Optional in Lua.
-| start_time | `int` | number | The start time of the tournament. Leave empty for immediately, or a future time.
-| end_time | `int` | number | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than start_time if set. Optional in Lua. Default value is __never__.
-| max_size | `int` | number | Maximum size of participants in a tournament. Optional in Lua.
-| max_num_score | `int` | number | Maximum submission attempts for a tournament record.
-| join_required | `bool` | bool | Whether the tournament needs to be joint before a record write is allowed.
+| sort | `string` | string | The sort order for records in the tournament; possible values are "asc" or "desc". Default "desc". |
+| operator | `string` | string | The operator that determines how scores behave when submitted. The possible values are "best", "set", or "incr". Default "best". |
+| duration | `int` | number | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever sooner. A game client can query the tournament for results between end of duration and next reset period. |
+| reset | `string` | string | The cron format used to define the reset schedule for the tournament. This controls when the underlying leaderboard resets and the tournament is considered active again. This is optional. |
+| metadata | `map[string]interface{}` | table | The metadata you want associated to the tournament. Some good examples are weather conditions for a racing game. This is optional. |
+| title | `string` | string | The title of the tournament. This is optional. |
+| description | `string` | string | The description of the tournament. This is optional. |
+| category | `int` | number | A category associated with the tournament. This can be used to filter different types of tournaments. Between 0 and 127. This is optional. |
+| start_time | `int` | number | The start time of the tournament. Leave empty for immediately, or a future time. |
+| end_time | `int` | number | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than start_time if set. Default value is __never__. |
+| max_size | `int` | number | Maximum size of participants in a tournament. This is optional. |
+| max_num_score | `int` | number | Maximum submission attempts for a tournament record. |
+| join_required | `bool` | bool | Whether the tournament needs to be joint before a record write is allowed. |
 
 _Example_
 
@@ -2639,8 +2649,11 @@ _Example_
     maxSize := 10000     // First 10,000 players who join.
     maxNumScore := 3     // Each player can have 3 attempts to score.
     joinRequired := true // Must join to compete.
-    if err := nk.TournamentCreate(ctx, id, sortOrder, operator, resetSchedule, metadata, title, description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired); err != nil {
-      // Handle error.
+
+    err := nk.TournamentCreate(ctx, id, sortOrder, operator, resetSchedule, metadata,
+        title, description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournament create error.")
     }
     ```
 
@@ -2654,8 +2667,8 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
-| id | `string` | string | The unique identifier for the tournament to delete. Mandatory field. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | The unique identifier for the tournament to delete. |
 
 _Example_
 
@@ -2668,8 +2681,9 @@ _Example_
 === "Go"
     ```go
     id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
-    if err := nk.TournamentDelete(ctx, id); err != nil {
-      // Handle error.
+    err := nk.TournamentDelete(ctx, id)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournament delete error.")
     }
     ```
 
@@ -2683,10 +2697,10 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
-| id | `string` | string | The unique identifier for the tournament to update. Mandatory field. |
-| owner | `string` | string | The owner of the record to increment the count for. Mandatory field. |
-| count | `int` | number | The number of attempt counts to increment. Can be negative to decrease count. Mandatory field. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | The unique identifier for the tournament to update. |
+| owner | `string` | string | The owner of the record to increment the count for. |
+| count | `int` | number | The number of attempt counts to increment. Can be negative to decrease count. |
 
 _Example_
 
@@ -2703,8 +2717,9 @@ _Example_
     id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     ownerID := "leaderboard-record-owner"
     count := -10
-    if err := nk.TournamentAddAttempt(ctx, id, ownerID, count); err != nil {
-      // Handle error.
+    err := nk.TournamentAddAttempt(ctx, id, ownerID, count)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournament add attempt error.")
     }
     ```
 
@@ -2718,10 +2733,10 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
-| id | `string` | string | The unique identifier for the tournament to update. Mandatory field. |
-| user_id | `string` | string | The owner of the record. Mandatory field. |
-| username | `string` | string | The username of the record owner. Mandatory field. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | The unique identifier for the tournament to update. |
+| user_id | `string` | string | The owner of the record. |
+| username | `string` | string | The username of the record owner. |
 
 _Example_
 
@@ -2738,8 +2753,9 @@ _Example_
     id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     ownerID := "leaderboard-record-owner"
     userName := "myusername"
-    if err := nk.TournamentJoin(ctx, id, ownerID, userName)
-      // Handle error.
+    err := nk.TournamentJoin(ctx, id, ownerID, userName)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournament join error.")
     }
     ```
 
@@ -2753,7 +2769,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | category_start | `int` | number | Filter tournament with categories greater or equal than this value. |
 | category_end | `int` | number | Filter tournament with categories equal or less than this value. |
 | start_time | `int` | number | Filter tournament with that start after this time. |
@@ -2776,7 +2792,7 @@ _Example_
     local limit = 100  -- Number to list per page.
     local tournaments = nk.tournament_list(category_start, category_end, start_time, end_time, limit)
     for i, row in ipairs(tournaments) do
-      nk.logger_info("ID " .. tournament.id .. " - can enter? " .. row.can_enter)
+      nk.logger_info(string.format("ID: %q - can enter? %q", tournament.id, row.can_enter))
     end
     ```
 
@@ -2788,10 +2804,11 @@ _Example_
     endTime := 0 // All tournaments from the start time.
     limit := 100 // Number to list per page.
     cursor := ""
-    if tournaments, err := nk.TournamentList(ctx, categoryStart, categoryEnd, startTime, endTime, limit, cursor); err != nil {
-      // Handle error.
+    list, err := nk.TournamentList(ctx, categoryStart, categoryEnd, startTime, endTime, limit, cursor)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournament list error.")
     } else {
-      for _, t := range tournaments.Tournaments {
+      for _, t := range list.Tournaments {
         logger.Info("ID %s - can enter? %b", t.Id, t.CanEnter)
       }
     }
@@ -2807,13 +2824,13 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
-| id | `string` | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
-| owner | `string` | string | The owner of this score submission. Mandatory field. |
-| username | `string` | string | The owner username of this score submission, if it's a user. Optional in Lua. |
-| score | `int64` | number | The score to submit. Optional in Lua. Default 0. |
-| subscore | `int64` | number | A secondary subscore parameter for the submission. Optional in Lua. Default 0. |
-| metadata | `map[string]interface{}` | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. Optional in Lua. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | The unique identifier of the leaderboard to submit. |
+| owner | `string` | string | The owner of this score submission. |
+| username | `string` | string | The owner username of this score submission, if it's a user. This is optional. |
+| score | `int64` | number | The score to submit. This is optional. Default 0. |
+| subscore | `int64` | number | A secondary subscore parameter for the submission. This is optional. Default 0. |
+| metadata | `map[string]interface{}` | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. This is optional. |
 
 _Returns_
 
@@ -2823,14 +2840,14 @@ _Example_
 
 === "Lua"
     ```lua
-    local metadata = {
-      weather_conditions = "rain"
-    }
     local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
     local username = "02ebb2c8"
     local score = 10
     local subscore = 0
+    local metadata = {
+      weather_conditions = "rain"
+    }
     nk.tournament_record_write(id, owner, username, score, subscore, metadata)
     ```
 
@@ -2844,8 +2861,9 @@ _Example_
     metadata := map[string]interface{}{
       "weather_conditions": "rain",
     }
-    if _, err := nk.TournamentRecordWrite(ctx, id, ownerID, username, score, subscore, metadata); err != nil {
-      // Handle error.
+    _, err := nk.TournamentRecordWrite(ctx, id, ownerID, username, score, subscore, metadata)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournament record write error.")
     }
     ```
 
@@ -2859,10 +2877,10 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
-| id | `string` | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
-| owner | `string` | string | The owner of this score submission. Mandatory field. |
-| limit | `int` | number | Number of records to return. Default 1, optional field. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | The unique identifier of the leaderboard to submit. |
+| owner | `string` | string | The owner of this score submission. |
+| limit | `int` | number | Number of records to return. Default value is 1. |
 
 _Returns_
 
@@ -2872,9 +2890,6 @@ _Example_
 
 === "Lua"
     ```lua
-    local metadata = {
-      weather_conditions = "rain"
-    }
     local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
     nk.tournament_records_haystack(id, owner, 10)
@@ -2885,9 +2900,9 @@ _Example_
     id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     ownerID := "4c2ae592-b2a7-445e-98ec-697694478b1c"
     limit := 10
-
-    if records, err := nk.TournamentRecordsHaystack(ctx, id, ownerID, limit); err != nil {
-      // Handle error.
+    records, err := nk.TournamentRecordsHaystack(ctx, id, ownerID, limit)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournament record haystack error.")
     } else {
       for _, r := range records {
         logger.Info("Leaderboard: %s, score: %d, subscore: %d", r.GetLeaderboardId(), r.Score, r.Subscore)
@@ -2907,7 +2922,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_ids | `[]string` | table | A table / array of user IDs to fetch. |
 
 _Returns_
@@ -2925,18 +2940,20 @@ _Example_
     local users = nk.users_get_id(user_ids)
     for _, u in ipairs(users)
     do
-      local message = ("username: %q, displayname: %q"):format(u.username, u.display_name)
+      local message = string.format("username: %q, displayname: %q", u.username, u.display_name)
       nk.logger_info(message)
     end
     ```
 
 === "Go"
     ```go
-    if users, err := nk.UsersGetId(ctx, []string{
+    userIDs := []string{
       "3ea5608a-43c3-11e7-90f9-7b9397165f34",
       "447524be-43c3-11e7-af09-3f7172f05936",
-    }); err != nil {
-      // Handle error.
+    }
+    users, err := nk.UsersGetId(ctx, userIDs)
+    if err != nil {
+      logger.WithField("err", err).Error("Users get ID error.")
     } else {
       for _, u := range users {
         logger.Info("username: %s, displayname: %s", u.Username, u.DisplayName)
@@ -2954,7 +2971,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | usernames | `[]string` | table | A table array of usernames to fetch. |
 
 _Returns_
@@ -2969,18 +2986,19 @@ _Example_
     local users = nk.users_get_username(usernames)
     for _, u in ipairs(users)
     do
-      local message = ("id: %q, displayname: %q"):format(u.id, u.display_name)
+      local message = string.format("id: %q, displayname: %q", u.id, u.display_name)
       nk.logger_info(message)
     end
     ```
 
 === "Go"
     ```go
-    if users, err := nk.UsersGetUsername(ctx, []string{"b7865e7e", "c048ba7a"}); err != nil {
-      // Handle error
+    users, err := nk.UsersGetUsername(ctx, []string{"b7865e7e", "c048ba7a"})
+    if err != nil {
+      logger.WithField("err", err).Error("Users get username error.")
     } else {
       for _, u := range users {
-        logger.Printf("id: %s, displayname: %s", u.Id, u.DisplayName)
+        logger.Info("id: %s, displayname: %s", u.Id, u.DisplayName)
       }
     }
     ```
@@ -2995,7 +3013,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_ids | `[]string` | table | A table / array of user IDs to ban. |
 
 _Example_
@@ -3011,11 +3029,13 @@ _Example_
 
 === "Go"
     ```go
-    if err := nk.UsersBanId(ctx, []string{
+    userIDs := []string{
       "3ea5608a-43c3-11e7-90f9-7b9397165f34",
       "447524be-43c3-11e7-af09-3f7172f05936",
-    }); err != nil {
-      // Handle error.
+    }
+    err := nk.UsersBanId(ctx, userIDs)
+    if err != nil {
+      logger.WithField("err", err).Error("Users ban ID error.")
     }
     ```
 
@@ -3029,7 +3049,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_ids | `[]string` | table | A table / array of user IDs to unban. |
 
 _Example_
@@ -3045,11 +3065,13 @@ _Example_
 
 === "Go"
     ```go
-    if err := nk.UsersUnbanId(ctx, []string{
+    userIDs := []string{
       "3ea5608a-43c3-11e7-90f9-7b9397165f34",
       "447524be-43c3-11e7-af09-3f7172f05936",
-    }); err != nil {
-      // Handle error.
+    }
+    err := nk.UsersUnbanId(ctx, userIDs)
+    if err != nil {
+      logger.WithField("err", err).Error("Users unban id error.")
     }
     ```
 
@@ -3073,7 +3095,7 @@ _Example_
 
 === "Go"
     ```go
-    // Use a Go CRON package, for example:
+    // Use a separate Go package for UUIDs.
     import "github.com/gofrs/uuid"
     ```
 
@@ -3104,7 +3126,7 @@ _Example_
 
 === "Go"
     ```go
-    // Use a Go CRON package, for example:
+    // Use a separate Go package for UUIDs.
     import "github.com/gofrs/uuid"
     ```
 
@@ -3149,7 +3171,7 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | The ID of the user to update the wallet for. |
 | changeset | `map[string]interface{}` | table | The set of wallet operations to apply. |
 | metadata | `map[string]interface{}` | table | Additional metadata to tag the wallet update with. Optional in Lua. |
@@ -3180,8 +3202,9 @@ _Example_
     metadata := map[string]interface{}{
       "game_result": "won",
     }
-    if err := nk.WalletUpdate(ctx, userID, changeset, metadata, true); err != nil {
-      // Handle error.
+    err := nk.WalletUpdate(ctx, userID, changeset, metadata, true)
+    if err != nil {
+      logger.WithField("err", err).Error("Wallet update error.")
     }
     ```
 
@@ -3197,9 +3220,9 @@ _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | updates | `[]*runtime.WalletUpdate` | table | The set of user wallet update operations to apply. |
-| update_ledger | `bool` | bool | Whether to record this update in the ledger. Default true. Optional in Lua. |
+| update_ledger | `bool` | bool | Whether to record this update in the ledger. Default true. This is optional. |
 
 _Example_
 
@@ -3234,9 +3257,9 @@ _Example_
         },
       },
     }
-
-    if err := nk.WalletsUpdate(ctx, updates, true); err != nil {
-      // Handle error.
+    err := nk.WalletsUpdate(ctx, updates, true)
+    if err != nil {
+      logger.WithField("err", err).Error("Wallets update error.")
     }
     ```
 
@@ -3244,14 +3267,14 @@ _Example_
 
 __Wallet Ledger List__
 
-List all wallet updates for a particular user, from oldest to newest.
+List all wallet updates for a particular user from oldest to newest.
 
 _Parameters_
 
 | Param | Go type | Lua type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes.|
-| user_id | `string` | string | The ID of the user to update the wallet for. |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | The ID of the user to update the wallet. |
 
 _Returns_
 
@@ -3293,7 +3316,7 @@ _Example_
     local updates = nk.wallet_ledger_list(user_id)
     for _, u in ipairs(updates)
     do
-      local message = ("found wallet update with id: %q"):format(u.id)
+      local message = string.format("Found wallet update with id: %q", u.id)
       nk.logger_info(message)
     end
     ```
@@ -3301,12 +3324,12 @@ _Example_
 === "Go"
     ```go
     userID := "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592"
-
-    if items, err := nk.WalletLedgerList(ctx, userID); err != nil {
-      // Handle error.
+    items, err := nk.WalletLedgerList(ctx, userID)
+    if err != nil {
+      logger.WithField("err", err).Error("Wallet ledger list error.")
     } else {
       for _, item := range items {
-        logger.Info("found wallet update with id: %v", item.GetID())
+        logger.Info("Found wallet update with id: %v", item.GetID())
       }
     }
     ```
@@ -3364,7 +3387,7 @@ _Example_
     local metadata = {
       game_result = "loss"
     }
-    local u = nk.wallet_ledger_update(id, metadata
+    local u = nk.wallet_ledger_update(id, metadata)
     ```
 
 === "Go"
@@ -3373,7 +3396,8 @@ _Example_
     metadata := map[string]interface{}{
       "game_result": "loss",
     }
-    if _, err := nk.WalletLedgerUpdate(ctx, itemID, metadata); err != nil {
-      // Handle error.
+    _, err := nk.WalletLedgerUpdate(ctx, itemID, metadata)
+    if err != nil {
+      logger.WithField("err", err).Error("Wallet ledger update error.")
     }
     ```
