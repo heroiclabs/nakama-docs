@@ -408,7 +408,7 @@ These results are the averages for each request made by the client because this 
 
 1. Authentication
 2. RPC Call
-3. Connect to Wwebsocket and
+3. Connect to websocket and
 4. Send messages through the websocket connection;
 
 the results take into account the entire set of request logic performed within each of the client sessions.
