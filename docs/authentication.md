@@ -153,11 +153,10 @@ A device identifier must contain alphanumeric characters with dashes and be betw
 
     auto loginSucceededCallback = [](NSessionPtr session)
     {
-      CCLOG("Successfully authenticated");
+        CCLOG("Successfully authenticated");
     };
 
     std::string deviceId = "unique device id";
-
     client->authenticateDevice(
             deviceId,
             opt::nullopt,
@@ -187,7 +186,7 @@ A device identifier must contain alphanumeric characters with dashes and be betw
 
     auto loginSucceededCallback = [](NSessionPtr session)
     {
-      cout << "Successfully authenticated" << endl;
+        cout << "Successfully authenticated" << endl;
     };
 
     std::string deviceId = "unique device id";
@@ -216,24 +215,24 @@ A device identifier must contain alphanumeric characters with dashes and be betw
 
     var deviceId : String? = defaults.string(forKey: deviceKey)
     if deviceId == nil {
-      deviceId = UIDevice.current.identifierForVendor!.uuidString
-      defaults.set(deviceId!, forKey: deviceKey)
+        deviceId = UIDevice.current.identifierForVendor!.uuidString
+        defaults.set(deviceId!, forKey: deviceKey)
     }
 
     let message = AuthenticateMessage(device: deviceId!)
     client.login(with: message).then { session in
-      print("Login successful")
+        print("Login successful")
     }.catch{ err in
-      if (err is NakamaError) {
-        switch err as! NakamaError {
-        case .userNotFound(_):
-          let _ = self.client.register(with: message)
-          return
-        default:
-          break
+        if (err is NakamaError) {
+            switch err as! NakamaError {
+            case .userNotFound(_):
+                let _ = self.client.register(with: message)
+                return
+            default:
+                break
+            }
         }
-      }
-      print("Could not login: %@", err)
+        print("Could not login: %@", err)
     }
     ```
 
@@ -367,9 +366,9 @@ An email address must be valid as defined by RFC-5322 and passwords must be at l
 
     let message = AuthenticateMessage(email: email, password: password)
     client.register(with: message).then { session in
-      NSLog("Session: %@", session.token)
+        NSLog("Session: %@", session.token)
     }.catch { err in
-      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+        NSLog("Error %@ : %@", err, (err as! NakamaError).message)
     }
     // Use client.login(...) after register.
     ```
@@ -416,8 +415,8 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
 === "cURL"
     ```sh
     curl "http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true" \
-      --user 'defaultkey:' \
-      --data '{"token":"valid-oauth-token"}'
+        --user 'defaultkey:' \
+        --data '{"token":"valid-oauth-token"}'
     ```
 
 === "JavaScript"
@@ -456,7 +455,7 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
 
     auto loginSucceededCallback = [](NSessionPtr session)
     {
-      CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+        CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
     };
 
     std::string oauthToken = "...";
@@ -477,10 +476,10 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
     const oauthToken = "...";
     client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
       .then(function(session) {
-          cc.log("Authenticated successfully. User ID:", session.user_id);
+            cc.log("Authenticated successfully. User ID:", session.user_id);
         },
         function(error) {
-          cc.error("authenticate failed:", JSON.stringify(error));
+            cc.error("authenticate failed:", JSON.stringify(error));
         });
     ```
 
@@ -492,12 +491,11 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
 
     auto loginSucceededCallback = [](NSessionPtr session)
     {
-      cout << "Authenticated successfully. User ID: " << session->getUserId() << endl;
+        cout << "Authenticated successfully. User ID: " << session->getUserId() << endl;
     };
 
     std::string oauthToken = "...";
     bool importFriends = true;
-
     client->authenticateFacebook(
             oauthToken,
             "mycustomusername",
@@ -521,9 +519,9 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
     let oauthToken = "..."
     let message = AuthenticateMessage(facebook: oauthToken)
     client.register(with: message).then { session in
-      NSLog("Session: %@", session.token)
+        NSLog("Session: %@", session.token)
     }.catch { err in
-      NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+        NSLog("Error %@ : %@", err, (err as! NakamaError).message)
     }
     ```
 
@@ -546,7 +544,7 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
     Authorization: Basic base64(ServerKey:)
 
     {
-      "token": "...",
+        "token": "...",
     }
     ```
 
@@ -555,11 +553,11 @@ You can add a button to your UI to login with Facebook.
 === "Unity"
     ```csharp
     FB.Login("email", (ILoginResult result) => {
-      if (FB.IsLoggedIn) {
-        var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
-        var session = await client.LinkFacebookAsync(session, accesstoken);
-        Debug.LogFormat("Session: '{0}'.", session.AuthToken);
-      }
+        if (FB.IsLoggedIn) {
+            var oauthToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
+            var session = await client.LinkFacebookAsync(session, accesstoken);
+            Debug.LogFormat("Session: '{0}'.", session.AuthToken);
+        }
     });
     ```
 
@@ -567,14 +565,16 @@ You can add a button to your UI to login with Facebook.
 
 Ensure that you've initialized the Facebook Instant Games SDK using `FBInstant.initializeAsync()`.
 
-```js tab="JavaScript"
-const result = await FBInstant.player.getSignedPlayerInfoAsync();
-const authObj = {signed_player_info: result.getSignature()};
-var session = await client.authenticateFacebookInstantGame(authObj);
-console.info("Successfully authenticated: %o", session);
-```
+=== "JavaScript"
+    ```js
+    const result = await FBInstant.player.getSignedPlayerInfoAsync();
+    const authObj = {signed_player_info: result.getSignature()};
+    var session = await client.authenticateFacebookInstantGame(authObj);
+    console.info("Successfully authenticated: %o", session);
+    ```
+
 !!! Note "Server configuration"
-    Ensure you've configured your FB Instant App secret for Nakama https://heroiclabs.com/docs/install-configuration/#facebook-instant-game.
+    Ensure you've [configured](install-configuration.md#facebook-instant-game) your FB Instant App secret for Nakama.
 
 #### Google
 
