@@ -42,7 +42,7 @@ This host node is responsible for maintaining the in-memory match state and allo
 
 A single node is responsible for this to ensure the highest level of consistency accessing and updating the state and to avoid potential delays reconciling distributed state.
 
-Match presences will still be replicated so all nodes in a cluster to have immediate access to both a list of matches and details about match participants.
+Match presences will still be replicated so all nodes in a cluster have immediate access to both a list of matches and details about match participants.
 
 The minimum structure of a match handler looks like:
 
