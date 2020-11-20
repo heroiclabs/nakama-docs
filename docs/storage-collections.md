@@ -237,7 +237,7 @@ A user can write one or more objects which will be stored in the database server
 
 When objects are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is known as a conditional write.
 
-A conditional write ensures a client can only update the object if they've seen the previous version of the object. The purpose is to prevent a change to the object if another client has changed the value between when the first client's read and it's next write.
+A conditional write ensures a client can only update the object if they've seen the previous version of the object. The purpose is to prevent a change to the object if another client has changed the value between the first client's read and its next write.
 
 === "cURL"
 	```sh
