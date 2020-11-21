@@ -229,13 +229,13 @@ When a user updates their status all of their followers receive an event that co
 			print("%s left with status: %s" % [j.user_id, j.status])
 	```
 
-If a user is disconnecs or appears offline they will leave their previous status but there will be no corresponding new status.
+If a user is disconnected or appears offline, they will leave their previous status but there will be no corresponding new status.
 
 ## Follow users
 
 Users only receive status updates from those they follow. Users can follow anyone they're interested in, but it's common to follow a list of friends to see when they're online and what they're up to.
 
-When following a set of users the operation will immediately return the status of those that are online and have set a visible status.
+When following a set of users, the operation will immediately return the status of those that are online and have set a visible status.
 
 === "JavaScript"
 	```js

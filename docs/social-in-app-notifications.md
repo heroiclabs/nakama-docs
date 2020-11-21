@@ -8,14 +8,14 @@ These notifications are viewed within the app which makes them a great companion
 
 ## Send notifications
 
-You can send a notification to one or more users with server-side Lua code. It can be sent to any user in the game, no need to be a friend to be able to exchange messages. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.
+You can send a notification to one or more users with server-side Lua code. It can be sent to any user in the game - there's no need to be friends to be able to exchange messages. A number of notifications are also sent by the server implicitly on certain events. Each notification has a code which is used to categorize it.
 
 !!! Note
-    The code you choose for your notifications must start at `0` and upwards. See [below](#notification-codes) for reserved message codes.
+    The code you choose for your notifications must start at `0` and increase upwards. See [below](#notification-codes) for reserved message codes.
 
 A notification has a content object which will be encoded as JSON.
 
-Notifications can be marked as persistent when sent. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read it should be marked as persistent when sent.
+Notifications can be marked as persistent when sent. A non-persistent message will only be received by a client which is currently connected to the server (i.e. a user who is online). If you want to make sure a notification is never lost before it's read, it should be marked as persistent when sent.
 
 === "Lua"
     ```lua

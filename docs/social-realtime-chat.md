@@ -6,7 +6,7 @@ Users can chat with each other 1-on-1, as part of a group, and in chat rooms. Me
 
 Every message which flows through the realtime chat engine belongs to a channel which is used internally to identify which users should receive the messages. Users explicitly join and leave channels when they connect. This makes it easy to selectively listen for messages which they care about or decide to "mute" certain channels when they're busy. Users can also join multiple channels at once to chat simultaneously in multiple groups or chat rooms.
 
-There are 3 types of channel:
+There are 3 types of channels:
 
 1. A chat room is great for public chat. Any user can join and participate without the need for permission. These rooms can scale to millions of users all in simultaneous communication. This is perfect for live participation apps or games with live events or tournaments.
 
@@ -119,7 +119,7 @@ A user joins a chat channel to start receiving messages in realtime. Each new me
 
 In group chat a user will receive other messages from the server. These messages contain events on users who join or leave the group, when someone is promoted as an admin, etc. You may want users to see these messages in the chat stream or ignore them in the UI.
 
-You can identify event messages from chat messages by the message "Type".
+You can identify event messages from chat messages by the message `Type`.
 
 === "JavaScript"
     ```js
@@ -883,7 +883,7 @@ The user who [joins a chat channel](#join-chat) receives an initial presence lis
 
 ## Send messages
 
-When a user has [joined a chat channel](#join-chat) its ID can be used to send messages with JSON encoded strings.
+When a user has [joined a chat channel](#join-chat), its ID can be used to send messages with JSON encoded strings.
 
 Every message sent returns an acknowledgment when it's received by the server. The acknowledgment returned contains a message ID, timestamp, and details back about the user who sent it.
 
@@ -894,7 +894,7 @@ Every message sent returns an acknowledgment when it's received by the server. T
     const messageAck = await socket.writeChatMessage(channelId, data);
     ```
 
-== ".NET"
+=== ".NET"
     ```csharp
     var channelId = "<channel id>";
     var content = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
