@@ -2986,7 +2986,7 @@ _Example_
     local users = nk.users_get_username(usernames)
     for _, u in ipairs(users)
     do
-      local message = string.format("id: %q, displayname: %q", u.id, u.display_name)
+      local message = string.format("id: %q, displayname: %q", u.user_id, u.display_name)
       nk.logger_info(message)
     end
     ```
