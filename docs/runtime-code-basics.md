@@ -17,7 +17,7 @@ By default, the server will scan all files within the "data/modules" folder rela
 nakama --runtime.path "$HOME/some/path/"
 ```
 
-All files with the ".lua" or ".go" extensions found in the runtime path will be loaded and evaluated as part of the boot up sequence. Each Lua file represents a module and all code in each module will be run and can be used to register functions which can operate on messages from clients as well as execute logic on demand. Shared Object files are the equivalent for Go plugins.
+All files with the ".lua" or ".so" extensions found in the runtime path will be loaded and evaluated as part of the boot up sequence. Each Lua file represents a module and all code in each module will be run and can be used to register functions which can operate on messages from clients as well as execute logic on demand. Shared object files are the equivalent for Go plugins.
 
 ## Simple example
 
