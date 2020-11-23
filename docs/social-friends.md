@@ -103,7 +103,7 @@ When a friend request is sent or the user is added an in-app notification will b
 	Authorization: Bearer <session token>
 	```
 
-When both users have added eachother as friends it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](social-realtime-chat.md) section for more info.
+When both users have added each other as friends, it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](social-realtime-chat.md) section for more info.
 
 ## List friends
 

@@ -8,13 +8,13 @@ Relayed multiplayer is very useful for many types of gameplay but may not suitab
 
 Technically all multiplayer games can be developed as relayed if player counts are small per match but to choose between which approach to use you must decide how important it is for authoritative control to be handled on the server. With Nakama you have the freedom and flexibility to decide without limitations.
 
-To support multiplayer game designs which require data messages to change state maintained on the server the authoritative multiplayer engine introduces a way to run custom match logic with a fixed tick rate. Messages can be validated and state changes broadcast to connected peers. This enables you to build:
+To support multiplayer game designs which require data messages to change state maintained on the server, the authoritative multiplayer engine introduces a way to run custom match logic with a fixed tick rate. Messages can be validated and state changes broadcast to connected peers. This enables you to build:
 
-1. **Asynchronous real-time authoritiative multiplayer**: Fast paced realtime multiplayer. Messages are sent to the server, server calculates changes to the environment and players and data is broadcasted to relevant peers. This typically requires a high tick-rate for the gameplay to feel responsive.
+1. **Asynchronous real-time authoritiative multiplayer**: Fast paced realtime multiplayer. Messages are sent to the server, server calculates changes to the environment and players, and data is broadcasted to relevant peers. This typically requires a high tick-rate for the gameplay to feel responsive.
 2. **Active turn-based multiplayer**: Like with Stormbound or Clash Royale mobile games where two or more players are connected and are playing a quick turn-based match. Players are expected to respond to turns immediately. The server receives input, validates them and broadcast to players. The expected tick-rate is quite low as rate of message sent and received is low.
 3. **Passive turn-based multiplayer**: A great example is Words With Friends on mobile where the gameplay can span several hours to weeks. The server receives input, validates them, stores them in the database and broadcast changes to any connected peers before shutting down the server loop until next gameplay sequence.
 
-To support this functionality the Authoritative Multiplayer feature introduces several concepts.
+To support this functionality, the Authoritative Multiplayer feature introduces several concepts.
 
 ## Concepts
 
@@ -1004,7 +1004,7 @@ _Parameters_
 | dispatcher | [Dispatcher](#match-runtime-api-go) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
 | tick | Tick is the current match tick number, starts at 0 and increments after every `MatchLoop` call. Does not increment with calls to `MatchJoinAttempt`, `MatchJoin`, or `MatchLeave`. |
 | state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
-| graceSeconds | Messages is a list of data messages received from users between the previous and current tick. |
+| graceSeconds | The number of seconds provided to complete a graceful termination before a match is forcefully closed. |
 
 _Returns_
 
