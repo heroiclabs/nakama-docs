@@ -70,7 +70,7 @@ As far as UDP is concerned, this is how it’s supposed to happen. It’s "best 
 
 Let’s rewind things and play this scenario out again over TCP. TCP is a more complex protocol and we’ll have to tell a more complex story. But let’s send those messages again, assuming that we’ve already completed the three-way handshake and we’re in the ESTABLISHED state. What happens to each?
 
-![image alt text](image_3.png)
+![Visualization of operations described below.](nakama-tcp.png)
 
 * M1 gets lost along the way. Eventually resent (more on this later), it arrives last. 
 
