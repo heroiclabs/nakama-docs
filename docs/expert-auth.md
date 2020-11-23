@@ -42,7 +42,7 @@ Players don’t generally think of being signed-in or about server connections. 
 
 As a consequence, session types overlap and depend on each other. This is how sign-ins and authentication support your game: they run longer or shorter than a play session, in ways that are (hopefully) transparent to the player. You can imagine your game being in many sessions at once: the player signed in, the player spending time playing the game, and the client in connection with Nakama.
 
-![image alt text](image_0.png)
+![The overlap between player behaviours and session types](nakama-sessions.png)
 
 But session types aren’t tightly connected to each other. A player may only play for a few minutes each day, but stay logged into their Apple account for days or weeks. A server connection might be established briefly and intermittently, or persist at length, depending on the game. Sessions need to begin and end when in relation with player and game activity.
 

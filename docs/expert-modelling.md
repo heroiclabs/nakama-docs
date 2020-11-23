@@ -125,7 +125,7 @@ In Nakama, we can implement this pattern with *[after hook*s](https://heroiclabs
 
 In this case, you can write an after hook that updates the player’s streak progression whenever a client calls the `getAccount()` function that sends an out-of-band notification about the streak.
 
-![image alt text](image_0.png)In this case, we get an event trigger on an API that Nakama already provides and that you’re likely to use anyway: `getAccount()`. On the client side, there’s no additional code needed to trigger a streak update.
+![After hook updating a player's streak progression when getAccount function is called](nakama-after-hook.png)In this case, we get an event trigger on an API that Nakama already provides and that you’re likely to use anyway: `getAccount()`. On the client side, there’s no additional code needed to trigger a streak update.
 
 ## One pattern, many applications
 

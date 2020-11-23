@@ -34,7 +34,7 @@ If your game has more than one mode of interaction, then it doesn’t make sense
 
 Any one message, depending on its contents, might have more or less impact on your player. If a single frame of voice chat audio is dropped, then it’s unlikely that your player will notice the loss. Some messages, if lost, may be highly aggravating: a lost store purchase confirmation may lead a player to an unwanted repeat purchase. Other messages may fall in-between these extremes: the movement of a projectile might be highly consequential or nearly irrelevant, depending on whether it’s traveling near the player.
 
-![image alt text](image_0.png)
+![Gradient of optional and required messages, from voice to purchases](nakama-tcp-or-udp.png)
 
 If some messages must* *be received while others are merely nice to have, then the game’s networking code must support a gradient of reliability.
 
@@ -46,7 +46,7 @@ UDP offers few reliability guarantees. It’s a more trusting protocol that expe
 
 TCP offers robust reliability guarantees. It goes to some effort to confirm that a connection between the sender and recipient is established, that the recipient is prepared to receive messages, and, after the messages are sent, that they are delivered completely and in order. When it comes to reliability, TCP is a strict micromanager.
 
-![image alt text](image_1.png)
+![UDP vs TCP for reliability and overhead](nakama-tcp-vs-udp.png)
 
 ### A Tale of Four Messages
 
@@ -56,7 +56,7 @@ In good conditions, messages arrive intact, promptly, in-order, and just once. I
 
 With UDP, send the four messages, M1, M2, M3, and M4, each one after the other. What happens to each?
 
-![image alt text](image_2.png)
+![Visualization of operation described below.](nakama-udp.png)
 
 * M1 gets lost along the way. It never arrives.
 
