@@ -61,6 +61,44 @@ _Example_
 
 ---
 
+__Get accounts__
+
+Get all account information for all given user IDs.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_ids | `[]string` | table | A table array of user ids to fetch information for. Must be valid UUIDs. |
+
+_Returns_
+
+A table (array) of accounts.
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_ids = {"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+    local accounts = nk.accounts_get_id(user_ids)
+    ```
+
+=== "Go"
+    ```go
+    userIDs := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+    accounts, err := nk.AccountsGetId(ctx, userIDs)
+    if err != nil {
+      logger.WithField("err", err).Error("Get accounts error.")
+    } else {
+      for _, account := range accounts {
+        logger.Info("Wallet is: %v", account.Wallet)
+      }
+    }
+    ```
+
+---
+
 __Update account__
 
 Update a user account.
@@ -109,6 +147,34 @@ _Example_
     avatarUrl := ""
     if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timezone, location, langTag, avatarUrl); err != nil {
       logger.WithField("err", err).Error("Account update error.")
+    }
+    ```
+
+---
+
+__Delete Account__
+
+Delete an account.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | User ID to fetch information for. Must be valid UUID. |
+| recorded | `bool` | bool | Whether to record this deletion in the database. By default this is set to false. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    nk.account_delete_id("8f4d52c7-bf28-4fcf-8af2-1d4fcf685592", false)
+    ```
+
+=== "Go"
+    ```go
+    if err := nk.AccountDeleteId(ctx, "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592", false); err != nil {
+      logger.WithField("err", err).Error("Delete account error.")
     }
     ```
 
@@ -974,6 +1040,114 @@ _Example_
 
 ---
 
+__Group User Join__
+
+Join a group for a particular user.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | The Id of the group to join. |
+| user_id | `string` | string | The user ID to add to this group. |
+| username | `string` | string | The username of the user to add to this group. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+    local user_id = "9a51cf3a-2377-11eb-b713-e7d403afe081"
+    local username = "myusername"
+
+    nk.group_user_join(group_id, user_id, username)
+    ```
+
+=== "Go"
+    ```go
+    groupID := "dcb891ea-a311-4681-9213-6741351c9994"
+    userID := "9a51cf3a-2377-11eb-b713-e7d403afe081"
+    username := "myusername"
+
+    if err := nk.GroupUserJoin(ctx, groupID, userID, username); err != nil {
+      logger.WithField("err", err).Error("Group user join error.")
+    }
+    ```
+
+---
+
+__Group User Leave__
+
+Leave a group for a particular user.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | The Id of the group to leave. |
+| user_id | `string` | string | The user ID to leave from this group. |
+| username | `string` | string | The username of the user to leave from this group. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+    local user_id = "9a51cf3a-2377-11eb-b713-e7d403afe081"
+    local username = "myusername"
+
+    nk.group_user_leave(group_id, user_id, username)
+    ```
+
+=== "Go"
+    ```go
+    groupID := "dcb891ea-a311-4681-9213-6741351c9994"
+    userID := "9a51cf3a-2377-11eb-b713-e7d403afe081"
+    username := "myusername"
+
+    if err := nk.GroupUserLeave(ctx, groupID, userID, username); err != nil {
+      logger.WithField("err", err).Error("Group user leave error.")
+    }
+    ```
+
+---
+
+__Group Users Add__
+
+Add users to a group.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | The Id of the group that you want to add users into. |
+| user_ids | `[]string` | table | A table array of user ids to add. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+    local user_ids = {"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+    nk.group_users_add(group_id, user_ids)
+    ```
+
+=== "Go"
+    ```go
+    groupID := "dcb891ea-a311-4681-9213-6741351c9994"
+    userIDs := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+    if err := nk.GroupUsersAdd(ctx, groupID, userIDs); err != nil {
+      logger.WithField("err", err).Error("Group users add error.")
+    }
+    ```
+
+---
+
 __Group Users Kick__
 
 Kick users from a group.
@@ -1003,6 +1177,74 @@ _Example_
 
     if err := nk.GroupUsersKick(ctx, groupID, userIds); err != nil {
       logger.WithField("err", err).Error("Group users kick error.")
+    }
+    ```
+
+---
+
+__Group Users Promote__
+
+Promote users in a group.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | The Id of the group who's members and admins you want to promote. |
+| user_ids | `[]string` | table | A table array of user ids to promote. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+    local user_ids = {"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+    nk.group_users_promote(group_id, user_ids)
+    ```
+
+=== "Go"
+    ```go
+    groupID := "dcb891ea-a311-4681-9213-6741351c9994"
+    userIDs := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+    if err := nk.GroupUsersPromote(ctx, groupID, userIDs); err != nil {
+      logger.WithField("err", err).Error("Group users promote error.")
+    }
+    ```
+
+---
+
+__Group Users Demote__
+
+Demote users in a group.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | The Id of the group who's members, admins and superadmins you want to demote. |
+| user_ids | `[]string` | table | A table array of user ids to demote. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
+    local user_ids = {"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+    nk.group_users_demote(group_id, user_ids)
+    ```
+
+=== "Go"
+    ```go
+    groupID := "dcb891ea-a311-4681-9213-6741351c9994"
+    userIds := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
+
+    if err := nk.GroupUsersDemote(ctx, groupID, userIDs); err != nil {
+      logger.WithField("err", err).Error("Group users demote error.")
     }
     ```
 
@@ -2756,6 +2998,42 @@ _Example_
     err := nk.TournamentJoin(ctx, id, ownerID, userName)
     if err != nil {
       logger.WithField("err", err).Error("Tournament join error.")
+    }
+    ```
+
+---
+
+__Tournaments Get by ID__
+
+Fetch one or more tournaments by ID.
+
+_Parameters_
+
+| Param | Go type | Lua type | Description |
+| ----- | ------- | -------- | ----------- |
+| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| ids | `[]string` | table | The table array of tournament ids. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local tournament_ids = {
+      "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+      "447524be-43c3-11e7-af09-3f7172f05936"
+    }
+    local tournaments = nk.tournaments_get_id(tournament_ids)
+    ```
+
+=== "Go"
+    ```go
+    tournamentIDs := []string{
+      "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+      "447524be-43c3-11e7-af09-3f7172f05936",
+    }
+    tournaments, err := nk.TournamentsGetId(ctx, tournamentIDs)
+    if err != nil {
+      logger.WithField("err", err).Error("Tournaments get error.")
     }
     ```
 
