@@ -53,41 +53,35 @@ To set this up, we’ll create a static progression template in JSON format (JSO
 ```json
 
 {
-
-  "title": "7-day check-in challenge",
-
-  "progress": 0,
-
-  "next_login_after": "1602092170",
-
-  "rewards": [
-
-{},
-
-	{},
-
-	{
-
-"gold": 300
-
-	},
-
-	{},
-
-	{},
-
-	{},
-
-	{
-
-"gold": 1000,
-
-"items": ["item374"]
-
-	}
-
-  ]
-
+   "title":"7-day check-in challenge",
+   "progress":0,
+   "next_login_after":"1602092170",
+   "rewards":[
+      {
+         
+      },
+      {
+         
+      },
+      {
+         "gold":300
+      },
+      {
+         
+      },
+      {
+         
+      },
+      {
+         
+      },
+      {
+         "gold":1000,
+         "items":[
+            "item374"
+         ]
+      }
+   ]
 }
 
 ```
