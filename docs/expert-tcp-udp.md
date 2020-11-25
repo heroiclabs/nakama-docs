@@ -1,3 +1,8 @@
+[nakama-tcp-or-udp]: images/nakama-tcp-or-udp.png "Gradient of optional and required messages, from voice to purchases"
+[nakama-tcp-vs-udp]: images/nakama-tcp-vs-udp.png "UDP vs TCP for reliability and overhead"
+[nakama-udp]: images/nakama-udp.png "Visualization of operation described below"
+[nakama-tcp]: images/nakama-tcp.png "Visualization of operations described below"
+
 # Choosing TCP or UDP: a guide for game developers
 
 As a game developer, you’ll hear lots of myths about network code, especially when it comes to choosing UDP or TCP. You’ll be told that:
@@ -34,7 +39,7 @@ If your game has more than one mode of interaction, then it doesn’t make sense
 
 Any one message, depending on its contents, might have more or less impact on your player. If a single frame of voice chat audio is dropped, then it’s unlikely that your player will notice the loss. Some messages, if lost, may be highly aggravating: a lost store purchase confirmation may lead a player to an unwanted repeat purchase. Other messages may fall in-between these extremes: the movement of a projectile might be highly consequential or nearly irrelevant, depending on whether it’s traveling near the player.
 
-![Gradient of optional and required messages, from voice to purchases](nakama-tcp-or-udp.png)
+![Gradient of optional and required messages, from voice to purchases][nakama-tcp-or-udp]
 
 If some messages must* *be received while others are merely nice to have, then the game’s networking code must support a gradient of reliability.
 
@@ -46,7 +51,7 @@ UDP offers few reliability guarantees. It’s a more trusting protocol that expe
 
 TCP offers robust reliability guarantees. It goes to some effort to confirm that a connection between the sender and recipient is established, that the recipient is prepared to receive messages, and, after the messages are sent, that they are delivered completely and in order. When it comes to reliability, TCP is a strict micromanager.
 
-![UDP vs TCP for reliability and overhead](nakama-tcp-vs-udp.png)
+![UDP vs TCP for reliability and overhead][nakama-tcp-vs-udp]
 
 ### A Tale of Four Messages
 
@@ -56,7 +61,7 @@ In good conditions, messages arrive intact, promptly, in-order, and just once. I
 
 With UDP, send the four messages, M1, M2, M3, and M4, each one after the other. What happens to each?
 
-![Visualization of operation described below.](nakama-udp.png)
+![Visualization of operation described below][nakama-udp]
 
 * M1 gets lost along the way. It never arrives.
 
@@ -70,7 +75,7 @@ As far as UDP is concerned, this is how it’s supposed to happen. It’s "best 
 
 Let’s rewind things and play this scenario out again over TCP. TCP is a more complex protocol and we’ll have to tell a more complex story. But let’s send those messages again, assuming that we’ve already completed the three-way handshake and we’re in the ESTABLISHED state. What happens to each?
 
-![Visualization of operations described below.](nakama-tcp.png)
+![Visualization of operations described below][nakama-tcp]
 
 * M1 gets lost along the way. Eventually resent (more on this later), it arrives last. 
 

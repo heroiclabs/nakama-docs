@@ -118,7 +118,7 @@ nav:
   - 'Events': 'advanced-events.md'
   - 'Streams': 'advanced-streams.md'
   - 'TCP or UDP': 'expert-tcp-udp.md'
-  - 'Modeling for Scalability': 'expert-modeling.md'
+  - 'Modelling for Scalability': 'expert-modelling.md'
   - 'Sessions and Auth': 'expert-auth.md'
 - 'Benchmarks': 'benchmarks.md'
 - 'Deployment':
