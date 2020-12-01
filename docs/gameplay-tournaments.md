@@ -790,7 +790,7 @@ A simple reward distribution function which sends a persistent notification to t
 	  local notifications = {}
 	  local wallet_updates = {}
 	  local records, owner_records, nc, pc = nk.leaderboard_records_list(tournament.id, nil, 10, nil, expiry)
-	  for i = 0, #records do
+	  for i = 1, #records do
 	    notifications[i] = {
 	      code = 1,
 	      content = { coins = 100 },
