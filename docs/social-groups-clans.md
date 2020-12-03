@@ -1220,15 +1220,11 @@ When a user joins a private group it will create a join request until an admin a
 
 === "REST"
     ```
-	POST /v2/group/<group id>/add
+	POST /v2/group/<group id>/add?user_ids=<user id>
 	Host: 127.0.0.1:7350
 	Accept: application/json
 	Content-Type: application/json
 	Authorization: Bearer <session token>
-
-	{
-	  "user_ids":["<user id>"]
-	}
 	```
 
 The user will receive an [in-app notification](social-in-app-notifications.md) when they've been added to the group. In a private group an admin will receive a notification about the join request.
@@ -1332,15 +1328,11 @@ An admin can promote another member of the group as an admin. This grants the me
 
 === "REST"
     ```
-	POST /v2/group/<group id>/promote
+	POST /v2/group/<group id>/promote?user_ids=<user id>
 	Host: 127.0.0.1:7350
 	Accept: application/json
 	Content-Type: application/json
 	Authorization: Bearer <session token>
-
-	{
-	  "user_ids":["<user id>"]
-	}
 	```
 
 ### Kick a member
@@ -1442,15 +1434,11 @@ If a user is removed from a group it does not prevent them from joining other gr
 
 === "REST"
     ```
-	POST /v2/group/<group id>/kick
+	POST /v2/group/<group id>/kick?user_ids=<user id>
 	Host: 127.0.0.1:7350
 	Accept: application/json
 	Content-Type: application/json
 	Authorization: Bearer <session token>
-
-	{
-	  "user_ids":["<user id>"]
-	}
 	```
 
 !!! Hint
