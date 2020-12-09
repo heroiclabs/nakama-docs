@@ -122,7 +122,8 @@ A device identifier must contain alphanumeric characters with dashes and be betw
       console.log("An error occured: %o", error);
     }
 
-    const session = await client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" });
+    var create = true;
+    const session = await client.authenticateDevice(deviceId, create, "mycustomusername");
     console.info("Successfully authenticated:", session);
     ```
 
@@ -169,7 +170,8 @@ A device identifier must contain alphanumeric characters with dashes and be betw
 === "Cocos2d-x JS"
     ```js
     var deviceId = "unique device id";
-    client.authenticateDevice({ id: deviceId, create: true, username: "mycustomusername" })
+    var create = true;
+    client.authenticateDevice(deviceId, create, "mycustomusername")
       .then(function(session) {
             cc.log("Authenticated successfully. User id:", session.user_id);
         },
@@ -281,7 +283,8 @@ An email address must be valid as defined by RFC-5322 and passwords must be at l
     ```js
     const email = "email@example.com";
     const password = "3bc8f72e95a9";
-    const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
+    const create = true;
+    const session = await client.authenticateEmail(email, password, create, "mycustomusername");
     console.info("Successfully authenticated:", session);
     ```
 
@@ -323,7 +326,7 @@ An email address must be valid as defined by RFC-5322 and passwords must be at l
     ```js
     const email = "email@example.com";
     const password = "3bc8f72e95a9";
-    client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername" })
+    client.authenticateEmail(email, password, true, "mycustomusername")
       .then(function(session) {
           cc.log("Authenticated successfully. User ID:", session.user_id);
         },
@@ -422,7 +425,8 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
 === "JavaScript"
     ```js
     const oauthToken = "...";
-    const session = await client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true });
+    const import = true;
+    const session = await client.authenticateFacebook(oauthToken, true, "mycustomusername", import);
     console.log("Successfully authenticated:", session);
     ```
 
@@ -474,7 +478,9 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
 === "Cocos2d-x JS"
     ```js
     const oauthToken = "...";
-    client.authenticateFacebook({ token: oauthToken, create: true, username: "mycustomusername", import: true })
+    const create = true;
+    const import = true;
+    client.authenticateFacebook(oauthToken, create, "mycustomusername", import)
       .then(function(session) {
             cc.log("Authenticated successfully. User ID:", session.user_id);
         },
@@ -568,8 +574,7 @@ Ensure that you've initialized the Facebook Instant Games SDK using `FBInstant.i
 === "JavaScript"
     ```js
     const result = await FBInstant.player.getSignedPlayerInfoAsync();
-    const authObj = {signed_player_info: result.getSignature()};
-    var session = await client.authenticateFacebookInstantGame(authObj);
+    var session = await client.authenticateFacebookInstantGame(result.getSignature());
     console.info("Successfully authenticated: %o", session);
     ```
 
@@ -592,7 +597,8 @@ You can choose a custom username when creating the account. To do this, set `use
 === "JavaScript"
     ```js
     const playerIdToken = "...";
-    const session = await client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" });
+    const create = true;
+    const session = await client.authenticateGoogle(oauthToken, create, "mycustomusername");
     console.info("Successfully authenticated: %o", session);
     ```
 
@@ -628,7 +634,8 @@ You can choose a custom username when creating the account. To do this, set `use
 === "Cocos2d-x JS"
     ```js
     const oauthToken = "...";
-    client.authenticateGoogle({ token: oauthToken, create: true, username: "mycustomusername" })
+    const create = true;
+    client.authenticateGoogle(oauthToken, create, "mycustomusername")
       .then(function(session) {
           cc.log("Authenticated successfully. User ID:", session.user_id);
         },
@@ -934,7 +941,8 @@ You can choose a custom username when creating the account. To do this, set `use
 === "Cocos2d-x JS"
     ```js
     const token = "...";
-    client.authenticateSteam({ token: token, create: true, username: "mycustomusername" })
+    const create = true;
+    client.authenticateSteam(token, create, "mycustomusername")
       .then(function(session) {
           cc.log("Authenticated successfully. User ID:", session.user_id);
         },
@@ -1021,7 +1029,8 @@ You can choose a custom username when creating the account. To do this, set `use
 === "JavaScript"
     ```js
     const customId = "some-custom-id";
-    const session = await client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" });
+    const create = true;
+    const session = await client.authenticateCustom(customId, create, "mycustomusername");
     console.info("Successfully authenticated:", session);
     ```
 
@@ -1059,7 +1068,8 @@ You can choose a custom username when creating the account. To do this, set `use
 === "Cocos2d-x JS"
     ```js
     const customId = "some-custom-id";
-    client.authenticateCustom({ id: customId, create: true, username: "mycustomusername" })
+    const create = true;
+    client.authenticateCustom(customId, create, "mycustomusername")
       .then(function(session) {
           cc.log("Authenticated successfully. User ID:", session.user_id);
         },
@@ -1252,7 +1262,7 @@ You can only link device Ids, custom Ids, and social provider IDs which are not 
 === "JavaScript"
     ```js
     const customId = "some-custom-id";
-    const success = await client.linkCustom(session, { id: customId });
+    const success = await client.linkCustom(session, customId);
     console.log("Successfully linked custom ID to current user.");
     ```
 
@@ -1289,7 +1299,7 @@ You can only link device Ids, custom Ids, and social provider IDs which are not 
 === "Cocos2d-x JS"
     ```js
     const customId = "some-custom-id";
-    client.linkCustom(session, { id: customId })
+    client.linkCustom(session, customId)
       .then(function() {
           cc.log("Linked successfully");
         },
@@ -1368,7 +1378,7 @@ You can unlink any linked login options for the current user.
 === "JavaScript"
     ```js
     const customId = "some-custom-id";
-    const success = await client.unlinkCustom(session, { id: customId });
+    const success = await client.unlinkCustom(session, customId);
     console.info("Successfully unlinked custom ID from the current user.");
     ```
 
@@ -1406,7 +1416,7 @@ You can unlink any linked login options for the current user.
 === "Cocos2d-x JS"
     ```js
     const customId = "some-custom-id";
-    client.unlinkCustom(session, { id: customId })
+    client.unlinkCustom(session, customId)
       .then(function() {
           cc.log("Successfully unlinked custom ID from the current user.");
         },

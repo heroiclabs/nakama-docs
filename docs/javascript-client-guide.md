@@ -58,10 +58,7 @@ If you are in an environment that supports `localStorage` then use the following
 ```js
 const email = "hello@example.com";
 const password = "somesupersecretpassword";
-const session = await client.authenticateEmail({
-  email: email,
-  password: password
-});
+const session = await client.authenticateEmail(email, password);
 // Store session for quick reconnects.
 localStorage.nakamaAuthToken = session.token;
 console.info("Authenticated successfully. User id:", session.user_id);
@@ -71,7 +68,7 @@ For React Native you can use AsyncStorage:
 
 ```js
 const customId = "someuniqueidentifier";
-const session = await client.authenticateCustom({ id: customId });
+const session = await client.authenticateCustom(customId);
 // Store session for quick reconnects.
 AsyncStorage.setItem('@MyApp:nkAuthToken', session.token);
 console.info("Authenticated successfully. User id:", session.user_id);

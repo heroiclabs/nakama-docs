@@ -15,7 +15,7 @@ You can access a user's id, name, and whether their session is expired using the
 === "JavaScript"
     ```js
     const id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-    const session = await client.authenticateDevice({ id: id })
+    const session = await client.authenticateDevice(id)
     console.info("id:", session.user_id, "username:", session.username);
     console.info("Session expired?", session.isexpired(Date.now() / 1000));
     ```
@@ -62,7 +62,7 @@ You can access a user's id, name, and whether their session is expired using the
 === "Cocos2d-x JS"
     ```js
     var deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
-    client.authenticateDevice({ id: deviceId })
+    client.authenticateDevice(deviceId)
     .then(function(session) {
             cc.log("Authenticated successfully. User id:", session.user_id);
         },
@@ -142,7 +142,8 @@ To set the variables in the client's request for authentication, use
 
 === "JavaScript"
     ```js
-    const session = await client.authenticateEmail({ email: email, password: password, create: true, username: "mycustomusername", vars: { key: "value" } })
+    const create = true;
+    const session = await client.authenticateEmail(email, password, create, "mycustomusername", {key: "value"});
     console.info("Successfully authenticated:", session);
     ```
 

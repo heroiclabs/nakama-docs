@@ -20,7 +20,7 @@ Import into your `project.json`:
 ```json
 "jsList" : [
   ...
-  "src/NakamaSDK/ThirdParty/polyfill.min.js",
+  "src/NakamaSDK/ThirdParty/polyfill.js",
   "src/NakamaSDK/nakama-js.umd.js"
 ]
 ```
@@ -61,10 +61,7 @@ Use the following code to store the session:
 const email = "hello@example.com";
 const password = "somesupersecretpassword";
 
-client.authenticateEmail({
-  email: email,
-  password: password
-}).then(function(session) {
+client.authenticateEmail(email, password).then(function(session) {
         cc.log("Authenticated successfully. User id:", session.user_id);
         // Store session token for quick reconnects.
         cc.sys.localStorage.setItem("nakamaToken", session.token);
@@ -265,7 +262,7 @@ const email = "hello@example.com";
     }
 
     return new Promise(function(resolve, reject) {
-      client.authenticateEmail({ email: email, password: password })
+      client.authenticateEmail(email, password)
         .then(function(session) {
             storeSession(session);
             cc.log("Authenticated successfully. User ID:", session.user_id);
