@@ -167,16 +167,16 @@ Signal handlers only need to be implemented for the features you want to use.
 
 | Signals | Description |
 | --------- | ----------- |
-| connected | Receive an event when the socket connects. |
-| closed | Handles an event for when the client is disconnected from the server. |
-| received\_error | Receives events about server errors. |
+| connected | Received when the socket connects. |
+| closed | Received when the client is disconnected from the server. |
+| received\_error | Received when there is a server error. |
 | received\_notification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
 | received\_channel\_message | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| received\_channel\_presence | It handles join and leave events within [chat](social-realtime-chat.md). |
+| received\_channel\_presence | Receives join and leave events within [chat](social-realtime-chat.md). |
 | received\_match\_state | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
-| received\_match\_presence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
+| received\_match\_presence | Receives join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
 | received\_matchmaker\_matched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
-| received\_status\_presence | It handles status updates when subscribed to a user [status feed](social-status.md). |
+| received\_status\_presence | Receives status updates when subscribed to a user [status feed](social-status.md). |
 | received\_stream\_presence | Receives [stream](advanced-streams.md) join and leave event. |
 | received\_stream\_state | Receives [stream](advanced-streams.md) data sent by the server. |
 

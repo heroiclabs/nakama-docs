@@ -167,14 +167,14 @@ Some events only need to be implemented for the features you want to use.
 
 | Callbacks | Description |
 | --------- | ----------- |
-| a | Handles an event for when the client is disconnected from the server. |
+| a | Received when the client is disconnected from the server. |
 | b | Receives events about server errors. |
-| c | Handles [realtime match](gameplay-multiplayer-realtime.md) messages. |
+| c | Receives [realtime match](gameplay-multiplayer-realtime.md) messages. |
 | d | Receives events when the [matchmaker](gameplay-matchmaker.md) has found match participants. |
-| e | When in a [realtime match](gameplay-multiplayer-realtime.md) receives events for when users join or leave. |
+| e | Receives join or leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md) |
 | f | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
 | g | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| h | Similar to "OnMatchPresence" it handles join and leave events but within [chat](social-realtime-chat.md). |
+| h | Receives join and leave events within [chat](social-realtime-chat.md). |
 -->
 
 ## Promise chains

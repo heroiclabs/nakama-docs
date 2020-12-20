@@ -309,14 +309,14 @@ Event handlers only need to be implemented for the features you want to use.
 
 | Callbacks | Description |
 | --------- | ----------- |
-| onDisconnect | Handles an event for when the client is disconnected from the server. |
+| onDisconnect | Received when the client is disconnected from the server. |
 | onNotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
 | onChannelMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| onChannelPresence | It handles join and leave events within [chat](social-realtime-chat.md). |
+| onChannelPresence | Receives join and leave events within [chat](social-realtime-chat.md). |
 | onMatchState | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
-| onMatchPresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
+| onMatchPresence | Receives join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
 | onMatchmakerMatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
-| onStatusPresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
+| onStatusPresence | Receives status updates when subscribed to a user [status feed](social-status.md). |
 | onStreamPresence | Receives [stream](advanced-streams.md) join and leave event. |
 | onStreamState | Receives [stream](advanced-streams.md) data sent by the server. |
 
