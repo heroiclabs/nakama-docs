@@ -160,15 +160,15 @@ Event handlers only need to be implemented for the features you want to use.
 | Callbacks | Description |
 | --------- | ----------- |
 | Connected | Receive an event when the socket connects. |
-| Closed | Handles an event for when the client is disconnected from the server. |
+| Closed | Receives an event for when the client is disconnected from the server. |
 | ReceivedError | Receives events about server errors. |
 | ReceivedNotification | Receives live [in-app notifications](social-in-app-notifications.md) sent from the server. |
 | ReceivedChannelMessage | Receives [realtime chat](social-realtime-chat.md) messages sent by other users. |
-| ReceivedChannelPresence | It handles join and leave events within [chat](social-realtime-chat.md). |
+| ReceivedChannelPresence | Received join and leave events within [chat](social-realtime-chat.md). |
 | ReceivedMatchState | Receives [realtime multiplayer](gameplay-multiplayer-realtime.md) match data. |
-| ReceivedMatchPresence | It handles join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
+| ReceivedMatchPresence | Receives join and leave events within [realtime multiplayer](gameplay-multiplayer-realtime.md). |
 | ReceivedMatchmakerMatched | Received when the [matchmaker](gameplay-matchmaker.md) has found a suitable match. |
-| ReceivedStatusPresence | It handles status updates when subscribed to a user [status feed](social-status.md). |
+| ReceivedStatusPresence | Receives status updates when subscribed to a user [status feed](social-status.md). |
 | ReceivedStreamPresence | Receives [stream](advanced-streams.md) join and leave event. |
 | ReceivedStreamState | Receives [stream](advanced-streams.md) data sent by the server. |
 
