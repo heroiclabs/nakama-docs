@@ -94,16 +94,15 @@ These steps will set up a workspace to write all your project code to be run by 
 
 We'll write some simple code and compile it to JavaScript so it can be run by the game server.
 
-All code must start execution from a function that the game server looks for in the global namespace at startup. This function must be called `"InitModule"` and is how you register RPCs, before/after hooks, and other event functions managed by the server.
+All code must start execution from a function that the game server looks for in the global scope at startup. This function must be called `"InitModule"` and is how you register RPCs, before/after hooks, and other event functions managed by the server.
 
 The code below is a simple Hello World example which uses the `"Logger"` to write a message. Name the source file "main.ts" inside the "src" folder. You can write it in your favourite editor or IDE.
 
 ``` typescript
-let main: nkruntime.InitModule = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+let InitModule: nkruntime.InitModule =
+        function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
     logger.info("Hello World!");
 }
-
-let InitModule = main;
 ```
 
 We can now add the file to the compiler options and run the TypeScript compiler.
