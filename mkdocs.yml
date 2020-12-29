@@ -112,6 +112,7 @@ nav:
 #  - 'Lua for JavaScripters': 'runtime-lua-for-javascripters.md'
 #  - 'JavaScript/Lua comparison': 'runtime-javascript-lua-comparison.md'
 #  - 'Lua cheatsheet': 'runtime-lua-cheatsheet.md'
+  - 'TypeScript Setup': 'runtime-code-typescript-setup.md'
   - 'Function Reference': 'runtime-code-function-reference.md'
 #- 'Nakama enterprise': 'nakama-enterprise.md'
 - 'Advanced':
