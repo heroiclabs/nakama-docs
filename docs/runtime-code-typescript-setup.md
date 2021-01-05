@@ -1,6 +1,6 @@
 # TypeScript Setup
 
-The game server includes a JavaScript Virtual Machine (VM) which can be used to load and run custom logic which is specific to your game project. This is in addition to Lua and Go as supported programming languages to write your server code.
+The game server embeds a JavaScript Virtual Machine (VM) which can be used to load and run custom logic which is specific to your game project. This is in addition to Lua and Go as supported programming languages to write your server code.
 
 It's useful to implement game code you would not want to run on the client or trust the client to provide unchecked inputs on. You can think of this feature of Nakama as similar to what is sometimes called Lambda or Cloud Functions in other systems. A good use case is if you wanted to grant the user a reward each day that they play the game.
 
@@ -42,7 +42,7 @@ These steps will set up a workspace to write all your project code to be run by 
     npx tsc --init
     ```
 
-    You'll have a "tsconfig.json" file describe the available options that can be added run on the TypeScript compiler. When you've trimmed the commented out entries and updated it a minimal file will look something like:
+    You'll now have a "tsconfig.json" file which describes the available options that are run on the TypeScript compiler. When you've trimmed the commented out entries and updated it a minimal file will look something like:
 
     ``` json
     {
@@ -129,7 +129,7 @@ npx tsc
 You can use Docker with a [compose file](install-docker-quickstart.md) for local development or [install the binary](install-binary.md) for the game server. You will also need to install the database if you run without Docker. Have a look at the installation section which cover these steps. When this is complete you can run the game server and have it load your code:
 
 ``` shell
-nakama --logger.level DEBUG --runtime.js.entrypoint "build/index.js"
+nakama --logger.level DEBUG --runtime.js_entrypoint "build/index.js"
 ```
 
 The server logs will show this output or similar which shows that the code we wrote above was loaded and executed at startup.
