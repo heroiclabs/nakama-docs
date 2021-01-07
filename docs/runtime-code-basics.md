@@ -43,10 +43,9 @@ nakama --runtime.js_entrypoint "some/path/foo.js"
 
 We provide <a href="../runtime-code-typescript-setup/#typescript-setup">a guide on how to get started</a> with the JavaScript runtime by writing your code in TypeScript and using its compiler to generate a ".js" bundle that can be interpreted by Nakama. The server support for JavaScript has been built to directly consider the use of TypeScript for your code and is the recommended way to develop your JavaScript code.
 
-
 ## Examples
 
-In this section we'll provide a few code examples in the programming languages that can be interpreted by the server runtime.
+In this section we'll provide a few code examples in the programming languages that can be interpreted by the server runtimes.
 
 ### RPC Example
 
@@ -56,7 +55,7 @@ In the Lua example, we will create a module called "example.lua". We will import
 
 In the Go example, we will import the runtime package and use the `NakamaModule` which has all the same functions as referenced above.
 
-And finally the JavaScript example will follow a similar pattern to the Go runtime; all custom code must be within the scope of a globally defined `InitModule` function, which exposes a `logger`, `ctx`, `nk` and `initializer` - the logger, context, nakama module that exposes the Nakama APIs and the initializer used to register the rpc function, respectively.
+And finally the TypeScript example will follow a similar pattern to the Go runtime; all custom code must be within the scope of a globally defined `InitModule` function, which exposes a `logger`, `ctx`, `nk` and `initializer` - the logger, context, nakama module that exposes the Nakama APIs and the initializer used to register the rpc function, respectively.
 
 === "Lua"
     ```lua
@@ -122,19 +121,19 @@ And finally the JavaScript example will follow a similar pattern to the Go runti
     }
     ```
 
-=== "JavaScript"
-    ```javascript
-    function InitModule(ctx, logger, nk, initializer) {
-        function createLeaderboardFn(ctx2, logger2, nk2, payload) {
-            var json = JSON.parse(payload);
+=== "TypeScript"
+    ```typescript
+    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+        function createLeaderboardFn(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, payload: string): string {
+            let json = JSON.parse(payload);
 
             logger2.debug('user_id: %s, payload: %q', ctx2.userId, json);
 
-            var id = 'level1';
-            var authoritative = false;
-            var sort = SortOrder.ASCENDING;
-            var operator = Operator.BEST;
-            var reset = '0 0 * * 1';
+            let id = 'level1';
+            let authoritative = false;
+            let sort = nkruntime.SortOrder.ASCENDING;
+            let operator = nkruntime.Operator.BEST;
+            let reset = '0 0 * * 1';
 
             try {
                 nk2.leaderboardCreate(id, authoritative, sort, operator, reset, json);
@@ -145,8 +144,8 @@ And finally the JavaScript example will follow a similar pattern to the Go runti
 
             logger2.info('Leaderboard with id: %s created', id);
 
-            return JSON.stringify({id: id});
-        });
+            return JSON.stringify({id});
+        }
 
         initializer.registerRpc('my_unique_id', createLeaderboardFn);
     }
@@ -200,6 +199,7 @@ There are multiple ways to register a function within the runtime each of which 
 
 === "Lua"
     ```lua
+    -- NOTE: Function arguments have been omitted in the example.
     -- If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
     nk.register_rt_before()
     nk.register_rt_after()
@@ -222,6 +222,7 @@ There are multiple ways to register a function within the runtime each of which 
 === "Go"
     ```go
     // NOTE: All Go runtime registrations must be made in the module's InitModule function.
+    //       Function arguments have been omitted in the example.
 
     // If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
     initializer.RegisterBeforeRt()
@@ -243,9 +244,10 @@ There are multiple ways to register a function within the runtime each of which 
     initializer.RegisterTournamentEnd()
     ```
 
-=== "JavaScript"
-    ```javascript
+=== "TypeScript"
+    ```typescript
     // NOTE: All JavaScript runtime registrations must be made in the bundle's InitModule function.
+    //       Function arguments have been omitted in the example.
 
     // If you are sending requests to the server via the realtime connection, ensure that you use this variant of the function.
     initializer.registerRtBefore()
@@ -325,27 +327,27 @@ In Go, each hook will receive the request input as a struct containing the data 
         return err
     }
     ```
-=== "JavaScript"
-    ```javascript
-    function userAddFriendLevelCheck(ctx, logger, nk, payload) {
-        var userId = ctx.userId;
+=== "TypeScript"
+    ```typescript
+     function userAddFriendLevelCheck(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, data: nkruntime.AddFriendsRequest): nkruntime.AddFriendsRequest {
+        let userId = ctx2.userId;
 
-        var user;
+        let users: nkruntime.User[];
         try {
-            user = nk.usersGetId([userId]);
+            users = nk2.usersGetId([userId]);
         } catch(error) {
-            logger.error('Failed to get user: %s', error.message);
+            logger2.error('Failed to get user: %s', error.message);
             throw error;
         }
 
         // Let's assume we've stored a user's level in their metadata.
-        if (user.metadata.level < 10) {
+        if (users[0].metadata.level < 10) {
             throw Error('Must reach level 10 before you can add friends.');
         }
 
         // important!
-        return payload;
-    });
+        return data;
+    };
 
     // Register as an after hook for the appropriate feature, this call should be in InitModule.
     initializer.registerBeforeAddFriends(userAddFriendLevelCheck);
@@ -419,16 +421,17 @@ The second argument is the "outgoing payload" containing the server's response t
     }
     ```
 
-=== "JavaScript"
-    ```javascript
-    function afterAddFriends(ctx, logger, nk, outgoingPayload, incomingPayload) {
-        var userId = ctx.userId;
+=== "TypeScript"
+    ```typescript
+     // The AddFriends function does not return a payload, hence why the outPayload argument is null.
+    function afterAddFriends(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, outPayload: null, inPayload: nkruntime.AddFriendsRequest) {
+        let userId = ctx2.userId;
         if (!userId) {
             throw Error('Missing user ID.');
         }
 
-        var userIds = incomingPayload.userIds;
-        var storageObj = {
+        let userIds = inPayload.ids;
+        let storageObj: nkruntime.StorageWriteRequest = {
             collection: 'rewards',
             key: 'reward',
             userId: userId,
@@ -436,14 +439,14 @@ The second argument is the "outgoing payload" containing the server's response t
         };
 
         try {
-            nk.storageWrite(storageObj);
+            nk2.storageWrite([storageObj]);
         } catch(error) {
-            logger.error('Error writing storage object: %s', error.message);
+            logger2.error('Error writing storage object: %s', error.message);
             throw error;
         };
 
         return null; // Can be omitted, will return `undefined` implicitly
-    });
+    };
 
     // Register as an after hook for the appropriate feature, this call should be in InitModule.
     initializer.registerAfterAddFriends(afterAddFriends);
@@ -500,13 +503,13 @@ Some logic between client and server is best handled as RPC functions which clie
     }
     ```
 
-=== "JavaScript"
-    ```javascript
-    function customRpcFunc(ctx, logger, nk, payload) {
-        logger.info('payload: %q', payload);
+=== "TypeScript"
+    ```typescript
+    function customRpcFunc(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, payload: string) {
+        logger2.info('payload: %q', payload);
 
         // "payload" is bytes sent by the client we'll JSON decode it.
-        var json = JSON.parse(payload);
+        let json = JSON.parse(payload);
 
         return JSON.stringify(json);
     }
@@ -561,9 +564,9 @@ Sometimes it's useful to create HTTP REST handlers which can be used by web serv
     }
     ```
 
-=== "JavaScript"
-    ```javascript
-        function customRpcFunc(ctx, logger, nk, payload) {
+=== "TypeScript"
+    ```typescript
+    function customRpcFunc(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, payload: string) {
         logger.info('payload: %q', payload);
 
         if (ctx.userId) {
@@ -571,7 +574,7 @@ Sometimes it's useful to create HTTP REST handlers which can be used by web serv
             throw Error('Cannot invoke this function from user session');
         }
 
-        var message = JSON.parse(payload);
+        let message = JSON.parse(payload);
         logger.info('Message: %q', message);
 
         return JSON.stringify({context: ctx});
@@ -686,9 +689,9 @@ JavaScript uses exceptions to handle errors. When an error occurs, an exception 
     }
     ```
 
-=== "JavaScript"
-    ```javascript
-    function throws() {
+=== "TypeScript"
+    ```typescript
+    function throws(): void {
         throw Error("I'm an exception");
     }
 
@@ -732,11 +735,11 @@ Unhandled exceptions in JavaScript are caught and logged by the runtime, except 
     }
     ```
 
-=== "JavaScript"
-    ```javascript
+=== "TypeScript"
+    ```typescript
     try {
-        // Will throw an exception because this function expects an array, not an object.
-        nk.usersGetUsername({ids: []});
+        // Will throw an exception because this function expects a valid user ID.
+        nk.accountsGetId(['invalid_id']);
     } catch(error) {
         logger.error('An error has occurred: %s', error.message);
     }
@@ -918,28 +921,28 @@ As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpf
     }
     ```
 
-=== "JavaScript"
-    ```javascript
-    var apiBaseUrl = 'https://pokeapi.co/api/v2';
+=== "TypeScript"
+    ```typescript
+    const apiBaseUrl = 'https://pokeapi.co/api/v2';
 
-    function InitModule(ctx, logger, nk, initializer) {
+    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
         initializer.registerRpc('get_pokemon', getPokemon);
-    }
+    };
 
-    function lookupPokemon(nk, name) {
-        var url = apiBaseUrl + '/pokemon/' + name;
-        var headers = { 'Accept': 'application/json' };
+    function lookupPokemon(nk: nkruntime.Nakama, name: string) {
+        let url = apiBaseUrl + '/pokemon/' + name;
+        let headers = { 'Accept': 'application/json' };
 
-        var response = nk.httpRequest(url, 'get', headers);
+        let response = nk.httpRequest(url, 'get', headers);
 
         return JSON.parse(response.body);
     }
 
-    function getPokemon(ctx, logger, nk, payload) {
+    function getPokemon(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
         // We'll assume payload was sent as JSON and decode it.
-        var json = JSON.parse(payload);
+        let json = JSON.parse(payload);
 
-        var pokemon;
+        let pokemon;
         try {
             pokemon = lookupPokemon(nk, json['PokemonName']);
         } catch(error) {
@@ -947,7 +950,7 @@ As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpf
             throw error;
         }
 
-        var result = {
+        let result = {
             name: pokemon.name,
             height: pokemon.height,
             weight: pokemon.weight,
@@ -970,7 +973,7 @@ We can now make an RPC call for a pokemon from a client.
       -d '"{\"PokemonName\": \"dragonite\"}"'
     ```
 
-=== "Javascript"
+=== "JavaScript"
     ```js
     const payload = { "PokemonName": "dragonite"};
     const rpcid = "get_pokemon";
