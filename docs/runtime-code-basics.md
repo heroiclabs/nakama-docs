@@ -1,11 +1,11 @@
 # Basics
 
-The server includes a fast embedded code runtime where you can write custom logic with <a href="https://golang.org/pkg/plugin/" target="_blank">Go plugins</a>, <a href="https://www.lua.org/manual/5.1/manual.html" target="_blank">Lua modules</a> or as a <a href="https://developer.mozilla.org/en-US/docs/Web/javascript" target="_blank">JavaScript</a> bundle.
+The server includes a fast embedded code runtime where you can write custom logic with <a href="https://golang.org/pkg/plugin/" target="_blank">Go plugins</a>, <a href="https://www.lua.org/manual/5.1/manual.html" target="_blank">Lua modules</a>, or as a <a href="https://developer.mozilla.org/en-US/docs/Web/javascript" target="_blank">JavaScript</a> bundle.
 
 !!! Note
-    Go plugins must be compiled before they can be loaded by Nakama. The build process is different for binary and Docker-based Nakama installations, you can find out more in these [instructions](https://github.com/heroiclabs/nakama/tree/master/sample_go_module).
+    Go plugins must be compiled before they can be loaded by Nakama. The build process is different for binary and Docker-based Nakama installations; you can find out more in these [instructions](https://github.com/heroiclabs/nakama/tree/master/sample_go_module).
 
-The runtime framework is important to write server-side game logic for your games or apps. This includes code you would not want to run on client devices or the browser. The code you deploy with the server can be used immediately by clients so you can change behavior on the fly and add new features faster.
+The runtime framework is essential to write server-side game logic for your games or apps. You can write code you would not want to run on client devices or the browser. This code you deploy with the server can be used immediately by clients so you can change behavior on the fly and add new features faster.
 
 You should use server-side code when you want to set rules around various features like how many [friends](social-friends.md) a user may have or how many [groups](social-groups-clans.md) can be joined. It can be used to run authoritative logic or perform validation checks as well as integrate with other services over HTTPS.
 
@@ -24,15 +24,15 @@ The different supported languages are loaded with a precedence order of Go follo
 
 ### Go
 
-The Go runtime looks for a Go plugin ".so" shared object file, either in the default location, or in the set runtime path. To learn how you can generate the `.so` file with your custom Go runtime code you can follow <a href="https://github.com/heroiclabs/nakama/tree/master/sample_go_module#build-process">these steps</a>.
+The Go runtime looks for a Go plugin ".so" shared object file, either in the default file path, or in the runtime path set. To learn how you can generate the ".so" file with your custom Go runtime code you can follow <a href="https://github.com/heroiclabs/nakama/tree/master/sample_go_module#build-process">these steps</a>.
 
 ### Lua
 
-The Lua runtime will interpret and load any ".lua" files in the default file path, or in the set runtime path. Each Lua file represents a module and all code in each module will be run and can be used to register functions.
+The Lua runtime will interpret and load any ".lua" files in the default file path, or in the runtime path set. Each Lua file represents a module and all code in each module will be run and can be used to register functions.
 
 ### JavaScript
 
-The JavaScript runtime expects an "index.js" file in the default file path, or in the set runtime path. To change the name of the relative file path where the code will be loaded within the runtime path you can set it in the server YML or as a cmd flag.
+The JavaScript runtime expects an "index.js" file in the default file path, or in the runtime path set. To change the name of the relative file path where the code will be loaded within the runtime path you can set it in the server YML or as a command flag.
 
 ```shell
 nakama --runtime.js_entrypoint "some/path/foo.js"
@@ -41,7 +41,7 @@ nakama --runtime.js_entrypoint "some/path/foo.js"
 !!! Note
     This path must be relative to the default or set runtime path.
 
-We provide <a href="../runtime-code-typescript-setup/#typescript-setup">a guide on how to get started</a> with the JavaScript runtime by writing your code in TypeScript and using its compiler to generate a ".js" bundle that can be interpreted by Nakama. The server support for JavaScript has been built to directly consider the use of TypeScript for your code and is the recommended way to develop your JavaScript code.
+We provide a <a href="../runtime-code-typescript-setup/#typescript-setup">guide on how to get started</a> with the JavaScript runtime by writing your code in TypeScript and using the compiler to generate a ".js" bundle that can be interpreted by Nakama. The server support for JavaScript has been built to directly consider the use of TypeScript for your code and is the recommended way to develop your JavaScript code.
 
 ## Examples
 
@@ -51,11 +51,11 @@ In this section we'll provide a few code examples in the programming languages t
 
 The following example will show you how to create and register code to be run by a client as an [RPC call](#register_rpc).
 
-In the Lua example, we will create a module called "example.lua". We will import the `"nakama"` module which is embedded within the server and contains lots of server-side functions which are helpful as you build your code. You can see all available functions in the [Lua module reference](runtime-code-function-reference.md).
+In the Lua example create a module called "example.lua". Import the `"nakama"` module which is embedded within the server and contains lots of server-side functions which are helpful as you build your code. You can see all available functions in the [reference](runtime-code-function-reference.md).
 
-In the Go example, we will import the runtime package and use the `NakamaModule` which has all the same functions as referenced above.
+In the Go example we import the runtime package and use the `NakamaModule` which has all the same functions as in the reference.
 
-And finally the TypeScript example will follow a similar pattern to the Go runtime; all custom code must be within the scope of a globally defined `InitModule` function, which exposes a `logger`, `ctx`, `nk` and `initializer` - the logger, context, nakama module that exposes the Nakama APIs and the initializer used to register the rpc function, respectively.
+The TypeScript example follows a similar pattern to the Go runtime; all custom code must be within the scope of a globally defined `InitModule` function.
 
 === "Lua"
     ```lua
@@ -123,31 +123,32 @@ And finally the TypeScript example will follow a similar pattern to the Go runti
 
 === "TypeScript"
     ```typescript
-    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
-        function createLeaderboardFn(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, payload: string): string {
-            let json = JSON.parse(payload);
+    let InitModule: nkruntime.InitModule =
+            function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+        initializer.registerRpc('my_unique_id', createLeaderboardFn);
+    }
 
-            logger2.debug('user_id: %s, payload: %q', ctx2.userId, json);
+    let createLeaderboardRpc: nkruntime.RpcFunction =
+            function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string): string {
+        let json = JSON.parse(payload);
 
-            let id = 'level1';
-            let authoritative = false;
-            let sort = nkruntime.SortOrder.ASCENDING;
-            let operator = nkruntime.Operator.BEST;
-            let reset = '0 0 * * 1';
+        logger.debug('user_id: %s, payload: %q', ctx.userId, json);
 
-            try {
-                nk2.leaderboardCreate(id, authoritative, sort, operator, reset, json);
-            } catch(error) {
-                logger2.error('Failed to create leaderboard: %s', error.message);
-                return JSON.stringify(error);
-            }
+        let id = 'level1';
+        let authoritative = false;
+        let sort = nkruntime.SortOrder.ASCENDING;
+        let operator = nkruntime.Operator.BEST;
+        let reset = '0 0 * * 1';
 
-            logger2.info('Leaderboard with id: %s created', id);
-
-            return JSON.stringify({id});
+        try {
+            nk.leaderboardCreate(id, authoritative, sort, operator, reset, json);
+        } catch (error) {
+            logger.error('Failed to create leaderboard: %s', error.message);
+            return JSON.stringify(error);
         }
 
-        initializer.registerRpc('my_unique_id', createLeaderboardFn);
+        logger.info('Leaderboard with id: %s created', id);
+        return JSON.stringify({ id });
     }
     ```
 
@@ -278,7 +279,7 @@ Have a look at [this section](#message-names) for a complete list of the server 
 
 Any function may be registered to intercept a message received from a client and operate on it (or reject it) based on custom logic. This is useful to enforce specific rules on top of the standard features in the server.
 
-In Go, each hook will receive the request input as a struct containing the data that will be processed by the server for that request, if that feature is expected to receive an input. In Lua, the second argument will be the "incoming payload" containing data received that will be processed by the server. In JavaScript the payload is the fourth argument as seen in the example below.
+In Go, each hook will receive the request input as a struct containing the data that will be processed by the server for that request, if that feature is expected to receive an input. In Lua, the second argument will be the "incoming payload" containing data received that will be processed by the server. In JavaScript the payload is the fourth argument as seen in the example.
 
 === "Lua"
     ```lua
@@ -329,14 +330,15 @@ In Go, each hook will receive the request input as a struct containing the data 
     ```
 === "TypeScript"
     ```typescript
-     function userAddFriendLevelCheck(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, data: nkruntime.AddFriendsRequest): nkruntime.AddFriendsRequest {
-        let userId = ctx2.userId;
+    let userAddFriendLevelCheck: nkruntime.BeforeHookFunction<AddFriendsRequest> =
+            function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, data: nkruntime.AddFriendsRequest): nkruntime.AddFriendsRequest {
+        let userId = ctx.userId;
 
         let users: nkruntime.User[];
         try {
-            users = nk2.usersGetId([userId]);
-        } catch(error) {
-            logger2.error('Failed to get user: %s', error.message);
+            users = nk.usersGetId([ userId ]);
+        } catch (error) {
+            logger.error('Failed to get user: %s', error.message);
             throw error;
         }
 
@@ -353,10 +355,10 @@ In Go, each hook will receive the request input as a struct containing the data 
     initializer.registerBeforeAddFriends(userAddFriendLevelCheck);
     ```
 
-The code above fetches the current user's profile and checks the metadata which is assumed to be JSON encoded with `"{level: 12}"` in it. If a user's level is too low, an error is thrown to prevent the Friend Add message from being passed onwards in the server pipeline.
+The code above fetches the current user's profile and checks the metadata which is assumed to be JSON encoded with `"{level: 12}"` in it. If a user's level is too low, an error is thrown to prevent the Friend Add message from being passed onwards in the server.
 
 !!! Note
-    You must remember to return the payload at the end of your function in the same structure as you received it. See the lines highlighted in the code above.
+    You must remember to return the payload at the end of your function in the same structure as you received it.
 
 !!! Tip
     If you choose to return `nil` (Lua) or `null|undefined` (JavaScript) instead of the `payload` (or a non-nil `error` in Go) the server will halt further processing of that message. This can be used to stop the server from accepting certain messages or disabling/blacklisting certain server features.
@@ -423,9 +425,10 @@ The second argument is the "outgoing payload" containing the server's response t
 
 === "TypeScript"
     ```typescript
-     // The AddFriends function does not return a payload, hence why the outPayload argument is null.
-    function afterAddFriends(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, outPayload: null, inPayload: nkruntime.AddFriendsRequest) {
-        let userId = ctx2.userId;
+    // The AddFriends function does not return a payload, hence why the outPayload argument is null.
+    let afterAddFriends: nkruntime.AfterHookFunction<null, AddFriendsRequest> =
+            function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, outPayload: null, inPayload: nkruntime.AddFriendsRequest) {
+        let userId = ctx.userId;
         if (!userId) {
             throw Error('Missing user ID.');
         }
@@ -435,13 +438,13 @@ The second argument is the "outgoing payload" containing the server's response t
             collection: 'rewards',
             key: 'reward',
             userId: userId,
-            value: {userIds},
+            value: { userIds },
         };
 
         try {
-            nk2.storageWrite([storageObj]);
-        } catch(error) {
-            logger2.error('Error writing storage object: %s', error.message);
+            nk.storageWrite([ storageObj ]);
+        } catch (error) {
+            logger.error('Error writing storage object: %s', error.message);
             throw error;
         };
 
@@ -455,7 +458,7 @@ The second argument is the "outgoing payload" containing the server's response t
 The simple code above writes a record to a user's storage when they add a friend. Any data returned by the function will be discarded.
 
 !!! Tip
-    After hooks cannot change the response payload being sent back to the client, and errors do not prevent the response from being sent.
+    After hooks cannot change the response payload being sent back to the client and errors do not prevent the response from being sent.
 
 ### RPC hook
 
@@ -505,8 +508,9 @@ Some logic between client and server is best handled as RPC functions which clie
 
 === "TypeScript"
     ```typescript
-    function customRpcFunc(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, payload: string) {
-        logger2.info('payload: %q', payload);
+    let customFuncRpc: nkruntime.RpcFunction =
+            function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
+        logger.info('payload: %q', payload);
 
         // "payload" is bytes sent by the client we'll JSON decode it.
         let json = JSON.parse(payload);
@@ -515,16 +519,16 @@ Some logic between client and server is best handled as RPC functions which clie
     }
 
     // Register as an after hook for the appropriate feature, this call should be in InitModule.
-    initializer.registerRpc("custom_rpc_func_id", customRpcFunc);
+    initializer.registerRpc("custom_rpc_func_id", customFuncRpc);
     ```
 
 The code above registers a function with the identifier "custom_rpc_func_id". This ID can be used within client code to send an RPC message to execute the function on the server and return the result.
 
-From Go runtime code, the result is returned as `(string, error)`. From Lua runtime code, results are always returned as a Lua string (or optionally `nil`). From the JavaScript runtime code, results should always be a string, null or omitted (undefined);
+From Go runtime code, the result is returned as `(string, error)`. From Lua runtime code, results are always returned as a Lua string (or optionally `nil`). From the JavaScript runtime code, results should always be a string, null or omitted (undefined).
 
 #### Server to server
 
-Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook). However, this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
+Sometimes it's useful to create HTTP REST handlers which can be used by web services and ease integration into custom server environments. This can be achieved by using the [RPC hook](#rpc-hook). However this uses the [Runtime HTTP Key](install-configuration.md#runtime) to authenticate with the server.
 
 === "Lua"
     ```lua
@@ -549,7 +553,7 @@ Sometimes it's useful to create HTTP REST handlers which can be used by web serv
 
       logger.Info("Message: %v", message)
 
-      response, err := json.Marshal(map[string]interface{}{"context": ctx})
+      response, err := json.Marshal(map[string]interface{}{"message": message})
       if err != nil {
         return "", err
       }
@@ -566,7 +570,8 @@ Sometimes it's useful to create HTTP REST handlers which can be used by web serv
 
 === "TypeScript"
     ```typescript
-    function customRpcFunc(ctx2: nkruntime.Context, logger2: nkruntime.Logger, nk2: nkruntime.Nakama, payload: string) {
+    let customFuncRpc: nkruntime.RpcFunction =
+            function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
         logger.info('payload: %q', payload);
 
         if (ctx.userId) {
@@ -577,11 +582,11 @@ Sometimes it's useful to create HTTP REST handlers which can be used by web serv
         let message = JSON.parse(payload);
         logger.info('Message: %q', message);
 
-        return JSON.stringify({context: ctx});
+        return JSON.stringify({ message: message });
     }
 
     // Register as an after hook for the appropriate feature, this call should be in InitModule.
-    initializer.registerRpc("custom_rpc_func_id", customRpcFunc);
+    initializer.registerRpc("custom_rpc_func_id", customFuncRpc);
     ```
 
 !!! Tip
@@ -640,7 +645,7 @@ The runtime environment allows you to run code that must only be executed only o
       }
 
       _, err := db.ExecContext(ctx, `
-    INSERT INFO users (id, username)
+    INSERT INTO users (id, username)
     VALUES ($1, $2)
     ON CONFLICT (id) DO NOTHING
       `, systemId, "sysmtem_id")
@@ -652,8 +657,22 @@ The runtime environment allows you to run code that must only be executed only o
     }
     ```
 
-!!! Warning "Unsupported in JavaScript"
-    This functionality is currently not supported in the JavaScript runtime.
+=== "TypeScript"
+    ```typescript
+    let InitModule: nkruntime.InitModule =
+            function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+        let systemId: string = ctx.env["SYSTEM_ID"]
+
+        nk.sqlExec(`
+    INSERT INTO users (id, username)
+    VALUES ($1, $2)
+    ON CONFLICT (id) DO NOTHING
+        `, { systemId, "system_id" })
+
+        logger.Info('system id: %s', systemId)
+    }
+    ```
+
 
 ## Errors and logs
 
@@ -739,13 +758,13 @@ Unhandled exceptions in JavaScript are caught and logged by the runtime, except 
     ```typescript
     try {
         // Will throw an exception because this function expects a valid user ID.
-        nk.accountsGetId(['invalid_id']);
+        nk.accountsGetId([ 'invalid_id' ]);
     } catch(error) {
         logger.error('An error has occurred: %s', error.message);
     }
     ```
 
-The JavaScript logger is just a stub to the Go logger, hence why in the examples you've seen formatting 'verbs' (e.g.: '%s') in the output strings, followed by the arguments that will replace them, in order. If you wish to better log and inspect the underlying Go structs used by the JavaScript VM you can use verbs such as '%#v'. The full reference can be found [here](https://golang.org/pkg/fmt/).
+The JavaScript logger is a wrapper around the server logger, in the examples you've seen formatting "verbs" (e.g. "%s") in the output strings, followed by the arguments that will replace them. If you wish to better log and inspect the underlying Go structs used by the JavaScript VM you can use verbs such as "%#v". The full reference can be found [here](https://golang.org/pkg/fmt/).
 
 !!! Warning "Lua stacktraces"
     If the server logger level is set to `info` (default level) or below, the server will return Lua stacktraces to the client. This is useful for debugging but should be disabled for production.
@@ -758,24 +777,22 @@ The JavaScript logger is just a stub to the Go logger, hence why in the examples
 
 The Lua runtime is a Lua 5.1-compatible implementation with a small set of additional packages backported from newer versions - see [available functions](#available-functions). For best results ensure your Lua modules and any 3rd party libraries are compatible with Lua 5.1.
 
-#### Go
-
-Go runtime available functionality depends on the version of Go each Nakama release is compiled with. This is usually the latest stable version at the time of release. Check server startup logging for the exact Go version used by your Nakama installation.
-
 !!! Note
     Lua runtime code cannot use the Lua C API or extensions. Make sure your code and any 3rd party libraries are pure Lua 5.1.
 
-#### JavaScript
-
-The JavaScript runtime is powered by the [goja library](https://github.com/dop251/goja) which currently only supports the JavaScript ES5 spec.
-
-### Available functions
-
 The Lua virtual machine embedded in the server uses a restricted set of Lua standard library modules. This ensures the code sandbox cannot tamper with operating system input/output or the filesystem.
 
-The list of available Lua modules are: base module, `math`, `string`, `table`, `bit32`, and a subset of `os` (only `clock`, `difftime`, `date`, and `time` functions).
+The list of available Lua modules are: base module, "math", "string", "table", "bit32", and a subset of "os" (only "clock", "difftime", "date", and "time" functions).
+
+#### Go
+
+Go runtime available functionality depends on the version of Go each Nakama release is compiled with. This is usually the latest stable version at the time of release. Check server startup logs for the exact Go version used by your Nakama installation.
 
 Go runtime code can make use of the full range of standard library functions and packages.
+
+#### JavaScript
+
+The JavaScript runtime is powered by the [goja VM](https://github.com/dop251/goja) which currently supports the JavaScript ES5 spec.
 
 The JavaScript runtime has access to the standard library functions included in the ES5 spec.
 
@@ -796,7 +813,7 @@ Go runtime code has full low-level access to the server and its environment. Thi
 
 ## An example module
 
-As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpful module named "pokeapi.lua".
+As a fun example let's use the [Pokéapi](http://pokeapi.co/) and build a helpful module named "pokeapi.lua".
 
 === "Lua"
     ```lua
@@ -925,7 +942,8 @@ As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpf
     ```typescript
     const apiBaseUrl = 'https://pokeapi.co/api/v2';
 
-    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+    let InitModule: nkruntime.InitModule =
+            function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
         initializer.registerRpc('get_pokemon', getPokemon);
     };
 
@@ -938,14 +956,15 @@ As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpf
         return JSON.parse(response.body);
     }
 
-    function getPokemon(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
+    let getPokemon: nkruntime.RpcFunction =
+            function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
         // We'll assume payload was sent as JSON and decode it.
         let json = JSON.parse(payload);
 
         let pokemon;
         try {
             pokemon = lookupPokemon(nk, json['PokemonName']);
-        } catch(error) {
+        } catch (error) {
             logger.error('An error occurred looking up pokemon: %s', error.message);
             throw error;
         }
@@ -956,7 +975,6 @@ As a fun example, let's use the [Pokéapi](http://pokeapi.co/) and build a helpf
             weight: pokemon.weight,
             image: pokemon.sprites.front_default,
         }
-
         return JSON.stringify(result);
     }
     ```
