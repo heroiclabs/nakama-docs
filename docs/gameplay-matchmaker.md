@@ -915,7 +915,8 @@ The match token is also used to prevent unwanted users from attempting to join a
     ```js
     socket.onmatchmakermatched = (matched) => {
       console.info("Received MatchmakerMatched message: ", matched);
-      socket.joinMatch(matched.token);
+      const matchId = null;
+      socket.joinMatch(matchId, matched.token);
     };
     ```
 
