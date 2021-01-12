@@ -18,10 +18,17 @@ This module contains all the core gameplay APIs, all registration functions used
     )
     ```
 
+=== "TypeScript"
+    ```typescript
+     npm i 'https://github.com/heroiclabs/nakama-common'
+    ```
+
 !!! Note
     All Lua code examples assume the `"nakama"` module has been imported.
 
     All Go functions will have `nk runtime.NakamaModule` avaiable as a parameter that may be used to access server runtime functions. A `context` will also be supplied in function input arguments.
+
+    All JavaScript functions, similarly to Go, will have the `nk` (of TypeScript type `nkruntime.Nakama`) object available as a parameter to access the server runtime functions.
 
 ### account
 
@@ -31,14 +38,16 @@ Get all account information for a given user ID.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | User ID to fetch information for. Must be valid UUID. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | string | User ID to fetch information for. Must be valid UUID. |
 
 _Returns_
 
-All account information including wallet, device IDs and more.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `*api.Account` | table | `nkruntime.Account` | All account information including wallet, device IDs and more. |
 
 _Example_
 
@@ -59,6 +68,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let account;
+    try {
+        account = nk.AccountGetId('8f4d52c7-bf28-4fcf-8af2-1d4fcf685592');
+    } catch (error) {
+        logger.error('An error occurred: %s', error);
+        throw error;
+    }
+    logger.Info('Account: %s', JSON.stringify(account));
+    ```
+
 ---
 
 __Get accounts__
@@ -67,14 +88,16 @@ Get all account information for all given user IDs.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_ids | `[]string` | table | A table array of user ids to fetch information for. Must be valid UUIDs. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_ids | `[]string` | table | `string[]` | An array of user ids to fetch information for. Must be valid UUIDs. |
 
 _Returns_
 
-A table (array) of accounts.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `*[]api.Account` | table | `nkruntime.Account[]` | An array of accounts. |
 
 _Example_
 
@@ -97,6 +120,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let accounts: nkruntime.Account[];
+    try {
+        accounts = nk.AccountsGetId(['8f4d52c7-bf28-4fcf-8af2-1d4fcf685592', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc']);
+    } catch (error) {
+        logger.error('An error occurred: %s', error);
+        throw error;
+    }
+    logger.Info('Accounts: %s', JSON.stringify(accounts));
+    ```
+
 ---
 
 __Update account__
@@ -108,17 +143,17 @@ _Parameters_
 !!! Note
     The order of parameters is different in Lua and Go. Check examples below
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string |User ID for which the information is to be updated. Must be valid UUID. |
-| metadata | `map[string]interface{}` | table | Metadata to update. Use `nil` if it is not being updated. |
-| username | `string` | string | Username to be set. Must be unique. Use `""` (Go) or `nil` (Lua) if it is not being updated. |
-| display_name | `string` | string | Display name to be updated. Use `""` (Go) or `nil` (Lua) if it is not being updated. |
-| timezone | `string` | string | Timezone to be updated. Use `""` (Go) or `nil` (Lua) if it is not being updated. |
-| location | `string` | string | Location to be updated. Use `""` (Go) or `nil` (Lua) if it is not being updated. |
-| language | `string` | string | Lang tag to be updated. Use `""` (Go) or `nil` (Lua) if it is not being updated. |
-| avatar_url | `string` | string | User's avatar URL. Use `""` (Go) or `nil` (Lua) if it is not being updated. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | Opt. `string` | User ID for which the information is to be updated. Must be valid UUID. |
+| metadata | `map[string]interface{}` | table | Opt. POJO | Metadata to update. Use `nil` (Lua) or `null` (TS) if it is not being updated. |
+| username | `string` | string | Opt. `string` | Username to be set. Must be unique. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| display_name | `string` | string | Opt. `string` | Display name to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| timezone | `string` | string | Opt. `string` | Timezone to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| location | `string` | string | Opt. `string` | Location to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| language | `string` | string | Opt. `string` | Lang tag to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| avatar_url | `string` | string | Opt. `string` | User's avatar URL. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
 
 _Example_
 
@@ -150,6 +185,25 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userID = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let username = null;
+    let metadata = {pro: true};
+    let displayName = 'new display name';
+    let timezone = null
+    let location = null
+    let langTag = null
+    let avatarUrl = null
+
+    try {
+        // Update metadata and display name only
+        nk.accountUpdateId(userID, username, displayName, timezone, location, langTag, avatarUrl, metadata);
+    } catch (error) {
+        // handle error
+    }
+    ```
+
 ---
 
 __Delete Account__
@@ -158,11 +212,11 @@ Delete an account.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | User ID to fetch information for. Must be valid UUID. |
-| recorded | `bool` | bool | Whether to record this deletion in the database. By default this is set to false. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` | User ID to fetch information for. Must be valid UUID. |
+| recorded | `bool` | bool | Opt. `bool` | Whether to record this deletion in the database. By default this is set to false. |
 
 _Example_
 
@@ -178,9 +232,20 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userID = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+
+    try {
+        nk.accountDeleteId(userID);
+    } catch (error) {
+        // handle error
+    }
+    ```
+
 ### aes128
 
-__aes128_decrypt (input, key)__
+__Aes128 Decrypt__
 
 AES-128 CFB decrypt input with the key. Key must be 16 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
 
@@ -193,7 +258,9 @@ _Parameters_
 
 _Returns_
 
-The decrypted input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Deciphered input. |
 
 _Example_
 
@@ -208,9 +275,19 @@ _Example_
     import "crypto/aes"
     ```
 
+=== "TypeScript"
+    ```typescript
+
+    let plaintext: string;
+    try {
+        plaintext = nk.aes128Decrypt('48656C6C6F20776F726C64', 'goldenbridge_key');
+    } catch (error) {
+        // Handle error
+    }
+    ```
 ---
 
-__aes128_encrypt (input, key)__
+__Aes128 Encrypt__
 
 AES-128 CFB encrypt input with the key. Key must be 16 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
 
@@ -223,7 +300,9 @@ _Parameters_
 
 _Returns_
 
-The encrypted input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Ciphered input. |
 
 _Example_
 
@@ -238,6 +317,102 @@ _Example_
     import "crypto/aes"
     ```
 
+=== "TypeScript"
+    ```typescript
+
+    let ciphertext: string;
+    try {
+        ciphertext = nk.aes128Encrypt('48656C6C6F20776F726C64', 'goldenbridge_key');
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
+### aes256
+
+__AES256 Decrypt__
+
+AES-256 CFB decrypt input with the key. Key must be 32 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The string which has been aes128 encrypted. |
+| key | string | 32 bytes decryption key. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Decyphered input. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local plaintext = nk.aes256_decrypt("48656C6C6F20776F726C64", "goldenbridge_key")
+    ```
+
+=== "Go"
+    ```go
+    // Use the standard Go crypto package.
+    import "crypto/aes"
+    ```
+
+=== "TypeScript"
+    ```typescript
+
+    let plaintext: string;
+    try {
+        plaintext = nk.aes256Decrypt('48656C6C6F20776F726C64', 'goldenbridge_key');
+    } catch (error) {
+        // Handle error
+    }
+    ```
+---
+
+__AES256 Encrypt__
+
+AES-128 CFB encrypt input with the key. Key must be 32 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| input | string | The string which will be aes128 encrypted. |
+| key | string | 32 bytes encryption key. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Ciphered input. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local cyphertext = nk.aes256_encrypt("48656C6C6F20776F726C64", "goldenbridge_keygoldenbridge_key")
+    ```
+
+=== "Go"
+    ```go
+    // Use the standard Go crypto package.
+    import "crypto/aes"
+    ```
+
+=== "TypeScript"
+    ```typescript
+
+    let ciphertext: string;
+    try {
+        ciphertext = nk.aes256Encrypt('48656C6C6F20776F726C64', 'goldenbridge_keygoldenbridge_key');
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### authenticate
 
 __Authenticate Custom__
@@ -246,12 +421,12 @@ Authenticate user and create a session token using a custom authentication manag
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | Custom ID to use to authenticate the user. Must be between 6-128 characters. |
-| username | `string` | string | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | Custom ID to use to authenticate the user. Must be between 6-128 characters. |
+| username | `string` | string | Opt. `string` |  Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -272,6 +447,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateCustom('48656C6C6F20776F726C64', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Authenticate Device__
@@ -280,16 +465,18 @@ Authenticate user and create a session token using a device identifier.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | Device ID to use to authenticate the user. Must be between 1 - 128 characters. |
-| username | `string` | string | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | Device ID to use to authenticate the user. Must be between 1 - 128 characters. |
+| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
-The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: A POJO of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -306,6 +493,15 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateDevice('48656C6C6F20776F726C64', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 ---
 
 __Authenticate Email__
@@ -314,17 +510,19 @@ Authenticate user and create a session token using an email address and password
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| email | `string` | string | Email address to use to authenticate the user. Must be between 10-255 characters. |
-| password | `string` | string | Password to set - must be longer than 8 characters. |
-| username | `string` | string | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| email | `string` | string | `string` | Email address to use to authenticate the user. Must be between 10-255 characters. |
+| password | `string` | string | `string` | Password to set - must be longer than 8 characters. |
+| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
-The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`). Go function will also return error, if any, as fourth return value.
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: A POJO of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -341,6 +539,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateEmail('email@example.com', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Authenticate Facebook__
@@ -349,17 +557,19 @@ Authenticate user and create a session token using a Facebook account token.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| token | `string` | string | Facebook OAuth access token. |
-| import | `bool` | bool | Whether to import facebook friends after authenticated automatically. This is true by default. |
-| username | `string` | string | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| token | `string` | string | `string` | Facebook OAuth access token. |
+| import | `bool` | bool | `bool` | Whether to import facebook friends after authenticated automatically. This is true by default. |
+| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
-The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: A POJO of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -376,7 +586,61 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateFacebook('some-oauth-access-token', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
+
+__Authenticate Facebook Instant Game__
+
+Authenticate user and create a session token using a Facebook Instant Game.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| player info | `string` | string | `string` | Facebook Player info. |
+| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+
+_Returns_
+
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: A POJO of type `nkruntime.AuthResult`.
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_id, username, created = nk.authenticate_facebook_instant_game("player-info", true, "username", true)
+    ```
+
+=== "Go"
+    ```go
+    userid, username, created, err := nk.AuthenticateFacebookInstantGame(ctx, "player-info", true, "username", true)
+    if err != nil {
+      logger.WithField("err", err).Error("Authenticate facebook error.")
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateFacebookInstantGame('player-info', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 
 __Authenticate Game Center__
 
@@ -384,25 +648,27 @@ Authenticate user and create a session token using Apple Game Center credentials
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| player_id | `string` | string | PlayerId provided by GameCenter. |
-| bundle_id | `string` | string | BundleId of your app on iTunesConnect. |
-| timestamp | `int64` | number | Timestamp at which Game Center authenticated the client and issued a signature. |
-| salt | `string` | string | A random string returned by Game Center authentication on client. |
-| signature | `string` | string | A signature returned by Game Center authentication on client. |
-| public_key_url | `string` | string | A url to the publick key returned by Game Center authentication on client. |
-| username | `string` | string | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| player_id | `string` | string | `string` | PlayerId provided by GameCenter. |
+| bundle_id | `string` | string | `string` | BundleId of your app on iTunesConnect. |
+| timestamp | `int64` | number | `number` | Timestamp at which Game Center authenticated the client and issued a signature. |
+| salt | `string` | string | `string` | A random string returned by Game Center authentication on client. |
+| signature | `string` | string | `string` | A signature returned by Game Center authentication on client. |
+| public_key_url | `string` | string | `string` | A url to the publick key returned by Game Center authentication on client. |
+| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `string` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
-The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: A POJO of type `nkruntime.AuthResult`.
 
 === "Lua"
     ```lua
-    local user_id, username, created = nk.authenticate_gamecenter(player_id, bundle_id, timestamp, salt, signature, public_key_url, username, create)
+    local user_id, username, created = nk.authenticate_game_center(player_id, bundle_id, timestamp, salt, signature, public_key_url, username, create)
     ```
 
 === "Go"
@@ -413,7 +679,16 @@ The user's ID, username, and a boolean flag indicating if the account was just c
     }
     ```
 
----
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        // Example assumes arguments are defined.
+        result = nk.authenticateGameCenter(playerId, bundleId, timestamp, salt, signature, publicKeyUrl, username, create);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 
 __Authenticate Google__
 
@@ -421,16 +696,18 @@ Authenticate user and create a session token using a Google ID token.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| token | `string` | string | Google OAuth access token. |
-| username | `string` | string | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| token | `string` | string | `string` | Google OAuth access token. |
+| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `string` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
-The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: A POJO of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -447,6 +724,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateGoogle('some-id-token', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Authenticate Steam__
@@ -455,16 +742,18 @@ Authenticate user and create a session token using a Steam account token.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| token | `string` | string | Steam token. |
-| username | `string` | string | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Create user if one didn't exist previously. By default this is set to true. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| token | `string` | string | `string` | Steam token. |
+| username | `string` | string | `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | bool | `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
-The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: A POJO of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -475,9 +764,19 @@ _Example_
 
 === "Go"
     ```go
-    userid, username, created, err := nk.AuthenticateGoogle(ctx, "steam-token", "username", true)
+    userid, username, created, err := nk.AuthenticateSteam(ctx, "steam-token", "username", true)
     if err != nil {
       logger.WithField("err", err).Error("Authenticate steam error.")
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateSteam('steam-token', 'username', true);
+    } catch (error) {
+        // Handle error
     }
     ```
 
@@ -491,16 +790,18 @@ This is useful if you have an external source of truth where users are registere
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | User ID you'd like to use to generated the token. |
-| username | `string` | string | Username information to embed in the token. This is mandatory. |
-| expires_at | `number` | string | Number of seconds the token should be valid for. Optional, defaults to [server configured expiry time](install-configuration.md#session). |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` | User ID you'd like to use to generated the token. |
+| username | `string` | string | `string` | Username information to embed in the token. This is mandatory. |
+| expires_at | `number` | string | `number` | Number of seconds the token should be valid for. Optional, defaults to [server configured expiry time](install-configuration.md#session). |
 
 _Returns_
 
-The session token created for the given user details, an the expiry time of the token expressed as UTC seconds.
+Lua/Go: The session token (string) created for the given user details, an the expiry time (number) of the token expressed as UTC seconds.
+
+TypeScript: A POJO of type `nkruntime.TokenGenerateResult`.
 
 _Example_
 
@@ -520,6 +821,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.TokenGenerateResult;
+    try {
+        result = nk.authenticateTokenGenerate('steam-token', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### base16
 
 __Base 16 Decode__
@@ -534,7 +845,9 @@ _Parameters_
 
 _Returns_
 
-The base 16 decoded input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Decoded string. |
 
 _Example_
 
@@ -548,6 +861,16 @@ _Example_
     ```go
     // Use the standard Go encoding package.
     import "encoding/hex"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result: string;
+    try {
+        result = nk.base16Decode('48656C6C6F20776F726C64');
+    } catch (error) {
+        // Handle error
+    }
     ```
 
 ---
@@ -564,7 +887,9 @@ _Parameters_
 
 _Returns_
 
-The base 16 encoded input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Encoded string. |
 
 _Example_
 
@@ -578,6 +903,17 @@ _Example_
     ```go
     // Use the standard Go encoding package.
     import "encoding/hex"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result: string;
+    try {
+        result = nk.base16Encode('Hello World');
+    } catch (error) {
+        // Handle error
+    }
+    logger.info(encoded) // outputs '48656C6C6F20776F726C64'
     ```
 
 ### base64
@@ -594,20 +930,33 @@ _Parameters_
 
 _Returns_
 
-The base 64 decoded input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Decoded string. |
 
 _Example_
 
 === "Lua"
     ```lua
     local decoded = nk.base64_decode("SGVsbG8gd29ybGQ=")
-    nk.logger_info(decoded) -- outputs "Hello world".
+    nk.logger_info(decoded) -- outputs "Hello world"
     ```
 
 === "Go"
     ```go
     // Use the standard Go encoding package.
     import "encoding/base64"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result: string;
+    try {
+        result = nk.base64Decode('SGVsbG8gd29ybGQ=');
+    } catch (error) {
+        // Handle error
+    }
+    logger.info(encoded) // outputs 'Hello world'
     ```
 
 ---
@@ -624,7 +973,9 @@ _Parameters_
 
 _Returns_
 
-The base 64 encoded input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Encoded string. |
 
 _Example_
 
@@ -638,6 +989,17 @@ _Example_
     ```go
     // Use the standard Go encoding package.
     import "encoding/base64"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result: string;
+    try {
+        result = nk.base64Encode('Hello World');
+    } catch (error) {
+        // Handle error
+    }
+    logger.info(encoded) // outputs 'SGVsbG8gd29ybGQ='
     ```
 
 ---
@@ -654,7 +1016,9 @@ _Parameters_
 
 _Returns_
 
-The base 64 URL decoded input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Decoded string. |
 
 _Example_
 
@@ -668,6 +1032,17 @@ _Example_
     ```go
     // Use the standard Go encoding package.
     import "encoding/base64"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result: string;
+    try {
+        result = nk.base64UrlDecode('SGVsbG8gd29ybGQ=');
+    } catch (error) {
+        // Handle error
+    }
+    logger.info(encoded) // outputs 'Hello World'
     ```
 
 ---
@@ -684,7 +1059,9 @@ _Parameters_
 
 _Returns_
 
-The base 64 URL encoded input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Encoded string. |
 
 _Example_
 
@@ -698,6 +1075,17 @@ _Example_
     ```go
     // Use the standard Go encoding package.
     import "encoding/base64"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result: string;
+    try {
+        result = nk.base64UrlEncode('Hello World');
+    } catch (error) {
+        // Handle error
+    }
+    logger.info(encoded) // outputs 'SGVsbG8gd29ybGQ='
     ```
 
 ### bcrypt
@@ -714,7 +1102,9 @@ _Parameters_
 
 _Returns_
 
-The hashed input.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]byte` | `string` | `string` | Hashed string. |
 
 _Example_
 
@@ -728,6 +1118,16 @@ _Example_
     ```go
     // Use the standard Go crypto package.
     import "golang.org/x/crypto/bcrypt"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result: string;
+    try {
+        result = nk.bcryptHash('Hello World');
+    } catch (error) {
+        // Handle error
+    }
     ```
 
 ---
@@ -761,6 +1161,16 @@ _Example_
     import "golang.org/x/crypto/bcrypt"
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result: boolean;
+    try {
+        result = nk.bcryptCompare('$2a$04$bl3tac7Gwbjy04Q8H2QWLuUOEkpoNiAeTxazxi4fVQQRMGbMaUHQ2', '123456');
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### cron
 
 __Cron Next__
@@ -776,7 +1186,7 @@ _Parameters_
 
 _Returns_
 
-The next UTC seconds timestamp that matches the given CRON expression, and is immediately after the given timestamp.
+The next UTC seconds timestamp (number) that matches the given CRON expression, and is immediately after the given timestamp.
 
 _Example_
 
@@ -795,6 +1205,18 @@ _Example_
     import "github.com/robfig/cron"
     ```
 
+=== "TypeScript"
+    ```typescript
+    let result: number;
+    try {
+        let expr = '0 0 * * 1';
+        let ts = Math.floor(Date.now() / 1000);
+        result = nk.cronNext(expr, ts);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### friends
 
 __Friends List__
@@ -803,17 +1225,19 @@ List all friends, invites, invited, and blocked which belong to a user.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
+| Param | Go type | Lua type | TypeScript type | Description |
 | ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | The ID of the user who's friends, invites, invited, and blocked you want to list. |
-| limit | `int` | number | The number of friends to retrieve in this page of results. No more than 1000 limit allowed per result. |
-| state | `int` | number | The state of the friendship with the user. If unspecified this returns friends in all states for the user. |
-| cursor | `string` | string | The cursor returned from a previous listing request. Used to obtain the next page of results. |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` | The ID of the user who's friends, invites, invited, and blocked you want to list. |
+| limit | `int` | number | Opt. `number` |  The number of friends to retrieve in this page of results. No more than 1000 limit allowed per result. |
+| state | `int` | number | Opt. `number` |  The state of the friendship with the user. If unspecified this returns friends in all states for the user. |
+| cursor | `string` | string | Opt. `string` | The cursor returned from a previous listing request. Used to obtain the next page of results. |
 
 _Returns_
 
-The user information for users of the current user who're friends.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `*api.FriendList` | `table` | `nkruntime.FriendList` | The user information for users of the current user who're friends. |
 
 _Example_
 
@@ -851,6 +1275,23 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let friends = {} as nkruntime.FriendList;
+    try {
+        let userId = 'b1aafe16-7540-11e7-9738-13777fcc7cd8';
+        let limit = 100;
+        let state = 0;
+        friends = nk.friendsList(userId, limit, state);
+    } catch (error) {
+        // Handle error
+    }
+    friends.friends?.forEach((f) => {
+        // States are: friend(0), invite_sent(1), invite_received(2), blocked(3)
+        logger.info('Friend username: %s has state %d', f.user?.username, f.state);
+    });
+    ```
+
 ---
 
 ### groups
@@ -863,18 +1304,18 @@ A user ID must be given as they'll be made group superadmin.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | The user ID to be associcated as the group superadmin. Mandatory field. |
-| name | `string` | string | Group name, must be set and unique. |
-| creator_id | `string` | string | The user ID to be associcated as creator. If not set, system user will be set. |
-| lang | `string` | string | Group language. Will default to 'en'. |
-| description | `string` | string | Group description, can be left empty. |
-| avatar_url | `string` | string | URL to the group avatar, can be left empty. |
-| open | `bool` | bool | Whether the group is for anyone to join, or members will need to send invitations to join. Defaults to false. |
-| metadata | `map[string]interface{}` | table | Custom information to store for this group. |
-| max_count | `int` | number | Maximum number of members to have in the group. Defaults to 100. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` | The user ID to be associated as the group superadmin. Mandatory field. |
+| name | `string` | string | `string` | Group name, must be set and unique. |
+| creator_id | `string` | string | Opt. `string` | The user ID to be associated as creator. If not set or nil/null system user will be set. |
+| lang | `string` | string | Opt. `string` | Group language. If not set or nil/null will default to 'en'. |
+| description | `string` | string | Opt. `string` | Group description, can be left empty as nil/null. |
+| avatar_url | `string` | string | Opt. `string` | URL to the group avatar, can be left empty as nil/null. |
+| open | `bool` | bool | Opt. `bool` | Whether the group is for anyone to join, or members will need to send invitations to join. Defaults to false. |
+| metadata | `map[string]interface{}` | table | Opt. POJO | Custom information to store for this group. Can be left empty as nil/null. |
+| max_count | `int` | number | Opt. `number` | Maximum number of members to have in the group. Defaults to 100. |
 
 _Example_
 
@@ -917,6 +1358,24 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let group = {} as nkruntime.Group;
+    try {
+        let userId = 'dcb891ea-a311-4681-9213-6741351c9994';
+        let creatorId = 'dcb891ea-a311-4681-9213-6741351c9994';
+        let name = 'Some unique group name';
+        let description = 'My awesome group.';
+        let lang = 'en';
+        let open = true;
+        let avatarURL = 'url://somelink';
+        let metadata = { custom_field: 'some_value' };
+        let maxCount = 100;
+        group = nk.groupCreate(userId, name, creatorId, lang, description, avatarURL, open, metadata, maxCount);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 ---
 
 __Group Delete__
@@ -925,10 +1384,10 @@ Delete a group.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
 | ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The group ID to delete. |
+| group_id | `string` | string | `string` | The group ID to delete. |
 
 _Example_
 
@@ -946,6 +1405,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    try {
+        let groupId = 'f00fa79a-750f-11e7-8626-0fb79f45ff97';
+        nk.groupdDelete(groupId);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Group Update__
@@ -954,18 +1423,18 @@ Update a group with various configuration settings. The group which is updated c
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The group ID to update. |
-| name | `string` | string | Group name, can be empty if not changed. |
-| creator_id | `string` | string | The user ID to be associcated as creator. Can be empty if not changed. |
-| lang | `string` | string | Group language. Empty if not updated. |
-| description | `string` | string | Group description, can be left empty if not updated. |
-| avatar_url | `string` | string | URL to the group avatar, can be left empty if not updated. |
-| open | `bool` | bool | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
-| metadata | `map[string]interface{}` | table | Custom information to store for this group. Use `nil` if field is not being updated. |
-| max_count | `int` | number | Maximum number of members to have in the group. Use `0` if field is not being updated. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The group ID to update. |
+| name | `string` | string | `string` | Group name, can be empty if not changed. |
+| creator_id | `string` | string | Opt. `string` | The user ID to be associcated as creator. Can be empty if not changed. |
+| lang | `string` | string | Opt. `string` | Group language. Empty if not updated. |
+| description | `string` | string | Opt. `string` | Group description, can be left empty if not updated. |
+| avatar_url | `string` | string | Opt `string` | URL to the group avatar, can be left empty if not updated. |
+| open | `bool` | bool | Opt. `string` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
+| metadata | `map[string]interface{}` | table | Opt. POJO | Custom information to store for this group. Use `nil` if field is not being updated. |
+| max_count | `int` | number | Opt. `number` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
 
 _Example_
 
@@ -993,6 +1462,18 @@ _Example_
       logger.WithField("err", err).Error("Group update error.")
     }
     ```
+=== "TypeScript"
+    ```typescript
+    let metadata = { someField: 'some value' };
+    let groupId = 'f00fa79a-750f-11e7-8626-0fb79f45ff97';
+    let description = 'An updated description';
+
+    try {
+        nk.groupUpdate(groupId, null, null, null, description, null, true, metadata);
+    } catch (error) {
+        // Handle error.
+    }
+    ```
 
 ---
 
@@ -1002,14 +1483,17 @@ List all members, admins and superadmins which belong to a group. This also list
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The Id of the group who's members, admins and superadmins you want to list. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The Id of the group who's members, admins and superadmins you want to list. |
 
 _Returns_
 
-The user information for members, admins and superadmins for the group. Also users who sent a join request as well.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]*api.GroupUserList_GroupUser` | `table` | `nkruntime.GroupUserList` | The user information for members, admins and superadmins for the group. Also users who sent a join request as well. |
+
 
 _Example_
 
@@ -1038,6 +1522,21 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let groupUsers = {} as nkruntime.GroupUserList;
+    try {
+        let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+        groupUsers = nk.groupUsersList(groupId);
+    } catch (error) {
+        // Handle error
+    }
+    groupUsers.groupUsers?.forEach(gu => {
+        // States are => 0: Superadmin, 1: Admin, 2: Member, 3: Requested to join
+        logger.info('Member username: %s has state %d', gu.user.username, gu.state);
+    });
+    ```
+
 ---
 
 __Group User Join__
@@ -1046,12 +1545,12 @@ Join a group for a particular user.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The Id of the group to join. |
-| user_id | `string` | string | The user ID to add to this group. |
-| username | `string` | string | The username of the user to add to this group. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The Id of the group to join. |
+| user_id | `string` | string | `string` | The user ID to add to this group. |
+| username | `string` | string | `string` | The username of the user to add to this group. |
 
 _Example_
 
@@ -1074,6 +1573,17 @@ _Example_
       logger.WithField("err", err).Error("Group user join error.")
     }
     ```
+=== "TypeScript"
+    ```typescript
+    let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let userId = '9a51cf3a-2377-11eb-b713-e7d403afe081';
+    let username = 'myusername';
+    try {
+        nk.groupUserJoin(groupId, userId, username);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 
 ---
 
@@ -1083,12 +1593,12 @@ Leave a group for a particular user.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The Id of the group to leave. |
-| user_id | `string` | string | The user ID to leave from this group. |
-| username | `string` | string | The username of the user to leave from this group. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The Id of the group to leave. |
+| user_id | `string` | string | `string` | The user ID to leave from this group. |
+| username | `string` | string | `string` | The username of the user to leave from this group. |
 
 _Example_
 
@@ -1112,6 +1622,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let userId = '9a51cf3a-2377-11eb-b713-e7d403afe081';
+    let username = 'myusername';
+    try {
+        nk.groupUserLeave(groupId, userId, username);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Group Users Add__
@@ -1120,11 +1642,11 @@ Add users to a group.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The Id of the group that you want to add users into. |
-| user_ids | `[]string` | table | A table array of user ids to add. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The Id of the group that you want to add users into. |
+| user_ids | `[]string` | table | `string[]` | A table array of user ids to add. |
 
 _Example_
 
@@ -1146,6 +1668,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let userIds = ['9a51cf3a-2377-11eb-b713-e7d403afe081', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc'];
+
+    try {
+        nk.groupUsersAdd(groupId, userIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Group Users Kick__
@@ -1154,11 +1688,11 @@ Kick users from a group.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The Id of the group who's members, admins and superadmins you want to list. |
-| user_ids | `[]string` | table | A table array of user ids to kick. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The Id of the group who's members, admins and superadmins you want to list. |
+| user_ids | `[]string` | table | `string[]` |  A table array of user ids to kick. |
 
 _Example_
 
@@ -1180,6 +1714,17 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let userIds = ['9a51cf3a-2377-11eb-b713-e7d403afe081', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc'];
+    try {
+        nk.groupUsersKick(groupId, userIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Group Users Promote__
@@ -1188,11 +1733,11 @@ Promote users in a group.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The Id of the group who's members and admins you want to promote. |
-| user_ids | `[]string` | table | A table array of user ids to promote. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The Id of the group who's members and admins you want to promote. |
+| user_ids | `[]string` | table | `string[]` | A table array of user ids to promote. |
 
 _Example_
 
@@ -1214,6 +1759,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let userIds = ['9a51cf3a-2377-11eb-b713-e7d403afe081', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc'];
+    try {
+        nk.groupUsersPromote(groupId, userIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 ---
 
 __Group Users Demote__
@@ -1222,11 +1777,11 @@ Demote users in a group.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_id | `string` | string | The Id of the group who's members, admins and superadmins you want to demote. |
-| user_ids | `[]string` | table | A table array of user ids to demote. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_id | `string` | string | `string` | The Id of the group who's members, admins and superadmins you want to demote. |
+| user_ids | `[]string` | table | `string[]` | A table array of user ids to demote. |
 
 _Example_
 
@@ -1248,6 +1803,17 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let userIds = ['9a51cf3a-2377-11eb-b713-e7d403afe081', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc'];
+    try {
+        nk.groupUsersDemote(groupId, userIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Groups Get by ID__
@@ -1256,10 +1822,10 @@ Fetch one or more groups by their ID.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| group_ids | `[]string` | table | A set of strings of the ID for the groups to get. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| group_ids | `[]string` | table | `string[]` | A set of strings of the ID for the groups to get. |
 
 _Returns_
 
@@ -1295,6 +1861,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+
+    let groups: nkruntime.Group[];
+    try {
+        let groupIds = ['dcb891ea-a311-4681-9213-6741351c9994'];
+        groups = nk.groupsGetId(groupIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Groups List for a user__
@@ -1303,14 +1881,16 @@ List all groups which a user belongs to and whether they've been accepted into t
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | The Id of the user who's groups you want to list. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` | The Id of the user who's groups you want to list. |
 
 _Returns_
 
-A list of groups for the user.
+| Go type | Lua type | TypeScript type | Description |
+| ------- | -------- | --------------- | ----------- |
+| `[]*api.UserGroupList_UserGroup` | `table` | `nkruntime.UserGroupList` | A list of groups for the user. |
 
 _Example_
 
@@ -1338,6 +1918,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+
+    let groups = {} as nkruntime.UserGroupList;
+    try {
+        let userId = '64ef6cb0-7512-11e7-9e52-d7789d80b70b';
+        groups = nk.userGroupsList(userId);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### hmac
 
 __HMAC SHA256 Hash__
@@ -1349,11 +1941,11 @@ _Parameters_
 | Param | Type | Description |
 | ----- | ---- | ----------- |
 | input | string | Plaintext input to hash. |
-| key | number | Hashing key. |
+| key | string | Hashing key. |
 
 _Returns_
 
-Hashed input using the key.
+Hashed input as a string using the key.
 
 _Example_
 
@@ -1369,6 +1961,17 @@ _Example_
     import "crypto/hmac"
     ```
 
+=== "TypeScript"
+    ```typescript
+
+    let hash: string;
+    try {
+        hash = nk.hmacSha256Hash('some input text to hash', 'some_key');
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### http
 
 __http_request (url, method, headers, content)__
@@ -1377,17 +1980,19 @@ Send a HTTP request and receive the result as a Lua table.
 
 _Parameters_
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| url | string | The URL of the web resource to request. |
-| method | string | The HTTP method verb used with the request. |
-| headers | table | A table of headers used with the request. |
-| content | string | The bytes to send with the request. |
-| timeout | number | Timeout of the request in milliseconds. Optional, by default is 5000ms. |
+| Param | Lua Type | TypeScript type | Description |
+| ----- | ---- | ----------- | ----------- |
+| url | string | `string` | The URL of the web resource to request. |
+| method | string | `string` |  The HTTP method verb used with the request. |
+| headers | table | Opt. `string` | A table of headers used with the request. |
+| content | string | Opt. `string` | The bytes to send with the request. |
+| timeout | number |  Opt. `number` | Timeout of the request in milliseconds. Optional, by default is 5000ms. |
 
 _Returns_
 
-`code, headers, body` - Multiple return values for the HTTP response.
+| Lua type | TypeScript type | Description |
+| -------- | --------------- | ----------- |
+| `table` | `nkruntime.httpResponse` | `code, headers, body` - Multiple return values for the HTTP response. |
 
 _Example_
 
@@ -1417,6 +2022,28 @@ _Example_
     import "net/http"
     ```
 
+=== "TypeScript"
+    ```typescript
+    let res = {} as nkruntime.HttpResponse;
+    try {
+        let method: nkruntime.RequestMethod = 'get';
+        let headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        };
+        let body = JSON.stringify({});
+        res = nk.httpRequest('https://google.com', method, headers, body);
+    } catch (error) {
+        // Handle error
+    }
+
+    if (res.code >= 400) {
+        logger.error('Failed %q', res);
+    } else {
+        logger.info('Success %q %q', res.code, res.body);
+    }
+    ```
+
 ### json
 
 __json_decode (input)__
@@ -1431,7 +2058,9 @@ _Parameters_
 
 _Returns_
 
-A Lua table with the decoded JSON.
+| Lua type | TypeScript type | Description |
+| -------- | --------------- | ----------- |
+| `table` | POJO | Decode the JSON input as a Lua table. |
 
 _Example_
 
@@ -1447,6 +2076,13 @@ _Example_
     import "encoding/json"
     ```
 
+
+=== "TypeScript"
+    ```typescript
+    // Use the JS global JSON object.
+    let obj = JSON.parse('{"hello": "world"}');
+    logger.info('Hello %s', obj.hello); // Prints 'Hello world');
+    ```
 ---
 
 __json_encode (input)__
@@ -1476,6 +2112,15 @@ _Example_
     ```go
     // Use the standard Go JSON package.
     import "encoding/json"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let obj = {hello: 'world'}; // A POJO (Plain Old JavaScript Object);
+    // Use the JS global JSON object.
+    let encodedJson: string;
+    encodedJson = JSON.stringify(obj);
+    logger.info('Encoded json: %s', encodedJson);
     ```
 
 ### leaderboards
