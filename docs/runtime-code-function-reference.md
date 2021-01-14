@@ -3069,8 +3069,8 @@ _Example_
     local end_time = 0 -- All tournaments from the start time.
     local limit = 100  -- Number to list per page.
     local tournaments = nk.tournament_list(category_start, category_end, start_time, end_time, limit)
-    for i, row in ipairs(tournaments) do
-      nk.logger_info(string.format("ID: %q - can enter? %q", tournament.id, row.can_enter))
+    for i, tournament in ipairs(tournaments) do
+      nk.logger_info(string.format("ID: %q - can enter? %q", tournament.id, tournament.can_enter))
     end
     ```
 
