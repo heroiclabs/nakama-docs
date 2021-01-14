@@ -148,7 +148,7 @@ _Parameters_
 | ----- | ------- | -------- | --------------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | Opt. `string` | User ID for which the information is to be updated. Must be valid UUID. |
-| metadata | `map[string]interface{}` | table | Opt. POJO | Metadata to update. Use `nil` (Lua) or `null` (TS) if it is not being updated. |
+| metadata | `map[string]interface{}` | table | Opt. object | Metadata to update. Use `nil` (Lua) or `null` (TS) if it is not being updated. |
 | username | `string` | string | Opt. `string` | Username to be set. Must be unique. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
 | display_name | `string` | string | Opt. `string` | Display name to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
 | timezone | `string` | string | Opt. `string` | Timezone to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
@@ -246,7 +246,7 @@ _Example_
 
 ### aes128
 
-__Aes128 Decrypt__
+__AES128 Decrypt__
 
 AES-128 CFB decrypt input with the key. Key must be 16 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
 
@@ -288,7 +288,7 @@ _Example_
     ```
 ---
 
-__Aes128 Encrypt__
+__AES128 Encrypt__
 
 AES-128 CFB encrypt input with the key. Key must be 16 bytes long. If a non-CFB mode of operation is required use the equivalent Go runtime functions instead.
 
@@ -416,6 +416,51 @@ _Example_
 
 ### authenticate
 
+__Authenticate Apple__
+
+Authenticate user and create a session token using a Apple sign in token.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | --------------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| token | `string` | string | `string` | Apple sign in token. |
+| username | `string` | string | Opt. `string` |  Optional username. If left empty, one is generated. |
+| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+
+
+_Returns_
+
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: An object of type `nkruntime.AuthResult`.
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_id, username, created = nk.authenticate_apple("some-oauth-access-token", "username", true)
+    ```
+
+=== "Go"
+    ```go
+    userid, username, created, err := nk.AuthenticateApple(ctx, "some-oauth-access-token", "username", true)
+    if err != nil {
+      logger.WithField("err", err).Error("Authenticate custom error.")
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let result = {} as nkruntime.AuthResult;
+    try {
+        result = nk.authenticateApple('some-oauth-access-token', 'username', true);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 __Authenticate Custom__
 
 Authenticate user and create a session token using a custom authentication managed by an external service or source not already supported by Nakama. Best suited for use with existing external identity services.
@@ -431,7 +476,9 @@ _Parameters_
 
 _Returns_
 
-The user's ID, username, and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
+
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -1316,7 +1363,7 @@ _Parameters_
 | description | `string` | string | Opt. `string` | Group description, can be left empty as nil/null. |
 | avatar_url | `string` | string | Opt. `string` | URL to the group avatar, can be left empty as nil/null. |
 | open | `bool` | bool | Opt. `bool` | Whether the group is for anyone to join, or members will need to send invitations to join. Defaults to false. |
-| metadata | `map[string]interface{}` | table | Opt. POJO | Custom information to store for this group. Can be left empty as nil/null. |
+| metadata | `map[string]interface{}` | table | Opt. object | Custom information to store for this group. Can be left empty as nil/null. |
 | max_count | `int` | number | Opt. `number` | Maximum number of members to have in the group. Defaults to 100. |
 
 _Example_
@@ -1390,7 +1437,7 @@ _Parameters_
 
 | Param | Go type | Lua type | TypeScript type | Description |
 | ----- | ------- | -------- | ----------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | group_id | `string` | string | `string` | The group ID to delete. |
 
 _Example_
@@ -1436,7 +1483,7 @@ _Parameters_
 | description | `string` | string | Opt. `string` | Group description, can be left empty if not updated. |
 | avatar_url | `string` | string | Opt `string` | URL to the group avatar, can be left empty if not updated. |
 | open | `bool` | bool | Opt. `string` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
-| metadata | `map[string]interface{}` | table | Opt. POJO | Custom information to store for this group. Use `nil` if field is not being updated. |
+| metadata | `map[string]interface{}` | table | Opt. object | Custom information to store for this group. Use `nil` if field is not being updated. |
 | max_count | `int` | number | Opt. `number` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
 
 _Example_
