@@ -14,13 +14,13 @@ This module contains all the core gameplay APIs, all registration functions used
 === "Go"
     ```go
     import (
-      "github.com/heroiclabs/nakama-common/runtime"
+        "github.com/heroiclabs/nakama-common/runtime"
     )
     ```
 
 === "TypeScript"
-    ```typescript
-     npm i 'https://github.com/heroiclabs/nakama-common'
+    ```shell
+    npm i 'https://github.com/heroiclabs/nakama-common'
     ```
 
 !!! Note
@@ -28,7 +28,7 @@ This module contains all the core gameplay APIs, all registration functions used
 
     All Go functions will have `nk runtime.NakamaModule` avaiable as a parameter that may be used to access server runtime functions. A `context` will also be supplied in function input arguments.
 
-    All JavaScript functions, similarly to Go, will have the `nk` (of TypeScript type `nkruntime.Nakama`) object available as a parameter to access the server runtime functions.
+    All JavaScript functions, similar to Go, have the `nk` (of TypeScript type `nkruntime.Nakama`) object available as a parameter to access the server runtime functions.
 
 ### account
 
@@ -62,10 +62,10 @@ _Example_
     ```go
     account, err := nk.AccountGetId(ctx, "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592")
     if err != nil {
-      // Handle error.
-    } else {
-      logger.Info("Wallet is: %v", account.Wallet)
+        logger.WithField("err", err).Error("Get accounts error.")
+        return
     }
+    logger.Info("Wallet is: %v", account.Wallet)
     ```
 
 === "TypeScript"
@@ -112,11 +112,12 @@ _Example_
     userIDs := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
     accounts, err := nk.AccountsGetId(ctx, userIDs)
     if err != nil {
-      logger.WithField("err", err).Error("Get accounts error.")
-    } else {
-      for _, account := range accounts {
+        logger.WithField("err", err).Error("Get accounts error.")
+        return
+    }
+
+    for _, account := range accounts {
         logger.Info("Wallet is: %v", account.Wallet)
-      }
     }
     ```
 
@@ -181,7 +182,7 @@ _Example_
     langTag := ""
     avatarUrl := ""
     if err := nk.AccountUpdateId(ctx, userID, username, metadata, displayName, timezone, location, langTag, avatarUrl); err != nil {
-      logger.WithField("err", err).Error("Account update error.")
+        logger.WithField("err", err).Error("Account update error.")
     }
     ```
 
@@ -228,7 +229,7 @@ _Example_
 === "Go"
     ```go
     if err := nk.AccountDeleteId(ctx, "8f4d52c7-bf28-4fcf-8af2-1d4fcf685592", false); err != nil {
-      logger.WithField("err", err).Error("Delete account error.")
+        logger.WithField("err", err).Error("Delete account error.")
     }
     ```
 
@@ -237,7 +238,7 @@ _Example_
     let userID = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
 
     try {
-        nk.accountDeleteId(userID);
+        nk.accountDeleteId(userID, false);
     } catch (error) {
         // handle error
     }
@@ -443,7 +444,7 @@ _Example_
     ```go
     userid, username, created, err := nk.AuthenticateCustom(ctx, "48656C6C6F20776F726C64", "username", true)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate custom error.")
+        logger.WithField("err", err).Error("Authenticate custom error.")
     }
     ```
 
@@ -476,7 +477,7 @@ _Returns_
 
 Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-TypeScript: A POJO of type `nkruntime.AuthResult`.
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -489,7 +490,7 @@ _Example_
     ```go
     userid, username, created, err := nk.AuthenticateDevice(ctx, "48656C6C6F20776F726C64", "username", true)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate custom error.")
+        logger.WithField("err", err).Error("Authenticate custom error.")
     }
     ```
 
@@ -522,7 +523,7 @@ _Returns_
 
 Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-TypeScript: A POJO of type `nkruntime.AuthResult`.
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -535,7 +536,7 @@ _Example_
     ```go
     userid, username, created, err := nk.AuthenticateEmail(ctx, "email@example.com", "48656C6C6F20776F726C64", "username", true)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate email error.")
+        logger.WithField("err", err).Error("Authenticate email error.")
     }
     ```
 
@@ -569,7 +570,7 @@ _Returns_
 
 Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-TypeScript: A POJO of type `nkruntime.AuthResult`.
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -582,7 +583,7 @@ _Example_
     ```go
     userid, username, created, err := nk.AuthenticateFacebook(ctx, "some-oauth-access-token", true, "username", true)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate facebook error.")
+        logger.WithField("err", err).Error("Authenticate facebook error.")
     }
     ```
 
@@ -615,7 +616,7 @@ _Returns_
 
 Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-TypeScript: A POJO of type `nkruntime.AuthResult`.
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -628,7 +629,7 @@ _Example_
     ```go
     userid, username, created, err := nk.AuthenticateFacebookInstantGame(ctx, "player-info", true, "username", true)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate facebook error.")
+        logger.WithField("err", err).Error("Authenticate facebook error.")
     }
     ```
 
@@ -664,7 +665,7 @@ _Returns_
 
 Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-TypeScript: A POJO of type `nkruntime.AuthResult`.
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 === "Lua"
     ```lua
@@ -675,7 +676,7 @@ TypeScript: A POJO of type `nkruntime.AuthResult`.
     ```go
     userid, username, created, err := nk.AuthenticateGameCenter(ctx, playerID, bundleID, timestamp, salt, signature, publicKeyUrl, username, create)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate game center error.")
+        logger.WithField("err", err).Error("Authenticate game center error.")
     }
     ```
 
@@ -707,7 +708,7 @@ _Returns_
 
 Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-TypeScript: A POJO of type `nkruntime.AuthResult`.
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -720,7 +721,7 @@ _Example_
     ```go
     userid, username, created, err := nk.AuthenticateGoogle(ctx, "some-id-token", "username", true)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate google error.")
+        logger.WithField("err", err).Error("Authenticate google error.")
     }
     ```
 
@@ -753,7 +754,7 @@ _Returns_
 
 Lua/Go: The user's ID (string), username (string), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`).
 
-TypeScript: A POJO of type `nkruntime.AuthResult`.
+TypeScript: An object of type `nkruntime.AuthResult`.
 
 _Example_
 
@@ -766,7 +767,7 @@ _Example_
     ```go
     userid, username, created, err := nk.AuthenticateSteam(ctx, "steam-token", "username", true)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate steam error.")
+        logger.WithField("err", err).Error("Authenticate steam error.")
     }
     ```
 
@@ -801,7 +802,7 @@ _Returns_
 
 Lua/Go: The session token (string) created for the given user details, an the expiry time (number) of the token expressed as UTC seconds.
 
-TypeScript: A POJO of type `nkruntime.TokenGenerateResult`.
+TypeScript: An object of type `nkruntime.TokenGenerateResult`.
 
 _Example_
 
@@ -815,10 +816,10 @@ _Example_
     ```go
     token, validity, err := nk.AuthenticateTokenGenerate("user_id", "username", 0)
     if err != nil {
-      logger.WithField("err", err).Error("Authenticate token generate error.")
-    } else {
-      logger.Info("Session token: %q, valid for %v seconds", token, validity)
+        logger.WithField("err", err).Error("Authenticate token generate error.")
+        return
     }
+    logger.Info("Session token: %q, valid for %v seconds", token, validity)
     ```
 
 === "TypeScript"
@@ -896,7 +897,7 @@ _Example_
 === "Lua"
     ```lua
     local encoded = nk.base16_encode("Hello world")
-    nk.logger_info(encoded) -- outputs "48656C6C6F20776F726C64".
+    nk.logger_info(encoded) -- outputs "48656C6C6F20776F726C64"
     ```
 
 === "Go"
@@ -982,7 +983,7 @@ _Example_
 === "Lua"
     ```lua
     local encoded = nk.base64_encode("Hello world")
-    nk.logger_info(encoded) -- outputs "SGVsbG8gd29ybGQ=".
+    nk.logger_info(encoded) -- outputs "SGVsbG8gd29ybGQ="
     ```
 
 === "Go"
@@ -1068,7 +1069,7 @@ _Example_
 === "Lua"
     ```lua
     local encoded = nk.base64url_encode("Hello world")
-    nk.logger_info(encoded) -- outputs "SGVsbG8gd29ybGQ=".
+    nk.logger_info(encoded) -- outputs "SGVsbG8gd29ybGQ="
     ```
 
 === "Go"
@@ -1267,11 +1268,12 @@ _Example_
     friends, err := nk.FriendsList(ctx, userID, limit, state, cursor)
     if err != nil {
       logger.WithField("err", err).Error("nk.FriendsList error.")
-    } else {
-      for _, friend := range friends {
+      return
+    }
+
+    for _, friend := range friends {
         // States are: friend(0), invite_sent(1), invite_received(2), blocked(3)
         logger.Info("Friend username %s has state %d", friend.GetUser().Username, friend.GetState())
-      }
     }
     ```
 
@@ -1353,24 +1355,26 @@ _Example_
     avatarURL := "url://somelink"
     maxCount := 100
 
-    if group, err := nk.GroupCreate(ctx, userID, name, creatorID, langTag, description, avatarURL, open, metadata, maxCount); err != nil {
-      logger.WithField("err", err).Error("Group create error.")
+    group, err := nk.GroupCreate(ctx, userID, name, creatorID, langTag, description, avatarURL, open, metadata, maxCount)
+    if err != nil {
+        logger.WithField("err", err).Error("Group create error.")
     }
     ```
 
 === "TypeScript"
     ```typescript
+    let userId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let creatorId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let name = 'Some unique group name';
+    let description = 'My awesome group.';
+    let lang = 'en';
+    let open = true;
+    let avatarURL = 'url://somelink';
+    let metadata = { custom_field: 'some_value' };
+    let maxCount = 100;
+
     let group = {} as nkruntime.Group;
     try {
-        let userId = 'dcb891ea-a311-4681-9213-6741351c9994';
-        let creatorId = 'dcb891ea-a311-4681-9213-6741351c9994';
-        let name = 'Some unique group name';
-        let description = 'My awesome group.';
-        let lang = 'en';
-        let open = true;
-        let avatarURL = 'url://somelink';
-        let metadata = { custom_field: 'some_value' };
-        let maxCount = 100;
         group = nk.groupCreate(userId, name, creatorId, lang, description, avatarURL, open, metadata, maxCount);
     } catch (error) {
         // Handle error
@@ -1401,15 +1405,14 @@ _Example_
     ```go
     groupID := "f00fa79a-750f-11e7-8626-0fb79f45ff97"
     if group, err := nk.GroupDelete(ctx, groupID); err != nil {
-      logger.WithField("err", err).Error("Group delete error.")
+        logger.WithField("err", err).Error("Group delete error.")
     }
     ```
 
 === "TypeScript"
     ```typescript
     try {
-        let groupId = 'f00fa79a-750f-11e7-8626-0fb79f45ff97';
-        nk.groupdDelete(groupId);
+        nk.groupdDelete('f00fa79a-750f-11e7-8626-0fb79f45ff97');
     } catch (error) {
         // Handle error
     }
@@ -1459,9 +1462,10 @@ _Example_
     description := "An updated description."
 
     if err := nk.GroupUpdate(ctx, groupID, "", "", "", description, "", true, metadata, 0); err != nil {
-      logger.WithField("err", err).Error("Group update error.")
+        logger.WithField("err", err).Error("Group update error.")
     }
     ```
+
 === "TypeScript"
     ```typescript
     let metadata = { someField: 'some value' };
@@ -1512,25 +1516,29 @@ _Example_
     ```go
     groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
-    if groupUserList, err := nk.GroupUsersList(ctx, groupID); err != nil {
+    groupUserList, err := nk.GroupUsersList(ctx, groupID)
+    if err != nil {
       logger.WithField("err", err).Error("Group users list error.")
-    } else {
-      for _, member := range groupUserList {
+      return
+    }
+
+    for _, member := range groupUserList {
         // States are => 0: Superadmin, 1: Admin, 2: Member, 3: Requested to join
         logger.Info("Member username %s has state %d", member.GetUser().Username, member.GetState())
-      }
     }
     ```
 
 === "TypeScript"
     ```typescript
+    let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
+
     let groupUsers = {} as nkruntime.GroupUserList;
     try {
-        let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
         groupUsers = nk.groupUsersList(groupId);
     } catch (error) {
         // Handle error
     }
+
     groupUsers.groupUsers?.forEach(gu => {
         // States are => 0: Superadmin, 1: Admin, 2: Member, 3: Requested to join
         logger.info('Member username: %s has state %d', gu.user.username, gu.state);
@@ -1570,7 +1578,7 @@ _Example_
     username := "myusername"
 
     if err := nk.GroupUserJoin(ctx, groupID, userID, username); err != nil {
-      logger.WithField("err", err).Error("Group user join error.")
+        logger.WithField("err", err).Error("Group user join error.")
     }
     ```
 === "TypeScript"
@@ -1578,6 +1586,7 @@ _Example_
     let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
     let userId = '9a51cf3a-2377-11eb-b713-e7d403afe081';
     let username = 'myusername';
+
     try {
         nk.groupUserJoin(groupId, userId, username);
     } catch (error) {
@@ -1618,7 +1627,7 @@ _Example_
     username := "myusername"
 
     if err := nk.GroupUserLeave(ctx, groupID, userID, username); err != nil {
-      logger.WithField("err", err).Error("Group user leave error.")
+        logger.WithField("err", err).Error("Group user leave error.")
     }
     ```
 
@@ -1627,6 +1636,7 @@ _Example_
     let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
     let userId = '9a51cf3a-2377-11eb-b713-e7d403afe081';
     let username = 'myusername';
+
     try {
         nk.groupUserLeave(groupId, userId, username);
     } catch (error) {
@@ -1664,7 +1674,7 @@ _Example_
     userIDs := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
 
     if err := nk.GroupUsersAdd(ctx, groupID, userIDs); err != nil {
-      logger.WithField("err", err).Error("Group users add error.")
+        logger.WithField("err", err).Error("Group users add error.")
     }
     ```
 
@@ -1710,7 +1720,7 @@ _Example_
     userIds := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
 
     if err := nk.GroupUsersKick(ctx, groupID, userIds); err != nil {
-      logger.WithField("err", err).Error("Group users kick error.")
+        logger.WithField("err", err).Error("Group users kick error.")
     }
     ```
 
@@ -1718,6 +1728,7 @@ _Example_
     ```typescript
     let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
     let userIds = ['9a51cf3a-2377-11eb-b713-e7d403afe081', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc'];
+
     try {
         nk.groupUsersKick(groupId, userIds);
     } catch (error) {
@@ -1755,7 +1766,7 @@ _Example_
     userIDs := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
 
     if err := nk.GroupUsersPromote(ctx, groupID, userIDs); err != nil {
-      logger.WithField("err", err).Error("Group users promote error.")
+        logger.WithField("err", err).Error("Group users promote error.")
     }
     ```
 
@@ -1763,12 +1774,14 @@ _Example_
     ```typescript
     let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
     let userIds = ['9a51cf3a-2377-11eb-b713-e7d403afe081', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc'];
+
     try {
         nk.groupUsersPromote(groupId, userIds);
     } catch (error) {
         // Handle error
     }
     ```
+
 ---
 
 __Group Users Demote__
@@ -1799,7 +1812,7 @@ _Example_
     userIds := []string{"9a51cf3a-2377-11eb-b713-e7d403afe081", "a042c19c-2377-11eb-b7c1-cfafae11cfbc"}
 
     if err := nk.GroupUsersDemote(ctx, groupID, userIDs); err != nil {
-      logger.WithField("err", err).Error("Group users demote error.")
+        logger.WithField("err", err).Error("Group users demote error.")
     }
     ```
 
@@ -1807,6 +1820,7 @@ _Example_
     ```typescript
     let groupId = 'dcb891ea-a311-4681-9213-6741351c9994';
     let userIds = ['9a51cf3a-2377-11eb-b713-e7d403afe081', 'a042c19c-2377-11eb-b7c1-cfafae11cfbc'];
+
     try {
         nk.groupUsersDemote(groupId, userIds);
     } catch (error) {
@@ -1852,18 +1866,19 @@ _Example_
     ```go
     groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
-    if groups, err := nk.GroupsGetId(ctx, []string{groupID}); err != nil {
-      logger.WithField("err", err).Error("Groups get by ID error.")
-    } else {
-      for _, group := range groups {
+    groups, err := nk.GroupsGetId(ctx, []string{groupID})
+    if err != nil {
+        logger.WithField("err", err).Error("Groups get by ID error.")
+        return
+    }
+
+    for _, group := range groups {
         logger.Info("Group name %s with id %s.", group.Name, group.Id)
-      }
     }
     ```
 
 === "TypeScript"
     ```typescript
-
     let groups: nkruntime.Group[];
     try {
         let groupIds = ['dcb891ea-a311-4681-9213-6741351c9994'];
@@ -1909,21 +1924,23 @@ _Example_
     ```go
     userID := "dcb891ea-a311-4681-9213-6741351c9994"
 
-    if groups, err := nk.UserGroupsList(ctx, userID); err != nil {
-      logger.WithField("err", err).Error("User groups list error.")
-    } else {
-      for _, group := range groups {
+    groups, err := nk.UserGroupsList(ctx, userID)
+    if err != nil {
+        logger.WithField("err", err).Error("User groups list error.")
+        return
+    }
+
+    for _, group := range groups {
         logger.Printf("User has state %d in group %s.", group.GetState(), group.GetGroup().Name)
-      }
     }
     ```
 
 === "TypeScript"
     ```typescript
+    let userId = '64ef6cb0-7512-11e7-9e52-d7789d80b70b';
 
     let groups = {} as nkruntime.UserGroupList;
     try {
-        let userId = '64ef6cb0-7512-11e7-9e52-d7789d80b70b';
         groups = nk.userGroupsList(userId);
     } catch (error) {
         // Handle error
@@ -1963,7 +1980,6 @@ _Example_
 
 === "TypeScript"
     ```typescript
-
     let hash: string;
     try {
         hash = nk.hmacSha256Hash('some input text to hash', 'some_key');
@@ -2024,14 +2040,15 @@ _Example_
 
 === "TypeScript"
     ```typescript
+    let method: nkruntime.RequestMethod = 'get';
+    let headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    };
+    let body = JSON.stringify({});
+
     let res = {} as nkruntime.HttpResponse;
     try {
-        let method: nkruntime.RequestMethod = 'get';
-        let headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        };
-        let body = JSON.stringify({});
         res = nk.httpRequest('https://google.com', method, headers, body);
     } catch (error) {
         // Handle error
@@ -2060,7 +2077,7 @@ _Returns_
 
 | Lua type | TypeScript type | Description |
 | -------- | --------------- | ----------- |
-| `table` | POJO | Decode the JSON input as a Lua table. |
+| `table` | object | Decode the JSON input as a Lua table. |
 
 _Example_
 
@@ -2081,8 +2098,9 @@ _Example_
     ```typescript
     // Use the JS global JSON object.
     let obj = JSON.parse('{"hello": "world"}');
-    logger.info('Hello %s', obj.hello); // Prints 'Hello world');
+    logger.info('Hello %s', obj.hello); // Prints 'Hello world'
     ```
+
 ---
 
 __json_encode (input)__
@@ -2116,10 +2134,9 @@ _Example_
 
 === "TypeScript"
     ```typescript
-    let obj = {hello: 'world'}; // A POJO (Plain Old JavaScript Object);
+    let obj = {hello: 'world'};
     // Use the JS global JSON object.
-    let encodedJson: string;
-    encodedJson = JSON.stringify(obj);
+    let encodedJson: string = JSON.stringify(obj);
     logger.info('Encoded json: %s', encodedJson);
     ```
 
