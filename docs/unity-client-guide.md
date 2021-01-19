@@ -31,7 +31,7 @@ public class YourGameObject : MonoBehaviour
 }
 ```
 
-Unity uses an entity component system (ECS) which makes it possible to share the client across game objects. Have a read of <a href="https://docs.unity3d.com/Manual/ControllingGameObjectsComponents.html" target="\_blank">Controlling GameObjects Using Components</a> for examples on how to share a C# object across your game objects.
+Unity uses an entity component system (ECS) which makes it possible to share the client across game objects. Have a read of <a href="https://docs.unity3d.com/Manual/CreatingAndUsingScripts.html" target="\_blank">Creating and Using Scripts</a> for examples on how to share a C# object across your game objects.
 
 ## Authenticate
 
@@ -242,6 +242,6 @@ public class SessionWithPlayerPrefs : MonoBehaviour
 }
 ```
 
-A collection of other code examples is available <a href="https://github.com/heroiclabs/nakama-unity/tree/master/Assets/Nakama/Snippets" target="\_blank">here</a>.
+A collection of other code examples is available <a href="https://github.com/heroiclabs/nakama-unity/tree/master/Packages/Nakama/Editor/Snippets" target="\_blank">here</a>.
 <br>
 <br>
