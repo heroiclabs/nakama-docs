@@ -134,7 +134,7 @@ The minimum structure of a match handler looks like:
     let matchInit: nkruntime.MatchInitFunction = function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, params: {[key: string]: string}) {
     let state = {};
     let tickRate = 10;
-    let label = ";
+    let label = "";
         return {
             state,
             tickRate,
