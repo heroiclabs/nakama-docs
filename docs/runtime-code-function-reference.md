@@ -147,14 +147,14 @@ _Parameters_
 | Param | Go type | Lua type | TypeScript type | Description |
 | ----- | ------- | -------- | --------------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | Opt. `string` | User ID for which the information is to be updated. Must be valid UUID. |
-| metadata | `map[string]interface{}` | table | Opt. object | Metadata to update. Use `nil` (Lua) or `null` (TS) if it is not being updated. |
-| username | `string` | string | Opt. `string` | Username to be set. Must be unique. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
-| display_name | `string` | string | Opt. `string` | Display name to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
-| timezone | `string` | string | Opt. `string` | Timezone to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
-| location | `string` | string | Opt. `string` | Location to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
-| language | `string` | string | Opt. `string` | Lang tag to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
-| avatar_url | `string` | string | Opt. `string` | User's avatar URL. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| user_id | `string` | Opt. string | Opt. `string` | User ID for which the information is to be updated. Must be valid UUID. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. object | Metadata to update. Use `nil` (Lua) or `null` (TS) if it is not being updated. |
+| username | `string` | Opt. string | Opt. `string` | Username to be set. Must be unique. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| display_name | `string` | Opt. string | Opt. `string` | Display name to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| timezone | `string` | Opt. string | Opt. `string` | Timezone to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| location | `string` | Opt. string | Opt. `string` | Location to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| language | `string` | Opt. string | Opt. `string` | Lang tag to be updated. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
+| avatar_url | `string` | Opt. string | Opt. `string` | User's avatar URL. Use `""` (Go), `nil` (Lua) or `null` (TS) if it is not being updated. |
 
 _Example_
 
@@ -426,8 +426,8 @@ _Parameters_
 | ----- | ------- | -------- | --------------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | token | `string` | string | `string` | Apple sign in token. |
-| username | `string` | string | Opt. `string` |  Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` |  If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 
 _Returns_
@@ -471,8 +471,8 @@ _Parameters_
 | ----- | ------- | -------- | --------------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | `string` | Custom ID to use to authenticate the user. Must be between 6-128 characters. |
-| username | `string` | string | Opt. `string` |  Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` | If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -517,8 +517,8 @@ _Parameters_
 | ----- | ------- | -------- | ----------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | id | `string` | string | `string` | Device ID to use to authenticate the user. Must be between 1 - 128 characters. |
-| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` | If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -563,8 +563,8 @@ _Parameters_
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | email | `string` | string | `string` | Email address to use to authenticate the user. Must be between 10-255 characters. |
 | password | `string` | string | `string` | Password to set - must be longer than 8 characters. |
-| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` | If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -610,8 +610,8 @@ _Parameters_
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | token | `string` | string | `string` | Facebook OAuth access token. |
 | import | `bool` | bool | `bool` | Whether to import facebook friends after authenticated automatically. This is true by default. |
-| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` | If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -656,8 +656,8 @@ _Parameters_
 | ----- | ------- | -------- | --------------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | player info | `string` | string | `string` | Facebook Player info. |
-| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` | If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -704,9 +704,9 @@ _Parameters_
 | timestamp | `int64` | number | `number` | Timestamp at which Game Center authenticated the client and issued a signature. |
 | salt | `string` | string | `string` | A random string returned by Game Center authentication on client. |
 | signature | `string` | string | `string` | A signature returned by Game Center authentication on client. |
-| public_key_url | `string` | string | `string` | A url to the publick key returned by Game Center authentication on client. |
-| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `string` | Create user if one didn't exist previously. By default this is set to true. |
+| public_key_url | `string` | string | `string` | A url to the public key returned by Game Center authentication on client. |
+| username | `string` | Opt. string | Opt. `string` | If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `string` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -748,8 +748,8 @@ _Parameters_
 | ----- | ------- | -------- | ----------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | token | `string` | string | `string` | Google OAuth access token. |
-| username | `string` | string | Opt. `string` | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | Opt. `string` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` | Optional username. If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `string` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -794,8 +794,8 @@ _Parameters_
 | ----- | ------- | -------- | ----------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | token | `string` | string | `string` | Steam token. |
-| username | `string` | string | `string` | Optional username. If left empty, one is generated. |
-| create | `bool` | bool | `bool` | Create user if one didn't exist previously. By default this is set to true. |
+| username | `string` | Opt. string | Opt. `string` | If left empty, one is generated. |
+| create | `bool` | Opt. bool | Opt. `bool` | Create user if one didn't exist previously. By default this is set to true. |
 
 _Returns_
 
@@ -1277,9 +1277,9 @@ _Parameters_
 | ----- | ------- | -------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | `string` | The ID of the user who's friends, invites, invited, and blocked you want to list. |
-| limit | `int` | number | Opt. `number` |  The number of friends to retrieve in this page of results. No more than 1000 limit allowed per result. |
-| state | `int` | number | Opt. `number` |  The state of the friendship with the user. If unspecified this returns friends in all states for the user. |
-| cursor | `string` | string | Opt. `string` | The cursor returned from a previous listing request. Used to obtain the next page of results. |
+| limit | `int` | Opt. number | Opt. `number` |  The number of friends to retrieve in this page of results. No more than 1000 limit allowed per result. |
+| state | `int` | Opt. number | Opt. `number` |  The state of the friendship with the user. If unspecified this returns friends in all states for the user. |
+| cursor | `string` | Opt. string | Opt. `string` | The cursor returned from a previous listing request. Used to obtain the next page of results. |
 
 _Returns_
 
@@ -1358,13 +1358,13 @@ _Parameters_
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | user_id | `string` | string | `string` | The user ID to be associated as the group superadmin. Mandatory field. |
 | name | `string` | string | `string` | Group name, must be set and unique. |
-| creator_id | `string` | string | Opt. `string` | The user ID to be associated as creator. If not set or nil/null system user will be set. |
-| lang | `string` | string | Opt. `string` | Group language. If not set or nil/null will default to 'en'. |
-| description | `string` | string | Opt. `string` | Group description, can be left empty as nil/null. |
-| avatar_url | `string` | string | Opt. `string` | URL to the group avatar, can be left empty as nil/null. |
-| open | `bool` | bool | Opt. `bool` | Whether the group is for anyone to join, or members will need to send invitations to join. Defaults to false. |
-| metadata | `map[string]interface{}` | table | Opt. object | Custom information to store for this group. Can be left empty as nil/null. |
-| max_count | `int` | number | Opt. `number` | Maximum number of members to have in the group. Defaults to 100. |
+| creator_id | `string` | Opt. string | Opt. `string` | The user ID to be associated as creator. If not set or nil/null system user will be set. |
+| lang | `string` | Opt. string | Opt. `string` | Group language. If not set or nil/null will default to 'en'. |
+| description | `string` | Opt. string | Opt. `string` | Group description, can be left empty as nil/null. |
+| avatar_url | `string` | Opt. string | Opt. `string` | URL to the group avatar, can be left empty as nil/null. |
+| open | `bool` | Opt. bool | Opt. `bool` | Whether the group is for anyone to join, or members will need to send invitations to join. Defaults to false. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. object | Custom information to store for this group. Can be left empty as nil/null. |
+| max_count | `int` | Opt. number | Opt. `number` | Maximum number of members to have in the group. Defaults to 100. |
 
 _Example_
 
@@ -1478,13 +1478,13 @@ _Parameters_
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
 | group_id | `string` | string | `string` | The group ID to update. |
 | name | `string` | string | `string` | Group name, can be empty if not changed. |
-| creator_id | `string` | string | Opt. `string` | The user ID to be associcated as creator. Can be empty if not changed. |
-| lang | `string` | string | Opt. `string` | Group language. Empty if not updated. |
-| description | `string` | string | Opt. `string` | Group description, can be left empty if not updated. |
-| avatar_url | `string` | string | Opt `string` | URL to the group avatar, can be left empty if not updated. |
-| open | `bool` | bool | Opt. `string` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
-| metadata | `map[string]interface{}` | table | Opt. object | Custom information to store for this group. Use `nil` if field is not being updated. |
-| max_count | `int` | number | Opt. `number` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
+| creator_id | `string` | Opt. string | Opt. `string` | The user ID to be associcated as creator. Can be empty if not changed. |
+| lang | `string` | Opt. string | Opt. `string` | Group language. Empty if not updated. |
+| description | `string` | Opt. string | Opt. `string` | Group description, can be left empty if not updated. |
+| avatar_url | `string` | Opt. string | Opt `string` | URL to the group avatar, can be left empty if not updated. |
+| open | `bool` | Opt. bool | Opt. `string` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. object | Custom information to store for this group. Use `nil` if field is not being updated. |
+| max_count | `int` | Opt. number | Opt. `number` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
 
 _Example_
 
@@ -2047,9 +2047,9 @@ _Parameters_
 | ----- | ---- | ----------- | ----------- |
 | url | string | `string` | The URL of the web resource to request. |
 | method | string | `string` |  The HTTP method verb used with the request. |
-| headers | table | Opt. `string` | A table of headers used with the request. |
-| content | string | Opt. `string` | The bytes to send with the request. |
-| timeout | number |  Opt. `number` | Timeout of the request in milliseconds. Optional, by default is 5000ms. |
+| headers | Opt. table | Opt. `string` | A table of headers used with the request. |
+| content | Opt. string | Opt. `string` | The bytes to send with the request. |
+| timeout | Opt. number | Opt. `number` | Timeout of the request in milliseconds. Optional, by default is 5000ms. |
 
 _Returns_
 
@@ -2195,15 +2195,15 @@ Setup a new dynamic leaderboard with the specified ID and various configuration 
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the new leaderboard. This is used by clients to submit scores. |
-| authoritative | `bool` | bool | Mark the leaderboard as authoritative which ensures updates can only be made via the Lua runtime. No client can submit a score directly. Optional in Lua. Default false. |
-| sort | `string` | string | The sort order for records in the leaderboard; possible values are "asc" or "desc". Optional in Lua. Default "desc". |
-| operator | `string` | string | The operator that determines how scores behave when submitted; possible values are "best", "set", or "incr". Optional in Lua. Default "best". |
-| reset | `string` | string | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. Optional in Lua. |
-| metadata | `map[string]interface{}` | table | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. Optional in Lua. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier for the new leaderboard. This is used by clients to submit scores. |
+| authoritative | `bool` | bool | bool | Mark the leaderboard as authoritative which ensures updates can only be made via the Lua runtime. No client can submit a score directly. Default false. |
+| sort | `string` | Opt. string | Opt. `string` | The sort order for records in the leaderboard; possible values are "asc" or "desc". Default "desc". |
+| operator | `string` | Opt. string | Opt. `string` | The operator that determines how scores behave when submitted; possible values are "best", "set", or "incr". Default "best". |
+| reset | `string` | Opt. string | Opt. `string` | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. Object | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
 
 _Example_
 
@@ -2236,6 +2236,23 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let authoritative = false;
+    let sort = nkruntime.SortOrder.DESCENDING;
+    let operator = nkruntime.Operator.BEST;
+    let reset = '0 0 * * 1';
+    let metadata = {
+      weatherConditions: 'rain',
+    };
+    try {
+        nk.leaderboardCreate(id, authoritative, sort, operator, reset, metadata);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Leaderboard Delete__
@@ -2244,10 +2261,10 @@ Delete a leaderboard and all scores that belong to it.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the leaderboard to delete. Mandatory field. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier for the leaderboard to delete. Mandatory field. |
 
 _Example_
 
@@ -2265,6 +2282,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    try {
+        nk.leaderboardDelete(id);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Leaderboard Record write__
@@ -2273,15 +2300,15 @@ Use the preconfigured operator for the given leaderboard to submit a score for a
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the leaderboard to submit to. Mandatory field. |
-| owner | `string` | string | The owner of this score submission. Mandatory field. |
-| username | `string` | string | The owner username of this score submission, if it's a user. Optional in Lua. |
-| score | `int64` | number | The score to submit. Optional in Lua. Default 0. |
-| subscore | `int64` | number | A secondary subscore parameter for the submission. Optional in Lua. Default 0. |
-| metadata | `map[string]interface{}` | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. Optional in Lua. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier for the leaderboard to submit to. Mandatory field. |
+| owner | `string` | string | `string` | The owner of this score submission. Mandatory field. |
+| username | `string` | Opt. string | Opt. `string` | The owner username of this score submission, if it's a user. |
+| score | `int64` | Opt. number | Opt. `number` | The score to submit. Default 0. |
+| subscore | `int64` | Opt. number | Opt. `number` | A secondary subscore parameter for the submission. Default 0. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. Object | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. |
 
 _Example_
 
@@ -2314,6 +2341,24 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let ownerID = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let username = '02ebb2c8';
+    let score = 10;
+    let subscore = 0;
+    let metadata = {
+      weatherConditions: 'rain',
+    };
+
+    try {
+        nk.leaderboardRecordWrite(id, ownerID, username, score, subscore, metadata);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Leaderboard Record delete__
@@ -2322,11 +2367,11 @@ Remove an owner's record from a leaderboard, if one exists.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the leaderboard to delete from. Mandatory field. |
-| owner | `string` | string | The owner of the score to delete. Mandatory field. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier for the leaderboard to delete from. Mandatory field. |
+| owner | `string` | string | `string` | The owner of the score to delete. Mandatory field. |
 
 _Example_
 
@@ -2347,6 +2392,17 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let owner = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    try {
+        nk.leaderboardRecordWrite(id, owner);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Leaderboard Record list__
@@ -2355,13 +2411,13 @@ List records on the specified leaderboard, optionally filtering to only a subset
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier of the leaderboard to list. |
-| owners | `[]string` | table | Table array of owners to filter to. An optional input. |
-| limit | `int` |  number | The maximum number of records to return from 10 to 100. An optional input. |
-| cursor | `string` | string | A cursor used to fetch the next page when applicable. An optional input. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier of the leaderboard to list. |
+| owners | `[]string` | Opt. table | Opt. `string[]` | Array of owners to filter to. |
+| limit | `int` | Opt. number | Opt. `number` | The maximum number of records to return from 10 to 100. |
+| cursor | `string` | Opt. string | Opt. `string` | A cursor used to fetch the next page when applicable. |
 
 _Returns_
 
@@ -2391,6 +2447,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let ownerIds: string[] = [];
+
+    try {
+        nk.leaderboardRecordsList(id, ownerIds);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ### logger
 
 __Logger Error__
@@ -2399,10 +2467,10 @@ Write an ERROR level message to the server logs.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| message | `string` | string | The message to write to server logs with ERROR level severity. |
-| vars | - | - | Variables to replace placeholders in message. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| message | `string` | string | `string` | The message to write to server logs with ERROR level severity. |
+| vars | - | - | - | Variables to replace placeholders in message. |
 
 _Example_
 
@@ -2417,6 +2485,10 @@ _Example_
     logger.Error("%s - %s", "hello", "world")
     ```
 
+=== "TypeScript"
+    ```typescript
+    logger.error('%s - %s', 'hello', 'world');
+    ```
 ---
 
 __Logger Info__
@@ -2425,10 +2497,10 @@ Write an INFO level message to the server logs.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| message | `string` | string | The message to write to server logs with INFO level severity. |
-| vars | - | - | Variables to replace placeholders in message. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| message | `string` | string | `string` | The message to write to server logs with INFO level severity. |
+| vars | - | - | - | Variables to replace placeholders in message. |
 
 _Example_
 
@@ -2443,6 +2515,11 @@ _Example_
     logger.Info("%s - %s", "hello", "world")
     ```
 
+=== "TypeScript"
+    ```typescript
+    logger.info('%s - %s', 'hello', 'world');
+    ```
+
 ---
 
 __Logger Warning__
@@ -2451,8 +2528,8 @@ Write an WARN level message to the server logs.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
 | message | `string` | string | The message to write to server logs with WARN level severity. |
 | vars | - | - | Variables to replace placeholders in message. |
 
@@ -2469,6 +2546,11 @@ _Example_
     logger.Warn("%s - %s", "hello", "world")
     ```
 
+=== "TypeScript"
+    ```typescript
+    logger.warn('%s - %s', 'hello', 'world');
+    ```
+
 ### match
 
 __Match Create__
@@ -2477,11 +2559,11 @@ Create a new authoritative realtime multiplayer match running on the given runti
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| module | `string` | string | The name of an available runtime module that will be responsible for the match. In Go, this was registered in InitModule. In Lua, this was provided as an independent match handler module. |
-| params | `map[string]interface{}` | any | Any value to pass to the match's init hook. Optional in Lua. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| module | `string` | string | `string` | The name of an available runtime module that will be responsible for the match. In Go, this was registered in InitModule. In Lua, this was provided as an independent match handler module. |
+| params | `map[string]interface{}` | Opt. any | Opt. `{[key: string]: any})` | Any value to pass to the match's init hook. |
 
 _Returns_
 
@@ -2513,7 +2595,68 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let module = 'some.folder.module';
+    let params = {
+        some: 'data',
+    }
+
+    try {
+        nk.matchCreate(module, params);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ---
+
+__Match Get__
+
+Get a running match information.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| id | `string` | string | `string` | Match ID. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `*api.Match` | `table` | `nkruntime.Match` | Running match info. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local match_id = "52f02f3e-5b48-11eb-b182-0f5058adfcc6"
+
+    local match_data = nk.match_get(match_id)
+    ```
+
+=== "Go"
+    ```go
+    matchId := "52f02f3e-5b48-11eb-b182-0f5058adfcc6"
+
+    match, err := nk.MatchGet(ctx, matchId)
+    if err != nil {
+      return "", err
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let matchId = '52f02f3e-5b48-11eb-b182-0f5058adfcc6';
+
+    let match: nkruntime.Match;
+    try {
+        match = nk.matchGet(matchId);
+    } catch(error) {
+        // Handle error
+    }
+    ```
 
 __Match List__
 
@@ -2521,15 +2664,21 @@ List currently running realtime multiplayer matches and optionally filter them b
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| limit | `int` | number | The maximum number of matches to list. Optional in Lua. Default 1. |
-| authoritative | `bool` | bool | Boolean `true` if listing should only return authoritative matches, `false` to only return relayed matches, `nil` to return both. Optional in Lua. Default `false` (Go) or `nil` (Lua). |
-| label | `string` | string | A label to filter authoritative matches by. Optional in Lua. Default "" (Go) or `nil` (Lua) meaning any label matches. |
-| min_size | `int` | number | Inclusive lower limit of current match participants. Optional in Lua. |
-| max_size | `int` | number | Inclusive upper limit of current match participants. Optional in Lua. |
-| query | `string` | - | Additional query parameters to shortlist matches |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| limit | `int` | Opt. number | Opt. `number` | The maximum number of matches to list. Default 1. |
+| authoritative | `bool` | Opt. bool | Opt. `bool` | Boolean `true` if listing should only return authoritative matches, `false` to only return relayed matches, `nil/null` (Lua/TS) to return both. Default `false` (Go) or `nil/null` (Lua/TS). |
+| label | `string` | Opt. string | Opt. `string` | A label to filter authoritative matches by. Default "" (Go) or `nil/null` (Lua/TS) meaning any label matches. |
+| min_size | `int` | Opt. number | Opt. `number` | Inclusive lower limit of current match participants. |
+| max_size | `int` | Opt. number | Opt. `number` | Inclusive upper limit of current match participants. |
+| query | `string` | Opt. number | Opt. `number` | Additional query parameters to shortlist matches |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.Match` | `table` | `nkruntime.Match[]` | A list of matches matching the parameters criteria. |
 
 _Example_
 
@@ -2556,12 +2705,12 @@ _Example_
     // List at most 10 matches, not authoritative, and that
     // have between 2 and 4 players currently participating.
     limit := 10
-    isauthoritative := false
+    isAuthoritative := false
     label := ""
-    min_size := 2
-    max_size := 4
+    minSize := 2
+    maxSize := 4
 
-    matches, err := nk.MatchList(ctx, limit, isauthoritative, label, min_size, max_size, "")
+    matches, err := nk.MatchList(ctx, limit, isAuthoritative, label, minSize, maxSize, "")
     if err != nil {
       logger.WithField("err", err).Error("Match list error.")
     } else {
@@ -2570,6 +2719,25 @@ _Example_
       }
     }
     ```
+
+=== "TypeScript"
+    ```typescript
+    // List at most 10 matches, not authoritative, and that
+    // have between 2 and 4 players currently participating.
+    let limit = 10;
+    let isAuthoritative = false;
+    let label = '';
+    let minSize = 2;
+    let maxSize = 4;
+
+    let matches: nkruntime.Match[] = [];
+    try {
+        matches = nk.matchList(limit, isAuthoritative, label, minSize, maxSize);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 
 ### md5
 
@@ -2582,6 +2750,10 @@ _Parameters_
 | Param | Type | Description |
 | ----- | ---- | ----------- |
 | input | string | The input string to hash. |
+
+_Returns_
+
+A string with the md5 hash of the input.
 
 _Example_
 
@@ -2598,6 +2770,13 @@ _Example_
     import "crypto/md5"
     ```
 
+=== "TypeScript"
+    ```typescript
+    let input = 'somestring';
+    let hashed = nk.md5Hash(input);
+    logger.info(hashed);
+    ```
+
 ### notifications
 
 __Notification Send__
@@ -2606,14 +2785,14 @@ Send one in-app notification to a user. Have a look at the section on [in-app no
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ---- | ----------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| subject | `string` | string | Notification subject. Must be set. |
-| content | `map[string]interface{}` | table | Notification content. Must be set but can be an empty table. |
-| code | `int` | number | Notification code to use. Must be equal or greater than 0. |
-| sender_id | `string` | string | The sender of this notification. If left empty, it will be assumed that it is a system notification. |
-| persistent | `bool` | bool | Whether to record this in the database for later listing. Defaults to false. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| subject | `string` | string | `string` | Notification subject. Must be set. |
+| content | `map[string]interface{}` | table | Object | Notification content. Must be set but can be an struct. |
+| code | `int` | number | `number` | Notification code to use. Must be equal or greater than 0. |
+| sender_id | `string` | Opt. string | Opt. `string` | The sender of this notification. If left empty, it will be assumed that it is a system notification. |
+| persistent | `bool` | Opt. bool | Opt. bool | Whether to record this in the database for later listing. Defaults to false. |
 
 _Example_
 
@@ -2645,6 +2824,20 @@ _Example_
     nk.NotificationSend(ctx, receiverID, subject, content, code, senderID, persistent)
     ```
 
+=== "TypeScript"
+    ```typescript
+    let receiverId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let subject = "You've unlocked level 100!";
+    let content = {
+      rewardCoins: 1000,
+    }
+    let code = 101;
+    let senderId = 'dcb891ea-a311-4681-9213-6741351c9994' // who the message if from
+    let persistent = true;
+
+    nk.notificationSend(receiverId, subject, content, code, senderId, persistent);
+    ```
+
 ---
 
 __Notifications Send__
@@ -2653,10 +2846,10 @@ Send one or more in-app notifications to a user. Have a look at the section on [
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| notifications | `[]*runtime.NotifictionSend` | table | A list of notifications to be sent together. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| notifications | `[]*runtime.NotifictionSend` | table | `nkruntime.NotificationRequest[]` | A list of notifications to be sent together. |
 
 _Example_
 
@@ -2699,6 +2892,28 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let notifications: nkruntime.NotificationRequest[] = [
+        {
+            userId: '4c2ae592-b2a7-445e-98ec-697694478b1c',
+            subject: "You've unlocked level 100!",
+            content: {rewardCoins: 1000},
+            code: 101,
+            persistent: true,
+        },
+        {
+            userId: '69769447-b2a7-445e-98ec-8b1c4c2ae592',
+            subject: "You've unlocked level 100!",
+            content: {rewardCoins: 1000},
+            code: 101,
+            persistent: true,
+        },
+    ]
+
+    nk.notificationsSend(notifications);
+    ```
+
 ### register hooks
 
 __Register Matchmaker Matched__
@@ -2716,7 +2931,7 @@ _Example_
 === "Lua"
     ```lua
     -- For example let's create a two player authoritative match.
-    local function matchmaker_matched(context, matchmaker_users)
+    local function matchmaker_matched(context, matched_users)
       for _, m in ipairs(matched_users)
       do
         nk.logger_info(m.presence["user_id"])
@@ -2730,18 +2945,18 @@ _Example_
         end
       end
 
-      if #matchmaker_users ~= 2 then
+      if #matched_users ~= 2 then
         return nil
       end
 
-      if matchmaker_users[1].properties["mode"] ~= "authoritative" then
+      if matched_users[1].properties["mode"] ~= "authoritative" then
         return nil
       end
-      if matchmaker_users[2].properties["mode"] ~= "authoritative" then
+      if matched_users[2].properties["mode"] ~= "authoritative" then
         return nil
       end
 
-      return nk.match_create("match", { debug = true, expected_users = matchmaker_users })
+      return nk.match_create("match", { debug = true, expected_users = matched_users })
     end
     nk.register_matchmaker_matched(matchmaker_matched)
     ```
@@ -2777,6 +2992,35 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    // For example let's create a two player authoritative match.
+    function matchmakerMatched(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, matchedUsers: nkruntime.MatchmakerResult[]) {
+        matchedUsers.forEach(u => {
+            logger.info(u.presence.userId);
+            logger.info(u.presence.sessionId);
+            logger.info(u.presence.username);
+            logger.info(u.presence.node);
+            logger.info(JSON.stringify(u.properties));
+        });
+
+        if (matchedUsers.length !== 2) {
+            return;
+        }
+
+        if (matchedUsers[0].properties.mode !== 'authoritative') {
+            return;
+        }
+        if (matchedUsers[1].properties.mode !== 'authoritative') {
+            return;
+        }
+
+        return nk.matchCreate('match', { debug: true, expectedUsers: matchedUsers });
+    }
+
+    initializer.registerMatchmakerMatched(matchmakerMatched);
+    ```
+
 Expected to return an authoritative match ID for a match ready to receive these users, or `nil` if the match should proceed through the peer-to-peer relayed mode.
 
 ---
@@ -2789,10 +3033,10 @@ This can be used to apply custom logic to standard features in the server. It wi
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ---- | ----------- | ----------- |
-| func | `function` | function | A function reference which will be executed on each `msgname` message (in Lua). In Go, there are separate functions for each of those actions. |
-| msgname | - | string | The specific message name to execute the `func` function after. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| func | `function` | function | `function` | A function reference which will be executed on each `msgname` message (in Lua). In Go, there are separate functions for each of those actions. |
+| msgname | - | string | - | The specific message name to execute the `func` function after. |
 
 For a complete list of RegisterBefore functions, refer [this page](https://github.com/heroiclabs/nakama/blob/master/runtime/runtime.go). For message names (in Lua), have a look at [this section](runtime-code-basics.md#message-names).
 
@@ -2819,6 +3063,13 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let afterAddFriendsFn: nkruntime.AfterHookFunction<void, nkruntime.AddFriendsRequest> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, data: nkruntime.AddFriendsRequest) {
+        // Run some code.
+    }
+    initializer.registerAfterAddFriends(afterAddFriendsFn);
+    ```
 ---
 
 __Register Request Before__
@@ -2827,10 +3078,10 @@ Register a function with the server which will be executed before any non-realti
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ---- | ----------- | ----------- |
-| func | `function` | function | A function reference which will be executed on each `msgname` message (in Lua). In Go, there are separate functions for each of those actions. |
-| msgname | - | string | The specific message name to execute the `func` function after. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| func | `function` | function | `function` | A function reference which will be executed on each `msgname` message (in Lua). In Go, there are separate functions for each of those actions. |
+| msgname | - | string | - | The specific message name to execute the `func` function after. |
 
 For a complete list of RegisterBefore functions, refer [this page](https://github.com/heroiclabs/nakama/blob/master/runtime/runtime.go). For message names in lua, have a look at [this section](runtime-code-basics.md#message-names).
 
@@ -2860,6 +3111,15 @@ _Example_
       logger.WithField("err", err).Error("Before add friends hook registration error.")
       return err
     }
+    ```
+
+=== "TypeScript"
+    ```typescript
+     let beforeAddFriendsFn: nkruntime.BeforeHookFunction<nkruntime.AddFriendsRequest> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, data: nkruntime.AddFriendsRequest) {
+        // Run some code.
+        return data; // Important!
+    }
+    initializer.registerBeforeAddFriends(beforeAddFriendsFn);
     ```
 
 ---
@@ -2902,6 +3162,13 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let rtAfterFn: nkruntime.RtBeforeHookFunction<nkruntime.EnvelopeChannelJoin> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, envelope: nkruntime.EnvelopeChannelJoin) {
+        // Run some code.
+    }
+    initializer.registerRtAfter('ChannelJoin', rtAfterFn);
+    ```
 ---
 
 __Register Realtime Before__
@@ -2942,6 +3209,15 @@ _Example_
       logger.WithField("err", err).Error("Before realtime hook registration error.")
       return err
     }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let rtBeforeFn: nkruntime.RtBeforeHookFunction<nkruntime.EnvelopeChannelJoin> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, envelope: nkruntime.EnvelopeChannelJoin): nkruntime.EnvelopeChannelJoin {
+        // Run some code.
+        return envelope;
+    }
+    initializer.registerRtBefore('ChannelJoin', rtBeforeFn);
     ```
 
 ---
@@ -2989,6 +3265,14 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let rpcFn: nkruntime.RpcFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string): string {
+        // Run some code.
+    }
+    initializer.registerRpc('my_func_id', rpcFn);
+    ```
+
 ---
 
 __Register Leaderboard Reset__
@@ -3022,6 +3306,14 @@ _Example_
         logger.WithField("err", err).Error("Leaderboard reset registration error.")
         return err
     }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let leaderboardResetFn: nkruntime.LeaderboardResetFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, leaderboard: nkruntime.Leaderboard, reset: number) {
+        // Custom logic runs on reset.
+    }
+    initializer.registerLeaderboardReset(leaderboardResetFn);
     ```
 
 ---
@@ -3059,6 +3351,14 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let tournamentResetFn: nkruntime.TournamentResetFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, tournament: nkruntime.Tournament, reset: number) {
+        // Custom logic runs on reset.
+    }
+    initializer.registerTournamentReset(tournamentResetFn);
+    ```
+
 ---
 
 __Register Tournament End__
@@ -3092,6 +3392,14 @@ _Example_
         -- Custom logic
     }
     nk.register_tournament_end(fn)
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let tournamentEndFn: nkruntime.TournamentEndFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, tournament: nkruntime.Tournament, end: number) {
+        // Custom logic runs on end.
+    }
+    initializer.registerTournamentEnd(tournamentEndFn);
     ```
 
 ---
@@ -3145,6 +3453,22 @@ _Example_
       }
 
       return nil
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let InitModule: nkruntime.InitModule =
+            function (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+        let systemId: string = ctx.env["SYSTEM_ID"]
+
+        nk.sqlExec(`
+    INSERT INTO users (id, username)
+    VALUES ($1, $2)
+    ON CONFLICT (id) DO NOTHING
+        `, { systemId, "system_id" })
+
+        logger.Info('system id: %s', systemId)
     }
     ```
 
