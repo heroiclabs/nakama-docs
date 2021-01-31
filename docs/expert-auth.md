@@ -78,24 +78,18 @@ JWTs are cryptographically-signed JSON objects ([learn more about the standard](
 
 Here’s an example JWT, in it’s encoded form:
 
-```
-
+```bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJmNDA4MmFhMC1hYWQwLTQ1MjYtODkwZC1iYTUwYjI0NmJlMTkiLCJ1c24iOiJhS25pWU5pZ1FiIiwiZXhwIjoxNTk3NjY3MjIwfQ.1fdAmq3nrDcPy0k6BwPCcULmhLiB54Z_feEuDaINNsA
-
 ```
 
 Decoded, it becomes this JSON object:
 
-```
-
-"uid": "f4082aa0-aad0-4526-890d-ba50b246be19",
-
-"usn": "aKniYNigQb",
-
-"exp": 1597667220
-
+```json
+{
+    "uid": "f4082aa0-aad0-4526-890d-ba50b246be19",
+    "usn": "aKniYNigQb",
+    "exp": 1597667220
 }
-
 ```
 
 The JWT contains three key keys:

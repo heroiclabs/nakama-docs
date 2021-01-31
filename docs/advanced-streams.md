@@ -116,7 +116,7 @@ Clients can register an event handler to consume stream data objects when receiv
 	func _ready():
 		# First, setup the socket as explained in the authentication section.
 		socket.connect("received_stream_state", self, "_on_stream_state")
-	
+
 	func _on_stream_state(p_state : NakamaRTAPI.StreamData):
 		print("Received data from stream: %s" % [p_state.stream])
 		print("Data: %s" % [parse_json(p_state.state)])
@@ -226,11 +226,11 @@ When a new presence joins a stream or an existing presence leaves the server wil
 	  @Override
 	  public void onStreamPresence(final StreamPresenceEvent presence) {
 	    System.out.println("Received presence event for stream: " + presence.getStream().getSubject());
-	
+
 	    for (UserPresence userPresence : presence.getJoins()) {
 	      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
 	    }
-	
+
 	    for (UserPresence userPresence : presence.getLeaves()) {
 	      System.out.println("User ID: " + userPresence.getUserId() + " Username: " + userPresence.getUsername() + " Status: " + userPresence.getStatus());
 	    }
@@ -243,7 +243,7 @@ When a new presence joins a stream or an existing presence leaves the server wil
 	func _ready():
 		# First, setup the socket as explained in the authentication section.
 		socket.connect("received_stream_presence", self, "_on_stream_presence")
-	
+
 	func _on_stream_presence(p_presence : NakamaRTAPI.StreamPresenceEvent):
 		print("Received presences on stream: %s" % [p_presence.stream])
 		for p in p_presence.joins:
@@ -285,23 +285,40 @@ As an example we can register an RPC function that will place the user that call
 			// If session ID is not found, RPC was not called over a connected socket.
 			return "", errors.New("Invalid context")
 		}
-	
+
 	  mode := 123
 		hidden := false
 		persistence := false
 		if _, err := nk.StreamUserJoin(mode, "", "", "label", userID, sessionID, hidden, persistence, ""); err != nil {
 			return "", err
 		}
-	
+
 		return "Success", nil
 	}
-	
+
 	// Register as RPC function, this call should be in InitModule.
 	if err := initializer.RegisterRpc("join", JoinStream); err != nil {
 	  logger.Error("Unable to register: %v", err)
 	  return err
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+
+    let joinFunction: nkruntime.RpcFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
+        let streamId: nkruntime.Stream = {
+            mode: 123,
+            label: 'my custom stream',
+        };
+        let hidden = false;
+        let persistence = false;
+        nk.streamUserJoin(ctx.userId, ctx.sessionId, streamId, hidden, persistence);
+    }
+
+    // Register as RPC function, this call should be in InitModule.
+    initializer.registerRpc('join', joinFunction);
+    ```
 
 If this user+session is already a member of the stream the operation will be a no-op.
 
@@ -334,20 +351,34 @@ As an example we can register an RPC function that will remove the user that cal
 	    // If session ID is not found, RPC was not called over a connected socket.
 	    return "", errors.New("Invalid context")
 	  }
-	
+
 		if err := nk.StreamUserLeave(123, "", "", "label", userID, sessionID); err != nil {
 			return "", err
 		}
-	
+
 		return "Success", nil
 	}
-	
+
 	// Register as RPC function, this call should be in InitModule.
 	if err := initializer.RegisterRpc("leave", LeaveStream); err != nil {
 	  logger.Error("Unable to register: %v", err)
 	  return err
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let leaveFunction: nkruntime.RpcFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
+        let streamId: nkruntime.Stream = {
+            mode: 123,
+            label: 'my custom stream',
+        };
+        nk.streamUserLeave(ctx.userId, ctx.sessionId, streamId);
+    }
+
+    // Register as RPC function, this call should be in InitModule.
+    initializer.registerRpc('leave', leaveFunction);
+    ```
 
 If this user+session is not a member of the stream the operation will be a no-op.
 
@@ -374,6 +405,21 @@ The server can send data to a stream through a function call. The message will b
 	nk.StreamSend(mode, "", "", label, data, nil)
 	```
 
+=== "TypeScript"
+    ```typescript
+
+    let leaveFunction: nkruntime.RpcFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
+        let streamId: nkruntime.Stream = {
+            mode: 123,
+            label: 'my custom stream',
+        };
+        nk.streamUserLeave(ctx.userId, ctx.sessionId, streamId;
+    }
+
+    // Register as RPC function, this call should be in InitModule.
+    initializer.registerRpc('leave', leaveFunction);
+    ```
+
 If the stream is empty the operation will be a no-op.
 
 !!! Tip
@@ -396,6 +442,15 @@ Closing a stream removes all presences currently on it. It can be useful to expl
 	nk.StreamClose(mode, "", "", label)
 	```
 
+=== "TypeScript"
+    ```typescript
+    let streamId: nkruntime.Stream = {
+        mode: 123,
+        label: 'my custom stream',
+    };
+    nk.streamClose(streamId);
+    ```
+
 ## Counting stream presences
 
 The server can peek at the presences on a stream to obtain a quick count without processing the full list of stream presences.
@@ -416,6 +471,15 @@ The server can peek at the presences on a stream to obtain a quick count without
 	}
 	```
 
+=== "TypeScript"
+    ```typescript
+    let streamId: nkruntime.Stream = {
+        mode: 123,
+        label: 'my custom stream',
+    };
+    let count = nk.streamCount(streamId);
+    ```
+
 ## Listing stream presences
 
 A list of stream presence contains every user currently online and connected to that stream, along with information about the session ID they are connected through and additional metadata.
@@ -424,7 +488,7 @@ A list of stream presence contains every user currently online and connected to 
 	```lua
 	local stream_id = { mode = 123, label = "my custom stream" }
 	local presences = nk.stream_user_list(stream_id)
-	
+
 	for _, presence in ipairs(presences) do
 	  nk.logger_info("Found user ID " .. presence.user_id)
 	end
@@ -436,16 +500,28 @@ A list of stream presence contains every user currently online and connected to 
 	label := "label"
 	includeHidden := true
 	includeNotHidden := true
-	
+
 	members, err := nk.StreamUserList(mode, "", "", label, includeHidden, includeNotHidden)
 	if err != nil {
 	  // Handle error here
 	}
-	
+
 	for _, m := range members {
 	  logger.Info("Found user: %s\n", m.GetUserId())
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let streamId: nkruntime.Stream = {
+        mode: 123,
+        label: 'my custom stream',
+    };
+    let presences = nk.streamUserList(streamId);
+    presences?.forEach(p => {
+        logger.info('Found user: %s\n', streamId);
+    });
+    ```
 
 ## Check a stream presence
 
@@ -458,7 +534,7 @@ As an example we can register an RPC function that will check if the user that c
 	local function check(context, _)
 	  local stream_id = { mode = 123, label = "my custom stream" }
 	  local meta = nk.stream_user_get(context.user_id, context.session_id, stream_id)
-	
+
 	  -- Meta is nil if the user is not present on the stream.
 	  if (meta) then
 	    nk.logger_info("User found on stream!")
@@ -480,10 +556,10 @@ As an example we can register an RPC function that will check if the user that c
 	    // If session ID is not found, RPC was not called over a connected socket.
 	    return "", errors.New("Invalid context")
 	  }
-	
+
 		mode := uint8(123)
 		label := "label"
-	
+
 		if metaPresence, err := nk.StreamUserGet(mode, "", "", label, userID, sessionID); err != nil {
 			// Handle error.
 		} else if metaPresence != nil {
@@ -491,16 +567,28 @@ As an example we can register an RPC function that will check if the user that c
 		} else {
 			logger.Info("User not found on stream")
 		}
-	
+
 		return "Success", nil
 	}
-	
+
 	// Register as RPC function, this call should be in InitModule.
 	if err := initializer.RegisterRpc("check", CheckStream); err != nil {
 	  logger.Error("Unable to register: %v", err)
 	  return err
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let streamId: nkruntime.Stream = {
+        mode: 123,
+        label: 'my custom stream',
+    };
+    let meta = nk.streamUserGet(ctx.userId, ctx.sessionId, streamId);
+    if (meta) {
+        logger.info('User found on stream');
+    }
+    ```
 
 ## Built-in streams
 
@@ -538,11 +626,20 @@ This code removes a user from a chat channel. If the user has more than one sess
 	label := "some chat room channel name"
 	userID := "user ID to kick"
 	sessionID := "session ID to kick"
-	
+
 	if err := nk.StreamUserLeave(mode, "", "", label, userID, sessionID); err != nil {
 	  // Handle error.
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let streamId: nkruntime.Stream = {
+        mode: 123,
+        label: 'my custom stream',
+    };
+    nk.streamUserLeave(ctx.userId, ctx.sessionId, streamId);
+    ```
 
 ### Example: Stop receiving notifications
 
@@ -570,17 +667,31 @@ By calling this RPC function a user can "silence" their notifications. Even if t
 	    // If session ID is not found, RPC was not called over a connected socket.
 	    return "", errors.New("Invalid context")
 	  }
-	
+
 	  if err := nk.StreamUserLeave(0, userId, "", "", userID, sessionID); err != nil {
 			// Handle error.
 		}
-	
+
 		return "Success", nil
 	}
-	
+
 	// Register as RPC function, this call should be in InitModule.
 	if err := initializer.RegisterRpc("enable_silent_mode", EnableSilentMode); err != nil {
 	  logger.Error("Unable to register: %v", err)
 	  return err
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+     let enableSilentModeFn: nkruntime.RpcFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string) {
+        let streamId: nkruntime.Stream = {
+            mode: 123,
+            label: 'my custom stream',
+        };
+        nk.streamUserLeave(ctx.userId, ctx.sessionId, streamId);
+    }
+
+    // Register as RPC function, this call should be in InitModule.
+    initializer.registerRpc('enable_silent_mode', enableSilentModeFn);
+    ```
