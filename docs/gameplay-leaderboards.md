@@ -209,6 +209,23 @@ A leaderboard can be created via server-side code at startup or within a [regist
 	}
 	```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let authoritative = false;
+    let sort = nkruntime.SortOrder.DESCENDING;
+    let operator = nkruntime.Operator.BEST;
+    let reset = '0 0 * * 1';
+    let metadata = {
+      weatherConditions: 'rain',
+    };
+    try {
+        nk.leaderboardCreate(id, authoritative, sort, operator, reset, metadata);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ## Submit a score
 
 A user can submit a score to a leaderboard and update it at any time. When a score is submitted the leaderboard's pre-configured sort order and operator determine what effect the operation will have.

@@ -697,6 +697,48 @@ Create a tournament with all it's configuration options.
 	}
 	```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let sortOrder = nkruntime.SortOrder.DESCENDING;
+    let operator = nkruntime.Operator.BEST;
+    let duration = 3600;     // In seconds.
+    let resetSchedule = '0 12 * * *'; // Noon UTC each day.
+    let metadata = {
+        weatherConditions: 'rain',
+    };
+    let title = 'Daily Dash';
+    let description = "Dash past your opponents for high scores and big rewards!";
+    let category = 1;
+    let startTime = 0;       // Start now.
+    let endTime = 0;         // Never end, repeat the tournament each day forever.
+
+    let maxSize = 10000;     // First 10,000 players who join.
+    let maxNumScore = 3;     // Each player can have 3 attempts to score.
+    let joinRequired = true; // Must join to compete.
+
+    try {
+        nk.tournamentCreate(
+            id,
+            sortOrder,
+            operator,
+            duration,
+            resetSchedule,
+            metadata,
+            title,
+            description,
+            category,
+            startTime,
+            endTime,
+            maxSize,
+            maxNumScore,
+            joinRequired
+        );
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 !!! Note
     If you don't create a tournament with a reset schedule then you must provide it with an end time.
 
@@ -718,6 +760,16 @@ Delete a tournament by it's ID.
 	  return "", runtime.NewError("failed to delete tournament", 3)
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    try {
+        nk.tournamentDelete(id);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 
 ### Add score attempts
 
@@ -742,6 +794,18 @@ Add additional score attempts to the owner's tournament record. This overrides t
 	  return "", runtime.NewError("failed to add tournament attempts", 3)
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let owner = 'leaderboard-record-owner';
+    let count = -10;
+    try {
+        nk.tournamentAddAttempt(id, owner, count);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 
 ## Reward distribution
 
@@ -780,6 +844,16 @@ To register a reward distribution function in Go use the `initializer`.
 	  return nil
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let distributeTournamentRewards: nkruntime.TournamentEndFunction = function(ctx: Context, logger: Logger, nk: Nakama, tournament: Tournament, end: number, reset: number) {
+        // ...
+    }
+
+    // Inside InitModule function
+    initializer.registerTournamentEnd(tournamentEndFn);
+    ```
 
 A simple reward distribution function which sends a persistent notification to the top ten players to let them know they've won and adds coins to their virtual wallets would look like:
 
@@ -835,6 +909,32 @@ A simple reward distribution function which sends a persistent notification to t
 	  return nil
 	}
 	```
+
+=== "TypeScript"
+    ```typescript
+    let distributeTournamentRewards: nkruntime.TournamentEndFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, tournament: nkruntime.Tournament, end: number, reset: number) {
+        let notifications: nkruntime.NotificationRequest[] = [];
+        let walletUpdates: nkruntime.WalletUpdate[] = []
+        let results = nk.leaderboardRecordsList(tournament.id, [], 10, '', reset);
+        results.records?.forEach(r => {
+            notifications.push({
+                code: 1,
+                content: { coins: 100 },
+                persistent: true,
+                subject: "Winner",
+                userId: r.ownerId,
+            });
+
+            walletUpdates.push({
+                userId: r.ownerId,
+                changeset: { coins: 100 },
+            });
+        });
+
+        nk.walletsUpdate(walletUpdates, true)
+        nk.notificationsSend(notifications)
+    }
+    ```
 
 ## Advanced
 

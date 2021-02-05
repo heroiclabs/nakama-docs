@@ -430,6 +430,17 @@ See the [runtime code basics](runtime-code-basics.md) on how to write server-sid
 	}
 	```
 
+=== "TypeScript"
+    ```typescript
+    let badUsers = ['someuserid', 'anotheruserid'];
+
+    try {
+        nk.usersBanId(badUsers);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ## Friend state
 
 | Code | Purpose |

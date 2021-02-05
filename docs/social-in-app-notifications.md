@@ -49,6 +49,20 @@ Notifications can be marked as persistent when sent. A non-persistent message wi
     nk.NotificationSend(ctx, userID, subject, content, code, senderID, persistent)
     ```
 
+=== "TypeScript"
+    ```typescript
+    let receiverId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let subject = "You've unlocked level 100!";
+    let content = {
+      rewardCoins: 1000,
+    }
+    let code = 101;
+    let senderId = 'dcb891ea-a311-4681-9213-6741351c9994' // who the message if from
+    let persistent = true;
+
+    nk.notificationSend(receiverId, subject, content, code, senderId, persistent);
+    ```
+
 ## Receive notifications
 
 A callback can be registered for notifications received when a client is connected. The handler will be called whenever a notification is received as long as the client socket remains connected. When multiple messages are returned (batched for performance) the handler will be called once for each notification.
