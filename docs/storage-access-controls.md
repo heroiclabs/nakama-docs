@@ -197,7 +197,7 @@ You can also use the code runtime to fetch an object. The code runtime is exempt
 === "TypeScript"
     ```typescript
     let objectIds: nkruntime.StorageReadRequest[] = [
-	    {collection: 'configuration', key: 'config', userId: '<uuid>'},
+        {collection: 'configuration', key: 'config', userId: '<uuid>'},
     ]
 
     let objects: nkruntime.StorageObject[] = [];
@@ -207,7 +207,7 @@ You can also use the code runtime to fetch an object. The code runtime is exempt
         // Handle error
     }
 
-	objects.forEach(o => {
+    objects.forEach(o => {
         logger.info('value: %q', o.value);
     });
     ```
