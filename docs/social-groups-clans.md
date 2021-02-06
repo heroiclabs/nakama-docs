@@ -885,6 +885,27 @@ You can also create a group with server-side code. This can be useful when the g
 	}
 	```
 
+=== "TypeScript"
+    ```typescript
+    let userId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let creatorId = 'dcb891ea-a311-4681-9213-6741351c9994';
+    let name = 'Some unique group name';
+    let description = 'My awesome group.';
+    let lang = 'en';
+    let open = true;
+    let avatarURL = 'url://somelink';
+    let metadata = { custom_field: 'some_value' };
+    let maxCount = 100;
+
+    let group = {} as nkruntime.Group;
+    try {
+        group = nk.groupCreate(userId, name, creatorId, lang, description, avatarURL, open, metadata, maxCount);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+---
+
 ## Update a group
 
 When a group has been created it's admins can update optional fields.

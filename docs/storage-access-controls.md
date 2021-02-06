@@ -194,6 +194,24 @@ You can also use the code runtime to fetch an object. The code runtime is exempt
 	}
 	```
 
+=== "TypeScript"
+    ```typescript
+    let objectIds: nkruntime.StorageReadRequest[] = [
+        {collection: 'configuration', key: 'config', userId: '<uuid>'},
+    ]
+
+    let objects: nkruntime.StorageObject[] = [];
+    try {
+        let objects = nk.storageRead(objectIds);
+    } catch (error) {
+        // Handle error
+    }
+
+    objects.forEach(o => {
+        logger.info('value: %q', o.value);
+    });
+    ```
+
 A user who writes a storage object from a client will be set as the owner by default while from the code runtime the owner is implied to be the system unless explicitly set.
 
 ## Object permissions

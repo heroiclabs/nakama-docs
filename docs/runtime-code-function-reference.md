@@ -3480,14 +3480,16 @@ Fetch one or more records by their bucket/collection/keyname and optional user.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| object_ids | `[]*runtime.StorageRead` | table | A table / array of object identifiers to be fetched. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| object_ids | `[]*runtime.StorageRead` | `nkruntime.StorageReadRequest[]` | table | A table / array of object identifiers to be fetched. |
 
 _Returns_
 
-A table array of object result set.
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.StorageObject` | `table` | `nkruntime.StorageObject[]` | A list of matches matching the parameters criteria. |
 
 _Example_
 
@@ -3538,6 +3540,25 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userId = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let objectIds: nkruntime.StorageReadRequest[] = [
+      {collection: 'save', key: 'save1', userId: userId},
+      {collection: 'save', key: 'save2', userId},
+      {collection: 'save', key: 'save3', userId},
+    ]
+    let results: nkruntime.StorageObject[] = [];
+    try {
+        results = nk.storageRead(objectIds);
+    } catch (error) {
+        // Handle error
+    }
+
+    results.forEach(o => {
+        logger.info('Storage object: %s', JSON.stringify(o));
+    });
+    ```
 ---
 
 __Storage List__
@@ -3546,24 +3567,26 @@ You can list records in a collection and page through results. The records retur
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | User ID or "" (empty string) for public records. |
-| collection | `string` | string | Collection to list data from. |
-| limit | `int` | number | Limit number of records retrieved. Min 10, Max 100. |
-| cursor | `string` | string | Pagination cursor from previous result. If none available set to nil or "" (empty string). |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` | User ID or "" (empty string) for public records. |
+| collection | `string` | string | `string` Collection to list data from. |
+| limit | `int` | number | Opt. `number` | Limit number of records retrieved. Defaults to 100 |
+| cursor | `string` | Opt. string | Opt. `string` | Pagination cursor from previous result. If none available set to nil or "" (empty string). |
 
 _Returns_
 
-A table array of the records result set.
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.StorageObject`, `string` | `table`, `string` | `nkruntime.StorageObjectList` | A list of storage objects. |
 
 _Example_
 
 === "Lua"
     ```lua
     local user_id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521" -- Some user ID.
-    local records = nk.storage_list(user_id "collection", 10, "")
+    local records = nk.storage_list(user_id, "collection", 10, "")
     for _, r in ipairs(records)
     do
       local m = string.format("read: %q, write: %q, value: %q", r.permission_read, r.permission_write, r.value)
@@ -3584,6 +3607,23 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let user_id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521' // Some user ID.
+
+    let result: nkruntime.StorageObjectList = {};
+    try {
+        let result = nk.storageList(user_id, "collection", 10);
+    } catch (error) {
+        // Handle error
+    }
+
+    result.objects?.forEach(r => {
+        logger.info('Storage object: %s', JSON.stringify(r));
+    });
+
+    ```
+
 ---
 
 __Storage Delete__
@@ -3592,10 +3632,10 @@ Remove one or more objects by their collection/keyname and optional user.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| object_ids | `[]*runtime.StorageDelete` | table | A table / array of object identifiers to be fetched. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| object_ids | `[]*runtime.StorageDelete` | table | `nkruntime.StorageDeleteRequest[]` A list of object identifiers to be deleted. |
 
 _Example_
 
@@ -3639,6 +3679,23 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userId = '4ec4f126-3f9d-11e7-84ef-b7c182b36521' // Some user ID.
+    let friendUserId = '8d98ee3f-8c9f-42c5-b6c9-c8f79ad1b820' // Friend ID.
+    let objectIds: nkruntime.StorageDeleteRequest[] = [
+      { collection: 'save', key: 'save1', userId },
+      { collection: 'save', key: 'save2', userId },
+      { collection: 'public', key: 'progress', userId: friendUserId },
+    ]
+
+    try {
+        nk.storageDelete(objectIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 <!--
@@ -3679,10 +3736,16 @@ Write one or more objects by their collection/keyname and optional user.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| object_ids | `[]*runtime.StorageWrite` | table | A table / array of object identifiers to be fetched. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| object_ids | `[]*runtime.StorageWrite` | `nkruntime.StorageWriteRequest[]` |table | A table / array of object identifiers to be fetched. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.StorageObjectAcks` | table | `nkruntime.StorageWriteAck` | A list of acks with the version of the written objects. |
 
 _Example_
 
@@ -3739,23 +3802,42 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userId = '4ec4f126-3f9d-11e7-84ef-b7c182b36521' // Some user ID.
+    let newObjects: nkruntime.StorageWriteRequest[] = [
+      { collection: "save", key: "save1", userId, value: {} },
+      { collection: "save", key: "save2", userId, value: {} },
+      { collection: "save", key: "save3", userId, value: {}, permissionRead: 2, permissionWrite: 1 },
+      { collection: "save", key: "save3", userId, value: {}, version: <some_version>, permissionRead: 1, permissionWrite: 1 }
+    ];
+
+    try {
+        nk.storageWrite(newObjects);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### sql
 
 !!! Note
-    These functions allow your Lua scripts to run arbitrary SQL staments beyond the ones built into Nakama itself. It is your responsibility to manage the performance of these queries.
+    These functions allow your Lua/TS scripts to run arbitrary SQL staments beyond the ones built into Nakama itself. It is your responsibility to manage the performance of these queries.
 
 __sql_exec (query, parameters)__
 
 Execute an arbitrary SQL query and return the number of rows affected. Typically an `"INSERT"`, `"DELETE"`, or `"UPDATE"` statement with no return columns.
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| query | string | A SQL query to execute. |
-| parameters | table | Arbitrary parameters to pass to placeholders in the query. |
+| Param | Lua Type | TypeScript Type | Description |
+| ----- | ---- | ----------- | ----------- |
+| query | string | `string` | A SQL query to execute. |
+| parameters | table | `any[]` | Arbitrary parameters to pass to placeholders in the query. |
 
 _Returns_
 
-A single number indicating the number of rows affected by the query.
+| Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- |
+| number | `{rowsAffected: number}` | A list of matches matching the parameters criteria. |
 
 _Example_
 
@@ -3774,20 +3856,37 @@ _Example_
     import "database/sql"
     ```
 
+=== "TypeScript"
+    ```typescript
+    // This example query deletes all expired leaderboard records.
+    let query = 'DELETE FROM leaderboard_record WHERE expires_at > 0 AND expires_at <= $1';
+    let parameters = [ Math.floor(Date.now() / 1000) ];
+    let result;
+    try {
+        result = nk.sqlExec(query, parameters);
+    } catch (error) {
+        // Handle error
+    }
+
+    logger.info('Affected %d rows', result?.rowsAffected);
+    ```
+
 ---
 
 __sql_query (query, parameters)__
 
 Execute an arbitrary SQL query that is expected to return row data. Typically a `"SELECT"` statement.
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| query | string | A SQL query to execute. |
-| parameters | table | Arbitrary parameters to pass to placeholders in the query. |
+| Param | Lua Type | TypeScript Type | Description |
+| ----- | ---- | ----------- | ----------- |
+| query | string | `string` | A SQL query to execute. |
+| parameters | table | `any[]` Arbitrary parameters to pass to placeholders in the query. |
 
 _Returns_
 
-A Lua table containing the result rows in the format:
+| Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- |
+| table | `nkruntime.SqlQueryResult` | An array/table of rows and the respective columns and values |
 
 === "Lua"
     ```lua
@@ -3802,6 +3901,15 @@ A Lua table containing the result rows in the format:
     ```go
     // Use the standard Go sql package.
     import "database/sql"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    [
+      {column1: 'value1', column2: 'value2', ...}, -- Row 1.
+      {column1: 'value1', column2: 'value2', ...}, -- Row 2.
+      ...
+    ]
     ```
 
 _Example_
@@ -3827,6 +3935,23 @@ _Example_
     ```go
     // Use the standard Go sql package.
     import "database/sql"
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let query = 'SELECT username, create_time FROM users ORDER BY create_time DESC LIMIT 100';
+    let parameters: any[] = [];
+
+    let rows: nkruntime.SqlQueryResult = [];
+    try {
+        rows = nk.sqlQuery(query, parameters);
+    } catch (error) {
+        // Handler error
+    }
+
+    rows.forEach(r => {
+        logger.info('Username %q created at %q', row.username, row.create_time);
+    });
     ```
 
 !!! Note
@@ -3855,6 +3980,12 @@ _Example_
     import "time"
     ```
 
+=== "TypeScript"
+    ```typescript
+    // Use the standard Date package.
+    let utcMsec = Date.now();
+    ```
+
 ### tournaments
 
 __Tournament Create__
@@ -3863,23 +3994,23 @@ Setup a new dynamic tournament with the specified ID and various configuration s
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the new tournament. This is used by clients to submit scores. |
-| sort | `string` | string | The sort order for records in the tournament; possible values are "asc" or "desc". Default "desc". |
-| operator | `string` | string | The operator that determines how scores behave when submitted. The possible values are "best", "set", or "incr". Default "best". |
-| duration | `int` | number | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever sooner. A game client can query the tournament for results between end of duration and next reset period. |
-| reset | `string` | string | The cron format used to define the reset schedule for the tournament. This controls when the underlying leaderboard resets and the tournament is considered active again. This is optional. |
-| metadata | `map[string]interface{}` | table | The metadata you want associated to the tournament. Some good examples are weather conditions for a racing game. This is optional. |
-| title | `string` | string | The title of the tournament. This is optional. |
-| description | `string` | string | The description of the tournament. This is optional. |
-| category | `int` | number | A category associated with the tournament. This can be used to filter different types of tournaments. Between 0 and 127. This is optional. |
-| start_time | `int` | number | The start time of the tournament. Leave empty for immediately, or a future time. |
-| end_time | `int` | number | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than start_time if set. Default value is __never__. |
-| max_size | `int` | number | Maximum size of participants in a tournament. This is optional. |
-| max_num_score | `int` | number | Maximum submission attempts for a tournament record. |
-| join_required | `bool` | bool | Whether the tournament needs to be joint before a record write is allowed. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string`| The unique identifier for the new tournament. This is used by clients to submit scores. |
+| sort | `string` | Opt. string | Opt. `string` | The sort order for records in the tournament; possible values are "asc" or "desc". Default "desc". |
+| operator | `string` | Opt. string | Opt. `string` | The operator that determines how scores behave when submitted. The possible values are "best", "set", or "incr". Default "best". |
+| duration | `int` | Opt. number | Opt. `number` | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever sooner. A game client can query the tournament for results between end of duration and next reset period. |
+| reset | `string` | Opt. string | Opt. `string` | The cron format used to define the reset schedule for the tournament. This controls when the underlying leaderboard resets and the tournament is considered active again. This is optional. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. Object | The metadata you want associated to the tournament. Some good examples are weather conditions for a racing game. This is optional. |
+| title | `string` | Opt. string | Opt. `string` | The title of the tournament. This is optional. |
+| description | `string` | Opt. string | Opt. `string` | The description of the tournament. This is optional. |
+| category | `int` | Opt. number | Opt. `number` | A category associated with the tournament. This can be used to filter different types of tournaments. Between 0 and 127. This is optional. |
+| start_time | `int` | Opt. number | Opt. `number` | The start time of the tournament. Leave empty for immediately, or a future time. |
+| end_time | `int` | Opt. number | Opt. `number` | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than start_time if set. Default value is __never__. |
+| max_size | `int` | Opt. number | Opt. `number` | Maximum size of participants in a tournament. This is optional. |
+| max_num_score | `int` | Opt. number | Opt. `number` | Maximum submission attempts for a tournament record. |
+| join_required | `bool` | Opt. bool | Opt. `boolean` | Whether the tournament needs to be joint before a record write is allowed. Defaults to false |
 
 _Example_
 
@@ -3932,6 +4063,48 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let sortOrder = nkruntime.SortOrder.DESCENDING;
+    let operator = nkruntime.Operator.BEST;
+    let duration = 3600;     // In seconds.
+    let resetSchedule = '0 12 * * *'; // Noon UTC each day.
+    let metadata = {
+        weatherConditions: 'rain',
+    };
+    let title = 'Daily Dash';
+    let description = "Dash past your opponents for high scores and big rewards!";
+    let category = 1;
+    let startTime = 0;       // Start now.
+    let endTime = 0;         // Never end, repeat the tournament each day forever.
+
+    let maxSize = 10000;     // First 10,000 players who join.
+    let maxNumScore = 3;     // Each player can have 3 attempts to score.
+    let joinRequired = true; // Must join to compete.
+
+    try {
+        nk.tournamentCreate(
+            id,
+            sortOrder,
+            operator,
+            duration,
+            resetSchedule,
+            metadata,
+            title,
+            description,
+            category,
+            startTime,
+            endTime,
+            maxSize,
+            maxNumScore,
+            joinRequired
+        );
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Tournament Delete__
@@ -3940,10 +4113,10 @@ Delete a tournament and all records that belong to it.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the tournament to delete. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier for the tournament to delete. |
 
 _Example_
 
@@ -3962,6 +4135,16 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    try {
+        nk.tournamentDelete(id);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Tournament Add Attempt__
@@ -3970,12 +4153,12 @@ Add additional score attempts to the owner's tournament record. This overrides t
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the tournament to update. |
-| owner | `string` | string | The owner of the record to increment the count for. |
-| count | `int` | number | The number of attempt counts to increment. Can be negative to decrease count. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier for the tournament to update. |
+| owner | `string` | string | `string` | The owner of the record to increment the count for. |
+| count | `int` | number | `string` | The number of attempt counts to increment. Can be negative to decrease count. |
 
 _Example_
 
@@ -3998,6 +4181,17 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let owner = 'leaderboard-record-owner';
+    let count = -10;
+    try {
+        nk.tournamentAddAttempt(id, owner, count);
+    } catch (error) {
+        // Handle error
+    }
+    ```
 ---
 
 __Tournament Join__
@@ -4006,12 +4200,12 @@ A tournament may need to be joined before the owner can submit scores. This oper
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier for the tournament to update. |
-| user_id | `string` | string | The owner of the record. |
-| username | `string` | string | The username of the record owner. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier for the tournament to update. |
+| user_id | `string` | string | `string` | The owner of the record. |
+| username | `string` | string | `string` | The username of the record owner. |
 
 _Example_
 
@@ -4034,6 +4228,18 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let owner = 'leaderboard-record-owner';
+    let username = 'myusername';
+    try {
+        nk.tournamentJoin(id, owner, username);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Tournaments Get by ID__
@@ -4042,10 +4248,10 @@ Fetch one or more tournaments by ID.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| ids | `[]string` | table | The table array of tournament ids. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| ids | `[]string` | table | `string[]` | The table array of tournament ids. |
 
 _Example_
 
@@ -4070,6 +4276,23 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let tournamentIds = [
+        '3ea5608a-43c3-11e7-90f9-7b9397165f34',
+        '447524be-43c3-11e7-af09-3f7172f05936',
+    ]
+    let owner = 'leaderboard-record-owner';
+    let username = 'myusername';
+
+    let tournaments
+    try {
+        nk.tournamentsGetId(id, owner, username);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Tournament List__
@@ -4078,19 +4301,22 @@ Find tournaments which have been created on the server. Tournaments can be filte
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| category_start | `int` | number | Filter tournament with categories greater or equal than this value. |
-| category_end | `int` | number | Filter tournament with categories equal or less than this value. |
-| start_time | `int` | number | Filter tournament with that start after this time. |
-| end_time | `int` | number | Filter tournament with that end before this time. |
-| limit | `int` | number | Return only the required number of tournament denoted by this limit value. |
-| cursor | `string` | string | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| category_start | `int` | number | `number` | Filter tournament with categories greater or equal than this value. |
+| category_end | `int` | number | `number` | Filter tournament with categories equal or less than this value. |
+| start_time | `int` | Opt. number | Opt. `number` | Filter tournament with that start after this time. |
+| end_time | `int` | Opt. number | Opt. `number` | Filter tournament with that end before this time. |
+| limit | `int` | Opt. number | Opt. `number` | Return only the required number of tournament denoted by this limit value. Defaults to 10 |
+| cursor | `string` | Opt. string | Opt. `number` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
 
 _Returns_
 
-A table of tournament objects.
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.TournamentList` | table | `nkruntime.TournamentList` | A list of tournament results and possibly a cursor. |
 
 _Example_
 
@@ -4125,6 +4351,22 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let categoryStart = 1;
+    let categoryEnd = 2;
+    let startTime = 1538147711M
+    let endTime = 0 // All tournaments from the start time.
+    let limit = 100  // Number to list per page.
+
+    let results: nkruntime.TournamentList = {};
+    try {
+        results = nk.tournamentList(categoryStart, categoryEnd, startTime, endTime, limit);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Tournament Record Write__
@@ -4133,19 +4375,16 @@ Submit a score and optional subscore to a tournament leaderboard. If the tournam
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier of the leaderboard to submit. |
-| owner | `string` | string | The owner of this score submission. |
-| username | `string` | string | The owner username of this score submission, if it's a user. This is optional. |
-| score | `int64` | number | The score to submit. This is optional. Default 0. |
-| subscore | `int64` | number | A secondary subscore parameter for the submission. This is optional. Default 0. |
-| metadata | `map[string]interface{}` | table | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. This is optional. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier of the leaderboard to submit. |
+| owner | `string` | string | `string` | The owner of this score submission. |
+| username | `string` | Opt. string | Opt. `username` |  The owner username of this score submission, if it's a user. This is optional. |
+| score | `int64` | Opt. number | Opt. `number` | The score to submit. This is optional. Default 0. |
+| subscore | `int64` | Opt. number | Opt. `number` | A secondary subscore parameter for the submission. This is optional. Default 0. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. `Object` | The metadata you want associated to this submission. Some good examples are weather conditions for a racing game. This is optional. |
 
-_Returns_
-
-A table of tournament record objects.
 
 _Example_
 
@@ -4178,6 +4417,24 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let owner = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let username = '02ebb2c8';
+    let score = 10;
+    let subscore = 0;
+    let metadata = {
+      weather_conditions = 'rain',
+    }
+
+    try {
+        nk.tournamentRecordWrite(categoryStart, categoryEnd, startTime, endTime, limit);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Tournament Records Haystack__
@@ -4186,16 +4443,19 @@ Fetch the list of tournament records around the owner.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| id | `string` | string | The unique identifier of the leaderboard to submit. |
-| owner | `string` | string | The owner of this score submission. |
-| limit | `int` | number | Number of records to return. Default value is 1. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| id | `string` | string | `string` | The unique identifier of the leaderboard to submit. |
+| owner | `string` | string | `string` | The owner of this score submission. |
+| limit | `int` | Opt. number | Opt. `number` | Number of records to return. Default value is 1. |
+| expiry | `int` | Opt. number | Opt. `number` | Tournament expiry unix epoch. |
 
 _Returns_
 
-A table of tournament record objects.
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.Tournament` | table | `nkruntime.Tournament[]` | A list of tournament record objects. |
 
 _Example_
 
@@ -4221,6 +4481,19 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let owner = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+
+    let results: nkruntime.Tournament[] = [];
+    try {
+        results = nk.tournamentRecordsHaystack(id, owner);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 ### users
@@ -4231,14 +4504,16 @@ Fetch one or more users by ID.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_ids | `[]string` | table | A table / array of user IDs to fetch. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_ids | `[]string` | table | `string[]` | A table / array of user IDs to fetch. |
 
 _Returns_
 
-A table array of the user result set.
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.Users` | table | `nkruntime.User[]` | A list of tournament record objects. |
 
 _Example_
 
@@ -4272,6 +4547,21 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userIds = [
+        '3ea5608a-43c3-11e7-90f9-7b9397165f34',
+        '447524be-43c3-11e7-af09-3f7172f05936',
+    ];
+
+    let users: nkruntime.Users[] = [];
+    try {
+        users = nk.usersGetId(userIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Users Get by Username__
@@ -4280,14 +4570,16 @@ Fetch a set of users by their usernames.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| usernames | `[]string` | table | A table array of usernames to fetch. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| usernames | `[]string` | table | `string[]` | A table array of usernames to fetch. |
 
 _Returns_
 
-A table array of the user result set.
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `[]*api.Users` | table | `nkruntime.User[]` | A list of tournament record objects. |
 
 _Example_
 
@@ -4314,6 +4606,25 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let usernames = [
+        'b7865e7e',
+        'c048ba7a',
+    ];
+
+    let users: nkruntime.Users[] = [];
+    try {
+        users = nk.usersGetUsername(usernamees);
+    } catch (error) {
+        // Handle error
+    }
+
+    users.forEach(u => {
+        logger.info('d: %q, displayname: %q', u.userId, u.displayName);
+    })
+    ```
+
 ---
 
 __Users Ban by ID__
@@ -4322,10 +4633,10 @@ Ban one or more users by ID. These users will no longer be allowed to authentica
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_ids | `[]string` | table | A table / array of user IDs to ban. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_ids | `[]string` | table | `string[]` | A table / array of user IDs to ban. |
 
 _Example_
 
@@ -4350,6 +4661,20 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userIds = [
+        '3ea5608a-43c3-11e7-90f9-7b9397165f34',
+        '447524be-43c3-11e7-af09-3f7172f05936',
+    ];
+
+    try {
+        users = nk.usersBanId(userIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Users Unban by ID__
@@ -4358,10 +4683,10 @@ Unban one or more users by ID. These users will again be allowed to authenticate
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_ids | `[]string` | table | A table / array of user IDs to unban. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_ids | `[]string` | table | `string[]` | A table / array of user IDs to unban. |
 
 _Example_
 
@@ -4386,6 +4711,20 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let userIds = [
+        '3ea5608a-43c3-11e7-90f9-7b9397165f34',
+        '447524be-43c3-11e7-af09-3f7172f05936',
+    ];
+
+    try {
+        users = nk.usersUnbanId(userIds);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ### uuid
 
 __uuid_v4 ()__
@@ -4394,7 +4733,7 @@ Generate a version 4 UUID in the standard 36-character string representation.
 
 _Returns_
 
-The generated version 4 UUID identifier.
+The generated version 4 UUID identifier string.
 
 _Example_
 
@@ -4410,6 +4749,10 @@ _Example_
     import "github.com/gofrs/uuid"
     ```
 
+=== "TypeScript"
+    ```typescript
+    let uuid = nk.uuidV4();
+    ```
 ---
 
 __uuid_bytes_to_string (uuid_bytes)__
@@ -4480,13 +4823,19 @@ Update a user's wallet with the given changeset.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | The ID of the user to update the wallet for. |
-| changeset | `map[string]interface{}` | table | The set of wallet operations to apply. |
-| metadata | `map[string]interface{}` | table | Additional metadata to tag the wallet update with. Optional in Lua. |
-| update_ledger | `bool` | bool | Whether to record this update in the ledger. Default true. Optional in Lua. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` |  The ID of the user to update the wallet for. |
+| changeset | `map[string]interface{}` | table | `{[key: string]: number}` | The set of wallet operations to apply. |
+| metadata | `map[string]interface{}` | Opt. table | Opt. Object | Additional metadata to tag the wallet update with. |
+| update_ledger | `bool` | Opt. bool | Opt. `bool` | Whether to record this update in the ledger. Defaults to true. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `map[string]int64`, `map[string]int64` | table, table | `nkruntime.WalletUpdateResult` | The changeset after the update and previously to the update, respectively. |
 
 _Example_
 
@@ -4500,7 +4849,7 @@ _Example_
     local metadata = {
       game_result = "won"
     }
-    nk.wallet_update(user_id, changeset, metadata, true)
+    local updated, previous = nk.wallet_update(user_id, changeset, metadata, true)
     ```
 
 === "Go"
@@ -4513,9 +4862,28 @@ _Example_
     metadata := map[string]interface{}{
       "game_result": "won",
     }
-    err := nk.WalletUpdate(ctx, userID, changeset, metadata, true)
+    updated, previous, err := nk.WalletUpdate(ctx, userID, changeset, metadata, true)
     if err != nil {
       logger.WithField("err", err).Error("Wallet update error.")
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let user_id = '8f4d52c7-bf28-4fcf-8af2-1d4fcf685592';
+    let changeset = {
+      coins: 10, // Add 10 coins to the user's wallet.
+      gems: -5,   // Remove 5 gems from the user's wallet.
+    }
+    let metadata = {
+      gameResult: 'won'
+    }
+
+    let result: nkruntime.WalletUpdateResult;
+    try {
+        result = nk.walletUpdate(user_id, changeset, metadata, true);
+    } catch (error) {
+        // Handle error
     }
     ```
 
@@ -4529,11 +4897,17 @@ All updates will be performed atomically.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| updates | `[]*runtime.WalletUpdate` | table | The set of user wallet update operations to apply. |
-| update_ledger | `bool` | bool | Whether to record this update in the ledger. Default true. This is optional. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| updates | `[]*runtime.WalletUpdate` | table | `nkruntime.WalletUpdate[]` | The set of user wallet update operations to apply. |
+| update_ledger | `bool` | Opt. bool | Opt. `bool` | Whether to record this update in the ledger. Default true. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `runtime.WalletUpdateResult` | table | `nkruntime.WalletUpdateResult` | A list of wallet updates results. |
 
 _Example_
 
@@ -4574,6 +4948,29 @@ _Example_
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    let updates: nkruntime.WalletUpdate[] = [
+      {
+        userId: '8f4d52c7-bf28-4fcf-8af2-1d4fcf685592',
+        changeset: {
+          coins: 10, // Add 10 coins to the user's wallet.
+          gems: -5,  // Remove 5 gems from the user's wallet.
+        },
+        metadata: {
+          gameResult: 'won',
+        }
+      }
+    ];
+
+    let results: nkruntime.WalletUpdateResult[] = [];
+    try {
+        results = nk.walletsUpdate(updates);
+    } catch (error) {
+        // Handle error
+    }
+    ```
+
 ---
 
 __Wallet Ledger List__
@@ -4582,14 +4979,15 @@ List all wallet updates for a particular user from oldest to newest.
 
 _Parameters_
 
-| Param | Go type | Lua type | Description |
-| ----- | ------- | -------- | ----------- |
-| ctx | `context.Context` | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | The ID of the user to update the wallet. |
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| user_id | `string` | string | `string` | The ID of the user to update the wallet. |
+| limit | `int` | Opt. number | Opt. `number` | Limit number of results. Defaults to 100 |
 
 _Returns_
 
-A Lua table / Go slice containing wallet entries, with the following parameters:
+A Lua table / Go slice / JS Object containing wallet entries, with the following parameters:
 
 === "Lua"
     ```lua
@@ -4619,6 +5017,23 @@ A Lua table / Go slice containing wallet entries, with the following parameters:
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    {
+      items: [
+        {
+          id: '...',
+          userID: '...',
+          createTime: 123,
+          updateTime: 123,
+          changeSet: {},
+          metadata: {},
+        },
+      ],
+      cursor: '...',
+    }
+    ```
+
 _Example_
 
 === "Lua"
@@ -4642,6 +5057,18 @@ _Example_
       for _, item := range items {
         logger.Info("Found wallet update with id: %v", item.GetID())
       }
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let userId = '8f4d52c7-bf28-4fcf-8af2-1d4fcf685592';
+
+    let results: nkruntime.WalletLedgerList[] = [];
+    try {
+        results = nk.walletLedgerList(userId);
+    } catch (error) {
+        // Handle error
     }
     ```
 
@@ -4690,6 +5117,23 @@ The updated wallet ledger item as a Lua table with the following format:
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    {
+      items: [
+        {
+          id: '...',
+          userID: '...',
+          createTime: 123,
+          updateTime: 123,
+          changeSet: {},
+          metadata: {},
+        },
+      ],
+      cursor: '...',
+    }
+    ```
+
 _Example_
 
 === "Lua"
@@ -4710,5 +5154,20 @@ _Example_
     _, err := nk.WalletLedgerUpdate(ctx, itemID, metadata)
     if err != nil {
       logger.WithField("err", err).Error("Wallet ledger update error.")
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let id = '2745ba53-4b43-4f83-ab8f-93e9b677f33a';
+    let metadata = {
+      gameResult = 'loss';
+    }
+
+    let result: nkruntime.WalletLedgerResult;
+    try {
+        local result = nk.walletLedgerUpdate(id, metadata);
+    } catch (error) {
+        // Handle error
     }
     ```

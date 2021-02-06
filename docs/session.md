@@ -216,6 +216,22 @@ Session variables may be set by the server, but only in the __before__ authentic
     }
     ```
 
+=== "TypeScript"
+    ```
+    let setSessionVars: nkruntime.BeforeHookFunction<nkruntime.AuthenticateEmailRequest> = function (context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: nkruntime.AuthenticateEmailRequest) {
+        payload.account.vars = {
+            key: 'key',
+            value: 'value',
+        }
+
+        return payload;
+    }
+
+    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+        initializer.registerBeforeAuthenticateEmail(setSessionVars);
+    }
+    ```
+
 ### Accessing with server
 
 Once set, session variables become read-only and may be accessed in any server hook. The only way to change or delete a session variable is through forcing the client to authenticate again.
