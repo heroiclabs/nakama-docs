@@ -1274,12 +1274,12 @@ List all friends, invites, invited, and blocked which belong to a user.
 _Parameters_
 
 | Param | Go type | Lua type | TypeScript type | Description |
-| ----- | ------- | -------- | ----------- |
+| ----- | ------- | -------- | --------------- | ----------- |
 | ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
-| user_id | `string` | string | `string` | The ID of the user who's friends, invites, invited, and blocked you want to list. |
-| limit | `int` | Opt. number | Opt. `number` |  The number of friends to retrieve in this page of results. No more than 1000 limit allowed per result. |
-| state | `int` | Opt. number | Opt. `number` |  The state of the friendship with the user. If unspecified this returns friends in all states for the user. |
-| cursor | `string` | Opt. string | Opt. `string` | The cursor returned from a previous listing request. Used to obtain the next page of results. |
+| user_id | `string` | `string` | `string` | The ID of the user who's friends, invites, invited, and blocked you want to list. |
+| limit | `int` | Opt. `number` | Opt. `number` |  The number of friends to retrieve in this page of results. No more than 1000 limit allowed per result. |
+| state | `int` | Opt. `number` | Opt. `number` |  The state of the friendship with the user. If unspecified this returns friends in all states for the user. |
+| cursor | `string` | Opt. `string` | Opt. `string` | The cursor returned from a previous listing request. Used to obtain the next page of results. |
 
 _Returns_
 
