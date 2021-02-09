@@ -391,8 +391,8 @@ cluster:
 	rpc_port: 7353
 
 matchmaker:
-	max_tickets: 2
-	interval_sec: 15
-	max_intervals: 3
+        max_tickets: 2
+        interval_sec: 15
+        max_intervals: 3
 
 ```
