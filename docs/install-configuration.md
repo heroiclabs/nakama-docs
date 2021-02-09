@@ -37,6 +37,8 @@ There are a few configuration properties that need to be changed in most environ
 | `runtime.http_key` | Key is used to protect the server's runtime HTTP invocations. Default value is `defaulthttpkey`.
 | `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
 | `session.token_expiry_sec` | Session token expiry in seconds. Default value is 60.
+| `session.refresh_encryption_key` | The encryption key used to produce the session refresh token. Default value is `defaultrefreshencryptionkey`.
+| `session.refresh_token_expiry_sec` | Refresh token expiry in seconds. Default value is 3600.
 
 
 !!! warning "Production settings"
@@ -208,6 +210,8 @@ You can change configuration options related to each user session, such as the e
 | --------- | ---- | -----------
 | <a class="anchor" id="session.encryption_key"></a>`encryption_key` | `session.encryption_key` | The encryption key used to produce the client token. Default value is `defaultencryptionkey`.
 | <a class="anchor" id="session.token_expiry_sec"></a>`token_expiry_sec` | `session.token_expiry_sec` | Token expiry in seconds. Default value is 60.
+| <a class="anchor" id="session.refresh_encryption_key"></a>`refresh_encryption_key` | `session.refresh_encryption_key` | The encryption key used to produce the session refresh token. Default value is `defaultrefreshencryptionkey`.
+| <a class="anchor" id="session.refresh_token_expiry_sec"></a>`refresh_token_expiry_sec` | `session.refresh_token_expiry_sec` | Refresh token expiry in seconds. Default value is 3600.
 
 !!! warning "Important"
     You must change `encryption_key` before going live with your app!
@@ -313,15 +317,15 @@ Google In-App Purchase configuration
 -->
 
 
-### Matchmaking
+### Matchmaker
 
 You can change configuration options related to matchmaking.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="matchmaking.max_tickets"></a>`max_tickets` | `matchmaking.max_tickets` | Maximum number of concurrent matchmaking tickets allowed per session or party. Default 3.
-| <a class="anchor" id="matchmaking.interval_sec"></a>`interval_sec` | `matchmaking.interval_sec` | How quickly the matchmaker attempts to form matches, in seconds. Default 15.
-| <a class="anchor" id="matchmaking.max_intervals"></a>`max_intervals` | `matchmaking.max_intervals` | How many intervals the matchmaker attempts to find matches at the max player count, before allowing min count. Default 2.
+| <a class="anchor" id="matchmaker.max_tickets"></a>`max_tickets` | `matchmaker.max_tickets` | Maximum number of concurrent matchmaking tickets allowed per session or party. Default 3.
+| <a class="anchor" id="matchmaker.interval_sec"></a>`interval_sec` | `matchmaker.interval_sec` | How quickly the matchmaker attempts to form matches, in seconds. Default 15.
+| <a class="anchor" id="matchmaker.max_intervals"></a>`max_intervals` | `matchmaker.max_intervals` | How many intervals the matchmaker attempts to find matches at the max player count, before allowing min count. Default 2.
 
 ## Example File
 
@@ -371,7 +375,9 @@ socket:
 session:
 	encryption_key: "defaultencryptionkey"
 	token_expiry_sec: 60
-
+    refresh_encryption_key: "defaultrefreshencryptionkey"
+    refresh_token_expiry_sec: 3600
+    
 social:
 	steam:
 	publisher_key: ""
