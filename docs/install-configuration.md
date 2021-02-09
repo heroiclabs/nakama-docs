@@ -313,6 +313,16 @@ Google In-App Purchase configuration
 -->
 
 
+### Matchmaking
+
+You can change configuration options related to matchmaking.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| <a class="anchor" id="matchmaking.max_tickets"></a>`max_tickets` | `matchmaking.max_tickets` | Maximum number of concurrent matchmaking tickets allowed per session or party. Default 3.
+| <a class="anchor" id="matchmaking.interval_sec"></a>`interval_sec` | `matchmaking.interval_sec` | How quickly the matchmaker attempts to form matches, in seconds. Default 15.
+| <a class="anchor" id="matchmaking.max_intervals"></a>`max_intervals` | `matchmaking.max_intervals` | How many intervals the matchmaker attempts to find matches at the max player count, before allowing min count. Default 2.
+
 ## Example File
 
 You can use the entire file or just a subset of the configuration.
@@ -379,4 +389,10 @@ cluster:
 	gossip_bindaddr: "0.0.0.0"
 	gossip_bindport: 7352
 	rpc_port: 7353
+
+matchmaker:
+        max_tickets: 2
+        interval_sec: 15
+        max_intervals: 3
+
 ```
