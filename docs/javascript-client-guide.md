@@ -4,12 +4,13 @@ The official JavaScript client handles all communication in realtime with the se
 
 ## Download
 
-The client is available on <a href="https://www.npmjs.com/package/@heroiclabs/nakama-js" target="\_blank">NPM</a>, Bower and on the GitHub <a href="https://github.com/heroiclabs/nakama-js/releases/latest" target="\_blank">releases page</a>. You can download `nakama-js.umd.js` which contains the Nakama-js module and UMD module loader.
+The client is available on <a href="https://www.npmjs.com/package/@heroiclabs/nakama-js" target="\_blank">NPM</a> and the GitHub <a href="https://github.com/heroiclabs/nakama-js/releases/latest" target="\_blank">releases page</a>.
 
-If you are using NPM simply add the dependency to your "package.json":
+If you are using Yarn or NPM simply add the dependency to your "package.json":
 
 ```shell
 yarn add "@heroiclabs/nakama-js"
+yarn install
 ```
 
 For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-js/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
@@ -19,10 +20,10 @@ For upgrades you can see changes and enhancements in the <a href="https://github
 
 ## Install and setup
 
-When you've [downloaded](#download) the "nakama-js.umd.js" file you should import it into your project to use it.
+When you've installed the Javascript client you should import it into your project to use it.
 
 ```html
-<script src="path/to/dist/nakama-js.umd.js"></script>
+import {Client} from "@heroiclabs/nakama-js";
 ```
 
 The client object is used to execute all logic against the server. In your main JavaScript function you'll need to create a client object:

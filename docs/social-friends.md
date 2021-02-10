@@ -212,6 +212,10 @@ You can list all of a user's friends, blocked users, friend requests received (i
 	Authorization: Bearer <session token>
 	```
 
+!!! Note
+    A single friends listing will return a page of up to 1000 friends. Pass the returned cursor to subsequent list calls
+    to retrieve more friend pages.
+
 ## Remove friends
 
 A user can remove a friend, reject a received invite, cancel a friend request sent, or unblock a user. Similar to how Friend Add works we reuse Friend Remove to cancel or undo whatever friend state is current with another user.
