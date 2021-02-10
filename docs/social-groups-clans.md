@@ -10,9 +10,9 @@ A group user has four states:
 
 | Code | Purpose | |
 | ---- | ------- | - |
-|    0 | Superadmin | There must at least be 1 superadmin in any group. The superadmin can only delete the group and promote admin members. |
-|    1 | Admin | There can be one of more admins. Admins can update groups as well as accept, kick, promote or add members. |
-|    2 | Member | Regular group member. They cannot accept join request from new users. |
+|    0 | Superadmin | There must at least be 1 superadmin in any group. The superadmin has all the privileges of the admin and can additionally delete the group and promote admin members. |
+|    1 | Admin | There can be one of more admins. Admins can update groups as well as accept, kick, promote, demote, ban or add members. |
+|    2 | Member | Regular group member. They cannot accept join requests from new users. |
 |    3 | Join request | A new join request from a new user. This does not count towards the maximum group member count. |
 
 ## List and filter groups
@@ -1358,7 +1358,7 @@ An admin can promote another member of the group as an admin. This grants the me
 
 ### Demote a member
 
-An admin can demote another member of the group down a role. This revokes the member of his current privileges to and assigns member the privileges available in the demoted role. Members who are already at the lowest role in their group will not be affected.
+An admin can demote another member of the group down a role. This revokes the member of his current privileges to and assigns member the privileges available in the demoted role. Members who are already at the lowest role in their group will not be affected by a demotion.
 
 === "cURL"
 	```sh
@@ -1412,7 +1412,7 @@ An admin can demote another member of the group down a role. This revokes the me
 
 ### Kick a member
 
-An admin or superadmin can kick a member from the group. The user is removed but can rejoin again later unless the group is private in which case an admin must accept the join request.
+An admin or superadmin can kick a member from the group. The user is removed but can rejoin again later unless the user is [banned](###Ban a group member) or the group is private in which case an admin must accept the rejoin request.
 
 If a user is removed from a group it does not prevent them from joining other groups.
 
@@ -1517,7 +1517,62 @@ If a user is removed from a group it does not prevent them from joining other gr
 	```
 
 !!! Hint
-    Sometimes a bad user needs to be kicked from the group and [permanently banned](social-friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
+    Sometimes a bad user needs to be kicked from the group and banned from rejoining either [the group](###ban-a-user) the [whole server](social-friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
+
+### Ban a group member
+An admin or superadmin can ban a member from the group. The user is kicked from the group and prevented from rejoining or even requesting to rejoin.
+
+The user can be unbanned either via the Nakama Console or a runtime code function.
+
+=== "cURL"
+	```sh
+	curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/ban?user_ids=<user id>" \
+        -H 'Authorization: Bearer <session token>'
+	```
+
+=== "JavaScript"
+	```js
+	const group_id = "<group id>";
+	const user_id = "<user id>";
+	await client.banGroupUsers(session, group_id, [user_id]);
+	```
+
+=== ".NET"
+	```csharp
+	const string groupId = "<group id>";
+	var userIds = new[] {"<user id>"};
+	await client.BanGroupUsersAsync(session, groupId, userIds);
+	```
+
+=== "Unity"
+	```csharp
+	const string groupId = "<group id>";
+	var userIds = new[] {"<user id>"};
+	await client.BanGroupUsersAsync(session, groupId, userIds);
+	```
+
+=== "Cocos2d-x JS"
+	```js
+	const group_id = "<group id>";
+	const user_id = "<user id>";
+	client.banGroupUsers(session, group_id, [user_id]);
+	```
+
+=== "Java"
+	```java
+	String groupid = "<group id>";
+	String[] userIds = new String[] {"<user id>"};
+	client.banGroupUsers(session, groupid, userIds).get();
+	```
+
+=== "REST"
+    ```
+	POST /v2/group/<group id>/ban?user_ids=<user id>
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
 
 ## Remove a group
 
