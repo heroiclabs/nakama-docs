@@ -1412,7 +1412,7 @@ An admin can demote another member of the group down a role. This revokes the me
 
 ### Kick a member
 
-An admin or superadmin can kick a member from the group. The user is removed but can rejoin again later unless the user is [banned](###Ban a group member) or the group is private in which case an admin must accept the rejoin request.
+An admin or superadmin can kick a member from the group. The user is removed but can rejoin again later unless the user is [banned](#ban-a-group-member) or the group is private in which case an admin must accept the rejoin request.
 
 If a user is removed from a group it does not prevent them from joining other groups.
 
@@ -1517,7 +1517,7 @@ If a user is removed from a group it does not prevent them from joining other gr
     ```
 
 !!! Hint
-    Sometimes a bad user needs to be kicked from the group and banned from rejoining either [the group](###ban-a-user) the [whole server](social-friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
+    Sometimes a bad user needs to be kicked from the group and banned from rejoining either [the group](###ban-a-group-member) the [whole server](social-friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
 
 ### Ban a group member
 An admin or superadmin can ban a member from the group. The user is kicked from the group and prevented from rejoining or even requesting to rejoin.
