@@ -1356,6 +1356,60 @@ An admin can promote another member of the group as an admin. This grants the me
 	Authorization: Bearer <session token>
 	```
 
+### Demote a member
+
+An admin can demote another member of the group down a role. This revokes the member of his current privileges to and assigns member the privileges available in the demoted role. Members who are already at the lowest role in their group will not be affected.
+
+=== "cURL"
+	```sh
+	curl -X POST "http://127.0.0.1:7350/v2/group/<group id>/demote?user_ids=<user id>" \
+        -H 'Authorization: Bearer <session token>'
+	```
+
+=== "JavaScript"
+	```js
+	const group_id = "<group id>";
+	const user_id = "<user id>";
+	await client.demoteGroupUsers(session, group_id, [user_id]);
+	```
+
+=== ".NET"
+	```csharp
+	const string groupId = "<group id>";
+	var userIds = new[] {"<user id>"};
+	await client.DemoteGroupUsersAsync(session, groupId, userIds);
+	```
+
+=== "Unity"
+	```csharp
+	const string groupId = "<group id>";
+	var userIds = new[] {"<user id>"};
+	await client.DemoteGroupUsersAsync(session, groupId, userIds);
+	```
+
+=== "Cocos2d-x JS"
+	```js
+	const group_id = "<group id>";
+	const user_id = "<user id>";
+	client.demoteGroupUsers(session, group_id, [user_id]);
+	```
+
+=== "Java"
+	```java
+	String groupid = "<group id>";
+	String[] userIds = new String[] {"<user id>"};
+	client.demoteGroupUsers(session, groupid, userIds).get();
+	```
+
+=== "REST"
+    ```
+	POST /v2/group/<group id>/demote?user_ids=<user id>
+	Host: 127.0.0.1:7350
+	Accept: application/json
+	Content-Type: application/json
+	Authorization: Bearer <session token>
+	```
+
 ### Kick a member
 
 An admin or superadmin can kick a member from the group. The user is removed but can rejoin again later unless the group is private in which case an admin must accept the join request.
