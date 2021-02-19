@@ -18,7 +18,7 @@ A tournament can also be played by opponents who are not users. For example a gu
 
 Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
 
-Setting the start and end time parameters to `-1` returns the ongoing and future tournaments.
+Omitting the start and end time parameters returns the ongoing and future tournaments.
 
 Setting the end time parameter to `0` only includes tournaments with no end time set in the results.
 
@@ -37,7 +37,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	var categoryStart = 1;
 	var categoryEnd = 2;
 	var startTime = 1538147711;
-	var endTime = -1; // all tournaments from the start time
+	var endTime = null; // all tournaments from the start time
 	var limit = 100; // number to list per page
 	var cursor = null;
 	var result = await client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
@@ -48,7 +48,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	var categoryStart = 1;
 	var categoryEnd = 2;
 	var startTime = 1538147711;
-	var endTime = -1L; // all tournaments from the start time
+	var endTime = null; // all tournaments from the start time
 	var limit = 100; // number to list per page
 	var cursor = null;
 	var result = await client.ListTournamentsAsync(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
@@ -59,7 +59,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	var categoryStart = 1;
 	var categoryEnd = 2;
 	var startTime = 1538147711;
-	var endTime = -1L; // all tournaments from the start time
+	var endTime = null; // all tournaments from the start time
 	var limit = 100; // number to list per page
 	var cursor = null;
 	var result = await client.ListTournamentsAsync(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor);
@@ -80,7 +80,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	uint32_t categoryStart = 1;
 	uint32_t categoryEnd = 2;
 	uint32_t startTime = 1538147711;
-	uint32_t endTime = -1; // all tournaments from the start time
+	uint32_t endTime = null; // all tournaments from the start time
 	int32_t limit = 100; // number to list per page
 
 	client->listTournaments(session,
@@ -99,7 +99,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	var categoryStart = 1;
 	var categoryEnd = 2;
 	var startTime = 1538147711;
-	var endTime = -1; // all tournaments from the start time
+	var endTime = null; // all tournaments from the start time
 	var limit = 100; // number to list per page
 	var cursor = null;
 	client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor)
@@ -125,7 +125,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	uint32_t categoryStart = 1;
 	uint32_t categoryEnd = 2;
 	uint32_t startTime = 1538147711;
-	uint32_t endTime = -1; // all tournaments from the start time
+	uint32_t endTime = null; // all tournaments from the start time
 	int32_t limit = 100; // number to list per page
 
 	client->listTournaments(session,
@@ -144,7 +144,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	int categoryStart = 1;
 	int categoryEnd = 2;
 	int startTime = 1538147711;
-	int endTime = -1; // all tournaments from the start time
+	int endTime = null; // all tournaments from the start time
 	int limit = 100; // number to list per page
 	String cursor = null;
 	TournamentList tournaments = client.listTournaments(session, categoryStart, categoryEnd, startTime, endTime, limit, cursor).get();
@@ -160,7 +160,7 @@ Setting the start time to a `> 0` unix timestamp returns any tournaments that st
 	var category_start = 1
 	var category_end = 2
 	var start_time = 1538147711
-	var end_time = -1 # all tournaments from the start time
+	var end_time = null # all tournaments from the start time
 	var limit = 100 # number to list per page
 	var cursor = null
 	var result : NakamaAPI.ApiTournamentList = yield(client.list_tournaments_async(session, category_start, category_end, start_time, end_time, limit, cursor), "completed")
