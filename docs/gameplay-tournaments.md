@@ -18,11 +18,11 @@ A tournament can also be played by opponents who are not users. For example a gu
 
 Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
 
-Setting the start and end time parameters to `-1` will returns the ongoing and future tournaments.
+Setting the start and end time parameters to `-1` returns the ongoing and future tournaments.
 
 Setting the end time parameter to `0` only includes tournaments with no end time set in the results.
 
-Setting end time to a `> 0` unix timestamp acts as an upper bound and only returns tournaments that end prior to it, excluding tournaments with no end time.
+Setting end time to a `> 0` unix timestamp acts as an upper bound and only returns tournaments that end prior to it (excluding tournaments with no end time).
 
 Setting the start time to a `> 0` unix timestamp returns any tournaments that start at a later time than it.
 
