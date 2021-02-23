@@ -88,21 +88,21 @@ Create a file called `docker-compose.yml` and edit it in your favourite text edi
 	version: '3'
 	services:
 	  cockroachdb:
-	    container_name: cockroachdb
-	    image: cockroachdb/cockroach:v19.2.5
-	    command: start --insecure --store=attrs=ssd,path=/var/lib/cockroach/
-	    restart: always
-	    volumes:
-	      - data:/var/lib/cockroach
-	    expose:
-	      - "8080"
-	      - "26257"
-	    ports:
-	      - "26257:26257"
-	      - "8080:8080"
+            container_name: cockroachdb
+            image: cockroachdb/cockroach:latest-v20.2
+            command: start-single-node --insecure --store=attrs=ssd,path=/var/lib/cockroach/
+            restart: "no"
+            volumes:
+              - data:/var/lib/cockroach
+            expose:
+              - "8080"
+              - "26257"
+            ports:
+              - "26257:26257"
+              - "8080:8080"
 	  nakama:
 	    container_name: nakama
-	    image: heroiclabs/nakama:2.12.0
+	    image: heroiclabs/nakama:latest
 	    entrypoint:
 	      - "/bin/sh"
 	      - "-ecx"
