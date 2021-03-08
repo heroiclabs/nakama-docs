@@ -76,6 +76,20 @@ The server has builtin authentication so clients can only send requests and conn
     onready var client := Nakama.create_client("defaultkey", "127.0.0.1", 7350, "http")
     ```
 
+=== "Defold"
+    ```lua
+    local defold = require "nakama.engine.defold"
+
+    local config = {}
+    config.host = 127.0.0.1
+    config.port = 7350
+    config.use_ssl = false
+    config.username = "defaultkey"
+    config.engine = defold
+
+    local client = nakama.create_client(config)    
+    ```
+
 Every user account is created from one of the [options used to authenticate](#authenticate). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
 
 ## Authenticate
@@ -262,6 +276,20 @@ A device identifier must contain alphanumeric characters with dashes and be betw
     }
     ```
 
+=== "Defold"
+    ```lua
+    local body = nakama.create_api_account_device(defold.uuid())
+    -- login using the token and create an account if the user
+    -- doesn't already exist
+    local result = nakama.authenticate_device(client, body, true)
+    if not result.token then
+        print("Unable to login")
+        return
+    end
+    -- store the token and use it when communicating with the server
+    nakama.set_bearer_token(client, result.token)
+    ```
+
 In games it is often a better option to use [Google](#google) or [Game Center](#game-center) to unobtrusively register the user.
 
 ### Email
@@ -399,6 +427,18 @@ An email address must be valid as defined by RFC-5322 and passwords must be at l
         "email": "email@example.com",
         "password": "3bc8f72e95a9"
     }
+    ```
+
+=== "Defold"
+    ```lua
+    local body = nakama.create_api_account_email("email@example.com", "3bc8f72e95a9")
+    local result = nakama.authenticate_email(client, body, true, "mycustomusername")
+    if not result.token then
+        print("Unable to login")
+        return
+    end
+    -- store the token and use it when communicating with the server
+    nakama.set_bearer_token(client, result.token)
     ```
 
 ### Social providers
@@ -554,6 +594,24 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
     }
     ```
 
+=== "Defold"
+    ```lua
+    -- Use the official Defold Facebook integration (www.defold.com/extension-facebook)
+    local permissions = { "public_profile" }
+    -- login using read permissions
+    -- there is no need to specify a publishing audience when requesting read permissions
+    facebook.login_with_permissions(permissions, facebook.AUDIENCE_NONE, function(self, data)
+        local body = nakama.create_api_account_facebook(facebook.access_token())
+        local result = nakama.authenticate_facebook(client, body, true, "mycustomusername")
+        if not result.token then
+            print("Unable to login")
+            return
+        end
+        -- store the token and use it when communicating with the server
+        nakama.set_bearer_token(client, result.token)
+    end)
+    ```
+
 You can add a button to your UI to login with Facebook.
 
 === "Unity"
@@ -580,6 +638,22 @@ Ensure that you've initialized the Facebook Instant Games SDK using `FBInstant.i
 
 !!! Note "Server configuration"
     Ensure you've [configured](install-configuration.md#facebook-instant-game) your FB Instant App secret for Nakama.
+
+
+=== "Defold"
+    ```lua
+    -- Use the official Defold Facebook Instant Games integration (www.defold.com/extension-fbinstant)
+    fbinstant.get_signed_player_info("developer payload", function(self, signature)
+        local body = nakama.create_api_account_facebook_instant_game(signature)
+        local result = nakama.authenticate_facebook_instant_game(client, body, true, "mycustomusername")
+        if not result.token then
+            print("Unable to login")
+            return
+        end
+        -- store the token and use it when communicating with the server
+        nakama.set_bearer_token(client, result.token)
+    end)
+    ```
 
 #### Google
 
@@ -699,6 +773,18 @@ You can choose a custom username when creating the account. To do this, set `use
     {
       "token": "...",
     }
+    ```
+
+=== "Defold"
+    ```lua
+    local body = nakama.create_api_account_google(oauth_token)
+    local result = nakama.authenticate_google(client, body, true, "mycustomusername")
+    if not result.token then
+        print("Unable to login")
+        return
+    end
+    -- store the token and use it when communicating with the server
+    nakama.set_bearer_token(client, result.token)
     ```
 
 #### Game Center
@@ -891,6 +977,25 @@ You can choose a custom username when creating the account. To do this, set `use
     }
     ```
 
+=== "Defold"
+    ```lua
+    -- Use https://defold.com/assets/gamekit/
+    local bundle_id = "..."
+    local player_id = "..."
+    local public_key_url = "..."
+    local salt = "..."
+    local signature = "..."
+    local timestamp_seconds = 0
+    local body = nakama.create_api_account_game_center(bundle_id, player_id, public_key_url, salt, signature, timestamp_seconds)
+    local result = nakama.authenticate_game_center(client, body, true, "mycustomusername")
+    if not result.token then
+        print("Unable to login")
+        return
+    end
+    -- store the token and use it when communicating with the server
+    nakama.set_bearer_token(client, result.token)
+    ```
+
 #### Steam
 
 Steam requires you to configure the server before you can register a user.
@@ -1009,6 +1114,19 @@ You can choose a custom username when creating the account. To do this, set `use
     {
       "token": "...",
     }
+    ```
+
+=== "Defold"
+    ```lua
+    -- Use https://defold.com/assets/steamworks/
+    local body = nakama.create_api_account_steam(steam_token)
+    local result = nakama.authenticate_steam(client, body, true, "mycustomusername")
+    if not result.token then
+        print("Unable to login")
+        return
+    end
+    -- store the token and use it when communicating with the server
+    nakama.set_bearer_token(client, result.token)
     ```
 
 ### Custom
@@ -1139,6 +1257,18 @@ You can choose a custom username when creating the account. To do this, set `use
     }
     ```
 
+=== "Defold"
+    ```lua
+    local body = nakama.create_api_account_custom(custom_id)
+    local result = nakama.authenticate_custom(client, body, true, "mycustomusername")
+    if not result.token then
+        print("Unable to login")
+        return
+    end
+    -- store the token and use it when communicating with the server
+    nakama.set_bearer_token(client, result.token)
+    ```
+
 ## Session
 
 When an authentication call succeeds, the server responds with a [session](/docs/session) object. The session object contains at least the following:
@@ -1244,6 +1374,16 @@ Once the client obtains the session object, you can utilize Nakama's realtime fe
             print("An error occured: %s" % connected)
             return
         print("Socket connected.")
+    ```
+
+=== "Defold"
+    ```lua
+    local socket = nakama.create_socket(client)
+    local ok, err = nakama.socket_connect(socket)
+    if not ok then
+        print("Unable to connect: ", err)
+        return
+    end
     ```
 
 ## Link or unlink
@@ -1366,6 +1506,16 @@ You can only link device Ids, custom Ids, and social provider IDs which are not 
     }
     ```
 
+=== "Defold"
+    ```lua
+    local body = nakama.create_api_account_custom(custom_id)
+    local result = nakama.link_custom(client, body)
+    if result.error then
+        print("An error occurred:", result.error)
+        return
+    end
+    ```
+
 You can unlink any linked login options for the current user.
 
 === "cURL"
@@ -1481,6 +1631,16 @@ You can unlink any linked login options for the current user.
     {
       "id":"some-custom-id"
     }
+    ```
+
+=== "Defold"
+    ```lua
+    local body = nakama.create_api_account_custom(custom_id)
+    local result = nakama.unlink_custom(client, body)
+    if result.error then
+        print("An error occurred:", result.error)
+        return
+    end
     ```
 
 You can link or unlink many different account options.
