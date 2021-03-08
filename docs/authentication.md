@@ -598,7 +598,9 @@ You can optionally import Facebook friends into Nakama's [friend graph](social-f
     ```lua
     -- Use the official Defold Facebook integration (www.defold.com/extension-facebook)
     local permissions = { "public_profile" }
-    facebook.login_with_permissions(permissions, facebook.AUDIENCE_EVERYONE, function(self, data)
+    -- login using read permissions
+    -- there is no need to specify a publishing audience when requesting read permissions
+    facebook.login_with_permissions(permissions, facebook.AUDIENCE_NONE, function(self, data)
         local body = nakama.create_api_account_facebook(facebook.access_token())
         local result = nakama.authenticate_facebook(client, body, true, "mycustomusername")
         if not result.token then
