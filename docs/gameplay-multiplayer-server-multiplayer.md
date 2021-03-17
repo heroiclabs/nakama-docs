@@ -149,8 +149,7 @@ A match ID will be created which could be sent out to the players with an in-app
       local setupstate = { initialstate = payload }
       local matchid = nk.match_create(modulename, setupstate)
 
-      -- Send notification of some kind
-      return matchid
+      return nk.json_encode({ matchid = matchid })
     end
     nk.register_rpc(create_match, "create_match_rpc")
     ```
