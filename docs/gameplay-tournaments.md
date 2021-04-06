@@ -691,13 +691,13 @@ Create a tournament with all it's configuration options.
 	title := "Daily Dash"
 	description := "Dash past your opponents for high scores and big rewards!"
 	category := 1
-	startTime := time.Now().UTC().Unix() // start now
+	startTime := int(time.Now().UTC().Unix()) // start now
 	endTime := 0                         // never end, repeat the tournament each day forever
 	duration := 3600                     // in seconds
 	maxSize := 10000                     // first 10,000 players who join
 	maxNumScore := 3                     // each player can have 3 attempts to score
 	joinRequired := true                 // must join to compete
-	err := nk.TournamentCreate(id.String(), sortOrder, operator, resetSchedule, metadata, title,
+	err := nk.TournamentCreate(ctx, id.String(), sortOrder, operator, resetSchedule, metadata, title,
 	    description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired)
 	if err != nil {
 	  logger.Printf("unable to create tournament: %q", err.Error())
@@ -762,7 +762,7 @@ Delete a tournament by it's ID.
 
 === "Go"
 	```go
-	err := nk.TournamentDelete(id)
+	err := nk.TournamentDelete(ctx, id)
 	if err != nil {
 	  logger.Printf("unable to delete tournament: %q", err.Error())
 	  return "", runtime.NewError("failed to delete tournament", 3)
@@ -796,7 +796,7 @@ Add additional score attempts to the owner's tournament record. This overrides t
 	id := "someid"
 	userID := "someuserid"
 	attempts := 10
-	err := nk.TournamentAddAttempt(id, userID, attempts)
+	err := nk.TournamentAddAttempt(ctx, id, userID, attempts)
 	if err != nil {
 	  logger.Printf("unable to update user %v record attempts: %q", userID, err.Error())
 	  return "", runtime.NewError("failed to add tournament attempts", 3)
@@ -895,26 +895,26 @@ A simple reward distribution function which sends a persistent notification to t
 === "Go"
 	```go
 	func distributeRewards(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, tournament *api.Tournament, end int64, reset int64) error {
-	  wallets := make([]*runtime.WalletUpdate, 0, 10)
-	  notifications := make([]*runtime.NotificationSend, 0, 10)
-	  content := map[string]interface{}{}
-	  changeset := map[string]interface{}{"coins": 100}
-	  records, _, _, _, err := nk.LeaderboardRecordsList(tournament.Id, []string{}, 10, nil, reset)
-	  for _, record := range records {
-	    wallets = append(wallets, &runtime.WalletUpdate{record.OwnerId, changeset, content})
-	    notifications = append(notifications, &runtime.NotificationSend{record.OwnerId, "Winner", content, 1, "", true})
-	  }
-	  err = nk.WalletsUpdate(wallets, false)
-	  if err := nil {
-	    logger.Error("failed to update winner wallets: %v", err)
-	    return err
-	  }
-	  err = nk.NotificationsSend(notifications)
-	  if err := nil {
-	    logger.Error("failed to send winner notifications: %v", err)
-	    return err
-	  }
-	  return nil
+		wallets := []*runtime.WalletUpdate{}
+		notifications := []*runtime.NotificationSend{}
+		content := map[string]interface{}{}
+		changeset := map[string]int64{"coins": 100}
+		records, _, _, _, err := nk.LeaderboardRecordsList(ctx, tournament.Id, []string{}, 10, "", reset)
+		for _, record := range records {
+			wallets = append(wallets, &runtime.WalletUpdate{record.OwnerId, changeset, content})
+			notifications = append(notifications, &runtime.NotificationSend{record.OwnerId, "Leaderboard winner", content, 1, "", true})
+		}
+		_, err = nk.WalletsUpdate(ctx, wallets, false)
+		if err != nil {
+			logger.Error("failed to update winner wallets: %v", err)
+			return err
+		}
+		err = nk.NotificationsSend(notifications)
+		if err != nil {
+			logger.Error("failed to send winner notifications: %v", err)
+			return err
+		}
+		return nil
 	}
 	```
 
