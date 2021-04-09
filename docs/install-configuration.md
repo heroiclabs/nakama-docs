@@ -118,6 +118,37 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 	    nakama --database.address "root@db1:26257" --database.address "root@db2:26257"
 	    ```
 
+
+### IAP (In-App Purchase)
+
+Nakama can verify in-app purchases by connecting to various stores and keeps a ledger of valid purchases. This is useful for preventing common in-app purchase replay attacks with valid receipts, as well as restoring purchases for user accounts as needed.
+
+#### Apple
+
+Apple In-App Purchase configuration
+
+| Parameter    | Flag                  | Description
+| ---------    | ----                  | -----------
+| <a class="anchor" id="apple.shared_password"></a>`shared_password`   | `apple.shared_password`      | Your application's shared password.
+
+#### Google
+
+Google In-App Purchase configuration
+
+| Parameter          | Flag                       | Description
+| ---------          | ----                       | -----------
+| <a class="anchor" id="google.client_email"></a>`client_email`          | `google.client_email`           | The Service Account Client Email value.
+| <a class="anchor" id="google.private_key"></a>`private_key` | `google.private_key`  | The Service Account Private Key value.
+
+#### Huawei
+
+| Parameter          | Flag                       | Description
+| ---------          | ----                       | -----------
+| <a class="anchor" id="huawei.public_key"></a>`public_key`          | `huawei.public_key`           | Huawei IAP store Base64 encoded Public Key.
+| <a class="anchor" id="huawei.client_id"></a>`client_id` | `huawei.client_id`  | Huawei OAuth client secret..
+| <a class="anchor" id="huawei.client_secret"></a>`client_secret` | `huawei.client_secret`  | Huawei OAuth app client secret.
+
+
 ### Leaderboard
 
 You can change configuration options related to the leaderboard and tournament systems.
@@ -185,7 +216,7 @@ Options related to Lua-based runtime engine.
 | <a class="anchor" id="runtime.call_stack_size"></a>`call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
 | <a class="anchor" id="runtime.env"></a>`env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
 | <a class="anchor" id="runtime.event_queue_size"></a>`event_queue_size` | `runtime.event_queue_size` | Size of the event queue buffer. Default 65536.
-| <a class="anchor" id="runtime.event_queue_workers"></a>`event_queue_workers` | `runtime.event_queue_workers` | Number of workers to use for concurrent processing of events. Default 8. 
+| <a class="anchor" id="runtime.event_queue_workers"></a>`event_queue_workers` | `runtime.event_queue_workers` | Number of workers to use for concurrent processing of events. Default 8.
 | <a class="anchor" id="runtime.http_key"></a>`http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
 | <a class="anchor" id="runtime.max_count"></a>`max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
 | <a class="anchor" id="runtime.min_count"></a>`min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
@@ -288,34 +319,6 @@ You can change configuration options related to session tracking.
 | <a class="anchor" id="tracker.max_silent_periods"></a>`max_silent_periods` | `tracker.max_silent_periods` | Maximum number of missed broadcasts before a cluster node's presences are considered down. Default value is 10.
 | <a class="anchor" id="tracker.permdown_period_ms"></a>`permdown_period_ms` | `tracker.permdown_period_ms` | Time in milliseconds since last broadcast before a cluster node's presences are considered permanently down and will be removed. Default value is 1200000.
 
-<!--
-
-### Purchase
-
-Nakama can verify in-app purchases by connecting to various stores and keeps a ledger of valid purchases. This is useful for preventing common in-app purchase replay attacks with valid receipts, as well as restoring purchases for user accounts as needed.
-
-#### Apple
-
-Apple In-App Purchase configuration
-
-| Parameter    | Flag                  | Description
-| ---------    | ----                  | -----------
-| <a class="anchor" id="apple.password"></a>`password`   | `apple.password`      | Your application's shared secret.
-| <a class="anchor" id="apple.production"></a>`production` | `apple.production`    | The order in which the reciept verification server will be contacted. Set `false` for test apps and `true` for live apps. Default is `false`.
-| <a class="anchor" id="apple.timeout_ms"></a>`timeout_ms` | `apple.timeout_ms`    | Connection timeout to connect to Apple services. Default value is 1500.
-
-#### Google
-
-Google In-App Purchase configuration
-
-| Parameter          | Flag                       | Description
-| ---------          | ----                       | -----------
-| <a class="anchor" id="google.package"></a>`package`          | `google.package`           | The package name the app is published under, such as `com.myapp.testapp`.
-| <a class="anchor" id="google.service_key_file"></a>`service_key_file` | `google.service_key_file`  | Absolute file path to the service key JSON file.
-| <a class="anchor" id="google.timeout_ms"></a>`timeout_ms`       | `google..timeout_ms`       | Connection timeout to connect to Google services. Default value is 1500.
-
--->
-
 
 ### Matchmaker
 
@@ -377,7 +380,7 @@ session:
 	token_expiry_sec: 60
     refresh_encryption_key: "defaultrefreshencryptionkey"
     refresh_token_expiry_sec: 3600
-    
+
 social:
 	steam:
 	publisher_key: ""

@@ -1,5 +1,5 @@
-[apple_iap_1]: images/apple_iap_1.jpg "Apple iTunes Connect"
-[apple_iap_2]: images/apple_iap_2.jpg "Apple iTunes Connect Shared Secret"
+[apple_iap_1]: images/apple_iap_1.jpg "Apple App Store Connect"
+[apple_iap_2]: images/apple_iap_2.jpg "Apple App Store Connect Shared Secret"
 [google_iap_1_create_service_account]: images/google_iap_1_create_service_account.jpg "Create Service Account"
 [google_iap_2_create_key]: images/google_iap_2_create_key.jpg "Create Key"
 [google_iap_3_create_key_2]: images/google_iap_3_create_key_2.jpg "Create Key"
@@ -27,9 +27,9 @@ In-App Purchase Validation is available for Apple and Google purchases, regardle
 
 __Fake Purchases__
 
-Nakama directly connects to Apple and Google services to check the validity of all incoming payments. This verification is completely outside the client's code, and cannot be intercepted and tampered with.
+Nakama directly connects to Apple, Google and Huawei services to check the validity of all incoming purchases. This verification is completely outside the client's code, and cannot be intercepted and tampered with.
 
-Every transaction is verified, every time, and invalid ones are rejected.
+Every purchase is verified, every time, and invalid ones are rejected.
 
 __Replay Attacks__
 
@@ -41,19 +41,11 @@ Successful transactions are bound to the account that submits them. Different us
 
 __Product Mismatches__
 
-The transaction is checked to ensure the correct reward is tied to each purchase. This prevents attacks that attempt to use a valid (cheap) purchase to unlock a different (expensive) reward.
-
-__Subscription Expiry__
-
-Nakama checks subscriptions to see if they've expired, and rejects the transaction as needed.
-
-__Purchase Cancellation__
-
-Valid receipts that link to cancelled purchases are flagged and rejected.
+Each validated purchase exposes data (e.g. product ID) that can be used to tie a purchase to a  product, preventing attacks that attempt to use a valid (cheap) purchase to unlock a different (expensive) reward.
 
 __Single Source of Truth__
 
-While Nakama maintains an internal record of all transactions, the remote payment provider is always given priority. Valid purchases that have been checked, logged, then subsequently cancelled, will be rejected appropriately.
+While Nakama maintains an internal record of all transactions, the remote payment provider is always used for validation.
 
 ## Apple
 
@@ -63,49 +55,30 @@ Apple purchase receipts are sent to Apple for validation. As suggested by Apple,
 
 ### Setup
 
-To validate receipts against the App Store, Nakama requires your app's shared secret. You can setup a shared secret in [iTunes Connect](https://itunesconnect.apple.com).
+To validate receipts against the App Store, Nakama requires your app's shared secret. You can setup a shared secret in [App Store Connect](https://appstoreconnect.apple.com) under your app's In-App Purchases management section.
 
-![Apple iTunes Connect][apple_iap_1]
+![Apple App Store Connect][apple_iap_1]
 
 Make a record of your shared secret:
 
-![Apple iTunes Connect Shared Secret][apple_iap_2]
+![Apple App Store Connect Shared Secret][apple_iap_2]
 
-You'll need to set the value of `purchase.apple.password` to the value of the Shared Secret above. For more info, take a look at the [configuration](install-configuration.md#purchase) page.
-
-If your app is in production, you'll need to set the value of `purchase.apple.production` to true to give priority Apple's Production servers.
+You'll need to set the value of Nakama's `iap.apple.shared_password` configuration flag to the value of the Shared Secret above. For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
 
 ### Validate Purchase
 
-Nakama only supports validating iOS 7+ receipts. In addition, Nakama only validates the first item in the receipt as Apple receipts can contain more than one in-app purchase item.
+Nakama only supports validating iOS 7+ receipts.
 
-=== "Unity"
-	```csharp
-	var productId = "com.yourcompany.product";
-	var receiptData = "...some-base64-encoded-data...";
-	
-	var message = NPurchaseValidateMessage.Apple(productId, receiptData);
-	client.Send(message, (INPurchaseRecord record) =>
-	{
-	  if (!record.Success) {
-	    Debug.Log("Purchase was not validation. Reason: {0}.", record.Message);
-	  } else {
-	    if (record.SeenBefore) {
-	      // This is useful for recovering previous purchases
-	      Debug.Log("This is a valid purchase but the purchase item was redeemed once before.");
-	    } else {
-	      Debug.Log("New purchase was validated");
-	    }
-	  }
-	}, (INError e) => {
-	  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-	});
-	```
+Apple receipts can contain multiple purchases, Nakama will validate all of them and store them as individual purchase records.
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| receipt_data | string | Base-64 encoded receipt data returned by the purchase operation itself. |
-| product_id | string | The product, item, or subscription package ID the purchase relates to. |
+=== "cURL"
+    ```sh
+    curl "http://127.0.0.1:7350/v2/iap/purchase/apple \
+      --user 'defaultkey:' \
+      --data '{"receipt":"base64_encoded_receipt_data"}'
+    ```
+
+Refer to the function reference page for the provided runtime [purchase validation functions](runtime-code-function-reference.md#purchase).
 
 ## Google
 
@@ -113,9 +86,10 @@ Nakama supports validating purchases made for products and subscription on Andro
 
 ### Setup
 
-To validate receipts against the Play Store, Nakama requires your app's package name, as well as a service file. You can setup a service account and download the service file on [Google Play Developer Console](https://play.google.com/apps/publish).
+To validate receipts against the Play Store, Nakama requires your Google Service Account `ClientEmail` and `PrivateKey`. The values must be set in Nakama's `iap.google.client_email` and `iap.google.private_key` configuration flags values, respectively.
+For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
 
-Firstly, you'll need to setup a Service Account in the [Google API Console](https://console.developers.google.com/iam-admin/serviceaccounts/).
+To get these values, first you'll need to setup a Service Account in the [Google API Console](https://play.google.com/console/developer/). You can refer to the [Google Play documentation](https://developers.google.com/android-publisher/getting_started#using_a_service_account) to create it.
 
 ![Create Service Account][google_iap_1_create_service_account]
 
@@ -123,11 +97,19 @@ Once a service account is created, you'll need to create a key:
 
 ![Create Key][google_iap_2_create_key]
 
-Download the key as a JSON file. You'll need to put this file somewhere that Nakama server can access.
+Download the key as a JSON file.
 
 ![Create Key][google_iap_3_create_key_2]
 
-Once the key is created, navigate back to [Google Play Developer Console](https://play.google.com/apps/publish) and navigate to __Settings__ > __API Access__.
+Open it, extract the values of `ClientEmail` and `PrivateKey` and set them as the respective Nakama configuration values for:
+
+- `iap.google.client_email`
+- `purchase.google.private_key`
+
+For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
+
+Finally you will need to ensure you grant Nakama access to the purchase validation APIs.
+Navigate back to [Google Play Developer Console](https://play.google.com/apps/publish) and navigate to __Settings__ > __API Access__.
 
 The service account you created in the previous steps should be listed above. You'll need to grant access to the service account to access the API:
 
@@ -141,69 +123,40 @@ Navigate to __Users & Permissions__ to check that the service account is setup c
 
 ![List users with access][google_iap_7_play_users]
 
-Lastly, you'll need to update Nakama's configuration with the following information:
-
-- `purchase.google.package_name`: Package name for your Android app, as you've listed in Google Play.
-
-- `purchase.google.service_key_file`: Path of the JSON file you download in previous steps. This file contains authentication information that allows Nakama to communicate with Google Play on your behalf. Make sure that the file is kept safe and is only accessible by Nakama and other authorized parties.
-
 ### Validate Purchase
 
-=== "Unity"
-	```csharp
-	var productId = "com.yourcompany.product";
-	var purchaseType = "product";
-	var purchaseToken = "some-token-from-google";
-	
-	var message = NPurchaseValidateMessage.Google(productId, purchaseType, purchaseToken);
-	client.Send(message, (INPurchaseRecord record) =>
-	{
-	  if (!record.Success) {
-	    Debug.Log("Purchase was not validation. Reason: {0}.", record.Message);
-	  } else {
-	    if (record.SeenBefore) {
-	      // This is useful for recovering previous purchases
-	      Debug.Log("This is a valid purchase but the purchase item was redeemed once before.");
-	    } else {
-	      Debug.Log("New purchase was validated");
-	    }
-	  }
-	}, (INError e) => {
-	  Debug.LogErrorFormat("Error: code '{0}' with '{1}'.", err.Code, err.Message);
-	});
-	```
+=== "cURL"
+    ```sh
+    curl "http://127.0.0.1:7350/v2/iap/purchase/google \
+      --user 'defaultkey:' \
+      --data '{"purchase":"json_encoded_purchase_data"}'
+    ```
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| product_type | string | Whether the purchase is for a `product` or a `subscription` |
-| purchase_token | string | The token returned in the purchase operation response, acts as a transaction identifier. |
-| product_id | string | The identifier of the product or subscription being purchased. |
+Refer to the function reference page for the provided runtime [purchase validation functions](runtime-code-function-reference.md#purchase).
 
-## Interpreting Responses
+## Huawei
 
-Responses contain the following information:
+Nakama validates Huawei purchases against their IAP validation service. As suggested by Huawei, the validity of the purchase data is also checked against the provided signature before contacting the Huawei service. If the data is invalid for any reason, the purchase is rejected before validation with Huawei's validation service.
 
-- `success` - Whether or not the transaction is valid and all the information matches.
-- `seen_before` - If this is a new transaction or if Nakama has a log of it.
-- `purchase_provider_reachable` - Indicates whether or not Nakama was able to reach the remote purchase service.
-- `message` - A string indicating why the purchase verification failed, if appropriate.
-- `data` - The complete response Nakama received from the remote service.
+### Validate Purchase
+=== "cURL"
+    ```sh
+    curl "http://127.0.0.1:7350/v2/iap/purchase/huawei \
+      --user 'defaultkey:' \
+      --data '{"purchase":"json_encoded_purchase_data","signature":"purchase_data_signature"}'
+    ```
 
-!!! note
-    If `purchase_provider_reachable` is `false` it indicates that Nakama was unable to query the remote purchase service. In this situation the client should use its discretion to decide if the purchase should be accepted, and must queue up the verification request for a later retry.
-
-Each response contains all the information needed to take the appropriate action. Below is a quick reference for interpreting the key fields:
+Refer to the function reference page for the provided runtime [purchase validation functions](runtime-code-function-reference.md#purchase).
 
 
-` ` | `seen_before` = `true` | `seen_before` = `false` |
------- | ------- | ---------- |
-`success` = `true`    | <mark>Valid, but Nakama has an existing record of it.</mark> | Valid and new.
-`success` = `false`   | <mark style="background-color: pink"> Rejected, check `message` field for reason.</mark> | <mark style="background-color: pink">Rejected, check `message` field for reason.</mark>
+## Interpreting the validation result
 
-## Recovering Purchases
+A validation result contains a list of validated purchases.
 
-When users change devices, it's common to offer an option (or fully automated process) to re-apply the benefits of any previous purchases to their new client installation.
+Because Apple may contain multiple purchases in a single receipt, the resulting list will contain only the purchases which have been validated and are new to Nakama's purchase ledger. If a purchase has already been validated by Nakama previously, it won't be included in the list, allowing the developer to discriminate new purchases and protect against replay attacks.
 
-Clients should always refer to the platform purchase provider for a list of purchases, then verify each one with Nakama. In this case clients should accommodate responses where the `seen_before` indicator is true and act accordingly.
+For Google and Huawei, each validation corresponds to a single purchase, which is included in the validation response list if new, and omitted otherwise.
 
+Each validated purchase also includes the payload of the provider validation response, should the developer need it for any reason.
 
+Should the purchase/receipt be invalid, the validation fail for any reason or the provider be unreachable, an error will be returned.

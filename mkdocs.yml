@@ -103,7 +103,7 @@ nav:
   - 'Realtime Multiplayer': 'gameplay-multiplayer-realtime.md'
   - "Authoritative Multiplayer": "gameplay-multiplayer-server-multiplayer.md"
 #  - 'Turn-based Multiplayer': 'gameplay-multiplayer-turnbased.md'
-#  - 'In-app Purchase Validation': 'in-app-purchase-validation.md'
+  - 'In-app Purchase Validation': 'in-app-purchase-validation.md'
 - 'Runtime Code':
   - 'Basics': 'runtime-code-basics.md'
 #  - 'Best practices': 'runtime-code-best-practices.md'
