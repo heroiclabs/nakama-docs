@@ -103,7 +103,6 @@ nav:
   - 'Realtime Multiplayer': 'gameplay-multiplayer-realtime.md'
   - "Authoritative Multiplayer": "gameplay-multiplayer-server-multiplayer.md"
 #  - 'Turn-based Multiplayer': 'gameplay-multiplayer-turnbased.md'
-  - 'In-app Purchase Validation': 'in-app-purchase-validation.md'
 - 'Runtime Code':
   - 'Basics': 'runtime-code-basics.md'
 #  - 'Best practices': 'runtime-code-best-practices.md'
@@ -115,6 +114,7 @@ nav:
   - 'TypeScript Setup': 'runtime-code-typescript-setup.md'
   - 'Function Reference': 'runtime-code-function-reference.md'
 #- 'Nakama enterprise': 'nakama-enterprise.md'
+- 'IAP Validation': 'iap-validation.md'
 - 'Advanced':
   - 'Events': 'advanced-events.md'
   - 'Streams': 'advanced-streams.md'

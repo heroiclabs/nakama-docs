@@ -2918,7 +2918,7 @@ _Example_
 
 __Purchase Get By Transaction Id__
 
-Look up a purchase by transaction ID.
+Look up a purchase receipt by transaction ID.
 
 _Parameters_
 
@@ -2952,7 +2952,7 @@ _Example_
 
 === "TypeScript"
     ```typescript
-    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
 
     let validation: nkruntime.ValidatedPurchaseAroundOwner;
     try {
@@ -2964,7 +2964,7 @@ _Example_
 
 __Purchases List__
 
-List stored validated purchases.
+List stored validated purchase receipts.
 
 _Parameters_
 
@@ -3003,7 +3003,7 @@ _Example_
 
 === "TypeScript"
     ```typescript
-    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
 
     let validation: nkruntime.ValidatedPurchaseList;
     try {
@@ -3056,8 +3056,8 @@ _Example_
 
 === "TypeScript"
     ```typescript
-    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
-    receipt := "<base64-receipt-data>"
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let receipt = '<base64-receipt-data>';
 
     let validation: nkruntime.ValidatePurchaseResponse;
     try {
@@ -3069,7 +3069,7 @@ _Example_
 
 __Purchase Validate Google__
 
-Validates and stores a purchase from the Google Play Store.
+Validates and stores a purchase receipt from the Google Play Store.
 
 _Parameters_
 
@@ -3110,8 +3110,8 @@ _Example_
 
 === "TypeScript"
     ```typescript
-    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
-    receipt := "<json-receipt-data>"
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let receipt = '<json-receipt-data>';
 
     let validation: nkruntime.ValidatePurchaseResponse;
     try {
@@ -3123,7 +3123,7 @@ _Example_
 
 __Purchase Validate Huawei__
 
-Validates and stores a purchase from the Huawei App Gallery.
+Validates and stores a purchase receipt from the Huawei App Gallery.
 
 _Parameters_
 
@@ -3168,9 +3168,9 @@ _Example_
 
 === "TypeScript"
     ```typescript
-    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
-    receipt := "<receipt-data>"
-    signature := "<signature-data>"
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let receipt = '<receipt-data>';
+    let signature = '<signature-data>';
 
     let validation: nkruntime.ValidatePurchaseResponse;
     try {

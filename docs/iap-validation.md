@@ -27,9 +27,9 @@ In-App Purchase Validation is available for Apple and Google purchases, regardle
 
 __Fake Purchases__
 
-Nakama directly connects to Apple, Google and Huawei services to check the validity of all incoming purchases. This verification is completely outside the client's code, and cannot be intercepted and tampered with.
+Nakama directly connects to Apple, Google and Huawei services to check the validity of all incoming purchase receipts. This verification is completely outside the client's code, and cannot be intercepted and tampered with.
 
-Every purchase is verified, every time, and invalid ones are rejected.
+Every purchase receipt is verified, every time, and invalid ones are rejected.
 
 __Replay Attacks__
 
@@ -41,7 +41,7 @@ Successful transactions are bound to the account that submits them. Different us
 
 __Product Mismatches__
 
-Each validated purchase exposes data (e.g. product ID) that can be used to tie a purchase to a  product, preventing attacks that attempt to use a valid (cheap) purchase to unlock a different (expensive) reward.
+Each validated purchase receipt exposes data (e.g. product ID) that can be used to tie a purchase to a product, preventing attacks that attempt to use a valid (cheap) purchase to unlock a different (expensive) reward.
 
 __Single Source of Truth__
 
