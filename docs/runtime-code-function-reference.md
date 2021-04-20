@@ -2914,6 +2914,272 @@ _Example_
     nk.notificationsSend(notifications);
     ```
 
+### purchase
+
+__Purchase Get By Transaction Id__
+
+Look up a purchase receipt by transaction ID.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| transactionID | `string` | string | `string` | Transaction ID of the purchase to look up. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `string, *api.ValidatedPurchase` | `table` | `nkruntime.ValidatedPurchaseAroundOwner` | A validated purchase and its owner. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local transaction_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    local purchases = nk.purchase_get_by_transaction_id(transaction_id)
+    ```
+
+=== "Go"
+    ```go
+    transactionId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    userId, purchase, err := nk.PurchaseGetByTransactionId(ctx, transactionId)
+    if err != nil {
+      // Handle error
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+
+    let validation: nkruntime.ValidatedPurchaseAroundOwner;
+    try {
+        validation = nk.purchasesList(userId);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
+__Purchases List__
+
+List stored validated purchase receipts.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| userID | `string` | Opt. string | Opt. `string` | Filter by userID. Can be an empty string in Go to list purchases for all users. Opt. in Lua/JavaScript |
+| limit | `int` | number | Opt. `number` | Limit number of records retrieved. Defaults to 100. |
+| cursor | `string` | Opt. string | Opt. `string` | Pagination cursor from previous result. If none available set to nil or "" (empty string). |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `*api.PurchaseList` | `table` | `nkruntime.ValidatedPurchaseList` | A page of stored validated purchases. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    local purchases = nk.purchases_list(user_id)
+    ```
+
+=== "Go"
+    ```go
+    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    purchases, err := nk.PurchasesList(ctx, userId, 100, "")
+    if err != nil {
+      // Handle error
+    }
+    for _, p := range purchases.ValidatedPurchases {
+        logger.Info("Purchase: %+v", v)
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+
+    let validation: nkruntime.ValidatedPurchaseList;
+    try {
+        validation = nk.purchasesList(userId);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
+__Purchase Validate Apple__
+
+Validates and stores the purchases present in an Apple App Store Receipt.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| userID | `string` | string | `string` | The userID of the owner of the receipt. |
+| receipt | `string` | string | `string` | Base-64 encoded receipt data returned by the purchase operation itself. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `*api.ValidatePurchaseResponse` | `table` | `nkruntime.ValidatePurchaseResponse` | The resulting succesfully validated purchases. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    local receipt = "<base64-receipt-data>"
+
+    local validation = nk.purchase_validate_apple(user_id, receipt)
+    ```
+
+=== "Go"
+    ```go
+    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    receipt := "<base64-receipt-data>"
+    validation, err := nk.PurchaseValidateApple(ctx, userId, receipt)
+    if err != nil {
+      // Handle error
+    }
+    for _, p := range validation.ValidatedPurchases {
+        logger.Info("Validated purchase: %+v", v)
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let receipt = '<base64-receipt-data>';
+
+    let validation: nkruntime.ValidatePurchaseResponse;
+    try {
+        validation = nk.purchaseValidateApple(userId, receipt);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
+__Purchase Validate Google__
+
+Validates and stores a purchase receipt from the Google Play Store.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| userID | `string` | string | `string` | The userID of the owner of the receipt. |
+| receipt | `string` | string | `string` | The JSON encoded Google receipt. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `*api.ValidatePurchaseResponse` | `table` | `nkruntime.ValidatePurchaseResponse` | The resulting succesfully validated purchases. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    local receipt = "<json-receipt-data>"
+
+    local validation = nk.purchase_validate_google(user_id, receipt)
+    ```
+
+=== "Go"
+    ```go
+    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    receipt := "<json-receipt-data>"
+    validation, err := nk.PurchaseValidateGoogle(ctx, userId, receipt)
+    if err != nil {
+      // Handle error
+    }
+    for _, p := range validation.ValidatedPurchases {
+        logger.Info("Validated purchase: %+v", v)
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let receipt = '<json-receipt-data>';
+
+    let validation: nkruntime.ValidatePurchaseResponse;
+    try {
+        validation = nk.purchaseValidateGoogle(userId, receipt);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
+__Purchase Validate Huawei__
+
+Validates and stores a purchase receipt from the Huawei App Gallery.
+
+_Parameters_
+
+| Param | Go type | Lua type | TypeScript type | Description |
+| ----- | ------- | -------- | ----------- | ----------- |
+| ctx | `context.Context` | - | - | The [context](runtime-code-basics.md#register-hooks) object represents information about the server and requester. |
+| userID | `string` | string | `string` | The userID of the owner of the receipt. |
+| receipt | `string` | string | `string` | The Huawei receipt data. |
+| signature | `string` | string | `string` | The receipt signature. |
+
+_Returns_
+
+| Go type | Lua type | TypeScript type | Description |
+| -------- | -------- | --------------- | ----------- |
+| `*api.ValidatePurchaseResponse` | `table` | `nkruntime.ValidatePurchaseResponse` | The resulting succesfully validated purchases. |
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local user_id = "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    local receipt = "<receipt-data>"
+    local signature = "<signature-data>"
+
+    local validation = nk.purchase_validate_huawei(user_id, receipt, signature)
+    ```
+
+=== "Go"
+    ```go
+    userId := "4c2ae592-b2a7-445e-98ec-697694478b1c"
+    signature := "<signature-data>"
+    receipt := "<receipt-data>"
+
+    validation, err := nk.PurchaseValidateHuawei(ctx, userId, signature, receipt)
+    if err != nil {
+      // Handle error
+    }
+    for _, p := range validation.ValidatedPurchases {
+        logger.Info("Validated purchase: %+v", v)
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    let userId = '4c2ae592-b2a7-445e-98ec-697694478b1c';
+    let receipt = '<receipt-data>';
+    let signature = '<signature-data>';
+
+    let validation: nkruntime.ValidatePurchaseResponse;
+    try {
+        validation = nk.purchaseValidateHuawei(userId, receipt, signature);
+    } catch(error) {
+        // Handle error
+    }
+    ```
+
 ### register hooks
 
 __Register Matchmaker Matched__
