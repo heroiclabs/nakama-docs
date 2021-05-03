@@ -404,4 +404,14 @@ matchmaker:
         interval_sec: 15
         max_intervals: 3
 
+iap:
+	apple:
+		shared_password: "password"
+	google:
+		client_email: "email@google.com"
+		private_key: "pk"
+	huawei:
+		public_key: "pk"
+		client_id: "id"
+		client_secret: "secret"
 ```
