@@ -3304,7 +3304,7 @@ _Parameters_
 | func | `function` | function | `function` | A function reference which will be executed on each `msgname` message (in Lua). In Go, there are separate functions for each of those actions. |
 | msgname | - | string | - | The specific message name to execute the `func` function after. |
 
-For a complete list of RegisterBefore functions, refer [this page](https://github.com/heroiclabs/nakama-common/blob/3c41e7f99ed19881a03dec296f5afc78a264ee99/runtime/runtime.go#L234). For message names (in Lua), have a look at [this section](runtime-code-basics.md#message-names).
+For a complete list of RegisterBefore functions, refer [this page](https://github.com/heroiclabs/nakama-common/blob/master/runtime/runtime.go). For message names (in Lua), have a look at [this section](runtime-code-basics.md#message-names).
 
 _Example_
 
