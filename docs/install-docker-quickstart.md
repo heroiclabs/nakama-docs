@@ -3,7 +3,7 @@
 [Docker](https://www.docker.com/) is the quickest way to download and start developing with Nakama. By using Docker you are able to:
 
 * Install to a pristine environment
-* Concurrently install and run the required [CockroachDB](https://www.cockroachlabs.com/) server
+* Concurrently install and run the required [CockroachDB](https://www.cockroachlabs.com/) database
 * Take snapshots, remove, and re-install Nakama without affecting your primary operating system
 * Enjoy a quick and simplified installation experience regardless of your OS
 
