@@ -3121,6 +3121,35 @@ _Example_
     }
     ```
 
+_receipt JSON format_
+
+This must be a string inside the `receipt` variable in the language examples above as provided by Google.
+
+```json
+{
+    "json": {
+        "orderId ": "..",
+        "packageName ": "..",
+        "productId ": "..",
+        "purchaseTime": 1607721533824,
+        "purchaseState": 0,
+        "purchaseToken": "..",
+        "acknowledged": false
+    },
+    "signature ": "..",
+    "skuDetails ": {
+        "productId": "..",
+        "type": "inapp",
+        "price": "u20ac82.67",
+        "price_amount_micros": 82672732,
+        "price_currency_code": "EUR",
+        "title": "..",
+        "description": "..",
+        "skuDetailsToken": ".."
+    }
+}
+```
+
 __Purchase Validate Huawei__
 
 Validates and stores a purchase receipt from the Huawei App Gallery.
