@@ -3,7 +3,7 @@
 [Docker](https://www.docker.com/) is the quickest way to download and start developing with Nakama. By using Docker you are able to:
 
 * Install to a pristine environment
-* Concurrently install and run the required [CockroachDB](https://www.cockroachlabs.com/) database
+* Easily install and run the [CockroachDB](https://www.cockroachlabs.com/) database
 * Take snapshots, remove, and re-install Nakama without affecting your primary operating system
 * Enjoy a quick and simplified installation experience regardless of your OS
 
@@ -69,7 +69,7 @@ You can also access the Nakama Console by navigating your browser to `localhost:
 ![Nakama console](images/console.png)
 
 !!! note "Note"
-    When prompted to login, the default credentials are `Admin:Password`. These can be changed via configuration file or command-line flags.
+    When prompted to login, the default credentials are `admin:password`. These can be changed via configuration file or command-line flags.
 
 7. You can now go get started with your preferred client SDK:
     * [.NET/Unity client](unity-client-guide.md)
@@ -81,4 +81,3 @@ You can also access the Nakama Console by navigating your browser to `localhost:
     * [Cocos2d-x (Javascript) client](cocos2d-x-js-client-guide.md)
     * [Unreal](unreal-client-guide.md)
     * [Defold client](defold-client-guide.md)
-    

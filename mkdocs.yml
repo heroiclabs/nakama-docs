@@ -68,7 +68,7 @@ nav:
 - 'Introduction': 'index.md'
 - 'Download': 'nakama-download.md'
 - 'Install and setup':
-  - 'Docker quickstart': 'install-docker-quickstart.md'
+  - 'Docker quickstart': 'install-docker-compose-quickstart.md'
   - 'Binary install': 'install-binary.md'
   - 'Start server': 'install-start-server.md'
   - 'Configuration': 'install-configuration.md'
