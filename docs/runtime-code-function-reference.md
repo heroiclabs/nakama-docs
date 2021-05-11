@@ -3121,9 +3121,9 @@ _Example_
     }
     ```
 
-_receipt JSON format_
+_Receipt JSON Format_
 
-This must be a string inside the `receipt` variable in the language examples above as provided by Google.
+The Google provided receipt, passed as a string inside the `receipt` variable in the language examples above.
 
 ```json
 {
