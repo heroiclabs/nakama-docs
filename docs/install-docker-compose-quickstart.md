@@ -13,6 +13,9 @@ Following this guide, you will use [Docker Compose](https://docs.docker.com/comp
 
 Before proceeding ensure that you have [installed Docker Desktop](https://docs.docker.com/get-docker/).
 
+!!! note "Linux Users"
+    Docker Desktop is only available for Mac and Windows. You must install [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) individually for your distribution.
+
 ## Running Nakama
 
 1. Start by creating a directory where your Nakama server will sit, for example `Desktop/nakama`.
@@ -37,15 +40,15 @@ docker-compose -f docker-compose.yml up
 
 6. Congratulations! Your Nakama server is now up and running, available at `127.0.0.1:7350`.
 
-![Nakama containers running](images/nakama-compose-running.png)
+![Nakama containers running](images/install-docker-compose/nakama-compose-running.png)
 
 Use the **Open in Visual Studio Code** button (or that for your IDE) to edit your `docker-compose.yml` file directly.
 
 ## Nakama Console
 
-You can also access the Nakama Console by navigating your browser to `localhost:7351`:
+You can also access the Nakama Console by navigating your browser to `127.0.0.1:7351`:
 
-![Nakama console](images/console.png)
+![Nakama console](images/install-docker-compose/console.png)
 
 !!! note "Note"
     When prompted to login, the default credentials are `admin:password`. These can be changed via configuration file or command-line flags.
