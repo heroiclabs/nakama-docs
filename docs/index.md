@@ -1,6 +1,6 @@
 [nakama_logo]: images/nakama-logo.png "Nakama Logo"
 
-# Nakama server
+# Nakama Server
 
 ![Nakama Logo][nakama_logo]
 

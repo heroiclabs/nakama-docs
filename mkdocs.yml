@@ -1,39 +1,47 @@
 # Project information
-site_name: 'Nakama server'
-site_description: 'Documentation for the Nakama realtime and social server for games and apps.'
-site_author: 'Heroic Labs Team & contributors'
-site_url: 'https://heroiclabs.com/'
-edit_uri: 'https://github.com/heroiclabs/nakama-docs/edit/master/docs/'
+site_name: Nakama Server
+site_description: Documentation for the Nakama realtime and social server for games and apps.
+site_author: Heroic Labs Team & Contributors
+site_url: https://heroiclabs.com/
+edit_uri: https://github.com/heroiclabs/nakama-docs/edit/master/docs/
 
 # Deployment
-remote_name: 'origin'
-remote_branch: 'gh-pages'
+remote_name: origin
+remote_branch: gh-pages
 
 # Repository
-repo_name: 'heroiclabs/nakama'
-repo_url: 'https://github.com/heroiclabs/nakama'
+repo_name: heroiclabs/nakama
+repo_url: https://github.com/heroiclabs/nakama
 
 # Copyright
-copyright: 'Copyright &copy; 2020 Heroic Labs'
+copyright: Copyright &copy; 2020 Heroic Labs
 
 # Documentation and theme
 theme:
-  name: 'material'
-  language: 'en'
-  logo: 'images/logo-white.svg'
-  favicon: 'images/favicon.ico'
+  name: material
+  language: en
+  logo: images/logo-white.svg
+  favicon: images/favicon.ico
   palette:
-    primary: 'indigo'
-    accent: 'indigo'
+    primary: indigo
+    accent: indigo
   font:
-    text: 'Roboto'
-    code: 'Roboto Mono'
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.instant
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    # Top level navigation turned into tabs
+    # Use to implement Nakama Docs Realms
+    # - navigation.tabs
 
 extra_javascript:
-  - 'javascripts/main.js'
+  - javascripts/main.js
 
 extra_css:
-  - 'css/extra.css'
+  - css/extra.css
 
 # Options
 plugins:
@@ -43,14 +51,14 @@ plugins:
 
 extra:
   social:
-    - icon: 'fontawesome/solid/globe'
-      link: 'https://heroiclabs.com'
-    - icon: 'fontawesome/brands/github'
-      link: 'https://github.com/heroiclabs'
-    - icon: 'fontawesome/brands/twitter'
-      link: 'https://twitter.com/heroicdev'
-    - icon: 'fontawesome/brands/linkedin'
-      link: 'https://www.linkedin.com/company/heroic-labs'
+    - icon: fontawesome/solid/globe
+      link: https://heroiclabs.com
+    - icon: fontawesome/brands/github
+      link: https://github.com/heroiclabs
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/heroicdev
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/heroic-labs
 
 # Extensions
 markdown_extensions:
@@ -65,86 +73,60 @@ markdown_extensions:
 
 # Nav menu
 nav:
-- 'Introduction': 'index.md'
-- 'Download': 'nakama-download.md'
-- 'Install and setup':
-  - 'Docker quickstart': 'install-docker-quickstart.md'
-  - 'Binary install': 'install-binary.md'
-  - 'Start server': 'install-start-server.md'
-  - 'Configuration': 'install-configuration.md'
-  - 'Nakama CLI': 'install-server-cli.md'
-  - 'Upgrades': 'install-nakama-upgrade.md'
-- '.NET/Unity client guide': 'unity-client-guide.md'
-- 'Godot client guide': 'godot-client-guide.md'
-- 'JavaScript client guide': 'javascript-client-guide.md'
-- 'Java/Android client guide': 'android-java-client-guide.md'
-- 'C++ client guide': 'cpp-client-guide.md'
-- 'Cocos2d-x client guide (C++)': 'cocos2d-x-client-guide.md'
-- 'Cocos2d-x client guide (JavaScript)': 'cocos2d-x-js-client-guide.md'
-- 'Unreal client guide': 'unreal-client-guide.md'
-- 'Defold client guide': 'defold-client-guide.md'
-- 'Authentication': 'authentication.md'
-- 'User accounts': 'user-accounts.md'
-- 'Session': 'session.md'
-- 'Storage Engine':
-  - 'Collections': 'storage-collections.md'
-  - 'Access controls': 'storage-access-controls.md'
-#  - 'Design patterns': 'storage-design-patterns.md'
-- 'Social':
-  - 'Friends': 'social-friends.md'
-  - 'Groups and Clans': 'social-groups-clans.md'
-  - 'In-app Notifications': 'social-in-app-notifications.md'
-  - 'Status': 'social-status.md'
-  - 'Realtime Chat': 'social-realtime-chat.md'
-- 'Gameplay':
-  - 'Leaderboards': 'gameplay-leaderboards.md'
-  - 'Tournaments': 'gameplay-tournaments.md'
-  - 'Matchmaker': 'gameplay-matchmaker.md'
-  - 'Realtime Multiplayer': 'gameplay-multiplayer-realtime.md'
-  - "Authoritative Multiplayer": "gameplay-multiplayer-server-multiplayer.md"
-#  - 'Turn-based Multiplayer': 'gameplay-multiplayer-turnbased.md'
-- 'Runtime Code':
-  - 'Basics': 'runtime-code-basics.md'
-#  - 'Best practices': 'runtime-code-best-practices.md'
-#  - 'Examples': 'runtime-code-examples.md'
-#  - 'Recommended modules': 'runtime-code-recommended-modules.md'
-#  - 'Lua for JavaScripters': 'runtime-lua-for-javascripters.md'
-#  - 'JavaScript/Lua comparison': 'runtime-javascript-lua-comparison.md'
-#  - 'Lua cheatsheet': 'runtime-lua-cheatsheet.md'
-  - 'TypeScript Setup': 'runtime-code-typescript-setup.md'
-  - 'Function Reference': 'runtime-code-function-reference.md'
-#- 'Nakama enterprise': 'nakama-enterprise.md'
-- 'IAP Validation': 'iap-validation.md'
-- 'Advanced':
-  - 'Events': 'advanced-events.md'
-  - 'Streams': 'advanced-streams.md'
-  - 'TCP or UDP': 'expert-tcp-udp.md'
-  - 'Modelling for Scalability': 'expert-modelling.md'
-  - 'Sessions and Auth': 'expert-auth.md'
-- 'Benchmarks': 'benchmarks.md'
-- 'Deployment':
-#  - 'Production settings': 'deployment-production-settings.md'
-#  - 'Resource limits': 'deployment-resource-limits.md'
-#  - 'Managed Cloud': 'deployment-managed-cloud.md'
-  - 'Digital Ocean': 'deployment-digital-ocean.md'
-- 'Tutorials':
-#  - 'Add custom roles to groups': 'tutorial-add-custom-roles-to-groups.md'
-#  - 'Authenticate with Game Center': 'tutorial-authenticate-with-game-center.md'
-  - 'Develop with LibGDX': 'tutorial-develop-with-libgdx.md'
-  - 'Initialize a new user': 'tutorial-initialize-new-user.md'
-  - 'Remote configuration': 'tutorial-remote-configuration.md'
-  - 'Send push messages': 'tutorial-send-push-messages.md'
-#  - 'Dynamic leaderboards': 'tutorial-dynamic-leaderboards.md'
-#  - 'Virtual wallet': 'tutorial-virtual-wallet.md'
-#  - 'Inventory management': 'tutorial-inventory-management.md'
-#  - 'Prized leaderboards': 'tutorial-prized-leaderboards.md'
-#- 'Internals':
-#  - 'Server architecture': 'internal-nakama-server-architecture.md'
-#  - 'Social graph engine': 'internal-nakama-social-graph-engine.md'
-#  - 'Message router': 'internal-nakama-message-router.md'
-#  - 'Network protocol': 'internal-nakama-network-protocol.md'
-#  - 'Lua runtime': 'internal-nakama-lua-runtime.md'
-#- 'Protocol reference': '#'
-#- 'Release notes': '#'
-- 'Previous versions': 'previous-versions.md'
-
+  - Getting Started:
+    - Introduction: index.md
+    - Docker compose: install-docker-quickstart.md
+    - Windows binary: install-binary-windows-quickstart.md
+    - macOS binary: install-binary-macos-quickstart.md
+    - Linux binary: install-binary-linux-quickstart.md
+    - Nakama CLI: install-server-cli.md
+    - Configuration: install-configuration.md
+    - Upgrading Nakama: install-nakama-upgrade.md
+  - Client Libraries:
+    - .NET/Unity: unity-client-guide.md
+    - JavaScript: javascript-client-guide.md
+    - Godot: godot-client-guide.md
+    - Defold : defold-client-guide.md
+    - Java/Android: android-java-client-guide.md
+    - C++: cpp-client-guide.md
+    - Unreal: unreal-client-guide.md
+    - Cocos2d-x C++: cocos2d-x-client-guide.md
+    - Cocos2d-x JS: cocos2d-x-js-client-guide.md
+  - Features:
+    - User Accounts:
+      - Authentication: authentication.md
+      - User accounts: user-accounts.md
+      - Session: session.md
+      - Initialize a new user: tutorial-initialize-new-user.md
+    - Storage Engine:
+      - Collections: storage-collections.md
+      - Access controls: storage-access-controls.md
+    - Social:
+      - Friends: social-friends.md
+      - Groups and Clans: social-groups-clans.md
+      - In-app Notifications: social-in-app-notifications.md
+      - Status: social-status.md
+      - Realtime Chat: social-realtime-chat.md
+    - Gameplay:
+      - Leaderboards: gameplay-leaderboards.md
+      - Tournaments: gameplay-tournaments.md
+      - Matchmaker: gameplay-matchmaker.md
+      - Realtime Multiplayer: gameplay-multiplayer-realtime.md
+      - Authoritative Multiplayer: gameplay-multiplayer-server-multiplayer.md
+    - Server Runtime Code:
+      - Basics: runtime-code-basics.md
+      - TypeScript Setup: runtime-code-typescript-setup.md
+      - Function Reference: runtime-code-function-reference.md
+  - Advanced:
+    - Events: advanced-events.md
+    - Streams: advanced-streams.md
+    - IAP Validation: iap-validation.md
+    - Push messages: tutorial-send-push-messages.md
+    - Advanced sessions: expert-auth.md
+    - Choosing TCP or UDP: expert-tcp-udp.md
+    - Modelling for Scalability: expert-modelling.md
+    - Remote configuration: tutorial-remote-configuration.md
+    - Develop with LibGDX: tutorial-develop-with-libgdx.md
+    - Deploy to Digital Ocean: deployment-digital-ocean.md
+    - Benchmarks: benchmarks.md
+    - Previous releases: previous-versions.md

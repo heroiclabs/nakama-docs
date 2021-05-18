@@ -431,7 +431,7 @@ _Returns_
 You must return three values:
 
 (table) - The initial in-memory state of the match. May be any non-nil Lua term, or nil to end the match.<br>
-(number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 30, inclusive.<br>
+(number) - Tick rate representing the desired number of `match_loop()` calls per second. Must be between 1 and 60, inclusive.<br>
 (string) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 bytes long. This is used in [match listing](#match-listings) to filter matches.
 
 _Example_
@@ -817,7 +817,7 @@ _Returns_
 The function must return:
 
 1. `state` (`interface{}`) - The initial in-memory state of the match. May be any `interface{}` value that will store the match state as it progresses. It will be available to, and can be updated by, all match handler functions.
-2. `tickrate` (`int`) - Tick rate representing the desired number of `MatchLoop()` calls per second. Must be between 1 and 30, inclusive. For example a tickrate of 2 will call the match loop twice every second, which is every 500ms.
+2. `tickrate` (`int`) - Tick rate representing the desired number of `MatchLoop()` calls per second. Must be between 1 and 60, inclusive. For example a tickrate of 2 will call the match loop twice every second, which is every 500ms.
 3. `label` (`string`) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 characters long. This is used in [match listing](#match-listings) to filter matches.
 
 _Example_
