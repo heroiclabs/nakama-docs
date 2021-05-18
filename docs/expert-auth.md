@@ -1,6 +1,6 @@
 [nakama-sessions]: images/nakama-sessions.png "The overlap between player behaviours and session types"
 
-# Handling Session and Authentication within your games
+# Session Management
 
 Authentication, coupled with user accounts and session management seems complex. There are lots of moving parts that come together, such as your:
 

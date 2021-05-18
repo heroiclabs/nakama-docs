@@ -96,33 +96,31 @@ nav:
     - User Accounts:
       - Authentication: authentication.md
       - User accounts: user-accounts.md
-      - Session: session.md
       - Initialize a new user: tutorial-initialize-new-user.md
+      - Sessions: session.md
+      - Session management: expert-auth.md
     - Storage Engine:
       - Collections: storage-collections.md
       - Access controls: storage-access-controls.md
-    - Social:
-      - Friends: social-friends.md
-      - Groups and Clans: social-groups-clans.md
-      - In-app Notifications: social-in-app-notifications.md
-      - Status: social-status.md
-      - Realtime Chat: social-realtime-chat.md
-    - Gameplay:
-      - Leaderboards: gameplay-leaderboards.md
-      - Tournaments: gameplay-tournaments.md
-      - Matchmaker: gameplay-matchmaker.md
-      - Realtime Multiplayer: gameplay-multiplayer-realtime.md
-      - Authoritative Multiplayer: gameplay-multiplayer-server-multiplayer.md
-    - Server Runtime Code:
-      - Basics: runtime-code-basics.md
-      - TypeScript Setup: runtime-code-typescript-setup.md
-      - Function Reference: runtime-code-function-reference.md
+    - Friends: social-friends.md
+    - Groups and Clans: social-groups-clans.md
+    - In-app Notifications: social-in-app-notifications.md
+    - Status: social-status.md
+    - Realtime Chat: social-realtime-chat.md
+    - Leaderboards: gameplay-leaderboards.md
+    - Tournaments: gameplay-tournaments.md
+    - Matchmaker: gameplay-matchmaker.md
+    - Realtime Multiplayer: gameplay-multiplayer-realtime.md
+    - Authoritative Multiplayer: gameplay-multiplayer-server-multiplayer.md
+    - IAP Validation: iap-validation.md
+    - Push messages: tutorial-send-push-messages.md
+  - Server Runtime Code:
+    - Basics: runtime-code-basics.md
+    - TypeScript Setup: runtime-code-typescript-setup.md
+    - Function Reference: runtime-code-function-reference.md
   - Advanced:
     - Events: advanced-events.md
     - Streams: advanced-streams.md
-    - IAP Validation: iap-validation.md
-    - Push messages: tutorial-send-push-messages.md
-    - Advanced sessions: expert-auth.md
     - Choosing TCP or UDP: expert-tcp-udp.md
     - Modelling for Scalability: expert-modelling.md
     - Remote configuration: tutorial-remote-configuration.md

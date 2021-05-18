@@ -1,4 +1,4 @@
-# Session
+# Sessions
 
 In general terms, a "session" is a period during which a user is authenticated with a system.
 
