@@ -64,7 +64,7 @@ Before proceeding ensure that you have [installed Docker Desktop](https://docs.d
               - "7350:7350"
               - "7351:7351"
             healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:7350/"]
+              test: ["CMD", "curl", "-f", "http://localhost:7350/"]
               interval: 10s
               timeout: 5s
               retries: 5
