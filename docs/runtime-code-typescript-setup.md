@@ -126,7 +126,7 @@ npx tsc
 
 ## Run the Project
 
-You can use Docker with a [compose file](install-docker-quickstart.md) for local development or [install the binary](install-binary.md) for the game server. You will also need to install the database if you run without Docker. Have a look at the installation section which cover these steps. When this is complete you can run the game server and have it load your code:
+You can use Docker with a [compose file](install-docker-quickstart.md) for local development or install the [Linux](install-binary-linux-quickstart.md), [Windows](install-binary-windows-quickstart.md), or [macOS](install-binary-macos-quickstart.md) binary for the game server. You will also need to install the database if you run without Docker. Have a look at the installation section which cover these steps. When this is complete you can run the game server and have it load your code:
 
 ``` shell
 nakama --logger.level DEBUG --runtime.js_entrypoint "build/index.js"

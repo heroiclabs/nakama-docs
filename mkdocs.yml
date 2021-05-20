@@ -14,7 +14,7 @@ repo_name: heroiclabs/nakama
 repo_url: https://github.com/heroiclabs/nakama
 
 # Copyright
-copyright: Copyright &copy; 2020 Heroic Labs
+copyright: Copyright &copy; 2021 Heroic Labs
 
 # Documentation and theme
 theme:
@@ -82,6 +82,7 @@ nav:
     - Nakama CLI: install-server-cli.md
     - Configuration: install-configuration.md
     - Upgrading Nakama: install-nakama-upgrade.md
+    - Nakama Console: console-overview.md
   - Client Libraries:
     - .NET/Unity: unity-client-guide.md
     - JavaScript: javascript-client-guide.md
@@ -113,7 +114,6 @@ nav:
     - Realtime Multiplayer: gameplay-multiplayer-realtime.md
     - Authoritative Multiplayer: gameplay-multiplayer-server-multiplayer.md
     - IAP Validation: iap-validation.md
-    - Push messages: tutorial-send-push-messages.md
   - Server Runtime Code:
     - Basics: runtime-code-basics.md
     - TypeScript Setup: runtime-code-typescript-setup.md
@@ -121,10 +121,11 @@ nav:
   - Advanced:
     - Events: advanced-events.md
     - Streams: advanced-streams.md
+    - Push messages: tutorial-send-push-messages.md
     - Choosing TCP or UDP: expert-tcp-udp.md
     - Modelling for Scalability: expert-modelling.md
     - Remote configuration: tutorial-remote-configuration.md
     - Develop with LibGDX: tutorial-develop-with-libgdx.md
     - Deploy to Digital Ocean: deployment-digital-ocean.md
-    - Benchmarks: benchmarks.md
     - Previous releases: previous-versions.md
+  - Benchmarks: benchmarks.md

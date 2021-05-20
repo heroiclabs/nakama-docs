@@ -91,23 +91,7 @@ This will remove the Docker storage volumes which contain the database files and
 docker-compose -f ./docker-compose.yml down -v
 ```
 
-Follow this [guide to continue](install-docker-quickstart.md#using-docker-compose).
-
-### Docker
-
-If you've used Nakama 1 using a Docker container then you'll need to delete the database volume and start again:
-
-```sh
-docker volume ls
-```
-
-Find the relevant volume and delete the database volume. This will delete all database files - tables and records.
-
-```
-docker volume rm <volumename>
-```
-
-Follow this [guide to continue](install-start-server.md).
+Follow this [guide to continue](install-docker-quickstart.md).
 
 ### Binaries
 
@@ -117,4 +101,4 @@ You'll need to connect to the database directly and issue the following command:
 cockroach sql --insecure -e "DROP DATABASE nakama CASCADE;"
 ```
 
-Follow this [guide to continue](install-start-server.md).
+Follow this binary guide for [Linux](install-binary-linux-quickstart.md), [Windows](install-binary-windows-quickstart.md), or [macOS](install-binary-macos-quickstart.md) to continue.
