@@ -22,8 +22,8 @@ In addition to the above, there are also convenient links to the Heroic Labs off
 
 The Status page provides a realtime view of your Nakama server, with usage details for each node and a general view into bandwidth and latency, including:
 
-* Latency: The network latency in milliseconds (ms).
-* Rate: The number of Remote Procedure Calls (RPC) per second.
+* Latency: The time spent executing Remote Procedure Call (RPC) functions, in milliseconds (ms).
+* Rate: The number of RPCs per second.
 * Input: Inbound traffic in kilobytes per second (kb/s).
 * Output: Outbound traffic in kilobytes per second (kb/s).
 
@@ -169,7 +169,7 @@ Select any desired user to view and edit the corresponding details:
 
 ![Console Storage Page](images/console/console-storage-objects.png)
 
-The Storage page displays a list of all storage objects, searchable according to collection and key name. From here you have view, edit, and delete any storage object. See [Collections](storage-collections.md) to learn more.
+The Storage page displays a list of all storage objects, searchable according to collection name, key name, and user ID. From here you have view, edit, and delete any storage object. See [Collections](storage-collections.md) to learn more.
 
 Select any desired object to view and edit the corresponding details:
 ![Console Storage Object Page](images/console/console-storage-object-details.png)
@@ -178,19 +178,23 @@ Select any desired object to view and edit the corresponding details:
 
 ![Console Leaderboards Page](images/console/console-leaderboards.png)
 
-The Leaderboards page enables you to view and manage your leaderboards and corresponding records. See [Leaderboard](gameplay-leaderboards.md) to learn more.
+The Leaderboards page enables you to view and manage your leaderboards and tournaments, and their corresponding records. See [Leaderboards](gameplay-leaderboards.md) and [Tournaments](gameplay-tournaments.md) to learn more.
+
+!!! note "Note"
+    Leaderboards and tournaments can only created via the server runtime. See [create a leaderboard](gameplay-leaderboards.md#create-a-leaderboard) and [create a tournament](gameplay-tournaments.md#create-tournament) for examples.
 
 Select any desired leaderboard from the list to view its details and records:
 ![Console Leaderboard Details Page](images/console/console-leaderboard-details.png)
 
 ## Matches
 
-The Matches page enables you to investigate your running matches and gives you a quick snapshot of what your player base is up to at any given moment.
+The Matches page displays the ten most recent matches, enabling you to investigate your running matches and providing you a quick snapshot of what your player base is up to at any given moment.
 
 Select any Match from the list to view its details:
 ![Console Match Details Page](images/console/console-match-details.png)
 
-See [Authoritative multiplayer](gameplay-multiplayer-server-multiplayer.md) to learn more.
+!!! note "Note"
+    Only authoritative matches can have state and the labels seen on the console dashboard. See [Authoritative multiplayer](gameplay-multiplayer-server-multiplayer.md) to learn more.
 
 ## API Explorer
 

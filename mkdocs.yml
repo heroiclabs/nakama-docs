@@ -73,7 +73,6 @@ markdown_extensions:
 # Nav menu
 nav:
   - Getting Started:
-    - Introduction: index.md
     - Docker compose: install-docker-quickstart.md
     - Windows binary: install-binary-windows-quickstart.md
     - macOS binary: install-binary-macos-quickstart.md
