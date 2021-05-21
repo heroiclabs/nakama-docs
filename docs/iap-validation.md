@@ -78,6 +78,27 @@ Apple receipts can contain multiple purchases, Nakama will validate all of them 
       --data '{"receipt":"base64_encoded_receipt_data"}'
     ```
 
+=== "Defold"
+	```lua
+    local function validate_receipt(receipt)
+        local request = nakama.create_api_validate_purchase_apple_request(receipt)
+        local result = nakama.validate_purchase_apple(client, request)
+        if result.error then
+            print(result.message)
+            return
+        end
+        pprint(result)
+    end
+
+    -- Use https://defold.com/extension-iap/
+    iap.set_listener(function(self, transaction, error)
+        if not error then
+            validate_receipt(transaction.receipt)
+        end
+    end)
+    iap.buy("com.defold.nakama.goldbars-10")
+	```
+
 Refer to the function reference page for the provided runtime [purchase validation functions](runtime-code-function-reference.md#purchase).
 
 ## Google
@@ -132,6 +153,27 @@ Navigate to __Users & Permissions__ to check that the service account is setup c
       --data '{"purchase":"json_encoded_purchase_data"}'
     ```
 
+=== "Defold"
+	```lua
+    local function validate_receipt(receipt)
+        local request = nakama.create_api_validate_purchase_google_request(receipt)
+        local result = nakama.validate_purchase_google(client, request)
+        if result.error then
+            print(result.message)
+            return
+        end
+        pprint(result)
+    end
+
+    -- Use https://defold.com/extension-iap/
+    iap.set_listener(function(self, transaction, error)
+        if not error then
+            validate_receipt(transaction.receipt)
+        end
+    end)
+    iap.buy("com.defold.nakama.goldbars-10")
+	```
+
 Refer to the function reference page for the provided runtime [purchase validation functions](runtime-code-function-reference.md#purchase).
 
 ## Huawei
@@ -145,6 +187,11 @@ Nakama validates Huawei purchases against their IAP validation service. As sugge
       --user 'defaultkey:' \
       --data '{"purchase":"json_encoded_purchase_data","signature":"purchase_data_signature"}'
     ```
+
+=== "Defold"
+	```lua
+    -- Huawei purchases are not yet supported by https://defold.com/extension-iap/
+	```
 
 Refer to the function reference page for the provided runtime [purchase validation functions](runtime-code-function-reference.md#purchase).
 
