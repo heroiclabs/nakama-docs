@@ -161,6 +161,21 @@ These code examples show how to retrieve an object owned by the system (marked w
 	}
 	```
 
+=== "Defold"
+	```lua
+	local request = nakama.create_api_read_storage_objects_request({
+		nakama.create_api_read_storage_object_id("configuration", "config"),
+	})
+	local result = nakama.read_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	for _,object in ipairs(result.objects) do
+		pprint(object)
+	end
+	```
+
 You can also use the code runtime to fetch an object. The code runtime is exempt from the standard rules around access permissions because it is run by the server as authoritative code.
 
 === "Lua"
@@ -413,6 +428,24 @@ When modifying objects from the client, the default permission of a object is se
 	    }
 	  ]
 	}
+	```
+
+=== "Defold"
+	```lua
+	local army_setup = json.encode({ soldiers = 50 })
+	local can_read = 2
+	local can_write = 1
+	local request = nakama.create_api_write_storage_objects_request({
+		nakama.create_api_write_storage_object("battle", "army", can_read, can_write, army_setup, version),
+	})
+	local result = nakama.write_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	for _,ack in ipairs(result.acks) do
+		pprint(ack)
+	end
 	```
 
 You can store an object with custom permissions from the code runtime.
