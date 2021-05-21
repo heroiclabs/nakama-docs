@@ -233,6 +233,27 @@ A user can write one or more objects which will be stored in the database server
 	}
 	```
 
+=== "Defold"
+	```lua
+	local save_game = json.encode({ progress = 50 })
+	local my_stats = json.encode({ skill = 24 })
+	local can_read = 1
+	local can_write = 1
+	local version = ""
+	local request = nakama.create_api_write_storage_objects_request({
+		nakama.create_api_write_storage_object("saves", "savegame", can_read, can_write, save_game, version),
+		nakama.create_api_write_storage_object("stats", "skills", can_read, can_write, my_stats, version),
+	})
+	local result = nakama.write_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	for _,ack in ipairs(result.acks) do
+		pprint(ack)
+	end
+	```
+
 ### Conditional writes
 
 When objects are successfully stored a version is returned which can be used with further updates to perform concurrent modification checks with the next write. This is known as a conditional write.
@@ -407,6 +428,25 @@ A conditional write ensures a client can only update the object if they've seen 
 	    }
 	  ]
 	}
+	```
+
+=== "Defold"
+	```lua
+	local save_game = json.encode({ progress = 50 })
+	local can_read = 1
+	local can_write = 1
+	local version = "some previous version"
+	local request = nakama.create_api_write_storage_objects_request({
+		nakama.create_api_write_storage_object("saves", "savegame", can_read, can_write, save_game, version),
+	})
+	local result = nakama.write_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	for _,ack in ipairs(result.acks) do
+		pprint(ack)
+	end
 	```
 
 We support another kind of conditional write which is used to write an object only if none already exists for that object's collection and key.
@@ -608,6 +648,25 @@ We support another kind of conditional write which is used to write an object on
 	}
 	```
 
+=== "Defold"
+	```lua
+	local save_game = json.encode({ progress = 50 })
+	local can_read = 1
+	local can_write = 1
+	local version = "*"		-- no version
+	local request = nakama.create_api_write_storage_objects_request({
+		nakama.create_api_write_storage_object("saves", "savegame", can_read, can_write, save_game, version),
+	})
+	local result = nakama.write_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	for _,ack in ipairs(result.acks) do
+		pprint(ack)
+	end
+	```
+
 ## Read objects
 
 Just like with [writing objects](#write-objects) you can read one or more objects from the database server.
@@ -774,6 +833,22 @@ Each object has an owner and permissions. An object can only be read if the perm
 	}
 	```
 
+=== "Defold"
+	```lua
+	local user_id = "some user id"
+	local request = nakama.create_api_read_storage_objects_request({
+		nakama.create_api_read_storage_object_id("saves", "savegame", user_id),
+	})
+	local result = nakama.read_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	for _,object in ipairs(result.objects) do
+		pprint(object)
+	end
+	```
+
 ## List objects
 
 You can list objects in a collection and page through results. The objects returned can be filter to those owned by the user or `"null"` for public records which aren't owned by a user.
@@ -893,6 +968,20 @@ You can list objects in a collection and page through results. The objects retur
 	Accept: application/json
 	Content-Type: application/json
 	Authorization: Bearer <session token>
+	```
+
+=== "Defold"
+	```lua
+	local user_id = "some user id"
+	local limit = 10
+	local result = nakama.list_storage_objects(client, "saves", user_id, limit)
+	if result.error then
+		print(result.message)
+		return
+	end
+	for _,object in ipairs(result.objects) do
+		pprint(object)
+	end
 	```
 
 ## Remove objects
@@ -1035,6 +1124,18 @@ A user can remove an object if it has the correct permissions and they own it.
 	    }
 	  ]
 	}
+	```
+
+=== "Defold"
+	```lua
+	local request = nakama.create_api_delete_storage_objects_request({
+		nakama.create_api_delete_storage_object_id("saves", "savegame")
+	})
+	local result = nakama.delete_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
 	```
 
 You can also conditionally remove an object if the object version matches the version sent by the client.
@@ -1191,3 +1292,14 @@ You can also conditionally remove an object if the object version matches the ve
 	}
 	```
 
+=== "Defold"
+	```lua
+	local request = nakama.create_api_delete_storage_objects_request({
+		nakama.create_api_delete_storage_object_id("saves", "savegame", "some version")
+	})
+	local result = nakama.delete_storage_objects(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	```
