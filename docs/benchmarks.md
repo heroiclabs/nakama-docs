@@ -53,12 +53,12 @@ The proposed workloads are meant to display Nakama's throughput and capacity for
 
 We'll present the benchmarking results for the following workloads:
 
-1. Number of concurrent socket connections (CCU count)
-2. Throughput of new user registration
-3. Throughput of user authentication
-4. Throughput of custom RPC call in the Lua runtime
-5. Throughput of custom RPC call in the Go runtime
-6. Number of authoritative realtime matches using custom match handlers
+1. Number of concurrent socket connections (CCU count).
+2. Throughput of new user registration.
+3. Throughput of user authentication.
+4. Throughput of custom RPC call in the Lua runtime.
+5. Throughput of custom RPC call in the Go runtime.
+6. Number of authoritative realtime matches using custom match handlers.
 
 The following subsections are respectively dedicated to each of the aformentioned workloads, where each one of them will be described in more detail; followed by the benchmark results gathered by Tsung for each of the considered hardware and topology configurations.
 
@@ -128,7 +128,7 @@ This workload consists of authenticating a user, opening a socket connection to 
 !!! Summary
     A single Nakama instance with a single CPU core can have up to ~19,500 connected users. Scaling up to 2 nodes with 2 CPU cores each this values goes up to ~32,000 CCU.
 
-## Workload 2 - Register a new user
+### Workload 2 - Register a new user
 
 This workload emulates the registration of new users through the game server's [device authentication](../authentication/#device) API which stores the new accounts to the database.
 
@@ -188,7 +188,7 @@ This workload emulates the registration of new users through the game server's [
 !!! Summary
     A single Nakama server can handle average loads of ~500 requests/sec with requests served in 24.60 ms (mean) with a database write operation for a new user. At this rate a game can create 1.86 million new players every hour. This value goes up to 2.7 million player accounts per hour when scaled to 2 nodes.
 
-## Workload 3 - Authenticate a user
+### Workload 3 - Authenticate a user
 
 This workload consists of authenticating an existing user using the game server's [device authentication](../authentication/#device) API.
 
@@ -245,7 +245,7 @@ This workload consists of authenticating an existing user using the game server'
   </tr>
 </table>
 
-## Workload 4 - Custom Lua RPC call
+### Workload 4 - Custom Lua RPC call
 
 This workload executes a simple [RPC function](../runtime-code-basics/#rpc-hook) exposed through the Lua runtime. The function receives a payload as a JSON string, decodes it, and echoes it back to the sender.
 
@@ -302,7 +302,7 @@ This workload executes a simple [RPC function](../runtime-code-basics/#rpc-hook)
   </tr>
 </table>
 
-## Workload 5 - Custom Go RPC call
+### Workload 5 - Custom Go RPC call
 
 This workload executes a simple [RPC function](../runtime-code-basics/#rpc-hook) exposed through the Go runtime. The function receives a payload as a JSON string, decodes it, and echoes it back to the sender.
 
@@ -362,11 +362,11 @@ This workload executes a simple [RPC function](../runtime-code-basics/#rpc-hook)
 !!! Summary
     A single Nakama server can handle an average of ~600 requests/sec served in 19.97 msec (mean). When compared with the results with Workload 5, we see that the results between the Lua and Go runtime are very similar. This is because the benchmarked workload does not incur significant CPU computations; causing the results to be similar despite the differences of the Lua virtual machine. With CPU intensive code the performance results would start to differ as would RAM usage by the Lua runtime.
 
-## Workload 6 - Custom authoritative match Logic
+### Workload 6 - Custom authoritative match Logic
 
 This workload emulates a realtime multiplayer game running on Nakama's [server-authoritative multiplayer](../gameplay-multiplayer-server-multiplayer/) engine. Although the client and custom logic are not an actual multiplayer game; the code creates an approximation of a real use-case scenario in terms of messages being exchanged between the server and the connected game clients. We'll briefly explain the server and client logic in this workload.
 
-### Server side logic
+#### Server side logic
 
 The server runs multiplayer matches with a tick rate of 10 ticks per second. Each match can have a maximum of 10 players.
 
@@ -377,7 +377,7 @@ The match loop logic is simple; the server expects to receive one of two opcodes
 1. Echo back the received message to the client.
 2. Broadcast the message to all of the match participants.
 
-### Client side logic
+#### Client side logic
 
 The client logic is also simple; each game client performs the following steps in-order:
 
