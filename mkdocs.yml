@@ -117,6 +117,8 @@ nav:
     - Basics: runtime-code-basics.md
     - TypeScript Setup: runtime-code-typescript-setup.md
     - Function Reference: runtime-code-function-reference.md
+  - Tutorials:
+    - Fish Game in Unity: tutorial-fishgame-unity.md
   - Advanced:
     - Events: advanced-events.md
     - Streams: advanced-streams.md

@@ -3,25 +3,24 @@
 A YAML configuration file configures many aspects of how your Nakama server runs. You can run Nakama without specifying a configuration file and rely on the the default settings instead.
 
 ## Specifying a config file
-You can specify a configuration file at run-time using --config flag.
+
+You can specify a configuration file at run-time using the `--config` flag.
 
 === "Shell"
-	```shell
-	nakama --config my-special-config.yml
-	```
+    ```shell
+    nakama --config my-special-config.yml
+    ```
 
-If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. Follow this guide to [setup folder binding](install-docker-quickstart.md#data).
+If you are running Nakama via Docker-Compose, you'll need to bind a folder in your machine so that it's available in Docker. See the documentation for [configuring Nakama running on Docker](install-docker-quickstart.md#configuration-file).
 
 ## Server ports
 
-Nakama is a very flexible system. You can exchange data with the server over gRPC, HTTP, Websockets and rUDP. Due to this flexibilty, Nakama requires 4 ports to be available to bind to:
+Nakama is a very flexible system. You can exchange data with the server over gRPC, HTTP, Websockets and rUDP. Due to this flexibility, Nakama requires 4 ports to be available to bind to:
 
 - HTTP API server on port 7350. *Port can be changed in the config.*
 - HTTP API server powering the embedded developer console on port 7351. *Port can be changed in the config.*
 - gRPC API server on port 7349. *Port is chosen based on the API server port.*
 - gRPC API server for the embedded console on port 7348. *Port is chosen based on the API server port.*
-
-We'll be reducing the port requirement in the future releases.
 
 ## Common properties
 
@@ -44,16 +43,16 @@ There are a few configuration properties that need to be changed in most environ
 !!! warning "Production settings"
     You must change the values of **`socket.server_key`**, **`session.encryption_key`** and **`runtime.http_key`** before you deploy Nakama to a live production environment.
 
-## Server Configuration
+## Server configuration
 
 Nakama has various configuration options to make it as flexible as possible for various use cases and deployment environments.
 
 Nakama ships with sane default values for all config options, therefore you'll only need to override a subset of the options. You can also setup your own config file, and override the values in the config file via command-line flags. For instance, to override Runtime Path:
 
 === "Shell"
-	```shell
-	nakama --runtime.path /tmp/my-modules
-	```
+    ```shell
+    nakama --runtime.path /tmp/my-modules
+    ```
 
 If fields are not specific, default values will be used. For more information on how to override flags, have a look at the [server command-line](install-server-cli.md) page.
 
@@ -73,7 +72,7 @@ This section configures how the nodes should connect to each other to form a clu
 !!! tip "Nakama Enterprise Only"
     The following configuration options are available only in the Nakama Enterprise version of the Nakama server
 
-    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Managed Cloud](https://heroiclabs.com/managed-cloud) service.
+    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Heroic Cloud](https://heroiclabs.com/managed-cloud) service.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
@@ -114,10 +113,9 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 !!! tip "Database addresses"
     You can pass in multiple database addresses to Nakama via command like:
 
-    	```
-	    nakama --database.address "root@db1:26257" --database.address "root@db2:26257"
-	    ```
-
+    ```
+    nakama --database.address "root@db1:26257" --database.address "root@db2:26257"
+    ```
 
 ### IAP (In-App Purchase)
 
@@ -127,27 +125,26 @@ Nakama can verify in-app purchases by connecting to various stores and keeps a l
 
 Apple In-App Purchase configuration
 
-| Parameter    | Flag                  | Description
-| ---------    | ----                  | -----------
+| Parameter | Flag | Description
+| --------- | ---- | -----------
 | <a class="anchor" id="apple.shared_password"></a>`shared_password`   | `apple.shared_password`      | Your application's shared password.
 
 #### Google
 
 Google In-App Purchase configuration
 
-| Parameter          | Flag                       | Description
-| ---------          | ----                       | -----------
+| Parameter | Flag | Description
+| --------- | ---- | -----------
 | <a class="anchor" id="google.client_email"></a>`client_email`          | `google.client_email`           | The Service Account Client Email value.
 | <a class="anchor" id="google.private_key"></a>`private_key` | `google.private_key`  | The Service Account Private Key value.
 
 #### Huawei
 
-| Parameter          | Flag                       | Description
-| ---------          | ----                       | -----------
+| Parameter | Flag | Description
+| --------- | ---- | -----------
 | <a class="anchor" id="huawei.public_key"></a>`public_key`          | `huawei.public_key`           | Huawei IAP store Base64 encoded Public Key.
 | <a class="anchor" id="huawei.client_id"></a>`client_id` | `huawei.client_id`  | Huawei OAuth client secret..
 | <a class="anchor" id="huawei.client_secret"></a>`client_secret` | `huawei.client_secret`  | Huawei OAuth app client secret.
-
 
 ### Leaderboard
 
@@ -192,24 +189,25 @@ You can change configuration options related to the authoritative multiplayer ru
 | <a class="anchor" id="match.input_queue_size"></a>`input_queue_size` | `match.input_queue_size` | Size of the authoritative match buffer that stores client messages until they can be processed by the next tick. Default 128.
 | <a class="anchor" id="match.join_attempt_queue_size"></a>`join_attempt_queue_size` | `match.join_attempt_queue_size` | Size of the authoritative match buffer that limits the number of in-progress join attempts. Default 128.
 | <a class="anchor" id="match.join_marker_deadline_ms"></a>`join_marker_deadline_ms` | `match.join_marker_deadline_ms` | Deadline in milliseconds that client authoritative match joins will wait for match handlers to acknowledge joins. Default 5000.
+| <a class="anchor" id="match.label_update_interval_ms"></a>`label_update_interval_ms` | `match.label_update_interval_ms` | Time in milliseconds between when match labels are updated. Default 1000.
 | <a class="anchor" id="match.max_empty_sec"></a>`max_empty_sec` | `match.max_empty_sec` | Maximum number of consecutive seconds that authoritative matches are allowed to be empty before they are stopped. 0 indicates no maximum. Default 0.
 
 ### Metrics
 
-Nakama produces metrics information. This information can be exported to Stackdriver or Prometheus.
+Nakama produces metrics information. This information can be exported to Prometheus.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
 | <a class="anchor" id="metrics.namespace"></a>`namespace` | `metrics.namespace` | Namespace for Prometheus or prefix for Stackdriver metrics. It will always prepend node name. Default value is empty.
+| <a class="anchor" id="metrics.prefix"></a>`prefix` | `metrics.prefix` | Prefix for metric names. Default is 'nakama', empty string '' disables the prefix.
 | <a class="anchor" id="metrics.prometheus_port"></a>`prometheus_port` | `metrics.prometheus_port` | Port to expose Prometheus. Default value is '0' which disables Prometheus exports.
 | <a class="anchor" id="metrics.reporting_freq_sec"></a>`reporting_freq_sec` | `metrics.reporting_freq_sec` | Frequency of metrics exports. Default is 60 seconds.
-| <a class="anchor" id="metrics.stackdriver_projectid"></a>`stackdriver_projectid` | `metrics.stackdriver_projectid` | This is the identifier of the Stackdriver project the server is uploading the stats data to. Setting this enables metrics to be exported to Stackdriver.
 
 Ensure that metrics exports are protected as they contain sensitive server information.
 
 ### Runtime
 
-Options related to Lua-based runtime engine.
+Options related to the runtime engine.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
@@ -218,9 +216,18 @@ Options related to Lua-based runtime engine.
 | <a class="anchor" id="runtime.event_queue_size"></a>`event_queue_size` | `runtime.event_queue_size` | Size of the event queue buffer. Default 65536.
 | <a class="anchor" id="runtime.event_queue_workers"></a>`event_queue_workers` | `runtime.event_queue_workers` | Number of workers to use for concurrent processing of events. Default 8.
 | <a class="anchor" id="runtime.http_key"></a>`http_key` | `runtime.http_key` | A key used to authenticate HTTP Runtime invocations. Default value is `defaultkey`.
+| <a class="anchor" id="runtime.js_entrypoint"></a>`js_entrypoint` | `runtime.js_entrypoint` | Specifies the location of the bundled JavaScript runtime source code.
+| <a class="anchor" id="runtime.js_max_count"></a>`js_max_count` | `runtime.js_max_count` | Maximum number of JavaScript runtime instances to allocate. Default 32.
+| <a class="anchor" id="runtime.js_min_count"></a>`js_min_count` | `runtime.js_min_count` | Minimum number of JavaScript runtime instances to allocate. Default 16.
+| <a class="anchor" id="runtime.lua_call_stack_size"></a>`lua_call_stack_size` | `lua_call_stack_size` | Size of each runtime instance's call stack. Default 128.
+| <a class="anchor" id="runtime.lua_max_count"></a>`lua_max_count` | `runtime.lua_max_count` | Maximum number of Lua runtime instances to allocate. Default 48.
+| <a class="anchor" id="runtime.lua_min_count"></a>`lua_min_count` | `runtime.lua_min_count` | Minimum number of Lua runtime instances to allocate. Default 16.
+| <a class="anchor" id="runtime.lua_read_only_globals"></a>`lua_read_only_globals` | `runtime.lua_read_only_globals` | When enabled, marks all Lua runtime global tables as read-only to reduce memory footprint. Default true.
+| <a class="anchor" id="runtime.lua_registry_size"></a>`lua_registry_size` | `runtime.lua_registry_size` | Size of each Lua runtime instance's registry. Default 512.
 | <a class="anchor" id="runtime.max_count"></a>`max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
 | <a class="anchor" id="runtime.min_count"></a>`min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
 | <a class="anchor" id="runtime.path"></a>`path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
+| <a class="anchor" id="runtime.read_only_globals"></a>`read_only_globals` | `runtime.read_only_globals` | When enabled, marks all runtime global tables as read-only to reduce memory footprint. Default true.
 | <a class="anchor" id="runtime.registry_size"></a>`registry_size` | `runtime.registry_size` | Size of each runtime instance's registry. Default 512.
 
 !!! warning "Important"
@@ -229,9 +236,9 @@ Options related to Lua-based runtime engine.
 !!! tip "Runtime env value"
     The runtime environment is a key-value pair. They are separated by the `=` character like this:
 
-    	```
-	    nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
-	    ```
+    ```
+    nakama --runtime.env "key=value" --runtime.env "key2=value2" --runtime.env "key3=valuecanhave=sign"
+    ```
 
 ### Session
 
@@ -251,7 +258,16 @@ You can change configuration options related to each user session, such as the e
 
 Nakama can connect to various social networks to fetch user information. It can also act as a notification center for delivering and persisting notifications.
 
+#### Apple
+
+Configuration related to Apple iOS/iPadOS apps.
+
+| Parameter | Flag | Description
+| --------- | ---- | -----------
+| <a class="anchor" id="apple.bundle_id"></a>`bundle_id` | `apple.bundle_id` | Apple Sign In bundle ID.
+
 #### Steam
+
 Configure Steam network settings. Facebook, Google and GameCenter don't require any server settings.
 
 | Parameter | Flag | Description
@@ -266,6 +282,7 @@ Configuration relevant to Facebook Instant Games.
 | Parameter | Flag | Description
 | --------- | ---- | -----------
 | <a class="anchor" id="facebook_instant_game.app_secret"></a>`app_secret` | `facebook_instant_game.app_secret` | Facebook Instant App Secret.
+| <a class="anchor" id="facebook_limited_login.app_id"></a>`app_id` | `facebook_limited_login.app_id` | Facebook Limited Login App ID.
 
 ### Socket
 
@@ -283,10 +300,12 @@ Options related to connection socket and transport protocol between the server a
 | <a class="anchor" id="socket.pong_wait_ms"></a>`pong_wait_ms`  | `socket.pong_wait_ms` | Time in milliseconds to wait for a pong message from the client after sending a ping. Used for real-time connections. Default value is 25000.
 | <a class="anchor" id="socket.port"></a>`port` | `socket.port` | The port for accepting connections from the client, listening on all interfaces. Default value is 7350.
 | <a class="anchor" id="socket.protocol"></a>`protocol` | `socket.protocol` | The network protocol to listen for traffic on. Possible values are `tcp` for both IPv4 and IPv6, `tcp4` for IPv4 only, or `tcp6` for IPv6 only. Default `tcp`."
+| <a class="anchor" id="socket.read_buffer_size_bytes"></a>`buffer_size_bytes` | `socket.read_buffer_size_bytes` | Size in bytes of the pre-allocated socket read buffer. Default 4096.
 | <a class="anchor" id="socket.read_timeout_ms"></a>`read_timeout_ms` | `socket.read_timeout_ms` | Maximum duration in milliseconds for reading the entire request. Used for HTTP connections. Default value is 10000.
 | <a class="anchor" id="socket.server_key"></a>`server_key` | `socket.server_key` | Server key to use to establish a connection to the server. Default value is `defaultkey`.
 | <a class="anchor" id="socket.ssl_certificate"></a>`ssl_certificate` | `socket.ssl_certificate` | Path to certificate file if you want the server to use SSL directly. Must also supply ssl_private_key. NOT recommended for production use.
 | <a class="anchor" id="socket.ssl_private_key"></a>`ssl_private_key` | `socket.ssl_private_key` | Path to private key file if you want the server to use SSL directly. Must also supply ssl_certificate. NOT recommended for production use.
+| <a class="anchor" id="socket.write_buffer_size_bytes"></a>`write_buffer_size_bytes` | `socket.write_buffer_size_bytes` | Size in bytes of the pre-allocated socket write buffer. Default 4096.
 | <a class="anchor" id="socket.write_timeout_ms"></a>`write_timeout_ms` | `socket.write_timeout_ms` | Maximum duration in milliseconds before timing out writes of the response. Used for HTTP connections. Default value is 10000.
 | <a class="anchor" id="socket.write_wait_ms"></a>`write_wait_ms` | `socket.write_wait_ms` | Time in milliseconds to wait for an ack from the client when writing data. Used for real-time connections. Default value is 5000.
 
@@ -295,7 +314,7 @@ Options related to connection socket and transport protocol between the server a
 
 <!--
 !!! info "Public Address"
-    Public Address is the direct addressable IP address of your server. This value is cached in session tokens with clients to enable fast reconnects. If the IP address changes clients will need to re-authenticate with the server.
+  Public Address is the direct addressable IP address of your server. This value is cached in session tokens with clients to enable fast reconnects. If the IP address changes clients will need to re-authenticate with the server.
 -->
 
 ### Tracker
@@ -319,18 +338,18 @@ You can change configuration options related to session tracking.
 | <a class="anchor" id="tracker.max_silent_periods"></a>`max_silent_periods` | `tracker.max_silent_periods` | Maximum number of missed broadcasts before a cluster node's presences are considered down. Default value is 10.
 | <a class="anchor" id="tracker.permdown_period_ms"></a>`permdown_period_ms` | `tracker.permdown_period_ms` | Time in milliseconds since last broadcast before a cluster node's presences are considered permanently down and will be removed. Default value is 1200000.
 
-
 ### Matchmaker
 
 You can change configuration options related to matchmaking.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
+| <a class="anchor" id="matchmaker.batch_pool_size"></a>`batch_pool_size` | `matchmaker.batch_pool_size` | Number of concurrent indexing batches that will be allocated. Default 32.
 | <a class="anchor" id="matchmaker.max_tickets"></a>`max_tickets` | `matchmaker.max_tickets` | Maximum number of concurrent matchmaking tickets allowed per session or party. Default 3.
 | <a class="anchor" id="matchmaker.interval_sec"></a>`interval_sec` | `matchmaker.interval_sec` | How quickly the matchmaker attempts to form matches, in seconds. Default 15.
 | <a class="anchor" id="matchmaker.max_intervals"></a>`max_intervals` | `matchmaker.max_intervals` | How many intervals the matchmaker attempts to find matches at the max player count, before allowing min count. Default 2.
 
-## Example File
+## Example file
 
 You can use the entire file or just a subset of the configuration.
 
@@ -339,79 +358,78 @@ name: nakama-node-1
 data_dir: "./data/"
 
 logger:
-	stdout: false
-	level: "warn"
-	file: "/tmp/path/to/logfile.log"
+  stdout: false
+  level: "warn"
+  file: "/tmp/path/to/logfile.log"
 
 metrics:
-	reporting_freq_sec: 60
-	namespace: ""
-	stackdriver_projectid: ""
-	prometheus_port: 0
+  reporting_freq_sec: 60
+  namespace: ""
+  prometheus_port: 0
 
 database:
-	address:
-	- "root@localhost:26257"
-	conn_max_lifetime_ms: 0
-	max_open_conns: 0
-	max_idle_conns: 100
+  address:
+  - "root@localhost:26257"
+  conn_max_lifetime_ms: 0
+  max_open_conns: 0
+  max_idle_conns: 100
 
 runtime:
-	env:
-	- "example_apikey=example_apivalue"
-	- "encryptionkey=afefa==e332*u13=971mldq"
-	path: "/tmp/modules/folders"
-	http_key: "defaulthttpkey"
+  env:
+  - "example_apikey=example_apivalue"
+  - "encryptionkey=afefa==e332*u13=971mldq"
+  path: "/tmp/modules/folders"
+  http_key: "defaulthttpkey"
 
 socket:
-	server_key: "defaultkey"
-	port: 7350
-	max_message_size_bytes: 4096 # bytes
-	read_timeout_ms: 10000
-	write_timeout_ms: 10000
-	idle_timeout_ms: 60000
-	write_wait_ms: 5000
-	pong_wait_ms: 10000
-	ping_period_ms: 8000 # Must be less than pong_wait_ms
-	outgoing_queue_size: 16
+  server_key: "defaultkey"
+  port: 7350
+  max_message_size_bytes: 4096 # bytes
+  read_timeout_ms: 10000
+  write_timeout_ms: 10000
+  idle_timeout_ms: 60000
+  write_wait_ms: 5000
+  pong_wait_ms: 10000
+  ping_period_ms: 8000 # Must be less than pong_wait_ms
+  outgoing_queue_size: 16
 
 session:
-	encryption_key: "defaultencryptionkey"
-	token_expiry_sec: 60
+  encryption_key: "defaultencryptionkey"
+  token_expiry_sec: 60
     refresh_encryption_key: "defaultrefreshencryptionkey"
     refresh_token_expiry_sec: 3600
 
 social:
-	steam:
-	publisher_key: ""
-	app_id: 0
+  steam:
+  publisher_key: ""
+  app_id: 0
 
 console:
-	port: 7351
-	username: "admin"
-	password: "password"
+  port: 7351
+  username: "admin"
+  password: "password"
 
 cluster:
-	join:
-	- "10.0.0.2:7352"
-	- "10.0.0.3:7352"
-	gossip_bindaddr: "0.0.0.0"
-	gossip_bindport: 7352
-	rpc_port: 7353
+  join:
+  - "10.0.0.2:7352"
+  - "10.0.0.3:7352"
+  gossip_bindaddr: "0.0.0.0"
+  gossip_bindport: 7352
+  rpc_port: 7353
 
 matchmaker:
-        max_tickets: 2
-        interval_sec: 15
-        max_intervals: 3
+  max_tickets: 2
+  interval_sec: 15
+  max_intervals: 3
 
 iap:
-	apple:
-		shared_password: "password"
-	google:
-		client_email: "email@google.com"
-		private_key: "pk"
-	huawei:
-		public_key: "pk"
-		client_id: "id"
-		client_secret: "secret"
+  apple:
+    shared_password: "password"
+  google:
+    client_email: "email@google.com"
+    private_key: "pk"
+  huawei:
+    public_key: "pk"
+    client_id: "id"
+    client_secret: "secret"
 ```
