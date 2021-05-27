@@ -107,6 +107,17 @@ When a user has a session you can retrieve their account. The profile contains a
 	Authorization: Bearer <session token>
 	```
 
+=== "Defold"
+	```lua
+	local result = nakama.get_account(client)
+	if result.error then
+		print(result.message)
+		return
+	end
+	local user = result.user
+	print(("User id '%s' and username '%s'."):format(user.id, user.username))
+	```
+
 Some information like wallet, device IDs and custom ID are private but part of the profile is visible to other users.
 
 | Public field | Description |
@@ -318,6 +329,22 @@ You can fetch one or more users by their IDs or handles. This is useful for disp
 	Authorization: Bearer <session token>
 	```
 
+=== "Defold"
+	```lua
+	local ids = { "userid1", "userid2" }
+	local usernames = { "username1", "username2" }
+	local facebook_ids = { "facebookid1" }
+	local result = nakama.get_users(client, ids, usernames, facebook_ids)
+	if result.error then
+		print(result.message)
+		return
+	end
+	local users = result.users
+	for _,user in ipairs(users) do
+		print(("User id '%s' and username '%s'."):format(user.id, user.username))
+	end
+	```
+
 You can also fetch one or more users in server-side code.
 
 === "Lua"
@@ -468,6 +495,21 @@ When a user is registered most of their profile is setup with default values. A 
 	  "avatar_url": "http://graph.facebook.com/avatar_url",
 	  "location": "San Francisco"
 	}
+	```
+
+=== "Defold"
+	```lua
+	local request = {
+		display_name = "Björn",
+		avatar_url = "http://graph.facebook.com/avatar_url",
+		location = "Stockholm"
+	}
+	local result = nakama.update_account(client, request)
+	if result.error then
+		print(result.message)
+		return
+	end
+	print("Account updated")
 	```
 
 With server-side code it's possible to update any user's profile.
