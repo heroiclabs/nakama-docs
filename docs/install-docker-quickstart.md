@@ -84,7 +84,7 @@ Before proceeding ensure that you have [installed Docker Desktop](https://docs.d
                 - job_name: nakama
                   metrics_path: /
                   static_configs:
-                - targets: ['nakama:9100']
+                  - targets: ['nakama:9100']
               EON
               prometheus --config.file=./prometheus.yml
               EOF'
@@ -159,7 +159,7 @@ Before proceeding ensure that you have [installed Docker Desktop](https://docs.d
 5. To pull all required images and start your application, run the following:
 
     ```sh
-    docker-compose -f docker-compose.yml up
+    docker compose up
     ```
 
 6. Congratulations! Your Nakama server is now up and running, available at `127.0.0.1:7350`.
@@ -170,7 +170,7 @@ Use the **Open in Visual Studio Code** button (or that for your IDE) to edit you
 
 ## Nakama Console
 
-You can also access the Nakama Console by navigating your browser to `127.0.0.1:7351`:
+You can also access the Nakama Console by navigating your browser to [127.0.0.1:7351](127.0.0.1:7351):
 
 ![Nakama console](images/install/docker/nakama-console.png)
 
