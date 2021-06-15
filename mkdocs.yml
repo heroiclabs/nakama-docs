@@ -1,5 +1,5 @@
 # Project information
-site_name: Nakama Server
+site_name: Heroic Labs Documentation
 site_description: Documentation for the Nakama realtime and social server for games and apps.
 site_author: Heroic Labs Team & Contributors
 site_url: https://heroiclabs.com/
@@ -34,7 +34,7 @@ theme:
     - navigation.top
     # Top level navigation turned into tabs
     # Use to implement Nakama Docs Realms
-    # - navigation.tabs
+    - navigation.tabs
 
 extra_javascript:
   - javascripts/main.js
@@ -72,62 +72,68 @@ markdown_extensions:
 
 # Nav menu
 nav:
-  - Getting Started:
-    - Introduction: introduction.md
-    - Docker compose: install-docker-quickstart.md
-    - Windows binary: install-binary-windows-quickstart.md
-    - macOS binary: install-binary-macos-quickstart.md
-    - Linux binary: install-binary-linux-quickstart.md
-    - Nakama CLI: install-server-cli.md
-    - Configuration: install-configuration.md
-    - Upgrading Nakama: install-nakama-upgrade.md
-    - Nakama Console: console-overview.md
-  - Client Libraries:
-    - .NET/Unity: unity-client-guide.md
-    - JavaScript: javascript-client-guide.md
-    - Godot: godot-client-guide.md
-    - Defold : defold-client-guide.md
-    - Java/Android: android-java-client-guide.md
-    - C++: cpp-client-guide.md
-    - Unreal: unreal-client-guide.md
-    - Cocos2d-x C++: cocos2d-x-client-guide.md
-    - Cocos2d-x JS: cocos2d-x-js-client-guide.md
-  - Features:
-    - User Accounts:
-      - Authentication: authentication.md
-      - User accounts: user-accounts.md
-      - Initialize a new user: tutorial-initialize-new-user.md
-      - Sessions: session.md
-      - Session management: expert-auth.md
-    - Storage Engine:
-      - Collections: storage-collections.md
-      - Access controls: storage-access-controls.md
-    - Friends: social-friends.md
-    - Groups and Clans: social-groups-clans.md
-    - In-app Notifications: social-in-app-notifications.md
-    - Status: social-status.md
-    - Realtime Chat: social-realtime-chat.md
-    - Realtime Parties: social-realtime-parties.md
-    - Leaderboards: gameplay-leaderboards.md
-    - Tournaments: gameplay-tournaments.md
-    - Matchmaker: gameplay-matchmaker.md
-    - Realtime Multiplayer: gameplay-multiplayer-realtime.md
-    - Authoritative Multiplayer: gameplay-multiplayer-server-multiplayer.md
-    - IAP Validation: iap-validation.md
-  - Server Runtime Code:
-    - Basics: runtime-code-basics.md
-    - TypeScript Setup: runtime-code-typescript-setup.md
-    - Function Reference: runtime-code-function-reference.md
-  - Tutorials:
-    - Fish Game in Unity: tutorial-fishgame-unity.md
-  - Advanced:
-    - Events: advanced-events.md
-    - Streams: advanced-streams.md
-    - Push messages: tutorial-send-push-messages.md
-    - Choosing TCP or UDP: expert-tcp-udp.md
-    - Modelling for Scalability: expert-modelling.md
-    - Remote configuration: tutorial-remote-configuration.md
-    - Develop with LibGDX: tutorial-develop-with-libgdx.md
-    - Deploy to Digital Ocean: deployment-digital-ocean.md
-    - Previous releases: previous-versions.md
-  - Benchmarks: benchmarks.md
+  - Nakama Server:
+    - Getting Started:
+      - Introduction: introduction.md
+      - Docker compose: install-docker-quickstart.md
+      - Windows binary: install-binary-windows-quickstart.md
+      - macOS binary: install-binary-macos-quickstart.md
+      - Linux binary: install-binary-linux-quickstart.md
+      - Nakama CLI: install-server-cli.md
+      - Configuration: install-configuration.md
+      - Upgrading Nakama: install-nakama-upgrade.md
+      - Nakama Console: console-overview.md
+    - Client Libraries:
+      - .NET/Unity: unity-client-guide.md
+      - JavaScript: javascript-client-guide.md
+      - Godot: godot-client-guide.md
+      - Defold : defold-client-guide.md
+      - Java/Android: android-java-client-guide.md
+      - C++: cpp-client-guide.md
+      - Unreal: unreal-client-guide.md
+      - Cocos2d-x C++: cocos2d-x-client-guide.md
+      - Cocos2d-x JS: cocos2d-x-js-client-guide.md
+    - Features:
+      - User Accounts:
+        - Authentication: authentication.md
+        - User accounts: user-accounts.md
+        - Initialize a new user: tutorial-initialize-new-user.md
+        - Sessions: session.md
+        - Session management: expert-auth.md
+      - Storage Engine:
+        - Collections: storage-collections.md
+        - Access controls: storage-access-controls.md
+      - Friends: social-friends.md
+      - Groups and Clans: social-groups-clans.md
+      - In-app Notifications: social-in-app-notifications.md
+      - Status: social-status.md
+      - Realtime Chat: social-realtime-chat.md
+      - Realtime Parties: social-realtime-parties.md
+      - Leaderboards: gameplay-leaderboards.md
+      - Tournaments: gameplay-tournaments.md
+      - Matchmaker: gameplay-matchmaker.md
+      - Realtime Multiplayer: gameplay-multiplayer-realtime.md
+      - Authoritative Multiplayer: gameplay-multiplayer-server-multiplayer.md
+      - IAP Validation: iap-validation.md
+    - Server Runtime Code:
+      - Basics: runtime-code-basics.md
+      - TypeScript Setup: runtime-code-typescript-setup.md
+      - Function Reference: runtime-code-function-reference.md
+    - Tutorials:
+      - Fish Game in Unity: tutorial-fishgame-unity.md
+    - Advanced:
+      - Events: advanced-events.md
+      - Streams: advanced-streams.md
+      - Push messages: tutorial-send-push-messages.md
+      - Choosing TCP or UDP: expert-tcp-udp.md
+      - Modelling for Scalability: expert-modelling.md
+      - Remote configuration: tutorial-remote-configuration.md
+      - Develop with LibGDX: tutorial-develop-with-libgdx.md
+      - Deploy to Digital Ocean: deployment-digital-ocean.md
+      - Previous releases: previous-versions.md
+    - Benchmarks: benchmarks.md
+  - Heroic Cloud:
+    - Introduction: heroic-cloud/introduction.md
+    - Organizations: heroic-cloud/organizations.md
+    - Projects: heroic-cloud/projects.md
+    - Builders: heroic-cloud/builders.md
