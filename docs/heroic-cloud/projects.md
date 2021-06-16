@@ -34,8 +34,9 @@ You can create a new project from your Organization or Projects dashboard.
     * **Project Type**: Indicate if this project is a **Development** or **Production** environment.
 3. For Production projects only, select your desired Support Tier.
 4. **Provision** your project.
-    !!! note "Note"
-        For accounts not configured with automatic billing you must contact Heroic Labs support to provision new projects.
+
+!!! note "Note"
+    For accounts not configured with automatic billing you must contact Heroic Labs support to provision new projects.
 
 ## Managing projects
 
@@ -52,7 +53,7 @@ The Access tab provides the deployment details for this project, such as the ima
 * **Status**: Displays the current health, and any relevant operations, of the infrastructure powering your Nakama servers.
 * **Developer Console**: The URL, username, and password to access the [Developer Console](console-overview.md) for this project. Use the **View** button to navigate there directly.
 
-=== note "Note"
+!!! note "Note"
     Each project will have its own Developer Console.
     
 * **Access**: The host details and associated keys for connecting to this server.
