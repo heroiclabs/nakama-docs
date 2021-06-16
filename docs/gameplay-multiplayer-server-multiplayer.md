@@ -10,7 +10,7 @@ Technically all multiplayer games can be developed as relayed if player counts a
 
 To support multiplayer game designs which require data messages to change state maintained on the server, the authoritative multiplayer engine introduces a way to run custom match logic with a fixed tick rate. Messages can be validated and state changes broadcast to connected peers. This enables you to build:
 
-1. **Asynchronous real-time authoritiative multiplayer**: Fast paced realtime multiplayer. Messages are sent to the server, server calculates changes to the environment and players, and data is broadcasted to relevant peers. This typically requires a high tick-rate for the gameplay to feel responsive.
+1. **Asynchronous real-time authoritative multiplayer**: Fast paced realtime multiplayer. Messages are sent to the server, server calculates changes to the environment and players, and data is broadcasted to relevant peers. This typically requires a high tick-rate for the gameplay to feel responsive.
 2. **Active turn-based multiplayer**: Like with Stormbound or Clash Royale mobile games where two or more players are connected and are playing a quick turn-based match. Players are expected to respond to turns immediately. The server receives input, validates them and broadcast to players. The expected tick-rate is quite low as rate of message sent and received is low.
 3. **Passive turn-based multiplayer**: A great example is Words With Friends on mobile where the gameplay can span several hours to weeks. The server receives input, validates them, stores them in the database and broadcast changes to any connected peers before shutting down the server loop until next gameplay sequence.
 
@@ -129,6 +129,58 @@ The minimum structure of a match handler looks like:
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    const matchInit = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, params: {[key: string]: string}): {state: nkruntime.MatchState, tickRate: number, label: string} => {
+        return {
+            state: { },
+            tickRate: 1,
+            label: ""
+        };
+    };
+
+    const matchJoinAttempt = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presence: nkruntime.Presence, metadata: {[key: string]: any }) : {state: nkruntime.MatchState, accept: boolean, rejectMessage?: string | undefined } | null => {
+        return {
+            state,
+            accept: true
+        };
+    }
+
+    const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
+        return {
+            state
+        };
+    }
+
+    const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
+        return {
+            state
+        };
+    }
+
+    const matchLoop = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, messages: nkruntime.MatchMessage[]) : { state: nkruntime.MatchState} | null => {
+        return {
+            state
+        };
+    }
+
+    const matchTerminate = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, graceSeconds: number) : { state: nkruntime.MatchState} | null => {
+        return {
+            state
+        };
+    }
+
+    // Register the match handler
+    initializer.registerMatch('lobby', {
+        matchInit,
+        matchJoinAttempt,
+        matchJoin,
+        matchLoop,
+        matchLeave,
+        matchTerminate
+    });
+    ```
+
 This match handler above does not do any work but demonstrates the various hooks into the authoritative realtime engine. If `nil` is returned the match is stopped.
 
 ## Create authoritative matches
@@ -174,6 +226,14 @@ A match ID will be created which could be sent out to the players with an in-app
     if err := initializer.RegisterRpc("create_match_rpc", CreateMatchRPC); err != nil {
       logger.Error("Unable to register: %v", err)
       return err
+    }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    function rpcCreateMatch(context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string): string {
+        var matchId = nk.matchCreate('pingpong', payload);
+        return JSON.stringify({ matchId });
     }
     ```
 
@@ -228,6 +288,30 @@ The clients will receive the matchmaker callback as normal with a match ID.
         logger.Error("Unable to register: %v", err)
         return err
     }
+    ```
+
+=== "TypeScript"
+    ```typescript
+    function matchmakerMatched(context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, matches: nkruntime.MatchmakerResult[]): string {
+        matches.forEach(match => {
+            logger.info("Matched user '%s' named '%s'", match.presence.userId, match.presence.username);
+            Object.keys(match.properties).forEach(key => {
+                logger.info("Matched on '%s' value '%v'", key, match.properties[key])
+            });
+        });
+
+        try {
+            const matchId = nk.matchCreate("pingpong", { invited: matches });
+            return matchId;
+        } catch (err) {
+            logger.error(err);
+            throw (err);
+        }
+    }
+
+    // ...
+
+    initializer.registerMatchmakerMatched(matchmakerMatched);
     ```
 
 The matchmaker matched hook must return a match ID or `nil` if the match should proceed as relayed multiplayer.
@@ -286,6 +370,21 @@ For instance if a match was created with a label field of "skill=100-150" you ca
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    function getMatchListings(context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama) {
+        const limit = 10
+        const isAuthoritative = true;
+        const label = "skill=100-150";
+        const minSize = 0;
+        const maxSize = 4;
+        const matches = nk.matchList(limit, isAuthoritative, label, minSize, maxSize, "");
+        matches.forEach(match => {
+            logger.info("Match id '%s'", match.matchId);
+        });
+    }
+    ```
+
 This is useful to present a lobby-like experience or search for matches before creating a new match.
 
 === "Lua"
@@ -330,6 +429,28 @@ This is useful to present a lobby-like experience or search for matches before c
     return "", nil
     ```
 
+=== "TypeScript"
+    ```typescript
+    function findOrCreateMatch(context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama): string {
+        const limit = 10
+        const isAuthoritative = true;
+        const label = "skill=100-150";
+        const minSize = 0;
+        const maxSize = 4;
+        var matches = nk.matchList(limit, isAuthoritative, label, minSize, maxSize, "");
+
+        // If matches exist, sort by match size and return the largest.
+        if (matches.length > 0) {
+            matches.sort((a, b) => a.size >= b.size ? 1 : -1);
+            return matches[0].matchId;
+        }
+
+        // If no matches exist, create a new one using the "lobby" module and return it's ID.
+        var matchId = nk.matchCreate('supermatch', {});
+        return JSON.stringify({ matchId });
+    }
+    ```
+
 ### Search query
 
 In the examples above, we looked at listing matches based on comparing labels exactly as they appear. Another, more powerful way of listing matches is to run search queries on the label.
@@ -370,6 +491,22 @@ In this example, we are looking for matches with "mode" that must match "freefor
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    function findMatch(context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama) {
+        const limit = 10
+        const isAuthoritative = true;
+        const label = "skill=100-150";
+        const minSize = 0;
+        const maxSize = 4;
+        const query = "+label.mode:freeforall label.level:>10";
+        var matches = nk.matchList(limit, isAuthoritative, label, minSize, maxSize, query);
+        matches.forEach(match => {
+            logger.info("Match id '%s'", match.matchId);
+        });
+    }
+    ```
+
 You can utilize the full power of the [Bleve](http://blevesearch.com/docs/Query-String-Query/) search engine inside Nakama's [matchmaker](gameplay-matchmaker.md) as well as match listing like above.
 
 You can also use this to create an authoritative match if your listing query returns no result:
@@ -406,6 +543,23 @@ You can also use this to create an authoritative match if your listing query ret
     }
     ```
 
+=== "TypeScript"
+    ```typescript
+    function findOrCreateMatch(context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama) {
+        const query = "+label.mode:freeforall label.level:>10";
+        var matches = nk.matchList(10, true, "", 2, maxSize, query);
+        
+        // If matches exist, sort by match size and return the largest.
+        if (matches.length > 0) {
+            logger.info("Match id '%s'", matches[0].matchId);
+        }
+
+        // If no matches exist, create a new one using the "lobby" module and return it's ID.
+        var matchId = nk.matchCreate('supermatch', {});
+        logger.info(matchId);
+    }
+    ```
+
 ## Lua runtime
 
 ### Match handler API
@@ -413,7 +567,7 @@ You can also use this to create an authoritative match if your listing query ret
 The match handler that govern Authoritative Multiplayer matches must implement all of the function callbacks below.
 
 !!! Note "Handler Errors"
-    Errors generated in any of the callbacks result in the match ending immetiately and a force disconnect of all clients currently connected to that match.
+    Errors generated in any of the callbacks result in the match ending immediately and a force disconnect of all clients currently connected to that match.
 
 __match_init(context, params) -> state, tickrate, label__
 
@@ -716,7 +870,7 @@ _Parameters_
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| label | strig | New label to set for the match. |
+| label | string | New label to set for the match. |
 
 _Example_
 
@@ -846,7 +1000,7 @@ _Parameters_
 | logger | The logger allows access to log messages at variable severity. |
 | db | Database object that may be used to access the underlying game database. |
 | nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
-| dispatcher | [Dispatcher](#match-runtime-api-go) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| dispatcher | [Dispatcher](#match-runtime-api_1) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
 | tick | Tick is the current match tick number, starts at 0 and increments after every `MatchLoop` call. Does not increment with calls to `MatchJoinAttempt`, `MatchJoin`, or `MatchLeave`. |
 | state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
 | presence | A presence structure containing identifying information for the user attempting to join the match. |
@@ -886,7 +1040,7 @@ _Parameters_
 | logger | The logger allows access to log messages at variable severity. |
 | db | Database object that may be used to access the underlying game database. |
 | nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
-| dispatcher | [Dispatcher](#match-runtime-api-go) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| dispatcher | [Dispatcher](#match-runtime-api_1) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
 | tick | Tick is the current match tick number, starts at 0 and increments after every `MatchLoop` call. Does not increment with calls to `MatchJoinAttempt`, `MatchJoin`, or `MatchLeave`. |
 | state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
 | presences | A list of presences that have successfully completed the match join process. |
@@ -921,7 +1075,7 @@ _Parameters_
 | logger | The logger allows access to log messages at variable severity. |
 | db | Database object that may be used to access the underlying game database. |
 | nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
-| dispatcher | [Dispatcher](#match-runtime-api-go) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| dispatcher | [Dispatcher](#match-runtime-api_1) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
 | tick | Tick is the current match tick number, starts at 0 and increments after every `MatchLoop` call. Does not increment with calls to `MatchJoinAttempt`, `MatchJoin`, or `MatchLeave`. |
 | state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
 | presences | A list of presences that have left the match. |
@@ -958,7 +1112,7 @@ _Parameters_
 | logger | The logger allows access to log messages at variable severity. |
 | db | Database object that may be used to access the underlying game database. |
 | nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
-| dispatcher | [Dispatcher](#match-runtime-api-go) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| dispatcher | [Dispatcher](#match-runtime-api_1) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
 | tick | Tick is the current match tick number, starts at 0 and increments after every `MatchLoop` call. Does not increment with calls to `MatchJoinAttempt`, `MatchJoin`, or `MatchLeave`. |
 | state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
 | messages | Messages is a list of data messages received from users between the previous and current tick. |
@@ -1000,7 +1154,7 @@ _Parameters_
 | logger | The logger allows access to log messages at variable severity. |
 | db | Database object that may be used to access the underlying game database. |
 | nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
-| dispatcher | [Dispatcher](#match-runtime-api-go) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| dispatcher | [Dispatcher](#match-runtime-api_1) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
 | tick | Tick is the current match tick number, starts at 0 and increments after every `MatchLoop` call. Does not increment with calls to `MatchJoinAttempt`, `MatchJoin`, or `MatchLeave`. |
 | state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
 | graceSeconds | The number of seconds provided to complete a graceful termination before a match is forcefully closed. |
@@ -1189,5 +1343,427 @@ This is an example of a Ping-Pong match handler. Messages received by the server
         message := "Server shutting down in " + strconv.Itoa(graceSeconds) + " seconds."
         dispatcher.BroadcastMessage(2, []byte(message), nil, nil)
         return state
+    }
+    ```
+
+## TypeScript runtime
+
+### Match handler API
+
+The match handler that governs Authoritative Multiplayer is an interface that must implement all of the functions listed below. Before we get to the functions though, it will help having a look at the following parameters, that will be commonly used in the match handler functions:
+
+__matchInit(ctx, logger, nk, params) -> { state, tickRate, label }__
+
+This is invoked when a match is created as a result of the match create function and sets up the initial state of a match. This will be called once at match start.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| params | This is a map of various parameters that may be sent from `matchCreate()` function while creating the match. It could be list of matched users, their properties or any other relevant information that you would like to pass to the match. |
+
+_Returns_
+
+The function must return an object containing:
+
+1. `state` (`nkruntime.MatchState`) - The initial in-memory state of the match. May be any `any` value that will store the match state as it progresses. It will be available to, and can be updated by, all match handler functions.
+2. `tickrate` (`number`) - Tick rate representing the desired number of `matchLoop()` calls per second. Must be between 1 and 60, inclusive. For example a tickrate of 2 will call the match loop twice every second, which is every 500ms.
+3. `label` (`string`) - A string label that can be used to filter matches in listing operations. Must be between 0 and 2048 characters long. This is used in [match listing](#match-listings) to filter matches.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchInit = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, params: {[key: string]: string}): {state: nkruntime.MatchState, tickRate: number, label: string} => {
+        logger.debug('Lobby match created');
+        
+        return {
+            state: { Debug: true },
+            tickRate: 10,
+            label: ""
+        };
+    };
+    ```
+
+---
+
+__matchJoinAttempt(ctx, logger, nk, dispatcher, tick, state, presence, metadata) -> { state, accept, rejectMessage }__
+
+Executed when a user attempts to join the match using the client's match join operation. This includes any rejoin request from a client after a lost connection is resumed, where client will need to explicitly rejoin upon reconnection. Match join attempt can be used to prevent more players from joining after a match has started or disallow the user for any other game specific reason.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| dispatcher | [Dispatcher](#match-runtime-api_2) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| tick | Tick is the current match tick number, starts at 0 and increments after every `matchLoop` call. Does not increment with calls to `matchJoinAttempt`, `matchJoin`, or `matchLeave`. |
+| state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
+| presence | A presence structure containing identifying information for the user attempting to join the match. |
+| metadata | Arbitrary key-value pairs received from the client as part of the join request. |
+
+_Returns_
+
+The function must return an object containing:
+
+1. `state` (`nkruntime.MatchState`) - An (optionally) updated state. May be any non-null value, or `null` to end the match.
+2. `accept` (`bool`) - `true` if the join attempt should be allowed, `false` otherwise.
+3. `rejectMessage` (`string`) - If the join attempt should be rejected, an optional string rejection reason can be returned to the client.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchJoinAttempt = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presence: nkruntime.Presence, metadata: {[key: string]: any }) : {state: nkruntime.MatchState, accept: boolean, rejectMessage?: string | undefined } | null => {
+        logger.debug('%q attempted to join Lobby match', ctx.userId);
+        
+        return {
+            state,
+            accept: true
+        };
+    }
+    ```
+
+---
+
+__matchJoin(ctx, logger, nk, dispatcher, tick, state, presences) -> { state }__
+
+Executed when one or more users have successfully completed the match join process after their `matchJoinAttempt()` returns `true`. When their presences are sent to this function the users are ready to receive match data messages and can be targets for the dispatcher's `broadcastMessage()` function.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| dispatcher | [Dispatcher](#match-runtime-api_2) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| tick | Tick is the current match tick number, starts at 0 and increments after every `matchLoop` call. Does not increment with calls to `matchJoinAttempt`, `matchJoin`, or `matchLeave`. |
+| state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
+| presences | A list of presences that have successfully completed the match join process. |
+
+_Returns_
+
+The function must return an object containing:
+
+1. `state` (`nkruntime.MatchState`) - An (optionally) updated state. May be any non-null value, or `null` to end the match.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
+        logger.debug('%q joined Lobby match', ctx.userId);
+        
+        return {
+            state
+        };
+    }
+    ```
+
+---
+
+__matchLeave(ctx, logger, nk, dispatcher, tick, state, presences) -> { state }__
+
+Executed when one or more users have left the match for any reason including connection loss.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| dispatcher | [Dispatcher](#match-runtime-api_2) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| tick | Tick is the current match tick number, starts at 0 and increments after every `matchLoop` call. Does not increment with calls to `matchJoinAttempt`, `matchJoin`, or `matchLeave`. |
+| state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
+| presences | A list of presences that have left the match. |
+
+_Returns_
+
+The function must return an object containing:
+
+1. `state` (`nkruntime.MatchState`) - An (optionally) updated state. May be any non-null value, or `null` to end the match.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
+        logger.debug('%q left Lobby match', ctx.userId);
+
+        return {
+            state
+        };
+    }
+    ```
+
+---
+
+__matchLoop(ctx, logger, nk, dispatcher, tick, state, messages) -> { state }__
+
+Executed on an interval based on the tick rate returned by `matchInit()`. Each tick the match loop is run which can process messages received from clients and apply changes to the match state before the next tick. It can also dispatch messages to one or more connected match participants.
+
+To send messages back to the participants in the match you can keep track of them in the game state and use the dispatcher object to send messages to subsets of the users or all of them.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| dispatcher | [Dispatcher](#match-runtime-api_2) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| tick | Tick is the current match tick number, starts at 0 and increments after every `matchLoop` call. Does not increment with calls to `matchJoinAttempt`, `matchJoin`, or `matchLeave`. |
+| state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
+| messages | Messages is a list of data messages received from users between the previous and current tick. |
+
+_Returns_
+
+The function must return an object containing:
+
+1. `state` (`nkruntime.MatchState`) - An (optionally) updated state. May be any non-null value, or `null` to end the match.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchLoop = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, messages: nkruntime.MatchMessage[]) : { state: nkruntime.MatchState} | null => {
+        logger.debug('Lobby match loop executed');
+
+        return {
+            state
+        };
+    }
+    ```
+
+---
+
+__matchTerminate(ctx, logger, nk, dispatcher, tick, state, graceSeconds) -> { state }__
+
+Called when the server begins a [graceful shutdown](install-configuration.md#server-configuration) process. Will not be called if graceful shutdown is disabled.
+
+The match should attempt to complete any processing before the given number of seconds elapses, and optionally send a message to clients to inform them the server is shutting down.
+
+When the grace period expires the match will be forcefully closed if it is still running, clients will be disconnected, and the server will shut down. Apart from the standard parameters, this function accepts:
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](runtime-code-basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| dispatcher | [Dispatcher](#match-runtime-api_2) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| tick | Tick is the current match tick number, starts at 0 and increments after every `matchLoop` call. Does not increment with calls to `matchJoinAttempt`, `matchJoin`, or `matchLeave`. |
+| state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
+| graceSeconds | The number of seconds provided to complete a graceful termination before a match is forcefully closed. |
+
+_Returns_
+
+The function must return an object containing:
+
+1. `state` (`nkruntime.MatchState`) - An (optionally) updated state. May be any non-null value, or `null` to end the match.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchTerminate = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, graceSeconds: number) : { state: nkruntime.MatchState} | null => {
+        logger.debug('Lobby match terminated');
+        
+        return {
+            state
+        };
+    }
+    ```
+
+### Match runtime API
+
+The dispatcher type passed into the handler functions expose the following functions:
+
+__broadcastMessage(opCode, data, presences, sender, reliable) -> void__
+
+Send a message to one or more presences.
+
+This may be called at any point in the match loop to give match participants information about match state changes. May also be useful inside the match join callback to send initial state to the user on successful join.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| opCode | Numeric message op code. |
+| data | Data as slice of bytes to be sent to the provided presences. |
+| presences | List of presences (a subset of match participants) to use as message targets, or `null` to send to the whole match. |
+| sender | A presence to tag on the message as the 'sender', or `null`. |
+| reliable | Broadcast the message with delivery guarantees or not. |
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchLoop = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, messages: nkruntime.MatchMessage[]) : { state: nkruntime.MatchState} | null => {
+        logger.debug('Lobby match loop executed');
+
+        const opCode = 1234;
+        const message = JSON.stringify({ hello: 'world' });
+        const presences = null; // Send to all.
+        const sender = null; // Used if a message should come from a specific user.
+        dispatcher.broadcastMessage(opCode, message, presences, sender, true);
+
+        return {
+            state
+        };
+    }
+    ```
+
+---
+
+__matchKick(presences) -> void__
+
+Removes participants from the match.
+
+Call at any point during the match loop to remove participants based on misbehaviour or other game-specific rules.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| presences | A list of match participant presences to remove from the match. |
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchLoop = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, messages: nkruntime.MatchMessage[]) : { state: nkruntime.MatchState} | null => {
+        logger.debug('Lobby match loop executed');
+
+        // For example we'll kick everyone that sends a message on or after tick 10.
+        if (tick >= 10) {
+            dispatcher.matchKick(messages.map(message => message.sender));
+        }
+        
+        return {
+            state
+        };
+    }
+    ```
+
+---
+
+__matchLabelUpdate(label) -> void__
+
+Sets a new label for the match.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| label | New label to set for the match. |
+
+_Returns_
+
+1. `error` (`error`) - An optional error that may indicate a problem applying the new match label.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchLoop = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, messages: nkruntime.MatchMessage[]) : { state: nkruntime.MatchState} | null => {
+        logger.debug('Lobby match loop executed');
+
+        // As an example update the match label in the 10th match tick.
+        if (tick === 10) {
+            dispatcher.matchLabelUpdate("Crossed 10 ticks!");
+        }
+
+        return {
+            state
+        };
+    }
+    ```
+
+### Full example
+
+This is an example of a Ping-Pong match handler. Messages received by the server are broadcast back to the peer who sent them.
+
+=== "TypeScript"
+    ```typescript
+    const matchInit = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, params: {[key: string]: string}): {state: nkruntime.MatchState, tickRate: number, label: string} => {
+        logger.debug('Lobby match created');
+        
+        const presences: nkruntime.Presence[] = [];
+        return {
+            state: { presences },
+            tickRate: 1,
+            label: ''
+        };
+    };
+
+    const matchJoinAttempt = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presence: nkruntime.Presence, metadata: {[key: string]: any }) : {state: nkruntime.MatchState, accept: boolean, rejectMessage?: string | undefined } | null => {
+        logger.debug('%q attempted to join Lobby match', ctx.userId);
+        
+        return {
+            state,
+            accept: true
+        };
+    }
+
+    const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
+        logger.debug('%q joined Lobby match', ctx.userId);
+        
+        presences.forEach(presence => {
+            state.presences[presence.userId] = presence;
+        });
+
+        return {
+            state
+        };
+    }
+
+    const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
+        logger.debug('%q left Lobby match', ctx.userId);
+
+        presences.forEach(presence => {
+            delete (state.presences[presence.userId]);
+        });
+
+        return {
+            state
+        };
+    }
+
+    const matchLoop = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, messages: nkruntime.MatchMessage[]) : { state: nkruntime.MatchState} | null => {
+        logger.debug('Lobby match loop executed');
+
+        Object.keys(state.presences).forEach(key => {
+            const presence = state.presences[key];
+            logger.info('Presence %v name $v', presence.userId, presence.username);
+        });
+
+        messages.forEach(message => {
+            logger.info('Received %v from %v', message.data, message.sender.userId);
+            dispatcher.broadcastMessage(1, message.data, [message.sender], null);
+        });
+
+        return {
+            state
+        };
+    }
+
+    const matchTerminate = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, graceSeconds: number) : { state: nkruntime.MatchState} | null => {
+        logger.debug('Lobby match terminated');
+        
+        const message = `Server shutting down in ${graceSeconds} seconds.`;
+        dispatcher.broadcastMessage(2, message, null, null);
+
+        return {
+            state
+        };
     }
     ```
