@@ -120,7 +120,10 @@ nav:
       - TypeScript Setup: runtime-code-typescript-setup.md
       - Function Reference: runtime-code-function-reference.md
     - Tutorials:
-      - Fish Game in Unity: tutorial-fishgame-unity.md
+      - Unity:
+        - Fish Game: tutorial-fishgame-unity.md
+      - JavaScript:
+        - Phaser tic-tac-toe: tutorial-xoxo-js.md
     - Advanced:
       - Events: advanced-events.md
       - Streams: advanced-streams.md
