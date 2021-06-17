@@ -120,6 +120,7 @@ nav:
       - TypeScript Setup: runtime-code-typescript-setup.md
       - Function Reference: runtime-code-function-reference.md
     - Tutorials:
+      - Daily Rewards: runtime-code-daily-rewards.md
       - Unity:
         - Fish Game: tutorial-fishgame-unity.md
       - JavaScript:
