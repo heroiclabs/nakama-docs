@@ -118,6 +118,7 @@ nav:
     - Server Runtime Code:
       - Basics: runtime-code-basics.md
       - TypeScript Setup: runtime-code-typescript-setup.md
+      - Go Setup: runtime-code-go-setup.md
       - Function Reference: runtime-code-function-reference.md
     - Tutorials:
       - Daily Rewards: runtime-code-daily-rewards.md
