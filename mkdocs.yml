@@ -75,24 +75,25 @@ nav:
   - Nakama Server:
     - Getting Started:
       - Introduction: introduction.md
-      - Docker compose: install-docker-quickstart.md
-      - Windows binary: install-binary-windows-quickstart.md
-      - macOS binary: install-binary-macos-quickstart.md
-      - Linux binary: install-binary-linux-quickstart.md
+      - Download and install:
+        - Docker compose: install-docker-quickstart.md
+        - Windows binary: install-binary-windows-quickstart.md
+        - macOS binary: install-binary-macos-quickstart.md
+        - Linux binary: install-binary-linux-quickstart.md
       - Nakama CLI: install-server-cli.md
       - Configuration: install-configuration.md
       - Upgrading Nakama: install-nakama-upgrade.md
       - Nakama Console: console-overview.md
-    - Client Libraries:
-      - .NET/Unity: unity-client-guide.md
-      - JavaScript: javascript-client-guide.md
-      - Godot: godot-client-guide.md
-      - Defold : defold-client-guide.md
-      - Java/Android: android-java-client-guide.md
-      - C++: cpp-client-guide.md
-      - Unreal: unreal-client-guide.md
-      - Cocos2d-x C++: cocos2d-x-client-guide.md
-      - Cocos2d-x JS: cocos2d-x-js-client-guide.md
+      - Client Libraries:
+        - .NET/Unity: unity-client-guide.md
+        - JavaScript: javascript-client-guide.md
+        - Godot: godot-client-guide.md
+        - Defold : defold-client-guide.md
+        - Java/Android: android-java-client-guide.md
+        - C++: cpp-client-guide.md
+        - Unreal: unreal-client-guide.md
+        - Cocos2d-x C++: cocos2d-x-client-guide.md
+        - Cocos2d-x JS: cocos2d-x-js-client-guide.md
     - Features:
       - User Accounts:
         - Authentication: authentication.md
@@ -121,22 +122,23 @@ nav:
       - Go Setup: runtime-code-go-setup.md
       - Function Reference: runtime-code-function-reference.md
     - Tutorials:
+      - Push messages: tutorial-send-push-messages.md
       - Daily Rewards: runtime-code-daily-rewards.md
+      - Remote configuration: tutorial-remote-configuration.md
       - Unity:
         - Fish Game: tutorial-fishgame-unity.md
       - JavaScript:
         - Phaser tic-tac-toe: tutorial-xoxo-js.md
-    - Advanced:
+    - Guides:
+      - Bucketed Leaderboards: nakama/guides/bucketed-leaderboards/index.md
+      - Deploy to Digital Ocean: deployment-digital-ocean.md
+    - Advanced topics:
       - Events: advanced-events.md
       - Streams: advanced-streams.md
-      - Push messages: tutorial-send-push-messages.md
-      - Choosing TCP or UDP: expert-tcp-udp.md
       - Modelling for Scalability: expert-modelling.md
-      - Remote configuration: tutorial-remote-configuration.md
-      - Develop with LibGDX: tutorial-develop-with-libgdx.md
-      - Deploy to Digital Ocean: deployment-digital-ocean.md
-      - Previous releases: previous-versions.md
+      - Choosing TCP or UDP: expert-tcp-udp.md
     - Benchmarks: benchmarks.md
+    - Previous releases: previous-versions.md
   - Heroic Cloud:
     - Introduction: heroic-cloud/introduction.md
     - Organizations: heroic-cloud/organizations.md
