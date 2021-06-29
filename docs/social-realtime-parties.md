@@ -19,12 +19,12 @@ A party can be created by any user. You can limit the max number of users allowe
     ```csharp
     // Create an open party (i.e. no approval needed to join) with 10 max users
     // This maximum does not include the party leader
-    var party = await client.CreatePartyAsync(open: true, maxSize: 10);
+    var party = await socket.CreatePartyAsync(open: true, maxSize: 10);
     System.Console.WriteLine("New Party: {0}", party);
 
     // Create a closed party (i.e. approval needed to join) with 5 max users
     // This maximum does not include the party leader
-    var party = await client.CreatePartyAsync(open: false, maxSize: 5);
+    var party = await socket.CreatePartyAsync(open: false, maxSize: 5);
     System.Console.WriteLine("New Party: {0}", party);
     ```
 
@@ -32,12 +32,12 @@ A party can be created by any user. You can limit the max number of users allowe
     ```csharp
     // Create an open party (i.e. no approval needed to join) with 10 max users
     // This maximum does not include the party leader
-    var party = await client.CreatePartyAsync(open: true, maxSize: 10);
+    var party = await socket.CreatePartyAsync(open: true, maxSize: 10);
     Debug.Log("New Party: " + party.ToString());
 
     // Create a closed party (i.e. approval needed to join) with 5 max users
     // This maximum does not include the party leader
-    var party = await client.CreatePartyAsync(open: true, maxSize: 5);
+    var party = await socket.CreatePartyAsync(open: true, maxSize: 5);
     Debug.Log("New Party: " + party.ToString());
     ```
 
@@ -135,14 +135,14 @@ A user can leave a party at any time. The user will also be automatically remove
 === ".NET"
     ```csharp
     string partyId = "<partyid>";
-    var party = await client.LeavePartyAsync(partyId);
+    var party = await socket.LeavePartyAsync(partyId);
     System.Console.WriteLine("Left party: " + party);
     ```
 
 === "Unity"
     ```csharp
     string partyId = "<partyid>";
-    var party = await client.LeavePartyAsync(partyId);
+    var party = await socket.LeavePartyAsync(partyId);
     Debug.Log("Left party: " + party.ToString());
     ```
 
@@ -211,13 +211,13 @@ A party cannot be closed by any member other than the party leader. The party le
 === ".NET"
     ```csharp
     string partyId = "<partyid>";
-    await client.ClosePartyAsync(partyId);
+    await socket.ClosePartyAsync(partyId);
     ```
 
 === "Unity"
     ```csharp
     string partyId = "<partyid>";
-    await client.ClosePartyAsync(partyId);
+    await socket.ClosePartyAsync(partyId);
     ```
 
 ## Best practices
