@@ -63,7 +63,7 @@ These steps will set up a workspace to write all your project code to be run by 
     ```
 
 !!! note "Note"
-    See [TypeScript Bundling with Rollup](runtime-code-rollup-ts.md) for an example not relying on the TypeScript complier, enabling to bundle other node modules with your TypeScript code for Nakama.
+    See [TypeScript Bundling with Rollup](#bundling-with-rollup) for an example not relying on the TypeScript complier, enabling to bundle other node modules with your TypeScript code for Nakama.
 
 4. Add the Nakama runtime types as a dependency to the project and configure the compiler to find the types.
 

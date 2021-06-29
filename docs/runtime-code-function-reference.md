@@ -1366,6 +1366,10 @@ _Parameters_
 | metadata | `map[string]interface{}` | Opt. table | Opt. object | Custom information to store for this group. Can be left empty as nil/null. |
 | max_count | `int` | Opt. number | Opt. `number` | Maximum number of members to have in the group. Defaults to 100. |
 
+_Returns_
+
+(string) - The `group_id` of the newly created group. 
+
 _Example_
 
 === "Lua"

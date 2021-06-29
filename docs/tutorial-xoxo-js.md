@@ -44,24 +44,24 @@ Here you will install the TypeScript dependencies required for this project, tra
 3. Add the PhaserJS script tag to your `index.html` file:
 
     === "index.html"
-            ```html
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                    <meta charset='utf-8'>
-                    <meta name='viewport' content='width=device-width,initial-scale=1'>
-                    <title>Svelte app</title>
-                    <link rel='icon' type='image/png' href='/favicon.png'>
-                    <link rel='stylesheet' href='/global.css'>
-                    <link rel='stylesheet' href='/build/bundle.css'>
-                    // PhaserJS script tag
-                    <script src="//cdn.jsdelivr.net/npm/phaser@3.54.0/dist/phaser.min.js"></script>
-                    <script defer src='/build/bundle.js'></script>
-            </head>
-            <body>
-            </body>
-            </html>
-            ```
+        ```html
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+                <meta charset='utf-8'>
+                <meta name='viewport' content='width=device-width,initial-scale=1'>
+                <title>Svelte app</title>
+                <link rel='icon' type='image/png' href='/favicon.png'>
+                <link rel='stylesheet' href='/global.css'>
+                <link rel='stylesheet' href='/build/bundle.css'>
+                // PhaserJS script tag
+                <script src="//cdn.jsdelivr.net/npm/phaser@3.54.0/dist/phaser.min.js"></script>
+                <script defer src='/build/bundle.js'></script>
+        </head>
+        <body>
+        </body>
+        </html>
+        ```
 
 4. You can now run your application locally by running:
 
@@ -106,6 +106,7 @@ Your application will be available at `localhost:5000`.
         ```
 
 2. Next, create a `config.js` file for you game settings. In this case, the height and width of the game canvas:
+
     === "config.js"
         ```js
         const CONFIG = {
@@ -116,6 +117,7 @@ Your application will be available at `localhost:5000`.
         ```
 
 3. Now you can start creating the game's Phaser scenes to group related logic. For our game we have three, the main menu, matchmaking, and in game scenes:
+
     === "MainMenu.js"
         ```js
 
@@ -306,6 +308,7 @@ For the In Game scene, you are creating the interactive board of nine individual
 ## Connecting to Nakama
 
 1. Next connect your client to Nakama server and configure it for [device authentication](authentication.md#device):
+
     === "nakama.js"
         ```js
         import { Client } from "@heroiclabs/nakama-js";
@@ -341,7 +344,8 @@ For the In Game scene, you are creating the interactive board of nine individual
             // ...
         ```
 
-2. Here you'll also configure the [multiplayer](gameplay-realtime-multiplayer.md) functionality. Learn more about this in the [authoritative multiplayer](gameplay-multiplayer-server-multiplayer.md) and [matchmaker](gameplay-matchmaker.md) documentation.
+2. Here you'll also configure the [multiplayer](gameplay-multiplayer-realtime.md) functionality. Learn more about this in the [authoritative multiplayer](gameplay-multiplayer-server-multiplayer.md) and [matchmaker](gameplay-matchmaker.md) documentation.
+
     === "nakama.js"
         ```js
         import { Client } from "@heroiclabs/nakama-js";
