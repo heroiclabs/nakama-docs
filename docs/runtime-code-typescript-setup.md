@@ -18,7 +18,7 @@ You will need to have these tools installed to work with TypeScript for your pro
 
 The TypeScript compiler and other dependencies will be fetched with NPM.
 
-## Initialize the Project
+## Initialize the project
 
 These steps will set up a workspace to write all your project code to be run by the game server.
 
@@ -62,6 +62,9 @@ These steps will set up a workspace to write all your project code to be run by 
     "outFile": "./build/index.js",
     ```
 
+!!! note "Note"
+    See [TypeScript Bundling with Rollup](runtime-code-rollup-ts.md) for an example not relying on the TypeScript complier, enabling to bundle other node modules with your TypeScript code for Nakama.
+
 4. Add the Nakama runtime types as a dependency to the project and configure the compiler to find the types.
 
     ``` shell
@@ -90,7 +93,7 @@ These steps will set up a workspace to write all your project code to be run by 
     └── tsconfig.json
     ```
 
-## Develop Code
+## Develop code
 
 We'll write some simple code and compile it to JavaScript so it can be run by the game server.
 
@@ -124,7 +127,7 @@ To compile the codebase:
 npx tsc
 ```
 
-## Run the Project
+## Run the project
 
 You can use Docker with a [compose file](install-docker-quickstart.md) for local development or install the [Linux](install-binary-linux-quickstart.md), [Windows](install-binary-windows-quickstart.md), or [macOS](install-binary-macos-quickstart.md) binary for the game server. You will also need to install the database if you run without Docker. Have a look at the installation section which cover these steps. When this is complete you can run the game server and have it load your code:
 
@@ -138,8 +141,167 @@ The server logs will show this output or similar which shows that the code we wr
 {"level":"info","ts":"...","msg":"Hello World!","caller":"server/runtime_javascript_logger.go:54"}
 ```
 
-## Next Steps
+## Bundling with Rollup
 
-Have a look at the [Nakama project template](https://github.com/heroiclabs/nakama-project-template) which shows a larger TypeScript example which includes how to write an [authoritative multiplayer match handler](gameplay-multiplayer-server-multiplayer.md) for the TicTacToe game. It shows off other concepts as well which includes [In-App Notifications](social-in-app-notifications.md), [Storage](storage-collections.md), [RPCs](runtime-code-basics.md#rpc-hook), and [User Wallets](user-accounts.md#virtual-wallet).
+The setup above relies solely on the TypeScript compiler. This helps to keep the toolchain and workflow simple, but limits your ability to bundle your TypeScript code with additional node modules.
 
-[https://github.com/heroiclabs/nakama-project-template](https://github.com/heroiclabs/nakama-project-template)
+[Rollup](https://rollupjs.org/guide/en/) is one of the options available to bundle node modules that don't depend on the Node.js runtime to run within Nakama.
+
+### Prerequisites
+
+* Node v14+ LTS
+* Rollup v1.20.0+
+* TypeScript v3.7+
+* [Rollup TypeScript plugin](https://www.npmjs.com/package/@rollup/plugin-typescript)
+
+### Example files
+
+Below are template files for a Nakama, TypeScript, and Rollup project, to be customized based on your specific needs:
+
+=== "main.ts"
+    ```ts
+    import { upperCase } from 'upper-case';
+
+    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+        initializer.registerRpc('test_rpc', handleTestRpc);
+        logger.info('TypeScript module loaded.');
+    }
+
+    function handleTestRpc(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama) {
+        const userId = upperCase(ctx.userId);
+        logger.info('test_rpc userid:', userId);
+        return userId;
+    }
+
+    // Reference InitModule to avoid it getting removed on build
+    !InitModule && InitModule.bind(null);
+    ```
+
+=== "package.json"
+    ```json
+    {
+        "name": "nakama-rollup-ts",
+        "version": "0.0.1",
+        "description": "Nakama + Typescript + Rollup Template.",
+        "main": "build/index.js",
+        "license": "Apache-2.0",
+        "scripts": {
+            "type-check": "tsc --noEmit",
+            "build": "rollup -c"
+        },
+        "dependencies": {
+            "nakama-runtime": "git+https://github.com/heroiclabs/nakama-common.git",
+            "upper-case": "^2.0.2"
+        },
+        "devDependencies": {
+            "@babel/core": "^7.13.8",
+            "@babel/plugin-external-helpers": "^7.12.13",
+            "@babel/preset-env": "^7.13.9",
+            "@rollup/plugin-babel": "^5.3.0",
+            "@rollup/plugin-commonjs": "17.1.0",
+            "@rollup/plugin-json": "^4.1.0",
+            "@rollup/plugin-node-resolve": "11.1.1",
+            "@rollup/plugin-typescript": "^8.2.0",
+            "rollup": "^2.40.0",
+            "tslib": "^2.1.0",
+            "typescript": "^4.2.3"
+        },
+        "keywords": []
+    }
+    ```
+
+=== "tsconfig.json"
+    ```json
+    {
+        "compilerOptions": {
+            "noImplicitReturns": true,
+            "moduleResolution": "node",
+            "esModuleInterop": true,
+            "noUnusedLocals": true,
+            "removeComments": true,
+            "target": "es6",
+            "module": "ESNext",
+            "strict": false,
+        },
+        "files": [
+            "./node_modules/nakama-runtime/index.d.ts",
+        ],
+        "include": [
+            "src/**/*",
+        ],
+        "exclude": [
+            "node_modules",
+            "build"
+        ]
+    }
+    ```
+
+=== "rollup.config.js"
+    ```js
+    import resolve from '@rollup/plugin-node-resolve';
+    import commonJS from '@rollup/plugin-commonjs';
+    import json from '@rollup/plugin-json';
+    import babel from '@rollup/plugin-babel';
+    import typescript from '@rollup/plugin-typescript';
+    import pkg from './package.json';
+
+    const extensions = ['.mjs', '.js', '.ts', '.json'];
+
+    export default {
+        input: './src/main.ts',
+        external: ['nakama-runtime'],
+        plugins: [
+            // Allows node_modules resolution
+            resolve({ extensions }),
+
+            // Compile TypeScript
+            typescript(),
+
+            json(),
+
+            // Resolve CommonJS modules
+            commonJS({ extensions }),
+
+            // Transpile to ES5
+            babel({
+                extensions,
+                babelHelpers: 'bundled',
+            }),
+        ],
+        output: {
+            file: pkg.main,
+        },
+    };
+    ```
+
+=== "babel.config.json"
+    ```json
+    {
+        "presets": [
+            "@babel/env"
+        ],
+        "plugins": []
+    }
+    ```
+
+### Usage
+
+1. Ensure you have all dependencies installed:
+    ```sh
+    npm i
+    ```
+
+2. Next perform a Type check:
+    ```sh
+    npm run type-check
+    ```
+
+3. Then, under `build/index.js`, build your project:
+    ```sh
+    npm run build
+    ```
+
+## Next steps
+
+Have a look at the [Nakama project template](https://github.com/heroiclabs/nakama-project-template) which shows a larger TypeScript example which includes how to write an [authoritative multiplayer match handler](gameplay-multiplayer-server-multiplayer.md) for the Tic-Tac-Toe game.
+It shows off other concepts as well which includes [In-App Notifications](social-in-app-notifications.md), [Storage](storage-collections.md), [RPCs](runtime-code-basics.md#rpc-hook), and [User Wallets](user-accounts.md#virtual-wallet).
