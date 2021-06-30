@@ -120,6 +120,7 @@ nav:
       - Basics: runtime-code-basics.md
       - TypeScript Setup: runtime-code-typescript-setup.md
       - Go Setup: runtime-code-go-setup.md
+      - Lua Setup: runtime-code-lua-setup.md
       - Function Reference: runtime-code-function-reference.md
     - Tutorials:
       - Push messages: tutorial-send-push-messages.md
