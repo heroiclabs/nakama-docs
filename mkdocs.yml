@@ -128,6 +128,16 @@ nav:
       - Remote configuration: tutorial-remote-configuration.md
       - Unity:
         - Fish Game: tutorial-fishgame-unity.md
+        - Pirate Panic:
+          - Introduction: nakama/tutorials/unity/pirate-panic/intro.md
+          - Authentication: nakama/tutorials/unity/pirate-panic/authentication.md
+          - Friends and Chat: nakama/tutorials/unity/pirate-panic/friends.md
+          - Clans: nakama/tutorials/unity/pirate-panic/clans.md
+          - Storage: nakama/tutorials/unity/pirate-panic/storage.md
+          - Matchmaking: nakama/tutorials/unity/pirate-panic/matchmaking.md
+          - Realtime Multiplayer: nakama/tutorials/unity/pirate-panic/realtime-multiplayer.md
+          - Leaderboards: nakama/tutorials/unity/pirate-panic/leaderboards.md
+          - Notifications: nakama/tutorials/unity/pirate-panic/notifications.md
       - JavaScript:
         - Phaser tic-tac-toe: tutorial-xoxo-js.md
     - Guides:
