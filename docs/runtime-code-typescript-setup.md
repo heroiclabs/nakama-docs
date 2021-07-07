@@ -9,6 +9,8 @@ TypeScript is a fantastic superset of the JavaScript language. It allows you to 
 !!! Note
     You can learn more about how to write your JavaScript code in TypeScript in the <a href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html" target="_blank">official documentation</a>.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FXguREV6Zf8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Prerequisites
 
 You will need to have these tools installed to work with TypeScript for your project:
@@ -127,13 +129,101 @@ To compile the codebase:
 npx tsc
 ```
 
-## Run the project
+## Running the project
 
-You can use Docker with a [compose file](install-docker-quickstart.md) for local development or install the [Linux](install-binary-linux-quickstart.md), [Windows](install-binary-windows-quickstart.md), or [macOS](install-binary-macos-quickstart.md) binary for the game server. You will also need to install the database if you run without Docker. Have a look at the installation section which cover these steps. When this is complete you can run the game server and have it load your code:
+### With Docker
+
+The easiest way to run your server locally is with Docker.
+
+To do this, create a file called `Dockerfile`.
+
+```dockerfile
+FROM node:alpine AS node-builder
+
+WORKDIR /backend
+
+COPY package*.json .
+RUN npm install
+
+COPY tsconfig.json .
+COPY main.ts .
+RUN npx tsc
+
+FROM heroiclabs/nakama:3.3.0
+
+COPY --from=node-builder /backend/build/*.js /nakama/data/modules/build/
+COPY local.yml .
+```
+
+Next create a `docker-compose.yml` file. For more information see the [Install Nakama with Docker Compose](/install-docker-quickstart/) documentation.
+
+```yml
+version: '3'
+services:
+  postgres:
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all
+    environment:
+      - POSTGRES_DB=nakama
+      - POSTGRES_PASSWORD=localdb
+    expose:
+      - "8080"
+      - "5432"
+    image: postgres:12.2-alpine
+    ports:
+      - "5432:5432"
+      - "8080:8080"
+    volumes:
+      - data:/var/lib/postgresql/data
+
+  nakama:
+    build: .
+    depends_on:
+      - postgres
+    entrypoint:
+      - "/bin/sh"
+      - "-ecx"
+      - >
+        /nakama/nakama migrate up --database.address postgres:localdb@postgres:5432/nakama &&
+        exec /nakama/nakama --config /nakama/data/local.yml --database.address postgres:localdb@postgres:5432/nakama
+    expose:
+      - "7349"
+      - "7350"
+      - "7351"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7350/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    links:
+      - "postgres:db"
+    ports:
+      - "7349:7349"
+      - "7350:7350"
+      - "7351:7351"
+    restart: unless-stopped
+
+volumes:
+  data:
+```
+
+Now run the server with the command:
+
+```
+docker compose up
+```
+
+### Without Docker
+
+Install a Nakama binary stack for [Linux](install-binary-linux-quickstart.md), [Windows](install-binary-windows-quickstart.md), or [macOS](install-binary-macos-quickstart.md). When this is complete you can run the game server and have it load your code:
 
 ``` shell
 nakama --logger.level DEBUG --runtime.js_entrypoint "build/index.js"
 ```
+
+!!! note "Note"
+    You'll need to have built the `build/index.js` file by running `npx tsc` from the Terminal before you can execute the above command.
+
+### Confirming the server is running
 
 The server logs will show this output or similar which shows that the code we wrote above was loaded and executed at startup.
 
