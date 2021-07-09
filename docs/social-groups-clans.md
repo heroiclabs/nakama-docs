@@ -17,9 +17,11 @@ A group user has four states:
 
 ## List and filter groups
 
-A user can find public groups to join by listing groups and filtering for groups with a name. This makes it easy to assemble new users into smaller groups for team-based play or collaboration.
+Groups can be listed using a number of optional filters: `name`, `lang_tag`, `open` and (number of) `members`. If all filters are omitted, the operation will list all existing groups.
 
-Filtering is achieved using a wildcard query that uses the `%` as a way to look for similarities. For instance, if you are looking for groups that contain the world "persian" in them, make the filter `%persian%`. If you don't supply a filtering criteria, Nakama will simply list groups.
+The `name` filter is case insensitive and mutually exclusive to the remainder filters. It can be useful to help the user look for a specific group by name, and it supports the `%` wildcard for partial matches as a suffix. As an example, looking for a group that is prefixed with the "persian" word would be written as `persian%` name filter.
+
+The remainder filters can be combined or omitted in any way, for instance, we could use the `open` and `members` filters to list all open groups with at most the specified amount of members.
 
 === "cURL"
     ```sh
@@ -152,7 +154,7 @@ The message response for a list of groups contains a cursor. The cursor can be u
 
 === "cURL"
     ```sh
-    curl -X GET "http://127.0.0.1:7350/v2/group?limit=20&name=%25heroes%25&cursor=somecursor" \
+    curl -X GET "http://127.0.0.1:7350/v2/group?limit=20&name=heroes%25&cursor=somecursor" \
       -H 'Authorization: Bearer <session token>'
     ```
 
