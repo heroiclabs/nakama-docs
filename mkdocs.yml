@@ -142,6 +142,7 @@ nav:
         - Phaser tic-tac-toe: tutorial-xoxo-js.md
     - Guides:
       - Bucketed Leaderboards: nakama/guides/bucketed-leaderboards/index.md
+      - Guarding APIs: nakama/guides/guarding-apis.md
       - Deploy to Digital Ocean: deployment-digital-ocean.md
     - Advanced topics:
       - Events: advanced-events.md

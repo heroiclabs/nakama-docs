@@ -149,7 +149,7 @@ COPY tsconfig.json .
 COPY main.ts .
 RUN npx tsc
 
-FROM heroiclabs/nakama:3.3.0
+FROM heroiclabs/nakama:3.4.0
 
 COPY --from=node-builder /backend/build/*.js /nakama/data/modules/build/
 COPY local.yml .
@@ -237,159 +237,176 @@ The setup above relies solely on the TypeScript compiler. This helps to keep the
 
 [Rollup](https://rollupjs.org/guide/en/) is one of the options available to bundle node modules that don't depend on the Node.js runtime to run within Nakama.
 
-### Prerequisites
+### Configuring Rollup
 
-* Node v14+ LTS
-* Rollup v1.20.0+
-* TypeScript v3.7+
-* [Rollup TypeScript plugin](https://www.npmjs.com/package/@rollup/plugin-typescript)
+When configuring your TypeScript project to use Rollup there are a few additional steps and alterations you will need to make to your project if you have followed the steps above.
 
-### Example files
+The first thing you will need to do is install some additional dependencies that will allow you to run Rollup to build your server runtime code. These include [Babel](https://babeljs.io/), [Rollup](https://rollupjs.org/), several of their respective plugins/presets and `tslib`.
 
-Below are template files for a Nakama, TypeScript, and Rollup project, to be customized based on your specific needs:
+To do this, run the following command in the Terminal, which will install the dependencies and add them to your `package.json` file as development dependencies:
 
-=== "main.ts"
-    ```ts
-    import { upperCase } from 'upper-case';
+```
+npm i -D @babel/core @babel/plugin-external-helpers @babel/preset-env @rollup/plugin-babel @rollup/plugin-commonjs @rollup/plugin-json @rollup/plugin-node-resolve @rollup/plugin-typescript rollup tslib
+```
 
-    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
-        initializer.registerRpc('test_rpc', handleTestRpc);
-        logger.info('TypeScript module loaded.');
-    }
-
-    function handleTestRpc(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama) {
-        const userId = upperCase(ctx.userId);
-        logger.info('test_rpc userid:', userId);
-        return userId;
-    }
-
-    // Reference InitModule to avoid it getting removed on build
-    !InitModule && InitModule.bind(null);
-    ```
+With Rollup installed as a dev dependency of your project, you now need to modify the `build` script in `package.json` to run the `rollup -c` command instead of the `tsc` command. You should also add a `type-check` script that will allow you to verify your TypeScript compiles without actually emitting a build file.
 
 === "package.json"
-    ```json
-    {
-        "name": "nakama-rollup-ts",
-        "version": "0.0.1",
-        "description": "Nakama + Typescript + Rollup Template.",
-        "main": "build/index.js",
-        "license": "Apache-2.0",
-        "scripts": {
-            "type-check": "tsc --noEmit",
-            "build": "rollup -c"
-        },
-        "dependencies": {
-            "nakama-runtime": "git+https://github.com/heroiclabs/nakama-common.git",
-            "upper-case": "^2.0.2"
-        },
-        "devDependencies": {
-            "@babel/core": "^7.13.8",
-            "@babel/plugin-external-helpers": "^7.12.13",
-            "@babel/preset-env": "^7.13.9",
-            "@rollup/plugin-babel": "^5.3.0",
-            "@rollup/plugin-commonjs": "17.1.0",
-            "@rollup/plugin-json": "^4.1.0",
-            "@rollup/plugin-node-resolve": "11.1.1",
-            "@rollup/plugin-typescript": "^8.2.0",
-            "rollup": "^2.40.0",
-            "tslib": "^2.1.0",
-            "typescript": "^4.2.3"
-        },
-        "keywords": []
-    }
-    ```
+  ```json
+  {
+    ...
+    "scripts": {
+      "build": "rollup -c",
+      "type-check": "tsc --noEmit"
+    },
+    ...
+  }
+  ```
 
-=== "tsconfig.json"
-    ```json
-    {
-        "compilerOptions": {
-            "noImplicitReturns": true,
-            "moduleResolution": "node",
-            "esModuleInterop": true,
-            "noUnusedLocals": true,
-            "removeComments": true,
-            "target": "es6",
-            "module": "ESNext",
-            "strict": false,
-        },
-        "files": [
-            "./node_modules/nakama-runtime/index.d.ts",
-        ],
-        "include": [
-            "src/**/*",
-        ],
-        "exclude": [
-            "node_modules",
-            "build"
-        ]
-    }
-    ```
+Next, you must add the following `rollup.config.js` file to your project.
 
 === "rollup.config.js"
-    ```js
-    import resolve from '@rollup/plugin-node-resolve';
-    import commonJS from '@rollup/plugin-commonjs';
-    import json from '@rollup/plugin-json';
-    import babel from '@rollup/plugin-babel';
-    import typescript from '@rollup/plugin-typescript';
-    import pkg from './package.json';
+  ```js
+  import resolve from '@rollup/plugin-node-resolve';
+  import commonJS from '@rollup/plugin-commonjs';
+  import json from '@rollup/plugin-json';
+  import babel from '@rollup/plugin-babel';
+  import typescript from '@rollup/plugin-typescript';
+  import pkg from './package.json';
 
-    const extensions = ['.mjs', '.js', '.ts', '.json'];
+  const extensions = ['.mjs', '.js', '.ts', '.json'];
 
-    export default {
-        input: './src/main.ts',
-        external: ['nakama-runtime'],
-        plugins: [
-            // Allows node_modules resolution
-            resolve({ extensions }),
+  export default {
+    input: './src/main.ts',
+    external: ['nakama-runtime'],
+    plugins: [
+      // Allows node_modules resolution
+      resolve({ extensions }),
 
-            // Compile TypeScript
-            typescript(),
+      // Compile TypeScript
+      typescript(),
 
-            json(),
+      json(),
 
-            // Resolve CommonJS modules
-            commonJS({ extensions }),
+      // Resolve CommonJS modules
+      commonJS({ extensions }),
 
-            // Transpile to ES5
-            babel({
-                extensions,
-                babelHelpers: 'bundled',
-            }),
-        ],
-        output: {
-            file: pkg.main,
-        },
-    };
-    ```
+      // Transpile to ES5
+      babel({
+        extensions,
+        babelHelpers: 'bundled',
+      }),
+    ],
+    output: {
+      file: pkg.main,
+    },
+  };
+  ```
+
+Followed by adding a `babel.config.json` file to your project.
 
 === "babel.config.json"
-    ```json
-    {
-        "presets": [
-            "@babel/env"
-        ],
-        "plugins": []
-    }
-    ```
+  ```json
+  {
+    "presets": [
+      "@babel/env"
+    ],
+    "plugins": []
+  }
+  ```
 
-### Usage
+There are also changes to the `tsconfig.json` file that must be made. Using Rollup simplifies the build process and means you no longer have to manually update the `tsconfig.json` file every time you add a new `*.ts` file to your project. Replace the contents of your existing `tsconfig.json` file with the example below.
+
+=== "tsconfig.json"
+  ```json
+  {
+    "compilerOptions": {
+      "noImplicitReturns": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "noUnusedLocals": true,
+      "removeComments": true,
+      "target": "es6",
+      "module": "ESNext",
+      "strict": false,
+    },
+    "files": [
+      "./node_modules/nakama-runtime/index.d.ts",
+    ],
+    "include": [
+      "src/**/*",
+    ],
+    "exclude": [
+      "node_modules",
+      "build"
+    ]
+  }
+  ```
+
+Next, you need to include a line at the bottom of your `main.ts` file that references the `InitModule` function. This is to ensure that Rollup does not omit it from the build.
+
+=== "main.ts"
+  ```ts
+  function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+    logger.info('TypeScript module loaded.');
+  }
+
+  // Reference InitModule to avoid it getting removed on build
+  !InitModule && InitModule.bind(null);
+  ```
+
+Finally, you need to make a slight alteration to your `Dockerfile` to ensure you copy across the `rollup.config.js` and `babel.config.json` files. You must also change the `RUN` command to run your updated build command rather than using the TypeScript compiler directly. Replace the contents of your `Dockerfile` with the example below.
+
+=== "Dockerfile"
+  ```docker
+  FROM node:alpine AS node-builder
+
+  WORKDIR /backend
+
+  COPY package*.json .
+  RUN npm install
+
+  COPY . .
+  RUN npm run build
+
+  FROM heroiclabs/nakama:3.4.0
+
+  COPY --from=node-builder /backend/build/*.js /nakama/data/modules/build/
+  COPY local.yml .
+  ```
+
+### Building your module locally
 
 1. Ensure you have all dependencies installed:
     ```sh
     npm i
     ```
 
-2. Next perform a Type check:
+2. Perform a type check to ensure your TypeScript will compile successfully:
     ```sh
     npm run type-check
     ```
 
-3. Then, under `build/index.js`, build your project:
+3. Build your project:
     ```sh
     npm run build
     ```
+
+### Running your module with Docker
+
+To run Nakama with your custom server runtime code, run:
+
+```
+docker compose up
+```
+
+If you have made changes to your module and want to re-run it, you can run:
+
+```
+docker compose up --build nakama
+```
+
+This will ensure the image is rebuilt with your latest changes.
 
 ## Next steps
 
