@@ -1,6 +1,6 @@
 # Leaderboards
 
-We have set up matches, friends, clans, and ways to store data. Let's put them all together to display a [leaderboard](../../../../gameplay-leaderboards.md) of top players to foster some competition.
+We have set up matches, friends, clans, and ways to store data. Let's put them all together to display a [leaderboard](../../../concepts/leaderboards.md) of top players to foster some competition.
 
 ![Leaderboard](images/leaderboard.png)
 
@@ -60,7 +60,7 @@ How you want to calculate the score is up to you and the mechanics of your game.
 
 Once a score is calculated, we pass it as a number into `leaderboardRecordWrite` along with the user ID and the username to display, and the leaderboard engine will take care of the rest.
 
-In addition, it's possible to do this on the Unity side using [WriteLeaderboardRecordAsync](../../../../../gameplay-leaderboards/#submit-a-score).
+In addition, it's possible to do this on the Unity side using [WriteLeaderboardRecordAsync](../../../concepts/leaderboards.md#submit-a-score).
 
 ## Listing leaderboard records
 
@@ -163,8 +163,8 @@ IApiLeaderboardRecordList list = await _connection.Client.ListLeaderboardRecords
 
 Learn more about the topics and features, and view the complete source code, discussed above:
 
-* [Leaderboards](../../../../gameplay-leaderboards.md)
-* [Server-side function reference](../../../../runtime-code-function-reference.md#leaderboards)
+* [Leaderboards](../../../concepts/leaderboards.md)
+* [Server-side function reference](../../../server-framework/function-reference.md#leaderboards)
 * [BattleMenuUI.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/BattleMenuUI.cs)
 * [LeaderboardsMenuUI.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/LeaderboardsMenuUI.cs)
 * [Server main.ts](https://github.com/heroiclabs/unity-sampleproject/blob/master/ServerModules/src/main.ts)

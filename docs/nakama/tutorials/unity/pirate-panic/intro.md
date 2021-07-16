@@ -12,7 +12,7 @@ This tutorial is split into multiple sections, each exploring a different featur
 
 So that you can follow along with this tutorial, please ensure you have done the following before proceeding:
 
-* [Installed Nakama](../../../../install-docker-quickstart.md)
+* [Installed Nakama](../../..//getting-started/docker-quickstart.md)
 * [Download](https://unity3d.com/get-unity/download) and install Unity
 * [Install the Nakama Unity SDK](https://github.com/heroiclabs/nakama-unity)
 * [Download the Pirate Panic Unity project]((https://github.com/heroiclabs/unity-sampleproject))

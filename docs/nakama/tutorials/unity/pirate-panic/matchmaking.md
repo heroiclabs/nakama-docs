@@ -2,7 +2,7 @@
 
 A core feature of many multiplayer games is the ability to find and play against random opponents.
 
-Since Nakama is aware of other online players, it is the best place to arrange matches between players. The Nakama [Matchmaking](../../../../gameplay-matchmaker.md) feature simplifies the creation and management of matches so that you don't have to build the infrastructure yourself.
+Since Nakama is aware of other online players, it is the best place to arrange matches between players. The Nakama [Matchmaking](../../../concepts/matches.md) feature simplifies the creation and management of matches so that you don't have to build the infrastructure yourself.
 
 ## Server-side settings
 
@@ -15,7 +15,7 @@ First, let's set up the matchmaking settings on the server so that we can accept
 * `max_intervals`: Sets the number of times to try at the max player limit before using the min player limit
 
 These are all server settings that cannot be changed by players.
-In order to configure these options, we create a [configuration file](../../../../install-configuration.md).
+In order to configure these options, we create a [configuration file](../../../getting-started/configuration.md).
 
 In Pirate Panic, our configuration file is `local.yml`, but in your game this can be whatever you want. Inside the configuration file, we create a section for the matchmaker:
 
@@ -27,7 +27,7 @@ In Pirate Panic, our configuration file is `local.yml`, but in your game this ca
       max_intervals: 3
     ```
 
-A full list of parameters and their defaults for other parts of the server configuration can be explored [in the documentation](../../../../install-configuration.md#matchmaker).
+A full list of parameters and their defaults for other parts of the server configuration can be explored [in the documentation](../../../getting-started/configuration.md#matchmaker).
 
 ## Requesting a match
 
@@ -45,7 +45,7 @@ _ticket = await _connection.Socket.AddMatchmakerAsync(
 This ticket describes a player looking to find any match (`*` wildcard query) with exactly two total players.
 
 !!! note "Note"
-    You can also restrict queries to find specific players that have matching properties. For example, to only match with other players in Europe you could make a `query = "+region:europe"`. See the [matchmaker documentation](../../../../gameplay-matchmaker.md#query) for more examples.
+    You can also restrict queries to find specific players that have matching properties. For example, to only match with other players in Europe you could make a `query = "+region:europe"`. See the [matchmaker documentation](../../../concepts/matches.md#query) for more examples.
 
 `stringProperties` and `numericProperties` can be used to store user data (e.g. name, region, or rank) for use with the matchmaker. Since we have no preference we can leave this `null` in this example.
 
@@ -73,15 +73,15 @@ private void OnMatchmakerMatched(IMatchmakerMatched matched)
 }
 ```
 
-Here, `ReceivedMatchmakerMatched` is a [register hook](../../../../runtime-code-function-reference.md#register-hooks) that automatically fires when the server finds an opponent.
+Here, `ReceivedMatchmakerMatched` is a [register hook](../../../server-framework/function-reference.md#register-hooks) that automatically fires when the server finds an opponent.
 
 ## Further reading
 
 Learn more about the topics and features, and view the complete source code, discussed above:
 
-* [Leaderboards](../../../../gameplay-leaderboards.md)
-* [Matchmaking](../../../../gameplay-matchmaker.md)
-* [Server-side function reference](../../../../../runtime-code-function-reference/#leaderboards)
+* [Leaderboards](../../../concepts/leaderboards.md)
+* [Matchmaking](../../../concepts/matches.md)
+* [Server-side function reference](../../../runtime-code-function-reference/#leaderboards)
 * [BattleMenuUI.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/BattleMenuUI.cs)
 * [LeaderboardsMenuUI.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/LeaderboardsMenuUI.cs)
 * [Server main.ts](https://github.com/heroiclabs/unity-sampleproject/blob/master/ServerModules/src/main.ts)

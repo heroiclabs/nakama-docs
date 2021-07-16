@@ -23,7 +23,7 @@ Here, we're creating a connection to the server that you started locally (availa
 * `Scheme`: The connection scheme, `http` here.
 * `Host`: The server host, `localhost` for this example.
 * `Port`: The server port, set to `7350` by default.
-* `ServerKey`: By default `defaultkey` is used. Can be changed via the [server configuration](../../../../install-configuration.md#socket).
+* `ServerKey`: By default `defaultkey` is used. Can be changed via the [server configuration](../../../getting-started/configuration.md#socket).
 
 ## Device authentication
 
@@ -40,7 +40,7 @@ session = await client.AuthenticateDeviceAsync(deviceId);
 !!! note "Note"
     If building for WebGL you may have to use `System.Guid.NewGuid().ToString()` instead of `deviceUniqueIdentifier`.
 
-When authentication is complete, the player joins a ***session***, which represents the period of time a player is logged in. See [Sessions](../../../../session.md) to learn more.
+When authentication is complete, the player joins a ***session***, which represents the period of time a player is logged in. See [Sessions](../../../concepts/session.md) to learn more.
 
 The session object allows us to make requests and access user information as an authenticated client, primarily through the `Socket` and `Account` objects:
 
@@ -104,7 +104,7 @@ Logging into Facebook will automatically add a player's Facebook friends into th
 
 After players have a way to log in, next is setting up the initial player information so they can start adding friends, collecting gems, completing quests, or anything else that requires storing user data over time.
 
-This can be done on the server side using a [register hook](../../../../runtime-code-basics.md#register-hooks). There is a different hook for each authentication method. For example, since we set up device and Facebook authentication, we should use `registerAfterAuthenticateDevice` and `registerAfterAuthenticateFacebook`.
+This can be done on the server side using a [register hook](../../../server-framework/basics.md#register-hooks). There is a different hook for each authentication method. For example, since we set up device and Facebook authentication, we should use `registerAfterAuthenticateDevice` and `registerAfterAuthenticateFacebook`.
 
 We bind a function to them that runs when the hook is triggered:
 
@@ -125,7 +125,7 @@ We bind a function to them that runs when the hook is triggered:
 
 ## Session tokens
 
-For security reasons, player sessions will automatically expire after the time period defined in your [Nakama configuration](../../../../install-configuration.md#common-properties). To avoid forcing players to constantly log back in, we can set up a method to automatically request a new session when the old one is about to expire.
+For security reasons, player sessions will automatically expire after the time period defined in your [Nakama configuration](../../../getting-started/configuration.md#common-properties). To avoid forcing players to constantly log back in, we can set up a method to automatically request a new session when the old one is about to expire.
 
 This is done by saving **tokens** for authentication on the client, and periodically passing these back to the server to request new tokens.
 
@@ -164,8 +164,8 @@ If the session is less than a day away from expiring, the script will attempt to
 
 Learn more about the topics and features, and view the complete source code, discussed above:
 
-* [Authentication](../../../../authentication.md)
-* [Session Management](../../../../expert-auth.md)
+* [Authentication](../../../concepts/authentication.md)
+* [Session Management](../../../concepts/session-management.md)
 * [GameConnection.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/GameConnection.cs)
 * [Scene01MainMenuController.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Scene01MainMenuController.cs)
 * [ProfileUpdatePanel.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/Profile/ProfileUpdatePanel.cs)

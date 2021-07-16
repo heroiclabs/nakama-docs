@@ -11,7 +11,7 @@ With Pirate Panic, we'll learn how to enable players to:
 * Chat with other members in the clan
 
 !!! note "Note"
-    This tutorial does not cover private groups, which require new players to submit join requests before being allowed to join. You can learn more about this at the [official Nakama documentation](../../../../social-groups-clans.md).
+    This tutorial does not cover private groups, which require new players to submit join requests before being allowed to join. You can learn more about this at the [official Nakama documentation](../../../concepts/groups-clans.md).
 
 ## Clans server module
 
@@ -197,7 +197,7 @@ To join a chat channel, we use `JoinChatAsync`:
 Here we join a group channel of ID `state.UserClan.Id`.
 This channel is **persistent**, meaning messages get saved to the database and will show up even if you disconnect and reconnect. And the player joins as a **hidden** member, meaning they won't show up in the member listing.
 
-These settings can be configured for different types of rooms. Learn more about different settings in the [Realtime Chat documentation](../../../../social-realtime-chat.md).
+These settings can be configured for different types of rooms. Learn more about different settings in the [Realtime Chat documentation](../../../concepts/realtime-chat.md).
 
 Once a player has joined a chat channel, sending and receiving messages is done in the same manner as with [direct messages](friends.md#chatting-with-friends).
 
@@ -229,8 +229,8 @@ To disband a clan:
 
 Learn more about the topics and features, and view the complete source code, discussed above:
 
-* [Groups and Clans](../../../../social-groups-clans.md)
-* [Runtime Function Reference - Groups](../../../../runtime-code-function-reference.md#groups)
+* [Groups and Clans](../../../concepts/groups-clans.md)
+* [Function Reference - Groups](../../../server-framework/function-reference.md#groups)
 * [Runtime list](https://github.com/heroiclabs/nakama-common/blob/master/runtime/runtime.go)
 * [ClanCreationPanel.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/Clans/ClanCreationPanel.cs)
 * [ClansMenuUI.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/ClansMenuUI.cs)

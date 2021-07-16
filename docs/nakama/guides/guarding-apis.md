@@ -4,14 +4,14 @@ There are many reasons why you may want to limit or completely prevent client ac
 
 Nakama provides multiple avenues for you to secure your game against malicious client actions:
 
-* Implementing game logic in the Server Framework as RPCs
-* Setting [access controls](../../storage-access-controls.md) on storage objects. Objects created via the REST API will always be owned by the authenticated user and you can set if other players have read access to this data by setting the read permissions accordingly.
-* Server-to-server calls can be secured via [HTTP key](../../runtime-code-basics.md#server-to-server).
+* Implementing game logic on the server as RPCs or hooks
+* Setting [access controls](../concepts/access-controls.md) on storage objects. Objects created via the REST API will always be owned by the authenticated user and you can set if other players have read access to this data by setting the read permissions accordingly.
+* Server-to-server calls can be secured via [HTTP key](../server-framework/basics.md#server-to-server).
 * [Use before hooks](#using-before-hooks) to disable any APIs you don't want to be directly accessible by clients.
 
 ## Using before hooks
 
-To disable any API, [register a before hook](../../runtime-code-basics.md#before-hook) on the function call you want to disable and instead of returning the request input, return `nil`. Nakama will automatically handle any such scenario as a disabled API call.
+To disable any API, [register a before hook](../server-framework/basics.md#before-hook) on the function call you want to disable and instead of returning the request input, return `nil`. Nakama will automatically handle any such scenario as a disabled API call.
 
 In the example implementation provided below, any message names and API calls that are commented out remain available to clients while all others are disabled:
 

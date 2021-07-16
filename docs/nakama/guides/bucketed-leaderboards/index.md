@@ -1,14 +1,14 @@
 # Bucketed Leaderboards
 
 !!! note "Note"
-    If you haven't already, check out the [Leaderboards](../../../gameplay-leaderboards.md) documentation to familiarize yourself with the relevant concepts and features before proceeding.
+    If you haven't already, check out the [Leaderboards](../../concepts/leaderboards.md) documentation to familiarize yourself with the relevant concepts and features before proceeding.
 
 As a game's player base grows a fundamental problem of social interaction in online games appears. Global leaderboards, and leaderboards generally, become static, with little movement at any particular skill or score level. This results in a loss, or lack, of engagement for newer players and so a lack of interest in continuing to play the game. One solution for this is the implementation of bucketed leaderboards.
 
 In bucketed leaderboards players don't play against all other players but instead see a limited view of other players (often 25-50). They compete against this group until the leaderboard expires or rolls over to another start time. These smaller groups of players are known as cohorts or "player buckets" which is where the bucketed leaderboards name originates.
 
 Bucketed leaderboards can be seen in many popular games, including several titles in Rovio's Angry Birds franchise.
-Using Nakama's [Storage Engine](../../../storage-collections.md), [Leaderboards](../../../gameplay-leaderboards.md), and [Tournaments](../../../gameplay-tournaments.md) features enables you to implement bucketed leaderboards in your games with server runtime code, specifically RPC functions.
+Using Nakama's [Storage Engine](../../concepts/collections.md), [Leaderboards](../../concepts/leaderboards.md), and [Tournaments](../../concepts/tournaments.md) features enables you to implement bucketed leaderboards in your games with server runtime code, specifically RPC functions.
 
 The Nakama leaderboards API already allows you to pass in a set of user IDs (or usernames) that become the filter used to generate the "bucketed view" of the leaderboard with just those players on it.
 
@@ -232,7 +232,7 @@ Lastly, since the user list is pseudo-randomly generated the user may or may not
     }
     ```
 
-You can verify your leaderboard and its settings using [Nakama Console](../../../console-overview.md):
+You can verify your leaderboard and its settings using [Nakama Console](../../getting-started/console-overview.md):
 
 ![Bucketed Leaderboard](bucket-nakama-console.png)
 

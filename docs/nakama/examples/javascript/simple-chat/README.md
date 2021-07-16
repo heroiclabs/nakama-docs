@@ -6,9 +6,9 @@ Here we provide an example JavaScript chat application using Nakama server.
 
 The demo uses Semantic UI and React to build a single page component which demonstrates:
 
-* Authentication: Login and registration here is done with auto-generated device IDs. We recommend you use [email/password or others](/authentication.md) in a real application.
-* User accounts: A [user account](/user-accounts.md) is created on registration.
-* Realtime chat: Messages sent between many users in a [single chat room](/social-realtime-chat.md#rooms).
+* Authentication: Login and registration here is done with auto-generated device IDs. We recommend you use [email/password or others](../../../concepts/authentication.md) in a real application.
+* User accounts: A [user account](../../../concepts/user-accounts.md) is created on registration.
+* Realtime chat: Messages sent between many users in a [single chat room](../../../concepts/realtime-chat.md#rooms).
 
 ## Setup
 
@@ -23,7 +23,7 @@ yarn install
 
 ## Run demo
 
-First [download and setup Nakama server](/nstall-docker-quickstart.md).
+First [download and setup Nakama server](../../../getting-started/docker-quickstart.md).
 
 With the server and database server setup and running you can run:
 

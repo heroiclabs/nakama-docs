@@ -56,7 +56,7 @@ We start by implementing the RPC on the server-side so that the client will have
   }
   ```
 
-This RPC is a function that outputs a JSON object back to the client. The [context object](../../../../runtime-code-basics.md#context) contains a number of useful properties that let us know where this call originated from. The Nakama instance allows us to interface with the Nakama runtime API, and
+This RPC is a function that outputs a JSON object back to the client. The [context object](../../../server-framework/basics.md#context) contains a number of useful properties that let us know where this call originated from. The Nakama instance allows us to interface with the Nakama runtime API, and
 the payload is a JSON object that contains any custom information sent by the client.
 
 Here, for example, a payload might look like `{username: "BobNorris101"}` if we're looking for our friend named "BobNorris101".
@@ -183,7 +183,7 @@ It might be counterintuitive why we call `DeleteFriendsAsync` to unblock. The al
 `DeleteFriendsAsync` can also be used in the same manner to remove a friend who is not blocked.
 
 !!! note "Note"
-  There is a difference between blocking and banning a user. A ban is done server-side and prevents a player from joining the game entirely. Learn more about [banning](../../../../social-friends.md#ban-a-user).
+  There is a difference between blocking and banning a user. A ban is done server-side and prevents a player from joining the game entirely. Learn more about [banning](../../../concepts/friends.md#ban-a-user).
 
 ## Chatting with friends
 
@@ -298,8 +298,8 @@ This code loops through each friend in the friends list on app start, and joins 
 
 Learn more about the topics and features, and view the complete source code, discussed above:
 
-* [Friends](../../../../social-friends.md)
-* [Realtime Chat](../../../../social-realtime-chat.md)
+* [Friends](../../../concepts/friends.md)
+* [Realtime Chat](../../../concepts/realtime-chat.md)
 * [UsernameSearcher.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/Friends/UsernameSearcher.cs)
 * [FriendsMenuUI.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/FriendsMenuUI.cs)
 * [FriendPanel.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/Friends/FriendPanel.cs)

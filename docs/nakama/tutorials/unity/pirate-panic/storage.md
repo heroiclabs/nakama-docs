@@ -2,7 +2,7 @@
 
 For most games, it is necessary to keep track of important player data (e.g. inventory or game stats). In a single-player game this can be done by storing information locally on the client, but for multiplayer games data often needs to be sent to multiple clients at the same time, or protected against tampering.
 
-The Nakama [Storage Engine](../../../../storage-collections.md) makes it easy to securely store and access per-user information on the server
+The Nakama [Storage Engine](../../../concepts/collections.md) makes it easy to securely store and access per-user information on the server
 
 In this section, we'll explore how to:
 
@@ -153,7 +153,7 @@ Multiple users may need to access (and possibly write to) the same object.
 
 In order to make sure that modifications don't conflict, you can pass in a `version` property into any write request. For this use either `writeStorageObjects` on the server or `WriteStorageObjectsAsync` on the client and the write will only be accepted if the version inputted matches the version stored in the database.
 
-This feature is not showcased in Pirate Panic, but you can learn more about the [conditional storage](../../../../storage-collections.md#conditional-writes) and implement it in your own games.
+This feature is not showcased in Pirate Panic, but you can learn more about the [conditional storage](../../../concepts/collections.md#conditional-writes) and implement it in your own games.
 
 ## Wallet
 
@@ -293,11 +293,11 @@ This is useful, for example, to skip to the current match rewards. If we set the
 
 Learn more about the topics and features, and view the complete source code, discussed above:
 
-* [Server-side functions reference - Storage](../../../../runtime-code-function-reference.md#storage)
-* [Server-side functions reference - Wallet](../../../../runtime-code-function-reference.md#wallet)
-* [Storage Collections](../../../../storage-collections.md)
-* [Permissions](../../../../storage-access-controls.md)
-* [Wallets](../../../../user-accounts.md#virtual-wallet)
+* [Server-side functions reference - Storage](../../../server-framework/function-reference.md#storage)
+* [Server-side functions reference - Wallet](../../../server-framework/function-reference.md#wallet)
+* [Storage Collections](../../../concepts/collections.md)
+* [Permissions](../../../concepts/access-controls.md)
+* [Wallets](../../../concepts/user-accounts.md#virtual-wallet)
 * [ProfilePanel.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/Profile/ProfilePanel.cs)
 * [GameConnection.cs](https://github.com/heroiclabs/unity-sampleproject/tree/master/PiratePanic/Assets/PiratePanic/Scripts)
 * [Server economy.ts](https://github.com/heroiclabs/unity-sampleproject/blob/master/ServerModules/src/economy.ts)

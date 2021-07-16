@@ -2,7 +2,7 @@
 
 From the Builders dashboard you can view and manage your existing CI pipelines (builders) across all [organizations](organizations.md), and [create new builders](#creating-builders).
 
-Builders are used to clone your custom [Runtime Code](../runtime-code-basics.md) written in Lua, TypeScript, and Go. It then conditionally compiles your code against the Nakama image selected and packages it into a Docker image. 
+Builders are used to clone your custom [Runtime Code](../nakama/server-framework/basics.md) written in Lua, TypeScript, and Go. It then conditionally compiles your code against the Nakama image selected and packages it into a Docker image. 
 This image is then available for deployment in a project in the [Configuration](projects.md#configuration) tab, enabling you to quickly deploy a new image or return to a previous one whenever needed.
 
 !!! note "Note"
