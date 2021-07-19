@@ -173,8 +173,9 @@ nav:
       - TypeScript Setup: nakama/server-framework/typescript-setup.md
       - Go Setup: nakama/server-framework/go-setup.md
       - Lua Setup: nakama/server-framework/lua-setup.md
-      - Function Reference: nakama/server-framework/function-reference.md
       - Streams: nakama/server-framework/streams.md
+      - Go Dependency Pinning: nakama/server-framework/go-dependency-pinning.md
+      - Function Reference: nakama/server-framework/function-reference.md
     - Client Libraries:
       - .NET/Unity: nakama/client-libraries/unity-client-guide.md
       - JavaScript: nakama/client-libraries/javascript-client-guide.md

@@ -65,6 +65,10 @@ Make a record of your shared secret:
 
 You'll need to set the value of Nakama's `iap.apple.shared_password` configuration flag to the value of the Shared Secret above. For more info, take a look at the [configuration](../getting-started/configuration.md#iap-in-app-purchase) page.
 
+!!! Note
+    For validating purchases for multiple applications, the configured `iap.apple.shared_password` can be overridden via the runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
+
+
 ### Validate Purchase
 
 Nakama only supports validating iOS 7+ receipts.
@@ -99,7 +103,7 @@ Apple receipts can contain multiple purchases, Nakama will validate all of them 
     iap.buy("com.defold.nakama.goldbars-10")
 	```
 
-Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchase).
+Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
 
 ## Google
 
@@ -174,7 +178,7 @@ Navigate to __Users & Permissions__ to check that the service account is setup c
     iap.buy("com.defold.nakama.goldbars-10")
 	```
 
-Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchase).
+Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
 
 ## Huawei
 
@@ -193,7 +197,7 @@ Nakama validates Huawei purchases against their IAP validation service. As sugge
     -- Huawei purchases are not yet supported by https://defold.com/extension-iap/
 	```
 
-Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchase).
+Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
 
 
 ## Interpreting the validation result

@@ -2512,6 +2512,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases.
     | | userID | `string` | The userID of the owner of the receipt. |
     | | receipt | `string` | Base-64 encoded receipt data returned by the purchase operation itself. |
+    | | passwordOverride | `string` | Optional. Override the `iap.apple.shared_password` provided in your [configuration](../getting-started/configuration.md#iap-in-app-purchase). |
     | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases.
     | | userID | `string` | The userID of the owner of the receipt. |
     | | receipt | `string` | The JSON encoded Google receipt. |
@@ -2583,6 +2584,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | cursor | Opt. `string` | Pagination cursor from previous result. If none available set to nil or `""` (empty string). |
     | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases.
     | | receipt | `string` | Base-64 encoded receipt data returned by the purchase operation itself. |
+    | | passwordOverride | `string` | Optional. Override the `iap.apple.shared_password` provided in your [configuration](../getting-started/configuration.md#iap-in-app-purchase). |
     | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases.
     | | receipt | `string` | The JSON encoded Google receipt. |
     | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases.
@@ -2628,6 +2630,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | cursor | Opt. `string` | Pagination cursor from previous result. If none available set to nil or `""` (empty string). |
     | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases.
     | | receipt | `string` | Base-64 encoded receipt data returned by the purchase operation itself. |
+    | | passwordOverride | `string` | Optional. Override the `iap.apple.shared_password` provided in your [configuration](../getting-started/configuration.md#iap-in-app-purchase). |
     | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases.
     | | receipt | `string` | The JSON encoded Google receipt. |
     | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases.
