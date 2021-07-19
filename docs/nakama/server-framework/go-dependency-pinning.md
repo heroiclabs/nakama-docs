@@ -13,11 +13,11 @@ For example, you cannot use a Go module that has been compiled on Linux together
 
 ```json
 {
-	"level":"error",
-	"ts":"...",
-	"caller":"...",
-	"msg":"Error initialising Go runtime provider",
-	"error":"plugin.Open(\"/nakama/data/modules/backend.so\"): /nakama/data/modules/backend.so: invalid ELF header"
+  "level":"error",
+  "ts":"...",
+  "caller":"...",
+  "msg":"Error initialising Go runtime provider",
+  "error":"plugin.Open(\"/nakama/data/modules/backend.so\"): /nakama/data/modules/backend.so: invalid ELF header"
 }
 ```
 
@@ -35,12 +35,12 @@ For example, you cannot use a Go module that has been compiled with Go version 1
 
 ```json
 {
-	"level":"error",
-	"ts":"...",
-	"caller":"...",
-	"msg":"Could not open Go module",
-	"path":"/nakama/data/modules/backend.so",
-	"error":"plugin.Open(\"/nakama/data/modules/backend\"): plugin was built with a different version of package runtime/internal/sys"
+  "level":"error",
+  "ts":"...",
+  "caller":"...",
+  "msg":"Could not open Go module",
+  "path":"/nakama/data/modules/backend.so",
+  "error":"plugin.Open(\"/nakama/data/modules/backend\"): plugin was built with a different version of package runtime/internal/sys"
 }
 ```
 
@@ -56,11 +56,11 @@ Any dependency/package you use, either directly or indirectly (transitive depend
 
 ```json
 {
-	"level":"fatal",
-	"ts":"...",
-	"caller":"...",
-	"msg":"Failed initializing runtime modules",
-	"error":"plugin.Open(\"/nakama/data/modules/backend\"): plugin was built with a different version of package go.uber.org/zap/buffer"
+  "level":"fatal",
+  "ts":"...",
+  "caller":"...",
+  "msg":"Failed initializing runtime modules",
+  "error":"plugin.Open(\"/nakama/data/modules/backend\"): plugin was built with a different version of package go.uber.org/zap/buffer"
 }
 ```
 
@@ -74,7 +74,7 @@ In a situation where the dependency mismatch is on an indirect (transitive) depe
 
 ```go
 import (
-	_ "go.uber.org/zap"
+  _ "go.uber.org/zap"
 )
 ```
 

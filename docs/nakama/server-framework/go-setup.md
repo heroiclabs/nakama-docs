@@ -7,7 +7,7 @@ Choosing to write your game server custom logic using Go brings with it the adva
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ru3RZ6LkJEk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 !!! Note
-  If you intend on writing your server runtime code in Go, you may wish to also refer to the follow up documentation detailing common issues you may encounter with [dependency version mismatches and how to solve them](go-dependency-pinning.md).
+    If you intend on writing your server runtime code in Go, you may wish to also refer to the follow up documentation detailing common issues you may encounter with [dependency version mismatches and how to solve them](go-dependency-pinning.md).
 
 ## Prerequisites
 
