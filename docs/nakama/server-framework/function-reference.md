@@ -1283,6 +1283,13 @@ This module contains all the core gameplay APIs, all registration functions used
     | | metadata | `map[string]interface{}` | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
     | **Leaderboard Delete**: Delete a leaderboard and all scores that belong to it. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | id | `string` | The unique identifier for the leaderboard to delete. |
+    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. This function can also be used to see the leaderboards that an owner has joined. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
+    | | category_start | `int` | Filter leaderboards with categories greater or equal than this value. |
+    | | category_end | `int` | Filter leaderboards with categories equal or less than this value. |
+    | | limit | `int` | Return only the required number of leaderboards denoted by this limit value. |
+    | | cursor | `string` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
+    | **Leaderboards Get By ID**: Fetch one or more leaderboards by ID. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
+    | | ids | `[]string` | The table array of leaderboard ids. |
     | **Leaderboard Record write**: Use the preconfigured operator for the given leaderboard to submit a score for a particular user. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | id | `string` | The unique identifier for the leaderboard to submit to. |
     | | owner | `string` | The owner of this score submission. Mandatory field. |
@@ -1319,6 +1326,30 @@ This module contains all the core gameplay APIs, all registration functions used
     id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     if err := nk.LeaderboardDelete(ctx, id); err != nil {
     logger.WithField("err", err).Error("Leaderboard delete error.")
+    }
+
+    // Leaderboard List
+    categoryStart := 1
+    categoryEnd := 2
+    limit := 100 // Number to list per page.
+    cursor := ""
+    list, err := nk.LeaderboardList(ctx, categoryStart, categoryEnd, limit, cursor)
+    if err != nil {
+    logger.WithField("err", err).Error("Leaderboard list error.")
+    } else {
+    for _, l := range list.Leaderboards {
+        logger.Info("ID %s - can enter? %b", l.Id, l.CanEnter)
+      }
+    }
+
+    // Leaderboards Get By ID
+    leaderboardIDs := []string{
+    "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+    "447524be-43c3-11e7-af09-3f7172f05936",
+    }
+    leaderboards, err := nk.LeaderboardsGetId(ctx, leaderboardIDs)
+    if err != nil {
+    logger.WithField("err", err).Error("Leaderboards get error.")
     }
 
     // Leaderboard Record Write
@@ -1366,6 +1397,11 @@ This module contains all the core gameplay APIs, all registration functions used
     | | reset | Opt. `string` | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. |
     | | metadata | Opt. `table` | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
     | **Leaderboard Delete**: Delete a leaderboard and all scores that belong to it. | id | `string` | The unique identifier of the leaderboard to delete. |
+    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. This function can also be used to see the leaderboards that an owner has joined. | category_start | `number` | Filter leaderboards with categories greater or equal than this value. | `table`: A list of leaderboard results and possibly a cursor. |
+    | | category_end | `number` | Filter leaderboards with categories equal or less than this value. |
+    | | limit | Opt. `number` | Return only the required number of leaderboards denoted by this limit value. Defaults to 10. |
+    | | cursor | Opt. `string` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
+    | **Leaderboards Get By ID**: Fetch one or more leaderboards by ID. | ids | `table` | The table array of leaderboard ids. |
     | **Leaderboard Record write**: Use the preconfigured operator for the given leaderboard to submit a score for a particular user. | id | `string` | The unique identifier for the leaderboard to submit to. |
     | | owner | `string` | The owner of this score submission. Mandatory field. |
     | | username | Opt. `string` | The owner username of this score submission, if it's a user. |
@@ -1413,6 +1449,22 @@ This module contains all the core gameplay APIs, all registration functions used
     local owner = "4c2ae592-b2a7-445e-98ec-697694478b1c"
     nk.leaderboard_record_delete(id, owner)
 
+    -- Leaderboard List
+    local category_start = 1
+    local category_end = 2
+    local limit = 100  -- Number to list per page.
+    local leaderboards = nk.leaderboard_list(category_start, category_end, limit)
+    for i, leaderboard in ipairs(leaderboards) do
+    nk.logger_info(string.format("ID: %q - can enter? %q", leaderboard.id, leaderboard.can_enter))
+    end
+
+    -- Leaderboards Get By ID
+    local leaderboard_ids = {
+    "3ea5608a-43c3-11e7-90f9-7b9397165f34",
+    "447524be-43c3-11e7-af09-3f7172f05936"
+    }
+    local leaderboards = nk.leaderboards_get_id(leaderboard_ids)
+
     -- Leaderboard Records list
     local id = "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
     local owners = {}
@@ -1430,6 +1482,11 @@ This module contains all the core gameplay APIs, all registration functions used
     | | reset | Opt. `string` | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. |
     | | metadata | Opt. `Object` | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
     | **Leaderboard Delete**: Delete a leaderboard and all scores that belong to it. | id | `string` | The unique identifier of the leaderboard to delete. |
+    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. This function can also be used to see the leaderboards that an owner has joined. | category_start | `number` | Filter leaderboards with categories greater or equal than this value. | `nkruntime.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
+    | | category_end | `number` | Filter leaderboards with categories equal or less than this value. |
+    | | limit | Opt. `number` | Return only the required number of leaderboards denoted by this limit value. Defaults to 10. |
+    | | cursor | Opt. `number` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
+    | **Leaderboards Get By ID**: Fetch one or more leaderboards by ID. | ids | `string[]` | The table array of leaderboard ids. |
     | **Leaderboard Record write**: Use the preconfigured operator for the given leaderboard to submit a score for a particular user. | id | `string` | The unique identifier for the leaderboard to submit to. |
     | | owner | `string` | The owner of this score submission. Mandatory field. |
     | | username | Opt. `string` | The owner username of this score submission, if it's a user. |
@@ -1482,6 +1539,33 @@ This module contains all the core gameplay APIs, all registration functions used
     try {
         nk.leaderboardRecordWrite(id, ownerID, username, score, subscore, metadata);
     } catch(error) {
+        // Handle error
+    }
+
+    // Leaderboard List
+    let categoryStart = 1;
+    let categoryEnd = 2;
+    let limit = 100  // Number to list per page.
+
+    let results: nkruntime.LeaderboardList = {};
+    try {
+        results = nk.leaderboardList(categoryStart, categoryEnd, limit);
+    } catch (error) {
+        // Handle error
+    }
+
+    // Leaderboards Get By ID
+    let leaderboardIds = [
+        '3ea5608a-43c3-11e7-90f9-7b9397165f34',
+        '447524be-43c3-11e7-af09-3f7172f05936',
+    ]
+    let owner = 'leaderboard-record-owner';
+    let username = 'myusername';
+
+    let leaderboards
+    try {
+        nk.leaderboardsGetId(id, owner, username);
+    } catch (error) {
         // Handle error
     }
 
