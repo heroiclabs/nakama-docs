@@ -10,7 +10,7 @@
 
 # In-app Purchase Validation
 
-The spectrum of monetisation models and tools is extremely varied. From ad-supported, microtransactions, freemium, one-off purchases, and everything in between. A key tool in many of these solutions is the In-App Purchase, which enables single purchases for unlocks, in-game consumables, subscriptions for premium access, and more.
+The spectrum of monetization models and tools is extremely varied. From ad-supported, microtransactions, freemium, one-off purchases, and everything in between. A key tool in many of these solutions is the In-App Purchase, which enables single purchases for unlocks, in-game consumables, subscriptions for premium access, and more.
 
 There are a number of readily available attacks against the most common in-app purchase implementations.
 
@@ -63,11 +63,7 @@ Make a record of your shared secret:
 
 ![Apple App Store Connect Shared Secret][apple_iap_2]
 
-You'll need to set the value of Nakama's `iap.apple.shared_password` configuration flag to the value of the Shared Secret above. For more info, take a look at the [configuration](../getting-started/configuration.md#iap-in-app-purchase) page.
-
-!!! Note
-    For validating purchases for multiple applications, the configured `iap.apple.shared_password` can be overridden via the runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
-
+You'll need to set the value of Nakama's `iap.apple.shared_password` configuration flag to the value of the Shared Secret above. For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
 
 ### Validate Purchase
 
@@ -103,6 +99,26 @@ Apple receipts can contain multiple purchases, Nakama will validate all of them 
     iap.buy("com.defold.nakama.goldbars-10")
 	```
 
+=== ".NET"
+    ```csharp
+    string appleReceipt = "<receipt>";
+    var response = await client.ValidatePurchaseAppleAsync(session, appleReceipt);
+    foreach (var validatedPurchase in response.ValidatedPurchases)
+    {
+        System.Console.WriteLine("Validated purchase: " + validatedPurchase);
+    }
+    ```
+
+=== "Unity"
+    ```csharp
+    string appleReceipt = "<receipt>";
+    var response = await client.ValidatePurchaseAppleAsync(session, appleReceipt);
+    foreach (var validatedPurchase in response.ValidatedPurchases)
+    {
+        Debug.Log("Validated purchase: " + validatedPurchase);
+    }
+    ```
+
 Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
 
 ## Google
@@ -112,7 +128,7 @@ Nakama supports validating purchases made for products and subscription on Andro
 ### Setup
 
 To validate receipts against the Play Store, Nakama requires your Google Service Account `ClientEmail` and `PrivateKey`. The values must be set in Nakama's `iap.google.client_email` and `iap.google.private_key` configuration flags values, respectively.
-For more info, take a look at the [configuration](../getting-started/configuration.md#iap-in-app-purchase) page.
+For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
 
 To get these values, first you'll need to setup a Service Account in the [Google API Console](https://play.google.com/console/developer/). You can refer to the [Google Play documentation](https://developers.google.com/android-publisher/getting_started#using_a_service_account) to create it.
 
@@ -131,7 +147,7 @@ Open it, extract the values of `ClientEmail` and `PrivateKey` and set them as th
 - `iap.google.client_email`
 - `purchase.google.private_key`
 
-For more info, take a look at the [configuration](../getting-started/configuration.md#iap-in-app-purchase) page.
+For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
 
 Finally you will need to ensure you grant Nakama access to the purchase validation APIs.
 Navigate back to [Google Play Developer Console](https://play.google.com/apps/publish) and navigate to __Settings__ > __API Access__.
@@ -142,7 +158,7 @@ The service account you created in the previous steps should be listed above. Yo
 
 Make sure that you give the service account access to __Visibility__, __View Financial Data__, and __Manage Orders__. These permissions are required for Nakama to validate receipts against Google Play.
 
-![Grant Access][google_iap_6_grant_access]
+![Grand Access][google_iap_6_grant_access]
 
 Navigate to __Users & Permissions__ to check that the service account is setup correctly.
 
@@ -178,6 +194,26 @@ Navigate to __Users & Permissions__ to check that the service account is setup c
     iap.buy("com.defold.nakama.goldbars-10")
 	```
 
+=== ".NET"
+    ```csharp
+    string googleReceipt = "<receipt>";
+    var response = await client.ValidatePurchaseGoogleAsync(session, googleReceipt);
+    foreach (var validatedPurchase in response.ValidatedPurchases)
+    {
+        System.Console.WriteLine("Validated purchase: " + validatedPurchase);
+    }
+    ```
+
+=== "Unity"
+    ```csharp
+    string googleReceipt = "<receipt>";
+    var response = await client.ValidatePurchaseGoogleAsync(session, googleReceipt);
+    foreach (var validatedPurchase in response.ValidatedPurchases)
+    {
+        Debug.Log("Validated purchase: " + validatedPurchase);
+    }
+    ```
+
 Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
 
 ## Huawei
@@ -197,8 +233,29 @@ Nakama validates Huawei purchases against their IAP validation service. As sugge
     -- Huawei purchases are not yet supported by https://defold.com/extension-iap/
 	```
 
-Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
+=== ".NET"
+    ```csharp
+    string huaweiReceipt = "<receipt>";
+    string huaweiSignature = "<signature>";
+    var response = await client.ValidatePurchaseHuaweiAsync(session, huaweiReceipt, huaweiSignature);
+    foreach (var validatedPurchase in response.ValidatedPurchases)
+    {
+        System.Console.WriteLine("Validated purchase: " + validatedPurchase);
+    }
+    ```
 
+=== "Unity"
+    ```csharp
+    string huaweiReceipt = "<receipt>";
+    string huaweiSignature = "<signature>";
+    var response = await client.ValidatePurchaseHuaweiAsync(session, huaweiReceipt, huaweiSignature);
+    foreach (var validatedPurchase in response.ValidatedPurchases)
+    {
+        Debug.Log("Validated purchase: " + validatedPurchase);
+    }
+    ```
+
+Refer to the function reference page for the provided runtime [purchase validation functions](../server-framework/function-reference.md#purchases).
 
 ## Interpreting the validation result
 
