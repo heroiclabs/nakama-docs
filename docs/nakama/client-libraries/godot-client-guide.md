@@ -28,7 +28,7 @@ Godot uses [singletons (AutoLoad)](https://docs.godotengine.org/en/stable/gettin
 
 ## Authenticate
 
-With a client object you can authenticate against the server. You can register or login a [user]((../concepts/user-accounts.md) with one of the [authenticate options](../concepts/authentication.md).
+With a client object you can authenticate against the server. You can register or login a [user](../concepts/user-accounts.md) with one of the [authenticate options](../concepts/authentication.md).
 
 To authenticate you should follow our recommended pattern in your client code:
 
@@ -229,5 +229,3 @@ func _ready():
 ```
 
 You can add this script as an autoload via `Project -> Project Settings -> AutoLoad` and access the client from other scripts via `MyClient.client`. A similar approach might be used for sockets.
-
-A collection of other code examples is available <a href="https://github.com/heroiclabs/nakama-godot/tree/master/snippets" target="\_blank">here</a>.
