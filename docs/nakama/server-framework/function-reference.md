@@ -789,6 +789,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | group_id | `string` | The ID of the group to delete. |
     | **Group Update**: Update a group with various configuration settings. The group which is updated can change some or all of its fields. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | group_id | `string` | The ID of the group to update. |
+    | | user_id | `string` | User ID calling the update operation for permission checking. Set as `nil` to enact the changes as the system user. |
     | | name | `string` | Group name, can be empty if not changed. |
     | | creator_id | `string` | The user ID to be associated as creator. Can be empty if not changed. |
     | | lang | `string` | Group language. Empty if not updated. |
@@ -797,6 +798,13 @@ This module contains all the core gameplay APIs, all registration functions used
     | | open | `bool` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
     | | metadata | `map[string]interface{}` | Custom information to store for this group. Use `nil` if field is not being updated. |
     | | max_count | `int` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
+    | **Groups List**: Find groups based on the entered criteria. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.GroupList`: A list of group results and possibly a cursor. |
+    | | name | `string` | Search for groups that contain this value in their name. |
+    | | langTag | `string` | Filter based upon the entered language tag. |
+    | | members | `int` | Search by number of group members. |
+    | | open | `bool` | Filter based on whether groups are Open or Closed. |
+    | | limit | `int` | Return only the required number of groups denoted by this limit value. |
+    | | cursor |`int` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
     | **Group Users List**: List all members, admins and superadmins which belong to a group. This also list incoming join requests. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.GroupUserList_GroupUser`:The user information for members, admins and superadmins for the group. Also users who sent a join request. |
     | | group_id | `string` | The ID of the group to list members for. |
     | **Group User Join**: Join a group for a particular user. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
@@ -859,10 +867,26 @@ This module contains all the core gameplay APIs, all registration functions used
     groupID := "dcb891ea-a311-4681-9213-6741351c9994"
     description := "An updated description."
 
-    if err := nk.GroupUpdate(ctx, groupID, "", "", "", description, "", true, metadata, 0); err != nil {
+    if err := nk.GroupUpdate(ctx, groupID, nil, "", "", "", description, "", true, metadata, 0); err != nil {
         logger.WithField("err", err).Error("Group update error.")
     }
 
+    // Group List
+    groupName := "Heroic"
+    langTag := "en"
+    members := 10
+    open := true
+    limit := 100
+
+    list, err := nk.GroupList(ctx, groupName, langTag, members, open, limit)
+    if err != nil {
+    logger.WithField("err", err).Error("Group list error.")
+    } else {
+    for _, g := range list.Groups {
+        logger.Info("ID %s - can enter? %b", g.Id, g.CanEnter)
+      }
+    }
+    
     // Group Users List
     groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
@@ -968,6 +992,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | max_count | `number` | Maximum number of members to have in the group. Defaults to 100. |
     | **Group Delete**: Delete a group. | group_id | `string` | The ID of the group to delete. |
     | **Group Update**: Update a group with various configuration settings. The group which is updated can change some or all of its fields. | group_id | `string` | The ID of the group to update. |
+    | | user_id | `string` | User ID calling the update operation for permission checking. Set as `nil` to enact the changes as the system user. |
     | | name | `string` | Group name, can be empty if not changed. |
     | | creator_id | `Opt. string` | The user ID to be associated as creator. Can be empty if not changed. |
     | | lang | `Opt. string` | Group language. Empty if not updated. |
@@ -976,6 +1001,12 @@ This module contains all the core gameplay APIs, all registration functions used
     | | open | `Opt. bool` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
     | | metadata | `Opt. table` | Custom information to store for this group. Use `nil` if field is not being updated. |
     | | max_count | `Opt. number` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
+    | **Groups List**: Find groups based on the entered criteria. | name | `string` | Search for groups that contain this value in their name. | `table`: A list of group results and possibly a cursor. |
+    | | lang_tag | Opt. `string` | Filter based upon the entered language tag. |
+    | | members | Opt. `number` | Search by number of group members. |
+    | | open | Opt. `bool` | Filter based on whether groups are Open or Closed. |
+    | | limit | Opt. `number` | Return only the required number of groups denoted by this limit value. |
+    | | cursor | Opt. `number` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
     | **Group Users List**: List all members, admins and superadmins which belong to a group. This also list incoming join requests. | group_id | `string` | The ID of the group to list members for. | `table`:The user information for members, admins and superadmins for the group. Also users who sent a join request. |
     | **Group User Join**: Join a group for a particular user. | group_id | `string` | The ID of the group to join. |
     | | user_id | `string` | The user ID to add to this group. |
@@ -1024,7 +1055,19 @@ This module contains all the core gameplay APIs, all registration functions used
     group_id = "f00fa79a-750f-11e7-8626-0fb79f45ff97"
     description = "An updated description."
 
-    nk.group_update(group_id, "", "", "", description, "", nil, metadata, 0)
+    nk.group_update(group_id, nil, "", "", "", description, "", nil, metadata, 0)
+
+    -- Group List
+    local group_name = "Heroic"
+    local lang_tag = "en"
+    local members = 10
+    local open = true
+    local limit = 100
+
+    local groups = nk.group_list(group_name, lang_tag, members, open, limit)
+    for i, group in ipairs(groups) do
+    nk.logger_info(string.format("ID: %q - can enter? %q", group.id, group.can_enter))
+    end
 
     -- Group Users List
     local group_id = "a1aafe16-7540-11e7-9738-13777fcc7cd8"
@@ -1108,6 +1151,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | max_count | `number` | Maximum number of members to have in the group. Defaults to 100. |
     | **Group Delete**: Delete a group. | group_id | `string` | The ID of the group to delete. |
     | **Group Update**: Update a group with various configuration settings. The group which is updated can change some or all of its fields. | group_id | `string` | The ID of the group to update. |
+    | | user_id | `string` | User ID calling the update operation for permission checking. Set as `nil` to enact the changes as the system user. |
     | | name | `string` | Group name, can be empty if not changed. |
     | | creator_id | `Opt. string` | The user ID to be associated as creator. Can be empty if not changed. |
     | | lang | `Opt. string` | Group language. Empty if not updated. |
@@ -1116,6 +1160,12 @@ This module contains all the core gameplay APIs, all registration functions used
     | | open | `Opt. bool` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
     | | metadata | `Opt. object` | Custom information to store for this group. Use `nil` if field is not being updated. |
     | | max_count | `Opt. number` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
+    | **Groups List**: Find groups based on the entered criteria. | name | `string` | Search for groups that contain this value in their name. | `nkruntime.GroupList`: A list of group results and possibly a cursor. |
+    | | langTag | Opt. `string` | Filter based upon the entered language tag. |
+    | | members | Opt. `number` | Search by number of group members. |
+    | | open | Opt. `bool` | Filter based on whether groups are Open or Closed. |
+    | | limit | Opt. `number` | Return only the required number of groups denoted by this limit value. |
+    | | cursor | Opt. `number` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
     | **Group Users List**: List all members, admins and superadmins which belong to a group. This also list incoming join requests. | group_id | `string` | The ID of the group to list members for. | `nkruntime.GroupUserList`:The user information for members, admins and superadmins for the group. Also users who sent a join request. |
     | **Group User Join**: Join a group for a particular user. | group_id | `string` | The ID of the group to join. |
     | | user_id | `string` | The user ID to add to this group. |
@@ -1167,9 +1217,23 @@ This module contains all the core gameplay APIs, all registration functions used
     let description = 'An updated description';
 
     try {
-        nk.groupUpdate(groupId, null, null, null, description, null, true, metadata);
+        nk.groupUpdate(groupId, nil, null, null, null, description, null, true, metadata);
     } catch (error) {
         // Handle error.
+    }
+
+    // Group List
+    let groupName = "Heroic";
+    let langTag = "en";
+    let members = 10;
+    let open = true;
+    let limit = 100;
+
+    let results: nkruntime.GroupList = {};
+    try {
+        results = nk.groupList(groupName, langTag, members, open, limit);
+    } catch (error) {
+        // Handle error
     }
 
     // Group Users List
@@ -3876,7 +3940,7 @@ The runtime environment allows you to run code that must only be executed only o
 === "TypeScript"
     | Action | Parameter | Type | Description | Returns |
     |-|-|-|-|-|
-    | **http_request**: Send a HTTP request and receive the result as a Lua table. | url | `string` | The URL of the web resource to request. | `nkruntime.httpResponse`: `code, headers, body` - Multiple return values for the HTTP response. |
+    | **http_request**: Send a HTTP request that returns a data type containing the result of the HTTP response. | url | `string` | The URL of the web resource to request. | `nkruntime.httpResponse`: `code, headers, body` - Multiple return values for the HTTP response. |
     | | method | `string` | The HTTP method verb used with the request. |
     | | headers | Opt. `string` | A table of headers used with the request. |
     | | content | Opt. `string` | The bytes to send with the request. |
@@ -3934,7 +3998,7 @@ The runtime environment allows you to run code that must only be executed only o
 === "TypeScript"
     | Action | Parameter | Type | Description | Returns |
     |-|-|-|-|-|
-    | **json_decode**: Decode the JSON input as a Lua table. | input | `string` | The JSON encoded input. | `table`: Decoded JSON input as a Lua table. |
+    | **json_decode**: Decode the JSON input. | input | `string` | The JSON encoded input. | `table`: Decoded JSON input. |
     | **json_encode**: Encode the input as JSON. | input | `string` | The input to encode as JSON . | The encoded JSON string. |
 
     Example:

@@ -63,7 +63,7 @@ Make a record of your shared secret:
 
 ![Apple App Store Connect Shared Secret][apple_iap_2]
 
-You'll need to set the value of Nakama's `iap.apple.shared_password` configuration flag to the value of the Shared Secret above. For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
+You'll need to set the value of Nakama's `iap.apple.shared_password` configuration flag to the value of the Shared Secret above. For more info, take a look at the [configuration](../getting-started/configuration.md#iap-in-app-purchase) page.
 
 ### Validate Purchase
 
@@ -128,7 +128,7 @@ Nakama supports validating purchases made for products and subscription on Andro
 ### Setup
 
 To validate receipts against the Play Store, Nakama requires your Google Service Account `ClientEmail` and `PrivateKey`. The values must be set in Nakama's `iap.google.client_email` and `iap.google.private_key` configuration flags values, respectively.
-For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
+For more info, take a look at the [configuration](../getting-started/configuration.md#iap-in-app-purchase) page.
 
 To get these values, first you'll need to setup a Service Account in the [Google API Console](https://play.google.com/console/developer/). You can refer to the [Google Play documentation](https://developers.google.com/android-publisher/getting_started#using_a_service_account) to create it.
 
@@ -147,7 +147,7 @@ Open it, extract the values of `ClientEmail` and `PrivateKey` and set them as th
 - `iap.google.client_email`
 - `purchase.google.private_key`
 
-For more info, take a look at the [configuration](install-configuration.md#iap-in-app-purchase) page.
+For more info, take a look at the [configuration](../getting-started/configuration.md#iap-in-app-purchase) page.
 
 Finally you will need to ensure you grant Nakama access to the purchase validation APIs.
 Navigate back to [Google Play Developer Console](https://play.google.com/apps/publish) and navigate to __Settings__ > __API Access__.
