@@ -39,7 +39,7 @@ Download and run a [PostgreSQL Windows installer](https://www.postgresql.org/dow
 3. Provide a password for the database superuser.
 2. Use the default values for other options in the installation process.
 
-!!! note "Mater password"
+!!! note "Master password"
 	Take note of the password you provide for the database superuser (postgres), you will need this later when configuring Nakama to connect to your database server.
 
 ## Download Nakama
