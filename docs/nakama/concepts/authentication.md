@@ -87,7 +87,7 @@ The server has builtin authentication so clients can only send requests and conn
     config.username = "defaultkey"
     config.engine = defold
 
-    local client = nakama.create_client(config)    
+    local client = nakama.create_client(config)
     ```
 
 Every user account is created from one of the [options used to authenticate](#authenticate). We call each of these options a "link" because it's a way to access the user's account. You can add more than one link to each account which is useful to enable users to login in multiple ways across different devices.
@@ -446,6 +446,142 @@ An email address must be valid as defined by RFC-5322 and passwords must be at l
 The server supports a lot of different social services with register and login. With each provider the user account will be fetched from the social service and used to setup the user. In some cases a user's [friends](friends.md) will also be fetched and added to their friends list.
 
 To register or login as a user with any of the providers an OAuth or access token must be obtained from that social service.
+
+#### Apple
+
+Follow the Apple Developer documentation for integrating [Sign in with Apple](https://developer.apple.com/sign-in-with-apple/get-started/) in your applications.
+
+You can choose a custom username when creating the account. To do this, set `username` to a custom name. If you want to only authenticate without implicitly creating a user account, set `create` to false.
+
+=== "cURL"
+    ```sh
+    curl "http://127.0.0.1:7350/v2/account/authenticate/apple?create=true&username=mycustomusername" \
+      --user 'defaultkey:' \
+      --data '{"bundle_id":"...", "token":"..."}'
+    ```
+
+=== ".NET"
+    ```csharp
+    var bundleId = "...";
+    var token = "...";
+
+    var session = await client.AuthenticateAppleAsync(bundleId, token,
+        publicKeyUrl, salt, signature, timestamp);
+    System.Console.WriteLine("New user: {0}, {1}", session.Created, session);
+    ```
+
+=== "Unity"
+    ```csharp
+    // The official Unity Sign in with Apple package
+    // has been deprecated from the Asset Store.
+    // Alternative packages are available, such as
+    // https://github.com/lupidan/apple-signin-unity#implement-sign-in-with-apple
+
+    var bundleId = "...";
+    var token = "...";
+
+    var session = await client.AuthenticateAppleAsync(bundleId, token);
+    Debug.LogFormat("New user: {0}, {1}", session.Created, session);
+    ```
+
+=== "Cocos2d-x C++"
+    ```cpp
+    auto successCallback = [](NSessionPtr session)
+    {
+        CCLOG("Authenticated successfully. User ID: %s", session->getUserId().c_str());
+    };
+
+    auto errorCallback = [](const NError& error)
+    {
+    };
+
+    std::string bundleId = "...";
+    std::string token = "...";
+
+    client->authenticateApple(bundleId, token);
+    ```
+
+=== "Cocos2d-x JS"
+    ```js
+    const bundle_id = "...";
+    const token = "...";
+
+    client.authenticateApple({
+      bundle_id: bundle_id,
+      token: token,
+      username: "mycustomusername",
+      create: true
+    }).then(function(session) {
+      cc.log("Authenticated successfully. User ID:", session.user_id);
+    },
+
+    function(error) {
+      cc.error("authenticate failed:", JSON.stringify(error));
+    });
+    ```
+
+=== "C++"
+    ```cpp
+    auto successCallback = [](NSessionPtr session)
+    {
+        std::cout << "Authenticated successfully. User ID: " << session->getUserId() << std::endl;
+    };
+
+    auto errorCallback = [](const NError& error)
+    {
+    };
+
+    std::string bundleId = "...";
+    std::string token = "...";
+
+    client->authenticateApple(bundleId, token);
+    ```
+
+=== "Godot"
+    ```gdscript
+    var bundle_id = "..."
+    var token = "..."
+
+    var session : NakamaSession = yield(client.authenticate_apple_async(bundle_id, token), "completed")
+
+    if session.is_exception():
+        print("An error occured: %s" % session)
+        return
+
+    print("Successfully authenticated: %s" % session)
+    ```
+
+=== "REST"
+    ```
+    POST /v2/account/authenticate/apple?create=true&username=mycustomusername
+    Host: 127.0.0.1:7350
+    Accept: application/json
+    Content-Type: application/json
+    Authorization: Basic base64(ServerKey:)
+
+    {
+      "bundle_id": "...",
+      "token": "...",
+    }
+    ```
+
+=== "Defold"
+    ```lua
+    -- Use https://defold.com/assets/siwa/
+    local bundle_id = "..."
+    local token = "..."
+
+    local body = nakama.create_api_account_apple(bundle_id, token)
+    local result = nakama.authenticate_apple(client, body, true, "mycustomusername")
+
+    if not result.token then
+      print("Unable to login")
+      return
+    end
+
+    -- store the token and use it when communicating with the server
+    nakama.set_bearer_token(client, result.token)
+    ```
 
 #### Facebook
 
@@ -1647,6 +1783,7 @@ You can link or unlink many different account options.
 
 | Link | Description |
 | ---- | ----------- |
+| Apple | An Apple account. |
 | Custom | A custom identifier from another identity service. |
 | Device | A unique identifier for a device which belongs to the user. |
 | Email | An email and password set by the user. |

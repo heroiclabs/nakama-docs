@@ -886,7 +886,7 @@ This module contains all the core gameplay APIs, all registration functions used
         logger.Info("ID %s - can enter? %b", g.Id, g.CanEnter)
       }
     }
-    
+
     // Group Users List
     groupID := "dcb891ea-a311-4681-9213-6741351c9994"
 
@@ -1347,8 +1347,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | metadata | `map[string]interface{}` | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
     | **Leaderboard Delete**: Delete a leaderboard and all scores that belong to it. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | id | `string` | The unique identifier for the leaderboard to delete. |
-    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
-    | | category_start | `int` | Filter leaderboards with categories greater or equal than this value. |
+    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. | category_start | `int` | Filter leaderboards with categories greater or equal than this value. | `[]*api.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
     | | category_end | `int` | Filter leaderboards with categories equal or less than this value. |
     | | limit | `int` | Return only the required number of leaderboards denoted by this limit value. |
     | | cursor | `string` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
