@@ -46,7 +46,7 @@ The server logs will show this output or similar which shows that the code we wr
 
 Have a look at the [Nakama project template](https://github.com/heroiclabs/nakama-project-template) which covers the following Nakama features:
 
-* [Authoritative multiplayer match handler](../concepts/server-relayed-multiplayer.md) for the TicTacToe game.
+* [Authoritative multiplayer match handler](../concepts/server-authoritative-multiplayer.md) for the TicTacToe game.
 * [In-App Notifications](../concepts/in-app-notifications.md),
 * [Storage](../concepts/collections.md)
 * [RPCs](basics.md#rpc-hook)

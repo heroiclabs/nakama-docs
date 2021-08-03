@@ -1347,7 +1347,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | metadata | `map[string]interface{}` | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
     | **Leaderboard Delete**: Delete a leaderboard and all scores that belong to it. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | id | `string` | The unique identifier for the leaderboard to delete. |
-    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. This function can also be used to see the leaderboards that an owner has joined. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
+    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
     | | category_start | `int` | Filter leaderboards with categories greater or equal than this value. |
     | | category_end | `int` | Filter leaderboards with categories equal or less than this value. |
     | | limit | `int` | Return only the required number of leaderboards denoted by this limit value. |
@@ -1461,7 +1461,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | reset | Opt. `string` | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. |
     | | metadata | Opt. `table` | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
     | **Leaderboard Delete**: Delete a leaderboard and all scores that belong to it. | id | `string` | The unique identifier of the leaderboard to delete. |
-    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. This function can also be used to see the leaderboards that an owner has joined. | category_start | `number` | Filter leaderboards with categories greater or equal than this value. | `table`: A list of leaderboard results and possibly a cursor. |
+    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. | category_start | `number` | Filter leaderboards with categories greater or equal than this value. | `table`: A list of leaderboard results and possibly a cursor. |
     | | category_end | `number` | Filter leaderboards with categories equal or less than this value. |
     | | limit | Opt. `number` | Return only the required number of leaderboards denoted by this limit value. Defaults to 10. |
     | | cursor | Opt. `string` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
@@ -1546,7 +1546,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | reset | Opt. `string` | The cron format used to define the reset schedule for the leaderboard. This controls when a leaderboard is reset and can be used to power daily/weekly/monthly leaderboards. |
     | | metadata | Opt. `Object` | The metadata you want associated to the leaderboard. Some good examples are weather conditions for a racing game. |
     | **Leaderboard Delete**: Delete a leaderboard and all scores that belong to it. | id | `string` | The unique identifier of the leaderboard to delete. |
-    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. This function can also be used to see the leaderboards that an owner has joined. | category_start | `number` | Filter leaderboards with categories greater or equal than this value. | `nkruntime.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
+    | **Leaderboard List**: Find leaderboards which have been created on the server. Leaderboards can be filtered with categories. | category_start | `number` | Filter leaderboards with categories greater or equal than this value. | `nkruntime.LeaderboardList`: A list of leaderboard results and possibly a cursor. |
     | | category_end | `number` | Filter leaderboards with categories equal or less than this value. |
     | | limit | Opt. `number` | Return only the required number of leaderboards denoted by this limit value. Defaults to 10. |
     | | cursor | Opt. `number` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
@@ -1842,7 +1842,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | username | `string` | The username of the record owner. |
     | **Tournaments Get By ID**: Fetch one or more tournaments by ID. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | ids | `[]string` | The table array of tournament ids. |
-    | **Tournament List**: Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner has joined. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.TournamentList`: A list of tournament results and possibly a cursor. |
+    | **Tournament List**: Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.TournamentList`: A list of tournament results and possibly a cursor. |
     | | category_start | `int` | Filter tournament with categories greater or equal than this value. |
     | | category_end | `int` | Filter tournament with categories equal or less than this value. |
     | | start_time | `int` | Filter tournament with that start after this time. |
@@ -1992,7 +1992,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | user_id | `string` | The owner of the record. |
     | | username | `string` | The username of the record owner. |
     | **Tournaments Get By ID**: Fetch one or more tournaments by ID. | ids | `table` | The table array of tournament ids. |
-    | **Tournament List**: Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner has joined. | category_start | `number` | Filter tournament with categories greater or equal than this value. | `table`: A list of tournament results and possibly a cursor. |
+    | **Tournament List**: Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. | category_start | `number` | Filter tournament with categories greater or equal than this value. | `table`: A list of tournament results and possibly a cursor. |
     | | category_end | `number` | Filter tournament with categories equal or less than this value. |
     | | start_time | Opt. `number` | Filter tournament with that start after this time. |
     | | end_time | Opt. `number` | Filter tournament with that end before this time. |
@@ -2108,7 +2108,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | user_id | `string` | The owner of the record. |
     | | username | `string` | The username of the record owner. |
     | **Tournaments Get By ID**: Fetch one or more tournaments by ID. | ids | `string[]` | The table array of tournament ids. |
-    | **Tournament List**: Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner has joined. | category_start | `number` | Filter tournament with categories greater or equal than this value. | `nkruntime.TournamentList`: A list of tournament results and possibly a cursor. |
+    | **Tournament List**: Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. | category_start | `number` | Filter tournament with categories greater or equal than this value. | `nkruntime.TournamentList`: A list of tournament results and possibly a cursor. |
     | | category_end | `number` | Filter tournament with categories equal or less than this value. |
     | | start_time | Opt. `number` | Filter tournament with that start after this time. |
     | | end_time | Opt. `number` | Filter tournament with that end before this time. |

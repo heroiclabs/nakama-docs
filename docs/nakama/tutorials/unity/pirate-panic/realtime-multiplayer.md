@@ -2,7 +2,7 @@
 
 [Realtime multiplayer](../../../concepts/client-relayed-multiplayer.md), also known as client-relayed multiplayer, makes it easy for players in a match to quickly send and receive data between one another. When clients connect to a match, they can send messages to the server. Nakama's realtime multiplayer engine then automatically routes these messages to everyone else in the match. Once messages are received, each client can then process them and prompt actions, updates, or other changes to the game state.
 
-Nakama also supports [server-authoritative multiplayer](../../../concepts/server-relayed-multiplayer.md), which puts the server at the center of each match. All clients send and receive data directly to the server, which then processes the data and routes it to other clients, if necessary. Server-authoritative multiplayer allows for more flexibility in how data is handled, but can be more complicated to develop and maintain.
+Nakama also supports [server-authoritative multiplayer](../../../concepts/server-authoritative-multiplayer.md), which puts the server at the center of each match. All clients send and receive data directly to the server, which then processes the data and routes it to other clients, if necessary. Server-authoritative multiplayer allows for more flexibility in how data is handled, but can be more complicated to develop and maintain.
 
 For Pirate Panic we will be using realtime multiplayer.
 
@@ -196,7 +196,7 @@ See an example of the behavior of such a RPC in the [Leaderboards](leaderboards.
 
 Learn more about the topics and features, and view the complete source code, discussed above:
 
-* [Authoritative Multiplayer](../../../concepts/server-relayed-multiplayer.md)
+* [Authoritative Multiplayer](../../../concepts/server-authoritative-multiplayer.md)
 * [Realtime Multiplayer](../../../concepts/client-relayed-multiplayer.md)
 * [BattleConnection.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Menus/Battle/Multiplayer/BattleConnection.cs)
 * [Scene02BattleController.cs](https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Scene02BattleController.cs)

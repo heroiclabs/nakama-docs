@@ -410,5 +410,5 @@ This will ensure the image is rebuilt with your latest changes.
 
 ## Next steps
 
-Have a look at the [Nakama project template](https://github.com/heroiclabs/nakama-project-template) which shows a larger TypeScript example which includes how to write an [authoritative multiplayer match handler](../concepts/server-relayed-multiplayer.md) for the Tic-Tac-Toe game.
+Have a look at the [Nakama project template](https://github.com/heroiclabs/nakama-project-template) which shows a larger TypeScript example which includes how to write an [authoritative multiplayer match handler](../concepts/server-authoritative-multiplayer.md) for the Tic-Tac-Toe game.
 It shows off other concepts as well which includes [In-App Notifications](../concepts/in-app-notifications.md), [Storage](../concepts/collections.md), [RPCs](basics.md#rpc-hook), and [User Wallets](../concepts/user-accounts.md#virtual-wallet).

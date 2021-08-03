@@ -34,7 +34,7 @@ The Status page provides a realtime view of your Nakama server, with usage detai
 !!! note "Note"
     The User Management page is only available to users with the Administrator role.
 
-The User Management page allows you to add new console users, or delete any existing users. When creating new users there are four available roles, enabling you to set up your support team with access to only the UI features they need. 
+The User Management page allows you to add new console users, or delete any existing users. When creating new users there are four available roles, enabling you to set up your support team with access to only the UI features they need.
 
 ## Configuration
 
@@ -194,12 +194,12 @@ Select any Match from the list to view its details:
 ![Console Match Details Page](images/console/console-match-details.png)
 
 !!! note "Note"
-    Only authoritative matches can have state and the labels seen on the console dashboard. See [Authoritative multiplayer](../concepts/server-relayed-multiplayer.md) to learn more.
+    Only authoritative matches can have state and the labels seen on the console dashboard. See [Authoritative multiplayer](../concepts/server-authoritative-multiplayer.md) to learn more.
 
 ## API Explorer
 
 ![Console API Explorer Page](images/console/console-api-explorer.png)
 
 The API explorer enables you to quickly and easily test any of the available features of Nakama server.
- 
+
 The Request Body is prepopulated according to your selected action, just enter the corresponding request details, indicated by `<..>`, and send to view the response.

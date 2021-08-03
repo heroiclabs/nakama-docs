@@ -84,7 +84,7 @@ plugins:
           'gameplay-tournaments.md': 'nakama/concepts/tournaments.md'
           'gameplay-matchmaker.md': 'nakama/concepts/matches.md'
           'gameplay-multiplayer-realtime.md': 'nakama/concepts/client-relayed-multiplayer.md'
-          'gameplay-multiplayer-server-multiplayer.md': 'nakama/concepts/server-relayed-multiplayer.md'
+          'gameplay-multiplayer-server-multiplayer.md': 'nakama/concepts/server-authoritative-multiplayer.md'
           'iap-validation.md': 'nakama/concepts/iap-validation.md'
           'runtime-code-basics.md': 'nakama/server-framework/basics.md'
           'runtime-code-typescript-setup.md': 'nakama/server-framework/typescript-setup.md'
@@ -102,6 +102,7 @@ plugins:
           'expert-modelling.md': 'nakama/concepts/scalability-modeling.md'
           'expert-tcp-udp.md': 'nakama/concepts/tcp-vs-udp.md'
           'benchmarks.md': 'nakama/getting-started/benchmarks.md'
+          'nakama/concepts/server-relayed-multiplayer.md': 'nakama/concepts/server-authoritative-multiplayer.md'
 
 extra:
   social:
@@ -165,7 +166,7 @@ nav:
       - Tournaments: nakama/concepts/tournaments.md
       - Multiplayer Engine:
         - Client-relayed multiplayer: nakama/concepts/client-relayed-multiplayer.md
-        - Server-relayed multiplayer: nakama/concepts/server-relayed-multiplayer.md
+        - Server authoritative multiplayer: nakama/concepts/server-authoritative-multiplayer.md
       - Events: nakama/concepts/events.md
       - Choosing TCP or UDP: nakama/concepts/tcp-vs-udp.md
     - Server Framework:

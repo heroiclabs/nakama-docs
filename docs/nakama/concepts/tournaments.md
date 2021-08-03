@@ -16,7 +16,7 @@ A tournament can also be played by opponents who are not users. For example a gu
 
 ## List tournaments
 
-Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times. This function can also be used to see the tournaments that an owner (usually a user) has joined.
+Find tournaments which have been created on the server. Tournaments can be filtered with categories and via start and end times.
 
 Omitting the start and end time parameters returns the ongoing and future tournaments.
 

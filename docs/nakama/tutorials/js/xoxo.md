@@ -21,7 +21,7 @@ To easily follow along with this tutorial, perform the following before proceedi
 * [Install Svelte](https://svelte.dev/blog/the-easiest-way-to-get-started)
 * [Clone the Nakama Project Template](https://github.com/heroiclabs/nakama-project-template)
 * [Prepare PhaserJS Game Engine](#configuring-your-javascript-framework)
-    
+
 !!! note "Note"
     For this tutorial you will be using JavaScript/TypeScript exclusively, so you can safely delete all Go and Lua files from the cloned template project.
 
@@ -92,7 +92,7 @@ Your application will be available at `localhost:5000`.
                 new Phaser.Game(config);
         </script>
         ```
-    
+
     === "main.js"
         ```js
         import App from './App.svelte';
@@ -318,8 +318,8 @@ For the In Game scene, you are creating the interactive board of nine individual
             constructor() {
                 this.client
                 this.session
-                this.socket 
-                this.matchID 
+                this.socket
+                this.matchID
             }
 
             async authenticate() {
@@ -344,7 +344,7 @@ For the In Game scene, you are creating the interactive board of nine individual
             // ...
         ```
 
-2. Here you'll also configure the [multiplayer](../../concepts/client-relayed-multiplayer.md) functionality. Learn more about this in the [authoritative multiplayer](../../concepts/server-relayed-multiplayer.md) and [matchmaker](../../concepts/matches.md) documentation.
+2. Here you'll also configure the [multiplayer](../../concepts/client-relayed-multiplayer.md) functionality. Learn more about this in the [authoritative multiplayer](../../concepts/server-authoritative-multiplayer.md) and [matchmaker](../../concepts/matches.md) documentation.
 
     === "nakama.js"
         ```js
@@ -355,13 +355,13 @@ For the In Game scene, you are creating the interactive board of nine individual
             constructor() {
                 this.client
                 this.session
-                this.socket 
-                this.matchID 
+                this.socket
+                this.matchID
             }
 
             // ...
 
-            async findMatch() { 
+            async findMatch() {
                 const rpcid = "find_match";
                 const matches = await this.client.rpc(this.session, rpcid, {});
 
@@ -370,7 +370,7 @@ For the In Game scene, you are creating the interactive board of nine individual
                 console.log("Matched joined!")
             }
 
-            async makeMove(index) { 
+            async makeMove(index) {
                 var data = { "position": index };
                 await this.socket.sendMatchState(this.matchID, 4, data);
                 console.log("Match data sent")
@@ -388,5 +388,5 @@ Learn more about the topics and features in this tutorial with the following:
 
 * [JavaScript Client Guide](../../client-libraries/javascript-client-guide.md)
 * [Authentication](../../concepts/authentication.md)
-* [Authoritative Multiplayer](../../concepts/server-relayed-multiplayer.md)
+* [Authoritative Multiplayer](../../concepts/server-authoritative-multiplayer.md)
 * [Matchmaker](../../concepts/matches.md)

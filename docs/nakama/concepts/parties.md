@@ -222,4 +222,4 @@ A party cannot be closed by any member other than the party leader. The party le
 
 ## Best practices
 
-We recommend you don’t use parties to implement multiplayer game logic or use it for scenarios where the messages sent to the party members is intended to drive gameplay progression. In these cases it’s better to use the [authoritative multiplayer engine](server-relayed-multiplayer.md) in the game server. This gives you complete control over your multiplayer net code and the logic associated with actions taken by users.
+We recommend you don’t use parties to implement multiplayer game logic or use it for scenarios where the messages sent to the party members is intended to drive gameplay progression. In these cases it’s better to use the [authoritative multiplayer engine](server-authoritative-multiplayer.md) in the game server. This gives you complete control over your multiplayer net code and the logic associated with actions taken by users.

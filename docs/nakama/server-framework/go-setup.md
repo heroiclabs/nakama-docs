@@ -196,4 +196,4 @@ The server logs will show this output or similar which shows that the code we wr
 
 ## Next steps
 
-Have a look at the [Nakama project template](https://github.com/heroiclabs/nakama-project-template) which shows a larger Go example which includes how to write an [authoritative multiplayer match handler](../concepts/server-relayed-multiplayer.md). It shows off other concepts as well which includes [In-App Notifications](../concepts/in-app-notifications.md), [Storage](../concepts/collections.md), [RPCs](basics.md#rpc-hook), and [User Wallets](../concepts/user-accounts.md#virtual-wallet).
+Have a look at the [Nakama project template](https://github.com/heroiclabs/nakama-project-template) which shows a larger Go example which includes how to write an [authoritative multiplayer match handler](../concepts/server-authoritative-multiplayer.md). It shows off other concepts as well which includes [In-App Notifications](../concepts/in-app-notifications.md), [Storage](../concepts/collections.md), [RPCs](basics.md#rpc-hook), and [User Wallets](../concepts/user-accounts.md#virtual-wallet).
