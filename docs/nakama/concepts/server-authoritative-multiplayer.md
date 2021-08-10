@@ -1286,7 +1286,7 @@ This is an example of a Ping-Pong match handler. Messages received by the server
         "database/sql"
         "strconv"
 
-        "github.com/heroiclabs/nakama/runtime"
+        "github.com/heroiclabs/nakama-common/runtime"
     )
 
     type MatchState struct {
@@ -1330,18 +1330,18 @@ This is an example of a Ping-Pong match handler. Messages received by the server
         for _, presence := range mState.presences {
             logger.Info("Presence %v named %v", presence.GetUserId(), presence.GetUsername())
         }
-
         for _, message := range messages {
             logger.Info("Received %v from %v", string(message.GetData()), message.GetUserId())
-
-            dispatcher.BroadcastMessage(1, message.GetData(), []runtime.Presence{message}, nil)
+            reliable := true
+            dispatcher.BroadcastMessage(1, message.GetData(), []runtime.Presence{message}, reliable)
         }
         return mState
     }
 
     func (m *Match) MatchTerminate(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, graceSeconds int) interface{} {
         message := "Server shutting down in " + strconv.Itoa(graceSeconds) + " seconds."
-        dispatcher.BroadcastMessage(2, []byte(message), nil, nil)
+        reliable := true
+        dispatcher.BroadcastMessage(2, []byte(message), []runtime.Presence{}, reliable)
         return state
     }
     ```
