@@ -932,7 +932,7 @@ This is an example of a Ping-Pong match handler. Messages received by the server
                 nk.logger_info(string.format("Key %s contains value %s", k, v))
             end
             -- PONG message back to sender
-            dispatcher.broadcast_message(1, message.data, { message.sender })
+            dispatcher.broadcast_message(1, m.data, { m.sender })
         end
         return state
     end
