@@ -91,10 +91,10 @@ Then we define an RPC function to get the player's ID and check for any existing
                 }
             }
 
-            // Fetch the tournament leaderboard
-            leaderboards, err := nk.TournamentsGetId(ctx, ids)
+            // Fetch the leaderboard
+            leaderboards, err := nk.LeaderboardsGetId(ctx, ids)
             if err != nil {
-                logger.Error("nk.TournamentsGetId error: %v", err)
+                logger.Error("nk.LeaderboardsGetId error: %v", err)
                 return "", ErrInternalError
             }
 
@@ -107,74 +107,27 @@ Before proceeding further, we perform a check to see if the leaderboard has rese
 === "Go"
     ```go
     // Leaderboard has reset or no current bucket exists for user
-    if userBucket.ResetTimeUnix != leaderboards[0].GetEndActive() || len(userBucket.UserIDs) < 1 {
+    if userBucket.ResetTimeUnix != leaderboards[0].GetPrevReset() || len(userBucket.UserIDs) < 1 {
         logger.Debug("rpcGetBucketRecordsFn new bucket for %q", userID)
     ```
 
 ## Generate opponent set
 
-To generate our random opponents list, we create a random UUID. This ID is then used as the pivot point from which we scan through the Nakama user account system for the desired number of opponents for our bucket. While accumulating our opponents list, we make sure to exclude our own user ID and the System User (`id: "00000000-0000-0000-0000-000000000000`).
+To generate our random opponents list, we will use the `GetUsersRandom` function available in Nakama 3.5.0.
 
 === "Go"
     ```go
-    pivotID := uuid.Must(uuid.NewV4(), nil).String()
+    userBucket.UserIDs = nil
+    logger.Debug("rpcGetBucketRecordsFn new bucket for %q", userID)
 
-    // Use a KEYSET clause to efficiently select users at a random pivot
-    // Note: Increase bucketSize to overscan and filter in the application layer
-    rows, err := db.QueryContext(ctx, `SELECT id FROM users WHERE id > $1 LIMIT $2`, pivotID, bucketSize)
+    users, err := nk.UsersGetRandom(ctx, bucketSize)
     if err != nil {
-        logger.Error("db.QueryContext error: %v", err)
+        logger.Error("Error getting random users.")
         return "", ErrInternalError
     }
-    //goland:noinspection GoUnhandledErrorResult
-    defer rows.Close()
 
-    for rows.Next() {
-        var id string
-        if err := rows.Scan(&id); err != nil {
-            logger.Error("rows.Scan error: %v", err)
-            return "", ErrInternalError
-        }
-        if id == userID || id == "00000000-0000-0000-0000-000000000000" {
-            continue
-        }
-        userBucket.UserIDs = append(userBucket.UserIDs, id)
-    }
-    if err := rows.Err(); err != nil {
-        logger.Error("rows.Err error: %v", err)
-        return "", ErrInternalError
-    }
-    ```
-
-If our initial pivot point does not provide enough opponents, we then scan from the beginning of the data set for the remaining amount of opponents needed, again making sure to exclude our own user ID and the System User.
-
-=== "Go"
-    ```go
-    // Not enough users to fill bucket with random pivot only
-    if len(userBucket.UserIDs) < bucketSize {
-        rows2, err := db.QueryContext(ctx, `SELECT id FROM users LIMIT $1`, bucketSize-len(userBucket.UserIDs))
-        if err != nil {
-            logger.Error("db.QueryContext error: %v", err)
-            return "", ErrInternalError
-        }
-        //goland:noinspection GoUnhandledErrorResult
-        defer rows2.Close()
-
-        for rows2.Next() {
-            var id string
-            if err := rows2.Scan(&id); err != nil {
-                logger.Error("rows2.Scan error: %v", err)
-                return "", ErrInternalError
-            }
-            if id == userID || id == "00000000-0000-0000-0000-000000000000" {
-                continue
-            }
-            userBucket.UserIDs = append(userBucket.UserIDs, id)
-        }
-        if err := rows2.Err(); err != nil {
-            logger.Error("rows.Err error: %v", err)
-            return "", ErrInternalError
-        }
+    for _, user := range users {
+        userBucket.UserIDs = append(userBucket.UserIDs, user.Id)
     }
     ```
 
@@ -188,7 +141,7 @@ After generating the new opponents list, we write this new user bucket, first se
 === "Go"
     ```go
     // Set the Reset and Bucket end times to be in sync
-    userBucket.ResetTimeUnix = leaderboards[0].GetEndActive()
+    userBucket.ResetTimeUnix = leaderboards[0].GetNextReset()
 
     value, err := json.Marshal(userBucket)
     if err != nil {
@@ -211,7 +164,7 @@ After generating the new opponents list, we write this new user bucket, first se
     }
     ```
 
-Lastly, since the user list is pseudo-randomly generated the user may or may not be included, so we also explicitly add the user to the bucketed leaderboard before listing the records.
+Lastly, since the user list is pseudo-randomly generated the user themselves may or may not be included, so we also explicitly add the user to the bucketed leaderboard before listing the records.
 
 === "Go"
     ```go
