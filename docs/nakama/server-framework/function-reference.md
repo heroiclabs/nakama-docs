@@ -39,6 +39,8 @@ This module contains all the core gameplay APIs, all registration functions used
     | | user_ids | `[]string` | An array of user IDs to fetch. |
     | **Users Get by Username**: Fetch one or more users by username. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.Users`: A list of user record objects. |
     | | usernames | `[]string` | An array of usernames to fetch. |
+    | **Users Get Random**: Fetch one or more users randomly. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.Users`: A list of user record objects. |
+    | | count | `int` | The amount of users to fetch. |
     | **Users Ban by ID**: Ban one or more users by ID. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | user_ids | `[]string` | An array of user IDs to ban. |
     | **Users Unban by ID**: Unban one or more users by ID. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
@@ -64,6 +66,16 @@ This module contains all the core gameplay APIs, all registration functions used
     users, err := nk.UsersGetUsername(ctx, []string{"b7865e7e", "c048ba7a"})
     if err != nil {
       logger.WithField("err", err).Error("Users get username error.")
+    } else {
+      for _, u := range users {
+        logger.Info("id: %s, displayname: %s", u.Id, u.DisplayName)
+      }
+    }
+
+    // Users Get Random
+    users, err := nk.UsersGetRandom(ctx, 10)
+    if err != nil {
+        logger.WithField("err", err).Error("Users get random error.")
     } else {
       for _, u := range users {
         logger.Info("id: %s, displayname: %s", u.Id, u.DisplayName)
@@ -96,6 +108,7 @@ This module contains all the core gameplay APIs, all registration functions used
     |-|-|-|-|-|
     | **Users Get by ID**: Fetch one or more users by ID. | user_ids | `table` | A table of user IDs to fetch. | `table`: A list of user record objects. |
     | **Users Get by Username**: Fetch one or more users by username. | usernames | `table` | A table of usernames to fetch. | `table`: A list of user record objects. |
+    | **Users Get Random**: Fetch one or more users randomly. | count | `int` | The amount of users to fetch. | `table`: A list of user record objects. |
     | **Users Ban by ID**: Ban one or more users by ID. | user_ids | `table` | A table of user IDs to Ban. |
     | **Users Unban by ID**: Unban one or more users by ID. | user_ids | `table` | A table of user IDs to unban. |
 
@@ -122,6 +135,14 @@ This module contains all the core gameplay APIs, all registration functions used
       nk.logger_info(message)
     end
 
+    -- Users Get Random
+    local users = nk.users_get_random(100)
+    for _, u in ipairs(users)
+    do
+      local message = string.format("id: %q, displayname: %q", u.user_id, u.display_name)
+      nk.logger_info(message)
+    end
+
     -- Users Ban By ID
     local user_ids = {
       "3ea5608a-43c3-11e7-90f9-7b9397165f34",
@@ -142,6 +163,7 @@ This module contains all the core gameplay APIs, all registration functions used
     |-|-|-|-|-|
     | **Users Get by ID**: Fetch one or more users by ID. | user_ids | `string[]` | An array of user IDs to fetch. | `nkruntime.User[]`: A list of user record objects. |
     | **Users Get by Username**: Fetch one or more users by username. | usernames | `string[]` | An array of username to fetch. | `nkruntime.User[]`: A list of user record objects. |
+    | **Users Get Random**: Fetch one or more users randomly. | count | `int` | The amount of users to fetch. | `nkruntime.User[]`: A list of user record objects. |
     | **Users Ban by ID**: Ban one or more users by ID. | user_ids | `string[]` | An array of user IDs to ban. |
     | **Users Unban by ID**: Unban one or more users by ID. | user_ids | `string[]` | An array of user IDs to unban. |
 
@@ -169,6 +191,18 @@ This module contains all the core gameplay APIs, all registration functions used
     let users: nkruntime.Users[] = [];
     try {
         users = nk.usersGetUsername(usernamees);
+    } catch (error) {
+        // Handle error
+    }
+
+    users.forEach(u => {
+        logger.info('d: %q, displayname: %q', u.userId, u.displayName);
+    })
+
+    // Users Get Random
+    let users: nkruntime.Users[] = [];
+    try {
+        users = nk.usersGetRandom(100);
     } catch (error) {
         // Handle error
     }
