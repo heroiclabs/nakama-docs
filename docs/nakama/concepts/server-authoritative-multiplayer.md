@@ -1295,6 +1295,20 @@ This is an example of a Ping-Pong match handler. Messages received by the server
 
     type Match struct{}
 
+    func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+        logger.Info("Hello Multiplayer!")
+        err := initializer.RegisterMatch("standard_match", newMatch)
+        if err != nil {
+            logger.Error("[RegisterMatch] error: ", err.Error())
+		    return err
+        }
+        return nil
+    }
+
+    func newMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule) (m runtime.Match, err error) {
+        return &Match{}, nil
+    }
+
     func (m *Match) MatchInit(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, params map[string]interface{}) (interface{}, int, string) {
         state := &MatchState{
             presences: make(map[string]runtime.Presence),
