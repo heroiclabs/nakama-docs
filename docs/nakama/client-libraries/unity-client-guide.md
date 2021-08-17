@@ -2,18 +2,20 @@
 
 This client is built on the [.NET client](https://github.com/heroiclabs/nakama-dotnet) with extensions for Unity Engine. To work with our Unity client you'll need to install and setup [Unity engine](https://unity3d.com/get-unity/download).
 
-The client is available on the <a href="https://assetstore.unity.com/packages/tools/network/nakama-81338" target="\_blank">Unity Asset Store</a> and also on <a href="https://github.com/heroiclabs/nakama-unity/releases/latest" target="\_blank">GitHub releases</a>. You can download "Nakama.unitypackage" which contains all source code and DLL dependencies required in the client code.
+The client is available on the [Unity Asset Store](https://assetstore.unity.com/packages/tools/network/nakama-81338) and also on [GitHub releases](https://github.com/heroiclabs/nakama-unity/releases/latest). 
 
-It requires the .NET4.6 scripting runtime version to be set in the editor. Navigate to Edit -> Project Settings -> Player -> Configuration (subheading) to apply it.
+You can download `Nakama.unitypackage` which contains all source code and DLL dependencies required in the client code. It requires the .NET 4.6 scripting runtime version to be set in the editor. Navigate to **Edit** -> **Project Settings** -> **Player** -> **Configuration** to apply it.
 
-For upgrades you can see changes and enhancements in the <a href="https://github.com/heroiclabs/nakama-unity/blob/master/CHANGELOG.md" target="\_blank">CHANGELOG</a> before you update to newer versions.
+For upgrades you can see changes and enhancements in the [CHANGELOG](https://github.com/heroiclabs/nakama-unity/blob/master/CHANGELOG.md) before you update to newer versions.
 
 !!! Tip "Contribute"
-    The Unity client is <a href="https://github.com/heroiclabs/nakama-unity" target="\_blank">open source</a> on GitHub. Report issues and contribute code to help us improve it.
+    The Unity client is [open source](https://github.com/heroiclabs/nakama-unity) on GitHub. Report issues and contribute code to help us improve it.
 
 ## Setup
 
-When you've <a href="https://github.com/heroiclabs/nakama-unity/releases/latest" target="\_blank">downloaded</a> the "Nakama.unitypackage" file you should drag or import it into your Unity editor project to install it. In the editor create a new C# script via the Assets menu with "Assets > Create > C# Script" and create a client object.
+When you've [downloaded](https://github.com/heroiclabs/nakama-unity/releases/latest) the `Nakama.unitypackage` file you should drag or import it into your Unity editor project to install it. 
+
+In the editor create a new C# script via the Assets menu with **Assets** > **Create** > **C# Script** and create a client object.
 
 The client object is used to interact with the server.
 
@@ -31,11 +33,11 @@ public class YourGameObject : MonoBehaviour
 }
 ```
 
-Unity uses an entity component system (ECS) which makes it possible to share the client across game objects. Have a read of <a href="https://docs.unity3d.com/Manual/CreatingAndUsingScripts.html" target="\_blank">Creating and Using Scripts</a> for examples on how to share a C# object across your game objects.
+Unity uses an entity component system (ECS) which makes it possible to share the client across game objects. Check out [Creating and Using Scripts](https://docs.unity3d.com/Manual/CreatingAndUsingScripts.html) for examples on how to share a C# object across your game objects.
 
 ## Authenticate
 
-With a client object you can authenticate against the server. You can register or login a [user]((../concepts/user-accounts.md) with one of the [authenticate options](../concepts/authentication.md).
+With a client object you can authenticate against the server. You can register or login a [user](../concepts/user-accounts.md) with one of the [authenticate options](../concepts/authentication.md).
 
 To authenticate you should follow our recommended pattern in your client code:
 
@@ -94,9 +96,47 @@ Debug.LogFormat("User username: '{0}'", account.User.Username);
 Debug.LogFormat("Account virtual wallet: '{0}'", account.Wallet);
 ```
 
-Methods which end with "Async" can use C# Tasks to asynchronously wait for the response. This can be done with the `await` keyword. For more advice on async/await features in C# have look at the <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/" target="\_blank">official documentation</a>.
+Methods which end with "Async" can use C# Tasks to asynchronously wait for the response. This can be done with the `await` keyword. For more advice on async/await features in C# have look at the [official documentation](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/).
 
 The other sections of the documentation include more code examples on the client.
+
+### Request retries
+
+To guard against transient network or server errors, a retry configuration can be supplied for all requests. This can be done on a global basis, with a single configuration applied to all subsequent requests, or on a per-request basis.
+
+The following parameters are available when setting your retry configuration:
+
+| Parameter | Description
+| --------- | ---------- |
+| `baseDelay` | The delay (milliseconds) used to calculate the time before making another request attempt. |
+| `maxRetries` | The maximum number of attempts to make before cancelling the request task. |
+| `listener` | A callback that is invoked before a new retry attempt is made. |
+| `jitter` | The jitter algorithm used to apply randomness to the retry delay. Full Jitter by default. |
+
+!!! note Note
+    Adding a per-request retry configuration will override any global configuration on that particular request.
+
+```csharp
+// Global configuration
+var retryConfiguration = new RetryConfiguration(baseDelay: 1, maxRetries: 5, delegate { System.Console.Writeline("Retrying."); });
+client.GlobalRetryConfiguration = retryConfiguration;
+var account = await client.GetAccountAsync(session);
+
+// Per-request configuration
+var retryConfiguration = new RetryConfiguration(baseDelay: 1, maxRetries: 5, delegate { System.Console.Writeline("Retrying."); });
+var account = await client.GetAccountAsync(session, retryConfiguration);
+```
+
+### Cancelling requests
+
+A cancellation token can be supplied if you need to cancel pending requests. For example:
+
+```csharp
+var canceller = new CancellationTokenSource();
+var account = await client.GetAccountAsync(session, retryConfiguration: null, canceller);
+await Task.Delay(25);
+canceller.Cancel(); // Will raise a TaskCanceledException
+```
 
 ## Socket messages
 
