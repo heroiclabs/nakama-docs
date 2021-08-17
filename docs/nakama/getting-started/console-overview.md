@@ -162,6 +162,8 @@ Nakama server enables you to write server side code in Go, Lua, and TypeScript. 
 
 The Accounts page displays a list of all user accounts, searchable according to user ID and username. From here you have view, edit, and delete any user. See [User accounts](../concepts/user-accounts.md) to learn more.
 
+By default the System User is always present, represented by UUID `00000000-0000-0000-0000-000000000000`.
+
 Select any desired user to view and edit the corresponding details:
 ![Console User Details Page](images/console/console-user-account.png)
 
@@ -170,6 +172,8 @@ Select any desired user to view and edit the corresponding details:
 ![Console Storage Page](images/console/console-storage-objects.png)
 
 The Storage page displays a list of all storage objects, searchable according to collection name, key name, and user ID. From here you have view, edit, and delete any storage object. See [Collections](../concepts/collections.md) to learn more.
+
+System owned objects are always associated with the system user, represented by UUID `00000000-0000-0000-0000-000000000000`.
 
 Select any desired object to view and edit the corresponding details:
 ![Console Storage Object Page](images/console/console-storage-object-details.png)

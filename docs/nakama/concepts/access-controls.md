@@ -4,9 +4,11 @@ The storage engine has two features which control access to objects. Object owne
 
 ## Object ownership
 
-A storage object is created with an owner. The owner is either the user who created it, the system owner, or an owner assigned when the object is created with the code runtime.
+A storage object is created with an owner. The owner is either the user who created it, the system owner, or an owner assigned when the object is created with the [code runtime](../server-framework/function-reference.md#storage-engine).
 
-An object which is system owned must have public read access permissions before it can be fetched by clients. Access permissions are covered below.
+When writing an object from the code runtime the owner is implied to be the system user unless explicitly set. A user who writes a storage object from a client is set as the owner by default.
+
+System owned objects are created under the system user, represented in the server by a nil UUID (`00000000-0000-0000-0000-000000000000`). An object which is system owned must have public read [access permissions](#object-permissions) before it can be fetched by clients.
 
 These code examples show how to retrieve an object owned by the system (marked with public read).
 
@@ -227,22 +229,20 @@ You can also use the code runtime to fetch an object. The code runtime is exempt
     });
     ```
 
-A user who writes a storage object from a client will be set as the owner by default while from the code runtime the owner is implied to be the system unless explicitly set.
-
 ## Object permissions
 
 An object has permissions which are enforced for the owner of that object when writing or updating the object:
 
-- __ReadPermission__ can have "Public Read" (2), "Owner Read" (1), or "No Read" (0).
-- __WritePermission__ can have "Owner Write" (1), or "No Write" (0).
+- __ReadPermission__ can have `Public Read` (`2`), `Owner Read` (`1`), or `No Read` (`0`).
+- __WritePermission__ can have `Owner Write` (`1`), or `No Write` (`0`).
 
-These permissions are ignored when interacting with the storage engine via the code runtime as the server is authoritative and can always read/write objects. This means that "No Read"/"No Write" means that no client can read/write the object.
+These permissions are ignored when interacting with the storage engine via the code runtime as the server is authoritative and can always read/write objects. As a result, `No Read` / `No Write` permissions mean that no client can read/write the object.
 
-Objects with permission "Owner Read" and "Owner Write" may only be accessed or modified by the user who owns it. No other client may access the object.
+Objects with permission `Owner Read` and `Owner Write` may only be accessed or modified by the user who owns it. No other client may access the object.
 
-"Public Read" means that any user can read that object. This is very useful for gameplay where users need to share their game state or parts of it with other users. For example you might have users with their own "Army" object who want to battle each other. Each user can write their own object with public read and it can be read by the other user so that it can be rendered on each others' devices.
+`Public Read` means that any user can read that object. This is very useful for gameplay where users need to share their game state or parts of it with other users. For example you might have users with their own `"Army"` object who want to battle each other. Each user can write their own object with public read and it can be read by the other user so that it can be rendered on each others' devices.
 
-When modifying objects from the client, the default permission of a object is set to "Owner Read" and "Owner Write". When modifying objects from the code runtime, the default permission of an object is set to "No Read" and "No Write".
+When modifying objects from the client, the default permission of a object is set to `Owner Read` and `Owner Write`. When modifying objects from the code runtime, the default permission of an object is set to `No Read` and `No Write`.
 
 !!! note "Listing objects"
     When listing objects you'll only get back objects with appropriate permissions.

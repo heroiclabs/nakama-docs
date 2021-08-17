@@ -2,7 +2,7 @@
 
 Every app or game has data which is specific to the project.
 
-This information must be stored for users, updated, retrieved, and displayed within various parts of a UI. For this purpose the server incorporates a storage engine with a design optimized for [object ownership](access-controls.md), access permissions, and batch operations.
+This information must be stored for users, updated, retrieved, and displayed within various parts of a UI. For this purpose the server incorporates a storage engine with a design optimized for [object ownership](access-controls.md#object-ownership), [access permissions](access-controls.md#object-permissions), and batch operations.
 
 Data is stored in collections with one or more objects which contain a unique key with JSON content. A collection is created without any configuration required. This creates a simple nested namespace which represents the location of a object.
 

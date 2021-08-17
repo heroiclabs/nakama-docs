@@ -4,6 +4,9 @@ A user represents an identity within the server. Every user is registered and ha
 
 A user can own [records](access-controls.md), share public information with other users, and authenticate via a variety of different social providers.
 
+!!! note "Note"
+    The system owner identity is represented by a user account with a nil UUID (`00000000-0000-0000-0000-000000000000`).
+
 ## Fetch account
 
 When a user has a session you can retrieve their account. The profile contains a variety of information which includes various "linked" social providers.

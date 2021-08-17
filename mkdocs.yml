@@ -131,6 +131,7 @@ nav:
   - Nakama Server:
     - Getting Started:
       - Introduction: nakama/getting-started/introduction.md
+      - Architecture Overview: nakama/getting-started/architecture-overview.md
       - Download and install:
         - Docker compose: nakama/getting-started/docker-quickstart.md
         - Windows binary: nakama/getting-started/binary-windows-quickstart.md
