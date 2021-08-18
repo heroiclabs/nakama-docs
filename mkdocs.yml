@@ -158,7 +158,9 @@ nav:
       - IAP Validation: nakama/concepts/iap-validation.md
       - Chat: nakama/concepts/realtime-chat.md
       - Leaderboards: nakama/concepts/leaderboards.md
-      - Friends: nakama/concepts/friends.md
+      - Friends: 
+        - Friends: nakama/concepts/friends.md
+        - Best Practices: nakama/concepts/friends-best-practices.md
       - Status: nakama/concepts/status.md
       - Notifications: nakama/concepts/in-app-notifications.md
       - Groups and Clans: nakama/concepts/groups-clans.md
