@@ -211,7 +211,7 @@ Options related to the runtime engine.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
-| <a class="anchor" id="runtime.call_stack_size"></a>`call_stack_size` | `runtime.call_stack_size` | Size of each runtime instance's call stack. Default 128.
+| <a class="anchor" id="runtime.call_stack_size"></a>`call_stack_size` | `runtime.call_stack_size` | *(Deprecated)* Size of each runtime instance's call stack. Default 128.
 | <a class="anchor" id="runtime.env"></a>`env` | `runtime.env` | List of Key-Value properties that are exposed to the Runtime scripts as environment variables.
 | <a class="anchor" id="runtime.event_queue_size"></a>`event_queue_size` | `runtime.event_queue_size` | Size of the event queue buffer. Default 65536.
 | <a class="anchor" id="runtime.event_queue_workers"></a>`event_queue_workers` | `runtime.event_queue_workers` | Number of workers to use for concurrent processing of events. Default 8.
@@ -219,16 +219,16 @@ Options related to the runtime engine.
 | <a class="anchor" id="runtime.js_entrypoint"></a>`js_entrypoint` | `runtime.js_entrypoint` | Specifies the location of the bundled JavaScript runtime source code.
 | <a class="anchor" id="runtime.js_max_count"></a>`js_max_count` | `runtime.js_max_count` | Maximum number of JavaScript runtime instances to allocate. Default 32.
 | <a class="anchor" id="runtime.js_min_count"></a>`js_min_count` | `runtime.js_min_count` | Minimum number of JavaScript runtime instances to allocate. Default 16.
-| <a class="anchor" id="runtime.lua_call_stack_size"></a>`lua_call_stack_size` | `lua_call_stack_size` | Size of each runtime instance's call stack. Default 128.
+| <a class="anchor" id="runtime.lua_call_stack_size"></a>`lua_call_stack_size` | `runtime.lua_call_stack_size` | Size of each runtime instance's call stack. Default 128.
 | <a class="anchor" id="runtime.lua_max_count"></a>`lua_max_count` | `runtime.lua_max_count` | Maximum number of Lua runtime instances to allocate. Default 48.
 | <a class="anchor" id="runtime.lua_min_count"></a>`lua_min_count` | `runtime.lua_min_count` | Minimum number of Lua runtime instances to allocate. Default 16.
 | <a class="anchor" id="runtime.lua_read_only_globals"></a>`lua_read_only_globals` | `runtime.lua_read_only_globals` | When enabled, marks all Lua runtime global tables as read-only to reduce memory footprint. Default true.
 | <a class="anchor" id="runtime.lua_registry_size"></a>`lua_registry_size` | `runtime.lua_registry_size` | Size of each Lua runtime instance's registry. Default 512.
-| <a class="anchor" id="runtime.max_count"></a>`max_count` | `runtime.max_count` | Maximum number of runtime instances to allocate. Default 256.
-| <a class="anchor" id="runtime.min_count"></a>`min_count` | `runtime.min_count` | Minimum number of runtime instances to allocate. Default 16.
+| <a class="anchor" id="runtime.max_count"></a>`max_count` | `runtime.max_count` | *(Deprecated)* Maximum number of runtime instances to allocate. Default 256.
+| <a class="anchor" id="runtime.min_count"></a>`min_count` | `runtime.min_count` | *(Deprecated)* Minimum number of runtime instances to allocate. Default 16.
 | <a class="anchor" id="runtime.path"></a>`path` | `runtime.path` | Path of modules for the server to scan and load at startup. Default value is `data_dir/modules`.
-| <a class="anchor" id="runtime.read_only_globals"></a>`read_only_globals` | `runtime.read_only_globals` | When enabled, marks all runtime global tables as read-only to reduce memory footprint. Default true.
-| <a class="anchor" id="runtime.registry_size"></a>`registry_size` | `runtime.registry_size` | Size of each runtime instance's registry. Default 512.
+| <a class="anchor" id="runtime.read_only_globals"></a>`read_only_globals` | `runtime.read_only_globals` | *(Deprecated)* When enabled, marks all runtime global tables as read-only to reduce memory footprint. Default true.
+| <a class="anchor" id="runtime.registry_size"></a>`registry_size` | `runtime.registry_size` | *(Deprecated)* Size of each runtime instance's registry. Default 512.
 
 !!! warning "Important"
     You must change `http_key` before going live with your app!
