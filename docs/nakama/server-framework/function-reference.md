@@ -455,7 +455,7 @@ This module contains all the core gameplay APIs, all registration functions used
     || token | `string` | Steam token. |
     || username | `string` | If left empty, one is generated. |
     || create | `bool` | Create user if one didn't exist previously. By default this is set to `true`. |
-    | **Authenticate token generator**: Generate a Nakama session token from a username. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | The user's ID (`string`), username (`string`), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`). |
+    | **Authenticate token generator**: Generate a Nakama session token from a username. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | The `token` created and its `validity` period. |
     || user_id | `string` | User ID to use to generate the token. |
     || username | `string` | If left empty, one is generated. |
     || expires_at | `number` | Optional. Number of seconds the token should be valid for. Default to [server configured expiry time](../getting-started/configuration.md#session). |
@@ -562,7 +562,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Authenticate Steam**: Authenticate user and create a session token using a Steam account token. | token | `string` | Steam token. | The user's ID (`string`), username (`string`), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`). |
     || username | `Opt. string` | If left empty, one is generated. |
     || create | `Opt. bool` | Create user if one didn't exist previously. By default this is set to `true`. |
-    | **Authenticate token generator**: Generate a Nakama session token from a username. | user_id | `string` | User ID to use to generate the token. | The user's ID (`string`), username (`string`), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`). |
+    | **Authenticate token generator**: Generate a Nakama session token from a username. | user_id | `string` | User ID to use to generate the token. | The `token` created and its `expiry` period. |
     || username | `Opt. string` | If left empty, one is generated. |
     || expires_at | `Opt. number` | Optional. Number of seconds the token should be valid for. Default to [server configured expiry time](../getting-started/configuration.md#session). |
 
