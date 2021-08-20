@@ -170,7 +170,7 @@ Use the **Open in Visual Studio Code** button (or that for your IDE) to edit you
 
 ## Nakama Console
 
-You can also access the Nakama Console by navigating your browser to [127.0.0.1:7351](127.0.0.1:7351):
+You can also access the Nakama Console by navigating your browser to [127.0.0.1:7351](http://127.0.0.1:7351):
 
 ![Nakama console](images/install/docker/nakama-console.png)
 
