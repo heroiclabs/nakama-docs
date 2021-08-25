@@ -4,9 +4,11 @@ Nakama's matchmaker allows users to find opponents and teammates for matches, gr
 
 In the server we've decoupled how users are matched from the [realtime multiplayer engine](client-relayed-multiplayer.md). This makes it easy to use the matchmaker system to find users even if the gameplay isn't realtime. It could be a casual social game where you want to find random new users to become friends with and chat together, or an asynchronous PvP game where gameplay happens in a simulated battle.
 
+The matchmaker only searches through users that are both online and currently matchmaking themselves.
+
 The matchmaker receives and tracks matchmaking requests, then groups users together based on the criteria they've expressed in their properties and query.
 
-To ensure relevant results the matchmaker only searches through users that are both online and currently matchmaking themselves.
+Internally Nakama processes matchmaking requests sequentially in various queues so that developers don't have to worry about concurrency or thread safetey. For example, this means match join attempts can be called mulitple times for the same object without concern for locking the data to protect access.
 
 !!! Tip
     Users must connect and remain online until the matchmaking process completes. If they disconnect they will be removed from the matchmaker until they try again.
