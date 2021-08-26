@@ -37,26 +37,7 @@ This representation of friend relationships not only handles the most-common fri
 
 In its database Nakama uses a small, understandable representation of friend relationship states. This representation has been finely tuned to make the most common tasks, such as finding all of a users’ relationships, fast, efficient, and scalable.
 
-One lens for understanding the storage model is through the schema itself:
-
-```sql
-CREATE TABLE IF NOT EXISTS user_edge (
-    PRIMARY KEY (source_id, state, position),
-    FOREIGN KEY (source_id)      REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (destination_id) REFERENCES users (id) ON DELETE CASCADE,
-
-    source_id      UUID        NOT NULL CHECK (source_id <> '00000000-0000-0000-0000-000000000000'),
-    position       BIGINT      NOT NULL, -- Used for sort order on rows.
-    update_time    TIMESTAMPTZ NOT NULL DEFAULT now(),
-    destination_id UUID        NOT NULL CHECK (destination_id <> '00000000-0000-0000-0000-000000000000'),
-    state          SMALLINT    NOT NULL DEFAULT 0, -- friend(0), invite_sent(1), invite_received(2), blocked(3)
-
-    UNIQUE (source_id, destination_id)
-);
-CREATE INDEX IF NOT EXISTS user_edge_auto_index_fk_destination_id_ref_users ON user_edge (destination_id);
-```
-
-The important thing to notice about the friends schema is the primary key, which consists of:
+To better understand the Nakama storage model, it is helpful to examine the primary key used in the database schema. This consists of:
 
 * A player ID (`source_id`)
 * The state of the relationship (`state`)

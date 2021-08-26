@@ -194,6 +194,7 @@ nav:
       - Push messages: nakama/tutorials/server/send-push-messages.md
       - Daily Rewards: nakama/tutorials/server/daily-rewards.md
       - Remote configuration: nakama/tutorials/server/remote-configuration.md
+      - SendGrid integration: nakama/tutorials/server/sendgrid.md
       - Unity:
         - Fish Game: nakama/tutorials/unity/fishgame.md
         - Pirate Panic:
