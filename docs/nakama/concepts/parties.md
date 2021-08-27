@@ -37,7 +37,7 @@ A party can be created by any user. You can limit the max number of users allowe
 
     // Create a closed party (i.e. approval needed to join) with 5 max users
     // This maximum does not include the party leader
-    var party = await socket.CreatePartyAsync(open: true, maxSize: 5);
+    var party = await socket.CreatePartyAsync(open: false, maxSize: 5);
     Debug.Log("New Party: " + party.ToString());
     ```
 
