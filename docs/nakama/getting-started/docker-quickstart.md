@@ -207,7 +207,7 @@ First you will need to make a local storage volume available to Docker:
         logger:
             stdout: false
             level: "warn"
-            file: "/tmp/path/to/logfile.log"
+            file: "/nakama/data/logfile.log"
 
         console:
             port: 7351
