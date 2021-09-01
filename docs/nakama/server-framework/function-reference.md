@@ -3111,87 +3111,90 @@ This module contains all the core gameplay APIs, all registration functions used
     ```go
     // Register Matchmaker Matched
     func MakeMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, entries []runtime.MatchmakerEntry) (string, error) {
-    for _, e := range entries {
-        logger.Info("%+v", e.GetPresence())
+        for _, e := range entries {
+            logger.Info("%+v", e.GetPresence())
 
-        for k, v := range e.GetProperties() {
-        logger.Info("%v: %v", k, v)
+            for k, v := range e.GetProperties() {
+            logger.Info("%v: %v", k, v)
+            }
         }
-    }
 
-    params := map[string]interface{}{
-        "debug":          true,
-        "expected_users": entries,
-    }
+        params := map[string]interface{}{
+            "debug": true,
+            "expected_users": entries,
+        }
 
-    matchID, err := nk.MatchCreate(ctx, "pingpong", params)
-    if err != nil {
-        return "", err
-    }
+        matchID, err := nk.MatchCreate(ctx, "pingpong", params)
+        if err != nil {
+            return "", err
+        }
 
-    return matchID, nil
+        return matchID, nil
     }
 
         // Register as matchmaker matched hook, this call should be in InitModule.
-    if err := initializer.RegisterMatchmakerMatched(MakeMatch); err != nil {
-    logger.Error("Unable to register: %v", err)
-    return err
-    }
+        if err := initializer.RegisterMatchmakerMatched(MakeMatch); err != nil {
+        logger.Error("Unable to register: %v", err)
+        return err
+        }
 
     // Register Request After
     func AfterAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) error {
-    // Run some code.
+        // Run some code.
     }
 
         // Register as an appropriate after hook, this call should be in InitModule.
-    if err := initializer.RegisterAfterAddFriends(AfterAddFriends); err != nil {
-    logger.WithField("err", err).Error("After add friends hook registration error.")
-    return err
-    }
+        if err := initializer.RegisterAfterAddFriends(AfterAddFriends); err != nil {
+            logger.WithField("err", err).Error("After add friends hook registration error.")
+            return err
+        }
 
     // Register Request Before
     func BeforeAddFriends(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AddFriendsRequest) (*api.AddFriendsRequest, error) {
-    // Run some code.
-    return in, nil // Important!
+        // Run some code.
+        return in, nil // Important!
     }
 
         // Register as an appropriate before hook, this call should be in InitModule.
-    if err := initializer.RegisterBeforeAddFriends(BeforeAddFriends); err != nil {
-    logger.WithField("err", err).Error("Before add friends hook registration error.")
-    return err
-    }
+        if err := initializer.RegisterBeforeAddFriends(BeforeAddFriends); err != nil {
+            logger.WithField("err", err).Error("Before add friends hook registration error.")
+            return err
+        }
 
     // Register Realtime After
     func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime NakamaModule, envelope *rtapi.Envelope) error {
-    // Run some code.
+        // Run some code.
     }
 
         // Register as an appropriate after hook, this call should be in InitModule.
-    if err := initializer.RegisterAfterRt("ChannelJoin", MyFunc); err != nil {
-    logger.WithField("err", err).Error("After realtime hook registration error.")
-    return err
-    }
+        if err := initializer.RegisterAfterRt("ChannelJoin", MyFunc); err != nil {
+            logger.WithField("err", err).Error("After realtime hook registration error.")
+            return err
+        }
+
     // Register Realtime Before
     func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, envelope *rtapi.Envelope) (*rtapi.Envelope, error) {
-    return envelope, nil // For code to keep processing the input message.
+        return envelope, nil // For code to keep processing the input message.
     }
 
         // Register as an appropriate before hook, this call should be in InitModule.
-    if err := initializer.RegisterBeforeRt("ChannelJoin", MyFunc); err != nil {
-    logger.WithField("err", err).Error("Before realtime hook registration error.")
-    return err
-    }
+        if err := initializer.RegisterBeforeRt("ChannelJoin", MyFunc); err != nil {
+            logger.WithField("err", err).Error("Before realtime hook registration error.")
+            return err
+        }
+
     // Register RPC
     func MyFunc(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-    logger.Info("Payload: %s", payload)
-    return payload, nil
+        logger.Info("Payload: %s", payload)
+        return payload, nil
     }
 
         // Register as an RPC function, this call should be in InitModule.
-    if err := initializer.RegisterRpc("my_func_id", MyFunc); err != nil {
-    logger.WithField("err", err).Error("RPC registration error.")
-    return err
-    }
+        if err := initializer.RegisterRpc("my_func_id", MyFunc); err != nil {
+            logger.WithField("err", err).Error("RPC registration error.")
+            return err
+        }
+        
     // Register Leaderboard Reset
     func LeaderboardReset(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, lb runtime.Leaderboard, reset int64) error {
         // Custom logic runs on reset.
@@ -3348,80 +3351,134 @@ This module contains all the core gameplay APIs, all registration functions used
     Examples:
     ```ts
     // Register Matchmaker Matched
-        // For example let's create a two player authoritative match.
-    function matchmakerMatched(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, matchedUsers: nkruntime.MatchmakerResult[]) {
-        matchedUsers.forEach(u => {
-            logger.info(u.presence.userId);
-            logger.info(u.presence.sessionId);
-            logger.info(u.presence.username);
-            logger.info(u.presence.node);
-            logger.info(JSON.stringify(u.properties));
-        });
+    // For example let's create a two player authoritative match.
+    function matchmakerMatched(
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      matchedUsers: nkruntime.MatchmakerResult[]
+    ) {
+      matchedUsers.forEach((u) => {
+        logger.info(u.presence.userId);
+        logger.info(u.presence.sessionId);
+        logger.info(u.presence.username);
+        logger.info(u.presence.node);
+        logger.info(JSON.stringify(u.properties));
+    });
 
-        if (matchedUsers.length !== 2) {
-            return;
-        }
+    if (matchedUsers.length !== 2) {
+        return;
+    }
 
-        if (matchedUsers[0].properties.mode !== 'authoritative') {
-            return;
-        }
-        if (matchedUsers[1].properties.mode !== 'authoritative') {
-            return;
-        }
+    if (matchedUsers[0].properties.mode !== "authoritative") {
+        return;
+    }
+    if (matchedUsers[1].properties.mode !== "authoritative") {
+        return;
+    }
 
-        return nk.matchCreate('match', { debug: true, expectedUsers: matchedUsers });
+    return nk.matchCreate("match", { debug: true, expectedUsers: matchedUsers });
     }
 
     initializer.registerMatchmakerMatched(matchmakerMatched);
 
     // Register Request After
-    let afterAddFriendsFn: nkruntime.AfterHookFunction<void, nkruntime.AddFriendsRequest> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, data: nkruntime.AddFriendsRequest) {
-        // Run some code.
-    }
+    let afterAddFriendsFn: nkruntime.AfterHookFunction<
+      void,
+      nkruntime.AddFriendsRequest
+    > = function (
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      data: nkruntime.AddFriendsRequest
+    ) {
+      // Run some code.
+    };
     initializer.registerAfterAddFriends(afterAddFriendsFn);
 
     // Register Request Before
-    let beforeAddFriendsFn: nkruntime.BeforeHookFunction<nkruntime.AddFriendsRequest> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, data: nkruntime.AddFriendsRequest) {
-        // Run some code.
-        return data; // Important!
-    }
+    let beforeAddFriendsFn: nkruntime.BeforeHookFunction<nkruntime.AddFriendsRequest> =
+      function (
+        ctx: nkruntime.Context,
+        logger: nkruntime.Logger,
+        nk: nkruntime.Nakama,
+        data: nkruntime.AddFriendsRequest
+    ) {
+      // Run some code.
+      return data; // Important!
+    };
     initializer.registerBeforeAddFriends(beforeAddFriendsFn);
 
     // Register Realtime After
-    let rtAfterFn: nkruntime.RtBeforeHookFunction<nkruntime.EnvelopeChannelJoin> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, envelope: nkruntime.EnvelopeChannelJoin) {
-        // Run some code.
-    }
-    initializer.registerRtAfter('ChannelJoin', rtAfterFn);
+    let rtAfterFn: nkruntime.RtBeforeHookFunction<nkruntime.EnvelopeChannelJoin> =
+    function (
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      envelope: nkruntime.EnvelopeChannelJoin
+    ) {
+      // Run some code.
+    };
+    initializer.registerRtAfter("ChannelJoin", rtAfterFn);
 
     // Register Realtime Before
-    let rtBeforeFn: nkruntime.RtBeforeHookFunction<nkruntime.EnvelopeChannelJoin> = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, envelope: nkruntime.EnvelopeChannelJoin): nkruntime.EnvelopeChannelJoin {
-        // Run some code.
-        return envelope;
-    }
-    initializer.registerRtBefore('ChannelJoin', rtBeforeFn);
+    let rtBeforeFn: nkruntime.RtBeforeHookFunction<nkruntime.EnvelopeChannelJoin> =
+    function (
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      envelope: nkruntime.EnvelopeChannelJoin
+    ): nkruntime.EnvelopeChannelJoin {
+      // Run some code.
+      return envelope;
+    };
+    initializer.registerRtBefore("ChannelJoin", rtBeforeFn);
 
     // Register RPC
-    let rpcFn: nkruntime.RpcFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: string): string {
-        // Run some code.
-    }
-    initializer.registerRpc('my_func_id', rpcFn);
+    let rpcFn: nkruntime.RpcFunction = function (
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      payload: string
+    ): string {
+      // Run some code.
+    };
+    initializer.registerRpc("my_func_id", rpcFn);
 
     // Register Leaderboard Reset
-    let leaderboardResetFn: nkruntime.LeaderboardResetFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, leaderboard: nkruntime.Leaderboard, reset: number) {
-        // Custom logic runs on reset.
-    }
+    let leaderboardResetFn: nkruntime.LeaderboardResetFunction = function (
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      leaderboard: nkruntime.Leaderboard,
+      reset: number
+    ) {
+      // Custom logic runs on reset.
+    };
     initializer.registerLeaderboardReset(leaderboardResetFn);
 
     // Register Tournament Reset
-    let tournamentResetFn: nkruntime.TournamentResetFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, tournament: nkruntime.Tournament, reset: number) {
-        // Custom logic runs on reset.
-    }
+    let tournamentResetFn: nkruntime.TournamentResetFunction = function (
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      tournament: nkruntime.Tournament,
+      reset: number
+    ) {
+      // Custom logic runs on reset.
+    };
     initializer.registerTournamentReset(tournamentResetFn);
 
     // Register Tournament End
-    let tournamentEndFn: nkruntime.TournamentEndFunction = function(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, tournament: nkruntime.Tournament, end: number) {
-        // Custom logic runs on end.
-    }
+    let tournamentEndFn: nkruntime.TournamentEndFunction = function (
+      ctx: nkruntime.Context,
+      logger: nkruntime.Logger,
+      nk: nkruntime.Nakama,
+      tournament: nkruntime.Tournament,
+      end: number
+    ) {
+      // Custom logic runs on end.
+    };
     initializer.registerTournamentEnd(tournamentEndFn);
     ```
 

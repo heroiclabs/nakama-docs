@@ -214,6 +214,7 @@ nav:
       - Deploy to Digital Ocean: nakama/guides/digital-ocean.md
       - Guarding APIs: nakama/guides/guarding-apis.md
       - Migrating from GameSparks: nakama/guides/gamesparks-migration.md
+      - Asset Management: nakama/guides/asset-management/index.md
   - Heroic Cloud:
     - Introduction: heroic-cloud/introduction.md
     - Organizations: heroic-cloud/organizations.md
