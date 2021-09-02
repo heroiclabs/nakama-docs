@@ -81,6 +81,8 @@ This section configures how the nodes should connect to each other to form a clu
 | <a class="anchor" id="cluster.join"></a>`join` | `cluster.join` | List of hostname and port of other Nakama nodes to connect to.
 | <a class="anchor" id="cluster.max_message_size_bytes"></a>`max_message_size_bytes` | `cluster.max_message_size_bytes` | Maximum amount of data in bytes allowed to be sent between Nakama nodes per message. Default value is 4194304.
 | <a class="anchor" id="cluster.rpc_port"></a>`rpc_port` | `cluster.rpc_port` | Port number to use to send data between Nakama nodes. Default value is 7353.
+| <a class="anchor" id="cluster.local_priority"></a>`local_priority` | `cluster.local_priority` | When set to `true`, prefer local resources where possible.
+| <a class="anchor" id="cluster.work_factor_interval_ms"></a>`work_factor_interval_ms` | `cluster.work_factor_interval_ms` | The update frequency for work factor sync operations.
 
 ### Console
 
@@ -328,7 +330,7 @@ You can change configuration options related to session tracking.
 !!! tip "Nakama Enterprise Only"
     The following configuration options are available only in the Nakama Enterprise version of the Nakama server
 
-    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Managed Cloud](https://heroiclabs.com/managed-cloud) service.
+    Nakama is designed to run in production as a highly available cluster. You can start a cluster locally on your development machine if you’re running [Nakama Enterprise](https://heroiclabs.com/nakama-enterprise). In production you can use either Nakama Enterprise or our [Heroic Cloud](https://heroiclabs.com/managed-cloud) service.
 
 | Parameter | Flag | Description
 | --------- | ---- | -----------
@@ -416,6 +418,8 @@ cluster:
   gossip_bindaddr: "0.0.0.0"
   gossip_bindport: 7352
   rpc_port: 7353
+  local_priority: true
+  work_factor_interval_ms: 1000
 
 matchmaker:
   max_tickets: 2
