@@ -190,7 +190,7 @@ This module contains all the core gameplay APIs, all registration functions used
 
     let users: nkruntime.Users[] = [];
     try {
-        users = nk.usersGetUsername(usernamees);
+        users = nk.usersGetUsername(usernames);
     } catch (error) {
         // Handle error
     }
