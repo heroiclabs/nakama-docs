@@ -430,7 +430,7 @@ This module contains all the core gameplay APIs, all registration functions used
     || username | `string` | If left empty, one is generated. |
     || create | `bool` | Create user if one didn't exist previously. By default this is set to `true`. |
     | **Authenticate Facebook**: Authenticate user and create a session token using a Facebook account token. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | The user's ID (`string`), username (`string`), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`). |
-    || token | `string` | Facebook OAuth access token. |
+    || token | `string` | Facebook OAuth or Limited Login (JWT) access token. |
     || import| `bool` | Whether to automatically import Facebook friends after authentication. This is `true` by default. |
     || username | `string` | If left empty, one is generated. |
     || create | `bool` | Create user if one didn't exist previously. By default this is set to `true`. |
@@ -541,7 +541,7 @@ This module contains all the core gameplay APIs, all registration functions used
     || password | `string` | Password to set. Must be longer than 8 characters. |
     || username | `Opt. string` | If left empty, one is generated. |
     || create | `Opt. bool` | Create user if one didn't exist previously. By default this is set to `true`. |
-    | **Authenticate Facebook**: Authenticate user and create a session token using a Facebook account token. | token | `string` | Facebook OAuth access token. | The user's ID (`string`), username (`string`), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`). |
+    | **Authenticate Facebook**: Authenticate user and create a session token using a Facebook account token. | token | `string` | Facebook OAuth or Limited Login (JWT) access token. | The user's ID (`string`), username (`string`), and a boolean flag indicating if the account was just created (`true`) or already existed (`false`). |
     || import| `bool` | Whether to automatically import Facebook friends after authentication. This is `true` by default. |
     || username | `Opt. string` | If left empty, one is generated. |
     || create | `Opt. bool` | Create user if one didn't exist previously. By default this is set to `true`. |
@@ -616,7 +616,7 @@ This module contains all the core gameplay APIs, all registration functions used
     || password | `string` | Password to set. Must be longer than 8 characters. |
     || username | `Opt. string` | If left empty, one is generated. |
     || create | `Opt. bool` | Create user if one didn't exist previously. By default this is set to `true`. |
-    | **Authenticate Facebook**: Authenticate user and create a session token using a Facebook account token. | token | `string` | Facebook OAuth access token. | An object of type `nkruntime.AuthResult`. |
+    | **Authenticate Facebook**: Authenticate user and create a session token using a Facebook account token. | token | `string` | Facebook OAuth or Limited Login (JWT) access token. | An object of type `nkruntime.AuthResult`. |
     || import| `bool` | Whether to automatically import Facebook friends after authentication. This is `true` by default. |
     || username | `Opt. string` | If left empty, one is generated. |
     || create | `Opt. bool` | Create user if one didn't exist previously. By default this is set to `true`. |

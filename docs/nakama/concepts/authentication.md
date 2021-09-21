@@ -591,6 +591,9 @@ You can choose a custom username when creating the account. To do this, set `use
 
 You can optionally import Facebook friends into Nakama's [friend graph](friends.md) when authenticating. To do this, set `import` to true.
 
+!!! note "Note"
+    The Facebook authentication function supports the use of both OAuth and Facebook Limited Login (JWT) tokens.
+
 === "cURL"
     ```sh
     curl "http://127.0.0.1:7350/v2/account/authenticate/facebook?create=true&username=mycustomusername&import=true" \
