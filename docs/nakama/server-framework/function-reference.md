@@ -829,16 +829,16 @@ This module contains all the core gameplay APIs, all registration functions used
     | | lang | `string` | Group language. Empty if not updated. |
     | | description | `string` | Group description, can be left empty if not updated. |
     | | avatar_url | `string` | URL to the group avatar, can be left empty if not updated. |
-    | | open | `bool` | Whether the group is for anyone to join or not. Use `nil` if field is not being updated. |
+    | | open | `bool` | Whether the group is for anyone to join or not. |
     | | metadata | `map[string]interface{}` | Custom information to store for this group. Use `nil` if field is not being updated. |
     | | max_count | `int` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
-    | **Groups List**: Find groups based on the entered criteria. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.GroupList`: A list of group results and possibly a cursor. |
+    | **Groups List**: Find groups based on the entered criteria. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.Group`: A list of groups, `string`: An optional next page cursor that can be used to retrieve the next page of records (if any). |
     | | name | `string` | Search for groups that contain this value in their name. |
     | | langTag | `string` | Filter based upon the entered language tag. |
     | | members | `int` | Search by number of group members. |
     | | open | `bool` | Filter based on whether groups are Open or Closed. |
     | | limit | `int` | Return only the required number of groups denoted by this limit value. |
-    | | cursor |`int` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
+    | | cursor |`string` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
     | **Group Users List**: List all members, admins and superadmins which belong to a group. This also list incoming join requests. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `[]*api.GroupUserList_GroupUser`:The user information for members, admins and superadmins for the group. Also users who sent a join request. |
     | | group_id | `string` | The ID of the group to list members for. |
     | **Group User Join**: Join a group for a particular user. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
@@ -905,19 +905,20 @@ This module contains all the core gameplay APIs, all registration functions used
         logger.WithField("err", err).Error("Group update error.")
     }
 
-    // Group List
+    // Groups List
     groupName := "Heroic"
     langTag := "en"
     members := 10
     open := true
     limit := 100
+	cursor := ""
 
-    list, err := nk.GroupList(ctx, groupName, langTag, members, open, limit)
+    list, cursor, err := nk.GroupsList(ctx, groupName, langTag, &members, &open, limit, cursor)
     if err != nil {
-    logger.WithField("err", err).Error("Group list error.")
+    	logger.WithField("err", err).Error("Group list error.")
     } else {
-    for _, g := range list.Groups {
-        logger.Info("ID %s - can enter? %b", g.Id, g.CanEnter)
+    for _, g := range list {
+        logger.Info("ID %s - open? %b cursor: %s", g.Id, g.Open, cursor)
       }
     }
 
@@ -1196,10 +1197,10 @@ This module contains all the core gameplay APIs, all registration functions used
     | | max_count | `Opt. number` | Maximum number of members to have in the group. Use `0`, nil/null if field is not being updated. |
     | **Groups List**: Find groups based on the entered criteria. | name | `string` | Search for groups that contain this value in their name. | `nkruntime.GroupList`: A list of group results and possibly a cursor. |
     | | langTag | Opt. `string` | Filter based upon the entered language tag. |
-    | | members | Opt. `number` | Search by number of group members. |
     | | open | Opt. `bool` | Filter based on whether groups are Open or Closed. |
+    | | members | Opt. `number` | Search by number of group members. |
     | | limit | Opt. `number` | Return only the required number of groups denoted by this limit value. |
-    | | cursor | Opt. `number` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
+    | | cursor | Opt. `string` | Cursor to paginate to the next result set. If this is empty/null there is no further results. |
     | **Group Users List**: List all members, admins and superadmins which belong to a group. This also list incoming join requests. | group_id | `string` | The ID of the group to list members for. | `nkruntime.GroupUserList`:The user information for members, admins and superadmins for the group. Also users who sent a join request. |
     | **Group User Join**: Join a group for a particular user. | group_id | `string` | The ID of the group to join. |
     | | user_id | `string` | The user ID to add to this group. |
@@ -1265,7 +1266,7 @@ This module contains all the core gameplay APIs, all registration functions used
 
     let results: nkruntime.GroupList = {};
     try {
-        results = nk.groupList(groupName, langTag, members, open, limit);
+        results = nk.groupsList(groupName, langTag, open, members, limit);
     } catch (error) {
         // Handle error
     }
