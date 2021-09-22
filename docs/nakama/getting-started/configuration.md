@@ -224,7 +224,8 @@ Options related to the runtime engine.
 | <a class="anchor" id="runtime.lua_call_stack_size"></a>`lua_call_stack_size` | `runtime.lua_call_stack_size` | Size of each runtime instance's call stack. Default 128.
 | <a class="anchor" id="runtime.lua_max_count"></a>`lua_max_count` | `runtime.lua_max_count` | Maximum number of Lua runtime instances to allocate. Default 48.
 | <a class="anchor" id="runtime.lua_min_count"></a>`lua_min_count` | `runtime.lua_min_count` | Minimum number of Lua runtime instances to allocate. Default 16.
-| <a class="anchor" id="runtime.lua_read_only_globals"></a>`lua_read_only_globals` | `runtime.lua_read_only_globals` | When enabled, marks all Lua runtime global tables as read-only to reduce memory footprint. Default true.
+| <a class="anchor" id="runtime.lua_read_only_globals"></a>`lua_api_stacktrace` | `runtime.lua_api_stacktrace` | When enabled, marks all Lua runtime global tables as read-only to reduce memory footprint. Default true.
+| <a class="anchor" id="runtime.lua_api_stacktrace"></a>`lua_read_only_globals` | `runtime.lua_read_only_globals` | Adds the Lua stacktrace in the API response. Default true.
 | <a class="anchor" id="runtime.lua_registry_size"></a>`lua_registry_size` | `runtime.lua_registry_size` | Size of each Lua runtime instance's registry. Default 512.
 | <a class="anchor" id="runtime.max_count"></a>`max_count` | `runtime.max_count` | *(Deprecated)* Maximum number of runtime instances to allocate. Default 256.
 | <a class="anchor" id="runtime.min_count"></a>`min_count` | `runtime.min_count` | *(Deprecated)* Minimum number of runtime instances to allocate. Default 16.

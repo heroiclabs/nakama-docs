@@ -725,6 +725,125 @@ This module contains all the core gameplay APIs, all registration functions used
     }
     ```
 
+## Chat
+
+=== "Go"
+    | Action | Parameter | Type | Description | Returns |
+    |-|-|-|-|-|
+    | **Send Channel Message**: Send a message on a realtime chat channel. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |  |
+    | | channel_id | `string` | The ID of the channel to send the message on. |
+    | | content | `map[string]interface{}` | Message content. Must be set. |
+    | | sender_id | `string` | The UUID for the sender of this message. If left empty, it will be assumed that it is a system message. |
+    | | sender_username | `string` | The username of the user to send this message as. If left empty, it will be assumed that it is a system message. |
+    | | persist | `bool` | Whether to record this message in the channel history. Defaults to true. |
+    | **Update Channel Message**: Update a message on a realtime chat channel. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | |
+    | | channel_id | `string` | The ID of the channel to send the message on. |
+    | | message_id | `string` | The ID of the message to update. |
+    | | content | `map[string]interface{}` | Updated message content. Must be set. |
+    | | sender_id | `string` | The UUID for the sender of this message. If left empty, it will be assumed that it is a system message. |
+    | | sender_username | `string` | The username of the user to send this message as. If left empty, it will be assumed that it is a system message. |
+    | | persist | `bool` | Whether to record this message in the channel history. Defaults to true. |
+
+    Example:
+    ```go
+	// Send Channel Message
+	channelID := "<ChannelId>"
+	content := map[string]interface{}{
+		"message": "Hello",
+	}
+	senderID := "<SenderId>"
+	senderUsername := "<SenderUsername>"
+	persist := true
+	ack, err := nk.ChannelMessageSend(ctx, channelID, content, senderID, senderUsername, persist)
+	if err != nil {
+		logger.Debug("%v created at %v", ack.MessageId, ack.CreateTime)
+		return err
+	}
+
+	// Update Channel Message
+	channelID := "<ChannelId>"
+	messageID := "<MessageId>"
+	content := map[string]interface{}{
+		"message": "Hello",
+	}
+	senderID := "<SenderId>"
+	senderUsername := "<SenderUsername>"
+	persist := true
+	ack, err := nk.ChannelMessageUpdate(ctx, channelID, messageID, content, senderID, senderUsername, persist)
+	if err != nil {
+		logger.Debug("%v updated at %v", ack.MessageId, ack.UpdateTime)
+		return err
+	}
+    ```
+
+=== "Lua"
+    | Action | Parameter | Type | Description | Returns |
+    |-|-|-|-|-|
+    | **Send Channel Message**: Send a message on a realtime chat channel. | channel_id | `string` | The ID of the channel to send the message on. |
+    | | content | `table` | Message content. Must be set. |
+    | | sender_id | Opt. `string` | The UUID for the sender of this message. If left empty, it will be assumed that it is a system message. |
+    | | sender_username | Opt. `string` | The username of the user to send this message as. If left empty, it will be assumed that it is a system message. |
+    | | persist | Opt. `bool` | Whether to record this message in the channel history. Defaults to true. |
+    | **Update Channel Message**: Update a message on a realtime chat channel. | channel_id | `string` | The ID of the channel to send the message on. |
+    | | message_id | `string` | The ID of the message to update. |
+    | | content | `table` | Updated message content. Must be set. |
+    | | sender_id | Opt. `string` | The UUID for the sender of this message. If left empty, it will be assumed that it is a system message. |
+    | | sender_username | Opt. `string` | The username of the user to send this message as. If left empty, it will be assumed that it is a system message. |
+    | | persist | Opt. `bool` | Whether to record this message in the channel history. Defaults to true. |
+
+    Example:
+    ```lua
+    local content = {}
+    content["message"] = "hello"
+
+    local create_ack = nk.channel_message_send("<ChannelId>", content, "<SenderId>", "<SenderUsername>", true)
+    nk.logger_info("%q created at %q", create_ack.message_id, create_ack.create_time)
+
+    local update_ack = nk.channel_message_update("<ChannelId>", "<MessageId>", content, "<SenderId>", "<SenderUsername>", true)
+    nk.logger_info("%q created at %q", update_ack.message_id, update_ack.create_time)
+    ```
+
+=== "TypeScript"
+    | Action | Parameter | Type | Description | Returns |
+    |-|-|-|-|-|
+    | **Send Channel Message**: Send a message on a realtime chat channel. | channel_id | `string` | The ID of the channel to send the message on. |
+    | | content | `string` | Message content. Must be set. |
+    | | sender_id | `string` | The UUID for the sender of this message. If left empty, it will be assumed that it is a system message. |
+    | | sender_username | `string` | The username of the user to send this message as. If left empty, it will be assumed that it is a system message. |
+    | | persist | `bool` | Whether to record this message in the channel history. Defaults to true. |
+    | **Update Channel Message**: Update a message on a realtime chat channel. | channel_id | `string` | The ID of the channel to send the message on. |
+    | | message_id | `string` | The ID of the message to update. |
+    | | content | `string` | Updated message content. Must be set. |
+    | | sender_id | `string` | The UUID for the sender of this message. If left empty, it will be assumed that it is a system message. |
+    | | sender_username | `string` | The username of the user to send this message as. If left empty, it will be assumed that it is a system message. |
+    | | persist | `bool` | Whether to record this message in the channel history. Defaults to true. |
+
+    Example:
+    ```ts
+    // Send Channel Message
+    let channelId = "<ChannelId>";
+    let content = {
+        message: "Hello"
+    };
+    let senderId = "<SenderId>";
+    let senderUsername = "<SenderUsername>";
+    let persist = true;
+    let ack = nk.channelMessageSend(channelId, content, senderId, senderUsername, persist);
+    logger.debug("%v created at %v", ack.messageId, ack.createTime);
+
+    // Update Channel Message
+    let channelId = "<ChannelId>";
+    let messageId = "<MessageId>";
+    let content = {
+        message: "Hello"
+    };
+    let senderId = "<SenderId>";
+    let senderUsername = "<SenderUsername>";
+    let persist = true;
+    let ack = nk.channelMessageUpdate(channelId, messageId, content, senderId, senderUsername, persist);
+    logger.debug("%v updated at %v", ack.messageId, ack.updateTime);
+    ```
+
 ## Friends
 
 === "Go"
@@ -2341,7 +2460,7 @@ This module contains all the core gameplay APIs, all registration functions used
     |-|-|-|-|-|
     | **Notification Send**: Send one [in-app notification](../concepts/in-app-notifications.md) to a user. | subject | `string` | Notification subject. Must be set. |
     | | content | `table` | Notification content. Must be set but can be a struct. |
-    | | code `number` | Notification code to use. Must be equal or greater than 0. |
+    | | code | `number` | Notification code to use. Must be equal or greater than 0. |
     | | sender_id | Opt. `string` | The sender of this notification. If left empty, it will be assumed that it is a system notification. |
     | | persistent | Opt. `bool` | Whether to record this in the database for later listing. Defaults to false. |
     | **Notifications Send**: Send one or more [in-app notifications](../concepts/in-app-notifications.md) to a user. | notifications | `table` | A list of notifications to be sent together. |
@@ -2380,7 +2499,7 @@ This module contains all the core gameplay APIs, all registration functions used
     |-|-|-|-|-|
     | **Notification Send**: Send one [in-app notification](../concepts/in-app-notifications.md) to a user. | subject | `string` | Notification subject. Must be set. |
     | | content | `table` | Notification content. Must be set but can be a struct. |
-    | | code `number` | Notification code to use. Must be equal or greater than 0. |
+    | | code | `number` | Notification code to use. Must be equal or greater than 0. |
     | | sender_id | Opt. `string` | The sender of this notification. If left empty, it will be assumed that it is a system notification. |
     | | persistent | Opt. `bool` | Whether to record this in the database for later listing. Defaults to false. |
     | **Notifications Send**: Send one or more [in-app notifications](../concepts/in-app-notifications.md) to a user. | notifications | `table` | A list of notifications to be sent together. |
@@ -2691,14 +2810,14 @@ This module contains all the core gameplay APIs, all registration functions used
     | | userID | `string` | Filter by userID. Can be an empty string to list purchases for all users. |
     | | limit | `int` | Limit number of records retrieved. Defaults to 100. |
     | | cursor | `string` | Pagination cursor from previous result. If none available set to nil or `""` (empty string). |
-    | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases.
+    | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | userID | `string` | The userID of the owner of the receipt. |
     | | receipt | `string` | Base-64 encoded receipt data returned by the purchase operation itself. |
     | | passwordOverride | `string` | Optional. Override the `iap.apple.shared_password` provided in your [configuration](../getting-started/configuration.md#iap-in-app-purchase). |
-    | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases.
+    | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | userID | `string` | The userID of the owner of the receipt. |
     | | receipt | `string` | The JSON encoded Google receipt. |
-    | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases.
+    | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `*api.ValidatePurchaseResponse`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | userID | `string` | The userID of the owner of the receipt. |
     | | receipt | `string` | The Huawei receipt data. |
     | | signature | `string` | The receipt signature. |
@@ -2764,12 +2883,12 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Purchases List**: List stored validated purchase receipts. | userID | Opt. `string` | Filter by userID. Can be an empty string to list purchases for all users. | `table`: A page of stored validated purchases.|
     | | limit | `number` | Limit number of records retrieved. Defaults to 100. |
     | | cursor | Opt. `string` | Pagination cursor from previous result. If none available set to nil or `""` (empty string). |
-    | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases.
+    | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | receipt | `string` | Base-64 encoded receipt data returned by the purchase operation itself. |
     | | passwordOverride | `string` | Optional. Override the `iap.apple.shared_password` provided in your [configuration](../getting-started/configuration.md#iap-in-app-purchase). |
-    | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases.
+    | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | receipt | `string` | The JSON encoded Google receipt. |
-    | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases.
+    | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | userID | `string` | The userID of the owner of the receipt. | `table`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | receipt | `string` | The Huawei receipt data. |
     | | signature | `string` | The receipt signature. |\
 
@@ -2810,12 +2929,12 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Purchases List**: List stored validated purchase receipts. | userID | Opt. `string` | Filter by userID. Can be an empty string to list purchases for all users. | `nkruntime.ValidatedPurchaseList`: A page of stored validated purchases.|
     | | limit | Opt. `number` | Limit number of records retrieved. Defaults to 100. |
     | | cursor | Opt. `string` | Pagination cursor from previous result. If none available set to nil or `""` (empty string). |
-    | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases.
+    | **Purchase Validate Apple**: Validates and stores the purchases present in an Apple App Store Receipt. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | receipt | `string` | Base-64 encoded receipt data returned by the purchase operation itself. |
     | | passwordOverride | `string` | Optional. Override the `iap.apple.shared_password` provided in your [configuration](../getting-started/configuration.md#iap-in-app-purchase). |
-    | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases.
+    | **Purchase Validate Google**: Validates and stores a purchase receipt from the Google Play Store. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | receipt | `string` | The JSON encoded Google receipt. |
-    | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases.
+    | **Purchase Validate Huawei**: Validates and stores a purchase receipt from the Huawei App Gallery. | userID | `string` | The userID of the owner of the receipt. | `nkruntime.ValidatePurchaseResponse`: The resulting successfully validated purchases. Any previously validated purchases are returned with a `seenBefore` flag.
     | | receipt | `string` | The Huawei receipt data. |
     | | signature | `string` | The receipt signature. |
 
@@ -2885,7 +3004,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | user_id | `string` |  The ID of the user to update the wallet for. |
     | | changeset | `map[string]interface{}` | The set of wallet operations to apply. |
     | | metadata | `map[string]interface{}` | Additional metadata to tag the wallet update with. |
-    | | update_ledger | `bool` | Whether to record this update in the ledger. Defaults to `true`. |
+    | | update_ledger | `bool` | Whether to record this update in the ledger. Defaults to `false`. |
     | **Wallets Update**: Update one or more user wallets with individual changesets. This function will also insert a new wallet ledger item into each user's wallet history that tracks their update. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | `runtime.WalletUpdateResult`: A list of wallet updates results. |
     | | updates | `[]*runtime.WalletUpdate` | The set of user wallet update operations to apply. |
     | | update_ledger | `bool` | Whether to record this update in the ledger. Default `true`. |
@@ -2957,7 +3076,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Wallet Update**: Update a user's wallet with the given changeset. | user_id | `string` |  The ID of the user to update the wallet for. | `table`, `table`: The changeset after the update and previously to the update, respectively. |
     | | changeset | `table` | The set of wallet operations to apply. |
     | | metadata | Opt. `table` | Additional metadata to tag the wallet update with. |
-    | | update_ledger | Opt. `bool` | Whether to record this update in the ledger. Defaults to `true`. |
+    | | update_ledger | Opt. `bool` | Whether to record this update in the ledger. Defaults to `false`. |
     | **Wallets Update**: Update one or more user wallets with individual changesets. This function will also insert a new wallet ledger item into each user's wallet history that tracks their update. | updates | `table` | The set of user wallet update operations to apply. | `table`: A list of wallet updates results. |
     | | update_ledger | Opt. `bool` | Whether to record this update in the ledger. Default `true`. |
     | **Wallet Ledger List**: List all wallet updates for a particular user from oldest to newest. | user_id | `string` | The ID of the user to update the wallet. | A JS Object containing wallet entries with `id`, `user_id`, `create_time`, `update_time`, `changeset`, `metadata` parameters. |
@@ -3016,7 +3135,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Wallet Update**: Update a user's wallet with the given changeset. | user_id | `string` |  The ID of the user to update the wallet for. | `nkruntime.WalletUpdateResult`: The changeset after the update and previously to the update, respectively. |
     | | changeset | `{[key: string]: number}` | The set of wallet operations to apply. |
     | | metadata | Opt. `Object` | Additional metadata to tag the wallet update with. |
-    | | update_ledger | Opt. `bool` | Whether to record this update in the ledger. Defaults to `true`. |
+    | | update_ledger | Opt. `bool` | Whether to record this update in the ledger. Defaults to `false`. |
     | **Wallets Update**: Update one or more user wallets with individual changesets. This function will also insert a new wallet ledger item into each user's wallet history that tracks their update. | updates | `nkruntime.WalletUpdate[]` | The set of user wallet update operations to apply. | `nkruntime.WalletUpdateResult`: A list of wallet updates results. |
     | | update_ledger | Opt. `bool` | Whether to record this update in the ledger. Default `true`. |
     | **Wallet Ledger List**: List all wallet updates for a particular user from oldest to newest. | user_id | `string` | The ID of the user to update the wallet. | A JS Object containing wallet entries with `Id`, `userId`, `createTime`, `updateTime`, `changeset`, `metadata` parameters. |
