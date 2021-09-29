@@ -1970,6 +1970,7 @@ This module contains all the core gameplay APIs, all registration functions used
     |-|-|-|-|-|
     | **Tournament Create**: Setup a new dynamic tournament with the specified ID and various configuration settings. The underlying leaderboard will be created if it doesn't already exist, otherwise its configuration will *not* be updated. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | id | `string`| The unique identifier for the new tournament. This is used by clients to submit scores. |
+    | | authoritative | `bool`| Whether the tournament created is server authoritative. Default `true` |
     | | sort | `string` | The sort order for records in the tournament. Possible values are "asc" or "desc" (Default). |
     | | operator | `string` | The operator that determines how scores behave when submitted. The possible values are "best" (Default), "set", or "incr". |
     | | duration | `int` | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever is sooner. A game client can query the tournament for results between end of duration and next reset period. |
@@ -1982,7 +1983,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | end_time | `int` | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than `start_time` if set. Default value is __never__. |
     | | max_size | `int` | Maximum size of participants in a tournament. Optional. |
     | | max_num_score | `int` | Maximum submission attempts for a tournament record. |
-    | | join_required | `bool` | Whether the tournament needs to be joint before a record write is allowed. Defaults to `false`. |
+    | | join_required | `bool` | Whether the tournament needs to be joined before a record write is allowed. Defaults to `false`. |
     | **Tournament Delete**: Delete a tournament and all records that belong to it. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
     | | id | `string` | The unique identifier for the tournament to delete. |
     | **Tournament Add Attempt**: Add additional score attempts to the owner's tournament record. This overrides the max number of score attempts allowed in the tournament for this specific owner. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. |
@@ -2019,6 +2020,7 @@ This module contains all the core gameplay APIs, all registration functions used
     ```go
     // Tournament Create
     id := "4ec4f126-3f9d-11e7-84ef-b7c182b36521"
+    authoritative := false
     sortOrder := "desc"           // One of: "desc", "asc".
     operator := "best"            // One of: "best", "set", "incr".
     resetSchedule := "0 12 * * *" // Noon UTC each day.
@@ -2035,7 +2037,7 @@ This module contains all the core gameplay APIs, all registration functions used
     maxNumScore := 3     // Each player can have 3 attempts to score.
     joinRequired := true // Must join to compete.
 
-    err := nk.TournamentCreate(ctx, id, sortOrder, operator, resetSchedule, metadata,
+    err := nk.TournamentCreate(ctx, id, authoritative, sortOrder, operator, resetSchedule, metadata,
         title, description, category, startTime, endTime, duration, maxSize, maxNumScore, joinRequired)
     if err != nil {
     logger.WithField("err", err).Error("Tournament create error.")
@@ -2124,6 +2126,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | Action | Parameter | Type | Description | Returns |
     |-|-|-|-|-|
     | **Tournament Create**: Setup a new dynamic tournament with the specified ID and various configuration settings. The underlying leaderboard will be created if it doesn't already exist, otherwise its configuration will *not* be updated. | id | `string`| The unique identifier for the new tournament. This is used by clients to submit scores. |
+    | | authoritative | `boolean`| Whether the tournament created is server authoritative. Default `true` |
     | | sort | Opt. `string` | The sort order for records in the tournament. Possible values are "asc" or "desc" (Default). |
     | | operator | Opt. `string` | The operator that determines how scores behave when submitted. The possible values are "best" (Default), "set", or "incr". |
     | | duration | Opt. `number` | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever is sooner. A game client can query the tournament for results between end of duration and next reset period. |
@@ -2136,7 +2139,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | end_time | Opt. `number` | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than `start_time` if set. Default value is __never__. |
     | | max_size | Opt. `number` | Maximum size of participants in a tournament. Optional. |
     | | max_num_score | Opt. `number` | Maximum submission attempts for a tournament record. |
-    | | join_required | Opt. `boolean` | Whether the tournament needs to be joint before a record write is allowed. Defaults to `false`. |
+    | | join_required | Opt. `boolean` | Whether the tournament needs to be joined before a record write is allowed. Defaults to `false`. |
     | **Tournament Delete**: Delete a tournament and all records that belong to it. | id | `string` | The unique identifier for the tournament to delete. |
     | **Tournament Add Attempt**: Add additional score attempts to the owner's tournament record. This overrides the max number of score attempts allowed in the tournament for this specific owner. | id | `string` | The unique identifier for the tournament to update. |
     | | owner | `string` | The owner of the record to increment the count for. |
@@ -2240,6 +2243,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | Action | Parameter | Type | Description | Returns |
     |-|-|-|-|-|
     | **Tournament Create**: Setup a new dynamic tournament with the specified ID and various configuration settings. The underlying leaderboard will be created if it doesn't already exist, otherwise its configuration will *not* be updated. | id | `string`| The unique identifier for the new tournament. This is used by clients to submit scores. |
+    | | authoritative | `boolean`| Whether the tournament created is server authoritative. Default `true` |
     | | sort | Opt. `string` | The sort order for records in the tournament. Possible values are "asc" or "desc" (Default). |
     | | operator | Opt. `string` | The operator that determines how scores behave when submitted. The possible values are "best" (Default), "set", or "incr". |
     | | duration | Opt. `number` | The active duration for a tournament. This is the duration when clients are able to submit new records. The duration starts from either the reset period or tournament start time whichever is sooner. A game client can query the tournament for results between end of duration and next reset period. |
@@ -2252,7 +2256,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | | end_time | Opt. `number` | The end time of the tournament. When the end time is elapsed, the tournament will not reset and will cease to exist. Must be greater than `start_time` if set. Default value is __never__. |
     | | max_size | Opt. `number` | Maximum size of participants in a tournament. Optional. |
     | | max_num_score | Opt. `number` | Maximum submission attempts for a tournament record. |
-    | | join_required | Opt. `boolean` | Whether the tournament needs to be joint before a record write is allowed. Defaults to `false`. |
+    | | join_required | Opt. `boolean` | Whether the tournament needs to be joined before a record write is allowed. Defaults to `false`. |
     | **Tournament Delete**: Delete a tournament and all records that belong to it. | id | `string` | The unique identifier for the tournament to delete. |
     | **Tournament Add Attempt**: Add additional score attempts to the owner's tournament record. This overrides the max number of score attempts allowed in the tournament for this specific owner. | id | `string` | The unique identifier for the tournament to update. |
     | | owner | `string` | The owner of the record to increment the count for. |
@@ -2282,6 +2286,7 @@ This module contains all the core gameplay APIs, all registration functions used
     ```ts
     // Tournament Create
     let id = '4ec4f126-3f9d-11e7-84ef-b7c182b36521';
+    let authoritative = false
     let sortOrder = nkruntime.SortOrder.DESCENDING;
     let operator = nkruntime.Operator.BEST;
     let duration = 3600;     // In seconds.
@@ -2302,6 +2307,7 @@ This module contains all the core gameplay APIs, all registration functions used
     try {
         nk.tournamentCreate(
             id,
+            authoritative,
             sortOrder,
             operator,
             duration,

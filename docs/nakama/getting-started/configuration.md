@@ -253,6 +253,8 @@ You can change configuration options related to each user session, such as the e
 | <a class="anchor" id="session.token_expiry_sec"></a>`token_expiry_sec` | `session.token_expiry_sec` | Token expiry in seconds. Default value is 60.
 | <a class="anchor" id="session.refresh_encryption_key"></a>`refresh_encryption_key` | `session.refresh_encryption_key` | The encryption key used to produce the session refresh token. Default value is `defaultrefreshencryptionkey`.
 | <a class="anchor" id="session.refresh_token_expiry_sec"></a>`refresh_token_expiry_sec` | `session.refresh_token_expiry_sec` | Refresh token expiry in seconds. Default value is 3600.
+| <a class="anchor" id="session.single_socket"></a>`single_socket` | `session.single_socket` | Only allow one socket per user, older sessions are disconnected. Default `false`.
+| <a class="anchor" id="session.single_match"></a>`single_match` | `session.single_match` | Only allow one match per user, older matches receive a leave. Requires `single_socket` to enable. Default `false`.
 
 !!! warning "Important"
     You must change `encryption_key` before going live with your app!
