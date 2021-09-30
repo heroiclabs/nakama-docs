@@ -211,10 +211,11 @@ nav:
         - Phaser tic-tac-toe: nakama/tutorials/js/xoxo.md
     - Guides:
       - Bucketed Leaderboards: nakama/guides/bucketed-leaderboards/index.md
-      - Deploy to Digital Ocean: nakama/guides/digital-ocean.md
+      - Tiered Leagues/Seasons: nakama/guides/leagues.md
       - Guarding APIs: nakama/guides/guarding-apis.md
-      - Migrating from GameSparks: nakama/guides/gamesparks-migration.md
       - Asset Management: nakama/guides/asset-management/index.md
+      - Deploy to Digital Ocean: nakama/guides/digital-ocean.md
+      - Migrating from GameSparks: nakama/guides/gamesparks-migration.md
   - Heroic Cloud:
     - Introduction: heroic-cloud/introduction.md
     - Organizations: heroic-cloud/organizations.md

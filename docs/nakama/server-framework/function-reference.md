@@ -1520,7 +1520,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Leaderboard Record list**: List records on the specified leaderboard, optionally filtering to only a subset of records by their owners. Records will be listed in the preconfigured leaderboard sort order. | ctx | `context.Context` | The [context](basics.md#register-hooks) object represents information about the server and requester. | A page of leaderboard records, a list of owner leaderboard records (empty if the `owners` input parameter is not set), an optional next page cursor that can be used to retrieve the next page of records (if any), and an optional previous page cursor that can be used to retrieve the previous page of records (if any). |
     | | id | `string` | The unique identifier for the leaderboard to list. Mandatory field. |
     | | owners | `[]string` | Array of owners to filter to. |
-    | | limit | `int` | The maximum number of records to return from 10 to 100. |
+    | | limit | `int` | The maximum number of records to return (Max 10,000). |
     | | cursor | `string` | A cursor used to fetch the next page when applicable. |
 
     Examples:
@@ -1630,7 +1630,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Leaderboard Record list**: List records on the specified leaderboard, optionally filtering to only a subset of records by their owners. Records will be listed in the preconfigured leaderboard sort order. | id | `string` | The unique identifier for the leaderboard to list. Mandatory field. | A page of leaderboard records, a list of owner leaderboard records (empty if the `owners` input parameter is not set), an optional next page cursor that can be used to retrieve the next page of records (if any), and an optional previous page cursor that can be used to retrieve the previous page of records (if any). |
     | | id | `string` | The unique identifier for the leaderboard to list. Mandatory field. |
     | | owners | Opt. `table` | Array of owners to filter to. |
-    | | limit | Opt. `number` | The maximum number of records to return from 10 to 100. |
+    | | limit | Opt. `number` | The maximum number of records to return (Max 10,000). |
     | | cursor | Opt. `string` | A cursor used to fetch the next page when applicable. |
 
     Examples:
@@ -1715,7 +1715,7 @@ This module contains all the core gameplay APIs, all registration functions used
     | **Leaderboard Record list**: List records on the specified leaderboard, optionally filtering to only a subset of records by their owners. Records will be listed in the preconfigured leaderboard sort order. | id | `string` | The unique identifier for the leaderboard to list. Mandatory field. | A page of leaderboard records, a list of owner leaderboard records (empty if the `owners` input parameter is not set), an optional next page cursor that can be used to retrieve the next page of records (if any), and an optional previous page cursor that can be used to retrieve the previous page of records (if any). |
     | | id | `string` | The unique identifier for the leaderboard to list. Mandatory field. |
     | | owners | Opt. `string[]` | Array of owners to filter to. |
-    | | limit | Opt. `number` | The maximum number of records to return from 10 to 100. |
+    | | limit | Opt. `number` | The maximum number of records to return (Max 10,000). |
     | | cursor | Opt. `string` | A cursor used to fetch the next page when applicable. |
 
     Examples:
@@ -3440,22 +3440,22 @@ This module contains all the core gameplay APIs, all registration functions used
     nk.register_rpc(my_func, "my_func_id")
 
     -- Register Leaderboard Reset
-    local fn = function(ctx, leaderboard, reset) {
+    local function my_func(ctx, leaderboard, reset)
         -- Custom logic
-    }
-    nk.register_leaderboard_reset(fn)
+    end
+    nk.register_leaderboard_reset(my_func)
 
     -- Register Tournament Reset
-    local fn = function(ctx, tournament, t_end, reset) {
+    local function my_func(ctx, leaderboard, reset)
         -- Custom logic
-    }
-    nk.register_tournament_reset(fn)
+    end
+    nk.register_tournament_reset(my_func)
 
     -- Register Tournament End
-    local fn = function(ctx, tournament, t_end, reset) {
+    local function my_func(ctx, leaderboard, reset)
         -- Custom logic
-    }
-    nk.register_tournament_end(fn)
+    end
+    nk.register_tournament_end(my_func)
     ```
 
 === "TypeScript"
