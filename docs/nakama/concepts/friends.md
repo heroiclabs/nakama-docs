@@ -103,6 +103,17 @@ When a friend request is sent or the user is added an in-app notification will b
 	Authorization: Bearer <session token>
 	```
 
+=== "Defold"
+	```lua
+	local ids = { "user-id1", "user-id2" }
+	local usernames = { "username1" }
+	local result = nakama.add_friends(client, ids, usernames)
+    if result.error then
+		print(result.message)
+		return
+	end
+	```
+
 When both users have added each other as friends, it's easy to initiate realtime chat in a 1-on-1 channel. See the [realtime chat](realtime-chat.md) section for more info.
 
 ## List friends
@@ -212,6 +223,18 @@ You can list all of a user's friends, blocked users, friend requests received (i
 	Authorization: Bearer <session token>
 	```
 
+=== "Defold"
+	```lua
+	local result = nakama.list_friends(client)
+    if result.error then
+		print(result.message)
+		return
+	end
+    for _,friend in ipairs(result.friends) do
+        pprint(friend)
+    end
+	```
+
 !!! Note
     A single friends listing will return a page of up to 1000 friends. Pass the returned cursor to subsequent list calls
     to retrieve more friend pages.
@@ -311,6 +334,17 @@ A user can remove a friend, reject a received invite, cancel a friend request se
 	Authorization: Bearer <session token>
 	```
 
+=== "Defold"
+	```lua
+    local ids = { "user-id1", "user-id2" }
+    local usernames = { "username1" }
+	local result = nakama.delete_friends(client, ids, usernames)
+    if result.error then
+		print(result.message)
+		return
+	end
+	```
+
 ## Block a friend
 
 You can stop a user from using 1-on-1 chat or other social features with a user if you block them. The user who wants to block should send the message. They can be unblocked later with a [Friend Remove](#remove-friends) message.
@@ -403,6 +437,17 @@ A user who has been blocked will not know which users have blocked them. That us
 	Accept: application/json
 	Content-Type: application/json
 	Authorization: Bearer <session token>
+	```
+
+=== "Defold"
+	```lua
+    local ids = { "user-id1", "user-id2" }
+    local usernames = { "username1" }
+	local result = nakama.block_friends(client, ids, usernames)
+    if result.error then
+		print(result.message)
+		return
+	end
 	```
 
 ### Ban a user
