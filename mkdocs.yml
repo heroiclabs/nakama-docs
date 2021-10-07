@@ -1,5 +1,5 @@
 # Project information
-site_name: Nakama Server
+site_name: Heroic Labs Documentation
 site_description: Documentation for the Nakama realtime and social server for games and apps.
 site_author: Heroic Labs Team & Contributors
 site_url: https://heroiclabs.com/
@@ -34,7 +34,7 @@ theme:
     - navigation.top
     # Top level navigation turned into tabs
     # Use to implement Nakama Docs Realms
-    # - navigation.tabs
+    - navigation.tabs
 
 extra_javascript:
   - javascripts/main.js
@@ -47,6 +47,62 @@ plugins:
   - search:
       lang:
         - en
+  - redirects:
+      redirect_maps:
+          'introduction.md': 'nakama/getting-started/introduction.md'
+          'install-docker-quickstart.md': 'nakama/getting-started/docker-quickstart.md'
+          'install-binary-windows-quickstart.md' : 'nakama/getting-started/binary-windows-quickstart.md'
+          'install-binary-macos-quickstart.md' : 'nakama/getting-started/binary-macos-quickstart.md'
+          'install-binary-linux-quickstart.md' : 'nakama/getting-started/binary-linux-quickstart.md'
+          'install-server-cli.md': 'nakama/getting-started/server-cli.md'
+          'install-configuration.md': 'nakama/getting-started/configuration.md'
+          'install-nakama-upgrade.md': 'nakama/getting-started/upgrade.md'
+          'console-overview.md': 'nakama/getting-started/console-overview.md'
+          'unity-client-guide.md': 'nakama/client-libraries/unity-client-guide.md'
+          'javascript-client-guide.md': 'nakama/client-libraries/javascript-client-guide.md'
+          'godot-client-guide.md': 'nakama/client-libraries/godot-client-guide.md'
+          'defold-client-guide.md': 'nakama/client-libraries/defold-client-guide.md'
+          'android-java-client-guide.md': 'nakama/client-libraries/android-java-client-guide.md'
+          'cpp-client-guide.md': 'nakama/client-libraries/cpp-client-guide.md'
+          'unreal-client-guide.md': 'nakama/client-libraries/unreal-client-guide.md'
+          'cocos2d-x-client-guide.md': 'nakama/client-libraries/cocos2d-x-client-guide.md'
+          'cocos2d-x-js-client-guide.md': 'nakama/client-libraries/cocos2d-x-js-client-guide.md'
+          'authentication.md': 'nakama/concepts/authentication.md'
+          'user-accounts.md': 'nakama/concepts/user-accounts.md'
+          'tutorial-initialize-new-user.md': 'nakama/tutorials/server/initialize-new-user.md'
+          'session.md': 'nakama/concepts/session.md'
+          'expert-auth.md': 'nakama/concepts/session-management.md'
+          'storage-collections.md': 'nakama/concepts/collections.md'
+          'storage-access-controls.md': 'nakama/concepts/access-controls.md'
+          'social-friends.md': 'nakama/concepts/friends.md'
+          'social-groups-clans.md': 'nakama/concepts/groups-clans.md'
+          'social-in-app-notifications.md': 'nakama/concepts/in-app-notifications.md'
+          'social-status.md': nakama/concepts/status.md
+          'social-realtime-chat.md': 'nakama/concepts/realtime-chat.md'
+          'social-realtime-parties.md': 'nakama/concepts/parties.md'
+          'gameplay-leaderboards.md': 'nakama/concepts/leaderboards.md'
+          'gameplay-tournaments.md': 'nakama/concepts/tournaments.md'
+          'gameplay-matchmaker.md': 'nakama/concepts/matches.md'
+          'gameplay-multiplayer-realtime.md': 'nakama/concepts/client-relayed-multiplayer.md'
+          'gameplay-multiplayer-server-multiplayer.md': 'nakama/concepts/server-authoritative-multiplayer.md'
+          'iap-validation.md': 'nakama/concepts/iap-validation.md'
+          'runtime-code-basics.md': 'nakama/server-framework/basics.md'
+          'runtime-code-typescript-setup.md': 'nakama/server-framework/typescript-setup.md'
+          'runtime-code-go-setup.md': 'nakama/server-framework/go-setup.md'
+          'runtime-code-lua-setup.md': 'nakama/server-framework/lua-setup.md'
+          'runtime-code-function-reference.md': 'nakama/server-framework/function-reference.md'
+          'tutorial-send-push-messages.md': 'nakama/tutorials/server/send-push-messages.md'
+          'runtime-code-daily-rewards.md': 'nakama/tutorials/server/daily-rewards.md'
+          'tutorial-remote-configuration.md': 'nakama/tutorials/server/remote-configuration.md'
+          'tutorial-fishgame-unity.md': 'nakama/tutorials/unity/fishgame.md'
+          'tutorial-xoxo-js.md': 'nakama/tutorials/js/xoxo.md'
+          'deployment-digital-ocean.md': 'nakama/guides/digital-ocean.md'
+          'advanced-events.md': 'nakama/concepts/events.md'
+          'advanced-streams.md': 'nakama/server-framework/streams.md'
+          'expert-modelling.md': 'nakama/concepts/scalability-modeling.md'
+          'expert-tcp-udp.md': 'nakama/concepts/tcp-vs-udp.md'
+          'benchmarks.md': 'nakama/getting-started/benchmarks.md'
+          'nakama/concepts/server-relayed-multiplayer.md': 'nakama/concepts/server-authoritative-multiplayer.md'
 
 extra:
   social:
@@ -72,61 +128,96 @@ markdown_extensions:
 
 # Nav menu
 nav:
-  - Getting Started:
-    - Introduction: introduction.md
-    - Docker compose: install-docker-quickstart.md
-    - Windows binary: install-binary-windows-quickstart.md
-    - macOS binary: install-binary-macos-quickstart.md
-    - Linux binary: install-binary-linux-quickstart.md
-    - Nakama CLI: install-server-cli.md
-    - Configuration: install-configuration.md
-    - Upgrading Nakama: install-nakama-upgrade.md
-    - Nakama Console: console-overview.md
-  - Client Libraries:
-    - .NET/Unity: unity-client-guide.md
-    - JavaScript: javascript-client-guide.md
-    - Godot: godot-client-guide.md
-    - Defold : defold-client-guide.md
-    - Java/Android: android-java-client-guide.md
-    - C++: cpp-client-guide.md
-    - Unreal: unreal-client-guide.md
-    - Cocos2d-x C++: cocos2d-x-client-guide.md
-    - Cocos2d-x JS: cocos2d-x-js-client-guide.md
-  - Features:
-    - User Accounts:
-      - Authentication: authentication.md
-      - User accounts: user-accounts.md
-      - Initialize a new user: tutorial-initialize-new-user.md
-      - Sessions: session.md
-      - Session management: expert-auth.md
-    - Storage Engine:
-      - Collections: storage-collections.md
-      - Access controls: storage-access-controls.md
-    - Friends: social-friends.md
-    - Groups and Clans: social-groups-clans.md
-    - In-app Notifications: social-in-app-notifications.md
-    - Status: social-status.md
-    - Realtime Chat: social-realtime-chat.md
-    - Leaderboards: gameplay-leaderboards.md
-    - Tournaments: gameplay-tournaments.md
-    - Matchmaker: gameplay-matchmaker.md
-    - Realtime Multiplayer: gameplay-multiplayer-realtime.md
-    - Authoritative Multiplayer: gameplay-multiplayer-server-multiplayer.md
-    - IAP Validation: iap-validation.md
-  - Server Runtime Code:
-    - Basics: runtime-code-basics.md
-    - TypeScript Setup: runtime-code-typescript-setup.md
-    - Function Reference: runtime-code-function-reference.md
-  - Tutorials:
-    - Fish Game in Unity: tutorial-fishgame-unity.md
-  - Advanced:
-    - Events: advanced-events.md
-    - Streams: advanced-streams.md
-    - Push messages: tutorial-send-push-messages.md
-    - Choosing TCP or UDP: expert-tcp-udp.md
-    - Modelling for Scalability: expert-modelling.md
-    - Remote configuration: tutorial-remote-configuration.md
-    - Develop with LibGDX: tutorial-develop-with-libgdx.md
-    - Deploy to Digital Ocean: deployment-digital-ocean.md
-    - Previous releases: previous-versions.md
-  - Benchmarks: benchmarks.md
+  - Nakama Server:
+    - Getting Started:
+      - Introduction: nakama/getting-started/introduction.md
+      - Architecture Overview: nakama/getting-started/architecture-overview.md
+      - Download and install:
+        - Docker compose: nakama/getting-started/docker-quickstart.md
+        - Windows binary: nakama/getting-started/binary-windows-quickstart.md
+        - macOS binary: nakama/getting-started/binary-macos-quickstart.md
+        - Linux binary: nakama/getting-started/binary-linux-quickstart.md
+      - Nakama CLI: nakama/getting-started/server-cli.md
+      - Nakama Console: nakama/getting-started/console-overview.md
+      - Configuration: nakama/getting-started/configuration.md
+      - Upgrading Nakama: nakama/getting-started/upgrade.md
+      - Benchmarks: nakama/getting-started/benchmarks.md
+      - Previous releases: previous-versions.md
+    - Concepts:
+      - Authentication: nakama/concepts/authentication.md
+      - Sessions:
+        - Sessions: nakama/concepts/session.md
+        - Session management: nakama/concepts/session-management.md
+      - Users:
+        - User accounts: nakama/concepts/user-accounts.md
+        - Initialize new users: nakama/tutorials/server/initialize-new-user.md
+      - Storage Engine:
+        - Collections: nakama/concepts/collections.md
+        - Access controls: nakama/concepts/access-controls.md
+        - Modeling for scalability: nakama/concepts/scalability-modeling.md
+      - IAP Validation: nakama/concepts/iap-validation.md
+      - Chat: nakama/concepts/realtime-chat.md
+      - Leaderboards: nakama/concepts/leaderboards.md
+      - Friends: 
+        - Friends: nakama/concepts/friends.md
+        - Best Practices: nakama/concepts/friends-best-practices.md
+      - Status: nakama/concepts/status.md
+      - Notifications: nakama/concepts/in-app-notifications.md
+      - Groups and Clans: nakama/concepts/groups-clans.md
+      - Parties: nakama/concepts/parties.md
+      - Matches: nakama/concepts/matches.md
+      - Tournaments: nakama/concepts/tournaments.md
+      - Multiplayer Engine:
+        - Client-relayed multiplayer: nakama/concepts/client-relayed-multiplayer.md
+        - Server authoritative multiplayer: nakama/concepts/server-authoritative-multiplayer.md
+      - Events: nakama/concepts/events.md
+      - Choosing TCP or UDP: nakama/concepts/tcp-vs-udp.md
+    - Server Framework:
+      - Basics: nakama/server-framework/basics.md
+      - TypeScript Setup: nakama/server-framework/typescript-setup.md
+      - Go Setup: nakama/server-framework/go-setup.md
+      - Lua Setup: nakama/server-framework/lua-setup.md
+      - Streams: nakama/server-framework/streams.md
+      - Go Dependency Pinning: nakama/server-framework/go-dependency-pinning.md
+      - Function Reference: nakama/server-framework/function-reference.md
+    - Client Libraries:
+      - .NET/Unity: nakama/client-libraries/unity-client-guide.md
+      - JavaScript: nakama/client-libraries/javascript-client-guide.md
+      - Godot: nakama/client-libraries/godot-client-guide.md
+      - Defold : nakama/client-libraries/defold-client-guide.md
+      - Java/Android: nakama/client-libraries/android-java-client-guide.md
+      - C++: nakama/client-libraries/cpp-client-guide.md
+      - Unreal: nakama/client-libraries/unreal-client-guide.md
+      - Cocos2d-x C++: nakama/client-libraries/cocos2d-x-client-guide.md
+      - Cocos2d-x JS: nakama/client-libraries/cocos2d-x-js-client-guide.md
+    - Tutorials:
+      - Push messages: nakama/tutorials/server/send-push-messages.md
+      - Daily Rewards: nakama/tutorials/server/daily-rewards.md
+      - Remote configuration: nakama/tutorials/server/remote-configuration.md
+      - SendGrid integration: nakama/tutorials/server/sendgrid.md
+      - Unity:
+        - Fish Game: nakama/tutorials/unity/fishgame.md
+        - Pirate Panic:
+          - Introduction: nakama/tutorials/unity/pirate-panic/intro.md
+          - Authentication: nakama/tutorials/unity/pirate-panic/authentication.md
+          - Friends and Chat: nakama/tutorials/unity/pirate-panic/friends.md
+          - Clans: nakama/tutorials/unity/pirate-panic/clans.md
+          - Storage: nakama/tutorials/unity/pirate-panic/storage.md
+          - Matchmaking: nakama/tutorials/unity/pirate-panic/matchmaking.md
+          - Realtime Multiplayer: nakama/tutorials/unity/pirate-panic/realtime-multiplayer.md
+          - Leaderboards: nakama/tutorials/unity/pirate-panic/leaderboards.md
+          - Notifications: nakama/tutorials/unity/pirate-panic/notifications.md
+      - JavaScript:
+        - Phaser tic-tac-toe: nakama/tutorials/js/xoxo.md
+    - Guides:
+      - Bucketed Leaderboards: nakama/guides/bucketed-leaderboards/index.md
+      - Tiered Leagues/Seasons: nakama/guides/leagues.md
+      - Guarding APIs: nakama/guides/guarding-apis.md
+      - Asset Management: nakama/guides/asset-management/index.md
+      - Deploy to Digital Ocean: nakama/guides/digital-ocean.md
+      - Migrating from GameSparks: nakama/guides/gamesparks-migration.md
+  - Heroic Cloud:
+    - Introduction: heroic-cloud/introduction.md
+    - Organizations: heroic-cloud/organizations.md
+    - Projects: heroic-cloud/projects.md
+    - Builders: heroic-cloud/builders.md
