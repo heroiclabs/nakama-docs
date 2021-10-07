@@ -1,0 +1,287 @@
+# Sessions
+
+In general terms, a "session" is a period during which a user is authenticated with a system.
+
+In Nakama, the session is represented with a client-side object that proves that the client was [authenticated](authentication.md) when accessing server functions.
+
+Session duration can be set with the [token_expiry_sec](../getting-started/configuration.md#common-properties) property in the configuration. It is recommended to set a session duration of about 2 to 3 times the length of your game's average play session.
+
+Sessions expire and become invalid after a set period. When this happens, you'll need to reauthenticate with the server to get a new session.
+
+## Session Details
+
+You can access a user's id, name, and whether their session is expired using the following code:
+
+=== "JavaScript"
+    ```js
+    const id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+    const session = await client.authenticateDevice(id)
+    console.info("id:", session.user_id, "username:", session.username);
+    console.info("Session expired?", session.isexpired(Date.now() / 1000));
+    ```
+
+=== ".NET"
+    ```csharp
+    const string id = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+    var session = await client.AuthenticateDeviceAsync(id);
+    System.Console.WriteLine("Id '{0}' Username '{1}'", session.UserId, session.Username);
+    System.Console.WriteLine("Session expired? {0}", session.IsExpired);
+    ```
+
+=== "Unity"
+    ```csharp
+    var deviceId = SystemInfo.deviceUniqueIdentifier;
+    var session = await client.AuthenticateDeviceAsync(deviceId);
+    Debug.LogFormat("Id '{0}' Username '{1}'", session.UserId, session.Username);
+    Debug.LogFormat("Session expired? {0}", session.IsExpired);
+    ```
+
+=== "Cocos2d-x C++"
+    ```cpp
+    auto loginFailedCallback = [](const NError& error)
+    {
+    };
+
+    auto loginSucceededCallback = [](NSessionPtr session)
+    {
+    CCLOG("id %s username %s", session->getUserId().c_str(), session->getUsername().c_str());
+    CCLOG("Session expired? %s", session->isExpired() ? "yes" : "no");
+    };
+
+    std::string deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+
+    client->authenticateDevice(
+            deviceId,
+            opt::nullopt,
+            opt::nullopt,
+            {},
+            loginSucceededCallback,
+            loginFailedCallback);
+    ```
+
+=== "Cocos2d-x JS"
+    ```js
+    var deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+    client.authenticateDevice(deviceId)
+    .then(function(session) {
+            cc.log("Authenticated successfully. User id:", session.user_id);
+        },
+        function(error) {
+            cc.error("authenticate failed:", JSON.stringify(error));
+        });
+    ```
+
+=== "C++"
+    ```cpp
+    auto loginFailedCallback = [](const NError& error)
+    {
+    };
+
+    auto loginSucceededCallback = [](NSessionPtr session)
+    {
+    cout << "id " << session->getUserId() << " username " << session->getUsername() << endl;
+    cout << "Session expired? " << (session->isExpired() ? "yes" : "no") << endl;
+    };
+
+    std::string deviceId = "3e70fd52-7192-11e7-9766-cb3ce5609916";
+
+    client->authenticateDevice(
+            deviceId,
+            opt::nullopt,
+            opt::nullopt,
+            {},
+            loginSucceededCallback,
+            loginFailedCallback);
+    ```
+
+=== "Java"
+    ```java
+    var deviceid = SystemInfo.deviceUniqueIdentifier;
+    Session session = client.authenticateDevice(deviceid).get();
+    System.out.format("Session %s", session.getAuthToken());
+    ```
+
+=== "Swift"
+    ```swift
+    // Requires Nakama 1.x
+    let id = "3e70fd52-7192-11e7-9766-cb3ce5609916"
+    let message = AuthenticateMessage(device: id)
+    client.login(with: message).then { session in
+        let expired = session.isExpired(currentTimeSince1970: Date().timeIntervalSince1970)
+        NSLog("Session id '%@' handle '%@'.", session.userID, session.handle)
+        NSLog("Session expired: '%@'", expired)
+    }.catch { err in
+        NSLog("Error %@ : %@", err, (err as! NakamaError).message)
+    }
+    ```
+
+=== "Godot"
+    ```gdscript
+    var session : NakamaSession = yield(client.authenticate_device_async(deviceid), "completed")
+    if session.is_exception():
+        print("An error occured: %s" % session)
+        return
+        print("Id '%s' Username '%s'" % [session.id, session.username])
+        print("Session expired? %s" % session.expired)
+    ```
+
+=== "Defold"
+    ```lua
+    local body = nakama.create_api_account_device(defold.uuid())
+    local result = nakama.authenticate_device(client, body)
+    if result.error then
+        print(result.message)
+        return
+    end
+    print(("Id '%s' Username '%s' "):format(result.user_id, result.username))
+    if os.time() > result.expires then
+        print("Session has expired")
+    end
+    ```
+
+## Session Variables
+
+Session variables allow clients and server-side code to embed additional key/value pairs into the session token generated by the game server. This enables the session token to act as an edge cache for information that won’t change until the next authentication (or re-authentication) happens.
+
+### Setting with client
+
+To set the variables in the client's request for authentication, use
+
+=== "cURL"
+    ```sh
+    curl "http://127.0.0.1:7350/v2/account/authenticate/email?create=true&username=mycustomusername" \
+    --user 'defaultkey:' \
+    --data '{"email": "hello@heroiclabs.com", "password": "password", "vars": { "key": "value" }}'
+    ```
+
+=== "JavaScript"
+    ```js
+    const create = true;
+    const session = await client.authenticateEmail(email, password, create, "mycustomusername", {key: "value"});
+    console.info("Successfully authenticated:", session);
+    ```
+
+=== "Unity"
+    ```csharp
+    string username = "mycustomusername";
+    var create = true;
+    var vars = new Dictionary<string, string> {{"key", "value"}};
+    var session = await _client.AuthenticateEmailAsync(email, password, username, create, vars);
+    ```
+
+=== "REST"
+    ```
+    POST /v2/account/authenticate/email?create=true&username=mycustomusername
+    Host: 127.0.0.1:7350
+    Accept: application/json
+    Content-Type: application/json
+    Authorization: Bearer <session token>
+
+    {
+      "email": "hello@heroiclabs.com",
+      "password": "password",
+      "vars": {
+        "key": "value"
+      }
+    }
+
+    ```
+
+This example shows setting session variables with Email Authentication, but this feature is available for all of the other [authentication options](/authentication) and in all client libraries.
+
+### Setting with server
+
+Session variables may be set by the server, but only in the __before__ authentication hooks.
+
+=== "Lua"
+    ```lua
+    local nk = require("nakama")
+
+    local function set_session_vars(context, payload)
+            nk.logger_info("User session contains key-value pairs set by the client: " .. nk.json_encode(payload.account.vars))
+
+            payload.account.vars["key_added_in_lua"] = "value_added_in_lua"
+            return payload
+    end
+
+    nk.register_req_before(set_session_vars, "AuthenticateEmail")
+    ```
+
+=== "Go"
+    ```go
+    func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+            if err := initializer.RegisterBeforeAuthenticateEmail(SetSessionVars); err != nil {
+                    logger.Error("Unable to register: %v", err)
+                    return err
+            }
+
+            return nil
+    }
+
+    func SetSessionVars(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, in *api.AuthenticateEmailRequest) (*api.AuthenticateEmailRequest, error) {
+            logger.Info("User session contains key-value pairs set the client: %v", in.GetAccount().Vars)
+
+            if in.GetAccount().Vars == nil {
+                    in.GetAccount().Vars = map[string]string{}
+            }
+            in.GetAccount().Vars["key_added_in_go"] = "value_added_in_go"
+
+            return in, nil
+    }
+    ```
+
+=== "TypeScript"
+    ```
+    let setSessionVars: nkruntime.BeforeHookFunction<nkruntime.AuthenticateEmailRequest> = function (context: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, payload: nkruntime.AuthenticateEmailRequest) {
+        payload.account.vars = {
+            key: 'key',
+            value: 'value',
+        }
+
+        return payload;
+    }
+
+    function InitModule(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, initializer: nkruntime.Initializer) {
+        initializer.registerBeforeAuthenticateEmail(setSessionVars);
+    }
+    ```
+
+### Accessing with server
+
+Once set, session variables become read-only and may be accessed in any server hook. The only way to change or delete a session variable is through forcing the client to authenticate again.
+
+=== "Lua"
+    ```lua
+    local nk = require("nakama")
+
+    local function access_session_vars(context, payload)
+            nk.logger_info("User session contains key-value pairs set by both the client and the before authentication hook: " .. nk.json_encode(context.vars))
+
+            return payload
+    end
+
+    nk.register_req_before(access_session_vars, "GetAccount")
+    ```
+
+=== "Go"
+    ```Go
+    func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, initializer runtime.Initializer) error {
+            if err := initializer.RegisterBeforeGetAccount(AccessSessionVars); err != nil {
+                    logger.Error("Unable to register: %v", err)
+                    return err
+            }
+
+            return nil
+    }
+
+    func AccessSessionVars(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule) error {
+            vars, ok := ctx.Value(runtime.RUNTIME_CTX_VARS).(map[string]string)
+            if !ok {
+                    logger.Info("User session does not contain any key-value pairs set")
+                    return nil
+            }
+
+            logger.Info("User session contains key-value pairs set by both the client and the before authentication hook: %v", vars)
+            return nil
+    }
+    ```

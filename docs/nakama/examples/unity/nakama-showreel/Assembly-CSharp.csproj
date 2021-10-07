@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LangVersion>4</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace>
+    </RootNamespace>
+    <ProjectGuid>{C28CF3DE-234D-91E8-B054-EE8F6986AD40}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_1_0;UNITY_2017_1;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_VR;ENABLE_MODULAR_UNITYENGINE_ASSEMBLIES;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_OSX;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Framework\Logger.cs" />
+    <Compile Include="Assets\Framework\NakamaManager.cs" />
+    <Compile Include="Assets\Framework\Singleton.cs" />
+    <Compile Include="Assets\Framework\StateManager.cs" />
+    <Compile Include="Assets\Nakama\Example\Matchmake.cs" />
+    <Compile Include="Assets\Nakama\Example\UnityMainThreadDispatch.cs" />
+    <Compile Include="Assets\Nakama\Example\UserChat.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\Api.pb.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INAuthenticateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INClient.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INCollatedMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INCursor.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INDisconnectEvent.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INError.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INFriend.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INGroup.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INGroupSelf.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INGroupUser.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INLeaderboard.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INLeaderboardRecord.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INLogger.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatch.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatchData.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatchmakeFilter.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatchmakeMatched.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatchmakeTicket.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatchmakeUserProperty.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatchPresence.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INMatchToken.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INNotification.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INPurchaseRecord.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INResultSet.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INRuntimeRpc.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INSelf.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INSession.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INStorageData.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INStorageKey.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INSyncState.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INTopic.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INTopicId.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INTopicMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INTopicMessageAck.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INTopicPresence.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INTransport.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INUncollatedMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INUser.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\INUserPresence.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NAuthenticateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NClient.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NConsoleLogger.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NCursor.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NDisconnectEvent.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NError.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NFriend.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NFriendAddMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NFriendBlockMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NFriendRemoveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NFriendsListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroup.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupAddUserMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupCreateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupJoinMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupKickUserMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupLeaveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupPromoteUserMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupRemoveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupSelf.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupsFetchMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupsListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupsSelfListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupUpdateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupUser.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NGroupUsersListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NLeaderboard.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NLeaderboardRecord.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NLeaderboardRecordsFetchMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NLeaderboardRecordsListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NLeaderboardRecordWriteMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NLeaderboardsListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NManagedClient.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatch.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchCreateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchData.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchDataSendMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchJoinMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchLeaveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchmakeAddMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchmakeFilter.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchmakeMatched.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchmakeRemoveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchmakeTicket.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchmakeUserProperty.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchPresence.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NMatchToken.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NNotification.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NNotificationsListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NNotificationsRemoveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NPurchaseRecord.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NPurchaseValidateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NResultSet.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NRuntimeRpc.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NRuntimeRpcMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NSelf.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NSelfFetchMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NSelfLinkMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NSelfUnlinkMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NSelfUpdateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NSession.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NStorageData.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NStorageFetchMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NStorageKey.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NStorageListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NStorageRemoveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NStorageUpdateMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NStorageWriteMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopic.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicId.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicJoinMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicLeaveMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicMessageAck.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicMessageSendMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicMessagesListMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTopicPresence.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTransportJavascript.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTransportUdp.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NTransportWebSocket.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NUnityLogger.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NUser.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NUserPresence.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\NUsersFetchMessage.cs" />
+    <Compile Include="Assets\Nakama\Plugins\Nakama\Properties\AssemblyInfo.cs" />
+    <Compile Include="Assets\Showreel\Authentication.cs" />
+    <Compile Include="Assets\Showreel\ChatFriendView.cs" />
+    <Compile Include="Assets\Showreel\ChatMessageContent.cs" />
+    <Compile Include="Assets\Showreel\ChatRoomView.cs" />
+    <Compile Include="Assets\Showreel\FakeData.cs" />
+    <Compile Include="Assets\Showreel\FriendsView.cs" />
+    <Compile Include="Assets\Showreel\GroupsView.cs" />
+    <Compile Include="Assets\Showreel\MainSceneLoader.cs" />
+    <Compile Include="Assets\Showreel\NotificationsView.cs" />
+    <Compile Include="Assets\Showreel\SelectionMenu.cs" />
+    <Compile Include="Assets\Showreel\UserAccountView.cs" />
+    <None Include="Assets\Nakama\Example\README.txt" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="Netcode.IO.NET">
+      <HintPath>/Users/mo/Documents/Heroic Labs/nakama-examples/unity/nakama-showreel/Assets/Nakama/Plugins/Netcode.IO.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>/Users/mo/Documents/Heroic Labs/nakama-examples/unity/nakama-showreel/Assets/Nakama/Plugins/websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>/Users/mo/Documents/Heroic Labs/nakama-examples/unity/nakama-showreel/Assets/Nakama/Plugins/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="BCCrypto">
+      <HintPath>/Users/mo/Documents/Heroic Labs/nakama-examples/unity/nakama-showreel/Assets/Nakama/Plugins/BCCrypto.dll</HintPath>
+    </Reference>
+    <Reference Include="ReliableNetcode">
+      <HintPath>/Users/mo/Documents/Heroic Labs/nakama-examples/unity/nakama-showreel/Assets/Nakama/Plugins/ReliableNetcode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
