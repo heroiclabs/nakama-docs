@@ -122,6 +122,14 @@ Clients can register an event handler to consume stream data objects when receiv
 		print("Data: %s" % [parse_json(p_state.state)])
 	```
 
+=== "Defold"
+	```lua
+    local result = nakama.on_streamdata(socket, function(message)
+        pprint(message)
+    end)
+	```
+
+
 ## Receiving stream presence events
 
 When a new presence joins a stream or an existing presence leaves the server will broadcast presence events to all users currently on the stream.
@@ -250,6 +258,14 @@ When a new presence joins a stream or an existing presence leaves the server wil
 			print("User ID: %s, Username: %s, Status: %s" % [p.user_id, p.username, p.status])
 		for p in p_presence.leaves:
 			print("User ID: %s, Username: %s, Status: %s" % [p.user_id, p.username, p.status])
+	```
+
+=== "Defold"
+	```lua
+    local result = nakama.on_streampresence(socket, function(message)
+        pprint(message.joins)
+        pprint(message.leaves)
+    end)
 	```
 
 !!! Tip
