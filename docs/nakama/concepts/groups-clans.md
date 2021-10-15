@@ -147,6 +147,14 @@ The remainder filters can be combined or omitted in any way, for instance, we co
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local result = nakama.list_groups(client, "heroes*", "<cursor>", 20)
+    for _,group in ipairs(result.groups) do
+        pprint(groups)
+    end
+    ```
+
 The message response for a list of groups contains a cursor. The cursor can be used to quickly retrieve the next set of results.
 
 !!! tip
@@ -324,6 +332,23 @@ The message response for a list of groups contains a cursor. The cursor can be u
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local cursor = nil
+    repeat
+        local result = nakama.list_groups(client, "heroes*", cursor, 20)
+        if result.error then
+            print(result.message)
+            break
+        end
+
+        cursor = result.cursor
+        for _,group in ipairs(result.groups) do
+            pprint(groups)
+        end
+    until not cursor
+    ```
+
 ## Join groups
 
 When a user has found a group to join they can request to become a member. A public group can be joined without any need for permission while a private group requires a [superadmin or an admin to accept](#accept-new-members) the user.
@@ -431,6 +456,17 @@ A user who's part of a group can join [group chat](realtime-chat.md#groups) and 
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local group_id = "<group_id>"
+    local result = nakama.join_group(client, group_id)
+    if result.error then
+        print(result.message)
+        return
+    end
+    print("Sent group join request", group_id)
     ```
 
 The user will receive an [in-app notification](in-app-notifications.md) when they've been added to the group. In a private group an admin or superadmin will receive a notification when a user has requested to join.
@@ -567,6 +603,19 @@ Each user can list groups they've joined as a member or an admin or a superadmin
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local user_id = "<user>"
+    local result = nakama.list_user_groups(client, user_id)
+    if result.error then
+        print(result.message)
+        return
+    end
+    for _,user_group in ipairs(result.user_groups) do
+        pprint(user_group)
+    end
+    ```
+
 ## List group members
 
 A user can list all members who're part of their group. These include other users who've requested to join the private group but not been accepted into yet.
@@ -684,6 +733,19 @@ A user can list all members who're part of their group. These include other user
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local group_id = "<group_id>"
+    local result = nakama.list_group_users(client, group_id)
+    if result.error then
+        print(result.message)
+        return
+    end
+    for _,user in ipairs(result.group_users) do
+        pprint(user)
+    end
     ```
 
 ## Create a group
@@ -840,6 +902,19 @@ A group can be created with a name and other optional fields. These optional fie
       "lang_tag": "en_US",
       "open": true
     }
+    ```
+
+=== "Defold"
+    ```lua
+    local request = {
+        name = "pizza-lovers",
+        description = "pizza lovers, pineapple haters",
+    }
+    local result = nakama.create_group(client, request)
+    if result.error then
+        print(result.message)
+        return
+    end
     ```
 
 You can also create a group with server-side code. This can be useful when the group must be created together with some other record or feature.
@@ -1044,6 +1119,19 @@ When a group has been created it's admins can update optional fields.
     }
     ```
 
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local request = {
+        description = "I was only kidding. Basil sauce ftw!",
+    }
+    local result = nakama.update_group(client, group_id, request)
+    if result.error then
+        print(result.message)
+        return
+    end
+    ```
+
 ## Leave a group
 
 A user can leave a group and will no longer be able to join [group chat](realtime-chat.md#groups) or read [message history](realtime-chat.md#message-history). If the user is a superadmin they will only be able to leave when at least one other superadmin exists in the group.
@@ -1135,6 +1223,16 @@ A user can leave a group and will no longer be able to join [group chat](realtim
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local result = nakama.leave_group(client, group_id)
+    if result.error then
+        print(result.message)
+        return
+    end
     ```
 
 ## Manage groups
@@ -1250,6 +1348,17 @@ When a user joins a private group it will create a join request until an admin a
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local user_ids = { "<user id>" }
+    local result = nakama.add_group_users(client, group_id, user_ids)
+    if result.error then
+        print(result.message)
+        return
+    end
+    ```
+
 The user will receive an [in-app notification](in-app-notifications.md) when they've been added to the group. In a private group an admin will receive a notification about the join request.
 
 To reject the user from joining the group you should [kick them](#kick-a-member).
@@ -1358,6 +1467,17 @@ An admin can promote another member of the group as an admin. This grants the me
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local user_ids = { "<user id>" }
+    local result = nakama.promote_group_users(client, group_id, user_ids)
+    if result.error then
+        print(result.message)
+        return
+    end
+    ```
+
 ### Demote a member
 
 An admin can demote another member of the group down a role. This revokes the member of his current privileges to and assigns member the privileges available in the demoted role. Members who are already at the lowest role in their group will not be affected by a demotion.
@@ -1410,6 +1530,17 @@ An admin can demote another member of the group down a role. This revokes the me
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local user_ids = { "<user id>" }
+    local result = nakama.demote_group_users(client, group_id, user_ids)
+    if result.error then
+        print(result.message)
+        return
+    end
     ```
 
 ### Kick a member
@@ -1518,6 +1649,17 @@ If a user is removed from a group it does not prevent them from joining other gr
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local user_ids = { "<user id>" }
+    local result = nakama.kick_group_users(client, group_id, user_ids)
+    if result.error then
+        print(result.message)
+        return
+    end
+    ```
+
 !!! Hint
     Sometimes a bad user needs to be kicked from the group and banned from rejoining either [the group](###ban-a-group-member) the [whole server](friends.md#ban-a-user). This will prevent the user from being able to connect to the server and interact at all.
 
@@ -1574,6 +1716,17 @@ The user can be unbanned either via the Nakama Console or a runtime code functio
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local user_ids = { "<user id>" }
+    local result = nakama.ban_group_users(client, group_id, user_ids)
+    if result.error then
+        print(result.message)
+        return
+    end
     ```
 
 ## Remove a group
@@ -1668,4 +1821,14 @@ A group can only be removed by one of the superadmins which will disband all mem
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    local result = nakama.delete_group(client, group_id)
+    if result.error then
+        print(result.message)
+        return
+    end
     ```

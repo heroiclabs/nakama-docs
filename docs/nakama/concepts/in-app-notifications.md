@@ -156,6 +156,15 @@ A callback can be registered for notifications received when a client is connect
         print(p_notification.content)
     ```
 
+=== "Defold"
+    ```lua
+    local group_id = "<group id>"
+    nakama.on_notification(socket, function(message)
+        print("Received notification!")
+        pprint(message)
+    end)
+    ```
+
 ## List notifications
 
 You can list notifications which were received when the user was offline. These notifications are ones which were marked "persistent" when sent. The exact logic depends on your game or app but we suggest you retrieve notifications after a client reconnects. You can then display a UI within your game or app with the list.
@@ -271,6 +280,18 @@ You can list notifications which were received when the user was offline. These 
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local result = nakama.list_notifications(client, 10)
+    if result.error then
+        print(result.message)
+        return
+    end
+    for _,notification in ipairs(result.notifications) do
+        pprint(notification)
+    end
     ```
 
 A list of notifications can be retrieved in batches of up to 100 at a time. To retrieve all messages you should accumulate them with the cacheable cursor. You can keep this cursor on the client and use it when the user reconnects to catch up on any notifications they may have missed while offline.
@@ -456,6 +477,23 @@ A list of notifications can be retrieved in batches of up to 100 at a time. To r
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local cursor = nil
+    repeat
+        local result = nakama.list_notifications(client, 10, cursor)
+        if result.error then
+            print(result.message)
+            break
+        end
+
+        cursor = result.cursor
+        for _,notification in ipairs(result.notifications) do
+            pprint(notification)
+        end
+    until not cursor
+    ```
+
 It can be useful to retrieve only notifications which have been added since the list was last retrieved by a client. This can be done with the cacheable cursor returned with each list message. Sending the cursor through a new list operation will retrieve only notifications newer than those seen.
 
 The cacheable cursor marks the position of the most recent notification retrieved. We recommend you store the cacheable cursor in device storage and use it when the client makes its next request for recent notifications.
@@ -579,6 +617,20 @@ The cacheable cursor marks the position of the most recent notification retrieve
     Authorization: Bearer <session token>
     ```
 
+=== "Defold"
+    ```lua
+    local cursor = "<cacheable-cursor>"
+    local result = nakama.list_notifications(client, 10, cursor)
+    if result.error then
+        print(result.message)
+        return
+    end
+
+    for _,notification in ipairs(result.notifications) do
+        pprint(notification)
+    end
+    ```
+
 ## Delete notifications
 
 You can delete one or more notifications from the client. This is useful to purge notifications which have been read or consumed by the user and prevent a build up of old messages. When a notification is deleted all record of it is removed from the system and it cannot be restored.
@@ -658,6 +710,16 @@ You can delete one or more notifications from the client. This is useful to purg
     Accept: application/json
     Content-Type: application/json
     Authorization: Bearer <session token>
+    ```
+
+=== "Defold"
+    ```lua
+    local ids = { "<notification-id>" }
+    local result = nakama.delete_notifications(client, ids)
+    if result.error then
+        print(result.message)
+        return
+    end
     ```
 
 ## Notification codes
