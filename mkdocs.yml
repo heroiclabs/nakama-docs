@@ -211,6 +211,7 @@ nav:
         - Phaser tic-tac-toe: nakama/tutorials/js/xoxo.md
     - Guides:
       - Bucketed Leaderboards: nakama/guides/bucketed-leaderboards/index.md
+      - Group & Friend Leaderboards: nakama/guides/group-leaderboards/index.md
       - Tiered Leagues/Seasons: nakama/guides/leagues.md
       - Guarding APIs: nakama/guides/guarding-apis.md
       - Asset Management: nakama/guides/asset-management/index.md

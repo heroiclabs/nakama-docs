@@ -36,6 +36,13 @@ The match state is a region of memory Nakama exposes to Authoritative Multiplaye
 
 State can be thought of as the result of continuous transformations applied to an initial state based on the loop of user input after validation.
 
+### Match label
+
+The match label is a string value usable via the Match Listings API to filter matches. Match labels can be a simple string value or JSON value.
+
+!!!note "Note"
+    You can only use search queries if you use a JSON value for the match label. If you instead use a simple value (e.g. `"team-deathmatch"`) you can only perform an exact match using the `label` parameter in the [Match Listings API](#search-query).
+
 ### Host node
 
 This host node is responsible for maintaining the in-memory match state and allocating CPU resource to execute the loop at the tick rate. Incoming user input messages that are waiting for the next tick to be processed are buffered in the host node to ensure it is immediately available on next match loop.
@@ -454,6 +461,9 @@ This is useful to present a lobby-like experience or search for matches before c
 ### Search query
 
 In the examples above, we looked at listing matches based on comparing labels exactly as they appear. Another, more powerful way of listing matches is to run search queries on the label.
+
+!!!note "Note"
+    You can only perform a structured query on the `label` field if it contains a JSON value.
 
 In this example, we are looking for matches with "mode" that must match "freeforall", and preferably "level" higher than "10".
 
@@ -1472,7 +1482,10 @@ _Example_
 === "TypeScript"
     ```typescript
     const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q joined Lobby match', ctx.userId);
+        presences.forEach(presence => {
+            state.presences[presence.userId] = presence;
+            logger.debug('%q joined Lobby match', presence.userId);
+        });
         
         return {
             state
@@ -1509,7 +1522,10 @@ _Example_
 === "TypeScript"
     ```typescript
     const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q left Lobby match', ctx.userId);
+        presences.forEach(presence => {
+            state.presences[presence.userId] = presence;
+            logger.debug('%q left Lobby match', presence.userId);
+        });
 
         return {
             state
@@ -1729,10 +1745,9 @@ This is an example of a Ping-Pong match handler. Messages received by the server
     }
 
     const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q joined Lobby match', ctx.userId);
-        
         presences.forEach(presence => {
             state.presences[presence.userId] = presence;
+            logger.debug('%q joined Lobby match', presence.userId);
         });
 
         return {
@@ -1741,10 +1756,9 @@ This is an example of a Ping-Pong match handler. Messages received by the server
     }
 
     const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q left Lobby match', ctx.userId);
-
         presences.forEach(presence => {
             delete (state.presences[presence.userId]);
+            logger.debug('%q left Lobby match', presence.userId);
         });
 
         return {
