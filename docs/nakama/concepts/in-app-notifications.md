@@ -675,3 +675,4 @@ The code is useful to decide how to display the notification in your UI.
 |   -4 | You've been accepted to X group. |
 |   -5 | User X wants to join your group. |
 |   -6 | Your friend X has just joined the game. |
+|   -7 | Final notifications to sockets closed via the [`single_socket` configuration](../getting-started/configuration.md#session). |
