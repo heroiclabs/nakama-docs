@@ -226,6 +226,14 @@ A leaderboard can be created via server-side code at startup or within a [regist
     }
     ```
 
+### Operators
+Configure how leaderboard record scores are set using the following `operator` values:
+
+
+* `set` - The value will be set to whatever score is submitted
+* `best` - The value will only be updated if the score being submitted is higher than the existing score
+* `incr` - The value will be incremented by the score being submit to it
+
 ## Submit a score
 
 A user can submit a score to a leaderboard and update it at any time. When a score is submitted the leaderboard's pre-configured sort order and operator determine what effect the operation will have.

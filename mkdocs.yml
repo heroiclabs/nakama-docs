@@ -179,6 +179,12 @@ nav:
       - Lua Setup: nakama/server-framework/lua-setup.md
       - Streams: nakama/server-framework/streams.md
       - Go Dependency Pinning: nakama/server-framework/go-dependency-pinning.md
+      - Recipes:
+          - Itch.io Authentication: nakama/server-framework/recipes/itch-authentication.md
+          - Updating User Metadata: nakama/server-framework/recipes/updating-user-metadata.md
+          - Updating Group Metadata: nakama/server-framework/recipes/updating-group-metadata.md
+          - Authoritative In-game Items: nakama/server-framework/recipes/handling-player-equipment-authoritatively.md
+          - Authoritative Storage: nakama/server-framework/recipes/writing-to-storage-authoritatively.md
       - Function Reference: nakama/server-framework/function-reference.md
     - Client Libraries:
       - .NET/Unity: nakama/client-libraries/unity-client-guide.md
