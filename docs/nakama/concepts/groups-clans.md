@@ -1132,6 +1132,34 @@ When a group has been created it's admins can update optional fields.
     end
     ```
 
+## Updating group size
+
+Updating a group's size is an action that can only be performed authoritatively via the server.
+
+=== "Lua"
+    ```lua
+    local nk = require("nakama")
+
+    local new_max_size = 50
+    local success, err = pcall(nk.group_update("<GroupId>", nil, "", "", "", "", "", nil, nil, new_max_size))
+    if (not success) then
+        nk.logger_error(("Could not update group: %q"):format(err))
+    end
+    ```
+=== "Go"
+    ```go
+    newMaxSize := 50
+    open := true
+    if err := nk.GroupUpdate(ctx, "<GroupId>", "", "", "", "", "", open, nil, newMaxSize); err != nil {
+        return err
+    }
+    ```
+=== "TypeScript"
+    ```typescript
+    let newMaxSize = 50
+    nk.groupUpdate("<GroupId>", "", null, null, null, null, null, null, null, newMaxSize);
+    ```
+
 ## Leave a group
 
 A user can leave a group and will no longer be able to join [group chat](realtime-chat.md#groups) or read [message history](realtime-chat.md#message-history). If the user is a superadmin they will only be able to leave when at least one other superadmin exists in the group.

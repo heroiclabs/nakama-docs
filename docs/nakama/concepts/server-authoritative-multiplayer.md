@@ -36,6 +36,13 @@ The match state is a region of memory Nakama exposes to Authoritative Multiplaye
 
 State can be thought of as the result of continuous transformations applied to an initial state based on the loop of user input after validation.
 
+### Match label
+
+The match label is a string value usable via the Match Listings API to filter matches. Match labels can be a simple string value or JSON value.
+
+!!!note "Note"
+    You can only use search queries if you use a JSON value for the match label. If you instead use a simple value (e.g. `"team-deathmatch"`) you can only perform an exact match using the `label` parameter in the [Match Listings API](#search-query).
+
 ### Host node
 
 This host node is responsible for maintaining the in-memory match state and allocating CPU resource to execute the loop at the tick rate. Incoming user input messages that are waiting for the next tick to be processed are buffered in the host node to ensure it is immediately available on next match loop.
@@ -455,6 +462,9 @@ This is useful to present a lobby-like experience or search for matches before c
 
 In the examples above, we looked at listing matches based on comparing labels exactly as they appear. Another, more powerful way of listing matches is to run search queries on the label.
 
+!!!note "Note"
+    You can only perform a structured query on the `label` field if it contains a JSON value.
+
 In this example, we are looking for matches with "mode" that must match "freeforall", and preferably "level" higher than "10".
 
 === "Lua"
@@ -613,7 +623,7 @@ _Parameters_
 | ----- | ---- | ----------- |
 | context | table | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
-| tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
+| tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`, `match_terminate`, or `match_signal`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
 | presence | table | Presence is the user attempting to join the match. |
 | metadata | table | Optional metadata arbitrary string key-value pairs received from the client as part of the join request. |
@@ -656,7 +666,7 @@ _Parameters_
 | ----- | ---- | ----------- |
 | context | table | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
-| tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
+| tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`, `match_terminate`, or `match_signal`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
 | presences | table | Presences is a list of users that have just joined the match. |
 
@@ -697,7 +707,7 @@ _Parameters_
 | ----- | ---- | ----------- |
 | context | table | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
-| tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
+| tick | number | Tick is the current match tick number, starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`, `match_terminate`, or `match_signal`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
 | presences | table | Presences is a list of users that have just left the match. |
 
@@ -730,7 +740,7 @@ _Parameters_
 | ----- | ---- | ----------- |
 | context | table | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
-| tick | number | Tick is the current match tick number starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
+| tick | number | Tick is the current match tick number starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`, `match_terminate`, or `match_signal`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
 | messages | table | Messages is a list of data messages received from users between the previous and current tick. |
 
@@ -779,7 +789,7 @@ _Parameters_
 | ----- | ---- | ----------- |
 | context | table | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
 | dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
-| tick | number | Tick is the current match tick number starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`. |
+| tick | number | Tick is the current match tick number starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`, `match_terminate`, or `match_signal`. |
 | state | table | The current in-memory match state, may be any Lua term except nil. |
 | grace_seconds | number | The number of seconds before the server will shut down. All match handler work must be completed before that time elapses, and the match will end regardless. |
 
@@ -795,6 +805,38 @@ _Example_
     ```lua
     local function match_terminate(context, dispatcher, tick, state, grace_seconds)
         return state
+    end
+    ```
+
+__match_signal(context, dispatcher, tick, state, data) -> state, data__
+
+Called when the match handler receives a runtime signal.
+
+Match signals allow the match handler to be sent a reservation signal to mark a user ID or session ID into the match state ahead of their join attempt and eventual join flow. This is useful to apply reservations to a matchmaking system with Nakama's matchmaker or match listings APIs.
+
+_Parameters_
+
+| Param | Type | Description |
+| ----- | ---- | ----------- |
+| context | table | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
+| dispatcher | table | [Dispatcher](#match-runtime-api) exposes useful functions to the match. |
+| tick | number | Tick is the current match tick number starts at 0 and increments after every `match_loop` call. Does not increment with calls to `match_join_attempt`, `match_join`, or `match_leave`, `match_terminate`, or `match_signal`. |
+| state | table | The current in-memory match state, may be any Lua term except nil. |
+| data | string | An arbitrary input supplied by the runtime caller of the signal. |
+
+_Returns_
+
+You must return:
+
+(table) - An (optionally) updated state. May be any non-nil Lua term, or nil to end the match.
+(string) - Arbitrary data to return to the runtime caller of the signal. May be a string or nil.
+
+_Example_
+
+=== "Lua"
+    ```lua
+    local function match_signal(context, dispatcher, tick, state, data)
+        return state, "signal received: " .. data
     end
     ```
 
@@ -1175,6 +1217,41 @@ _Example_
     }
     ```
 
+__MatchSignal(ctx, logger, db, nk, dispatcher, tick, state, data) -> state, data__
+
+Called when the match handler receives a runtime signal.
+
+Match signals allow the match handler to be sent a reservation signal to mark a user ID or session ID into the match state ahead of their join attempt and eventual join flow. This is useful to apply reservations to a matchmaking system with Nakama's matchmaker or match listings APIs.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| db | Database object that may be used to access the underlying game database. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| dispatcher | [Dispatcher](#match-runtime-api_1) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| tick | Tick is the current match tick number, starts at 0 and increments after every `MatchLoop` call. Does not increment with calls to `MatchJoinAttempt`, `MatchJoin`, or `MatchLeave`. |
+| state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
+| data | An arbitrary input supplied by the runtime caller of the signal. |
+
+_Returns_
+
+The function must return:
+
+1. `state` (`interface{}`) - An (optionally) updated state. May be any non-nil value, or `nil` to end the match.
+2. `data` (`string`) - Arbitrary data to return to the runtime caller of the signal. May be a string or nil.
+
+_Example_
+
+=== "Go"
+    ```go
+    func (m *Match) MatchSignal(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, data string) (interface{}, string) {
+        return state, "signal received: " + data
+    }
+    ```
+
 ### Match runtime API
 
 The dispatcher type passed into the handler functions expose the following functions:
@@ -1472,7 +1549,10 @@ _Example_
 === "TypeScript"
     ```typescript
     const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q joined Lobby match', ctx.userId);
+        presences.forEach(presence => {
+            state.presences[presence.userId] = presence;
+            logger.debug('%q joined Lobby match', presence.userId);
+        });
         
         return {
             state
@@ -1509,7 +1589,10 @@ _Example_
 === "TypeScript"
     ```typescript
     const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q left Lobby match', ctx.userId);
+        presences.forEach(presence => {
+            state.presences[presence.userId] = presence;
+            logger.debug('%q left Lobby match', presence.userId);
+        });
 
         return {
             state
@@ -1593,6 +1676,45 @@ _Example_
         
         return {
             state
+        };
+    }
+    ```
+
+__matchSignal(ctx, logger, nk, dispatcher, tick, state, data) -> { state, data }__
+
+Called when the match handler receives a runtime signal.
+
+Match signals allow the match handler to be sent a reservation signal to mark a user ID or session ID into the match state ahead of their join attempt and eventual join flow. This is useful to apply reservations to a matchmaking system with Nakama's matchmaker or match listings APIs.
+
+_Parameters_
+
+| Param | Description |
+| ----- | ----------- |
+| ctx | [Context object](../server-framework/basics.md#register-hooks) represents information about the match and server for information purposes. |
+| logger | The logger allows access to log messages at variable severity. |
+| nk | NakamaModule exposes runtime functions to interact with various server systems and features. |
+| dispatcher | [Dispatcher](#match-runtime-api_2) exposes useful functions to the match, and may be used by the server to send messages to the participants of the match. |
+| tick | Tick is the current match tick number, starts at 0 and increments after every `matchLoop` call. Does not increment with calls to `matchJoinAttempt`, `matchJoin`, or `matchLeave`. |
+| state | Custom match state interface, use this to manage the state of your game. You may choose any structure for this interface depending on your game's needs. |
+| data | An arbitrary input supplied by the runtime caller of the signal. |
+
+_Returns_
+
+The function must return an object containing:
+
+1. `state` (`nkruntime.MatchState`) - An (optionally) updated state. May be any non-null value, or `null` to end the match.
+2. `data` (`string`) - Arbitrary data to return to the runtime caller of the signal. May be a string or nil.
+
+_Example_
+
+=== "TypeScript"
+    ```typescript
+    const matchSignal = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, data: string) : { state: nkruntime.MatchState, data?: string } | null => {
+        logger.debug('Lobby match signal received: ' + data);
+        
+        return {
+            state,
+            data: "Lobby match signal received: " + data
         };
     }
     ```
@@ -1729,10 +1851,9 @@ This is an example of a Ping-Pong match handler. Messages received by the server
     }
 
     const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q joined Lobby match', ctx.userId);
-        
         presences.forEach(presence => {
             state.presences[presence.userId] = presence;
+            logger.debug('%q joined Lobby match', presence.userId);
         });
 
         return {
@@ -1741,10 +1862,9 @@ This is an example of a Ping-Pong match handler. Messages received by the server
     }
 
     const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, presences: nkruntime.Presence[]) : { state: nkruntime.MatchState } | null => {
-        logger.debug('%q left Lobby match', ctx.userId);
-
         presences.forEach(presence => {
             delete (state.presences[presence.userId]);
+            logger.debug('%q left Lobby match', presence.userId);
         });
 
         return {
