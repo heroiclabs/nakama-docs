@@ -70,6 +70,17 @@ A match can be created by a user. The server will assign a unique ID which can b
     print("New match with id %s.", created_match.match_id)
     ```
 
+=== "Defold"
+    ```lua
+    local message = nakama.create_match_create_message()
+    local result = nakama.socket_send(message)
+    if result.error then
+        print(result.error.message)
+        return
+    end
+    print("Created match with ID", result.match.match_id)
+    ```
+
 A user can [leave a match](#leave-a-match) at any point which will notify all other users.
 
 ## Join a match
@@ -186,6 +197,20 @@ A user can join a specific match by ID. Matches can be joined at any point until
       return
     for presence in joined_match.presences:
       print("User id %s name %s'." % [presence.user_id, presence.username])
+    ```
+
+=== "Defold"
+    ```lua
+    local match_id = "<matchid>"
+    local message = nakama.create_match_join_message(match_id)
+    local result = nakama.socket_send(socket, message)
+    if result.error then
+        print(result.error.message)
+        return
+    end
+    for _,user in  ipairs(result.match.presences) do
+        print("User id", user.user_id, "name", user.name)
+    end
     ```
 
 The list of match opponents returned in the success callback might not include all users. It contains users who are connected to the match so far.
@@ -330,6 +355,19 @@ When a user joins a match they receive an initial list of connected opponents. A
       print("Connected opponents: %s" % [connected_opponents])
     ```
 
+=== "Defold"
+    ```lua
+    local connected_opponents = {}
+    nakama.on_matchpresence(socket, function(message)
+        for _,p in ipairs(message.match_presence_event.leaves) do
+            connected_opponents[p.user_id] = nil
+        end
+        for _,p in ipairs(message.match_presence_event.joins) do
+            connected_opponents[p.user_id] = p
+        end
+    end)
+    ```
+
 No server updates are sent if there are no changes to the presence list.
 
 ## Send data messages
@@ -403,6 +441,24 @@ The binary content in each data message should be as __small as possible__. It i
     var op_code = 1
     var new_state = {"hello": "world"}
     socket.send_match_state_async(match_id, op_code, JSON.print(new_state))
+    ```
+
+=== "Defold"
+    ```lua
+    local match_id = "<matchid>"
+    local op_code = 1
+    local data = json.encode({
+        move = {
+            dir = "left",
+            steps = 4
+        }
+    })
+    local message = nakama.create_match_data_message(match_id, op_code, data)
+    local result = nakama.socket_send(socket, message)
+    if result.error then
+        print(result.error.message)
+        return
+    end
     ```
 
 ## Receive data messages
@@ -530,6 +586,14 @@ A client can add a callback for incoming match data messages. This should be don
       print("Received match state with opcode %s, data %s" % [p_state.op_code, parse_json(p_state.data)])
     ```
 
+=== "Defold"
+    ```lua
+    nakama.on_matchdata(socket, function(message)
+        local data = json.decode(message.match_data.data)
+        local op_code = tonumber(message.match_data.op_code)
+    end)
+    ```
+
 ## Leave a match
 
 Users can leave a match at any point. A match ends when all users have left.
@@ -584,6 +648,17 @@ Users can leave a match at any point. A match ends when all users have left.
       print("An error occured: %s" % leave)
       return
     print("Match left")
+    ```
+
+=== "Defold"
+    ```lua
+    local match_id = "<matchid>"
+    local message = nakama.create_match_leave_message(match_id)
+    local result = nakama.socket_send(socket, message)
+    if result.error then
+        print(result.error.message)
+        return
+    end
     ```
 
 !!! Note

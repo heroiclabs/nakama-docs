@@ -54,6 +54,12 @@ By default users have no status when they first connect, and will not appear onl
 	print("Status updated")
 	```
 
+=== "Defold"
+	```lua
+	local message = nakama.create_status_update_message("Hello everyone!")
+	nakama.socket_send(socket, message)
+	```
+
 The status can be set and updated as often as needed with this operation.
 
 !!! Tip

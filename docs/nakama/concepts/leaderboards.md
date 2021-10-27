@@ -178,6 +178,20 @@ Each record can optionally include additional data about the score or the owner 
 	}
 	```
 
+=== "Defold"
+    ```lua
+    local leaderboard_id = "level1"
+    local request = {
+        score = 100,
+        metadata = json.encode({ weather_conditions = "rain" })
+    }
+    local result = nakama.write_leaderboard_record(client, leaderboard_id, request)
+    if result.error then
+        print(result.message)
+        return
+    end
+    ```
+
 ## Create a leaderboard
 
 A leaderboard can be created via server-side code at startup or within a [registered function](../server-framework/function-reference.md#register-hooks). The ID given to the leaderboard is used to submit scores to it.
@@ -378,6 +392,17 @@ With the "incr" operator the new value is added to any existing score for that r
 	}
 	```
 
+=== "Defold"
+    ```lua
+    local leaderboard_id = "level1"
+    local request = { score = 100 }
+    local result = nakama.write_leaderboard_record(client, leaderboard_id, request)
+    if result.error then
+        print(result.message)
+        return
+    end
+    ```
+
 ## List records
 
 A user can list records from a leaderboard. This makes it easy to compare scores to other users and see their positions.
@@ -521,6 +546,19 @@ The standard way to list records is ordered by score based on the sort order in 
 	Content-Type: application/json
 	Authorization: Bearer <session token>
 	```
+
+=== "Defold"
+    ```lua
+    local leaderboard_id = "level1"
+    local result = nakama.list_leaderboard_records(client, leaderboard_id)
+    if result.error then
+        print(result.message)
+        return
+    end
+    for _,record in ipair(result.records) do
+        pprint(record)
+    end
+    ```
 
 You can fetch the next set of results with a cursor.
 
@@ -767,6 +805,27 @@ You can fetch the next set of results with a cursor.
 	Authorization: Bearer <session token>
 	```
 
+=== "Defold"
+    ```lua
+    local leaderboard_id = "level1"
+    local cursor = nil
+    repeat
+        local result = nakama.list_leaderboard_records(
+            client,
+            leaderboard_id
+            nil,                -- owner id
+            100,                -- limit
+            cursor)
+        if result.error then
+            print(result.message)
+            return
+        end
+        for _,record in ipair(result.records) do
+            pprint(record)
+        end
+    until not cursor
+    ```
+
 ### List by friends
 
 You can use a bunch of owner IDs to filter the records to only ones owned by those users. This can be used to retrieve only scores belonging to the user's friends.
@@ -920,6 +979,20 @@ You can use a bunch of owner IDs to filter the records to only ones owned by tho
 	Authorization: Bearer <session token>
 	```
 
+=== "Defold"
+    ```lua
+    local leaderboard_id = "level1"
+    local owner_ids = { "some", "friend", "user id" }
+    local result = nakama.list_leaderboard_records(client, leaderboard_id, owner_ids)
+    if result.error then
+        print(result.message)
+        return
+    end
+    for _,record in ipair(result.records) do
+        pprint(record)
+    end
+    ```
+
 ## List leaderboard records around owner
 
 Fetch the list of leaderboard records around the owner.
@@ -1023,3 +1096,17 @@ Fetch the list of leaderboard records around the owner.
 	Content-Type: application/json
 	Authorization: Bearer <session token>
 	```
+
+=== "Defold"
+    ```lua
+    local leaderboard_id = "level1"
+    local owner_id = "user id"
+    local result = nakama.list_leaderboard_records_around_owner(client, leaderboard_id, owner_id)
+    if result.error then
+        print(result.message)
+        return
+    end
+    for _,record in ipair(result.records) do
+        pprint(record)
+    end
+    ```
