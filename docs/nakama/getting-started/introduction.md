@@ -19,44 +19,44 @@ You get to focus on building your project while the server handles all [user acc
 <div style="display: flex">
   <div style="flex: 1; margin: 0 1em 0 0">
     <strong>User accounts</strong>
-    <p>Every <a href="./user-accounts/">user</a> is registered and has a profile for other users to find and become friends with or join groups and chat.</p>
+    <p>Every <a href="https://heroiclabs.com/docs/nakama/concepts/user-accounts/">user</a> is registered and has a profile for other users to find and become friends with or join groups and chat.</p>
   </div>
   <div style="flex: 1">
     <strong>Friends</strong>
-    <p><a href="./social-friends/">Friends</a> are a great way to build a social community.</p>
+    <p><a href="https://heroiclabs.com/docs/nakama/concepts/friends/">Friends</a> are a great way to build a social community.</p>
   </div>
 </div>
 
 <div style="display: flex">
   <div style="flex: 1; margin: 0 1em 0 0">
     <strong>Groups and Clans</strong>
-    <p>A <a href="./social-groups-clans/">group</a> brings together a bunch of users into a small community or team.</p>
+    <p>A <a href="https://heroiclabs.com/docs/nakama/concepts/groups-clans/">group</a> brings together a bunch of users into a small community or team.</p>
   </div>
   <div style="flex: 1">
     <strong>Realtime chat</strong>
-    <p>Users can <a href="./social-realtime-chat/">chat</a> with each other 1-on-1, as part of a group, and in chat rooms.</p>
+    <p>Users can <a href="https://heroiclabs.com/docs/nakama/concepts/realtime-chat/">chat</a> with each other 1-on-1, as part of a group, and in chat rooms.</p>
   </div>
 </div>
 
 <div style="display: flex">
   <div style="flex: 1; margin: 0 1em 0 0">
     <strong>In-app notifications</strong>
-    <p><a href="./social-in-app-notifications/">In-app notifications</a> make it easy to broadcast a message to one or more users.</p>
+    <p><a href="https://heroiclabs.com/docs/nakama/concepts/in-app-notifications/">In-app notifications</a> make it easy to broadcast a message to one or more users.</p>
   </div>
   <div style="flex: 1">
     <strong>Leaderboards</strong>
-    <p><a href="./gameplay-leaderboards/">Leaderboards</a> are a great way to add a social and competitive element to any game.</p>
+    <p><a href="https://heroiclabs.com/docs/nakama/concepts/leaderboards/">Leaderboards</a> are a great way to add a social and competitive element to any game.</p>
   </div>
 </div>
 
 <div style="display: flex">
   <div style="flex: 1; margin: 0 1em 0 0">
     <strong>Matchmaker</strong>
-    <p>The <a href="./gameplay-matchmaker/">matchmaker</a> makes it easy in realtime and turn-based games to find active opponents to play against.</p>
+    <p>The <a href="https://heroiclabs.com/docs/nakama/concepts/matchmaker/">matchmaker</a> makes it easy in realtime and turn-based games to find active opponents to play against.</p>
   </div>
   <div style="flex: 1">
     <strong>Multiplayer</strong>
-    <p>The <a href="./gameplay-multiplayer-realtime/">multiplayer engine</a> makes it easy for users to set up and join matches where they can rapidly exchange data with opponents.</p>
+    <p>The <a href="https://heroiclabs.com/docs/nakama/concepts/client-relayed-multiplayer/">multiplayer engine</a> makes it easy for users to set up and join matches where they can rapidly exchange data with opponents.</p>
   </div>
 </div>
 

@@ -77,12 +77,13 @@ plugins:
           'social-friends.md': 'nakama/concepts/friends.md'
           'social-groups-clans.md': 'nakama/concepts/groups-clans.md'
           'social-in-app-notifications.md': 'nakama/concepts/in-app-notifications.md'
-          'social-status.md': nakama/concepts/status.md
+          'social-status.md': 'nakama/concepts/status.md'
           'social-realtime-chat.md': 'nakama/concepts/realtime-chat.md'
           'social-realtime-parties.md': 'nakama/concepts/parties.md'
           'gameplay-leaderboards.md': 'nakama/concepts/leaderboards.md'
           'gameplay-tournaments.md': 'nakama/concepts/tournaments.md'
           'gameplay-matchmaker.md': 'nakama/concepts/matches.md'
+          'nakama/concepts/matches.md': 'nakama/concepts/matchmaker.md'
           'gameplay-multiplayer-realtime.md': 'nakama/concepts/client-relayed-multiplayer.md'
           'gameplay-multiplayer-server-multiplayer.md': 'nakama/concepts/server-authoritative-multiplayer.md'
           'iap-validation.md': 'nakama/concepts/iap-validation.md'
@@ -155,21 +156,21 @@ nav:
         - Collections: nakama/concepts/collections.md
         - Access controls: nakama/concepts/access-controls.md
         - Modeling for scalability: nakama/concepts/scalability-modeling.md
-      - IAP Validation: nakama/concepts/iap-validation.md
-      - Chat: nakama/concepts/realtime-chat.md
-      - Leaderboards: nakama/concepts/leaderboards.md
       - Friends: 
         - Friends: nakama/concepts/friends.md
         - Best Practices: nakama/concepts/friends-best-practices.md
       - Status: nakama/concepts/status.md
-      - Notifications: nakama/concepts/in-app-notifications.md
       - Groups and Clans: nakama/concepts/groups-clans.md
-      - Parties: nakama/concepts/parties.md
-      - Matches: nakama/concepts/matches.md
+      - Real-time Parties: nakama/concepts/parties.md
+      - Chat: nakama/concepts/realtime-chat.md
+      - Leaderboards: nakama/concepts/leaderboards.md
       - Tournaments: nakama/concepts/tournaments.md
+      - Notifications: nakama/concepts/in-app-notifications.md
       - Multiplayer Engine:
+        - Real-time Matchmaker: nakama/concepts/matches.md
         - Client-relayed multiplayer: nakama/concepts/client-relayed-multiplayer.md
         - Server authoritative multiplayer: nakama/concepts/server-authoritative-multiplayer.md
+      - IAP Validation: nakama/concepts/iap-validation.md
       - Events: nakama/concepts/events.md
       - Choosing TCP or UDP: nakama/concepts/tcp-vs-udp.md
     - Server Framework:
