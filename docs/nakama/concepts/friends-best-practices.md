@@ -1,4 +1,4 @@
-# Best Practices
+# Friends Best Practices
 
 Friend relationships are a core part of contemporary online gaming. The Nakama feature set and APIs help you build engaging friend experiences into your game.
 
