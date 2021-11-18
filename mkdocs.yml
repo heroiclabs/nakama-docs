@@ -50,6 +50,7 @@ plugins:
   - redirects:
       redirect_maps:
           'introduction.md': 'nakama/getting-started/introduction.md'
+          'nakama-download.md': 'nakama/getting-started/docker-quickstart.md'
           'install-docker-quickstart.md': 'nakama/getting-started/docker-quickstart.md'
           'install-binary-windows-quickstart.md' : 'nakama/getting-started/binary-windows-quickstart.md'
           'install-binary-macos-quickstart.md' : 'nakama/getting-started/binary-macos-quickstart.md'
