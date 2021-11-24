@@ -2,7 +2,10 @@
 
 This client library guide will show you how to use the core Nakama features in **Unity** by showing you how to develop the Nakama specific parts (without full game logic or UI) of an [Among Us (external)](https://www.innersloth.com/games/among-us/) inspired game called Sagi-shi (Japanese for "Imposter").
 
-<!-- mockup of Sagi-shi gameplay screen -->
+<figure>
+  <img src="../images/gameplay.png" alt="Sagi-shi gameplay screen">
+  <figcaption>Sagi-shi gameplay</figcaption>
+</figure>
 
 ## Prerequisites
 
@@ -131,7 +134,10 @@ Nakama has many [authentication methods](../concepts/authentication.md) and supp
 
 Sagi-shi will use device and Facebook authentication, linked to the same user account so that players can play from multiple devices.
 
-<!-- mockup of Sagi-shi login screen with device, facebook and custom login buttons -->
+<figure>
+  <img src="../images/login.png" alt="Sagi-shi login screen">
+  <figcaption>Login screen and Authentication options</figcaption>
+</figure>
 
 
 ### Device authentication
@@ -211,8 +217,6 @@ See the [Itch.io custom authentication](../server-framework/recipes/itch-authent
 ### Linking authentication
 
 Nakama allows players to [Link Authentication](../concepts/authentication/#link-or-unlink) methods to their account once they have authenticated.
-
-<!-- mockup Sagi-shi player account screen with linked authentication methods -->
 
 
 **Linking Device ID authentication**
@@ -346,7 +350,10 @@ Nakama [User Accounts](../concepts/user-accounts.md) store user information defi
 
 Sagi-shi allows players to edit their accounts and stores metadata for things like game progression and in-game items.
 
-<!-- mockup Sagi-shi of player profile screen, with basic info and custom metadata, edit and back buttons -->
+<figure>
+  <img src="../images/profile.png" alt="Sagi-shi player profile screen">
+  <figcaption>Player profile</figcaption>
+</figure>
 
 
 ### Get the user account
@@ -430,10 +437,6 @@ Nakama [User Wallets](../concepts/user-accounts/#virtual-wallet) can store multi
 
 Players in Sagi-shi can unlock or purchase titles, skins and hats with a virtual in-game currency.
 
-<!-- mockup Sagi-shi in-game store with multiple currencies
-important for our game demographic, to visualize their game's store
--->
-
 
 #### Accessing wallets
 
@@ -474,8 +477,10 @@ By default, the player has full permission to create, read, update and delete th
 
 Sagi-shi players can unlock or purchase many items, which are stored in the Storage Engine.
 
-<!-- mockup Sagi-shi player owned items list with favourites -->
-
+<figure>
+  <img src="../images/player_items.png" alt="Sagi-shi player items screen">
+  <figcaption>Player items</figcaption>
+</figure>
 
 
 ### Reading storage objects
@@ -686,8 +691,10 @@ Nakama [Friends](../concepts/friends/) offers a complete social graph system to 
 
 Sagi-shi allows players to add friends, manage their relationships and play together.
 
-<!-- Sagi-shi mockup of friends list, with invite, unfriend, block, chat -->
-
+<figure>
+  <img src="../images/friends.png" alt="Sagi-shi Friends screen">
+  <figcaption>Friends screen</figcaption>
+</figure>
 
 ### Adding friends
 
@@ -795,8 +802,10 @@ Players don't have to be friends with others they want to follow.
 
 Sagi-shi uses status messages and online presences to notify players when their friends are online and share matches.
 
-<!-- Sagi-shi mockup screen to write new status message, list friends presence and status -->
-
+<figure>
+  <img src="../images/status.png" alt="Sagi-shi status update screen">
+  <figcaption>Updating player status</figcaption>
+</figure>
 
 ### Follow users
 
@@ -859,8 +868,10 @@ Nakama [Groups](../concepts/groups-clans/) is a group or clan system with public
 
 Sagi-shi allows players to form and join groups to socialize and compete.
 
-<!-- Sagi-shi mockup of group list and view, needs to be fleshed out -->
-
+<figure>
+  <img src="../images/groups_list.png" alt="Sagi-shi groups screen">
+  <figcaption>Groups list screen</figcaption>
+</figure>
 
 ### Creating groups
 
@@ -893,6 +904,11 @@ await client.UpdateGroupAsync(session, "<GroupId>", name: null, open);
 Other properties, like the group's maximum member size, can only be changed on the server.
 
 See the [updating group size](../concepts/groups-clans.md#updating-group-size) recipe for an example, and the [Groups server function reference](../server-framework/function-reference.md#groups) to learn more about updating groups on the server.
+
+<figure>
+  <img src="../images/group_edit.png" alt="Sagi-shi group edit screen">
+  <figcaption>Sagi-shi group edit</figcaption>
+</figure>
 
 
 ### Listing and filtering groups
@@ -970,8 +986,6 @@ Nakama group memberships are categorized with the following [states](../concepts
 |    1 | Admin | There can be one of more admins. Admins can update groups as well as accept, kick, promote, demote, ban or add members. |
 |    2 | Member | Regular group member. They cannot accept join requests from new users. |
 |    3 | Join request | A new join request from a new user. This does not count towards the maximum group member count. |
-
-<!-- maybe another mokcup screen for joining and accepting -->
 
 
 ### Joining a group
@@ -1087,8 +1101,10 @@ Nakama Chat is a real-time chat system for groups, private/direct messages and d
 
 Sagi-shi uses dynamic chat during matches, for players to mislead each other and discuss who the imposters are, group chat and private/direct messages.
 
-<!-- Sagi-shi mockup of chat, needs to be fleshed out -->
-
+<figure>
+  <img src="../images/chat.png" alt="Sagi-shi chat screen">
+  <figcaption>Sagi-shi Chat</figcaption>
+</figure>
 
 ### Joining dynamic rooms
 
@@ -1609,8 +1625,10 @@ Nakama [Leaderboards](../concepts/leaderboards/) introduce a competitive aspect 
 
 Sagi-shi has a leaderboard of weekly imposter wins, where player scores increase each time they win, and similarly a leaderboard for weekly crew member wins.
 
-<!-- mockup of Sagi-shi leaderboards -->
-
+<figure>
+  <img src="../images/leaderboard.png" alt="Sagi-shi leaderboard screen">
+  <figcaption>Sagi-shi Leaderboard</figcaption>
+</figure>
 
 ### Creating leaderboards
 
@@ -1709,14 +1727,16 @@ Nakama [Tournaments](../concepts/tournaments/) are short lived competitions wher
 
 Sagi-shi players can view, filter and join running tournaments.
 
-<!-- Sagi-shi mockup tournaments ui -->
-
+<figure>
+  <img src="../images/tournaments.png" alt="Sagi-shi tournaments screen">
+  <figcaption>Sagi-shi Tournaments</figcaption>
+</figure>
 
 ### Creating tournaments
 
 Tournaments have to be created on the server, see the [tournament](../concepts/tournaments.md#create-tournament) documentation for details on how to create a tournament.
 
-Sagis-shi has a weekly tournament which challenges players to get the most correct imposter votes. At the end of the week the top players receive a prize of in-game currency.
+Sagi-shi has a weekly tournament which challenges players to get the most correct imposter votes. At the end of the week the top players receive a prize of in-game currency.
 
 
 ### Joining tournaments
@@ -1801,8 +1821,10 @@ Notifications can be either persistent (remaining until a player has viewed it) 
 
 Sagi-shi uses Notifications to notify tournament winners about their winnings.
 
-<!-- Sagi-shi mockup of notifications -->
-
+<figure>
+  <img src="../images/notifications.png" alt="Sagi-shi notification screen">
+  <figcaption>Sagi-shi notifications</figcaption>
+</figure>
 
 ### Receiving notifications
 
