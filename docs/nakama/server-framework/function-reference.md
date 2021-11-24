@@ -1,6 +1,15 @@
 # Function Reference
 
-The code runtime built into the server includes a module with functions to implement various logic and custom behavior. It is easy to define authoritative code and conditions on input received by clients.
+The code runtime built into the server includes a module with functions to implement various logic and custom behavior, enabling you to define authoritative code and conditions on input received by clients. Learn more about it in the [Server Framework Basics](basics.md) documentation.
+
+This page lists all functions available within Nakama and their respective parameters, with corresponding code samples for each. 
+If you haven't already, see the documentation on using the server framework with your desired language:
+
+* [Go Setup](go-setup.md)
+* [Lua Setup](lua-setup.md)
+* [TypeScript Setup](typescript-setup.md)
+
+Some practical examples can be found in the **Server Framework > Recipes** section, such as [custom authentication](../recipes/itch-authentication/), [updating metadata](../recipes/updating-group-metadata/), and [authoritative storage writes](../recipes/writing-to-storage-authoritatively/).
 
 ## Nakama
 

@@ -85,6 +85,10 @@ The minimum structure of a match handler looks like:
       return state
     end
 
+    function M.match_signal(context, dispatcher, tick, state, data)
+      return state, data
+    end
+
     return M
     ```
 
@@ -125,6 +129,10 @@ The minimum structure of a match handler looks like:
 
     func (m *Match) MatchTerminate(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, graceSeconds int) interface{} {
         return state
+    }
+
+    func (m *Match) MatchSignal(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, data string) (interface{}, string) {
+        return state, data
     }
 
     // Register as match handler, this call should be in InitModule.
@@ -174,6 +182,15 @@ The minimum structure of a match handler looks like:
     const matchTerminate = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, graceSeconds: number) : { state: nkruntime.MatchState} | null => {
         return {
             state
+        };
+    }
+
+    const matchSignal = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, data: string) : { state: nkruntime.MatchState, data?: string } | null => {
+    logger.debug('Lobby match signal received: ' + data);
+
+        return {
+            state,
+            data
         };
     }
 
@@ -985,6 +1002,10 @@ This is an example of a Ping-Pong match handler. Messages received by the server
         return nil
     end
 
+    local function match_signal(context, dispatcher, tick, state, data)
+        return state, "signal received: " .. data
+    end
+
     return M
     ```
 
@@ -1434,6 +1455,10 @@ This is an example of a Ping-Pong match handler. Messages received by the server
         reliable := true
         dispatcher.BroadcastMessage(2, []byte(message), []runtime.Presence{}, reliable)
         return state
+    }
+
+    func (m *Match) MatchSignal(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, dispatcher runtime.MatchDispatcher, tick int64, state interface{}, data string) (interface{}, string) {
+        return state, "signal received: " + data
     }
     ```
 
@@ -1898,6 +1923,15 @@ This is an example of a Ping-Pong match handler. Messages received by the server
 
         return {
             state
+        };
+    }
+
+    const matchSignal = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: nkruntime.MatchState, data: string) : { state: nkruntime.MatchState, data?: string } | null => {
+        logger.debug('Lobby match signal received: ' + data);
+
+        return {
+            state,
+            data: "Lobby match signal received: " + data
         };
     }
     ```
