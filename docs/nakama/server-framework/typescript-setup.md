@@ -388,7 +388,7 @@ Finally, you need to make a slight alteration to your `Dockerfile` to ensure you
   FROM heroiclabs/nakama:3.4.0
 
   COPY --from=node-builder /backend/build/*.js /nakama/data/modules/build/
-  COPY local.yml .
+  COPY local.yml /nakama/data/local.yml
   ```
 
 ### Building your module locally
