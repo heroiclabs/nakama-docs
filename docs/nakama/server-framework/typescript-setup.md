@@ -354,6 +354,22 @@ Next, you need to include a line at the bottom of your `main.ts` file that refer
   // Reference InitModule to avoid it getting removed on build
   !InitModule && InitModule.bind(null);
   ```
+You will also need to create a configuration for nakama called `local.yml`. The `runtime.js_entrypoint` setting indicates to nakama to read the built javascript code.
+
+=== "local.yml"
+  ```yaml
+  console:
+    max_message_size_bytes: 409600
+  logger:
+    level: "DEBUG"
+  runtime:
+    js_entrypoint: "build/index.js"
+  session:
+    token_expiry_sec: 7200 # 2 hours
+  socket:
+    max_message_size_bytes: 4096 # reserved buffer
+    max_request_size_bytes: 131072
+  ```
 
 Finally, you need to make a slight alteration to your `Dockerfile` to ensure you copy across the `rollup.config.js` and `babel.config.json` files. You must also change the `RUN` command to run your updated build command rather than using the TypeScript compiler directly. Replace the contents of your `Dockerfile` with the example below.
 
