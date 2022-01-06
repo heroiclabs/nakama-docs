@@ -41,6 +41,23 @@ A party can be created by any user. You can limit the max number of users allowe
     Debug.Log("New Party: " + party.ToString());
     ```
 
+=== "Godot"
+    ```gdscript
+    # Create an open party (i.e. no approval needed to join) with 10 max users
+    # This maximum does not include the party leader
+    var open = true
+    var max_size = 10
+    var party = yield(socket.create_party_async(open, max_size), "completed")
+    print("New party: %s" % party)
+
+    # Create a closed party (i.e. approval needed to join) with 5 max users
+    # This maximum does not include the party leader
+    var open = false
+    var max_size = 5
+    var party = yield(socket.create_party_async(open, max_size), "completed")
+    print("New party: %s" % party)
+    ```
+
 You can create rules on which users can create parties in your game with [before hooks](../server-framework/basics.md#before-hook) using runtime code.
 
 ## Find party
@@ -67,6 +84,14 @@ The way you combine these features of the server to power your game design can c
 
     // Set a status update with your party ID
     await socket.UpdateStatusAsync("Join my party: ", partyId);
+    ```
+
+=== "Godot"
+    ```gdscript
+    var party_id = "<party_id>"
+
+    # Set a status update with your party ID
+    var update : NakamaAsyncResult = yield(socket.update_status_async(JSON.print({"Join my party: %s" % party_id}), "completed")
     ```
 
 With the party ID, users can then [join the party](#join-party).
@@ -97,6 +122,16 @@ A user must join a party before they can send messages, see the member list, or 
     };
     ```
 
+=== "Godot"
+    ```gdscript
+    var party_id = "<party_id>"
+
+    var join: NakamaAsyncResult = yield(socket.join_party_async(party_id), "completed")
+
+    func _on_party_presence(p_presence : NakamaRTAPI.PartyPresenceEvent):
+        print("Joined party: %s" % [p_presence.party_id])
+    ```
+
 If the party is private, users can request to join and the party leader can accept or reject.
 
 === ".NET"
@@ -125,6 +160,20 @@ If the party is private, users can request to join and the party leader can acce
     await socket.RemovePartyMemberAsync(partyId, <userPresence>);
     ```
 
+=== "Godot"
+    ```gdscript
+    var party_id = "<party_id>"
+
+    # List all existing join requests
+    var requests: NakamaAsyncResult = yield(socket.list_party_join_requests_async(party_id), "completed")
+
+    # Accept a join request
+    var request: NakamaAsyncResult = yield(socket.accept_party_member_async(party_id, <user_presence>), "completed")
+
+    # Reject a join request
+    var request: NakamaAsyncResult = yield(socket.remove_party_member_async(party_id, <user_presence>), "completed")
+    ```
+
 ## Leave party
 
 A user can leave a party at any time. The user will also be automatically removed from the party if they disconnect and do not reconnect and rejoin the party within the allowed transient disconnect timeout.
@@ -144,6 +193,13 @@ A user can leave a party at any time. The user will also be automatically remove
     string partyId = "<partyid>";
     var party = await socket.LeavePartyAsync(partyId);
     Debug.Log("Left party: " + party.ToString());
+    ```
+
+=== "Godot"
+    ```gdscript
+    var party_id = "<party_id>"
+    var party: NakamaAsyncResult = yield(socket.leave_party_async(party_id), "completed")
+    print("Left party: %s" % party)
     ```
 
 ### Party leader rotation
@@ -180,6 +236,19 @@ Any user who is a party member can send messages to the party containing: text, 
     };
     ```
 
+=== "Godot"
+    ```gdscript
+    # Sending the message
+    var party_id = "<party_id>"
+    var op_code = 1
+    var data = "<message>".to_utf8()
+    var party_message: NakamaAsyncResult =  yield(socket.send_party_data_async(party_id, op_code, data), "completed")
+
+    # Receiving the message
+    var message: NakamaAsyncResult = yield(socket.received_party_data(data), "completed)
+    print("Received: %s" % message)
+    ```
+
 ### Manual leader promotion
 
 As well as regular messages the party leader can also send a special promotion message which will declare that they’ve stepped down as the current leader and who they have promoted to the new leader.
@@ -204,6 +273,14 @@ As well as regular messages the party leader can also send a special promotion m
     await socket.PromotePartyMemberAsync("<partyid>", partyMember);
     ```
 
+=== "Godot"
+    ```gdscript
+    var new_leader = "<user_id>"
+    var party_id = "<party_id>"
+    var leader: NakamaAsyncResult = yield(socket.received_party_leader(party_id, new_leader), "completed)
+    print("New party leader: %s" % new_leader)
+    ```
+
 ## Close party
 
 A party cannot be closed by any member other than the party leader. The party leader can also eject all party members, which will close the party and clear its state on the server. In most cases its more useful from a game design perspective to allow the leader to leave.
@@ -218,6 +295,12 @@ A party cannot be closed by any member other than the party leader. The party le
     ```csharp
     string partyId = "<partyid>";
     await socket.ClosePartyAsync(partyId);
+    ```
+
+=== "Godot"
+    ```gdscript
+    var party_id = "<party_id>"
+    var party: NakamaAsyncResult = yield(socket.close_party_async(party_id), "completed")
     ```
 
 ## Best practices

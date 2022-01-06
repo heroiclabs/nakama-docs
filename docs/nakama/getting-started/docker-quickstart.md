@@ -39,7 +39,7 @@ Before proceeding ensure that you have [installed Docker Desktop](https://docs.d
               - "26257:26257"
               - "8080:8080"
           nakama:
-            image: heroiclabs/nakama:3.2.1
+            image: heroiclabs/nakama:3.9.0
             entrypoint:
               - "/bin/sh"
               - "-ecx"
@@ -114,7 +114,7 @@ Before proceeding ensure that you have [installed Docker Desktop](https://docs.d
               - "8080:8080"
           nakama:
             container_name: nakama
-            image: heroiclabs/nakama:3.2.1
+            image: heroiclabs/nakama:3.9.0
             entrypoint:
               - "/bin/sh"
               - "-ecx"
