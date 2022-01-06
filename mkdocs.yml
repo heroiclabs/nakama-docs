@@ -227,6 +227,7 @@ nav:
       - Asset Management: nakama/guides/asset-management/index.md
       - Deploy to Digital Ocean: nakama/guides/digital-ocean.md
       - Migrating from GameSparks: nakama/guides/gamesparks-migration.md
+      - Asset Management: nakama/guides/asset-management/index.md
   - Heroic Cloud:
     - Introduction: heroic-cloud/introduction.md
     - Organizations: heroic-cloud/organizations.md
