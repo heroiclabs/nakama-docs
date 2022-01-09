@@ -8,7 +8,7 @@ The matchmaker only searches through users that are both online and currently ma
 
 The matchmaker receives and tracks matchmaking requests, then groups users together based on the criteria they've expressed in their properties and query.
 
-Internally Nakama processes matchmaking requests sequentially in various queues so that developers don't have to worry about concurrency or thread safetey. For example, this means match join attempts can be called mulitple times for the same object without concern for locking the data to protect access.
+Internally Nakama processes matchmaking requests sequentially in various queues so that developers don't have to worry about concurrency or thread safety. For example, this means match join attempts can be called multiple times for the same object without concern for locking the data to protect access.
 
 !!! Tip
     Users must connect and remain online until the matchmaking process completes. If they disconnect they will be removed from the matchmaker until they try again.
