@@ -12,7 +12,27 @@ This client library guide will show you how to use the core Nakama features in *
 Before proceeding ensure that you have:
 
 * [Installed Nakama server](../getting-started/docker-quickstart.md)
-* Installed Unity and the [Nakama Unity SDK](https://github.com/heroiclabs/nakama-unity)
+* [Downloaded and installed Unity](https://unity.com/download)
+* Installed the [Nakama Unity SDK](#installation)
+
+### Installation
+
+The client is available from the:
+
+* [Unity Asset Store](https://assetstore.unity.com/packages/tools/network/nakama-81338)
+* [Heroic Labs GitHub releases page](https://github.com/heroiclabs/nakama-unity/releases/latest)
+
+The `Nakama.unitypackage` contains all source code and DLL dependencies required in the client code.
+
+After downloading the file:
+
+* Drag or import it into your Unity project
+* Set the editor scripting runtime version to .NET 4.6 (from the **Edit** -> **Project Settings** -> **Player** -> **Configuration** menu).
+* From the **Assets** menu create a new C# script and a [client object](#nakama-client)
+
+#### Updates
+
+New versions of the Nakama Unity Client and the corresponding improvements are documented in the [Changelog](https://github.com/heroiclabs/nakama-unity/blob/master/Packages/Nakama/CHANGELOG.md).
 
 
 ### Asynchronous programming
