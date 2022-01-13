@@ -157,7 +157,7 @@ nav:
         - Collections: nakama/concepts/collections.md
         - Access controls: nakama/concepts/access-controls.md
         - Modeling for scalability: nakama/concepts/scalability-modeling.md
-      - Friends: 
+      - Friends:
         - Friends: nakama/concepts/friends.md
         - Best Practices: nakama/concepts/friends-best-practices.md
       - Groups and Clans:
@@ -166,7 +166,9 @@ nav:
       - Status: nakama/concepts/status.md
       - Chat: nakama/concepts/realtime-chat.md
       - Real-time Parties: nakama/concepts/parties.md
-      - Leaderboards: nakama/concepts/leaderboards.md
+      - Leaderboards:
+        - Leaderboards: nakama/concepts/leaderboards.md
+        - Best Practices: nakama/concepts/leaderboards-best-practices.md
       - Tournaments: nakama/concepts/tournaments.md
       - Notifications: nakama/concepts/in-app-notifications.md
       - Multiplayer Engine:
