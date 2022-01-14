@@ -716,6 +716,7 @@ Sagi-shi allows players to add friends, manage their relationships and play toge
   <figcaption>Friends screen</figcaption>
 </figure>
 
+
 ### Adding friends
 
 Adding a friend in Nakama does not immediately add a mutual friend relationship. An outgoing friend request is created to each user, which they will need to accept.
@@ -892,6 +893,7 @@ Sagi-shi allows players to form and join groups to socialize and compete.
   <img src="../images/groups_list.png" alt="Sagi-shi groups screen">
   <figcaption>Groups list screen</figcaption>
 </figure>
+
 
 ### Creating groups
 
@@ -1125,6 +1127,7 @@ Sagi-shi uses dynamic chat during matches, for players to mislead each other and
   <img src="../images/chat.png" alt="Sagi-shi chat screen">
   <figcaption>Sagi-shi Chat</figcaption>
 </figure>
+
 
 ### Joining dynamic rooms
 
@@ -1650,6 +1653,7 @@ Sagi-shi has a leaderboard of weekly imposter wins, where player scores increase
   <figcaption>Sagi-shi Leaderboard</figcaption>
 </figure>
 
+
 ### Creating leaderboards
 
 Leaderboards have to be created on the server, see the [leaderboard](../concepts/leaderboards.md#create-a-leaderboard) documentation for details on creating leaderboards.
@@ -1752,6 +1756,7 @@ Sagi-shi players can view, filter and join running tournaments.
   <figcaption>Sagi-shi Tournaments</figcaption>
 </figure>
 
+
 ### Creating tournaments
 
 Tournaments have to be created on the server, see the [tournament](../concepts/tournaments.md#create-tournament) documentation for details on how to create a tournament.
@@ -1845,6 +1850,7 @@ Sagi-shi uses Notifications to notify tournament winners about their winnings.
   <img src="../images/notifications.png" alt="Sagi-shi notification screen">
   <figcaption>Sagi-shi notifications</figcaption>
 </figure>
+
 
 ### Receiving notifications
 
