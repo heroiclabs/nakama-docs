@@ -111,6 +111,7 @@ Nakama requires a CockroachDB server instance to be available. Nakama creates an
 | <a class="anchor" id="database.conn_max_lifetime_ms"></a>`conn_max_lifetime_ms` | `database.conn_max_lifetime_ms` | Time in milliseconds to reuse a database connection before the connection is killed and a new one is created.. Default value is 0 (indefinite).
 | <a class="anchor" id="database.max_idle_conns"></a>`max_idle_conns` | `database.max_idle_conns` | Maximum number of allowed open but unused connections to the database. Default value is 100.
 | <a class="anchor" id="database.max_open_conns"></a>`max_open_conns` | `database.max_open_conns` | Maximum number of allowed open connections to the database. Default value is 0 (no limit).
+| <a class="anchor" id="database.dns_scan_interval_sec"></a>`dns_scan_interval_sec` | `database.dns_scan_interval_sec` | Number of seconds between scans looking for DNS resolution changes for the database hostname. Default 60.
 
 !!! tip "Database addresses"
     You can pass in multiple database addresses to Nakama via command like:
