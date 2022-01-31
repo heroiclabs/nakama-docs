@@ -1858,7 +1858,7 @@ This is an example of a Ping-Pong match handler. Messages received by the server
     const matchInit = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, params: {[key: string]: string}): {state: nkruntime.MatchState, tickRate: number, label: string} => {
         logger.debug('Lobby match created');
         
-        const presences: nkruntime.Presence[] = [];
+        const presences: { [userId: string]: nkruntime.Presence };
         return {
             state: { presences },
             tickRate: 1,
