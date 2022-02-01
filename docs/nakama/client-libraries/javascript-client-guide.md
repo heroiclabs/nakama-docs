@@ -277,8 +277,8 @@ Use the auth and refresh tokens on the session object to restore or refresh sess
 Store the tokens for use later:
 
 ```js
-var authToken = session.authToken;
-var refreshToken = session.refreshToken;
+var authToken = session.token;
+var refreshToken = session.refresh_token;
 ```
 
 Restore a session without having to re-authenticate:
@@ -298,10 +298,10 @@ if (session.isexpired || session.isexpired(Date.now + 1) {
     } catch (error) {
         // Couldn't refresh the session so reauthenticate.
         session = await client.authenticateDevice(deviceId);
-        var refreshToken = session.refreshToken;
+        var refreshToken = session.refresh_token;
     }
 
-    var authToken = session.authToken;
+    var authToken = session.token;
 }
 ```
 
