@@ -4248,6 +4248,7 @@ The runtime environment allows you to run code that must only be executed only o
 === "Go"
     | Action | Parameter | Type | Description | Returns |
     |-|-|-|-|-|
+    | **Logger Debug**: Write a DEBUG level message to the server logs. | message | `string` | The message to write to server logs with DEBUG level severity. |
     | **Logger Error**: Write an ERROR level message to the server logs. | message | `string` | The message to write to server logs with ERROR level severity. |
     | | vars | | Variables to replace placeholders in message. |
     | **Logger Info**: Write an INFO level message to the server logs. | message | `string` | The message to write to server logs with INFO level severity. |
@@ -4257,6 +4258,9 @@ The runtime environment allows you to run code that must only be executed only o
 
     Examples:
     ```go
+    // Logger Debug
+    logger.Debug("%s - %s", "hello", "world")
+
     // Logger Error
     logger.Error("%s - %s", "hello", "world")
 
@@ -4270,6 +4274,7 @@ The runtime environment allows you to run code that must only be executed only o
 === "Lua"
     | Action | Parameter | Type | Description | Returns |
     |-|-|-|-|-|
+    | **Logger Debug**: Write a DEBUG level message to the server logs. | message | `string` | The message to write to server logs with DEBUG level severity. |
     | **Logger Error**: Write an ERROR level message to the server logs. | message | `string` | The message to write to server logs with ERROR level severity. |
     | | vars | | Variables to replace placeholders in message. |
     | **Logger Info**: Write an INFO level message to the server logs. | message | `string` | The message to write to server logs with INFO level severity. |
@@ -4279,6 +4284,10 @@ The runtime environment allows you to run code that must only be executed only o
 
     Examples:
     ```lua
+    -- Logger Debug
+    local message = string.format("%q - %q", "hello", "world")
+    nk.logger_debug(message)
+
     -- Logger Error
     local message = string.format("%q - %q", "hello", "world")
     nk.logger_error(message)
@@ -4295,6 +4304,7 @@ The runtime environment allows you to run code that must only be executed only o
 === "TypeScript"
     | Action | Parameter | Type | Description | Returns |
     |-|-|-|-|-|
+    | **Logger Debug**: Write a DEBUG level message to the server logs. | message | `string` | The message to write to server logs with DEBUG level severity. |
     | **Logger Error**: Write an ERROR level message to the server logs. | message | `string` | The message to write to server logs with ERROR level severity. |
     | | vars | | Variables to replace placeholders in message. |
     | **Logger Info**: Write an INFO level message to the server logs. | message | `string` | The message to write to server logs with INFO level severity. |
@@ -4304,6 +4314,9 @@ The runtime environment allows you to run code that must only be executed only o
 
     Examples:
     ```typescript
+    // Logger Debug
+    logger.debug('%s - %s', 'hello', 'world');
+
     // Logger Error
     logger.error('%s - %s', 'hello', 'world');
 
