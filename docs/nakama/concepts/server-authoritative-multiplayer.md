@@ -1002,7 +1002,7 @@ This is an example of a Ping-Pong match handler. Messages received by the server
         return nil
     end
 
-    local function match_signal(context, dispatcher, tick, state, data)
+    function M.match_signal(context, dispatcher, tick, state, data)
         return state, "signal received: " .. data
     end
 
