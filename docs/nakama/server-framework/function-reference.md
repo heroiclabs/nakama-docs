@@ -1227,7 +1227,7 @@ This module contains all the core gameplay APIs, all registration functions used
     local open = true
     local limit = 100
 
-    local groups = nk.group_list(group_name, lang_tag, members, open, limit)
+    local groups = nk.groups_list(group_name, lang_tag, open, members, limit)
     for i, group in ipairs(groups) do
     nk.logger_info(string.format("ID: %q - can enter? %q", group.id, group.can_enter))
     end
