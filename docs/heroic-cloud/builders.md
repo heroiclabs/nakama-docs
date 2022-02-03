@@ -3,12 +3,7 @@
 From the Builders dashboard you can view and manage your existing CI pipelines (builders) across all [organizations](organizations.md), and [create new builders](#creating-builders).
 
 Builders are used to clone your custom [Runtime Code](../nakama/server-framework/basics.md) written in Lua, TypeScript, and Go. It then conditionally compiles your code against the Nakama image selected and packages it into a Docker image. 
-This image is then available for deployment in a project in the [Configuration](projects.md#configuration) tab, enabling you to quickly deploy a new image or return to a previous one whenever needed.
-
-!!! note "Note"
-    Builders are designed to ignore your Lua test files as follows:
-    * All `.lua` files in a `/tests` directory
-    * Any files named in the format `*.test.lua` or `*_test.lua`  
+This image is then available for deployment in a project in the [Configuration](projects.md#configuration) tab, enabling you to quickly deploy a new image or return to a previous one whenever needed.  
 
 ![Builders dashboard](images/builders-dashboard.png)
 
@@ -20,6 +15,29 @@ Each tile on the dashboard provides the details of the corresponding builder:
 * **Description**: The user provided builder description.
 * **Repository**: The Git repository this builder is linked to.
 * **Branch Nakama Version**: The Nakama version associated with this builder. Any custom code must use the same Nakama version.
+
+## Best practices
+
+Before you start [creating builders](#creating-builders) and deploying new projects, be sure to keep in mind the following:
+
+* The repository should only contain source code relevant for the server module (i.e. do not place your Unity project there).
+* Beside your custom runtime code files, all other files will be removed from the builder **except** for the following extensions: `.yml`, `.json`, `.txt`, and `.md`.
+
+***For Go:*** 
+
+* Your `main.go` and mod files must be in the root directory, all others can be in subfolders. The shared object or Dockerfile **do not** need to be committed.
+
+***For TypeScript:*** 
+
+* You must include the (single) compiled bundled JavaScript file, not TypeScript.
+
+***For Lua***: 
+
+* You must include at least one file in the root directory, all other Lua modules can then be included in subfolders.
+* Builders are designed to ignore your Lua test files as follows:
+    
+    * All `.lua` files in a `/tests` directory
+    * Any files named in the format `*.test.lua` or `*_test.lua`
 
 ## Creating builders
 
