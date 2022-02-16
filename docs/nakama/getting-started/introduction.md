@@ -52,7 +52,7 @@ You get to focus on building your project while the server handles all [user acc
 <div style="display: flex">
   <div style="flex: 1; margin: 0 1em 0 0">
     <strong>Matchmaker</strong>
-    <p>The <a href="https://heroiclabs.com/docs/nakama/concepts/matchmaker/">matchmaker</a> makes it easy in realtime and turn-based games to find active opponents to play against.</p>
+    <p>The <a href="https://heroiclabs.com/docs/nakama/concepts/matches/">matchmaker</a> makes it easy in realtime and turn-based games to find active opponents to play against.</p>
   </div>
   <div style="flex: 1">
     <strong>Multiplayer</strong>
