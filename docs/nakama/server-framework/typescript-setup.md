@@ -326,7 +326,7 @@ There are also changes to the `tsconfig.json` file that must be made. Using Roll
       "esModuleInterop": true,
       "noUnusedLocals": true,
       "removeComments": true,
-      "target": "es6",
+      "target": "es5",
       "module": "ESNext",
       "strict": false,
     },
