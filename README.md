@@ -1,3 +1,9 @@
+## Nakama documentation has moved.
+> As part of our ongoing efforts to improve our developer experience, content and discoverability we've moved away from using MkDocs to host the content. Please read this blog post for more information:
+> 
+> 
+>  https://heroiclabs.com/blog/announcements/announcing-docs-20
+
 Nakama Documentation
 ====================
 
